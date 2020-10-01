@@ -97,7 +97,7 @@ function createSideBarMenuItem(id, config, containAll) {
 
 
     var title = utils.getLocalPairs(config, "name");
-    var li = $("<li id='iclient_" + id + "' class='treeview ' title='" + title + "'></li>");
+    var li = $("<li id='ekmapclient_" + id + "' class='treeview ' title='" + title + "'></li>");
     if (config.content) {
         createSideBarMenuTitle(id, title, true, config.hasNewExamples).appendTo(li);
         createSideBarSecondMenu(config.content, id).appendTo(li);
@@ -235,7 +235,7 @@ function _getTarget(id, length) {
     if (length) {
         if (length === 1) {
             $("section#sidebar li.active").removeClass("active");
-            target = $("section#sidebar li#iclient_" + id);
+            target = $("section#sidebar li#ekmapclient_" + id);
             target.children('ul').show();
         }
         if (length === 2) {

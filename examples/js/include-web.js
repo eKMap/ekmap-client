@@ -68,9 +68,7 @@
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js");
         }
 
-        if (inArray(includes, 'template')) {
-            inputScript("https://iclient.supermap.io/web/libs/art-template/template-web.js");
-        }
+        
         if (inArray(includes, 'randomcolor')) {
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.2/randomColor.min.js");
         }
@@ -89,22 +87,12 @@
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css");
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js");
         }
-        if (inArray(includes, 'geohash')) {
-            inputScript("https://iclient.supermap.io/web/libs/geohash/geohash.js");
-        }
+       
         if (inArray(includes, 'dat-gui')) {
             inputScript("https://cdn.bootcss.com/dat-gui/0.7.6/dat.gui.js");
             datGuiI18N();
         }
-        if (inArray(includes, 'admin-lte')) {
-            inputCSS("https://iclient.supermap.io/web/libs/admin-lte/css/AdminLTE.min.css");
-            inputCSS("https://iclient.supermap.io/web/libs/admin-lte/css/skins/skin-blue.min.css");
-            inputCSS("https://iclient.supermap.io/web/libs/font-awesome/css/font-awesome.min.css");
-            inputScript("https://iclient.supermap.io/web/libs/admin-lte/js/app.min.js");
-        }
-        if (inArray(includes, 'jquery.scrollto')) {
-            inputScript("https://iclient.supermap.io/web/libs/jquery.scrollto/jquery.scrollTo.min.js");
-        }
+       
         if (inArray(includes, 'ace')) {
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js");
         }
