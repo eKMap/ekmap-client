@@ -83,16 +83,25 @@ export class Request {
         options = options || {};
         var encode = (options.encode !== false)
         if (encode) url = encodeURI(url);
-        if (isNaN(data % 2)) {
+        if (data.adds || data.updates || data.deletes) {
             var dataPost = new FormData();
             dataPost.append("f", "json");
-            dataPost.append("features", data);
+            dataPost.append("adds", data.adds);
+            dataPost.append("updates", data.updates);
+            dataPost.append("deletes", data.deletes);
             if (options.token) dataPost.append("token", options.token)
-        } else {
-            var dataPost = new FormData();
-            dataPost.append("f", "json");
-            dataPost.append("objectIds", data)
-            if (options.token) dataPost.append("token", options.token)
+        }else{
+            if (isNaN(data % 2)) {
+                var dataPost = new FormData();
+                dataPost.append("f", "json");
+                dataPost.append("features", data);
+                if (options.token) dataPost.append("token", options.token)
+            } else {
+                var dataPost = new FormData();
+                dataPost.append("f", "json");
+                dataPost.append("objectIds", data)
+                if (options.token) dataPost.append("token", options.token)
+            }
         }
         var ajax = new XMLHttpRequest();
         ajax.open("POST", url, false);

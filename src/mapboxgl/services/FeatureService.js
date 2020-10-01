@@ -260,17 +260,31 @@ export class FeatureService extends ServiceBase {
         }, this);
     }
 
+    /**
+     * @function mapboxgl.ekmap.FeatureService.prototype.applyEdits
+     * @description This operation adds, updates, and deletes features to the associated feature layer.
+     * @param {Object} params Options.
+     * @param {GeoJSONObject} params.adds GeoJSON of feature add.
+     * @param {GeoJSONObject} params.updates GeoJSON of feature update.
+     * @param {Interger} params.deletes Id of feature delete.
+     * @param {RequestCallback} callback
+     */
     applyEdits(params, callback, context) {
         var param = {}
-        var dataAdd = Parse.geojsonToArcGIS(params.adds);
-        var arr1 = [];
-        arr1.push(dataAdd)
-        param.adds = JSON.stringify(arr1)
-        var dataUpdate = Parse.geojsonToArcGIS(params.updates);
-        var arr2 = [];
-        arr2.push(dataUpdate)
-        param.updates = JSON.stringify(arr2)
-        param.deletes = params.deletes;
+        if (params.adds) {
+            var dataAdd = Parse.geojsonToArcGIS(params.adds);
+            param.adds = JSON.stringify(dataAdd)
+        } else
+            params.adds = false;
+        if (params.updates) {
+            var dataUpdate = Parse.geojsonToArcGIS(params.updates);
+            param.updates = JSON.stringify(dataUpdate)
+        } else
+            params.updates = false;
+        if (params.deletes)
+            param.deletes = params.deletes;
+        else
+            param.deletes = false;
         var service = new FeatureService(this.options);
         return service.post('applyEdits', param, function (error, response) {
             callback.call(context, error, response, response);
