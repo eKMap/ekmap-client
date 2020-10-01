@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Bound Query Data</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Nhấp chuột điểm trên bản đồ để sửa.
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105.6685713, 20.9003181],
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256
+                    }
+                },
+                "layers": [
+                    {
+                        "id": "raster-tiles",
+                        "type": "raster",
+                        "source": "raster-tiles",
+                        "minzoom": 0,
+                        "maxzoom": 22,
+                        'layout': {
+                            'visibility': 'visible',
+                        },
+                        'raster-opacity': 0.75,
+                    }
+                ]
+            },
+            zoom: 7
+        });
+        map.on('load', function () {
+            var featureLayer = new mapboxgl.ekmap.FeatureLayer({
+                url: urlFeatureLayer,
+                token: tokenKey
+            }).addTo(map);
+
+            var idUpdate;
+            featureLayer.on('click', function (obj) {
+                document.getElementById("selectedFeatures").innerHTML = "Bạn hãy kích vào feature cần update.<br>Sau đó chọn điểm bạn cẩn di chuyển đến.";
+                if (!obj.type) 
+                    idUpdate = obj.objectIds[0];
+                else {
+                    if (idUpdate) {
+                        var geojson = {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [obj.lngLat.lng, obj.lngLat.lat]
+                            },
+                            "properties": {
+                                'OBJECTID': idUpdate
+                            } 
+                        };
+                        widgets.loader.showLoader("data loading...");
+                        featureLayer.updateFeature(geojson, function (e) {
+                            alert('update thành công!');
+                            document.getElementById("selectedFeatures").innerHTML = "Nhấp chuột điểm trên bản đồ để sửa.";
+                            featureLayer.refresh();
+                            idUpdate = null;
+                            widgets.loader.removeLoader();
+                        });
+                    } else {
+                        alert("Hãy chọn vào điểm cần update");
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>

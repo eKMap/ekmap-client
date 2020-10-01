@@ -1,0 +1,555 @@
+.navbar {
+  font-size: 14px;
+}
+
+#logo {
+  width: 24px;
+  height: 24px;
+  margin-top: 10px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.navbar .project-title {
+  text-decoration: none;
+  vertical-align: middle;
+  color:rgba(255,255,255,1);
+  opacity:0.85;
+  font-weight: 400;
+}
+
+#title {
+  font-size: 20px;
+  color: #FFFFFF;
+  font-family: "Microsoft Yahei";
+}
+
+
+.pre-release {
+    font-size: 18px;
+    color: #FFFFFF;
+    vertical-align: super;
+    margin-left: 5px;
+}
+
+#suffix-title {
+    font-size: 16px;
+    color: #FFFFFF;
+    height: 60px;
+    line-height: 60px;
+    padding: 5px;
+    float: left;
+    color:rgba(255,255,255,0.85);
+}
+
+.main-header .sidebar-toggle {
+    float: left;
+    background-color: transparent;
+    background-image: none;
+    padding: 15px 17px;
+    font-family: 'fontAwesome';
+}
+
+.main-header .sidebar-toggle:before {
+    content: "\f03b";
+}
+
+.skin-blue .main-header .navbar .nav > li > a:hover,
+.skin-blue .main-header .navbar .nav > li > a:active,
+.skin-blue .main-header .navbar .nav > li > a:focus,
+.skin-blue .main-header .navbar .nav .open > a,
+.skin-blue .main-header .navbar .nav .open > a:hover,
+.skin-blue .main-header .navbar .nav .open > a:focus{
+    background: #C30022;
+}
+
+.skin-blue .main-header .navbar .nav > li > a:hover {
+  background: rgba(255,255,255,0.12)
+}
+
+.navbar-toggle {
+    height: 60px;
+}
+
+.navbar.default .navbar-title {
+    height: 100%;
+    /*width: 460px;*/
+}
+
+.navbar.lite .navbar-title {
+    height: 100%;
+    width: auto;
+}
+
+.navbar ul {
+    list-style: none outside none;
+    padding: 0;
+}
+
+.navbar-nav > li {
+    height: 60px;
+    display: table;
+}
+
+.navbar-nav > li > a {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.navbar-menu .menu-sub-warp {
+    max-height: 0;
+}
+
+.navbar-menu:hover .menu-sub-warp {
+    max-height: 660px;
+    transform-origin: 50% 0;
+    -webkit-transform-origin: 50% 0;
+    -moz-transform-origin: 50% 0;
+    transition: all .5s ease-out 0.2s;
+    -webkit-transition: all .5s ease-out 0.2s;
+    -moz-transition: all .5s ease-out 0.2s;
+}
+
+.navbar .project-log-container{
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.lang-option {
+    cursor: pointer;
+    z-index: -1;
+}
+
+.menu-box {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 60px;
+}
+
+.menu-box .menu-sub-warp {
+    width: 100%;
+    margin: 0 auto;
+    overflow: auto;
+    text-align: center;
+    line-height: normal;
+    color: white;
+    background-color: rgba(0, 0, 0, .9);
+}
+
+.menu-box .menu-sub-warp::-webkit-scrollbar {
+    width: 3px;
+}
+
+.menu-box .menu-sub-warp::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    background: rgba(0, 0, 0, .8);
+}
+
+.navbar-nav > li > a {
+    padding-bottom: 17px;
+}
+
+.navbar-nav > .nav-dropdown-menu > .dropdown-menu {
+    border: 0;
+}
+
+.navbar-nav > .nav-dropdown-menu > .dropdown-menu > li > a {
+    color: #F8F8F8;
+    font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #C30022;
+}
+
+.navbar-nav > .nav-dropdown-menu > .dropdown-menu > li:hover > a {
+    background-color: #2f5975;
+}
+
+.navbar-nav > li {
+    position: static !important;
+    height: 60px;
+    display: table;
+}
+
+.nav-header-example > li {
+    position: relative !important;
+}
+
+ul.ekmapclient-nav-menu-box {
+    margin: 0;
+    padding: 10px;
+}
+
+.ekmapclient-nav-menu-box > li {
+    display: inline-block;
+    vertical-align: text-top;
+    width: 160px;
+    margin: 0 30px;
+    text-align: right;
+}
+
+li.navbar-menu > a {
+  padding: 12.5px;
+}
+
+li.navbar-menu {
+  font-family: "Microsoft Yahei";
+}
+
+li.navbar-menu > a:hover, li.navbar-menu > a:focus {
+    outline: none;
+}
+
+li.navbar-menu>a::after {
+  position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #E14D57;
+    content: '';
+    opacity: 0;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    -moz-transition: opacity 0.3s, -moz-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
+}
+
+li.navbar-menu>a::after {
+  bottom: 0px;
+  -webkit-transform: translateY(0px);
+  -moz-transform: translateY(0px);
+  transform: translateY(0px);
+}
+
+li.navbar-menu.active>a::after {
+    bottom: 0px;
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
+}
+
+ul.ekmapclient-nav-menu-sub:nth-child(1) {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.ekmapclient-nav-menu-title {
+    display: block;
+    color: white;
+    font-size: 1.7rem;
+    text-align: right;
+    margin: 6px 0;
+    padding: 10px 4px;
+}
+
+.ekmapclient-nav-menu-title:link,
+.ekmapclient-nav-menu-title:hover,
+.ekmapclient-nav-menu-title:focus,
+.ekmapclient-nav-menu-title:visited {
+    color: white;
+}
+
+.ekmapclient-nav-menu-box li a:not(.disabled):hover,
+.ekmapclient-nav-menu-box li a:not(.disabled):focus {
+  color: #e14d57;
+}
+
+.ekmapclient-nav-menu-sub {
+    font-size: 1.4rem;
+    max-height: 600px;
+    margin-bottom: 10px;
+    /* overflow: auto; */
+    color: #d7d7d7;
+}
+
+.ekmapclient-nav-menu-sub a {
+    color: #d7d7d7;
+}
+
+.ekmapclient-nav-menu-sub li {
+    text-align: match-parent;
+
+    line-height: 30px;
+}
+
+.ekmapclient-nav-menu-sub .red-circle{
+    display: inline-block; 
+    width: 6px;
+    height: 6px;
+    border-radius: 6px;
+    position: absolute; 
+    right: -10px; 
+    top: 7px;
+    background:#e14d57; 
+} 
+
+.ekmapclient-nav-menu-sub::-webkit-scrollbar {
+    width: 3px;
+}
+
+.ekmapclient-nav-menu-sub::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    background: rgba(0, 0, 0, .8);
+}
+
+.ekmapclient-nav-menu-item:not(.ekmapclient-nav-menu-overivew) > li:last-child {
+    width: 130px;
+}
+
+@media screen and (max-width: 1220px) {
+    .navbar.default .navbar-toggle {
+        display: block;
+        float: right;
+    }
+
+    .navbar.default .navbar-collapse.collapse {
+        display: none !important;
+    }
+
+    .navbar.default .collapse.in {
+        display: block !important;
+    }
+
+    .navbar.default .navbar-header {
+        float: none;
+    }
+
+    .menu-box {
+        top: 120px;
+    }
+}
+
+@media screen and (max-width: 1030px) {
+    .navbar.lite .navbar-toggle {
+        display: block;
+        float: right;
+    }
+
+    .navbar.lite .navbar-collapse.collapse {
+        display: none !important;
+    }
+
+    .navbar.lite .collapse.in {
+        display: block !important;
+    }
+
+    .navbar.lite .navbar-header {
+        float: none;
+    }
+
+    .menu-box {
+        top: 120px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+
+    .navbar-custom-menu > .navbar-nav > li > .dropdown-menu {
+        border: 0;
+        background: #C30022;
+    }
+
+    .navbar-custom-menu > .navbar-nav > li > .dropdown-menu > li {
+        position: relative;
+        right: 0;
+        left: auto;
+        border: 0;
+        background: #C30022;
+    }
+
+    .skin-blue .main-header .navbar .dropdown-menu > li > a {
+        color: #ffffff;
+    }
+
+    .navbar-header {
+        float: none
+    }
+
+    .navbar-toggle {
+        display: block;
+        float: right;
+    }
+
+    .collapse.in {
+        display: block !important;
+    }
+
+    .ekmapclient-nav-menu-title {
+        font-size: 1.5rem;
+    }
+
+    .ekmapclient-nav-menu-overivew > li {
+        margin: 0 20px;
+    }
+
+}
+
+@media (max-width: 991px) {
+    .navbar-custom-menu > .navbar-nav > li {
+        position: relative;
+    }
+
+    .navbar-custom-menu > .navbar-nav > li > .dropdown-menu {
+        position: absolute;
+        right: 0;
+        left: auto;
+    }
+}
+
+@media screen and (max-width: 834px) {
+    html[lang="en"] .skin-blue .main-header .navbar .nav > li > a {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .navbar-nav > li > .dropdown-menu {
+        margin-top: 0 !important;
+    }
+
+    #suffix-title {
+        font-size: 14px;
+    }
+
+    #title {
+        font-size: 20px;
+    }
+
+    .pre-release {
+        font-size: 14px;
+    }
+
+    .navbar-brand {
+        padding-right: 10px !important;
+    }
+
+    .navbar-toggle {
+        padding-left: 10px;
+        padding-top: 18px
+    }
+
+    .navbar-collapse.in {
+        overflow-y: visible;
+    }
+
+    .navbar-menu {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 756px) {
+    html[lang="en"] .menu-box {
+        top: 180px;
+    }
+}
+
+@media screen and (max-width: 659px) {
+    .menu-box {
+        top: 180px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .navbar-custom-menu > .navbar-nav > li {
+        position: static !important;
+    }
+
+    .navbar-custom-menu > .nav-header-example > li {
+        position: relative !important;
+    }
+
+    .navbar-custom-menu > .navbar-nav > li > .dropdown-menu {
+        position: absolute;
+        left: 0;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    #logo {
+        width: 25px;
+        height: 25px;
+    }
+
+    #suffix-title {
+        padding-left: 5px;
+        font-size: 12px;
+        padding-bottom: 15px;
+    }
+
+    #title {
+        font-size: 14px;
+    }
+
+    .pre-release {
+        font-size: 8px;
+    }
+
+    .navbar-custom-menu .navbar-nav > li > a {
+        padding: 12px;
+        line-height: 20px;
+    }
+
+    .skin-blue .main-header .navbar .nav > li > a {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .skin-blue .main-header .navbar .nav > li > a {
+        font-size: 13px;
+    }
+
+    html[lang="en"] .menu-box {
+        top: 240px;
+    }
+}
+
+@media screen and (width: 414px) {
+
+    html[lang="en"] .menu-box {
+        top: 180px;
+    }
+}
+
+@media screen and (max-width: 410px) {
+    #logo {
+        width: 20px;
+        height: 20px;
+    }
+
+    #suffix-title {
+        font-size: 8px;
+    }
+
+    #title {
+        font-size: 11px;
+    }
+
+    .pre-release {
+        font-size: 5px;
+    }
+    .navbar-toggle {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media screen and (max-width: 356px) {
+    .navbar-toggle {
+        padding-left: 3px;
+        padding-right: 6px;
+    }
+
+    .menu-box {
+        top: 240px;
+    }
+}
+
+@media screen and (max-height: 640px) {
+    .navbar-menu:hover .menu-sub-warp {
+        max-height: 400px;
+    }
+}

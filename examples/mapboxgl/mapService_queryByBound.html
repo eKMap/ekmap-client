@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+
+    <title>Bound Query</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256
+                    }
+                },
+                "layers": [
+                    {
+                        "id": "raster-tiles",
+                        "type": "raster",
+                        "source": "raster-tiles",
+                        "minzoom": 0,
+                        "maxzoom": 22,
+                        'layout': {
+                            'visibility': 'visible',
+                        },
+                        'raster-opacity': 0.75,
+                    }
+                ]
+            },
+            center: [105.6685713, 20.9003181],
+            zoom: 8
+        });
+        map.on('load', function () {
+            var tiledMap = new mapboxgl.ekmap.FeatureLayer({
+                url: urlMapLayer,
+                token: tokenKey
+            }).addTo(map);
+
+            map.addLayer({
+                'id': 'polygonLayer',
+                'type': 'fill',
+                'source': {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Polygon',
+                            'coordinates': [[[104.49305685331223, 21.281957265184587], [106.2838283376874, 21.281957265184587], [106.2838283376874, 20.079412404984694], [104.49305685331223, 20.079412404984694], [104.49305685331223, 21.281957265184587]]],
+                        }
+                    }
+                },
+                'paint': {
+                    'fill-outline-color': 'blue',
+                    'fill-color': 'rgba(0, 0, 255, 0.1)'
+
+                }
+            });
+            var lngLatBounds = new mapboxgl.LngLatBounds([106.2838283376874, 21.281957265184587], [104.49305685331223, 20.079412404984694]);
+            tiledMap.queryByBound(lngLatBounds, function (serviceResult) {
+                map.addSource('points', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'FeatureCollection',
+                        'features': serviceResult
+                    }
+                })
+
+                map.addLayer({
+                    "id": "points",
+                    "type": "circle",
+                    "paint": {
+                        "circle-radius": 10,
+                        "circle-color": "red",
+                    },
+                    "source": "points"
+                });
+            });
+        })
+        
+
+    </script>
+</body>
+</html>

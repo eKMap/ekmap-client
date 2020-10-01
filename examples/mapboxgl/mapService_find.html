@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Map Find</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .filter-ctrl {
+            position: inherit;
+            top: 10px;
+            margin-left: 42%;
+            z-index: 1;
+        }
+
+            .filter-ctrl input[type='text'] {
+                width: 100%;
+                border: 0;
+                background-color: #fff;
+                margin: 0;
+                padding: 10px;
+                box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+                border-radius: 3px;
+                width: 250px;
+            }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+            <div class="filter-ctrl">
+                <input id="filter-input"
+                       type="text"
+                       name="filter"
+                       placeholder="Filter by name" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256
+                    }
+                },
+                "layers": [
+                    {
+                        "id": "raster-tiles",
+                        "type": "raster",
+                        "source": "raster-tiles",
+                        "minzoom": 0,
+                        "maxzoom": 22,
+                        'layout': {
+                            'visibility': 'visible',
+                        },
+                        'raster-opacity': 0.75,
+                    }
+                ]
+            },
+            center: [103.9, 22.2],
+            zoom: 6
+        });
+        var tiledMap;
+        map.on('load', function () {
+            tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                url: urlMapService,
+                token: tokenKey
+            }).addTo(map)
+        });
+        var filterInput = document.getElementById('filter-input');
+        filterInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                var text = event.target.value.trim();
+                var params = {
+                    searchText: text
+                }
+                widgets.loader.showLoader("data finding...");
+                tiledMap.find(params, function (e) {
+                    if (e) {
+                        widgets.loader.removeLoader();
+                        alert('Có ' + e.length + ' điểm cần tìm')
+                    }
+                })
+            }
+        });
+    </script>
+</body>
+</html>

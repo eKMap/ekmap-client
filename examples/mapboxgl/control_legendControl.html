@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Legend Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [103.9, 22.2],
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256
+                    }
+                },
+                "layers": [
+                    {
+                        "id": "raster-tiles",
+                        "type": "raster",
+                        "source": "raster-tiles",
+                        "minzoom": 0,
+                        "maxzoom": 22,
+                        'layout': {
+                            'visibility': 'visible',
+                        },
+                        'raster-opacity': 0.75,
+                    }
+                ]
+            },
+            zoom: 4
+        });
+        map.on('load', function () {
+            var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                url: urlMapService,
+                token: tokenKey
+            }).addTo(map);
+            var legend = new mapboxgl.ekmap.control.Legend([tiledMap]);
+            map.addControl(legend, "top-left");
+        })
+    </script>
+</body>
+</html>

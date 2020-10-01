@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+
+    <title>Bound Query</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Nhấp chuột trên bản đồ để thực hiện <a href='#'>Identify</a>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256
+                    }
+                },
+                "layers": [
+                    {
+                        "id": "raster-tiles",
+                        "type": "raster",
+                        "source": "raster-tiles",
+                        "minzoom": 0,
+                        "maxzoom": 22,
+                        'layout': {
+                            'visibility': 'visible',
+                        },
+                        'raster-opacity': 0.75,
+                    }
+                ]
+            },
+            center: [105.6685713, 20.9003181],
+            zoom: 8
+        });
+        var tiledMap;
+        map.on('load', function () {
+            this.tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                url: urlMapService,
+                token: tokenKey
+            }).addTo(map);
+        })
+        var pane = document.getElementById('selectedFeatures');
+        map.on('click', function (e) {
+            pane.innerHTML = 'Loading';
+            this.tiledMap.identify()
+                .on(map)
+                .at(e.lngLat)
+                .run(function (obj) {
+                    if (obj.length > 0) {
+                        var soilDescriptionLine = 'Đường sắt: ';
+                        var soilDescriptionPoint = 'Ga đường sắt: ';
+                        obj.forEach(feature => {
+                            if (feature.layerName == 'Đường sắt') {
+                                soilDescriptionLine += feature.attributes.Ten_duong + ','
+                            }
+                            if (feature.layerName == 'Ga đường sắt')
+                                soilDescriptionPoint += feature.attributes.Ten_ga + ','
+                        })
+                        if (soilDescriptionLine == 'Đường sắt: ')
+                            soilDescriptionLine = 'Đường sắt: không có đường nào';
+                        if (soilDescriptionPoint == 'Ga đường sắt: ')
+                            soilDescriptionPoint = 'Ga đường sắt: không có ga nào';
+                        pane.innerHTML = soilDescriptionLine + "<br />" + soilDescriptionPoint;
+                    } else {
+                        pane.innerHTML = 'No features identified.';
+                    }
+                })
+        })
+    </script>
+</body>
+</html>
