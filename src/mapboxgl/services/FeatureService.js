@@ -23,8 +23,9 @@ import { Parse } from '../core/Parse';
 export class FeatureService extends ServiceBase {
     constructor(options) {
         super(options);
-        if (options.url)
+        if (options.url){
             this.options = Util.getUrlParams(options);
+        }
     }
 
     nearby(lat, long, callback, context) {

@@ -68,7 +68,9 @@
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js");
         }
 
-        
+        // if (inArray(includes, 'template')) {
+        //     inputScript("libs/art-template/template-web.js");
+        // }
         if (inArray(includes, 'randomcolor')) {
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.2/randomColor.min.js");
         }
@@ -87,12 +89,13 @@
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css");
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js");
         }
-       
         if (inArray(includes, 'dat-gui')) {
             inputScript("https://cdn.bootcss.com/dat-gui/0.7.6/dat.gui.js");
             datGuiI18N();
         }
-       
+        if (inArray(includes, 'admin-lte')) {
+            inputCSS("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css");
+        }
         if (inArray(includes, 'ace')) {
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js");
         }
@@ -112,7 +115,7 @@
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.6.3/jquery.contextMenu.min.css");
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.6.3/jquery.contextMenu.min.js");
         }
-      
+        
         if (inArray(includes, 'lazyload')) {
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js");
         }
@@ -120,7 +123,6 @@
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/i18next/10.0.7/i18next.min.js");
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/jquery-i18next/1.2.1/jquery-i18next.min.js");
         }
-       
        
         if (inArray(includes, 'ionRangeSlider')) {
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/css/ion.rangeSlider.css");
@@ -143,6 +145,5 @@
     load();
     window.isLocal = false;
     window.server = document.location.toString().match(/file:\/\//) ? "http://localhost:8090" : document.location.protocol + "//" + document.location.host;
-    window.version = "10.0.1";
     window.preRelease = "";
 })();
