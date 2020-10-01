@@ -1,0 +1,6 @@
+# Package Files #
+/node_modules
+/.idea
+/.vscode
+/.history
+/package-lock.json
