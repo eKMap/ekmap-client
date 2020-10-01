@@ -89,12 +89,15 @@
         })
 
         map.on('click', function (e) {
-            var params = {};
-            var color = symbols.value;
-            params.lngLat = e.lngLat;
-            params.color = color
-            featureLayer.addFeature(params, function (serviceResult) {
-            });
+            var params = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [e.lngLat.lng, e.lngLat.lat]
+                },
+                "color":symbols.value
+            }
+            featureLayer.addFeature(params, function (serviceResult) {});
         });
     </script>
 </body>

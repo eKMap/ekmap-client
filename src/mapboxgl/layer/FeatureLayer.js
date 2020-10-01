@@ -164,34 +164,32 @@ export class FeatureLayer extends mapboxgl.Evented {
     }
 
     /**
-   * @function mapboxgl.ekmap.FeatureLayer.prototype.addFeature
-   * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-   * @param {Object} params Options
-   * @param {mapboxgl.LngLat} params.lngLat
-   * @param {string} params.color The color to use for the default marker if options.element is not provided. The default is light blue ('#3FB1CE').
-   * @param {Function} callback
-   * @param {Object} context
-   * @returns {this}
-   */
+     * @function mapboxgl.viegis.FeatureLayer.prototype.addFeature
+     * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
+     * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
+     * @param {Function} callback
+     * @param {Object} context
+     * @returns {this}
+     */
     addFeature(params, callback, context) {
+        var coor = params.geometry.coordinates;
+        console.log(params.color)
         var marker = new mapboxgl.Marker({
             'color': params.color ? params.color : ''
         })
-        .setLngLat([params.lngLat.lng,params.lngLat.lat])
-        .addTo(this.map);
+            .setLngLat(coor)
+            .addTo(this.map);
         this.addFeatures(params, callback, context);
     }
 
     /**
-    * @private
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.addFeatures
-    * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-    * @param {Object} params Options
-    * @param {mapboxgl.LngLat} params.LngLat 
-    * @param {string} params.color The color to use for the default marker if options.element is not provided. The default is light blue ('#3FB1CE').
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
+     * @private
+     * @function mapboxgl.viegis.FeatureLayer.prototype.addFeatures
+     * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
+     * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
+     * @param {Function} callback
+     * @param {Object} context
+     * @returns {this}
     */
     addFeatures(params, callback, context) {
         return this.service.addFeatures(params, callback, context);
@@ -223,7 +221,7 @@ export class FeatureLayer extends mapboxgl.Evented {
 
     /**
     * @function mapboxgl.ekmap.FeatureLayer.prototype.deleteFeature
-    * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
+    * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link mapboxgl.viegis.FeatureLayer.html#refresh|refresh()} then delete.
     * @param {string} id Id of feature.
     * @param {Function} callback The callback of result data returned by the server side.
     * @param {Object} context
@@ -295,7 +293,24 @@ export class FeatureLayer extends mapboxgl.Evented {
         });
     }
 
-    applyEdits(params, callback,context) {
+     /**
+     * @function mapboxgl.viegis.FeatureLayer.prototype.applyEdits
+     * @description This operation adds, updates, and deletes features to the associated feature layer. Please use function {@link mapboxgl.viegis.FeatureLayer.html#refresh|refresh()} then applyEdits.
+     * @param {Object} params Options.
+     * @param {GeoJSONObject} params.adds GeoJSON of feature add (To change point color, set 'color' for options GeoJSON).
+     * @param {GeoJSONObject} params.updates GeoJSON of feature update.
+     * @param {Interger} params.deletes Id of feature delete.
+     * @param {RequestCallback} callback
+     */
+    applyEdits(params, callback, context) {
+        if (params.adds) {
+            var coor = params.adds.geometry.coordinates;
+            var marker = new mapboxgl.Marker({
+                'color': params.adds.color ? params.adds.color : ''
+            })
+                .setLngLat(coor)
+                .addTo(this.map);
+        }
         return this.service.applyEdits(params, callback, context);
     }
 }
