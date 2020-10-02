@@ -121,8 +121,8 @@ var exampleConfig = {
                         name: "random points",
                         name_en: "random points",
                         version: "9.1.0",
-                        thumbnail: "heatMapLayer.png",
-                        fileName: "heatMapLayer"
+                        thumbnail: "heatMap_Layer.png",
+                        fileName: "heatMap_Layer"
                     },
                 ]
             },
@@ -135,20 +135,20 @@ var exampleConfig = {
                     {
                         name: "Admin map",
                         name_en: "Admin map",
-                        thumbnail: "adminmap.png",
-                        fileName: "adminmap"
+                        thumbnail: "tiledMap_adminmap.png",
+                        fileName: "tiledMap_adminmap"
                     },
                     {
                         name: "Road map",
                         name_en: "Road map",
-                        thumbnail: "roadMapx.png",
-                        fileName: "roadmap"
+                        thumbnail: "tiledMap_roadMap.png",
+                        fileName: "tiledMap_roadmap"
                     },
                     {
                         name: "OSM Standard",
                         name_en: "OSM Standard",
-                        thumbnail: "osmMap.png",
-                        fileName: "osmMap"
+                        thumbnail: "tiledMap_osmMap.png",
+                        fileName: "tiledMap_osmMap"
                     }
 
 
@@ -161,8 +161,8 @@ var exampleConfig = {
                     {
                         name: "Vector Tile",
                         name_en: "Vector Tile",
-                        thumbnail: "vectorTileMap.png",
-                        fileName: "vectorTileMap"
+                        thumbnail: "vectorTile_Map.png",
+                        fileName: "vectorTile_Map"
                     }
                 ]
             },
@@ -604,31 +604,31 @@ var exampleConfig = {
                     {
                         name: "Navigation Control",
                         name_en: "Navigation Control",
-                        thumbnail: "control_navigationController.png",
+                        thumbnail: "control_navigationControl.png",
                         fileName: "control_navigationControl" 
                     },
                     {
                         name: "Scale Control",
                         name_en: "Scale Control",
-                        thumbnail: "control_scaleController.png",
+                        thumbnail: "control_scaleControl.png",
                         fileName: "control_scaleControl"
                     },
                     {
                         name: "Fullscreen Control",
                         name_en: "Fullscreen Control",
-                        thumbnail: "control_fullscreenController.png",
+                        thumbnail: "control_fullscreenControl.png",
                         fileName: "control_fullscreenControl"
                     },
                     {
                         name: "Geolocate Control",
                         name_en: "Geolocate Control",
-                        thumbnail: "control_geolocateController.png",
+                        thumbnail: "control_geolocateControl.png",
                         fileName: "control_geolocateControl"
                     },
                     {
                         name: "Attribution Control",
                         name_en: "Attribution Control",
-                        thumbnail: "control_attributionController.png",
+                        thumbnail: "control_attributionControl.png",
                         fileName: "control_attributionControl"
                     }
                 ]
@@ -640,20 +640,20 @@ var exampleConfig = {
                 {
                     name: "Draw Control",
                     name_en: "Draw Control",
-                        thumbnail: "control_drawController.png",
+                        thumbnail: "control_drawControl.png",
                     fileName: "control_drawControl"
                 },
                 {
                     name: "Swipe between maps",
                     name_en: "Swipe between maps",
                     thumbnail: "control_swipeBetweenMap.png",
-                    fileName: "control_swipeBetweenMaps"
+                    fileName: "control_swipeBetweenMap"
                 },
                 {
                     name: "Side By Side",
                     name_en: "Side By Side",
-                    thumbnail: "control_sideBySideControl.png",
-                    fileName: "sidebyside"
+                    thumbnail: "control_sideBySide.png",
+                    fileName: "control_sideBySide"
                 },
                 {
                     name: "Snapshot maps",
@@ -664,13 +664,13 @@ var exampleConfig = {
                 {
                     name: "Legend Control",
                     name_en: "Legend Control",
-                    thumbnail: "control_legendController.png",
+                    thumbnail: "control_legendControl.png",
                     fileName: "control_legendControl"
                 },
                 {
                     name: "Feature Infomation Control",
                     name_en: "Feature Infomation ",
-                    thumbnail: "control_featureInfomationController.png",
+                    thumbnail: "control_featureInfomationControl.png",
                     fileName: "control_featureInfomationControl"
                 }]
             }

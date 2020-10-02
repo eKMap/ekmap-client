@@ -122,5 +122,5 @@ var urlOSMStandard = [
 var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
 var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
 
-var urlMapService = 'https://ekmapserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
+var urlMapService = 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
 

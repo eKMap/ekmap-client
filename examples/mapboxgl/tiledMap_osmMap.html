@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map"></div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105, 17],
+            zoom: 4
+        });
+        var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
+    </script>
+</body>
+</html>

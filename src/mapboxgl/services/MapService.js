@@ -118,7 +118,6 @@ export class MapService extends ServiceBase {
         }, this);
     }
 
-
     /**
      * @function mapboxgl.ekmap.MapService.prototype.queryByBound
      * @description  Is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.。
