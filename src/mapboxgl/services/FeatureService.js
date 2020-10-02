@@ -28,9 +28,9 @@ export class FeatureService extends ServiceBase {
         }
     }
 
-    nearby(lat, long, callback, context) {
+    nearby(lngLat, callback, context) {
         var params = {};
-        params.geometry = [long, lat];
+        params.geometry = [lngLat.lng, lngLat.lat];
         params.geometryType = 'esriGeometryPoint';
         params.spatialRel = 'esriSpatialRelIntersects';
         params.units = 'esriSRUnit_Kilometer';
@@ -71,7 +71,7 @@ export class FeatureService extends ServiceBase {
     }
 
     /**
-     * @function mapboxgl.viegis.FeatureService.prototype.addFeature
+     * @function mapboxgl.ekmap.FeatureService.prototype.addFeature
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
      * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
      * @param {Function} callback
@@ -84,7 +84,7 @@ export class FeatureService extends ServiceBase {
 
     /**
      * @private
-     * @function mapboxgl.viegis.FeatureService.prototype.addFeatures
+     * @function mapboxgl.ekmap.FeatureService.prototype.addFeatures
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
      * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
      * @param {Function} callback

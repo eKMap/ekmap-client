@@ -49,25 +49,46 @@ export class FeatureLayer extends mapboxgl.Evented {
         };
         this.service.query(params, function (result) {
             if (result[0].geometry.type == "Point") {
+                map.addSource('point', {
+                    "type": "geojson",
+                    "data": {
+                        'type': 'FeatureCollection',
+                        'features': result
+                    }
+                });
+
                 map.addLayer({
-                    "id": "Point",
+                    "id": "point",
                     "type": "circle",
                     "paint": {
                         "circle-radius": 10,
                         "circle-color": "red",
                     },
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            'type': 'FeatureCollection',
-                            'features': result
-                        }
-                    }
+                    "source": 'point'
+                });
+
+                map.addLayer({
+                    "id": "point-selected",
+                    "type": "circle",
+                    "paint": {
+                        "circle-radius": 10,
+                        "circle-color": "blue",
+                    },
+                    'filter': ['in', 'OBJECTID', ''],
+                    "source": 'point'
                 });
             }
             if (result[0].geometry.type == "LineString") {
+                map.addSource('line', {
+                    "type": "geojson",
+                    "data": {
+                        'type': 'FeatureCollection',
+                        'features': result
+                    }
+                });
+
                 map.addLayer({
-                    'id': "Line",
+                    'id': "line",
                     'type': 'line',
                     'layout': {
                         'line-join': 'round',
@@ -77,18 +98,39 @@ export class FeatureLayer extends mapboxgl.Evented {
                         'line-color': '#000',
                         'line-width': 5
                     },
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            'type': 'FeatureCollection',
-                            'features': result
-                        }
-                    }
+                    "source": "line"
+                });
+
+                map.addLayer({
+                    'id': "line-selected",
+                    'type': 'line',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': 'blue',
+                        'line-width': 5
+                    },
+                    'filter': ['in', 'OBJECTID', ''],
+                    "source": "line"
                 });
             }
             if (result[0].geometry.type == "LineString") {
+                map.addSource('area', {
+                    "type": "geojson",
+                    lineMetrics: true,
+                    'data': {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'LineString',
+                            'coordinates': result
+                        }
+                    }
+                });
+
                 map.addLayer({
-                    'id': 'Area',
+                    'id': 'area',
                     'type': 'line',
                     'layout': {
                         'line-join': 'round',
@@ -115,17 +157,21 @@ export class FeatureLayer extends mapboxgl.Evented {
                             'red'
                         ],
                     },
-                    source: {
-                        "type": "geojson",
-                        lineMetrics: true,
-                        'data': {
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'LineString',
-                                'coordinates': result
-                            }
-                        }
-                    }
+                    source: 'area'
+                })
+
+                map.addLayer({
+                    'id': 'area-selected',
+                    'type': 'line',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': 'white',
+                        'line-width': 5
+                    },
+                    source: 'area'
                 })
             }
         })
@@ -164,7 +210,7 @@ export class FeatureLayer extends mapboxgl.Evented {
     }
 
     /**
-     * @function mapboxgl.viegis.FeatureLayer.prototype.addFeature
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.addFeature
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
      * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
      * @param {Function} callback
@@ -184,7 +230,7 @@ export class FeatureLayer extends mapboxgl.Evented {
 
     /**
      * @private
-     * @function mapboxgl.viegis.FeatureLayer.prototype.addFeatures
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.addFeatures
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
      * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
      * @param {Function} callback
@@ -221,7 +267,7 @@ export class FeatureLayer extends mapboxgl.Evented {
 
     /**
     * @function mapboxgl.ekmap.FeatureLayer.prototype.deleteFeature
-    * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link mapboxgl.viegis.FeatureLayer.html#refresh|refresh()} then delete.
+    * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then delete.
     * @param {string} id Id of feature.
     * @param {Function} callback The callback of result data returned by the server side.
     * @param {Object} context
@@ -294,8 +340,8 @@ export class FeatureLayer extends mapboxgl.Evented {
     }
 
      /**
-     * @function mapboxgl.viegis.FeatureLayer.prototype.applyEdits
-     * @description This operation adds, updates, and deletes features to the associated feature layer. Please use function {@link mapboxgl.viegis.FeatureLayer.html#refresh|refresh()} then applyEdits.
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.applyEdits
+     * @description This operation adds, updates, and deletes features to the associated feature layer. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then applyEdits.
      * @param {Object} params Options.
      * @param {GeoJSONObject} params.adds GeoJSON of feature add (To change point color, set 'color' for options GeoJSON).
      * @param {GeoJSONObject} params.updates GeoJSON of feature update.
