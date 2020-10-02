@@ -110,6 +110,7 @@ export class Legend extends mapboxgl.Evented {
         this.layers.forEach(layer => {
             layer.legend(function (list) {
                 var listLenged = list.layers.slice();
+                console.log(listLenged)
                 for (var i = 0; i < listLenged.length; i++) {
                     var li = document.createElement("li");
                     var strong = document.createElement("strong");
@@ -121,7 +122,8 @@ export class Legend extends mapboxgl.Evented {
                         img.height = 13;
                         img.src = "data:image/png;base64," + listLenged[i].legend[j].imageData;
                         var span = document.createElement("span");
-                        span.innerHTML = "<all values>"
+                        span.innerHTML = listLenged[i].legend[j].label;
+                        span.style.paddingLeft = '15px';
                         var li1 = document.createElement("li");
                         li1.appendChild(img);
                         li1.appendChild(span);

@@ -89,7 +89,7 @@ export class FeatureInfomation extends mapboxgl.Evented {
                                 for (var i = 0; i < obj.length; i++) {
                                     //Point
                                     if (obj[i].geometryType == 'esriGeometryPoint') {
-                                        if (!me._map.getLayer('point')) {
+                                        if (!me._map.getLayer('point')) { 
                                             me._map.addSource('point', {
                                                 'type': 'geojson',
                                                 'data': geojson

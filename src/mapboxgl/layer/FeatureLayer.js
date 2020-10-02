@@ -72,7 +72,9 @@ export class FeatureLayer extends mapboxgl.Evented {
                     "type": "circle",
                     "paint": {
                         "circle-radius": 10,
-                        "circle-color": "blue",
+                        "circle-color": "red",
+                        "circle-stroke-color": '#00ffff',
+                        "circle-stroke-width": 3,
                     },
                     'filter': ['in', 'OBJECTID', ''],
                     "source": 'point'
@@ -328,7 +330,8 @@ export class FeatureLayer extends mapboxgl.Evented {
             data = {
                 'type': 'FeatureCollection',
                 'features': result
-            }
+            };
+            var filter = ["in", "OBJECTID"];
             if (me.map.getLayer('point')) {
                 me.map.getSource('point').setData(data);
                 map.setFilter('point-selected', filter);

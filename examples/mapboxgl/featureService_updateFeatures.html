@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/viegis-mapboxgl.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Bound Query Data</title>
@@ -73,7 +73,7 @@
         var featureLayer;
         var idUpdate;
         map.on('load', function () {
-            featureLayer = new mapboxgl.viegis.FeatureLayer({
+            featureLayer = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
                 token: tokenKey
             }).addTo(map);
