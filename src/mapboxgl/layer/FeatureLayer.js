@@ -329,13 +329,18 @@ export class FeatureLayer extends mapboxgl.Evented {
                 'type': 'FeatureCollection',
                 'features': result
             }
-            if (me.map.getLayer('Point')) {
-                me.map.getSource('Point').setData(data);
+            if (me.map.getLayer('point')) {
+                me.map.getSource('point').setData(data);
+                map.setFilter('point-selected', filter);
             }
-            if (me.map.getLayer('Line'))
-                me.map.getSource('Line').setData(data);
-            if (me.map.getLayer('Area'))
-                me.map.getSource('Area').setData(data);
+            if (me.map.getLayer('line')) {
+                map.setFilter('line-selected', filter);
+                me.map.getSource('line').setData(data);
+            }
+            if (me.map.getLayer('area')) {
+                me.map.getSource('area').setData(data);
+                map.setFilter('area-selected', filter);
+            }
         });
     }
 
