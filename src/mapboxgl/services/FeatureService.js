@@ -207,6 +207,7 @@ export class FeatureService extends ServiceBase {
         var param = {};
         var data = Util._setGeometry(lngLatBounds);
         param.f = 'geojson';
+        param.outFields = '*';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
         var service = new FeatureService(this.options);
@@ -224,6 +225,7 @@ export class FeatureService extends ServiceBase {
     queryByGeometry(params, callback, context) {
         var param = {};
         param.f = 'geojson';
+        param.outFields = '*';
         if (params) {
             var geom = params;
             if (params.type == 'Point') {
