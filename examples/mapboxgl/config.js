@@ -95,14 +95,14 @@ var exampleConfig = {
                      {
                         name: "Mapbox Vector Tile",
                         name_en: "Mapbox Vector Tile",
-                        thumbnail: "mvtVectorTile.png",
-                        fileName: "vectortileService"
+                        thumbnail: "vectorTile_Map.png",
+                        fileName: "vectorTile_Map"
                     },
                     {
                         name: "Mapbox Vector Tile Overlay",
                         name_en: "Mapbox Vector Tile Overlay",
-                        thumbnail: "mvtVectorTile.png",
-                        fileName: "vectortileService_overlay"
+                        thumbnail: "vectorTile_Map_overlay.png",
+                        fileName: "vectorTile_Map_overlay"
                     }
                 ]
             }

@@ -5,12 +5,13 @@ import mapboxgl from 'mapbox-gl';
  * @class mapboxgl.ekmap.VectorTiledMapLayer
  * @classdesc The VectorTiledMapLayer class.
  * @category Layer
- * @param {string} key - Construction parameters.
+ * @param {string} url - Url Vector Tile Services.
  * @extends {mapboxgl.Evented}
  */
 export class VectorTiledMapLayer extends mapboxgl.Evented {
-    constructor(key) {
-        super(key);
+    constructor(url) {
+        super();
+        this.url = url;
     }
 
     /**
@@ -20,7 +21,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
      * @returns this
      */
     addTo(map) {
-        map.setStyle("mapbox://styles/mapbox/streets-v11")
+        map.setStyle(url);
         return this;
     }
 }

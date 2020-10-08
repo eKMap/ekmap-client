@@ -129,4 +129,6 @@ var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/ogsfeature/35/Fe
 //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
 var urlMapLayer = urlServicesHost + '/gserver/rest/services/ogsmap/35/MapServer/478'
 var urlMapService = urlServicesHost + '/gserver/rest/services/ogsmap/35/MapServer'
+var urlVectorService = urlServicesHost + '/gserver/rest/services/ogsmap/35/VectorTileServer';
+
 

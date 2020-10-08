@@ -5,7 +5,8 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
-    <title>Vector Tile Map</title>
+    <script src="../../examples/js/common.js"></script>
+    <title>Vector Tile Layer</title>
     <style>
         .map {
             width: 100%;
@@ -23,13 +24,17 @@
         </div>
     </div>
     <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoibG9uZ2NoZWxzZWF0OSIsImEiOiJja2Q5eGgzZ2swNnh2Mnd0MW9xdG5vbDFuIn0.G4kTs0XK20VSLMTF9iCc_Q';
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Mapbox </a>" +
+            " with <span>© <a href='https://iclient.supermap.io' target='_blank'>eKMap Client</a> | </span>" +
+            " Map Data <span>© <a href='http://ekgis.com.vn/' target='_blank'>eKMap Server</a></span> ";
+         var map = new mapboxgl.Map({
+            container: 'divMapId', // container id
+            style: urlVectorService + "/resources/styles?apikey=" + tokenKey,
+            minZoom: 4,
             center: [105, 17],
             zoom: 4
         });
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer().addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     </script>
 </body>
 </html>
