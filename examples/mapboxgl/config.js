@@ -115,19 +115,19 @@ var exampleConfig = {
             heat: {
                 name: "Heat map",
                 name_en: "Heat map",
-                version: "9.1.0",
+                version: "",
                 content: [
                     {
                         name: "random points",
                         name_en: "random points",
-                        version: "9.1.0",
+                        version: "",
                         thumbnail: "heatMapLayer_mbgl.png",
                         fileName: "heatMapLayer_mbgl"
                     },
                     {
-                        name: "random points (Classic)",
-                        name_en: "random points (Classic)",
-                        version: "9.1.0",
+                        name: "Heatmap Layer",
+                        name_en: "Heatmap Layer",
+                        version: "",
                         thumbnail: "heatMapLayer.png",
                         fileName: "heatMapLayer"
                     },
@@ -136,7 +136,7 @@ var exampleConfig = {
             tile: {
                 name: "Tiled map",
                 name_en: "Tiled map",
-                version: "9.1.0",
+                version: "",
                 content: [
                     
                     // {
@@ -163,12 +163,12 @@ var exampleConfig = {
             cluster: {
                 name: "Cluster",
                 name_en: "Cluster",
-                version: "9.1.1",
+                version: "",
                 content: [
                     {
                         name: "Cluster",
                         name_en: "Marker cluster",
-                        version: "9.1.1",
+                        version: "",
                         thumbnail: "cluster.png",
                         fileName: "cluster"
                     }
@@ -180,44 +180,44 @@ var exampleConfig = {
                 content: [{
                     name: "flashing points",
                     name_en: "flashing points",
-                    thumbnail: "l_pulse.gif",
-                    fileName: "12_pulse"
+                    thumbnail: "animation_flashing_point.png",
+                    fileName: "animation_flashing_point"
                 }]
             },
             ECharts: {
                 name: "ECharts",
                 name_en: "ECharts",
                 content: [
-                    {
-                        name: "ECharts",
-                        name_en: "ECharts",
-                        thumbnail: "echarts_effectScatter.png",
-                        fileName: "echarts_effectScatter"
-                    },
-                    {
-                        name: "Mock migration",
-                        name_en: "Mock migration",
-                        thumbnail: "echarts_geoline.gif",
-                        fileName: "echarts_geoline"
-                    },
-                    {
-                        name: "heat map",
-                        name_en: "heat map",
-                        thumbnail: "echarts_heatmap.png",
-                        fileName: "echarts_heatmap"
-                    },
-                    {
-                        name: "line",
-                        name_en: "line",
-                        thumbnail: "echarts_linesBus.png",
-                        fileName: "echarts_linesBus"
-                    },
-                    {
-                        name: "Changchun public transport network",
-                        name_en: "Changchun public transport network",
-                        thumbnail: "echarts_ChangchunPublicTransportNetwork.gif",
-                        fileName: "echarts_ChangchunPublicTransportNetwork"
-                    },
+                    // {
+                    //     name: "ECharts",
+                    //     name_en: "ECharts",
+                    //     thumbnail: "echarts_effectScatter.png",
+                    //     fileName: "echarts_effectScatter"
+                    // },
+                    // {
+                    //     name: "Mock migration",
+                    //     name_en: "Mock migration",
+                    //     thumbnail: "echarts_geoline.gif",
+                    //     fileName: "echarts_geoline"
+                    // },
+                    // {
+                    //     name: "heat map",
+                    //     name_en: "heat map",
+                    //     thumbnail: "echarts_heatmap.png",
+                    //     fileName: "echarts_heatmap"
+                    // },
+                    // {
+                    //     name: "line",
+                    //     name_en: "line",
+                    //     thumbnail: "echarts_linesBus.png",
+                    //     fileName: "echarts_linesBus"
+                    // },
+                    // {
+                    //     name: "Changchun public transport network",
+                    //     name_en: "Changchun public transport network",
+                    //     thumbnail: "echarts_ChangchunPublicTransportNetwork.gif",
+                    //     fileName: "echarts_ChangchunPublicTransportNetwork"
+                    // },
                     {
                         name: "line chart",
                         name_en: "line chart",
@@ -242,331 +242,331 @@ var exampleConfig = {
                         thumbnail: "echarts_pie.png",
                         fileName: "echarts_pie"
                     },
-                    {
-                        name: "Airplane route map",
-                        name_en: "Airplane route map",
-                        thumbnail: "echarts_linesAirline.png",
-                        fileName: "echarts_linesAirline"
-                    },
-                    {
-                        name: "scatter of Weibo user",
-                        name_en: "scatter of Weibo user",
-                        thumbnail: "echarts_scatterWeibo.png",
-                        fileName: "echarts_scatterWeibo"
-                    },
+                    // {
+                    //     name: "Airplane route map",
+                    //     name_en: "Airplane route map",
+                    //     thumbnail: "echarts_linesAirline.png",
+                    //     fileName: "echarts_linesAirline"
+                    // },
+                    // {
+                    //     name: "scatter of Weibo user",
+                    //     name_en: "scatter of Weibo user",
+                    //     thumbnail: "echarts_scatterWeibo.png",
+                    //     fileName: "echarts_scatterWeibo"
+                    // },
 
-                    {
-                        name: "cell map",
-                        name_en: "cell map",
-                        thumbnail: "echarts_cellMap.png",
-                        fileName: "echarts_cellMap"
-                    },
-                    {
-                        name: "Use lines to draw 1.3 millions Beijing streets",
-                        name_en: "Use lines to draw 1.3 millions Beijing streets",
-                        localIgnore: true,
-                        version: "9.1.0",
-                        thumbnail: "mb_echartsLinesMillionsBeijingRoads.png",
-                        fileName: "echarts_linesDrawMillionsBeijingRoadsNetwork"
-                    },
-                    {
-                        name: "Use scatter to draw 1.4 millions New York Taxi Points",
-                        name_en: "Use scatter to draw 1.4 millions New York Taxi Points",
-                        localIgnore: true,
-                        version: "9.1.0",
-                        thumbnail: "mb_echartScatterMillionsNewYorkTaxi.png",
-                        fileName: "echarts_scatterDrawMillionsNewYorkTaxiPoints"
-                    },
-                    {
-                        name: "Use lines to draw 4 millions Chinese railways",
-                        name_en: "Use lines to draw 4 millions Chinese railways",
-                        localIgnore: true,
-                        version: "9.1.0",
-                        thumbnail: "mb_echartsLinesMillionsRailway.png",
-                        fileName: "echarts_linesDrawMillionsRailwaysNetwork"
-                    },
-                    {
-                        name: "Use lines to draw 14 millions Chinese water system",
-                        name_en: "Use lines to draw 14 millions Chinese water system",
-                        localIgnore: true,
-                        version: "9.1.0",
-                        thumbnail: "mb_echartsLinesMillionsWaterSystem.png",
-                        fileName: "echarts_linesDrawMillionsWaterSystem"
-                    },
-                    {
-                        name: "Use lines to draw 25 millions Chinese roads",
-                        name_en: "Use lines to draw 25 millions Chinese roads",
-                        localIgnore: true,
-                        version: "9.1.0",
-                        thumbnail: "mb_echartsLinesMillionsRoads.png",
-                        fileName: "echarts_linesDrawMillionsRoadsNetwork_50WFeatures"
-                    },
-                    {
-                        name: "Car Animation",
-                        name_en: "Car Animation",
-                        version: "9.1.0",
-                        thumbnail: "mb_echartsAnimatorCar.png",
-                        fileName: "echartsAnimatorCar"
-                    }
+                    // {
+                    //     name: "cell map",
+                    //     name_en: "cell map",
+                    //     thumbnail: "echarts_cellMap.png",
+                    //     fileName: "echarts_cellMap"
+                    // },
+                    // {
+                    //     name: "Use lines to draw 1.3 millions Beijing streets",
+                    //     name_en: "Use lines to draw 1.3 millions Beijing streets",
+                    //     localIgnore: true,
+                    //     version: "",
+                    //     thumbnail: "mb_echartsLinesMillionsBeijingRoads.png",
+                    //     fileName: "echarts_linesDrawMillionsBeijingRoadsNetwork"
+                    // },
+                    // {
+                    //     name: "Use scatter to draw 1.4 millions New York Taxi Points",
+                    //     name_en: "Use scatter to draw 1.4 millions New York Taxi Points",
+                    //     localIgnore: true,
+                    //     version: "",
+                    //     thumbnail: "mb_echartScatterMillionsNewYorkTaxi.png",
+                    //     fileName: "echarts_scatterDrawMillionsNewYorkTaxiPoints"
+                    // },
+                    // {
+                    //     name: "Use lines to draw 4 millions Chinese railways",
+                    //     name_en: "Use lines to draw 4 millions Chinese railways",
+                    //     localIgnore: true,
+                    //     version: "",
+                    //     thumbnail: "mb_echartsLinesMillionsRailway.png",
+                    //     fileName: "echarts_linesDrawMillionsRailwaysNetwork"
+                    // },
+                    // {
+                    //     name: "Use lines to draw 14 millions Chinese water system",
+                    //     name_en: "Use lines to draw 14 millions Chinese water system",
+                    //     localIgnore: true,
+                    //     version: "",
+                    //     thumbnail: "mb_echartsLinesMillionsWaterSystem.png",
+                    //     fileName: "echarts_linesDrawMillionsWaterSystem"
+                    // },
+                    // {
+                    //     name: "Use lines to draw 25 millions Chinese roads",
+                    //     name_en: "Use lines to draw 25 millions Chinese roads",
+                    //     localIgnore: true,
+                    //     version: "",
+                    //     thumbnail: "mb_echartsLinesMillionsRoads.png",
+                    //     fileName: "echarts_linesDrawMillionsRoadsNetwork_50WFeatures"
+                    // },
+                    // {
+                    //     name: "Car Animation",
+                    //     name_en: "Car Animation",
+                    //     version: "",
+                    //     thumbnail: "mb_echartsAnimatorCar.png",
+                    //     fileName: "echartsAnimatorCar"
+                    // }
                 ]
             },
-            EChartsGL: {
-                name: "EChartsGL",
-                name_en: "EChartsGL",
-                content: [
-                    {
-                        name: "Shanghai building price",
-                        name_en: "Shanghai building price",
-                        thumbnail: "echartsGL_ShanghaiBuildingPrice.png",
-                        fileName: "echartsGL_ShanghaiBuildingPrice"
-                    },
-                    {
-                        name: "flight path",
-                        name_en: "flight path",
-                        thumbnail: "echartsGL_flightPath.gif",
-                        fileName: "echartsGL_flightPath"
-                    },
-                    {
-                        name: "taxi Routes Of CapeTown",
-                        name_en: "taxi Routes Of CapeTown",
-                        thumbnail: "echartsGL_taxiRoutesOfCapeTown.gif",
-                        fileName: "echartsGL_taxiRoutesOfCapeTown"
-                    },
-                    {
-                        name: "colorful buildings",
-                        name_en: "colorful buildings",
-                        thumbnail: "echartsGL_colorfulCity.png",
-                        fileName: "echartsGL_colorfulCity"
-                    },
-                    {
-                        name: "taxi trajectory map Of ChengDu",
-                        name_en: "taxi trajectory map Of ChengDu",
-                        thumbnail: "echartsGL_taxiTrajectoryMap.gif",
-                        fileName: "echartsGL_taxiTrajectoryMap"
-                    },
-                    {
-                        name: "Global wind visualization",
-                        name_en: "Global wind visualization",
-                        thumbnail: "echartsGL_GlobalWind.gif",
-                        fileName: "echartsGL_GlobalWind"
-                    }
-                ]
-            },
-            DeckGL: {
-                name: "DeckGL",
-                name_en: "DeckGL",
-                content: [
-                    {
-                        name: "path",
-                        name_en: "path",
-                        version: "9.1.0",
-                        thumbnail: "mb_deckglLayer_pathLayer.png",
-                        fileName: "deckglLayer_pathLayer"
-                    },
-                    {
-                        name: "arcLine",
-                        name_en: "arcLine",
-                        version: "9.1.0",
-                        thumbnail: "mb_deckglLayer_arcLayer.png",
-                        fileName: "deckglLayer_arcLayer"
-                    },
-                    {
-                        name: "polygon",
-                        name_en: "polygon",
-                        version: "9.1.0",
-                        thumbnail: "mb_deckglLayer_polygonLayer.png",
-                        fileName: "deckglLayer_polygonLayer"
-                    },
-                    {
-                        name: "honeycomb",
-                        name_en: "honeycomb",
-                        version: "9.1.0",
-                        thumbnail: "mb_deckglLayer_hexagonLayer.png",
-                        fileName: "deckglLayer_hexagonLayer"
-                    },
-                    {
-                        name: "New York Construction",
-                        name_en: "New York Construction",
-                        localIgnore: true,
-                        version: "9.1.0",
-                        thumbnail: "mb_deckgl_nyBuilding.png",
-                        fileName: "deckglLayer_nyBuilding"
-                    },
-                    {
-                        name: "California Earthquakes",
-                        name_en: "California Earthquakes",
-                        version: "9.1.0",
-                        thumbnail: "mb_deckglLayer_scatterPlot.png",
-                        fileName: "deckglLayer_scatterPlot"
-                    },
-                    {
-                        name: "New york city population",
-                        name_en: "New york city population",
-                        version: "9.1.0",
-                        thumbnail: "mb_deckglLayer_nyc_census.png",
-                        fileName: "deckglLayer_nyc_census"
-                    },
-                    {
-                        name: "San Francisco Elevation Contour",
-                        name_en: "San Francisco Elevation Contour",
-                        localIgnore: true,
-                        version: "9.1.0",
-                        thumbnail: "mb_deckglLayer_sfcontour.png",
-                        fileName: "deckglLayer_sfcontour"
-                    },
-                    {
-                        name: "San Francisco Street Tree Map",
-                        name_en: "San Francisco Street Tree Map",
-                        version: "9.1.0",
-                        thumbnail: "mb_deckglLayer_sftrees.png",
-                        fileName: "deckglLayer_sftrees"
-                    },
-                    {
-                        name: "Commute Patterns in the UK",
-                        name_en: "Commute Patterns in the UK",
-                        version: "9.1.0",
-                        localIgnore: true,
-                        thumbnail: "mb_deckglLayer_ukcommute.png",
-                        fileName: "deckglLayer_ukcommute"
-                    }
-                ]
-            },
-            MapV: {
-                name: "MapV",
-                name_en: "MapV",
-                content: [
-                    {
-                        name: "honeycomb",
-                        name_en: "honeycomb",
-                        version: "9.1.0",
-                        thumbnail: "mb_mapVLayer_honeycomb.png",
-                        fileName: "mapvLayerHoneycomb"
-                    },
-                    {
-                        name: "NY taxi car point",
-                        name_en: "NY taxi car point",
-                        version: "9.1.0",
-                        thumbnail: "mb_mapVLayer_point.png",
-                        fileName: "mapvNyTaxi"
-                    },
-                    {
-                        name: "OD",
-                        name_en: "OD",
-                        thumbnail: "mapvCsvcar.png",
-                        fileName: "mapvCsvcar"
-                    },
-                    {
-                        name: "force edge bundling",
-                        name_en: "force edge bundling",
-                        thumbnail: "mapvForceEdgeBuilding.gif",
-                        fileName: "mapvForceEdgeBuilding"
-                    },
-                    {
-                        name: "line density",
-                        name_en: "line density",
-                        thumbnail: "mapvPolylineIntensity.png",
-                        fileName: "mapvPolylineIntensity"
-                    },
-                    {
-                        name: "simple line",
-                        name_en: "simple line",
-                        thumbnail: "mapvPolylineSimple.png",
-                        fileName: "mapvPolylineSimple"
-                    },
-                    {
-                        name: "dynamic trajectory",
-                        name_en: "dynamic trajectory",
-                        thumbnail: "mapvPolylineTime.gif",
-                        fileName: "mapvPolylineTime"
-                    },
-                    {
-                        name: "Migration timing",
-                        name_en: "Migration timing",
-                        thumbnail: "mapvQianxiTime.gif",
-                        fileName: "mapvQianxiTime"
-                    },
-                    {
-                        name: "migration",
-                        name_en: "migration",
-                        thumbnail: "mapvQianxi.gif",
-                        fileName: "mapvQianxi"
-                    },
-                    {
-                        name: "simple polygon",
-                        name_en: "simple polygon",
-                        thumbnail: "mb_mapvLayer_polygon.png",
-                        fileName: "mapvLayerPolyon"
-                    },
-                    {
-                        name: "village of beijing",
-                        name_en: "village of beijing",
-                        thumbnail: "mapvBeijingVillage.png",
-                        fileName: "mapvBeijingVillage"
-                    },
-                    {
-                        name: "Beijing house prices(2018.2)",
-                        name_en: "Beijing house prices(2018.2)",
-                        localIgnore: true,
-                        version: "9.1.0",
-                        thumbnail: "mb_mapvLianjia.png",
-                        fileName: "mapvLinanJiaData"
-                    }
-                ]
-            },
-            threejs: {
-                name: "threejs",
-                name_en: "threejs",
-                content: [
-                    {
-                        name: "buildings",
-                        name_en: "buildings",
-                        version: "9.1.0",
-                        thumbnail: "mb_threejs_buildings.png",
-                        fileName: "threejsLayer_buildings"
-                    },
-                    {
-                        name: "facility(mtl+obj)",
-                        name_en: "facility(mtl+obj)",
-                        version: "9.1.0",
-                        thumbnail: "mb_threejs_facility.png",
-                        fileName: "threejsLayer_facility"
-                    },
-                    {
-                        name: "airplane(gltf)",
-                        name_en: "airplane(gltf)",
-                        version: "9.1.0",
-                        thumbnail: "mb_threejs_airplane.png",
-                        fileName: "threejsLayer_airplane"
-                    },
-                    {
-                        name: "bird",
-                        name_en: "bird",
-                        version: "9.1.0",
-                        thumbnail: "mb_threejs_bird.png",
-                        fileName: "threejsLayer_bird"
-                    }
-                ]
-            },
-            D3: {
-                name: "D3",
-                name_en: "D3",
-                content: [{
-                    name: "unique thematic layer",
-                    name_en: "unique thematic layer",
-                    thumbnail: "l_d3UniqueThemeLayer.png",
-                    fileName: "d3UniqueThemeLayer"
-                }, {
-                    name: "range thematic layer",
-                    name_en: "range thematic layer",
-                    thumbnail: "l_d3RangeThemeLayer.png",
-                    fileName: "d3RangeThemeLayer"
-                }, {
-                        name: "honeycomb layer",
-                    name_en: "honeycomb layer",
-                    thumbnail: "l_d3HexbinLayer.png",
-                    fileName: "d3HexbinLayer"
-                }]
-            }
+            // EChartsGL: {
+            //     name: "EChartsGL",
+            //     name_en: "EChartsGL",
+            //     content: [
+            //         {
+            //             name: "Shanghai building price",
+            //             name_en: "Shanghai building price",
+            //             thumbnail: "echartsGL_ShanghaiBuildingPrice.png",
+            //             fileName: "echartsGL_ShanghaiBuildingPrice"
+            //         },
+            //         {
+            //             name: "flight path",
+            //             name_en: "flight path",
+            //             thumbnail: "echartsGL_flightPath.gif",
+            //             fileName: "echartsGL_flightPath"
+            //         },
+            //         {
+            //             name: "taxi Routes Of CapeTown",
+            //             name_en: "taxi Routes Of CapeTown",
+            //             thumbnail: "echartsGL_taxiRoutesOfCapeTown.gif",
+            //             fileName: "echartsGL_taxiRoutesOfCapeTown"
+            //         },
+            //         {
+            //             name: "colorful buildings",
+            //             name_en: "colorful buildings",
+            //             thumbnail: "echartsGL_colorfulCity.png",
+            //             fileName: "echartsGL_colorfulCity"
+            //         },
+            //         {
+            //             name: "taxi trajectory map Of ChengDu",
+            //             name_en: "taxi trajectory map Of ChengDu",
+            //             thumbnail: "echartsGL_taxiTrajectoryMap.gif",
+            //             fileName: "echartsGL_taxiTrajectoryMap"
+            //         },
+            //         {
+            //             name: "Global wind visualization",
+            //             name_en: "Global wind visualization",
+            //             thumbnail: "echartsGL_GlobalWind.gif",
+            //             fileName: "echartsGL_GlobalWind"
+            //         }
+            //     ]
+            // },
+            // DeckGL: {
+            //     name: "DeckGL",
+            //     name_en: "DeckGL",
+            //     content: [
+            //         {
+            //             name: "path",
+            //             name_en: "path",
+            //             version: "",
+            //             thumbnail: "mb_deckglLayer_pathLayer.png",
+            //             fileName: "deckglLayer_pathLayer"
+            //         },
+            //         {
+            //             name: "arcLine",
+            //             name_en: "arcLine",
+            //             version: "",
+            //             thumbnail: "mb_deckglLayer_arcLayer.png",
+            //             fileName: "deckglLayer_arcLayer"
+            //         },
+            //         {
+            //             name: "polygon",
+            //             name_en: "polygon",
+            //             version: "",
+            //             thumbnail: "mb_deckglLayer_polygonLayer.png",
+            //             fileName: "deckglLayer_polygonLayer"
+            //         },
+            //         {
+            //             name: "honeycomb",
+            //             name_en: "honeycomb",
+            //             version: "",
+            //             thumbnail: "mb_deckglLayer_hexagonLayer.png",
+            //             fileName: "deckglLayer_hexagonLayer"
+            //         },
+            //         {
+            //             name: "New York Construction",
+            //             name_en: "New York Construction",
+            //             localIgnore: true,
+            //             version: "",
+            //             thumbnail: "mb_deckgl_nyBuilding.png",
+            //             fileName: "deckglLayer_nyBuilding"
+            //         },
+            //         {
+            //             name: "California Earthquakes",
+            //             name_en: "California Earthquakes",
+            //             version: "",
+            //             thumbnail: "mb_deckglLayer_scatterPlot.png",
+            //             fileName: "deckglLayer_scatterPlot"
+            //         },
+            //         {
+            //             name: "New york city population",
+            //             name_en: "New york city population",
+            //             version: "",
+            //             thumbnail: "mb_deckglLayer_nyc_census.png",
+            //             fileName: "deckglLayer_nyc_census"
+            //         },
+            //         {
+            //             name: "San Francisco Elevation Contour",
+            //             name_en: "San Francisco Elevation Contour",
+            //             localIgnore: true,
+            //             version: "",
+            //             thumbnail: "mb_deckglLayer_sfcontour.png",
+            //             fileName: "deckglLayer_sfcontour"
+            //         },
+            //         {
+            //             name: "San Francisco Street Tree Map",
+            //             name_en: "San Francisco Street Tree Map",
+            //             version: "",
+            //             thumbnail: "mb_deckglLayer_sftrees.png",
+            //             fileName: "deckglLayer_sftrees"
+            //         },
+            //         {
+            //             name: "Commute Patterns in the UK",
+            //             name_en: "Commute Patterns in the UK",
+            //             version: "",
+            //             localIgnore: true,
+            //             thumbnail: "mb_deckglLayer_ukcommute.png",
+            //             fileName: "deckglLayer_ukcommute"
+            //         }
+            //     ]
+            // },
+            // MapV: {
+            //     name: "MapV",
+            //     name_en: "MapV",
+            //     content: [
+            //         {
+            //             name: "honeycomb",
+            //             name_en: "honeycomb",
+            //             version: "",
+            //             thumbnail: "mb_mapVLayer_honeycomb.png",
+            //             fileName: "mapvLayerHoneycomb"
+            //         },
+            //         {
+            //             name: "NY taxi car point",
+            //             name_en: "NY taxi car point",
+            //             version: "",
+            //             thumbnail: "mb_mapVLayer_point.png",
+            //             fileName: "mapvNyTaxi"
+            //         },
+            //         {
+            //             name: "OD",
+            //             name_en: "OD",
+            //             thumbnail: "mapvCsvcar.png",
+            //             fileName: "mapvCsvcar"
+            //         },
+            //         {
+            //             name: "force edge bundling",
+            //             name_en: "force edge bundling",
+            //             thumbnail: "mapvForceEdgeBuilding.gif",
+            //             fileName: "mapvForceEdgeBuilding"
+            //         },
+            //         {
+            //             name: "line density",
+            //             name_en: "line density",
+            //             thumbnail: "mapvPolylineIntensity.png",
+            //             fileName: "mapvPolylineIntensity"
+            //         },
+            //         {
+            //             name: "simple line",
+            //             name_en: "simple line",
+            //             thumbnail: "mapvPolylineSimple.png",
+            //             fileName: "mapvPolylineSimple"
+            //         },
+            //         {
+            //             name: "dynamic trajectory",
+            //             name_en: "dynamic trajectory",
+            //             thumbnail: "mapvPolylineTime.gif",
+            //             fileName: "mapvPolylineTime"
+            //         },
+            //         {
+            //             name: "Migration timing",
+            //             name_en: "Migration timing",
+            //             thumbnail: "mapvQianxiTime.gif",
+            //             fileName: "mapvQianxiTime"
+            //         },
+            //         {
+            //             name: "migration",
+            //             name_en: "migration",
+            //             thumbnail: "mapvQianxi.gif",
+            //             fileName: "mapvQianxi"
+            //         },
+            //         {
+            //             name: "simple polygon",
+            //             name_en: "simple polygon",
+            //             thumbnail: "mb_mapvLayer_polygon.png",
+            //             fileName: "mapvLayerPolyon"
+            //         },
+            //         {
+            //             name: "village of beijing",
+            //             name_en: "village of beijing",
+            //             thumbnail: "mapvBeijingVillage.png",
+            //             fileName: "mapvBeijingVillage"
+            //         },
+            //         {
+            //             name: "Beijing house prices(2018.2)",
+            //             name_en: "Beijing house prices(2018.2)",
+            //             localIgnore: true,
+            //             version: "",
+            //             thumbnail: "mb_mapvLianjia.png",
+            //             fileName: "mapvLinanJiaData"
+            //         }
+            //     ]
+            // },
+            // threejs: {
+            //     name: "threejs",
+            //     name_en: "threejs",
+            //     content: [
+            //         {
+            //             name: "buildings",
+            //             name_en: "buildings",
+            //             version: "",
+            //             thumbnail: "mb_threejs_buildings.png",
+            //             fileName: "threejsLayer_buildings"
+            //         },
+            //         {
+            //             name: "facility(mtl+obj)",
+            //             name_en: "facility(mtl+obj)",
+            //             version: "",
+            //             thumbnail: "mb_threejs_facility.png",
+            //             fileName: "threejsLayer_facility"
+            //         },
+            //         {
+            //             name: "airplane(gltf)",
+            //             name_en: "airplane(gltf)",
+            //             version: "",
+            //             thumbnail: "mb_threejs_airplane.png",
+            //             fileName: "threejsLayer_airplane"
+            //         },
+            //         {
+            //             name: "bird",
+            //             name_en: "bird",
+            //             version: "",
+            //             thumbnail: "mb_threejs_bird.png",
+            //             fileName: "threejsLayer_bird"
+            //         }
+            //     ]
+            // },
+            // D3: {
+            //     name: "D3",
+            //     name_en: "D3",
+            //     content: [{
+            //         name: "unique thematic layer",
+            //         name_en: "unique thematic layer",
+            //         thumbnail: "l_d3UniqueThemeLayer.png",
+            //         fileName: "d3UniqueThemeLayer"
+            //     }, {
+            //         name: "range thematic layer",
+            //         name_en: "range thematic layer",
+            //         thumbnail: "l_d3RangeThemeLayer.png",
+            //         fileName: "d3RangeThemeLayer"
+            //     }, {
+            //             name: "honeycomb layer",
+            //         name_en: "honeycomb layer",
+            //         thumbnail: "l_d3HexbinLayer.png",
+            //         fileName: "d3HexbinLayer"
+            //     }]
+            // }
         }
     },
     clientspatial: {
@@ -577,12 +577,12 @@ var exampleConfig = {
                 name: "turfjs",
                 name_en: "turfjs",
                 content: [
-                    {
-                        name: "Buffer",
-                        name_en: "Buffer",
-                        thumbnail: "mvtVectorTile.png",
-                        fileName: "mvtVectorTile"
-                    }
+                    // {
+                    //     name: "Buffer",
+                    //     name_en: "Buffer",
+                    //     thumbnail: "mvtVectorTile.png",
+                    //     fileName: "mvtVectorTile"
+                    // }
                 ]
             }
         }
