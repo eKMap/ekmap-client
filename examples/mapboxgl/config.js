@@ -139,18 +139,18 @@ var exampleConfig = {
                 version: "9.1.0",
                 content: [
                     
-                    {
-                        name: "Admin map",
-                        name_en: "Admin map",
-                        thumbnail: "tiledMap_adminmap.png",
-                        fileName: "tiledMap_adminmap"
-                    },
-                    {
-                        name: "Road map",
-                        name_en: "Road map",
-                        thumbnail: "tiledMap_roadMap.png",
-                        fileName: "tiledMap_roadmap"
-                    },
+                    // {
+                    //     name: "Admin map",
+                    //     name_en: "Admin map",
+                    //     thumbnail: "tiledMap_adminmap.png",
+                    //     fileName: "tiledMap_adminmap"
+                    // },
+                    // {
+                    //     name: "Road map",
+                    //     name_en: "Road map",
+                    //     thumbnail: "tiledMap_roadMap.png",
+                    //     fileName: "tiledMap_roadmap"
+                    // },
                     {
                         name: "OSM Standard",
                         name_en: "OSM Standard",
@@ -158,19 +158,6 @@ var exampleConfig = {
                         fileName: "tiledMap_osmMap"
                     }
 
-
-                ]
-            },
-            VectorTileLayer: {
-                name: "Vector tile",
-                name_en: "Vector tile",
-                content: [
-                    {
-                        name: "Vector Tile",
-                        name_en: "Vector Tile",
-                        thumbnail: "vectorTile_Map.png",
-                        fileName: "vectorTile_Map"
-                    }
                 ]
             },
             cluster: {
