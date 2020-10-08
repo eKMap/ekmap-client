@@ -28,9 +28,9 @@ export class FeatureService extends ServiceBase {
         }
     }
 
-    nearby(lat, long, callback, context) {
+    nearby(lngLat, callback, context) {
         var params = {};
-        params.geometry = [long, lat];
+        params.geometry = [lngLat.lng, lngLat.lat];
         params.geometryType = 'esriGeometryPoint';
         params.spatialRel = 'esriSpatialRelIntersects';
         params.units = 'esriSRUnit_Kilometer';
@@ -71,39 +71,28 @@ export class FeatureService extends ServiceBase {
     }
 
     /**
-    * @function mapboxgl.ekmap.FeatureService.prototype.addFeature
-    * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-    * @param {Object} params Options
-    * @param {mapboxgl.LngLat} params.lngLat
-    * @param {string} params.color The color to use for the default marker if options.element is not provided. The default is light blue ('#3FB1CE').
-    * @param {Function} callback
-    * @param {Object} context
-    * @returns {this}
-    */
+     * @function mapboxgl.ekmap.FeatureService.prototype.addFeature
+     * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
+     * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
+     * @param {Function} callback
+     * @param {Object} context
+     * @returns {this}
+     */
     addFeature(params, callback, context) {
         this.addFeatures(params, callback, context);
     }
 
     /**
-    * @private
-    * @function mapboxgl.ekmap.FeatureService.prototype.addFeatures
-    * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-    * @param {Object} params Options
-    * @param {mapboxgl.LngLat} params.lngLat
-    * @param {string} params.color The color to use for the default marker if options.element is not provided. The default is light blue ('#3FB1CE')
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
-    */
+     * @private
+     * @function mapboxgl.ekmap.FeatureService.prototype.addFeatures
+     * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
+     * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
+     * @param {Function} callback
+     * @param {Object} context
+     * @returns {this}
+     */
     addFeatures(params, callback, context) {
-        var geojson = {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [params.lngLat.lng, params.lngLat.lat]
-            }
-        }
-        var fea = Parse.geojsonToArcGIS(geojson);
+        var fea = Parse.geojsonToArcGIS(params);
         var data = [];
         data.push(fea)
         var dataPost = JSON.stringify(data)
@@ -202,6 +191,7 @@ export class FeatureService extends ServiceBase {
         }
         param.outFields = '*';
         param.f = 'geojson';
+        param.returnGeometry = true;
         var service = new FeatureService(this.options);
         return service.request('query', param, function (error, response) {
             callback.call(context, error, response, response);
@@ -218,6 +208,7 @@ export class FeatureService extends ServiceBase {
         var param = {};
         var data = Util._setGeometry(lngLatBounds);
         param.f = 'geojson';
+        param.outFields = '*';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
         var service = new FeatureService(this.options);
@@ -235,6 +226,7 @@ export class FeatureService extends ServiceBase {
     queryByGeometry(params, callback, context) {
         var param = {};
         param.f = 'geojson';
+        param.outFields = '*';
         if (params) {
             var geom = params;
             if (params.type == 'Point') {
@@ -274,12 +266,16 @@ export class FeatureService extends ServiceBase {
         var param = {}
         if (params.adds) {
             var dataAdd = Parse.geojsonToArcGIS(params.adds);
-            param.adds = JSON.stringify(dataAdd)
+            var arr1 = [];
+            arr1.push(dataAdd);
+            param.adds = JSON.stringify(arr1)
         } else
             params.adds = false;
         if (params.updates) {
             var dataUpdate = Parse.geojsonToArcGIS(params.updates);
-            param.updates = JSON.stringify(dataUpdate)
+            var arr2 = [];
+            arr2.push(dataUpdate);
+            param.updates = JSON.stringify(arr2)
         } else
             params.updates = false;
         if (params.deletes)

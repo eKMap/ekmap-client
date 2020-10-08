@@ -7,7 +7,7 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
 
-    <title>Bound Query</title>
+    <title>Identify</title>
     <style>
         .map {
             width: 100%;
@@ -85,19 +85,19 @@
                 .at(e.lngLat)
                 .run(function (obj) {
                     if (obj.length > 0) {
-                        var soilDescriptionLine = 'Đường sắt: ';
-                        var soilDescriptionPoint = 'Ga đường sắt: ';
+                        var soilDescriptionLine = 'Địa phận tỉnh: ';
+                        var soilDescriptionPoint = 'Quốc lộ: ';
                         obj.forEach(feature => {
-                            if (feature.layerName == 'Đường sắt') {
-                                soilDescriptionLine += feature.attributes.Ten_duong + ','
+                            if (feature.layerName == 'DiaPhanTinh') {
+                                soilDescriptionLine += feature.attributes.NAME + ','
                             }
-                            if (feature.layerName == 'Ga đường sắt')
-                                soilDescriptionPoint += feature.attributes.Ten_ga + ','
+                            if (feature.layerName == 'Quoc_lo')
+                                soilDescriptionPoint += feature.attributes.TenCu + ','
                         })
-                        if (soilDescriptionLine == 'Đường sắt: ')
-                            soilDescriptionLine = 'Đường sắt: không có đường nào';
-                        if (soilDescriptionPoint == 'Ga đường sắt: ')
-                            soilDescriptionPoint = 'Ga đường sắt: không có ga nào';
+                        if (soilDescriptionLine == 'Địa phận tỉnh: ')
+                            soilDescriptionLine = 'Địa phận tỉnh: không có đường địa phận tỉnh nào';
+                        if (soilDescriptionPoint == 'Quốc lộ: ')
+                            soilDescriptionPoint = 'Quốc lộ: không có quốc lộ nào';
                         pane.innerHTML = soilDescriptionLine + "<br />" + soilDescriptionPoint;
                     } else {
                         pane.innerHTML = 'No features identified.';

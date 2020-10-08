@@ -1,0 +1,154 @@
+
+<!--********************************************************************
+* Nguồn: https://earthquake.usgs.gov/earthquakes
+*********************************************************************-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="../../examples/js/common.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <title>Marker Cluster</title>
+    <style type="text/css">
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var map = new mapboxgl.Map({
+            container: "divMapId",
+            style: {
+                version: 8,
+                sources: {
+                    "raster-tiles": {
+                        type: "raster",
+                        tiles: urlOSMStandard,
+                        tileSize: 256,
+                    },
+                },
+                layers: [
+                    {
+                        id: "simple-tiles",
+                        type: "raster",
+                        source: "raster-tiles",
+                        minzoom: 0,
+                        maxzoom: 9,
+                    },
+                ],
+            },
+            center: [58.117655641467195, 12.140828304833803],
+            zoom: 2
+        });
+
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+
+        map.on('load', function () {
+            $.get("../data/earthquake.json", function (response) {
+                var geojson = response;
+                map.addSource("earthquakes", {
+                    type: "geojson",
+                    data: geojson,
+                    cluster: true,
+                    clusterMaxZoom: 14,
+                    clusterRadius: 100
+                });
+
+                map.addLayer({
+                    id: "clusters",
+                    type: "circle",
+                    source: "earthquakes",
+                    filter: ["has", "point_count"],
+                    paint: {
+                        "circle-color": [
+                            "step",
+                            ["get", "point_count"],
+                            "#51bbd6",
+                            100,
+                            "#f1f075",
+                            750,
+                            "#f28cb1"
+                        ],
+                        "circle-radius": [
+                            "step",
+                            ["get", "point_count"],
+                            20,
+                            100,
+                            30,
+                            750,
+                            40
+                        ]
+                    }
+                });
+
+                map.addLayer({
+                    id: "cluster-count",
+                    type: "symbol",
+                    source: "earthquakes",
+                    filter: ["has", "point_count"],
+                });
+                map.addLayer({
+                    id: "unclustered-point",
+                    type: "circle",
+                    source: "earthquakes",
+                    filter: ["!", ["has", "point_count"]],
+                    paint: {
+                        "circle-color": "#11b4da",
+                        "circle-radius": 4,
+                        "circle-stroke-width": 1,
+                        "circle-stroke-color": "#fff"
+                    }
+                });
+
+                map.on('click', 'clusters', function (e) {
+                    var features = map.queryRenderedFeatures(e.point, {
+                        layers: ['clusters']
+                    });
+                    var clusterId = features[0].properties.cluster_id;
+                    map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function (
+                        err, zoom) {
+                        if (err)
+                            return;
+                        map.easeTo({
+                            center: features[0].geometry.coordinates,
+                            zoom: zoom
+                        });
+                    });
+                });
+
+                map.on('mouseenter', 'clusters', function () {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+                map.on('mouseleave', 'clusters', function () {
+                    map.getCanvas().style.cursor = '';
+                });
+            })
+        });
+    </script>
+</body>
+
+</html>

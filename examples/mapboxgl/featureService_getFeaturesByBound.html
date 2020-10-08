@@ -79,24 +79,18 @@
             });
 
             var lngLatBounds = new mapboxgl.LngLatBounds([106.2838283376874, 21.281957265184587], [104.49305685331223, 20.079412404984694])
-
-            tiledMap.queryByBound(lngLatBounds, function (serviceResult) {
-                map.addLayer({
-                    "id": "points",
-                    "type": "circle",
-                    "paint": {
-                        "circle-radius": 10,
-                        "circle-color": "red",
-                    },
-                    "source": {
-                        'type': 'geojson',
-                        'data': {
-                            'type': 'FeatureCollection',
-                            'features': serviceResult
-                        }
-                    }
-                });
-            })
+            if(tiledMap){
+                tiledMap.queryByBound(lngLatBounds, function (serviceResult) {
+                    var filter = serviceResult.reduce(
+                        function (memo, feature) {
+                            memo.push(feature.properties.OBJECTID);
+                            return memo;
+                        },
+                        ['in', 'OBJECTID']
+                    );
+                    map.setFilter('point-selected', filter);
+                })
+            }
         })
     </script>
 </body>

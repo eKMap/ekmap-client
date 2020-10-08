@@ -45,29 +45,52 @@ export class FeatureLayer extends mapboxgl.Evented {
     addTo(map) {
         this.map = map;
         var params = {
-            where: 'CHAR_LENGTH(OBJECTID) > 0'
+            where: '1=1'
         };
         this.service.query(params, function (result) {
             if (result[0].geometry.type == "Point") {
+                map.addSource('point', {
+                    "type": "geojson",
+                    "data": {
+                        'type': 'FeatureCollection',
+                        'features': result
+                    }
+                });
+
                 map.addLayer({
-                    "id": "Point",
+                    "id": "point",
                     "type": "circle",
                     "paint": {
                         "circle-radius": 10,
                         "circle-color": "red",
                     },
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            'type': 'FeatureCollection',
-                            'features': result
-                        }
-                    }
+                    "source": 'point'
+                });
+
+                map.addLayer({
+                    "id": "point-selected",
+                    "type": "circle",
+                    "paint": {
+                        "circle-radius": 10,
+                        "circle-color": "red",
+                        "circle-stroke-color": '#00ffff',
+                        "circle-stroke-width": 3,
+                    },
+                    'filter': ['in', 'OBJECTID', ''],
+                    "source": 'point'
                 });
             }
             if (result[0].geometry.type == "LineString") {
+                map.addSource('line', {
+                    "type": "geojson",
+                    "data": {
+                        'type': 'FeatureCollection',
+                        'features': result
+                    }
+                });
+
                 map.addLayer({
-                    'id': "Line",
+                    'id': "line",
                     'type': 'line',
                     'layout': {
                         'line-join': 'round',
@@ -77,18 +100,39 @@ export class FeatureLayer extends mapboxgl.Evented {
                         'line-color': '#000',
                         'line-width': 5
                     },
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            'type': 'FeatureCollection',
-                            'features': result
-                        }
-                    }
+                    "source": "line"
+                });
+
+                map.addLayer({
+                    'id': "line-selected",
+                    'type': 'line',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': 'blue',
+                        'line-width': 5
+                    },
+                    'filter': ['in', 'OBJECTID', ''],
+                    "source": "line"
                 });
             }
             if (result[0].geometry.type == "LineString") {
+                map.addSource('area', {
+                    "type": "geojson",
+                    lineMetrics: true,
+                    'data': {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'LineString',
+                            'coordinates': result
+                        }
+                    }
+                });
+
                 map.addLayer({
-                    'id': 'Area',
+                    'id': 'area',
                     'type': 'line',
                     'layout': {
                         'line-join': 'round',
@@ -115,17 +159,22 @@ export class FeatureLayer extends mapboxgl.Evented {
                             'red'
                         ],
                     },
-                    source: {
-                        "type": "geojson",
-                        lineMetrics: true,
-                        'data': {
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'LineString',
-                                'coordinates': result
-                            }
-                        }
-                    }
+                    'source': 'area'
+                })
+
+                map.addLayer({
+                    'id': 'area-selected',
+                    'type': 'line',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': 'white',
+                        'line-width': 5
+                    },
+                    'filter': ['in', 'OBJECTID', ''],
+                    "source": 'area'
                 })
             }
         })
@@ -164,34 +213,32 @@ export class FeatureLayer extends mapboxgl.Evented {
     }
 
     /**
-   * @function mapboxgl.ekmap.FeatureLayer.prototype.addFeature
-   * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-   * @param {Object} params Options
-   * @param {mapboxgl.LngLat} params.lngLat
-   * @param {string} params.color The color to use for the default marker if options.element is not provided. The default is light blue ('#3FB1CE').
-   * @param {Function} callback
-   * @param {Object} context
-   * @returns {this}
-   */
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.addFeature
+     * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
+     * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
+     * @param {Function} callback
+     * @param {Object} context
+     * @returns {this}
+     */
     addFeature(params, callback, context) {
+        var coor = params.geometry.coordinates;
+        console.log(params.color)
         var marker = new mapboxgl.Marker({
             'color': params.color ? params.color : ''
         })
-        .setLngLat([params.lngLat.lng,params.lngLat.lat])
-        .addTo(this.map);
+            .setLngLat(coor)
+            .addTo(this.map);
         this.addFeatures(params, callback, context);
     }
 
     /**
-    * @private
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.addFeatures
-    * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-    * @param {Object} params Options
-    * @param {mapboxgl.LngLat} params.LngLat 
-    * @param {string} params.color The color to use for the default marker if options.element is not provided. The default is light blue ('#3FB1CE').
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
+     * @private
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.addFeatures
+     * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
+     * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
+     * @param {Function} callback
+     * @param {Object} context
+     * @returns {this}
     */
     addFeatures(params, callback, context) {
         return this.service.addFeatures(params, callback, context);
@@ -223,7 +270,7 @@ export class FeatureLayer extends mapboxgl.Evented {
 
     /**
     * @function mapboxgl.ekmap.FeatureLayer.prototype.deleteFeature
-    * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
+    * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then delete.
     * @param {string} id Id of feature.
     * @param {Function} callback The callback of result data returned by the server side.
     * @param {Object} context
@@ -278,24 +325,47 @@ export class FeatureLayer extends mapboxgl.Evented {
         var me = this;
         var data = {};
         var params = {
-            where: 'CHAR_LENGTH(OBJECTID) > 0'
+            where: '1=1'
         };
         this.service.query(params, function (result) {
             data = {
                 'type': 'FeatureCollection',
                 'features': result
+            };
+            var filter = ["in", "OBJECTID"];
+            if (me.map.getLayer('point')) {
+                me.map.getSource('point').setData(data);
+                map.setFilter('point-selected', filter);
             }
-            if (me.map.getLayer('Point')) {
-                me.map.getSource('Point').setData(data);
+            if (me.map.getLayer('line')) {
+                map.setFilter('line-selected', filter);
+                me.map.getSource('line').setData(data);
             }
-            if (me.map.getLayer('Line'))
-                me.map.getSource('Line').setData(data);
-            if (me.map.getLayer('Area'))
-                me.map.getSource('Area').setData(data);
+            if (me.map.getLayer('area')) {
+                me.map.getSource('area').setData(data);
+                map.setFilter('area-selected', filter);
+            }
         });
     }
 
-    applyEdits(params, callback,context) {
+     /**
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.applyEdits
+     * @description This operation adds, updates, and deletes features to the associated feature layer. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then applyEdits.
+     * @param {Object} params Options.
+     * @param {GeoJSONObject} params.adds GeoJSON of feature add (To change point color, set 'color' for options GeoJSON).
+     * @param {GeoJSONObject} params.updates GeoJSON of feature update.
+     * @param {Interger} params.deletes Id of feature delete.
+     * @param {RequestCallback} callback
+     */
+    applyEdits(params, callback, context) {
+        if (params.adds) {
+            var coor = params.adds.geometry.coordinates;
+            var marker = new mapboxgl.Marker({
+                'color': params.adds.color ? params.adds.color : ''
+            })
+                .setLngLat(coor)
+                .addTo(this.map);
+        }
         return this.service.applyEdits(params, callback, context);
     }
 }

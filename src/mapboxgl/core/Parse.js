@@ -126,7 +126,7 @@ export class Parse {
             case 'FeatureCollection':
                 result = [];
                 for (i = 0; i < geojson.features.length; i++) {
-                    result.push(geojsonToArcGIS(geojson.features[i], idAttribute));
+                    result.push(this.geojsonToArcGIS(geojson.features[i], idAttribute));
                 }
                 break;
             case 'GeometryCollection':

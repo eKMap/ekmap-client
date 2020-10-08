@@ -112,15 +112,21 @@ function guid12() {
 }
 
 
-var tokenKey = "";
+//var tokenKey = "";
+var tokenKey = "1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x";
+
 var urlOSMStandard = [
     "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
     "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
     "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
 ]
 
-var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
-var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
+//var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
+var urlFeatureLayer = 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsfeature/35/FeatureServer/479'
 
-var urlMapService = 'https://ekmapserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
+
+//var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
+var urlMapLayer = 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer/478'
+
+var urlMapService = 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
 

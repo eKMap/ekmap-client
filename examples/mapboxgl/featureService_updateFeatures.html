@@ -70,43 +70,58 @@
             },
             zoom: 7
         });
+        var featureLayer;
+        var idUpdate;
         map.on('load', function () {
-            var featureLayer = new mapboxgl.ekmap.FeatureLayer({
+            featureLayer = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
                 token: tokenKey
             }).addTo(map);
-
-            var idUpdate;
-            featureLayer.on('click', function (obj) {
-                document.getElementById("selectedFeatures").innerHTML = "Bạn hãy kích vào feature cần update.<br>Sau đó chọn điểm bạn cẩn di chuyển đến.";
-                if (!obj.type) 
-                    idUpdate = obj.objectIds[0];
-                else {
-                    if (idUpdate) {
-                        var geojson = {
-                            "type": "Feature",
-                            "geometry": {
-                                "type": "Point",
-                                "coordinates": [obj.lngLat.lng, obj.lngLat.lat]
-                            },
-                            "properties": {
-                                'OBJECTID': idUpdate
-                            } 
-                        };
-                        widgets.loader.showLoader("data loading...");
-                        featureLayer.updateFeature(geojson, function (e) {
-                            alert('update thành công!');
-                            document.getElementById("selectedFeatures").innerHTML = "Nhấp chuột điểm trên bản đồ để sửa.";
-                            featureLayer.refresh();
-                            idUpdate = null;
-                            widgets.loader.removeLoader();
-                        });
-                    } else {
-                        alert("Hãy chọn vào điểm cần update");
-                    }
-                }
-            })
         })
+        map.on('click', function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['point']
+            });
+            console.log(features)
+            var filter = features.reduce(
+                function (memo, feature) {
+                    memo.push(feature.properties.OBJECTID);
+                    return memo;
+                },
+                ['in', 'OBJECTID']
+            );
+            if (features.length > 0) {
+                document.getElementById("selectedFeatures").innerHTML = "Bạn hãy kích vào feature cần update.<br>Sau đó chọn điểm bạn cẩn di chuyển đến.";
+                idUpdate = features[0].id;
+                map.setFilter('point-selected', filter);
+            } else {
+                if (idUpdate) {
+                    var geojson = {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [e.lngLat.lng, e.lngLat.lat]
+                        },
+                        "properties": {
+                            'OBJECTID': idUpdate
+                        }
+                    };
+                    widgets.loader.showLoader("Dữ liệu đang cập nhật ...");
+                    featureLayer.updateFeature(geojson, function (e) {
+                        alert('Cập nhật thành công!');
+                        document.getElementById("selectedFeatures").innerHTML = "Nhấp vào điểm trên bản đồ để cập nhật vị trí.";
+                        featureLayer.refresh();
+                        idUpdate = null;
+                        widgets.loader.removeLoader();
+                    });
+                } else 
+                    map.setFilter('point-selected', filter);
+            }
+        });
     </script>
 </body>
 </html>
