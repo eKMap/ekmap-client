@@ -121,12 +121,12 @@ var urlOSMStandard = [
     "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
 ]
 
+var urlServicesHost = "https://viegisserver.ekgis.vn";
 //var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
-var urlFeatureLayer = 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsfeature/35/FeatureServer/479'
+var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/ogsfeature/35/FeatureServer/478'
 
 
 //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
-var urlMapLayer = 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer/478'
-
-var urlMapService = 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
+var urlMapLayer = urlServicesHost + '/gserver/rest/services/ogsmap/35/MapServer/478'
+var urlMapService = urlServicesHost + '/gserver/rest/services/ogsmap/35/MapServer'
 

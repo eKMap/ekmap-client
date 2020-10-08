@@ -47,6 +47,8 @@ export class FeatureLayer extends mapboxgl.Evented {
         var params = {
             where: '1=1'
         };
+        var me = this;
+        me.fire('loadstart', me);
         this.service.query(params, function (result) {
             if (result[0].geometry.type == "Point") {
                 map.addSource('point', {
@@ -177,6 +179,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                     "source": 'area'
                 })
             }
+            me.fire('loadend', me);
         })
         return this;
     }
@@ -300,22 +303,22 @@ export class FeatureLayer extends mapboxgl.Evented {
     * @param {Function} callback The callback of result data returned by the server side.
     * @returns {} Unique key for the listener. If called with an array of event types as the first argument, the return will be an array of keys.
     */
-    on(event, callback) {
-        var me = this;
-        if (event == 'click') {
-            this.map.on('click', function (e) {
-                var lngLat = e.lngLat;
-                var featureService = new mapboxgl.ekmap.FeatureService(me.options);
-                featureService.nearby(lngLat.lat, lngLat.lng, function (obj) {
-                    if (obj.objectIds)
-                        callback(obj);
-                    else
-                        callback(e)
-                })
+    // on(event, callback) {
+    //     var me = this;
+    //     if (event == 'click') {
+    //         this.map.on('click', function (e) {
+    //             var lngLat = e.lngLat;
+    //             var featureService = new mapboxgl.ekmap.FeatureService(me.options);
+    //             featureService.nearby(lngLat.lat, lngLat.lng, function (obj) {
+    //                 if (obj.objectIds)
+    //                     callback(obj);
+    //                 else
+    //                     callback(e)
+    //             })
 
-            })
-        }
-    }
+    //         })
+    //     }
+    // }
 
     /**
     * @function mapboxgl.ekmap.FeatureLayer.prototype.refresh

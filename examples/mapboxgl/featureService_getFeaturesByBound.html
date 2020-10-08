@@ -56,8 +56,23 @@
             var tiledMap = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
                 token: tokenKey
-            }).addTo(map);
+            }).addTo(map)
 
+            tiledMap.on('loadend', function(){
+                var lngLatBounds = new mapboxgl.LngLatBounds([106.2838283376874, 21.281957265184587], [104.49305685331223, 20.079412404984694])
+                if(tiledMap){
+                    tiledMap.queryByBound(lngLatBounds, function (serviceResult) {
+                        var filter = serviceResult.reduce(
+                            function (memo, feature) {
+                                memo.push(feature.properties.OBJECTID);
+                                return memo;
+                            },
+                            ['in', 'OBJECTID']
+                        );
+                        map.setFilter('point-selected', filter);
+                    })
+                }
+            })
             map.addLayer({
                 'id': 'polygonLayer',
                 'type': 'fill',
@@ -78,19 +93,7 @@
                 }
             });
 
-            var lngLatBounds = new mapboxgl.LngLatBounds([106.2838283376874, 21.281957265184587], [104.49305685331223, 20.079412404984694])
-            if(tiledMap){
-                tiledMap.queryByBound(lngLatBounds, function (serviceResult) {
-                    var filter = serviceResult.reduce(
-                        function (memo, feature) {
-                            memo.push(feature.properties.OBJECTID);
-                            return memo;
-                        },
-                        ['in', 'OBJECTID']
-                    );
-                    map.setFilter('point-selected', filter);
-                })
-            }
+            
         })
     </script>
 </body>
