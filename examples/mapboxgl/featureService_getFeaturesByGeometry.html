@@ -80,23 +80,18 @@
                 }
             });
 
-            tiledMap.queryByGeometry(geometry, function (serviceResult) {
-                map.addLayer({
-                    "id": "points",
-                    "type": "circle",
-                    "paint": {
-                        "circle-radius": 10,
-                        "circle-color": "red",
-                    },
-                    "source": {
-                        'type': 'geojson',
-                        'data': {
-                            'type': 'FeatureCollection',
-                            'features': serviceResult
-                        }
-                    }
+            if(tiledMap){
+                tiledMap.queryByGeometry(geometry, function (serviceResult) {
+                    var filter = serviceResult.reduce(
+                        function (memo, feature) {
+                            memo.push(feature.properties.OBJECTID);
+                            return memo;
+                        },
+                        ['in', 'OBJECTID']
+                    );
+                    map.setFilter('line-selected', filter);
                 });
-            });
+            }  
         })
     </script>
 </body>

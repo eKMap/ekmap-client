@@ -45,7 +45,7 @@ export class FeatureLayer extends mapboxgl.Evented {
     addTo(map) {
         this.map = map;
         var params = {
-            where: 'CHAR_LENGTH(OBJECTID) > 0'
+            where: '1=1'
         };
         this.service.query(params, function (result) {
             if (result[0].geometry.type == "Point") {
@@ -159,7 +159,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                             'red'
                         ],
                     },
-                    source: 'area'
+                    'source': 'area'
                 })
 
                 map.addLayer({
@@ -173,7 +173,8 @@ export class FeatureLayer extends mapboxgl.Evented {
                         'line-color': 'white',
                         'line-width': 5
                     },
-                    source: 'area'
+                    'filter': ['in', 'OBJECTID', ''],
+                    "source": 'area'
                 })
             }
         })
@@ -324,7 +325,7 @@ export class FeatureLayer extends mapboxgl.Evented {
         var me = this;
         var data = {};
         var params = {
-            where: 'CHAR_LENGTH(OBJECTID) > 0'
+            where: '1=1'
         };
         this.service.query(params, function (result) {
             data = {

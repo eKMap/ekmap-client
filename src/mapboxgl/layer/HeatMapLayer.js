@@ -1,5 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 import '../core/Base';
+import { Parse } from '../core/Parse';
+import { Util } from '../core/Util';
 
 /**
  * @class mapboxgl.ekmap.HeatMapLayer
@@ -9,14 +11,94 @@ import '../core/Base';
 export class HeatMapLayer extends mapboxgl.Evented {
 
     constructor(name, options) {
-        super(name, options);
+        super();
+        
+        var _options = options ? options : {};
+
+         /**
+         * @member {string} mapboxgl.ekmap.HeatMapLayer.prototype.name
+         * @description Name of source.
+         */
+        this.source = name;
+
+         /**
+         * @member {string} mapboxgl.ekmap.HeatMapLayer.prototype.id
+         * @description Id of layer.
+         */
+        this.id = _options.id ? _options.id : "heatmap";
+        
+        /**
+         * @member {mapboxgl.Map} mapboxgl.ekmap.HeatMapLayer.prototype.map
+         * @description 热力图图层 map。
+         */
+        this.map = _options.map ? _options.map : null;
+
+         /**
+         * @member {string} mapboxgl.ekmap.HeatMapLayer.prototype.type
+         * @description 热力图图层 type.
+         */
+        this.type = 'heatmap';
+
+         /**
+         * @member {Object} mapboxgl.ekmap.HeatMapLayer.prototype.paint
+         * @description 热力图图层 Object.
+         * @private
+         */
+        this.paint = {
+            "heatmap-weight": 1,
+            "heatmap-intensity": 2,
+            "heatmap-color": [
+                "interpolate",
+                ["linear"],
+                ["heatmap-density"],
+                0,
+                "rgba(33,102,172,0)",
+                0.2,
+                "rgb(103,169,207)",
+                0.4,
+                "rgb(209,229,240)",
+                0.6,
+                "rgb(253,219,199)",
+                0.8,
+                "rgb(239,138,98)",
+                1,
+                "rgb(178,24,43)",
+            ],
+            "heatmap-radius": _options.radius ? _options.radius : 50,
+        };
     }
 
     /**
-     * @function mapboxgl.ekmap.HeatMapLayer.prototype.onAdd
-     * @description on Add
+     * @function mapboxgl.ekmap.HeatMapLayer.prototype.addFeatures
+     * @description 添加热点信息。
+     * @param {GeoJSONObject} features - 待添加的要素数组。
+     *
+     * @example
+     * var geojson = {
+     *      "type": "FeatureCollection",
+     *      "features": [
+     *          {
+     *              "type": "feature",
+     *              "geometry": {
+     *                  "type": "Point",  //只支持point类型
+     *                  "coordinates": [0, 0]
+     *              },
+     *              "properties": {
+     *                  "height": Math.random()*9,
+     *                  "geoRadius": useGeoRadius?radius:null
+     *              }
+     *          }
+     *      ]
+     *   };
+     * var heatMapLayer = new mapboxgl.ekmap.HeatMapLayer("heatmaplayer",{"map":map});                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   pLayer = new mapboxgl.ekmap.HeatMapLayer("heatmaplayer",{"featureWeight":"height"});
+     * heatMapLayer.addFeatures(geojson);
+     * map.addLayer(heatMapLayer);
      */
-    onAdd(map) {
+    addFeatures(features) {
+        this.map.addSource(this.source, {
+            type: "geojson",
+            data: features,
+        });
     }
 }
 

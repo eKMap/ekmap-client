@@ -191,6 +191,7 @@ export class FeatureService extends ServiceBase {
         }
         param.outFields = '*';
         param.f = 'geojson';
+        param.returnGeometry = true;
         var service = new FeatureService(this.options);
         return service.request('query', param, function (error, response) {
             callback.call(context, error, response, response);

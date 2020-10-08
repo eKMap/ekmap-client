@@ -110,7 +110,6 @@ export class Legend extends mapboxgl.Evented {
         this.layers.forEach(layer => {
             layer.legend(function (list) {
                 var listLenged = list.layers.slice();
-                console.log(listLenged)
                 for (var i = 0; i < listLenged.length; i++) {
                     var li = document.createElement("li");
                     var strong = document.createElement("strong");

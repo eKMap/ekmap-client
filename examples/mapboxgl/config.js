@@ -121,8 +121,15 @@ var exampleConfig = {
                         name: "random points",
                         name_en: "random points",
                         version: "9.1.0",
-                        thumbnail: "heatMap_Layer.png",
-                        fileName: "heatMap_Layer"
+                        thumbnail: "heatMapLayer_mbgl.png",
+                        fileName: "heatMapLayer_mbgl"
+                    },
+                    {
+                        name: "random points (Classic)",
+                        name_en: "random points (Classic)",
+                        version: "9.1.0",
+                        thumbnail: "heatMapLayer.png",
+                        fileName: "heatMapLayer"
                     },
                 ]
             },
@@ -175,8 +182,8 @@ var exampleConfig = {
                         name: "Cluster",
                         name_en: "Marker cluster",
                         version: "9.1.1",
-                        thumbnail: "markerCluster_3857.png",
-                        fileName: "markerCluster_3857"
+                        thumbnail: "cluster.png",
+                        fileName: "cluster"
                     }
                 ]
             },
