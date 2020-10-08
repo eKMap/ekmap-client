@@ -7,8 +7,8 @@ var identification = {
 
 var exampleConfig = {
     ekmapServer: {
-        name: "ekmapServer",
-        name_en: "ekmapServer",
+        name: "eKMap Server",
+        name_en: "eKMap Server",
         content: {
             map: {
                 name: "Map service",
