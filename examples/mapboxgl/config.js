@@ -112,27 +112,6 @@ var exampleConfig = {
         name: "Visualization",
         name_en: "Visualization",
         content: {
-            heat: {
-                name: "Heat map",
-                name_en: "Heat map",
-                version: "",
-                content: [
-                    {
-                        name: "random points",
-                        name_en: "random points",
-                        version: "",
-                        thumbnail: "heatMapLayer_mbgl.png",
-                        fileName: "heatMapLayer_mbgl"
-                    },
-                    {
-                        name: "Heatmap Layer",
-                        name_en: "Heatmap Layer",
-                        version: "",
-                        thumbnail: "heatMapLayer.png",
-                        fileName: "heatMapLayer"
-                    },
-                ]
-            },
             tile: {
                 name: "Tiled map",
                 name_en: "Tiled map",
@@ -160,6 +139,27 @@ var exampleConfig = {
 
                 ]
             },
+            heat: {
+                name: "Heat map",
+                name_en: "Heat map",
+                version: "",
+                content: [
+                    {
+                        name: "random points",
+                        name_en: "random points",
+                        version: "",
+                        thumbnail: "heatMapLayer_mbgl.png",
+                        fileName: "heatMapLayer_mbgl"
+                    },
+                    {
+                        name: "Heatmap Layer",
+                        name_en: "Heatmap Layer",
+                        version: "",
+                        thumbnail: "heatMapLayer.png",
+                        fileName: "heatMapLayer"
+                    },
+                ]
+            },
             cluster: {
                 name: "Cluster",
                 name_en: "Cluster",
@@ -175,8 +175,8 @@ var exampleConfig = {
                 ]
             },
             animation: {
-                name: "animation",
-                name_en: "animation",
+                name: "Animation",
+                name_en: "Animation",
                 content: [{
                     name: "flashing points",
                     name_en: "flashing points",
