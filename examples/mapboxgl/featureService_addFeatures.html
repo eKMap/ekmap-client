@@ -20,7 +20,7 @@
         #info-pane {
             position: absolute;
             top: 15px;
-            left: 15px;
+            left: 60px;
             z-index: 400;
             padding: 1em;
             background: white;
@@ -78,6 +78,8 @@
             },
             zoom: 7
         });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
         var featureLayer;
         var symbols
         map.on('load', function () {

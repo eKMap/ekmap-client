@@ -21,7 +21,7 @@
         #selectedFeatures {
             position: absolute;
             top: 15px;
-            left: 15px;
+            left: 60px;
             z-index: 1000;
             background: white;
             padding: 1em;
@@ -38,7 +38,7 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Nhấp chuột điểm trên bản đồ để xóa.
+            Click the point on the map to delete.
         </div>
     </div>
     <script>
@@ -70,13 +70,14 @@
             },
             zoom: 7
         });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
         map.on('load', function () {
             var featureLayer = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
                 token: tokenKey
             }).addTo(map);
             featureLayer.on('click', function (obj) {
-                console.log(obj)
                 if (obj.objectIds.length > 0) {
                     widgets.loader.showLoader("data loading...");
                     featureLayer.deleteFeature(obj.objectIds[0], function (e) {

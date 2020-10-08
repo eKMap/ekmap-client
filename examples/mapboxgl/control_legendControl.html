@@ -59,6 +59,7 @@
                 url: urlMapService,
                 token: tokenKey
             }).addTo(map);
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             var legend = new mapboxgl.ekmap.control.Legend([tiledMap]);
             map.addControl(legend, "top-left");
         })

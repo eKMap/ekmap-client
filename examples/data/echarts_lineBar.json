@@ -5,15 +5,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "1",
-				"SmX": "1.2747137542832293E7",
-				"SmY": "4585528.063874258",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12025856",
 				"CLASS": "AD",
-				"NAME": "石家庄市",
-				"PINYIN": "Shijiazhuang Shi",
+				"NAME": "Hà Nội",
 				"GNID": "130100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -21,8 +18,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					114.5094848350001,
-					38.04318401909711
+					105.86032374772634,
+					20.92797109955376
 				]
 			},
 			"id": 1
@@ -31,15 +28,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "2",
-				"SmX": "1.252830846636536E7",
-				"SmY": "4561151.141121053",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12025876",
 				"CLASS": "AD",
-				"NAME": "太原市",
-				"PINYIN": "Taiyuan Shi",
+				"NAME": "Ninh Bình",
 				"GNID": "140100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -47,8 +41,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					112.54370979500004,
-					37.87052281409848
+					105.99246610110828,
+					20.20049135057087
 				]
 			},
 			"id": 2
@@ -57,15 +51,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "3",
-				"SmX": "1.2439110895738998E7",
-				"SmY": "4989083.583398639",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12025896",
 				"CLASS": "AD",
-				"NAME": "呼和浩特市",
-				"PINYIN": "Hohhot Shi",
+				"NAME": "Hải Dương",
 				"GNID": "150100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -73,8 +64,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					111.74243438500014,
-					40.84212928907822
+					106.37314390573778,
+					20.94322546880501
 				]
 			},
 			"id": 3
@@ -90,7 +81,7 @@
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12025916",
 				"CLASS": "AD",
-				"NAME": "沈阳市",
+				"NAME": "Hải Phòng",
 				"PINYIN": "Shenyang Shi",
 				"GNID": "210100",
 				"XZNAME": "",
@@ -99,8 +90,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					123.42540325000005,
-					41.80533096407363
+					106.67430069633872,
+					20.846818376016145
 				]
 			},
 			"id": 4
@@ -109,15 +100,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "5",
-				"SmX": "1.3950379753677484E7",
-				"SmY": "5437063.785369059",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12025936",
 				"CLASS": "AD",
-				"NAME": "长春市",
-				"PINYIN": "Changchun Shi",
+				"NAME": "Hạ Long",
 				"GNID": "220100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -125,8 +113,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					125.31839352000007,
-					43.81633714406749
+					107.07587835564402,
+					20.95258717851216
 				]
 			},
 			"id": 5
@@ -135,15 +123,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "6",
-				"SmX": "1.4085297116926836E7",
-				"SmY": "5748886.328199991",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12025956",
 				"CLASS": "AD",
-				"NAME": "哈尔滨市",
-				"PINYIN": "Ha'erbin Shi",
+				"NAME": "Thái Bình",
 				"GNID": "230100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -151,8 +136,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					126.53037681500007,
-					45.803316189065899
+					106.34680378074825,
+					20.444027166465233
 				]
 			},
 			"id": 6
@@ -161,15 +146,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "7",
-				"SmX": "1.3223928426358005E7",
-				"SmY": "3771752.10444645",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12025976",
 				"CLASS": "AD",
-				"NAME": "南京市",
-				"PINYIN": "Nanjing Shi",
+				"NAME": "Nam Định",
 				"GNID": "320100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -177,8 +159,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					118.79257021500007,
-					32.064285844164519
+					106.17667331500104,
+					20.420096096648436
 				]
 			},
 			"id": 7
@@ -187,15 +169,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "8",
-				"SmX": "1.33569211507522E7",
-				"SmY": "3532788.05150135",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12025996",
 				"CLASS": "AD",
-				"NAME": "杭州市",
-				"PINYIN": "Hangzhou Shi",
+				"NAME": "Thanh Hóa",
 				"GNID": "330100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -203,8 +182,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					119.98726418500007,
-					30.22720161419226
+					105.77510309993221,
+					19.80482678171073
 				]
 			},
 			"id": 8
@@ -213,15 +192,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "9",
-				"SmX": "1.304918831308713E7",
-				"SmY": "3740344.509256625",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026016",
 				"CLASS": "AD",
-				"NAME": "合肥市",
-				"PINYIN": "Hefei Shi",
+				"NAME": "Phú Yên",
 				"GNID": "340100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -229,8 +205,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					117.22285307000003,
-					31.824874014167937
+					105.84646401276194,
+					19.749810954847575
 				]
 			},
 			"id": 9
@@ -239,15 +215,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "10",
-				"SmX": "1.3279633021264289E7",
-				"SmY": "3008648.5344763706",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026036",
 				"CLASS": "AD",
-				"NAME": "福州市",
-				"PINYIN": "Fuzhou Shi",
+				"NAME": "Nghi Sơn",
 				"GNID": "350100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -255,8 +228,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					119.29297310500009,
-					26.077223354266203
+					105.7833864993438,
+					19.444402268168574
 				]
 			},
 			"id": 10
@@ -265,15 +238,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "11",
-				"SmX": "1.2896889499498436E7",
-				"SmY": "3335833.97870196",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026056",
 				"CLASS": "AD",
-				"NAME": "南昌市",
-				"PINYIN": "Nanchang Shi",
+				"NAME": "Quỳnh Thiện",
 				"GNID": "360100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -281,8 +251,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					115.8547295500001,
-					28.686730739217844
+					105.72069939277225,
+					19.266970398861304
 				]
 			},
 			"id": 11
@@ -291,15 +261,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "12",
-				"SmX": "1.3023172163842933E7",
-				"SmY": "4392645.394542361",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026076",
 				"CLASS": "AD",
-				"NAME": "济南市",
-				"PINYIN": "Jinan Shi",
+				"NAME": "Cầu Giắt",
 				"GNID": "370100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -307,8 +274,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					116.98914602500008,
-					36.665943849109378
+					105.62848444868627,
+					19.138281102164555
 				]
 			},
 			"id": 12
@@ -317,15 +284,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "13",
-				"SmX": "1.2648208904890765E7",
-				"SmY": "4129809.2677930356",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026096",
 				"CLASS": "AD",
-				"NAME": "郑州市",
-				"PINYIN": "Zhengzhou Shi",
+				"NAME": "Mỹ Hòa",
 				"GNID": "410100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -333,8 +297,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					113.62079376000009,
-					34.74889608412978
+					105.70510983462839,
+					19.12301441348633
 				]
 			},
 			"id": 13
@@ -343,15 +307,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "14",
-				"SmX": "1.2723894786231007E7",
-				"SmY": "3580455.5769788185",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026116",
 				"CLASS": "AD",
-				"NAME": "武汉市",
-				"PINYIN": "Wuhan Shi",
+				"NAME": "Phú Liên",
 				"GNID": "420100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -359,8 +320,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					114.30069160000005,
-					30.596488109186418
+					105.69259956754024,
+					19.085087827544882
 				]
 			},
 			"id": 14
@@ -369,15 +330,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "15",
-				"SmX": "1.2571860508384045E7",
-				"SmY": "3278243.5791259813",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026136",
 				"CLASS": "AD",
-				"NAME": "长沙市",
-				"PINYIN": "Changsha Shi",
+				"NAME": "Diễn Châu",
 				"GNID": "430100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -385,8 +343,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					112.93494444500004,
-					28.231907279225866
+					105.60227837677257,
+					18.979858331813787
 				]
 			},
 			"id": 15
@@ -395,15 +353,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "16",
-				"SmX": "1.2607962173437864E7",
-				"SmY": "2647870.7767329095",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026156",
 				"CLASS": "AD",
-				"NAME": "广州市",
-				"PINYIN": "Guangzhou Shi",
+				"NAME": "La Vân",
 				"GNID": "440100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -411,8 +366,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					113.25925122000014,
-					23.13101816432765
+					105.64501090264406,
+					18.88539154309352
 				]
 			},
 			"id": 16
@@ -421,15 +376,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "17",
-				"SmX": "1.2062937354028402E7",
-				"SmY": "2610399.4831578615",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026176",
 				"CLASS": "AD",
-				"NAME": "南宁市",
-				"PINYIN": "Nanning Shi",
+				"NAME": "Cửa Lò",
 				"GNID": "450100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -437,8 +389,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					108.36320996500011,
-					22.82111229433446
+					105.71813459974919,
+					18.81716483957709
 				]
 			},
 			"id": 17
@@ -447,15 +399,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "18",
-				"SmX": "1.2283769056446148E7",
-				"SmY": "2272679.9820176405",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026196",
 				"CLASS": "AD",
-				"NAME": "海口市",
-				"PINYIN": "Haikou Shi",
+				"NAME": "Quán Hành",
 				"GNID": "460100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -463,8 +412,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					110.34697490000008,
-					19.99703750440062
+					105.64449594706514,
+					18.775240412808486
 				]
 			},
 			"id": 18
@@ -473,15 +422,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "19",
-				"SmX": "1.1584406994365932E7",
-				"SmY": "3577624.128900375",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026216",
 				"CLASS": "AD",
-				"NAME": "成都市",
-				"PINYIN": "Chengdu Shi",
+				"NAME": "Đà Lạt",
 				"GNID": "510100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -489,8 +435,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					104.06449860500004,
-					30.57459158418677
+					108.4525786361902,
+					11.898488031270205
 				]
 			},
 			"id": 19
@@ -499,15 +445,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "20",
-				"SmX": "1.186973375884509E7",
-				"SmY": "3080008.8635848477",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026236",
 				"CLASS": "AD",
-				"NAME": "贵阳市",
-				"PINYIN": "Guiyang Shi",
+				"NAME": "Vinh",
 				"GNID": "520100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -515,8 +458,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					106.62763254000002,
-					26.65158446925504
+					105.68756677071991,
+					18.6680260264758
 				]
 			},
 			"id": 20
@@ -525,15 +468,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "21",
-				"SmX": "1.1447329876034709E7",
-				"SmY": "2861348.613809453",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026256",
 				"CLASS": "AD",
-				"NAME": "昆明市",
-				"PINYIN": "Kunming Shi",
+				"NAME": "Hồ Chí Minh",
 				"GNID": "530100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -541,8 +481,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					102.83311390000006,
-					24.88273902429022
+					106.75946425595299,
+					10.703104072341418
 				]
 			},
 			"id": 21
@@ -551,15 +491,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "22",
-				"SmX": "1.0149031439931486E7",
-				"SmY": "3459205.8604936074",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026276",
 				"CLASS": "AD",
-				"NAME": "拉萨市",
-				"PINYIN": "Lhasa Shi",
+				"NAME": "Cần Thơ",
 				"GNID": "540100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -567,8 +504,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					91.17030061500009,
-					29.654421619201519
+					105.78808556977856,
+					10.011936037238783
 				]
 			},
 			"id": 22
@@ -577,15 +514,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "23",
-				"SmX": "1.212678825249799E7",
-				"SmY": "4075013.25053011",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026296",
 				"CLASS": "AD",
-				"NAME": "西安市",
-				"PINYIN": "Xi'an Shi",
+				"NAME": "Vũng Tàu",
 				"GNID": "610100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -593,8 +527,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					108.93679234500006,
-					34.34345385913458
+					107.19898637442282,
+					10.474903459711797
 				]
 			},
 			"id": 23
@@ -603,15 +537,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "24",
-				"SmX": "1.1558672287511146E7",
-				"SmY": "4308931.491261594",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026316",
 				"CLASS": "AD",
-				"NAME": "兰州市",
-				"PINYIN": "Lanzhou Shi",
+				"NAME": "Khánh Hòa",
 				"GNID": "620100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -619,8 +550,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					103.83331980000013,
-					36.060370854115429
+					109.17375044362296,
+					12.27071320513275
 				]
 			},
 			"id": 24
@@ -629,15 +560,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "25",
-				"SmX": "1.1329764579788513E7",
-				"SmY": "4385648.7294257805",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026336",
 				"CLASS": "AD",
-				"NAME": "西宁市",
-				"PINYIN": "Xining Shi",
+				"NAME": "Sơn Bằng",
 				"GNID": "630100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -645,8 +573,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					101.7770068750001,
-					36.61551172910987
+					105.9143935847278,
+					18.459235943231093
 				]
 			},
 			"id": 25
@@ -655,15 +583,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "26",
-				"SmX": "1.1825230270808395E7",
-				"SmY": "4648319.232892305",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026356",
 				"CLASS": "AD",
-				"NAME": "银川市",
-				"PINYIN": "Yinchuan Shi",
+				"NAME": "Hà Tĩnh",
 				"GNID": "640100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -671,8 +596,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					106.22785090500008,
-					38.4860603740935
+					105.90615429491731,
+					18.33561097915181
 				]
 			},
 			"id": 26
@@ -688,7 +613,7 @@
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026376",
 				"CLASS": "AD",
-				"NAME": "乌鲁木齐市",
+				"NAME": "Cẩm Xuyên",
 				"PINYIN": "Urumqi Shi",
 				"GNID": "650100",
 				"XZNAME": "",
@@ -697,8 +622,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					87.61425523000016,
-					43.82500784906757
+					106.0039113070489,
+					18.24510967540381
 				]
 			},
 			"id": 27
@@ -707,15 +632,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "28",
-				"SmX": "1.3532639069939917E7",
-				"SmY": "2880317.0120239877",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026396",
 				"CLASS": "AD",
-				"NAME": "台北市",
-				"PINYIN": "Taipei Shih",
+				"NAME": "Quảng Bình",
 				"GNID": "710100",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -723,8 +645,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					121.56576511000013,
-					25.037220459287029
+					106.59738616375125,
+					17.460948245911098
 				]
 			},
 			"id": 28
@@ -733,15 +655,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "29",
-				"SmX": "1.3046158869474063E7",
-				"SmY": "4733914.485993809",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026416",
 				"CLASS": "AB",
-				"NAME": "天津市",
-				"PINYIN": "Tianjin Shi",
+				"NAME": "Thừa Thiên - Huế",
 				"GNID": "120000",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "-1"
@@ -749,8 +668,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					117.19563911500008,
-					39.08541884908908
+					107.6071182132294,
+					16.472944407008555
 				]
 			},
 			"id": 29
@@ -759,15 +678,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "30",
-				"SmX": "1.1860826813097375E7",
-				"SmY": "3447713.3939502495",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026436",
 				"CLASS": "AB",
-				"NAME": "重庆市",
-				"PINYIN": "Chongqing Shi",
+				"NAME": "Đà Nẵng",
 				"GNID": "500000",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "2492624"
@@ -775,8 +691,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					106.54762008500006,
-					29.56466470420296
+					108.20093023756772,
+					16.03251527151241
 				]
 			},
 			"id": 30
@@ -785,15 +701,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "31",
-				"SmX": "1.3521945890529728E7",
-				"SmY": "3663107.71662176",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026456",
 				"CLASS": "AB",
-				"NAME": "上海市",
-				"PINYIN": "Shanghai Shi",
+				"NAME": "Quảng Ngãi",
 				"GNID": "310000",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "2652824"
@@ -801,8 +714,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					121.46970664500009,
-					31.23347603917659
+					108.80831616506816,
+					15.100177483836902
 				]
 			},
 			"id": 31
@@ -811,15 +724,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "32",
-				"SmX": "1.263896460820918E7",
-				"SmY": "2534330.7125967303",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026476",
 				"CLASS": "AB",
-				"NAME": "澳门",
-				"PINYIN": "Aomen",
+				"NAME": "Bình Định",
 				"GNID": "820000",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "0"
@@ -827,8 +737,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					113.53775083000005,
-					22.18982010434874
+					109.06382715366993,
+					14.081404292538323
 				]
 			},
 			"id": 32
@@ -837,15 +747,12 @@
 			"type": "Feature",
 			"properties": {
 				"SmID": "33",
-				"SmX": "1.2708117209860487E7",
-				"SmY": "2544968.844054693",
 				"SmLibTileID": "1",
 				"SmUserID": "0",
 				"SmGeometrySize": "20",
 				"SmGeoPosition": "12026496",
 				"CLASS": "AB",
-				"NAME": "香港",
-				"PINYIN": "Xianggang",
+				"NAME": "Quy Nhơn",
 				"GNID": "810000",
 				"XZNAME": "",
 				"Field_SmGeoPosition": "80"
@@ -853,8 +760,8 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [
-					114.15895922000004,
-					22.278278479346676
+					109.20932653185156,
+					13.707113352279777
 				]
 			},
 			"id": 33

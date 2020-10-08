@@ -61,7 +61,6 @@
         if (inArray(includes, 'echarts')) {
             inputScript('https://cdn.jsdelivr.net/npm/echarts@4.9.0/dist/echarts.min.js');
             inputScript('https://cdn.jsdelivr.net/npm/echarts-liquidfill@2.0.6/dist/echarts-liquidfill.min.js');
-            inputScript('../../dist/mapboxgl/EchartsLayer.min.js');
         }
 
         if (inArray(includes, 'bootstrap-js')) {

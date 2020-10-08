@@ -81,7 +81,8 @@
             attributionControl: false,
         });
         var container = '#comparison-container';
-
+        beforeMap.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        afterMap.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var mapC = new mapboxgl.ekmap.control.Swipe(beforeMap, afterMap, container);
     </script>
 </body>

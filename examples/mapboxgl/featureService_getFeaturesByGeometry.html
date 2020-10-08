@@ -52,6 +52,8 @@
             },
             zoom: 7
         });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
         map.on('load', function () {
             var tiledMap = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
@@ -80,7 +82,7 @@
                 }
             });
 
-            if(tiledMap){
+            tiledMap.on("loadend",function(){
                 tiledMap.queryByGeometry(geometry, function (serviceResult) {
                     var filter = serviceResult.reduce(
                         function (memo, feature) {
@@ -89,9 +91,9 @@
                         },
                         ['in', 'OBJECTID']
                     );
-                    map.setFilter('line-selected', filter);
+                    map.setFilter('point-selected', filter);
                 });
-            }  
+            })
         })
     </script>
 </body>

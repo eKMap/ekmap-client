@@ -27,6 +27,7 @@
             zoom: 4
         });
         var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>
 </html>

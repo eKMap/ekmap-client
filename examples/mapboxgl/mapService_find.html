@@ -78,6 +78,8 @@
             center: [103.9, 22.2],
             zoom: 6
         });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
         var tiledMap;
         map.on('load', function () {
             tiledMap = new mapboxgl.ekmap.TiledMapLayer({

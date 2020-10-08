@@ -234,7 +234,7 @@ var exampleConfig = {
                     {
                         name: "line chart",
                         name_en: "line chart",
-                        thumbnail: "echarts_lineMarker.png",
+                        thumbnail: "echart_lineMarker.png",
                         fileName: "echarts_lineMarker"
                     },
                     {

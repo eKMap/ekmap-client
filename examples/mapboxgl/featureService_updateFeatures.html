@@ -21,7 +21,7 @@
         #selectedFeatures {
             position: absolute;
             top: 15px;
-            left: 15px;
+            left: 60px;
             z-index: 1000;
             background: white;
             padding: 1em;
@@ -38,7 +38,7 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Nhấp chuột điểm trên bản đồ để sửa.
+            Click the point on the map to edit.
         </div>
     </div>
     <script>
@@ -70,6 +70,8 @@
             },
             zoom: 7
         });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
         var featureLayer;
         var idUpdate;
         map.on('load', function () {
@@ -86,7 +88,6 @@
             var features = map.queryRenderedFeatures(bbox, {
                 layers: ['point']
             });
-            console.log(features)
             var filter = features.reduce(
                 function (memo, feature) {
                     memo.push(feature.properties.OBJECTID);

@@ -52,6 +52,7 @@
             center: [105.6685713, 20.9003181],
             zoom: 7
         });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
         map.on('load', function () {
             var tiledMap = new mapboxgl.ekmap.FeatureLayer({
@@ -80,7 +81,7 @@
                 }
             });
 
-            if(tiledMap){
+            tiledMap.on('loadend',function(){
                 tiledMap.queryByGeometry(geometry, function (serviceResult) {
                 var filter = serviceResult.reduce(
                         function (memo, feature) {
@@ -91,7 +92,7 @@
                     );
                     map.setFilter('point-selected', filter);
                 });
-            }
+            })
         })
     </script>
 </body>

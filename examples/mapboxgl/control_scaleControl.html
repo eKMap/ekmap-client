@@ -30,6 +30,7 @@
         });
         var roadMap = new mapboxgl.ekmap.TiledOSMapLayer({
         }).addTo(map)
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var scale = new mapboxgl.ScaleControl({});
         map.addControl(scale, 'bottom-right');
         scale.setUnit('metric');
