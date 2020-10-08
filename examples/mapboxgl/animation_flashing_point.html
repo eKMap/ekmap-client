@@ -26,6 +26,7 @@
             center: [105, 17],
             zoom: 4
         });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
         var size = 200;
 
