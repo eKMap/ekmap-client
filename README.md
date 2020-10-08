@@ -6,6 +6,14 @@ eKMap Client SDKs is a set of open source WebGIS client application development 
 
 https://ekmap.github.io/ekmap-client
 
+## Docs API
+
+https://ekmap.github.io/docs
+
+## Tutorials
+
+https://ekmap.github.io/tutorials
+
 ## License
 [MIT License](./LICENSE)
 
