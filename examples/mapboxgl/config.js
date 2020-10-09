@@ -66,7 +66,7 @@ var exampleConfig = {
                         name: "Apply Edits",
                         name_en: "Apply Edits",
                         thumbnail: "featureService_queryByGeometry.png",
-                        fileName: "featureService_getFeaturesByGeometry"
+                        fileName: "featureService_applyEditsFeatures"
                     },
                     {
                         name: "Add Features",

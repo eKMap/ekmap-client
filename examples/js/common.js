@@ -131,4 +131,3 @@ var urlMapLayer = urlServicesHost + '/gserver/rest/services/ogsmap/35/MapServer/
 var urlMapService = urlServicesHost + '/gserver/rest/services/ogsmap/35/MapServer'
 var urlVectorService = urlServicesHost + '/gserver/rest/services/ogsmap/35/VectorTileServer';
 
-

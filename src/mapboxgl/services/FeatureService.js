@@ -270,19 +270,20 @@ export class FeatureService extends ServiceBase {
             arr1.push(dataAdd);
             param.adds = JSON.stringify(arr1)
         } else
-            params.adds = false;
+            param.adds = false;
         if (params.updates) {
             var dataUpdate = Parse.geojsonToArcGIS(params.updates);
             var arr2 = [];
             arr2.push(dataUpdate);
             param.updates = JSON.stringify(arr2)
         } else
-            params.updates = false;
+            param.updates = false;
         if (params.deletes)
             param.deletes = params.deletes;
         else
             param.deletes = false;
         var service = new FeatureService(this.options);
+        console.log(param)
         return service.post('applyEdits', param, function (error, response) {
             callback.call(context, error, response, response);
         }, this);

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -52,16 +53,17 @@
                         type: "raster",
                         source: "raster-tiles",
                         minzoom: 0,
-                        maxzoom: 9,
+                        maxzoom: 20,
                     },
                 ],
             },
-            center: [15.464843749971521, -4.123886832736076],
-            zoom: 2
+            center: [106.19610650117397, 20.26392435005252],
+            zoom: 10.39832470161636
         });
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
         map.on('load', function () {
+            //Data Source: https://namdinh.gov.vn/sothongtintruyenthong/1223/28318/44734/101964/Danh-sach-tram-BTS/Danh-sach-tram-BTS-kiem-dinh-nam-2018--Viettel-.aspx 
             $.get("../data/heatmapBTS.json", function (response) {
                 var features = [];
                 var listdata = response[0]
@@ -88,7 +90,7 @@
                 heatMapLayer = new mapboxgl.ekmap.HeatMapLayer("heatmap", {
                     "map": map,
                     "id": "heatmap",
-                    "radius": 45,
+                    "radius": 10,
                 });
                 heatMapLayer.addFeatures(geojson);
                 map.addLayer(heatMapLayer);

@@ -7,7 +7,7 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Bound Query Data</title>
+    <title>Update feature</title>
     <style>
         .map {
             width: 100%;
@@ -96,8 +96,8 @@
                 ['in', 'OBJECTID']
             );
             if (features.length > 0) {
-                document.getElementById("selectedFeatures").innerHTML = "Bạn hãy kích vào feature cần update.<br>Sau đó chọn điểm bạn cẩn di chuyển đến.";
-                idUpdate = features[0].id;
+                document.getElementById("selectedFeatures").innerHTML = "Click on the feature to update.<br>Then select the point you need to move to.";
+                idUpdate = features[0].properties.OBJECTID;
                 map.setFilter('point-selected', filter);
             } else {
                 if (idUpdate) {
@@ -111,10 +111,10 @@
                             'OBJECTID': idUpdate
                         }
                     };
-                    widgets.loader.showLoader("Dữ liệu đang cập nhật ...");
+                    widgets.loader.showLoader("data updating...");
                     featureLayer.updateFeature(geojson, function (e) {
-                        alert('Cập nhật thành công!');
-                        document.getElementById("selectedFeatures").innerHTML = "Nhấp vào điểm trên bản đồ để cập nhật vị trí.";
+                        alert('Update successful!');
+                        document.getElementById("selectedFeatures").innerHTML = "Click on the point on the map to update the location.";
                         featureLayer.refresh();
                         idUpdate = null;
                         widgets.loader.removeLoader();

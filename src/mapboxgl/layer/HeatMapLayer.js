@@ -7,6 +7,12 @@ import { Util } from '../core/Util';
  * @class mapboxgl.ekmap.HeatMapLayer
  * @classdesc The class of the thermal layer.
  * @category  Visualization
+ * @param {string} name The name of the source.
+ * @param {Object} options Construction parameters.
+ * @param {mapboxgl.Map} options.map The map object of mapboxgl.
+ * @param {string} options.id Id of layer.
+ * @param {number} options.radius=50 The maximum radius of the hotspot rendering (hotspot pixel radius) in px. 
+ * @extends {mapboxgl.Evented}
  */
 export class HeatMapLayer extends mapboxgl.Evented {
 
@@ -29,19 +35,25 @@ export class HeatMapLayer extends mapboxgl.Evented {
         
         /**
          * @member {mapboxgl.Map} mapboxgl.ekmap.HeatMapLayer.prototype.map
-         * @description 热力图图层 map。
+         * @description map
          */
         this.map = _options.map ? _options.map : null;
 
+        /**
+         * @member {number} mapboxgl.ekmap.HeatMapLayer.prototype.radius
+         * @description map
+         */
+        this.radius = _options.radius ? _options.radius : 50
+
          /**
          * @member {string} mapboxgl.ekmap.HeatMapLayer.prototype.type
-         * @description 热力图图层 type.
+         * @description Default 'heatmap'.
          */
         this.type = 'heatmap';
 
          /**
          * @member {Object} mapboxgl.ekmap.HeatMapLayer.prototype.paint
-         * @description 热力图图层 Object.
+         * @description  Object.
          * @private
          */
         this.paint = {
@@ -70,8 +82,8 @@ export class HeatMapLayer extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.HeatMapLayer.prototype.addFeatures
-     * @description 添加热点信息。
-     * @param {GeoJSONObject} features - 待添加的要素数组。
+     * @description Add features
+     * @param {GeoJSONObject} features 
      *
      * @example
      * var geojson = {

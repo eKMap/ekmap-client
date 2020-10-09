@@ -17,14 +17,19 @@
         body {
             overflow: hidden;
         }
-
+        .dataTable {
+            overflow: auto;
+            height: calc(100vh - 20px);
+        }
         .filter-ctrl {
             position: inherit;
             top: 10px;
             margin-left: 42%;
             z-index: 1;
         }
-
+        td{
+            padding:4px;
+        }
             .filter-ctrl input[type='text'] {
                 width: 100%;
                 border: 0;
@@ -46,6 +51,10 @@
                        name="filter"
                        placeholder="Filter by name" />
             </div>
+        </div>
+        <div id="divResults" class="dataTable">
+            <table id="tbl">
+            </table>
         </div>
     </div>
     <hr />
@@ -78,8 +87,6 @@
             center: [103.9, 22.2],
             zoom: 6
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-
         var tiledMap;
         map.on('load', function () {
             tiledMap = new mapboxgl.ekmap.TiledMapLayer({
@@ -87,6 +94,7 @@
                 token: tokenKey
             }).addTo(map)
         });
+        var resultsTable = document.getElementById("tbl");
         var filterInput = document.getElementById('filter-input');
         filterInput.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
@@ -95,11 +103,28 @@
                 var params = {
                     searchText: text
                 }
+                document.getElementById("divMapId").style = "width:70%; float:left";
+                document.getElementById("divResults").style = " margin-left: 10px !important;";
+                document.getElementById('tbl').style.color = 'black';
+                resultsTable.innerHTML = "";
+                var topRow = resultsTable.insertRow(0);
+                var cell1 = topRow.insertCell(0);
+                var cell2 = topRow.insertCell(1);
+                cell1.innerHTML = "<b>Layer name</b>"; 
+                cell2.innerHTML = "<b>Name</b>";
                 widgets.loader.showLoader("data finding...");
                 tiledMap.find(params, function (e) {
                     if (e) {
                         widgets.loader.removeLoader();
-                        alert('Có ' + e.length + ' điểm cần tìm')
+                        e.forEach(function (data, i) {
+                            var layerName = data.layerName;
+                            var name = data.value;
+                            var row = resultsTable.insertRow(i + 1);
+                            cell1 = row.insertCell(0);
+                            cell2 = row.insertCell(1);
+                            cell1.innerHTML = layerName;
+                            cell2.innerHTML = name;
+                        })
                     }
                 })
             }

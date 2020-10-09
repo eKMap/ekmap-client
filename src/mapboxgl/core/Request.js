@@ -119,17 +119,17 @@ export class Request {
                 // Decode response
                 try {
                     response = JSON.parse(this.response);
-                    if (response.addResults) {
-                        callback(response.addResults)
-                    }
-                    if (response.updateResults) {
-                        callback(response.updateResults)
-                    }
-                    if (response.deleteResults) {
-                        callback(response.deleteResults)
+                    if(response.addResults && response.updateResults && response.deleteResults)
+                        callback(response)
+                    else{
+                        if (response.addResults) 
+                            callback(response.addResults)
+                        if (response.updateResults) 
+                            callback(response.updateResults)
+                        if (response.deleteResults) 
+                            callback(response.deleteResults)
                     }
                 } catch (e) {
-
                 }
             } else {
             }

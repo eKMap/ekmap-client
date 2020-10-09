@@ -1,6 +1,4 @@
-<!--********************************************************************
-* Nguồn dữ liệu: https://moitruongthudo.vn/
-*********************************************************************-->
+
 <html>
 <head>
     <meta charset='utf-8'/>
@@ -9,7 +7,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Scatter Chart</title>
-    <title></title>
     <style>
        .map {
             width: 100%;
@@ -57,6 +54,7 @@
         map.addImage('positionPoint', image);
     });
 
+    //Data: https://moitruongthudo.vn/ 
     var data1 = [
         [ 5, 46 ], [ 6, 49 ], [ 7, 50 ], [ 8, 45 ], [ 9, 44 ], [ 10, 0 ], [ 11, 0 ], [ 12, 0 ], [ 13, 31 ], [ 14, 34 ], [ 15, 0 ], [ 16, 32 ], [ 17, 38 ], [ 18, 0 ], [ 19, 28 ], [ 20, 31 ], [ 21, 35 ], [ 22, 37 ], [ 23, 38 ]
     ];
@@ -326,6 +324,7 @@
     query();
 
     function query() {
+        //Data Source: https://moitruongthudo.vn/ 
         $.get("../data/echarts_scatter.json", function (response){
             map.addLayer({
                 "id": "points",
