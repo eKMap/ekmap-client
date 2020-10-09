@@ -29,11 +29,6 @@ export class FeatureLayer extends mapboxgl.Evented {
                 this.tileUrl += ('?token=' + this.options.token);
             }
         }
-        /**
-         * @event mapboxgl.ekmap.FeatureLayer#Click
-         * @description Fired when the user click the feature on layer.
-         */
-        this.fire('Click', this);
     }
 
     /**
@@ -48,6 +43,10 @@ export class FeatureLayer extends mapboxgl.Evented {
             where: '1=1'
         };
         var me = this;
+        /**
+         * @event mapboxgl.ekmap.FeatureLayer#loadstart
+         * @description Fired when the feature layer load start.
+         */
         me.fire('loadstart', me);
         this.service.query(params, function (result) {
             if (result[0].geometry.type == "Point") {
@@ -179,6 +178,10 @@ export class FeatureLayer extends mapboxgl.Evented {
                     "source": 'area'
                 })
             }
+            /**
+            * @event mapboxgl.ekmap.FeatureLayer#loadend
+            * @description Fired when the feature layer load end. 
+            */
             me.fire('loadend', me);
         })
         return this;
@@ -225,7 +228,6 @@ export class FeatureLayer extends mapboxgl.Evented {
      */
     addFeature(params, callback, context) {
         var coor = params.geometry.coordinates;
-        console.log(params.color)
         var marker = new mapboxgl.Marker({
             'color': params.color ? params.color : ''
         })
@@ -351,15 +353,15 @@ export class FeatureLayer extends mapboxgl.Evented {
         });
     }
 
-     /**
-     * @function mapboxgl.ekmap.FeatureLayer.prototype.applyEdits
-     * @description This operation adds, updates, and deletes features to the associated feature layer. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then applyEdits.
-     * @param {Object} params Options.
-     * @param {GeoJSONObject} params.adds GeoJSON of feature add (To change point color, set 'color' for options GeoJSON).
-     * @param {GeoJSONObject} params.updates GeoJSON of feature update.
-     * @param {Interger} params.deletes Id of feature delete.
-     * @param {RequestCallback} callback
-     */
+    /**
+    * @function mapboxgl.ekmap.FeatureLayer.prototype.applyEdits
+    * @description This operation adds, updates, and deletes features to the associated feature layer. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then applyEdits.
+    * @param {Object} params Options.
+    * @param {GeoJSONObject} params.adds GeoJSON of feature add (To change point color, set 'color' for options GeoJSON).
+    * @param {GeoJSONObject} params.updates GeoJSON of feature update.
+    * @param {Interger} params.deletes Id of feature delete.
+    * @param {RequestCallback} callback
+    */
     applyEdits(params, callback, context) {
         if (params.adds) {
             var coor = params.adds.geometry.coordinates;

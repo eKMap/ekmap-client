@@ -92,7 +92,7 @@ var exampleConfig = {
                 name: "Vector Tile Services",
                 name_en: "Vector Tile Services",
                 content: [
-                     {
+                    {
                         name: "Mapbox Vector Tile",
                         name_en: "Mapbox Vector Tile",
                         thumbnail: "vectorTile_Map.png",
@@ -117,7 +117,7 @@ var exampleConfig = {
                 name_en: "Tiled map",
                 version: "",
                 content: [
-                    
+
                     // {
                     //     name: "Admin map",
                     //     name_en: "Admin map",
@@ -177,12 +177,20 @@ var exampleConfig = {
             animation: {
                 name: "Animation",
                 name_en: "Animation",
-                content: [{
-                    name: "flashing points",
-                    name_en: "flashing points",
-                    thumbnail: "animation_flashing_point.png",
-                    fileName: "animation_flashing_point"
-                }]
+                content: [
+                    {
+                        name: "flashing points",
+                        name_en: "flashing points",
+                        thumbnail: "animation_flashing_point.png",
+                        fileName: "animation_flashing_point"
+                    },
+                    {
+                        name: "point",
+                        name_en: "point",
+                        thumbnail: "animation_point.png",
+                        fileName: "animation_point"
+                    }
+                ]
             },
             ECharts: {
                 name: "ECharts",
@@ -599,7 +607,7 @@ var exampleConfig = {
                         name: "Navigation Control",
                         name_en: "Navigation Control",
                         thumbnail: "control_navigationControl.png",
-                        fileName: "control_navigationControl" 
+                        fileName: "control_navigationControl"
                     },
                     {
                         name: "Scale Control",
@@ -631,42 +639,42 @@ var exampleConfig = {
                 name: "Control",
                 name_en: "Advanced Control",
                 content: [
-                {
-                    name: "Draw Control",
-                    name_en: "Draw Control",
+                    {
+                        name: "Draw Control",
+                        name_en: "Draw Control",
                         thumbnail: "control_drawControl.png",
-                    fileName: "control_drawControl"
-                },
-                {
-                    name: "Swipe between maps",
-                    name_en: "Swipe between maps",
-                    thumbnail: "control_swipeBetweenMap.png",
-                    fileName: "control_swipeBetweenMap"
-                },
-                {
-                    name: "Side By Side",
-                    name_en: "Side By Side",
-                    thumbnail: "control_sideBySide.png",
-                    fileName: "control_sideBySide"
-                },
-                {
-                    name: "Snapshot maps",
-                    name_en: "Snapshot maps",
-                    thumbnail: "control_snapShotControl.png",
-                    fileName: "control_snapShotControl"
-                },
-                {
-                    name: "Legend Control",
-                    name_en: "Legend Control",
-                    thumbnail: "control_legendControl.png",
-                    fileName: "control_legendControl"
-                },
-                {
-                    name: "Feature Infomation Control",
-                    name_en: "Feature Infomation ",
-                    thumbnail: "control_featureInfomationControl.png",
-                    fileName: "control_featureInfomationControl"
-                }]
+                        fileName: "control_drawControl"
+                    },
+                    {
+                        name: "Swipe between maps",
+                        name_en: "Swipe between maps",
+                        thumbnail: "control_swipeBetweenMap.png",
+                        fileName: "control_swipeBetweenMap"
+                    },
+                    {
+                        name: "Side By Side",
+                        name_en: "Side By Side",
+                        thumbnail: "control_sideBySide.png",
+                        fileName: "control_sideBySide"
+                    },
+                    {
+                        name: "Snapshot maps",
+                        name_en: "Snapshot maps",
+                        thumbnail: "control_snapShotControl.png",
+                        fileName: "control_snapShotControl"
+                    },
+                    {
+                        name: "Legend Control",
+                        name_en: "Legend Control",
+                        thumbnail: "control_legendControl.png",
+                        fileName: "control_legendControl"
+                    },
+                    {
+                        name: "Feature Infomation Control",
+                        name_en: "Feature Infomation ",
+                        thumbnail: "control_featureInfomationControl.png",
+                        fileName: "control_featureInfomationControl"
+                    }]
             }
         }
     }
@@ -682,7 +690,7 @@ var sideBarIconConfig = {
 
 
 var exampleIconConfig = {
-     ekmapServer: "fa-server",
+    ekmapServer: "fa-server",
     viz: "fa-map",
     control: "fa-sliders"
 };

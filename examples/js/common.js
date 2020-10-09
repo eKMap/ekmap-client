@@ -112,8 +112,8 @@ function guid12() {
 }
 
 
-//var tokenKey = "";
-var tokenKey = "1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x";
+var tokenKey = "";
+//var tokenKey = "1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x";
 
 var urlOSMStandard = [
     "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -122,8 +122,8 @@ var urlOSMStandard = [
 ]
 
 var urlServicesHost = "https://viegisserver.ekgis.vn";
-//var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
-var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/ogsfeature/35/FeatureServer/478'
+var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
+//var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/ogsfeature/35/FeatureServer/478'
 
 
 //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'

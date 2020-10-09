@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
@@ -17,39 +18,42 @@
         body {
             overflow: hidden;
         }
+
         .dataTable {
             overflow: auto;
             height: calc(100vh - 20px);
+            background-color: #f2efe9;
         }
+
         .filter-ctrl {
             position: inherit;
             top: 10px;
             margin-left: 42%;
             z-index: 1;
         }
-        td{
-            padding:4px;
+
+        td {
+            padding: 4px;
         }
-            .filter-ctrl input[type='text'] {
-                width: 100%;
-                border: 0;
-                background-color: #fff;
-                margin: 0;
-                padding: 10px;
-                box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-                border-radius: 3px;
-                width: 250px;
-            }
+
+        .filter-ctrl input[type='text'] {
+            width: 100%;
+            border: 0;
+            background-color: #fff;
+            margin: 0;
+            padding: 10px;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            width: 250px;
+        }
     </style>
 </head>
+
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
             <div class="filter-ctrl">
-                <input id="filter-input"
-                       type="text"
-                       name="filter"
-                       placeholder="Filter by name" />
+                <input id="filter-input" type="text" name="filter" placeholder="Filter by name" />
             </div>
         </div>
         <div id="divResults" class="dataTable">
@@ -110,7 +114,7 @@
                 var topRow = resultsTable.insertRow(0);
                 var cell1 = topRow.insertCell(0);
                 var cell2 = topRow.insertCell(1);
-                cell1.innerHTML = "<b>Layer name</b>"; 
+                cell1.innerHTML = "<b>Layer name</b>";
                 cell2.innerHTML = "<b>Name</b>";
                 widgets.loader.showLoader("data finding...");
                 tiledMap.find(params, function (e) {
@@ -131,4 +135,5 @@
         });
     </script>
 </body>
+
 </html>
