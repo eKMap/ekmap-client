@@ -26,7 +26,7 @@
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105, 17],
-            zoom: 4
+            zoom: 4.5
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
@@ -35,12 +35,11 @@
         function pointOnCircle(angle) {
             return {
                 'type': 'Point',
-                'coordinates': [Math.cos(angle) * radius, Math.sin(angle) * radius]
+                'coordinates': [Math.cos(angle) +105, Math.cos(angle)*10 + 17]
             };
         }
 
         map.on('load', function () {
-            // Add a source and layer displaying a point which will be animated in a circle.
             map.addSource('point', {
                 'type': 'geojson',
                 'data': pointOnCircle(0)
@@ -57,11 +56,7 @@
             });
 
             function animateMarker(timestamp) {
-                // Update the data to a new position based on the animation timestamp. The
-                // divisor in the expression `timestamp / 1000` controls the animation speed.
                 map.getSource('point').setData(pointOnCircle(timestamp / 1000));
-
-                // Request the next frame of the animation.
                 requestAnimationFrame(animateMarker);
             }
 

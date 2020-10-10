@@ -258,6 +258,7 @@
         var divUpdate;
         var idFeatureSelected;
         var coorSelected;
+        var filter;
         map.on('load', function () {
             featureLayer = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
@@ -303,6 +304,7 @@
                     featureLayer.refresh();
                     color = null;
                     widgets.loader.removeLoader();
+                    map.setFilter('point-selected', filter);
                 });
             });
 
@@ -356,7 +358,7 @@
                     divAddFea.style.display = 'none';
                     divAddTemp.style.display = 'none';
                     divUpdate.style.display = 'block';
-                    var filter = features.reduce(
+                    filter = features.reduce(
                         function (memo, feature) {
                             memo.push(feature.properties.OBJECTID);
                             return memo;

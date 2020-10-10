@@ -9,6 +9,8 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.url - Required The URL to the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Feature Layer}.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @extends {mapboxgl.Evented}
+ * @fires mapboxgl.ekmap.FeatureLayer#loadstart
+ * @fires mapboxgl.ekmap.FeatureLayer#loadend
  */
 export class FeatureLayer extends mapboxgl.Evented {
 
@@ -89,7 +91,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                         'features': result
                     }
                 });
-
+                
                 map.addLayer({
                     'id': "line",
                     'type': 'line',

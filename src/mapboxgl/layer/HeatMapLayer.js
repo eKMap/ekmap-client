@@ -76,7 +76,7 @@ export class HeatMapLayer extends mapboxgl.Evented {
                 1,
                 "rgb(178,24,43)",
             ],
-            "heatmap-radius": _options.radius ? _options.radius : 50,
+            "heatmap-radius": this.radius,
         };
     }
 

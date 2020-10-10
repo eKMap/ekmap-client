@@ -155,7 +155,7 @@ var exampleConfig = {
                         name: "Heatmap Layer",
                         name_en: "Heatmap Layer",
                         version: "",
-                        thumbnail: "heatMapLayer.png",
+                        thumbnail: "heatMapLayerBTS.png",
                         fileName: "heatMapLayer"
                     },
                 ]
@@ -585,12 +585,24 @@ var exampleConfig = {
                 name: "turfjs",
                 name_en: "turfjs",
                 content: [
-                    // {
-                    //     name: "Buffer",
-                    //     name_en: "Buffer",
-                    //     thumbnail: "mvtVectorTile.png",
-                    //     fileName: "mvtVectorTile"
-                    // }
+                    {
+                        name: "Hexagon",
+                        name_en: "Hexagon",
+                        thumbnail: "turfjs_Hexagon.png",
+                        fileName: "turfjs_Hexagon"
+                    },
+                    {
+                        name: "Voronoi",
+                        name_en: "Voronoi",
+                        thumbnail: "turfjs_Voronoi.png",
+                        fileName: "turfjs_Voronoi"
+                    },
+                    {
+                        name: "Buffer",
+                        name_en: "Buffer",
+                        thumbnail: "turfjs_Buffer.png",
+                        fileName: "turfjs_Buffer"
+                    }
                 ]
             }
         }
