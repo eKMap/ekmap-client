@@ -23,13 +23,13 @@ export class Util {
         return (typeof str === 'string') && str.constructor === String;
     }
     
-    static newGuid(attr) {
+    static newGuid(attr) { 
         let len = attr || 32;
         let guid = "";
         for (let i = 1; i < len; i++) {
             let n = Math.floor(Math.random() * 16.0).toString(16);
             guid += n;
-        }
+        } 
         return guid;
     }
     

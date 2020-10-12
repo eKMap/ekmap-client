@@ -202,45 +202,45 @@ export class FeatureInfomation extends mapboxgl.Evented {
                                                 });
                                                 me._map.addLayer({
                                                     //line path
-                                                    'id': 'area',
-                                                    'type': 'line',
-                                                    'source': 'area',
-                                                    'layout': {
-                                                        'line-join': 'round',
-                                                        'line-cap': 'round'
-                                                    },
-                                                    'paint': {
-                                                        'line-color': '#90c258',
-                                                        'line-width': 5,
-                                                        'line-gradient': [
-                                                            'interpolate',
-                                                            ['linear'],
-                                                            ['line-progress'],
-                                                            0,
-                                                            'blue',
-                                                            0.1,
-                                                            'royalblue',
-                                                            0.3,
-                                                            'cyan',
-                                                            0.5,
-                                                            'lime',
-                                                            0.7,
-                                                            'yellow',
-                                                            1,
-                                                            'red'
-                                                        ],
-                                                    }
+                                                    // 'id': 'area',
+                                                    // 'type': 'line',
+                                                    // 'source': 'area',
+                                                    // 'layout': {
+                                                    //     'line-join': 'round',
+                                                    //     'line-cap': 'round'
+                                                    // },
+                                                    // 'paint': {
+                                                    //     'line-color': '#90c258',
+                                                    //     'line-width': 5,
+                                                    //     'line-gradient': [
+                                                    //         'interpolate',
+                                                    //         ['linear'],
+                                                    //         ['line-progress'],
+                                                    //         0,
+                                                    //         'blue',
+                                                    //         0.1,
+                                                    //         'royalblue',
+                                                    //         0.3,
+                                                    //         'cyan',
+                                                    //         0.5,
+                                                    //         'lime',
+                                                    //         0.7,
+                                                    //         'yellow',
+                                                    //         1,
+                                                    //         'red'
+                                                    //     ],
+                                                    // }
                                                     //fill path
-                                                    //'id': 'area',
-                                                    //'type': 'fill',
-                                                    //'source': 'area',
-                                                    //'layout': {
-                                                    //},
-                                                    //'paint': {
-                                                    //    'fill-outline-color': '#484896',
-                                                    //    'fill-color': '#6e599f',
-                                                    //    'fill-opacity': 0.75
-                                                    //},
+                                                    'id': 'area',
+                                                    'type': 'fill',
+                                                    'source': 'area',
+                                                    'layout': { 
+                                                    }, 
+                                                    'paint': {
+                                                       'fill-outline-color': '#484896',
+                                                       'fill-color': '#6e599f',
+                                                       'fill-opacity': 0.75
+                                                    },
                                                 });
                                             } else {
                                                 me._map.removeLayer('area');
