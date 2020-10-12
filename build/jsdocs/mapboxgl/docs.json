@@ -1,0 +1,36 @@
+{
+    "opts": {
+        "recurse": true,
+        "template": "../template",
+        "configPath": "../mapboxgl",
+        "destination": "./docs/mapboxgl"
+    },
+    "disqus":"",
+    "tags": {
+        "allowUnknownTags": true,
+        "linkdoc-mapboxgl":"https://www.mapbox.com/mapbox-gl-js/api/"
+    },
+    "i18n": {
+        "defaultLang": "en",
+        "possibleLang": ["en"],
+        "dbFilePath":"./build/jsdocs/mapboxgl"
+    },
+    "source": {
+        "includePattern": ".+\\.js?$",
+        "excludePattern": ".+\\\\src\\\\common\\\\iServer\\\\.*Service.js?$",
+        "include": [
+            "src/mapboxgl"
+        ],
+        "exclude": [
+        ]
+    },
+    "plugins": ["plugins/markdown"],
+    "templates": {
+        "cleverLinks": true,
+        "monospaceLinks": true,
+        "default": {
+            "outputSourceFiles": false
+        },
+        "applicationName": "eKMap Client for MapboxGL"
+    }
+}

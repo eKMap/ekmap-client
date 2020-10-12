@@ -1,0 +1,40 @@
+{
+    "ekmapServer": {
+        "name": "eKMap Server",
+        "content": {
+            "map": {
+                "name": "Map Services",
+                "name_en": "Map Services",
+                "content": {
+                   
+                }
+            },
+            "data": {
+                "name": "Data Services",
+                "name_en": "Data Services",
+                "content": {
+                    
+                }
+            },
+            "vectortile": {
+                "name": "Vector Tile Services",
+                "name_en": "Vector Tile Services",
+                "content": {
+                    
+                }
+
+            }
+        }
+    },
+    "Visualization": {
+        "name": "Visualization",
+        "name_en": "Visualization",
+        "content": {
+            
+        }
+    },
+    "Control": {
+        "name": "Control",
+        "name_en": "Control"
+    }
+}
