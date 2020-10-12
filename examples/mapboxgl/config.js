@@ -105,6 +105,24 @@ var exampleConfig = {
                         fileName: "vectorTile_Map_overlay"
                     }
                 ]
+            },
+            control: {
+                name: "Control",
+                name_en: "Control",
+                content: [
+                    {
+                        name: "Legend Control",
+                        name_en: "Legend Control",
+                        thumbnail: "control_legendControl.png",
+                        fileName: "control_legendControl"
+                    },
+                    {
+                        name: "Feature Infomation Control",
+                        name_en: "Feature Infomation ",
+                        thumbnail: "control_featureInfomationControl.png",
+                        fileName: "control_featureInfomationControl"
+                    }
+                ]
             }
         }
     },
@@ -521,24 +539,27 @@ var exampleConfig = {
             //         }
             //     ]
             // },
-            // threejs: {
-            //     name: "threejs",
-            //     name_en: "threejs",
-            //     content: [
-            //         {
-            //             name: "buildings",
-            //             name_en: "buildings",
-            //             version: "",
-            //             thumbnail: "mb_threejs_buildings.png",
-            //             fileName: "threejsLayer_buildings"
-            //         },
-            //         {
-            //             name: "facility(mtl+obj)",
-            //             name_en: "facility(mtl+obj)",
-            //             version: "",
-            //             thumbnail: "mb_threejs_facility.png",
-            //             fileName: "threejsLayer_facility"
-            //         },
+            threejs: {
+                name: "threejs",
+                name_en: "threejs",
+                content: [
+                    {
+                        name: "buildings",
+                        name_en: "buildings",
+                        version: "",
+                        thumbnail: "mb_threejs_buildings.png",
+                        fileName: "threejsLayer_buildings"
+                    },
+
+                    {
+                        name: "facility(mtl+obj)",
+                        name_en: "facility(mtl+obj)",
+                        version: "",
+                        thumbnail: "mb_threejs_airplane.png",
+                        fileName: "threejsLayer_airplane"
+                    }
+                ]
+            }
             //         {
             //             name: "airplane(gltf)",
             //             name_en: "airplane(gltf)",
@@ -674,18 +695,6 @@ var exampleConfig = {
                         name_en: "Snapshot maps",
                         thumbnail: "control_snapShotControl.png",
                         fileName: "control_snapShotControl"
-                    },
-                    {
-                        name: "Legend Control",
-                        name_en: "Legend Control",
-                        thumbnail: "control_legendControl.png",
-                        fileName: "control_legendControl"
-                    },
-                    {
-                        name: "Feature Infomation Control",
-                        name_en: "Feature Infomation ",
-                        thumbnail: "control_featureInfomationControl.png",
-                        fileName: "control_featureInfomationControl"
                     }]
             }
         }

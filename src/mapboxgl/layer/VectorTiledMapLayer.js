@@ -1,4 +1,3 @@
-import { Util } from '../core/Util';
 import mapboxgl from 'mapbox-gl';
 
 /**
@@ -21,7 +20,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
      * @returns this
      */
     addTo(map) {
-        map.setStyle(url);
+        map.setStyle(this.url);
         return this;
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
@@ -18,28 +19,61 @@
         }
     </style>
 </head>
+
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
     </div>
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Mapbox </a>" +
-            " with <span>© <a href='https://iclient.supermap.io' target='_blank'>eKMap Client</a> | </span>" +
-            " Map Data <span>© <a href='http://ekgis.com.vn/' target='_blank'>eKMap Server</a></span> ";
-         var map = new mapboxgl.Map({
+
+        var map = new mapboxgl.Map({
             container: 'divMapId', // container id
-            style: urlVectorService + "/resources/styles?apikey=" + tokenKey,
             minZoom: 4,
             center: [105, 17],
             zoom: 4
         });
-<<<<<<< HEAD
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer().addTo(map);
+        var hoveredStateId = null;
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer(urlVectorService + "/resources/styles?apikey=" + tokenKey).addTo(map);
+        map.on('load', function () {
+            map.addLayer({
+                'id': 'state-fills',
+                'type': 'fill',
+                'source': '35',
+                'source-layer':'480',
+                'paint': {
+                    'fill-color': '#627BC1',
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        1,
+                        0.5
+                    ]
+                }
+            });
+            console.log(map.getStyle().layers)
+        })
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
-=======
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
->>>>>>> 346dfd94da14b1aa2e73fa7dad6642e10b510c7d
+
+
+
+        map.on('mousemove', 'state-fills', function (e) {
+            if (e.features.length > 0) {
+                if (hoveredStateId) {
+                    map.setFeatureState(
+                        { source: '35', id: hoveredStateId },
+                        { hover: false }
+                    );
+                }
+                hoveredStateId = e.features[0].id;
+                map.setFeatureState(
+                    { source: '35', id: hoveredStateId },
+                    { hover: true }
+                );
+            }
+        });
+
     </script>
 </body>
+
 </html>

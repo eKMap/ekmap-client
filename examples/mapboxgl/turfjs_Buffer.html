@@ -6,6 +6,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
     <style>
         .map {
             width: 100%;
@@ -32,27 +33,40 @@
         });
         var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        $.get("../data/Buffer_Covid.json", function (response) {
+            var provinces = response.provinces
+            provinces.forEach(province => {
+                var point = turf.point([province.Long, province.Lat]);
+                var buffered = turf.buffer(point, province.Confirmed/2, { units: 'kilometers' });
+                //var marker = new mapboxgl.Marker({
+                //    'color': 'green'
+                //})
+                //    .setLngLat(point.geometry.coordinates)
+                //    .addTo(map);
 
-        var point = turf.point([105.89897378680303, 20.977957777066706]);
-        var buffered = turf.buffer(point, 100, { units: 'miles' });
-        var marker = new mapboxgl.Marker({
-                'color': 'green'
-            })
-                .setLngLat(point.geometry.coordinates)
-                .addTo(map);
-
-        map.addLayer({
-            'id': 'park-boundary',
-            'type': 'fill',
-            'source': {
-                'type': 'geojson',
-                'data': buffered
-            },
-            'paint': {
-                'fill-color': '#c5d7da',
-                'fill-opacity': 0.7
-            }
+                map.addLayer({
+                    'id': guid12(),
+                    'type': 'fill',
+                    'source': {
+                        'type': 'geojson',
+                        'data': buffered
+                    },
+                    'paint': {
+                        'fill-color': '#770404',
+                        'fill-opacity': 0.7,
+                        'fill-outline-color': 'black'
+                    }
+                })
+            });
         })
+        function guid12() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+            return s4() + s4() + s4();
+        }
     </script>
 </body>
 

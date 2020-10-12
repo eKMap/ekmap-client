@@ -12,6 +12,9 @@ export { TiledOSMapLayer } from './TiledOSMapLayer';
 
 export { FeatureLayer } from './FeatureLayer';
 
+export { ThreeLayer } from './ThreeLayer';
+
+
 
 
 

@@ -13,9 +13,10 @@ module.exports = {
      contentBase: './dist',
   },
   externals: Object.assign({}, configBase.externals, {
-    'mapbox-gl': 'mapboxgl'
+    'mapbox-gl': 'mapboxgl',
+    three: 'function(){try{return THREE}catch(e){return {}}}()'
   }),
-
+   
   module: {
     noParse: /[\/\\]node_modules[\/\\]mapbox-gl[\/\\]dist[\/\\]mapbox-gl\.js$/,
 

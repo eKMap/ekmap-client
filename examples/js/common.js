@@ -122,8 +122,8 @@ var urlOSMStandard = [
 ]
 
 var urlServicesHost = "https://viegisserver.ekgis.vn";
-//var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
-var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/ogsfeature/35/FeatureServer/479'
+var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
+//var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/ogsfeature/35/FeatureServer/478'
 
 
 //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'

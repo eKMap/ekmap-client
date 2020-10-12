@@ -55,12 +55,22 @@
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css");
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js");
         }
+
         if (inArray(includes, 'bootstrap-css')) {
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css")
         }
+
         if (inArray(includes, 'echarts')) {
             inputScript('https://cdn.jsdelivr.net/npm/echarts@4.9.0/dist/echarts.min.js');
             inputScript('https://cdn.jsdelivr.net/npm/echarts-liquidfill@2.0.6/dist/echarts-liquidfill.min.js');
+        }
+
+        if (inArray(includes, 'three')) {
+            inputScript('https://cdn.bootcss.com/three.js/92/three.min.js');
+        }
+
+        if (inArray(includes, 'GLTFLoader')) {
+            inputScript('../mapboxgl/js/GLTFLoader.js');
         }
 
         if (inArray(includes, 'bootstrap-js')) {
