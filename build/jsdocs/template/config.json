@@ -35,6 +35,9 @@
     },
     "Control": {
         "name": "Control",
-        "name_en": "Control"
+        "name_en": "Control",
+        "content": {
+            
+        }
     }
 }
