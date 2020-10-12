@@ -8,8 +8,8 @@ import { Request } from '../core/Request';
  * @category  BaseType Service
  * @description mapboxgl.ekmap base class.
  * @param {Object} options The optional parameters.
- * @param {string} [options.url] (Required) The URL to the MapService.
- * @param {string} [options.token] - Will use this token to authenticate all calls to the service.
+ * @param {string} options.url (Required) The URL to the MapService.
+ * @param {string} options.token - Will use this token to authenticate all calls to the service.
  */
 export class ServiceBase extends mapboxgl.Evented {
 

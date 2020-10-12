@@ -30,7 +30,6 @@ var ThreeApplication = {
         //程序入口开始
         SceneBuilder.preLoader(ThreeApplication).load();
     }
-
 };
 
 
@@ -39,7 +38,6 @@ var SceneBuilder = {
     preLoader: function (app) {
 
         var manager, slowLoopIntervalId, is3DDataLoaded = false;
-
         function loadData(onComplete) {
             var url = '../../data/ThreeBuildingData.json';
             $.ajax({

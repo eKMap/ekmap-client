@@ -91,7 +91,7 @@
                 scene = threeLayer.getScene(),
                 camera = threeLayer.getCamera();
 
-            this.light = new THREE.PointLight(0xaaaaaa, 0.5);
+            this.light = new THREE.PointLight(0xaa, 50);
             this.light.position.copy(camera.position);
             scene.add(this.light);
             scene.add(new THREE.AmbientLight(0xffffff));

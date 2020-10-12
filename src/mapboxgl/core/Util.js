@@ -2,7 +2,7 @@ import mapboxgl from "mapbox-gl";
 import "../core/Base";
 import { Parse } from "../core/Parse";
 /**
- * @class mapboxgl.supermap.Util
+ * @class mapboxgl.ekmap.Util
  * @category BaseType Util
  * @classdesc The tool class.
  */

@@ -135,7 +135,6 @@ var exampleConfig = {
                 name_en: "Tiled map",
                 version: "",
                 content: [
-
                     // {
                     //     name: "Admin map",
                     //     name_en: "Admin map",
@@ -547,15 +546,15 @@ var exampleConfig = {
                         name: "buildings",
                         name_en: "buildings",
                         version: "",
-                        thumbnail: "mb_threejs_buildings.png",
+                        thumbnail: "threejsLayer_buildings.png",
                         fileName: "threejsLayer_buildings"
                     },
 
                     {
-                        name: "facility(mtl+obj)",
-                        name_en: "facility(mtl+obj)",
+                        name: "airplane(gltf)",
+                        name_en: "airplane(gltf)",
                         version: "",
-                        thumbnail: "mb_threejs_airplane.png",
+                        thumbnail: "threejsLayer_airplane.png",
                         fileName: "threejsLayer_airplane"
                     }
                 ]

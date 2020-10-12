@@ -8,7 +8,7 @@ import { TiledMapLayer } from './TiledMapLayer';
  * @category Layer
  * @param {Object} options - Control options.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
- * @extends {TiledMapLayer}
+ * @extends {mapboxgl.ekmap.TiledMapLayer}
  * @example
  * var map = new mapboxgl.Map({
  *     container: 'map1',

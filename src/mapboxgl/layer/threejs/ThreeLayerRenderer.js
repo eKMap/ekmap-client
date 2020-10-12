@@ -1,14 +1,3 @@
-/* Copyright© 2000 - 2020 ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-/**
- * reference and modification
- * maptalks.three
- * (https://github.com/maptalks/maptalks.three)
- * Apache Licene 2.0
- * thanks maptalks
- */
-
 import * as THREE from "three";
 import {Transform} from "./Transform";
 
@@ -38,10 +27,10 @@ const cancel = window.cancelAnimationFrame ||
  * @private
  * @class ThreeLayerRenderer
  * @category  Visualization Three
- * @classdesc Three图层渲染器
- * @param {mapboxgl.ekmap.ThreeLayer} layer - ThreeJs图层。</br>
- * @param {string} [renderer="gl"] - 图层渲染方式(canvas或WebGL)。取值："gl","canvas"。</br>
- * @param {Object} options - threejs渲染器初始化参数对象。参数内容详见:
+ * @classdesc Three
+ * @param {mapboxgl.ekmap.ThreeLayer} layer ThreeJs
+ * @param {string} renderer="gl" The rendering mode of the layer (canvas or WebGL). Value: "gl", "canvas".
+ * @param {Object} options The parameter object initialized by the threejs renderer. For details of the parameters, see:
  *          [WebGLRenderer]{@link https://threejs.org/docs/index.html#api/renderers/WebGLRenderer}/
  *          [CanvasRenderer]{@link https://threejs.org/docs/index.html#examples/renderers/CanvasRenderer}
  *
@@ -62,21 +51,21 @@ export class ThreeLayerRenderer {
         this.map = map;
     }
 
-    //开始渲染
     render() {
         if (!this._layer) {
             return;
         }
         this.prepare();
         /**
+         * @private
          * @event mapboxgl.ekmap.ThreeLayer#initialized
-         * @description three 初始化之后后触发。
+         * @description three 
          */
         this._layer.fire("initialized");
         this._layer && this._layer.draw(this.context, this.scene, this.camera);
         /**
          * @event mapboxgl.ekmap.ThreeLayer#draw
-         * @description draw 绘制事件, 调用提供给外部绘制的接口后触发
+         * @description draw event, trigger after calling the interface provided for external drawing.
          */
         this._layer.fire("draw");
         this.renderScene();
@@ -87,7 +76,6 @@ export class ThreeLayerRenderer {
         this.render();
     }
 
-    //渲染场景（模型已经添加到图层）
     renderScene() {
         this.locationCamera();
         this.animationFrame = this.renderFrame((function () {
@@ -117,7 +105,6 @@ export class ThreeLayerRenderer {
         this.renderScene();
     }
 
-    //创建画布、初始化渲染器、初始化相机等
     prepare() {
         if (!this.map) {
             return new Error("map object is necessary");
@@ -127,7 +114,7 @@ export class ThreeLayerRenderer {
             this._initThreeRenderer();
             /**
              * @event mapboxgl.ekmap.ThreeLayer#rendererinitialized
-             * @description rendererinitialized 事件，初始化 three 渲染器后触发
+             * @description rendererinitialized event, trigger after renderer initializing.
              */
             this._layer.fire("rendererinitialized");
         } else {
@@ -158,13 +145,11 @@ export class ThreeLayerRenderer {
         this.container = null;
     }
 
-    //清理画布内容
     clear(context) {
         context && context.clear && context.clear();
         context && context.clearRect && context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }
 
-    //计算缩放比例
     getScale(zoom) {
         let map = this.map;
         let z = zoom == null ? map.getZoom() : zoom;
@@ -182,7 +167,6 @@ export class ThreeLayerRenderer {
     }
 
 
-    //重新设置相机位置
     locationCamera() {
         let map = this.map;
 
@@ -192,7 +176,6 @@ export class ThreeLayerRenderer {
 
         let camera = this.camera;
 
-        //倾斜时，相机位置低于Z轴
         let pitch = map.getPitch() * RADIAN;
         let pZ = -scale * size.height / 2 / fovRatio;
         camera.position.z = pZ * Math.cos(pitch);

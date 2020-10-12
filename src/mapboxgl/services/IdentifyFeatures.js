@@ -9,8 +9,8 @@ import { Util } from '../core/Util';
  * @classdesc  mapboxgl.ekmap.IdentifyFeatures is an abstraction for the Identify API found in Map Services. It provides a chainable API for building request parameters and executing the request.
  * @extends {mapboxgl.ekmap.ServiceBase}
  * @param {object} options Construction parameters.
- * @param {string} [options.url] URL of the ArcGIS service you would like to consume.
- * @param {string} [options.token] - Will use this token to authenticate all calls to the service.
+ * @param {string} options.url URL of the ArcGIS service you would like to consume.
+ * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @example
  * var map = new mapboxgl.Map({
  *      container: 'divMapId',
@@ -18,7 +18,7 @@ import { Util } from '../core/Util';
  *      zoom: 6
  * })
  * var identify = new mapboxgl.ekmap.IdentifyFeatures({
- *      url: 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
+ *      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
  * })
  *   .on(map)
  *   .at([])

@@ -6,7 +6,7 @@ import { Util } from '../core/Util';
 /**
  * @class mapboxgl.ekmap.HeatMapLayer
  * @classdesc The class of the thermal layer.
- * @category  Visualization
+ * @category  Visualization HeatMap
  * @param {string} name The name of the source.
  * @param {Object} options Construction parameters.
  * @param {mapboxgl.Map} options.map The map object of mapboxgl.

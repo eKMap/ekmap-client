@@ -11,7 +11,7 @@ import { Util } from '../core/Util';
  *      //config....
  *  });
  *  var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
- *       url: 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
+ *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
  *  }).addTo(map);
  *  var legend = new mapboxgl.ekmap.control.Legend([tiledMap]);
  *  map.addControl(legend,"top-left");

@@ -5,24 +5,17 @@
             "map": {
                 "name": "Map Services",
                 "name_en": "Map Services",
-                "content": {
-                   
-                }
+                "content": {}
             },
             "data": {
                 "name": "Data Services",
                 "name_en": "Data Services",
-                "content": {
-                    
-                }
+                "content": {}
             },
             "vectortile": {
                 "name": "Vector Tile Services",
                 "name_en": "Vector Tile Services",
-                "content": {
-                    
-                }
-
+                "content": {}
             }
         }
     },
@@ -30,14 +23,84 @@
         "name": "Visualization",
         "name_en": "Visualization",
         "content": {
-            
+            "HeatMap": {
+                "name": "HeatMap",
+                "name_en": "HeatMap"
+            },
+            "TiledMap": {
+                "name": "TiledMap"
+            },
+            "Graphic": {
+                "name": "Graphic",
+                "name_en": "Graphic"
+            },
+            "DeckGL": {
+                "name": "DeckGL",
+                "name_en": "DeckGL"
+            },
+            "Theme": {
+                "name": "Theme",
+                "name_en": "Theme"
+            },
+            "MapV": {
+                "name": "MapV"
+            },
+            "VectorTile": {
+                "name": "VectorTile",
+                "name_en": "VectorTile"
+            },
+            "Turf": {
+                "name": "Turf"
+            },
+            "Marker": {
+                "name": "Marker"
+            },
+            "Three": {
+                "name": "Three"
+            }
         }
+    },
+    "Layer": {
+        "name": "Layer",
+        "name_en": "Layer"
     },
     "Control": {
         "name": "Control",
         "name_en": "Control",
+        "content": {}
+    },
+    "BaseType": {
+        "name": "BaseType",
+        "name_en": "BaseType",
         "content": {
-            
+            "Namespace": {
+                "name": "Namespace",
+                "name_en": "Namespace"
+            },
+            "Util": {
+                "name": "Util",
+                "name_en": "Util"
+            },
+            "Service": {
+                "name": "Service",
+                "name_en": "Service"
+            },
+            "Geometry": {
+                "name": "Geometry",
+                "name_en": "Geometry"
+            },
+            "Projection": {
+                "name": "Projection",
+                "name_en": "Projection"
+            },
+            "Format": {
+                "name": "Format",
+                "name_en": "Format"
+            },
+            "Style": {
+                "name": "Style",
+                "name_en": "Style"
+            }
         }
     }
 }

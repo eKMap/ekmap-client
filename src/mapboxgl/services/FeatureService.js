@@ -17,8 +17,8 @@ import { Parse } from '../core/Parse';
  * })
  * @extends {mapboxgl.ekmap.ServiceBase}
  * @param {object} options Construction parameters.
- * @param {string} [options.url]  (Required) The URL to the Feature Service.
- * @param {string} [options.token] - Will use this token to authenticate all calls to the service.
+ * @param {string} options.url  (Required) The URL to the Feature Service.
+ * @param {string} options.token - Will use this token to authenticate all calls to the service.
  */
 export class FeatureService extends ServiceBase {
     constructor(options) {

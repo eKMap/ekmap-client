@@ -4,7 +4,6 @@ import mapboxgl from 'mapbox-gl';
 /**
  * @class mapboxgl.ekmap.GeoJSONLayer
  * @classdesc The GeoJSONLayer class.
- * @category  Layer
  * @extends {mapboxgl.Evented}
  */
 export class GeoJSONLayer extends mapboxgl.Evented {

@@ -5,10 +5,10 @@ import { TiledMapLayer } from './TiledMapLayer';
 /**
  * @class mapboxgl.ekmap.TiledOSMapLayer
  * @classdesc The TiledOSMapLayer class.
- * @category Layer
+ * @category Visualization TiledMap
  * @param {Object} options - Control options.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
- * @extends {TiledMapLayer}
+ * @extends {mapboxgl.ekmap.TiledMapLayer}
  * @example
  * var map = new mapboxgl.Map({
  *     container: 'divMapId',
