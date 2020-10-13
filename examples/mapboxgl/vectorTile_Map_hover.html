@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Vector Tile Layer</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+
+        var map = new mapboxgl.Map({
+            container: 'divMapId', // container id
+            minZoom: 4,
+            center: [105, 17],
+            zoom: 4
+        });
+        var hoveredStateId = null;
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer(urlVectorService + "/resources/styles?apikey=" + tokenKey).addTo(map);
+        map.on('load', function () {
+            map.addLayer({
+                'id': 'areaHover',
+                'type': 'fill',
+                'source': '35',
+                'source-layer': "480",
+                'layout': {
+                },
+                'paint': {
+                    'fill-outline-color': '#484896',
+                    'fill-color': '#6e599f',
+                    'fill-opacity': 0.75
+                },
+                'filter': ["get", "CODE"]
+            })
+            console.log(map.getStyle().layers)
+        })
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+
+        var hoveredStateId = null;
+        map.on('mousemove', '480', function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['480']
+            });
+            var x = null;
+            var filter = features.reduce(
+                function (memo, feature) {
+                    x = feature.properties.CODE;
+                    memo.push();
+                    return memo;
+                },
+                ['get', 'CODE']
+            );
+                var arr = ['==', ['get', 'CODE'], x];
+                map.setFilter('areaHover', arr);
+        });
+
+        map.on('mouseout', '480', function (e) {
+            map.setFilter('areaHover', ['get', 'CODE']);
+        });
+
+    </script>
+</body>
+
+</html>

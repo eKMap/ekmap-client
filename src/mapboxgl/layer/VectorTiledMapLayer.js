@@ -9,7 +9,7 @@ import mapboxgl from 'mapbox-gl';
  */
 export class VectorTiledMapLayer extends mapboxgl.Evented {
     constructor(url) {
-        super();
+        super(); 
         this.url = url;
     }
 

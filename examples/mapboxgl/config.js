@@ -103,7 +103,20 @@ var exampleConfig = {
                         name_en: "Mapbox Vector Tile Overlay",
                         thumbnail: "vectorTile_Map_overlay.png",
                         fileName: "vectorTile_Map_overlay"
+                    },
+                    {
+                        name: "Mapbox Vector Tile Hover",
+                        name_en: "Mapbox Vector Tile Hover",
+                        thumbnail: "vectorTile_Map_hover.png",
+                        fileName: "vectorTile_Map_hover"
+                    },
+                    {
+                        name: "Mapbox Vector Tile Select",
+                        name_en: "Mapbox Vector Tile Select",
+                        thumbnail: "vectorTile_Map_select.png",
+                        fileName: "vectorTile_Map_select"
                     }
+                    
                 ]
             },
             control: {

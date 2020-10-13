@@ -33,46 +33,8 @@
             center: [105, 17],
             zoom: 4
         });
-        var hoveredStateId = null;
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer(urlVectorService + "/resources/styles?apikey=" + tokenKey).addTo(map);
-        map.on('load', function () {
-            map.addLayer({
-                'id': 'state-fills',
-                'type': 'fill',
-                'source': '35',
-                'source-layer':'480',
-                'paint': {
-                    'fill-color': '#627BC1',
-                    'fill-opacity': [
-                        'case',
-                        ['boolean', ['feature-state', 'hover'], false],
-                        1,
-                        0.5
-                    ]
-                }
-            });
-            console.log(map.getStyle().layers)
-        })
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
-
-
-        map.on('mousemove', 'state-fills', function (e) {
-            if (e.features.length > 0) {
-                if (hoveredStateId) {
-                    map.setFeatureState(
-                        { source: '35', id: hoveredStateId },
-                        { hover: false }
-                    );
-                }
-                hoveredStateId = e.features[0].id;
-                map.setFeatureState(
-                    { source: '35', id: hoveredStateId },
-                    { hover: true }
-                );
-            }
-        });
-
     </script>
 </body>
 
