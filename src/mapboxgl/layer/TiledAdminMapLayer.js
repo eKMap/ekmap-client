@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl';
+import { TiledMapLayer } from './TiledMapLayer';
 
 /**
  * @class mapboxgl.ekmap.TiledAdminMapLayer
@@ -6,7 +7,7 @@ import mapboxgl from 'mapbox-gl';
  * @category  Layer
  * @param {Object} options  Construction parameters.
  * @param {string} options.token  Will use this token to authenticate all calls to the service.
- * @extends {mapboxgl.Evented}
+ * @extends {mapboxgl.ekmap.TiledMapLayer}
  * @example
  * var map = new mapboxgl.Map({
  *     container: 'map1',
@@ -18,7 +19,7 @@ import mapboxgl from 'mapbox-gl';
  * })
  *   .addTo(map);
  */
-export class TiledAdminMapLayer extends mapboxgl.Evented {
+export class TiledAdminMapLayer extends TiledMapLayer {
 
     constructor(options) {
         super();

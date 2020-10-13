@@ -6,16 +6,22 @@ import mapboxgl from 'mapbox-gl';
  * @class mapboxgl.ekmap.control.FeatureInfomation
  * @category  Control
  * @classdesc FeatureInfomation.
+ * @param {Object} options Construction parameters.
+ * @param {Boolean} options.setStyle=true If setStyle = false, the selected feature will not set style and vice versa it will set style default.
+ * @extends {mapboxgl.Evented}
+ * @fires mapboxgl.ekmap.FeatureInfomation#selectfeatures
  * @example
  * (start code)
- *  map.addControl(new mapboxgl.ekmap.control.FeatureInfomation(),'bottom-right');
+ *  map.addControl(new mapboxgl.ekmap.control.FeatureInfomation({ setStyle: true }),'bottom-right');
  * (end)
  */
 
 export class FeatureInfomation extends mapboxgl.Evented {
 
-    constructor() {
-        super();
+    constructor(options) {
+        super(options);
+        this.options = options ? options : {};
+        this.setStyle = options ? options.setStyle : true;
     }
 
     /**
@@ -28,7 +34,143 @@ export class FeatureInfomation extends mapboxgl.Evented {
         this._map = map;
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl';
+        var me = this;
+        this._map.on('click', function (e) {
+            var layers = me._map.getStyle().layers;
+            layers.forEach(layer => {
+                if (layer.metadata && layer.metadata.type == 'overlayer' && layer.layout.visibility === "visible") {
+                    var mapService = new mapboxgl.ekmap.MapService({
+                        url: layer.metadata.url,
+                        token: layer.metadata.token
+                    });
+                    mapService.identify().on(me._map).at(e.lngLat).run(function (obj) {
+                        var features = [];
+                        if (obj.length > 0 && me.setStyle) {
+                            for (var i = 0; i < obj.length; i++) {
+                                //Point
+                                if (obj[i].geometryType == 'esriGeometryPoint') {
+                                    features.push({
+                                        'type': 'Feature',
+                                        'geometry': {
+                                            'type': 'Point',
+                                            'coordinates': [
+                                                obj[i].geometry.x,
+                                                obj[i].geometry.y
+                                            ]
+                                        },
+                                        'properties': {
+                                            'name': 'point'
+                                        }
+                                    })
+                                } else {
+                                    var coordinates;
+                                    if (obj[i].geometry.paths)
+                                        coordinates = obj[i].geometry.paths[0];
+                                    else
+                                        coordinates = obj[i].geometry.rings[0];
+                                    if (obj[i].geometryType == 'esriGeometryPolyline')
+                                        features.push({
+                                            'type': 'Feature',
+                                            'geometry': {
+                                                'type': 'LineString',
+                                                'coordinates': coordinates
+                                            },
+                                            'properties': {
+                                                'name': 'line'
+                                            }
+                                        })
+                                    else
+                                        features.push({
+                                            'type': 'Feature',
+                                            'geometry': {
+                                                'type': 'LineString',
+                                                'coordinates': coordinates
+                                            },
+                                            'properties': {
+                                                'name': 'area'
+                                            }
+                                        })
+                                }
+                                var data = {
+                                    'type': 'FeatureCollection',
+                                    'features': features
+                                }
+                                console.log(!me._map.getSource('feature-info'))
+                                if (!me._map.getSource('feature-info')) {
+                                    me._map.addSource('feature-info', {
+                                        'type': 'geojson',
+                                        'data': data
+                                    })
+
+                                    me._map.addLayer({
+                                        'id': 'point',
+                                        'type': 'circle',
+                                        'source': 'feature-info',
+                                        'paint': {
+                                            'circle-radius': 10,
+                                            'circle-color': '#0000ff'
+                                        },
+                                        'filter': ['in', 'name']
+                                    })
+
+                                    me._map.addLayer({
+                                        'id': 'line',
+                                        'type': 'line',
+                                        'source': 'feature-info',
+                                        'layout': {
+                                            'line-join': 'round',
+                                            'line-cap': 'round'
+                                        },
+                                        'paint': {
+                                            'line-color': '#000',
+                                            'line-width': 5
+                                        },
+                                        'filter': ['in', 'name']
+                                    })
+
+                                    me._map.addLayer({
+                                        'id': 'area',
+                                        'type': 'fill',
+                                        'source': 'feature-info',
+                                        'layout': {
+                                        },
+                                        'paint': {
+                                            'fill-outline-color': '#484896',
+                                            'fill-color': '#6e599f',
+                                            'fill-opacity': 0.75
+                                        },
+                                        'filter': ['in', 'name']
+                                    })
+                                    me.setFilter(me._map);
+                                } else {
+                                    me._map.getSource('feature-info').setData(data);
+                                    me.setFilter(me._map);
+                                }
+                                if (me._map.getLayer('point') && me._map.getLayer('line'))
+                                    me._map.moveLayer('line', 'point');
+                            }
+                            obj.coordinate = e.lngLat;
+                        }
+                        /**
+                         * @event mapboxgl.ekmap.control.FeatureInfomation#selectfeatures
+                         * @description Fired when the feature is selected.
+                         */
+                        me.fire('selectfeatures', obj);
+                    }, "");
+                }
+            });
+        });
         return this._container;
+    }
+
+    /**
+     * @private
+     * @param {*} map 
+     */
+    setFilter(map) {
+        map.setFilter('point', ['in', 'name', 'point'])
+        map.setFilter('line', ['in', 'name', 'line'])
+        map.setFilter('area', ['in', 'name', 'area'])
     }
 
     /**
@@ -56,252 +198,6 @@ export class FeatureInfomation extends mapboxgl.Evented {
                 map.removeLayer('area');
                 map.removeSource('area');
             }
-        }
-    }
-
-    on(event, callback) {
-        var me = this;
-        if (event == 'selectfeature') {
-            this._map.on('click', function (e) {
-                me.removeLayer(me._map);
-                var cooor = [e.lngLat.lng, e.lngLat.lat];
-                var geojson = {
-                    'type': 'FeatureCollection',
-                    'features': [
-                        {
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': cooor
-                            }
-                        }
-                    ]
-                };
-                var layers = me._map.getStyle().layers;
-                layers.forEach(layer => {
-                    if (layer.metadata && layer.metadata.type == 'overlayer' && layer.layout.visibility === "visible") {
-                        var mapService = new mapboxgl.ekmap.MapService({
-                            url: layer.metadata.url,
-                            token: layer.metadata.token
-                        });
-                        mapService.identify().on(me._map).at(e.lngLat).run(function (obj) {
-                            if (obj.length > 0) {
-                                for (var i = 0; i < obj.length; i++) {
-                                    //Point
-                                    if (obj[i].geometryType == 'esriGeometryPoint') {
-                                        if (!me._map.getLayer('point')) { 
-                                            me._map.addSource('point', {
-                                                'type': 'geojson',
-                                                'data': geojson
-                                            });
-                                            me._map.addLayer({
-                                                'id': 'point',
-                                                'type': 'circle',
-                                                'source': 'point',
-                                                'paint': {
-                                                    'circle-radius': 10,
-                                                    'circle-color': '#0000ff'
-                                                }
-                                            });
-                                        } else {
-                                            me._map.removeLayer('point');
-                                            me._map.removeSource('point');
-                                            me._map.addSource('point', {
-                                                'type': 'geojson',
-                                                'data': geojson
-                                            });
-
-                                            me._map.addLayer({
-                                                'id': 'point',
-                                                'type': 'circle',
-                                                'source': 'point',
-                                                'paint': {
-                                                    'circle-radius': 10,
-                                                    'circle-color': '#0000ff'
-                                                }
-                                            });
-                                        }
-                                    }
-                                    //Polygon
-                                    else {
-                                        var coordinates;
-                                        if (obj[i].geometry.paths)
-                                            coordinates = obj[i].geometry.paths[0];
-                                        else
-                                            coordinates = obj[i].geometry.rings[0];
-                                        //Polyline
-                                        if (obj[i].geometryType == 'esriGeometryPolyline') {
-                                            if (!me._map.getLayer('line')) {
-                                                me._map.addSource('line', {
-                                                    'type': 'geojson',
-                                                    'data': {
-                                                        'type': 'Feature',
-                                                        'properties': {},
-                                                        'geometry': {
-                                                            'type': 'LineString',
-                                                            'coordinates': coordinates
-                                                        }
-                                                    }
-                                                });
-                                                me._map.addLayer({
-                                                    'id': 'line',
-                                                    'type': 'line',
-                                                    'source': 'line',
-                                                    'layout': {
-                                                        'line-join': 'round',
-                                                        'line-cap': 'round'
-                                                    },
-                                                    'paint': {
-                                                        'line-color': '#000',
-                                                        'line-width': 5
-                                                    }
-                                                });
-                                            } else {
-                                                me._map.removeLayer('line');
-                                                me._map.removeSource('line');
-                                                me._map.addSource('line', {
-                                                    'type': 'geojson',
-                                                    'data': {
-                                                        'type': 'Feature',
-                                                        'properties': {},
-                                                        'geometry': {
-                                                            'type': 'LineString',
-                                                            'coordinates': coordinates
-                                                        }
-                                                    }
-                                                });
-                                                me._map.addLayer({
-                                                    'id': 'line',
-                                                    'type': 'line',
-                                                    'source': 'line',
-                                                    'layout': {
-                                                        'line-join': 'round',
-                                                        'line-cap': 'round'
-                                                    },
-                                                    'paint': {
-                                                        'line-color': '#000',
-                                                        'line-width': 5
-                                                    }
-                                                });
-                                            }
-                                        }
-                                        //Area
-                                        else {
-                                            if (!me._map.getLayer('area')) {
-                                                me._map.addSource('area', {
-                                                    'type': 'geojson',
-                                                    lineMetrics: true,
-                                                    'data': {
-                                                        'type': 'Feature',
-                                                        'properties': {},
-                                                        'geometry': {
-                                                            'type': 'LineString',
-                                                            'coordinates': coordinates
-                                                        }
-                                                    }
-                                                });
-                                                me._map.addLayer({
-                                                    //line path
-                                                    // 'id': 'area',
-                                                    // 'type': 'line',
-                                                    // 'source': 'area',
-                                                    // 'layout': {
-                                                    //     'line-join': 'round',
-                                                    //     'line-cap': 'round'
-                                                    // },
-                                                    // 'paint': {
-                                                    //     'line-color': '#90c258',
-                                                    //     'line-width': 5,
-                                                    //     'line-gradient': [
-                                                    //         'interpolate',
-                                                    //         ['linear'],
-                                                    //         ['line-progress'],
-                                                    //         0,
-                                                    //         'blue',
-                                                    //         0.1,
-                                                    //         'royalblue',
-                                                    //         0.3,
-                                                    //         'cyan',
-                                                    //         0.5,
-                                                    //         'lime',
-                                                    //         0.7,
-                                                    //         'yellow',
-                                                    //         1,
-                                                    //         'red'
-                                                    //     ],
-                                                    // }
-                                                    //fill path
-                                                    'id': 'area',
-                                                    'type': 'fill',
-                                                    'source': 'area',
-                                                    'layout': { 
-                                                    }, 
-                                                    'paint': {
-                                                       'fill-outline-color': '#484896',
-                                                       'fill-color': '#6e599f',
-                                                       'fill-opacity': 0.75
-                                                    },
-                                                });
-                                            } else {
-                                                me._map.removeLayer('area');
-                                                me._map.removeSource('area');
-                                                me._map.addSource('area', {
-                                                    'type': 'geojson',
-                                                    'data': {
-                                                        'type': 'Feature',
-                                                        'properties': {},
-                                                        'geometry': {
-                                                            'type': 'LineString',
-                                                            'coordinates': coordinates
-                                                        }
-                                                    }
-                                                });
-                                                me._map.addLayer({
-                                                    'id': 'area',
-                                                    'type': 'line',
-                                                    'source': 'area',
-                                                    'layout': {
-                                                        'line-join': 'round',
-                                                        'line-cap': 'round'
-                                                    },
-                                                    'paint': {
-                                                        'line-color': '#90c258',
-                                                        'line-width': 5,
-                                                        'line-gradient': [
-                                                            'interpolate',
-                                                            ['linear'],
-                                                            ['line-progress'],
-                                                            0,
-                                                            'blue',
-                                                            0.1,
-                                                            'royalblue',
-                                                            0.3,
-                                                            'cyan',
-                                                            0.5,
-                                                            'lime',
-                                                            0.7,
-                                                            'yellow',
-                                                            1,
-                                                            'red'
-                                                        ],
-                                                    }
-                                                });
-                                            }
-                                        }
-                                    }
-                                    if (me._map.getLayer('point') && me._map.getLayer('line'))
-                                        me._map.moveLayer('line', 'point');
-                                }
-                                obj.coordinate = e.lngLat;
-                            }
-                            else {
-                                me.removeLayer(me._map);
-                            }
-                            callback(obj);
-                        }, "");
-                    }
-                });
-            });
         }
     }
 }

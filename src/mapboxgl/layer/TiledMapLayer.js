@@ -75,23 +75,6 @@ export class TiledMapLayer extends mapboxgl.Evented {
                         'type': 'overlayer',
                         'url': this.options.url,
                         'token': this.options.token ? this.options.token : ""
-                        //'layers': [
-                        //    {
-                        //        id: 'Thủy điện',
-                        //        geometryType: 'esriGeometryPoint',
-                        //        url: 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/VietNam/FeatureServer/0/'
-                        //    },
-                        //    {
-                        //        id: 'Đường giao thông',
-                        //        geometryType: 'esriGeometryPolyline',
-                        //        url: 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/VietNam/FeatureServer/1/'
-                        //    },
-                        //    {
-                        //        id: 'Địa phận tỉnh',
-                        //        geometryType: 'esriGeometryPolygon',
-                        //        url: 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/VietNam/FeatureServer/2/'
-                        //    }
-                        //]
                     }
                 })
         }

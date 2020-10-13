@@ -278,7 +278,7 @@ export class FeatureLayer extends mapboxgl.Evented {
     /**
     * @function mapboxgl.ekmap.FeatureLayer.prototype.deleteFeature
     * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then delete.
-    * @param {string} id Id of feature.
+    * @param {Interger} id Id of feature.
     * @param {Function} callback The callback of result data returned by the server side.
     * @param {Object} context
     * @returns {this}
@@ -299,30 +299,6 @@ export class FeatureLayer extends mapboxgl.Evented {
     deleteFeatures(ids, callback, context) {
         return this.service.deleteFeatures(ids, callback, context)
     }
-
-    /**
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.on
-    * @description Listen for a event.
-    * @param {string} event The event type or array of event types.
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @returns {} Unique key for the listener. If called with an array of event types as the first argument, the return will be an array of keys.
-    */
-    // on(event, callback) {
-    //     var me = this;
-    //     if (event == 'click') {
-    //         this.map.on('click', function (e) {
-    //             var lngLat = e.lngLat;
-    //             var featureService = new mapboxgl.ekmap.FeatureService(me.options);
-    //             featureService.nearby(lngLat.lat, lngLat.lng, function (obj) {
-    //                 if (obj.objectIds)
-    //                     callback(obj);
-    //                 else
-    //                     callback(e)
-    //             })
-
-    //         })
-    //     }
-    // }
 
     /**
     * @function mapboxgl.ekmap.FeatureLayer.prototype.refresh
