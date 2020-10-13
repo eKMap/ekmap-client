@@ -8,11 +8,11 @@ https://ekmap.github.io/ekmap-client
 
 ## Docs API
 
-https://ekmap.github.io/docs
+https://ekmap.github.io/ekmap-client/docs
 
 ## Tutorials
 
-https://ekmap.github.io/tutorials
+https://ekmap.github.io/ekmap-client/tutorials
 
 ## License
 [MIT License](./LICENSE)
