@@ -328,8 +328,8 @@ export class Util {
 
     /**
      * add img, video element to domContainer.
-     * @param {*domEle} dom, dom container..
-     * @param {*Array} res, urls of img/video loaded to dom. 
+     * @param {domEle} dom, dom container..
+     * @param {Array} res, urls of img/video loaded to dom. 
      */
     static setResource(dom, res) {
         if (!(res instanceof Array)) return;
