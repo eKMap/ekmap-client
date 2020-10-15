@@ -95,7 +95,6 @@ export class FeatureInfomation extends mapboxgl.Evented {
                                     'type': 'FeatureCollection',
                                     'features': features
                                 }
-                                console.log(!me._map.getSource('feature-info'))
                                 if (!me._map.getSource('feature-info')) {
                                     me._map.addSource('feature-info', {
                                         'type': 'geojson',

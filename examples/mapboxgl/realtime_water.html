@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Realtime Water</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [106.813834123584, 15.77458200059695],
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256
+                    }
+                },
+                "layers": [
+                    {
+                        "id": "raster-tiles",
+                        "type": "raster",
+                        "source": "raster-tiles",
+                        "minzoom": 0,
+                        "maxzoom": 22,
+                        'layout': {
+                            'visibility': 'visible',
+                        },
+                        'raster-opacity': 0.75,
+                    }
+                ]
+            },
+            zoom: 5.479005488986576,
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+        map.on('load', function () {
+            $.get("../data/waterdata.json", function (response) {
+                window.setInterval(function () {
+                    // var x = Math.floor(Math.random() * 332) + 162;
+                    // map.setFilter('water-color',["in","madoituong",''+x])
+                    var color = getRandomColor();
+                    var color1 = getRandomColor();
+                    var color2 = getRandomColor();
+                    map.setPaintProperty('water-color', 'fill-color', ''+color);
+                    map.setPaintProperty('water-color1', 'fill-color', ''+color1);
+                    map.setPaintProperty('water-color2', 'fill-color', ''+color2);
+                }, 2000)
+                map.addSource('drone', {
+                    'type': 'geojson',
+                    'data': response
+                });
+                map.addLayer({
+                    'id': 'water',
+                    'type': 'line',
+                    'source': 'drone',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': '#000',
+                        'line-width': 2
+                    },
+                });
+                map.addLayer({
+                    'id': 'water-color',
+                    'type': 'fill',
+                    'source': 'drone',
+                    'paint': {
+                        'fill-outline-color': '#484896',
+                        'fill-color': '#6e599f',
+                        'fill-opacity': 0.75
+                    },
+                    'filter': ['in', 'madoituong', '201']
+                })
+                map.addLayer({
+                    'id': 'water-color1',
+                    'type': 'fill',
+                    'source': 'drone',
+                    'paint': {
+                        'fill-outline-color': '#484896',
+                        'fill-color': 'orange',
+                        'fill-opacity': 0.75
+                    },
+                    'filter': ['in', 'madoituong', '203']
+                })
+                map.addLayer({
+                    'id': 'water-color2',
+                    'type': 'fill',
+                    'source': 'drone',
+                    'paint': {
+                        'fill-outline-color': '#484896',
+                        'fill-color': 'blue',
+                        'fill-opacity': 0.75
+                    },
+                    'filter': ['in', 'madoituong', '266']
+                })
+            });
+        })
+        function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+    </script>
+</body>
+
+</html>

@@ -295,7 +295,7 @@
                         },
                         "properties": {
                             'OBJECTID': idFeatureSelected,
-                            'Ten_ga': document.getElementById("desName").value
+                            'ten': document.getElementById("desName").value
                         }
                     }
                 };
@@ -367,7 +367,7 @@
                     );
                     idFeatureSelected = features[0].properties.OBJECTID;
                     map.setFilter('point-selected', filter);
-                    document.getElementById("desName").value = features[0].properties.Ten_ga;
+                    document.getElementById("desName").value = features[0].properties.ten;
                 }
             }
         });

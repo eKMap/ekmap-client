@@ -123,13 +123,13 @@ var urlOSMStandard = [
 
 var urlServicesHost = "https://viegisserver.ekgis.vn";
 //var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
-var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/ogsfeature/35/FeatureServer/478'
+var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/35/FeatureServer/478'
 
 
 //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
-var urlMapLayer = urlServicesHost + '/gserver/rest/services/ogsmap/35/MapServer/478'
-var urlMapService = urlServicesHost + '/gserver/rest/services/ogsmap/35/MapServer'
+var urlMapLayer = urlServicesHost + '/gserver/rest/services/35/MapServer/478'
+var urlMapService = urlServicesHost + '/gserver/rest/services/35/MapServer'
 //var urlMapService = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
 
-var urlVectorService = urlServicesHost + '/gserver/rest/services/ogsmap/35/VectorTileServer';
+var urlVectorService = urlServicesHost + '/gserver/rest/services/35/VectorTileServer';
 

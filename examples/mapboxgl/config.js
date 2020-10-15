@@ -608,6 +608,25 @@ var exampleConfig = {
             //         fileName: "d3HexbinLayer"
             //     }]
             // }
+            ,
+            LayerChart: {
+                name: "Layer Chart",
+                name_en: "Layer Chart",
+                content: [
+                    {
+                        name: "Layer Chart",
+                        name_en: "Layer Chart",
+                        thumbnail: "layerChart.png",
+                        fileName: "layerChart"
+                    },
+                    {
+                        name: "Realtime Water",
+                        name_en: "Realtime Water",
+                        thumbnail: "realtime_water.png",
+                        fileName: "realtime_water"
+                    }
+                ]
+            }
         }
     },
     clientspatial: {

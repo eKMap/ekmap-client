@@ -1,6 +1,7 @@
 import mapboxgl from "mapbox-gl";
 import "../core/Base";
 import { Parse } from "../core/Parse";
+
 /**
  * @class mapboxgl.ekmap.Util
  * @category BaseType Util
@@ -22,17 +23,17 @@ export class Util {
     static isString(str) {
         return (typeof str === 'string') && str.constructor === String;
     }
-    
-    static newGuid(attr) { 
+
+    static newGuid(attr) {
         let len = attr || 32;
         let guid = "";
         for (let i = 1; i < len; i++) {
             let n = Math.floor(Math.random() * 16.0).toString(16);
             guid += n;
-        } 
+        }
         return guid;
     }
-    
+
     static hexToRgba(hex, opacity) {
         var color = [],
             rgba = [];
@@ -103,7 +104,7 @@ export class Util {
         if (geometry instanceof mapboxgl.LngLat) {
             geometry = {
                 type: 'Point',
-                coordinates: [geometry.lng, geometry.lat] 
+                coordinates: [geometry.lng, geometry.lat]
             };
         }
 
@@ -143,7 +144,7 @@ export class Util {
             // get the geometry of the geojson feature
             geometry = geometry.geometry;
         }
-      
+
     }
 
     static boundsToExtent(bounds) {
@@ -210,7 +211,7 @@ export class Util {
     }
 
     static getUrl(options) {
-        if (options.url.indexOf('/0') != '-1') 
+        if (options.url.indexOf('/0') != '-1')
             option.url = options.url.split('/0').join('');
         if (options.url.indexOf('/1') != '-1')
             option.url = options.url.split('/1').join('');
@@ -302,6 +303,100 @@ export class Util {
             }
         }
         return dest;
+    }
+
+    static deepClone(obj) {
+        let cloned = {};
+        if (typeof obj !== 'object') return obj;
+        if (obj instanceof Array) return obj.map((ele) => this.deepClone(ele));
+        for (let k in obj) {
+            if (obj.hasOwnProperty(k) && typeof obj[k] !== 'object') {
+                cloned[k] = obj[k];
+            } else if (obj[k].constructor.toString().indexOf("Object") > 0) {
+                cloned[k] = this.deepClone(obj[k]);
+            } else if (Array.isArray(obj[k])) {
+                cloned[k] = obj[k].map((ele) => {
+                    // let ret = null;
+                    if (typeof ele !== 'object') return ele;
+                    else return this.deepClone(ele);
+                });
+                // cloned[k] = [].concat(obj[k]);
+            }
+        }
+        return cloned;
+    }
+
+    /**
+     * add img, video element to domContainer.
+     * @param {*domEle} dom, dom container..
+     * @param {*Array} res, urls of img/video loaded to dom. 
+     */
+    static setResource(dom, res) {
+        if (!(res instanceof Array)) return;
+        dom.innerHTML = '';
+        for (let i = 0; i < res.length; i++) {
+            let filetype = this.getFiletype(res[i]);
+            if (filetype !== "") {
+                let ele = document.createElement(filetype);
+                ele.style.width = ele.style.height = dom.style.width = dom.style.height = '60px';
+                ele.style.borderRadius = "50%";
+                ele.src = res[i];
+                dom.style.borderRadius = "50%";
+                dom.appendChild(ele);
+            }
+            if (filetype == 'video') {
+                ele.setAttribute('autoplay', true);
+            }
+        }
+    }
+
+    /**
+     * return iconposition style by iconName
+     */
+    static setIconDiv(dom, iconName) {
+        let icons = Const.Sprites;
+        if (iconName && icons[iconName]) {
+            let iconStyle = icons[iconName],
+                iconDiv = document.createElement("div");
+            iconDiv.style.width = iconStyle.width + "px";
+            iconDiv.style.height = iconStyle.height + "px";
+            iconDiv.style.overflow = 'hidden';
+            let iconImg = document.createElement("img");
+            iconImg.src = Const.SpritesUrl + ".png";
+            iconImg.style.marginLeft = "-" + iconStyle.x + "px";
+            iconImg.style.marginTop = "-" + iconStyle.y + "px";
+            iconDiv.appendChild(iconImg);
+            dom.appendChild(iconDiv);
+        }
+    }
+
+    static isChanged(lastData, data) {
+        if (JSON.stringify(lastData) == JSON.stringify(data))
+            return false;
+        else {
+            return true;
+        }
+    }
+
+    static setChart(dom, data, type, height) {
+        if (!Chart) {
+            return;
+        }
+        let canv = document.createElement('canvas'),
+            ctx = canv.getContext('2d');
+        let chart = new Chart(ctx, {
+            type: type,
+            data: data,
+            options: {
+                legend: {
+                    display: false
+                },
+            }
+        });
+        canv.height = height; canv.style.height = canv.height + 'px';
+        canv.width = height; canv.style.width = canv.width + 'px';
+        dom.appendChild(canv);
+        return chart;
     }
 }
 
