@@ -1,6 +1,15 @@
 import mapboxgl from 'mapbox-gl';
 
-export default class Overlayer extends mapboxgl.Evented{
+/**
+ * @class mapboxgl.ekmap.Overlay
+ * @classdesc mapboxgl.ekmap.Overlay 
+ * @category  Layer
+ * @param {Object} options - Construction parameters.
+ * @param {mapboxgl.Map} options.map Adds the layer to the given map or layer group.
+ * 
+ * @extends {mapboxgl.Overlay}
+ */
+export default class Overlay extends mapboxgl.Evented{
     
     constructor(opts){
         super(opts);
@@ -17,13 +26,21 @@ export default class Overlayer extends mapboxgl.Evented{
 
     }
 
-    // @setter
+    /**
+     * @private
+     * @function mapboxgl.ekmap.Overlay.prototype.setMap
+     * @description set map for overlay.
+     * @returns {mapboxgl.Map}
+     */
     static setMap(map) {
         this.map = map;
         return this;
     }
+
     /**
-     * use Global map or this.map instance to project
+     * @private
+     * @function mapboxgl.ekmap.Overlay.prototype.lnglat2pix
+     * @description use Global map or this.map instance to project.
      */
     lnglat2pix(lng, lat) {
         if (this.map != undefined && this.map.project instanceof Function) {
@@ -36,4 +53,4 @@ export default class Overlayer extends mapboxgl.Evented{
     }
 }
 
-mapboxgl.ekmap.Overlayer = Overlayer;
+mapboxgl.ekmap.Overlay = Overlay;

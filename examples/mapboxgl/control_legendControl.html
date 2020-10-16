@@ -24,6 +24,7 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
+        <button id='test'></button>
     </div>
     <script>
         var map = new mapboxgl.Map({
@@ -60,7 +61,9 @@
                 token: tokenKey
             }).addTo(map);
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-            var legend = new mapboxgl.ekmap.control.Legend([tiledMap]);
+            var legend = new mapboxgl.ekmap.control.Legend({
+                layers: [tiledMap]
+            });
             map.addControl(legend, "top-left");
         })
     </script>

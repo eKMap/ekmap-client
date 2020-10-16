@@ -14,7 +14,7 @@ export { FeatureLayer } from './FeatureLayer';
 
 export { ThreeLayer } from './ThreeLayer';
 
-export { DomOverlayer } from './DomOverlayer';
+export { DomOverlay } from './DomOverlay';
 
 
 

@@ -27,7 +27,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper">
-        <h1 class="page-title" data-filename="mapboxgl.ekmap.TiledMapLayer.html">Class: TiledMapLayer</h1>
+        <h1 class="page-title" data-filename="mapboxgl.ekmap.DomOverlay.html">Class: DomOverlay</h1>
         
 
 
@@ -35,11 +35,11 @@
 <section>
     
 <header>
-    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a>.</span>TiledMapLayer
+    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a>.</span>DomOverlay
     
     </h2>
     
-        <div class="class-description"><p>The TiledMapLayer class.</p></div>
+        <div class="class-description"><p>mapboxgl.ekmap.DomOverlay</p></div>
     
 </header>  
 
@@ -51,14 +51,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="TiledMapLayer">
+        <h4 class="name" id="DomOverlay">
             
-            new mapboxgl.ekmap.TiledMapLayer<span class="signature">(options)</span>
+            new mapboxgl.ekmap.DomOverlay<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/TiledMapLayer.js, line 4
+            layer/DomOverlay.js, line 6
         </div>
         
     </div>
@@ -135,13 +135,13 @@
 	
         <tr>
             
-                <td class="name"><code>url</code></td>
+                <td class="name"><code>map</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type"><a href="https://www.mapbox.com/mapbox-gl-js/api/#map">mapboxgl.Map</a></span>
 
 
             
@@ -151,14 +151,37 @@
             
             <td class="description last">
                 
-                <p>Required: URL of the <a href="https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm">Map Service</a> with a tile cache.</p></td>
+                <p>Adds the layer to the given map or layer group.</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>token</code></td>
+                <td class="name"><code>features</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="https://geojson.org">GeoJSONObject</a>></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>List features.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
             
             
             <td class="type">
@@ -174,7 +197,53 @@
             
             <td class="description last">
                 
-                <p>Will use this token to authenticate all calls to the service.</p></td>
+                <p>Type of Chart.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fields</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>List fields display and fields properties data.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>colors</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Color corresponds to the data.</p></td>
         </tr>
 	
 	
@@ -237,7 +306,7 @@
             
             
             
-            <li><a href="https://www.mapbox.com/mapbox-gl-js/api/#Evented">mapboxgl.Evented</a></li>
+            <li>mapboxgl.Overlay</li>
             
             
         </ul>
@@ -262,14 +331,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="addTo">
+        <h4 class="name" id="clearDoms">
             
-            addTo<span class="signature">(map)</span>
+            clearDoms<span class="signature">()</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/TiledMapLayer.js, line 49
+            layer/DomOverlay.js, line 100
         </div>
         
     </div>
@@ -280,7 +349,7 @@
     
     
     <div class="description">
-        <p>Adds the layer to the given map or layer group.</p>
+        <p>remove all doms.</p>
     </div>
     
 
@@ -288,51 +357,6 @@
     
     
     
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>map</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="https://www.mapbox.com/mapbox-gl-js/api/#map">mapboxgl.Map</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>Adds the layer to the given map or layer group.</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
     
     
     
@@ -370,15 +394,6 @@
     
     
     
-    <h5>Returns:</h5>
-    
-
-
-
-this
-
-
-    
     
     
 </dd>
@@ -387,14 +402,14 @@ this
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="find">
+        <h4 class="name" id="findDom">
             
-            find<span class="signature">(params, callback)</span>
+            findDom<span class="signature">(domId)</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/TiledMapLayer.js, line 135
+            layer/DomOverlay.js, line 84
         </div>
         
     </div>
@@ -403,10 +418,6 @@ this
 </dt>
 <dd>
     
-    
-    <div class="description">
-        <p>Adds the layer to the given map or layer group.</p>
-    </div>
     
 
     
@@ -436,36 +447,13 @@ this
 	
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>domId</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>Adds the layer to the given map or layer group.</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">RequestCallback</span>
+<span class="param-type">string</span>
 
 
             
@@ -526,14 +514,14 @@ this
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="identity">
+        <h4 class="name" id="setDoms">
             
-            identity<span class="signature">()</span>
+            setDoms<span class="signature">(Doms)</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/TiledMapLayer.js, line 126
+            layer/DomOverlay.js, line 71
         </div>
         
     </div>
@@ -544,87 +532,7 @@ this
     
     
     <div class="description">
-        <p>Returns a new mapboxgl.ekmap.IdentifyFeatures object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-
-this
-
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="legend">
-            
-            legend<span class="signature">(callback)</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            layer/TiledMapLayer.js, line 145
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>legend of Tiled Map Layer.</p>
+        <p>updateDoms and redraw.</p>
     </div>
     
 
@@ -655,13 +563,13 @@ this
 	
         <tr>
             
-                <td class="name"><code>callback</code></td>
+                <td class="name"><code>Doms</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">RequestCallback</span>
+<span class="param-type">Object</span>
 
 
             

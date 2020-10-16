@@ -1,27 +1,53 @@
+import mapboxgl from 'mapbox-gl';
 import { Util } from '../core/Util';
-import Overlayer from './Overlayer';
+import Overlay from './Overlay';
 
 
 /**
- * @class mapboxgl.ekmap.FeatureLayer
- * @classdesc mapboxgl.ekmap.FeatureLayer is used to visualize, style, query and edit vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server. Copyright text from the service is added to map attribution automatically.
+ * @class mapboxgl.ekmap.DomOverlay
+ * @classdesc mapboxgl.ekmap.DomOverlay 
  * @category  Layer
  * @param {Object} options - Construction parameters.
- * @param {string} options.url - Required The URL to the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Feature Layer}.
- * @param {string} options.token - Will use this token to authenticate all calls to the service.
- * @extends {mapboxgl.Evented}
- * @fires mapboxgl.ekmap.FeatureLayer#loadstart
- * @fires mapboxgl.ekmap.FeatureLayer#loadend
+ * @param {mapboxgl.Map} options.map Adds the layer to the given map or layer group.
+ * @param {Array.<GeoJSONObject>} options.features List features.
+ * @param {string} options.type Type of Chart.
+ * @param {Array.<string>} options.fields List fields display and fields properties data.
+ * @param {Array.<string>} options.colors Color corresponds to the data. 
+ * 
+ * @extends {mapboxgl.Overlay}
  */
-export class DomOverlayer extends Overlayer {
+export class DomOverlay extends Overlay {
 
     constructor(opts) {
         super(opts);
         this.domContainer = this._init();
         this.redraw = _redraw.bind(this);
-        this.domOpts = opts.doms;  // store dom config
+        this.features = opts.features;
+        this.fields = opts.fields;
+        this.domOpts = [];
+        this.features.forEach(fea => {
+            var data = []
+            this.fields.forEach(field => {
+                data.push(fea.properties[field])
+            })
+            this.domOpts.push({
+                type: opts.type,
+                data: {
+                    datasets: [{
+                        data: data,
+                        backgroundColor: opts.colors,
+                        datalabels: {
+                            color: '#FFCE56'
+                        }
+                    }],
+                    labels: this.fields
+                },
+                lon: fea.geometry.coordinates[0],
+                lat: fea.geometry.coordinates[1]
+            })
+        });
         if (opts && opts.map) {
-            Overlayer.setMap(opts.map);
+            Overlay.setMap(opts.map);
             // bind render doms to each move..performance to be promoted.
             opts.map.on("move", this.redraw);
         }
@@ -43,7 +69,9 @@ export class DomOverlayer extends Overlayer {
     }
 
     /**
-     * updateDoms and redraw..
+     * @function mapboxgl.ekmap.DomOverlay.prototype.setDoms
+     * @description updateDoms and redraw.
+     * @param {Object} Doms
      */
     setDoms(Doms) {
         if (Array.isArray(Doms)) {
@@ -53,8 +81,12 @@ export class DomOverlayer extends Overlayer {
         }
     }
 
+    /**
+     * @function mapboxgl.ekmap.DomOverlay.prototype.findDom
+     * @param {string} domId
+     */
     findDom(domId) {
-        for(let i = 0;i<this.doms.length;i++) {
+        for (let i = 0; i < this.doms.length; i++) {
             try {
                 if (this.doms[i] === domId) {
                     return this.doms[i];
@@ -65,15 +97,19 @@ export class DomOverlayer extends Overlayer {
         }
     }
 
+    /**
+     * @function mapboxgl.ekmap.DomOverlay.prototype.clearDoms
+     * @description remove all doms.
+     */
     clearDoms() {
-        for(let i = 0;i<this.doms.length;i++) {
-            this.domContainer.removeChild(this.doms[i]);         
+        for (let i = 0; i < this.doms.length; i++) {
+            this.domContainer.removeChild(this.doms[i]);
         }
         this.doms = [];
     }
 }
 
-const lineHeight = 60, dotRadius = 4, chartHeight = 60;
+const lineHeight = 60, dotRadius = 4, chartHeight = 80;
 /**
  * domOverlay register&render above default canvas..
  * keep in absolute geolocation..
@@ -82,21 +118,21 @@ function _redraw() {
     let doms = this.domOpts;
     if (doms && Array.isArray(doms)) {
         // append each of domPopups to domContainer.
-        for (let i=0;i<doms.length;i++) {
+        for (let i = 0; i < doms.length; i++) {
             let domOpt = doms[i];
             if (typeof domOpt == undefined) continue;
             // let sanity = Util.checkSanity(this.lastDoms[i], domOpt);
-            let x = domOpt['lon'], y = domOpt['lat'], 
+            let x = domOpt['lon'], y = domOpt['lat'],
                 pix = this.lnglat2pix(x, y);
             if (pix == null) continue;
-            let iconName = domOpt['icon'], resources = domOpt['resources'], 
-                domStyle = domOpt['style']? domOpt['style'] + ' animated': 'bounceInRight animated',
+            let iconName = domOpt['icon'], resources = domOpt['resources'],
+                domStyle = domOpt['style'] ? domOpt['style'] + ' animated' : 'bounceInRight animated',
                 chartData = domOpt['data'], chartType = domOpt['type'];
             // data sanity should be checked, domOpts not changed then just update position!
-            let dom = this.doms[i*3] || document.createElement("div"),
-                line = this.doms[i*3+1] ||document.createElement("div"),
-                dot =this.doms[i*3+2] || document.createElement("div");
-            preStyleEles(line, dot, dom, pix, chartType||resources);
+            let dom = this.doms[i * 3] || document.createElement("div"),
+                line = this.doms[i * 3 + 1] || document.createElement("div"),
+                dot = this.doms[i * 3 + 2] || document.createElement("div");
+            preStyleEles(line, dot, dom, pix, chartType || resources);
             let dataClone = Util.deepClone(chartData);
             // handle different typesof domOverlay.
             if (resources != undefined) {
@@ -110,11 +146,11 @@ function _redraw() {
             } else if (chartData != undefined && chartType != undefined) {
                 if (Util.isChanged(this.lastData[i], chartData)) {
                     // setChart would contaminate input Data.
-                    Util.setChart(dom, dataClone, chartType, chartHeight*2);
+                    Util.setChart(dom, dataClone, chartType, chartHeight * 2);
                     this.lastData[i] = chartData;
                 }
             } else {
-                dom.innerHTML = (domOpt['content']|| '') + '</br>';
+                dom.innerHTML = (domOpt['content'] || '') + '</br>';
             }
             if (chartType != undefined) styleChartContainer(dom)
 
@@ -125,7 +161,7 @@ function _redraw() {
             dot.style.top = pix[1] - dotRadius + "px";
 
             // add dom to container at init process.
-            if (this.doms[i*3] == undefined) {
+            if (this.doms[i * 3] == undefined) {
                 dom.className = `dom-popup ${domStyle}`;
                 line.className = dot.className = `dom-ele ${domStyle}`
                 this.domContainer.appendChild(dom);
@@ -157,26 +193,26 @@ function preStyleEles(line, dot, dom, pix, chartType) {
     if (!chartType) {
         dom.style.minWidth = "100px"; // consistant with chart/image dom width/height.
     }
-    dom.style.background = "#fff";
+    // dom.style.background = "#fff";
     dom.style.textAlign = "center";
     dom.style.padding = '3px';
     // if has chartType, display chart above vertical line.
-    dom.style.left = (pix[0] - (isImg? chartHeight/2: chartHeight)) + "px";
-    dom.style.top = (pix[1] - lineHeight - (chartType? chartHeight : 20)) + "px";
+    dom.style.left = (pix[0] - (isImg ? chartHeight / 2 : chartHeight)) + "px";
+    dom.style.top = (pix[1] - lineHeight - (chartType ? chartHeight : 20)) + "px";
 }
 
 function styleChartContainer(dom) {
     dom.style.borderWidth = '0';
     dom.style.zIndex = 9999;
-    dom.style.backgroundColor = 'rgba(0,0,0,0.0)';
+    // dom.style.backgroundColor = 'rgba(0,0,0,0.0)';
 }
 
-function animLine (line){
-    line.className = "dom-line";    
+function animLine(line) {
+    line.className = "dom-line";
 }
 
 const htmlTemplate = {
 
 }
 
-mapboxgl.ekmap.DomOverlayer = DomOverlayer;
+mapboxgl.ekmap.DomOverlay = DomOverlay;

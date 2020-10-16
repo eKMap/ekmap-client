@@ -5,22 +5,29 @@ import { Util } from '../core/Util';
  * @class mapboxgl.ekmap.control.Legend
  * @category  Control
  * @classdesc Legend.
+ * @param {Object} options Construction parameters.
+ * @param {Array<mapboxgl.Map>} options.layers List of layers for which you want to display legend.
+ * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  *
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....
  *  });
  *  var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
- *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
+ *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
  *  }).addTo(map);
- *  var legend = new mapboxgl.ekmap.control.Legend([tiledMap]);
+ *  var legend = new mapboxgl.ekmap.control.Legend({
+ *      layers: [tiledMap]
+ *  });
  *  map.addControl(legend,"top-left");
  */
 export class Legend extends mapboxgl.Evented {
 
-    constructor(layers) {
-        super(layers);
-        this.layers = Util.isArray(layers)? layers : [layers];
+    constructor(options) {
+        super(options);
+        this.options = options ? options : {};
+        this.layers = Util.isArray(this.options.layers)? this.options.layers : [this.options.layers];
+        this.target = this.options.target;
     }
 
     /**
@@ -33,22 +40,36 @@ export class Legend extends mapboxgl.Evented {
         this._map = map;
         let me = this; //might use this later
 
-        this.button = document.createElement("button");
-        let icon = document.createElement("i");
-        icon.className = "fa fa-bars";
-        this.button.className = "mapboxgl-ctrl-zoom-in"
-        this.button.appendChild(icon);
-        this.button.addEventListener("click", function (e) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (me._panel) {
-                me._div.removeChild(me._panel);
-            }
-            me.button.style.display = "none";
-            me._panel = me.createLayerInputToggle();
-            me._div.appendChild(me._panel);
-        })
-
+        if(!this.target){
+            this.button = document.createElement("button");
+            let icon = document.createElement("i");
+            icon.className = "fa fa-bars";
+            this.button.className = "mapboxgl-ctrl-zoom-in"
+            this.button.appendChild(icon);
+            this.button.addEventListener("click", function (e) {
+                event.preventDefault();
+                event.stopPropagation();
+                if (me._panel) {
+                    me._div.removeChild(me._panel);
+                }
+                me.button.style.display = "none";
+                me._panel = me.createLayerInputToggle();
+                me._div.appendChild(me._panel);
+            })
+        }
+        else{
+            this.button = document.getElementById(this.target);
+            this.button.addEventListener("click", function (e) {
+                event.preventDefault();
+                event.stopPropagation();
+                if (me._panel) {
+                    me._div.removeChild(me._panel);
+                }
+                me.button.style.display = "none";
+                me._panel = me.createLayerInputToggle();
+                me._div.appendChild(me._panel);
+            })
+        }
         this._div = document.createElement('div');
         this._div.setAttribute("id", "container");
         me._div.style.overflow = "auto";
@@ -142,6 +163,10 @@ export class Legend extends mapboxgl.Evented {
         return div;
     }
 
+    /**
+    * @private
+    * @description Close layer input
+    */
     close() {
         if (this._panel) {
             this._div.removeChild(this._panel);

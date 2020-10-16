@@ -309,9 +309,12 @@
             });
 
             document.getElementById("btnDelete").addEventListener("click", function () {
+                var x= [];
+                x.push(''+idFeatureSelected)
                 var param = {
-                    "deletes": idFeatureSelected
+                    "deletes": x
                 };
+                console.log(param.deletes)
                 widgets.loader.showLoader("data updating...");
                 featureLayer.applyEdits(param, function (e) {
                     widgets.loader.removeLoader();
@@ -334,9 +337,10 @@
                     },
                     "color": color,
                 }
-            };
+            }; 
             if (color) {
                 featureLayer.applyEdits(paramadd, function (e) {
+                    
                     if (e) {
                         divAddFea.style.display = 'none';
                         divAddTemp.style.display = 'none';
