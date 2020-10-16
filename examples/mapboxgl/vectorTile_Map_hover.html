@@ -26,59 +26,86 @@
         </div>
     </div>
     <script>
-
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Mapbox </a>" +
+            " with <span>© <a href='https://iclient.supermap.io' target='_blank'>eKMap Client</a> | </span>" +
+            " Map Data <span>© <a href='http://ekgis.com.vn/' target='_blank'>eKMap Server</a></span> ";
         var map = new mapboxgl.Map({
             container: 'divMapId', // container id
+            style: {
+                "version": 8,
+                "sources": {
+                    "vector-tiles": {
+                        "attribution": attribution,
+                        "type": "vector",
+                        "tiles": [urlVectorService + "/tile/{z}/{y}/{x}.pdf?apikey=" + tokenKey]
+                    },
+                },
+                "glyphs": urlVectorService + "/resources/fonts/{fontstack}/{range}.pbf",
+                "layers": []
+            },
             minZoom: 4,
             center: [105, 17],
             zoom: 4
         });
         var hoveredStateId = null;
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer(urlVectorService + "/resources/styles?apikey=" + tokenKey).addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.on('load', function () {
+            new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
             map.addLayer({
-                'id': 'areaHover',
-                'type': 'fill',
-                'source': '35',
-                'source-layer': "480",
-                'layout': {
-                },
+                "id": "state-fills",
+                "source": "vector-tiles",
+                "type": "fill",
+                "source-layer": "480",
+                "layout": {},
                 'paint': {
-                    'fill-outline-color': '#484896',
-                    'fill-color': '#6e599f',
-                    'fill-opacity': 0.75
-                },
-                'filter': ["get", "CODE"]
-            })
-            console.log(map.getStyle().layers)
-        })
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
-
-        var hoveredStateId = null;
-        map.on('mousemove', '480', function (e) {
-            var bbox = [
-                [e.point.x - 5, e.point.y - 5],
-                [e.point.x + 5, e.point.y + 5]
-            ];
-            var features = map.queryRenderedFeatures(bbox, {
-                layers: ['480']
+                    'fill-color': '#627BC1',
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        1,
+                        0.5
+                    ]
+                }
             });
-            var x = null;
-            var filter = features.reduce(
-                function (memo, feature) {
-                    x = feature.properties.CODE;
-                    memo.push();
-                    return memo;
-                },
-                ['get', 'CODE']
-            );
-                var arr = ['==', ['get', 'CODE'], x];
-                map.setFilter('areaHover', arr);
+            map.addLayer({
+                'id': 'state-borders',
+                'type': 'line',
+                'source': 'vector-tiles',
+                "source-layer": "480",
+                'layout': {},
+                'paint': {
+                    'line-color': '#627BC1',
+                    'line-width': 2
+                }
+            });
+        })
+
+        map.on('mousemove', 'state-fills', function (e) {
+            if (e.features.length > 0) {
+                if (hoveredStateId) {
+                    map.setFeatureState(
+                        { source: 'vector-tiles', id: hoveredStateId, sourceLayer: '480' },
+                        { hover: false }
+                    );
+                }
+                hoveredStateId = e.features[0].id;
+                map.setFeatureState(
+                    { source: 'vector-tiles', id: hoveredStateId, sourceLayer: '480' },
+                    { hover: true }
+                );
+            }
         });
 
-        map.on('mouseout', '480', function (e) {
-            map.setFilter('areaHover', ['get', 'CODE']);
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on('mouseleave', 'state-fills', function () {
+            if (hoveredStateId) {
+                map.setFeatureState(
+                    { source: 'vector-tiles', id: hoveredStateId, sourceLayer: '480' },
+                    { hover: false }
+                );
+            }
+            hoveredStateId = null;
         });
 
     </script>

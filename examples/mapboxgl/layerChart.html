@@ -8,7 +8,7 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <link href="https://alex2wong.github.io/mapbox-plugins/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Layer Chart</title>
@@ -180,44 +180,27 @@
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var domLayer;
         var listColor;
-        var doms = []
+        var doms = [];
+        var features;
 
         map.on('load', function () {
             $.get("../data/water_quality.json", function (response) {
-                var features = response.features;
-                features.forEach(fea => {
-                    doms.push({
-                        type: null,
-                        class: 'bounceIn',
-                        data: {
-                            datasets: [{
-                                data: [fea.properties.P, fea.properties.QD, fea.properties.QA, fea.properties.Pin],
-                                backgroundColor: null,
-                                datalabels: {
-                                    color: '#FFCE56'
-                                }
-                            }],
-                            labels: ['P', 'Q+', 'Q-', 'Pin']
-                        },
-                        lon: fea.geometry.coordinates[0],
-                        lat: fea.geometry.coordinates[1]
-                    })
-                });
+                features = response.features;
             }).done(function () {
                 createDomLayer('pie', ['#008000', '#ffa500', '#ff0000', '#0000ff']);
             })
         });
 
-        function createDomLayer(typeGraph, listColor) {
+        function createDomLayer(typeGraph, colors) {
+            var me = this;
             if (domLayer)
                 domLayer.clearDoms();
-            doms.forEach(dom => {
-                dom.type = typeGraph;
-                dom.data.datasets[0].backgroundColor = listColor
-            });
-            domLayer = new mapboxgl.ekmap.DomOverlayer({
+            domLayer = new mapboxgl.ekmap.DomOverlay({
+                type: typeGraph,
                 map: map,
-                doms: doms
+                features: features,
+                fields: ['P', 'Q+', 'Q-', 'Pin'],
+                colors: colors
             })
         }
 
@@ -225,18 +208,18 @@
             var typeGraph = document.getElementById("graph").value;
             var color = document.getElementById("color").value;
             if (color == 'classic')
-                listColor = ['#008000', '#ffa500', '#ff0000', '#0000ff']
+                colors = ['#008000', '#ffa500', '#ff0000', '#0000ff']
             if (color == 'dark')
-                listColor = ['#006600', '#960', '#900', '#000033']
+                colors = ['#006600', '#960', '#900', '#000033']
             if (color == 'pale')
-                listColor = ['#3b7', '#fd0', '#f64', '#336699']
+                colors = ['#3b7', '#fd0', '#f64', '#336699']
             if (color == 'pastel')
-                listColor = ['#7d7', '#fb4', '#f66', '#7799cc']
+                colors = ['#7d7', '#fb4', '#f66', '#7799cc']
             if (color == 'neon')
-                listColor = ['#f0f', '#ff0', '#0f0', '#00ffff']
+                colors = ['#f0f', '#ff0', '#0f0', '#00ffff']
             if (color == 'custom')
-                listColor = ['#f0f', '#f00', '#00f', '#008000']
-            createDomLayer(typeGraph, listColor)
+                colors = ['#f0f', '#f00', '#00f', '#008000']
+            createDomLayer(typeGraph, colors)
         }
     </script>
 </body>

@@ -90,7 +90,7 @@ export class Request {
             dataPost.append("updates", data.updates);
             dataPost.append("deletes", data.deletes);
             if (options.token) dataPost.append("token", options.token)
-        }else{
+        } else {
             if (isNaN(data % 2)) {
                 var dataPost = new FormData();
                 dataPost.append("f", "json");
@@ -119,16 +119,8 @@ export class Request {
                 // Decode response
                 try {
                     response = JSON.parse(this.response);
-                    if(response.addResults && response.updateResults && response.deleteResults)
-                        callback(response)
-                    else{
-                        if (response.addResults) 
-                            callback(response.addResults)
-                        if (response.updateResults) 
-                            callback(response.updateResults)
-                        if (response.deleteResults) 
-                            callback(response.deleteResults)
-                    }
+                    callback(response)
+                    
                 } catch (e) {
                 }
             } else {

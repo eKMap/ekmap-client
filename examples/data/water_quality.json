@@ -4,8 +4,8 @@
 			"type": "Feature",
 			"properties": {
 				"P": "2",
-				"QD": "1",
-				"QA": "0.5",
+				"Q+": "1",
+				"Q-": "0.5",
 				"Pin": "5",
 				"SmGeoPosition": "12026156",
 				"CLASS": "AD",
@@ -27,8 +27,8 @@
 			"type": "Feature",
 			"properties": {
 				"P": "3",
-				"QD": "0.75",
-				"QA": "0.25",
+				"Q+": "0.75",
+				"Q-": "0.25",
 				"Pin": "5",
 				"SmGeoPosition": "12026456",
 				"CLASS": "AB",
@@ -50,8 +50,8 @@
 			"type": "Feature",
 			"properties": {
 				"P": "4",
-				"QD": "0.5",
-				"QA": "0.6",
+				"Q+": "0.5",
+				"Q-": "0.6",
 				"Pin": "5",
 				"SmGeoPosition": "11894784",
 				"CLASS": "AB",
