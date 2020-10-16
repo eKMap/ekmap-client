@@ -18,7 +18,7 @@ import { Util } from '../core/Util';
  *      zoom: 6
  * })
  * var identify = new mapboxgl.ekmap.IdentifyFeatures({
- *      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/ogsmap/35/MapServer'
+ *      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
  * })
  *   .on(map)
  *   .at([])
