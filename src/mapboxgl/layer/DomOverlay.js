@@ -6,7 +6,7 @@ import Overlay from './Overlay';
 /**
  * @class mapboxgl.ekmap.DomOverlay
  * @classdesc mapboxgl.ekmap.DomOverlay 
- * @category  Layer
+ * @category Layer
  * @param {Object} options - Construction parameters.
  * @param {mapboxgl.Map} options.map Adds the layer to the given map or layer group.
  * @param {Array.<GeoJSONObject>} options.features List features.

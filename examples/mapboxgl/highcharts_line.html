@@ -1,0 +1,173 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>High Line Chart</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #divMapId {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        #stat {
+            position: absolute;
+            top: 50%;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+            background: #FFF;
+            z-index: 1000;
+        }
+        
+        #container {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='divMapId'></div>
+    <div id='stat'>
+        <div id='container'></div>
+    </div>
+    <script type="text/javascript">
+        var data;
+        var chart, div, popup = '';
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256
+                    }
+                },
+                "layers": [{
+                    "id": "raster-tiles",
+                    "type": "raster",
+                    "source": "raster-tiles",
+                    "minzoom": 0,
+                    "maxzoom": 22,
+                    'layout': {
+                        'visibility': 'visible',
+                    },
+                    'raster-opacity': 0.75,
+                }]
+            },
+            center: [106.1471579608559, 20.416161703696787],
+            zoom: 8.383742725041827
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.loadImage('./img/marker-icon.png', function(error, image) {
+            if (error) throw error;
+            map.addImage('positionPoint', image);
+        });
+        query();
+
+        function query() {
+            $.get("../data/echarts_lineMarker.json", function(response) {
+                console.log(response)
+                map.addLayer({
+                    "id": "points",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "positionPoint",
+                        "icon-size": 0.8,
+                        "icon-offset": [0, -15]
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": response
+                    }
+                });
+            })
+        }
+        map.on('click', 'points', function(e) {
+            console.log(e)
+            var options = {
+                chart: {
+                    renderTo: 'container',
+                    type: 'spline'
+                },
+                title: {
+                    text: e.features[0].properties.NAME + ' future temperature'
+                },
+                subtitle: {
+                    text: 'Source: WorldClimate.com'
+                },
+                xAxis: {
+                    categories: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature'
+                    },
+                    labels: {
+                        formatter: function() {
+                            return this.value + '°';
+                        }
+                    }
+                },
+                tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            radius: 4,
+                            lineColor: '#666666',
+                            lineWidth: 2
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Max temp',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data: [10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), {
+                        y: 20 + Math.ceil(Math.random() * 10),
+                        marker: {
+                            symbol: 'url(https://www.highcharts.com/samples/graphics/sun.png)'
+                        }
+                    }, 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10)]
+
+                }, {
+                    name: 'Min temp',
+                    marker: {
+                        symbol: 'diamond'
+                    },
+                    data: [8 - Math.ceil(Math.random() * 10), {
+                        y: -Math.ceil(Math.random() * 10),
+                        marker: {
+                            symbol: 'url(https://www.highcharts.com/samples/graphics/snow.png)'
+                        }
+                    }, 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10)]
+                }]
+            };
+            var chart = new Highcharts.Chart(options);
+        });
+    </script>
+</body>
+
+</html>

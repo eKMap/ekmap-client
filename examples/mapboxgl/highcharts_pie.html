@@ -1,0 +1,245 @@
+<html lang="en">
+
+<head>
+    <meta charset='utf-8' />
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Heigh chart pie</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #divMapId {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    
+    #stat {
+        position: absolute;
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+        background: #FFF;
+        z-index: 1000;
+    }
+    
+    #container {
+        height: 100%;
+        width: 100%;
+    }
+</style>
+
+<body>
+    <div id='divMapId'></div>
+    <div id='stat'>
+        <div id='container'></div>
+    </div>
+    <script type="text/javascript">
+        var chart, div, popup = '';
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256,
+                    },
+                },
+                "layers": [{
+                    "id": "simple-tiles",
+                    "type": "raster",
+                    "source": "raster-tiles",
+                    "minzoom": 0,
+                    "maxzoom": 18
+                }]
+            },
+            center: [106.5090846096723, 16.787962287423255],
+            zoom: 5.1128594812072485
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.loadImage('./img/marker-icon.png', function(error, image) {
+            if (error) throw error;
+            map.addImage('positionPoint', image);
+        });
+
+        // categoryDataMap
+        var categoryDataMap = {
+            "Hà Nội": [{
+                y: 335,
+                name: 'class A'
+            }, {
+                y: 679,
+                name: 'class B'
+            }, {
+                y: 1299,
+                name: 'class C'
+            }],
+            "Đà Nẵng": [{
+                y: 117,
+                name: 'class A'
+            }, {
+                y: 1267,
+                name: 'class B'
+            }, {
+                y: 1048,
+                name: 'class C'
+            }],
+            "Thành phố Hồ Chí Minh": [{
+                y: 475,
+                name: 'class A'
+            }, {
+                y: 1450,
+                name: 'class B'
+            }, {
+                y: 875,
+                name: 'class C'
+            }]
+        };
+        var dataMap = {
+            "Hà Nội": [{
+                y: 335,
+                name: 'commodity A',
+                sliced: true,
+                selected: true
+            }, {
+                y: 310,
+                name: 'commodity B'
+            }, {
+                y: 234,
+                name: 'commodity C'
+            }, {
+                y: 135,
+                name: 'commodity D'
+            }, {
+                y: 1048,
+                name: 'commodity E'
+            }, {
+                y: 251,
+                name: 'commodity F'
+            }],
+            "Đà Nẵng": [{
+                y: 117,
+                name: 'commodity A'
+            }, {
+                y: 284,
+                name: 'commodity B'
+            }, {
+                y: 768,
+                name: 'commodity C'
+            }, {
+                y: 215,
+                name: 'commodity D'
+            }, {
+                y: 901,
+                name: 'commodity E'
+            }, {
+                y: 148,
+                name: 'commodity F'
+            }],
+            "Thành phố Hồ Chí Minh": [{
+                y: 475,
+                name: 'commodity A'
+            }, {
+                y: 29,
+                name: 'commodity B'
+            }, {
+                y: 430,
+                name: 'commodity C'
+            }, {
+                y: 981,
+                name: 'commodity D'
+            }, {
+                y: 732,
+                name: 'commodity E'
+            }, {
+                y: 143,
+                name: 'commodity F'
+            }]
+        };
+        query();
+
+        function query() {
+            $.get("../data/echarts_pie.json", function(response) {
+                var fs = response;
+                map.addLayer({
+                    "id": "points",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "positionPoint",
+                        "icon-size": 0.8,
+                        "icon-offset": [0, -15]
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": fs
+                    }
+                });
+            });
+        }
+
+        map.on('click', 'points', function(e) {
+            var city = e.features[0].properties.NAME;
+            var options = {
+                chart: {
+                    renderTo: 'container',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: city + ' commodity sales'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'comodity class',
+                    colorByPoint: true,
+                    data: categoryDataMap[city]
+                }, {
+                    type: 'pie',
+                    size: '100%',
+                    innerSize: '70%',
+                    name: 'commodity',
+                    data: dataMap[city]
+                }]
+            };
+            var chart = new Highcharts.Chart(options);
+        });
+    </script>
+</body>
+
+</html>

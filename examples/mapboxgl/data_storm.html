@@ -1,0 +1,235 @@
+<!--********************************************************************
+* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+*********************************************************************-->
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Pie Chart</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/@turf/turf@5.1.6/turf.min.js"></script>
+
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
+    <script type="text/javascript">
+        var data;
+        var chart, div, popup = '';
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256,
+                    },
+                },
+                "layers": [{
+                    "id": "simple-tiles",
+                    "type": "raster",
+                    "source": "raster-tiles",
+                    "minzoom": 0,
+                    "maxzoom": 18
+                }]
+            },
+            center: [106.5090846096723, 16.787962287423255],
+            zoom: 5.1128594812072485
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.loadImage('../data/ATND_DaDiQua.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointDQ', image);
+        });
+        map.loadImage('../data/ApThap_DuBao.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointDB', image);
+        });
+        map.loadImage('../data/ATND_HT.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointHT', image);
+        });
+        map.on('load', function () {
+
+            //Source Data: https://nchmf.gov.vn/ 
+            $.get("../data/storm.json", function (response) {
+                var features = [];
+                var coordinates = [];
+                //Add Points
+                response[0].forEach(feature => {
+                    features.push({
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [feature.lon, feature.lat]
+                        },
+                        'properties': {
+                            'id': '' + feature.id
+                        }
+                    })
+                    coordinates.push([feature.lon, feature.lat]);
+                });
+
+                map.addLayer({
+                    "id": "points",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "positionPointDQ",
+                        "icon-size": 1
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": {
+                            'type': 'FeatureCollection',
+                            'features': features
+                        }
+                    }
+                });
+                map.addLayer({
+                    "id": "points1",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "positionPointDB",
+                        "icon-size": 1.5
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": {
+                            'type': 'FeatureCollection',
+                            'features': features
+                        }
+                    },
+                    "filter": ['in', 'id', '32030']
+                });
+                map.addLayer({
+                    "id": "points2",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "positionPointHT",
+                        "icon-size": 1
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": {
+                            'type': 'FeatureCollection',
+                            'features': features
+                        }
+                    },
+                    "filter": ['in', 'id', '32031']
+                });
+
+
+
+                //Add Lines
+
+                var line = turf.lineString(coordinates)
+                var start = turf.point([126.5, 11]);
+                var stop = turf.point([106, 15.4]);
+                var sliced = turf.lineSlice(start, stop, line);
+
+                map.addLayer({
+                    'id': 'route',
+                    'type': 'line',
+                    'source': {
+                        'type': 'geojson',
+                        'data': sliced
+                    },
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': '#000',
+                        'line-width': 2
+                    }
+                });
+
+                //Buffer
+                var point = turf.point([response[0][14].lon, response[0][14].lat]);
+                var buffered = turf.buffer(point, response[0][14].area_wind_level_center, { units: 'kilometers' });
+
+                map.addLayer({
+                    'id': 'min',
+                    'type': 'fill',
+                    'source': {
+                        'type': 'geojson',
+                        'data': buffered
+                    },
+                    'paint': {
+                        'fill-color': '#7a9972',
+                        'fill-opacity': 0.7,
+                        'fill-outline-color': '#fff',
+                    }
+                })
+                map.moveLayer('min', 'points1');
+
+                var point1 = turf.point([response[0][15].lon, response[0][15].lat]);
+                var buffered1 = turf.buffer(point1, response[0][15].area_wind_level_center, { units: 'kilometers' });
+                map.addLayer({
+                    'id': 'max',
+                    'type': 'fill',
+                    'source': {
+                        'type': 'geojson',
+                        'data': buffered1
+                    },
+                    'paint': {
+                        'fill-color': '#7a9972',
+                        'fill-opacity': 0.7,
+                        'fill-outline-color': '#fff',
+                    }
+                })
+                map.moveLayer('max', 'points2');
+
+                //Polygon
+                var buffer = turf.featureCollection([
+                    buffered,buffered1
+                ]);
+
+                var hull = turf.convex(buffer);
+                map.addLayer({
+                    'id': 'polygon',
+                    'type': 'fill',
+                    'source': {
+                        'type': 'geojson',
+                        'data': hull
+                    },
+                    'paint': {
+                        'fill-color': '#7a9972',
+                        'fill-opacity': 0.7
+                    }
+                })
+                map.moveLayer('polygon', 'max');
+                map.moveLayer('polygon', 'min');
+            })
+            function guid12() {
+                function s4() {
+                    return Math.floor((1 + Math.random()) * 0x10000)
+                        .toString(16)
+                        .substring(1);
+                }
+                return s4() + s4() + s4();
+            }
+        })
+    </script>
+</body>
+
+</html>

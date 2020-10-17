@@ -280,6 +280,24 @@ var exampleConfig = {
                         thumbnail: "echarts_pie.png",
                         fileName: "echarts_pie"
                     },
+                    {
+                        name: "bar highcharts",
+                        name_en: "bar highcharts",
+                        thumbnail: "highcharts_bar.png",
+                        fileName: "highcharts_bar"
+                    },
+                    {
+                        name: "line highcharts",
+                        name_en: "line highcharts",
+                        thumbnail: "highcharts_line.png",
+                        fileName: "highcharts_line"
+                    },
+                    {
+                        name: "pie highcharts",
+                        name_en: "pie highcharts",
+                        thumbnail: "highcharts_pie.png",
+                        fileName: "highcharts_pie"
+                    },
                     // {
                     //     name: "Airplane route map",
                     //     name_en: "Airplane route map",
@@ -624,6 +642,24 @@ var exampleConfig = {
                         name_en: "Realtime Water",
                         thumbnail: "realtime_water.png",
                         fileName: "realtime_water"
+                    },
+                    {
+                        name: "Realtime Satellite Image",
+                        name_en: "Realtime Satellite Image",
+                        thumbnail: "realtime_satelliteImage.png",
+                        fileName: "realtime_satelliteImage"
+                    },
+                    {
+                        name: "Water HightChart",
+                        name_en: "Water HightChart",
+                        thumbnail: "highcharts_lineWater.png",
+                        fileName: "highcharts_lineWater"
+                    },
+                    {
+                        name: "Data Storm",
+                        name_en: "Data Storm",
+                        thumbnail: "data_storm.png",
+                        fileName: "data_storm"
                     }
                 ]
             }

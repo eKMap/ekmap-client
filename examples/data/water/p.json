@@ -1,1 +1,618 @@
-[{"valuen":"27.5","datatime":"10/15/2020 12:00:00 AM"},{"valuen":"30","datatime":"10/15/2020 12:15:00 AM"},{"valuen":"30","datatime":"10/15/2020 12:30:00 AM"},{"valuen":"30.5","datatime":"10/15/2020 12:45:00 AM"},{"valuen":"30.5","datatime":"10/15/2020 1:00:00 AM"},{"valuen":"31","datatime":"10/15/2020 1:15:00 AM"},{"valuen":"30.5","datatime":"10/15/2020 1:30:00 AM"},{"valuen":"31","datatime":"10/15/2020 1:45:00 AM"},{"valuen":"30.5","datatime":"10/15/2020 2:00:00 AM"},{"valuen":"31","datatime":"10/15/2020 2:15:00 AM"},{"valuen":"31.5","datatime":"10/15/2020 2:30:00 AM"},{"valuen":"31","datatime":"10/15/2020 2:45:00 AM"},{"valuen":"31.5","datatime":"10/15/2020 3:00:00 AM"},{"valuen":"30.5","datatime":"10/15/2020 3:15:00 AM"},{"valuen":"30.5","datatime":"10/15/2020 3:30:00 AM"},{"valuen":"30.5","datatime":"10/15/2020 3:45:00 AM"},{"valuen":"30.5","datatime":"10/15/2020 4:00:00 AM"},{"valuen":"30","datatime":"10/15/2020 4:15:00 AM"},{"valuen":"29","datatime":"10/15/2020 4:30:00 AM"},{"valuen":"36.5","datatime":"10/15/2020 4:45:00 AM"},{"valuen":"36","datatime":"10/15/2020 5:00:00 AM"},{"valuen":"35","datatime":"10/15/2020 5:15:00 AM"},{"valuen":"36.5","datatime":"10/15/2020 5:30:00 AM"},{"valuen":"34.5","datatime":"10/15/2020 5:45:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 6:00:00 AM"},{"valuen":"31","datatime":"10/15/2020 6:15:00 AM"},{"valuen":"31.5","datatime":"10/15/2020 6:30:00 AM"},{"valuen":"32","datatime":"10/15/2020 6:45:00 AM"},{"valuen":"33","datatime":"10/15/2020 7:00:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 7:15:00 AM"},{"valuen":"32","datatime":"10/15/2020 7:30:00 AM"},{"valuen":"33","datatime":"10/15/2020 7:45:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 8:00:00 AM"},{"valuen":"33","datatime":"10/15/2020 8:15:00 AM"},{"valuen":"33.5","datatime":"10/15/2020 8:30:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 8:45:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 9:00:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 9:15:00 AM"},{"valuen":"31.5","datatime":"10/15/2020 9:30:00 AM"},{"valuen":"32","datatime":"10/15/2020 9:45:00 AM"},{"valuen":"31.5","datatime":"10/15/2020 10:00:00 AM"},{"valuen":"32","datatime":"10/15/2020 10:15:00 AM"},{"valuen":"32","datatime":"10/15/2020 10:30:00 AM"},{"valuen":"31.5","datatime":"10/15/2020 10:45:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 11:00:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 11:15:00 AM"},{"valuen":"34","datatime":"10/15/2020 11:30:00 AM"},{"valuen":"33","datatime":"10/15/2020 11:45:00 AM"},{"valuen":"32.5","datatime":"10/15/2020 12:00:00 PM"},{"valuen":"32.5","datatime":"10/15/2020 12:15:00 PM"},{"valuen":"32.5","datatime":"10/15/2020 12:30:00 PM"},{"valuen":"32.5","datatime":"10/15/2020 12:45:00 PM"},{"valuen":"33","datatime":"10/15/2020 1:00:00 PM"},{"valuen":"33.5","datatime":"10/15/2020 1:15:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 1:30:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 1:45:00 PM"},{"valuen":"35","datatime":"10/15/2020 2:00:00 PM"},{"valuen":"35","datatime":"10/15/2020 2:15:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 2:30:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 2:45:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 3:00:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 3:15:00 PM"},{"valuen":"34","datatime":"10/15/2020 3:30:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 3:45:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 4:00:00 PM"},{"valuen":"34","datatime":"10/15/2020 4:15:00 PM"},{"valuen":"34","datatime":"10/15/2020 4:30:00 PM"},{"valuen":"34","datatime":"10/15/2020 4:45:00 PM"},{"valuen":"32.5","datatime":"10/15/2020 5:00:00 PM"},{"valuen":"32.5","datatime":"10/15/2020 5:15:00 PM"},{"valuen":"32","datatime":"10/15/2020 5:30:00 PM"},{"valuen":"32","datatime":"10/15/2020 5:45:00 PM"},{"valuen":"33","datatime":"10/15/2020 6:00:00 PM"},{"valuen":"33","datatime":"10/15/2020 6:15:00 PM"},{"valuen":"34","datatime":"10/15/2020 6:30:00 PM"},{"valuen":"33.5","datatime":"10/15/2020 6:45:00 PM"},{"valuen":"34","datatime":"10/15/2020 7:00:00 PM"},{"valuen":"34","datatime":"10/15/2020 7:15:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 7:30:00 PM"},{"valuen":"32.5","datatime":"10/15/2020 7:45:00 PM"},{"valuen":"35","datatime":"10/15/2020 8:00:00 PM"},{"valuen":"35","datatime":"10/15/2020 8:15:00 PM"},{"valuen":"35.5","datatime":"10/15/2020 8:30:00 PM"},{"valuen":"36.5","datatime":"10/15/2020 8:45:00 PM"},{"valuen":"34.5","datatime":"10/15/2020 9:00:00 PM"},{"valuen":"35","datatime":"10/15/2020 9:15:00 PM"},{"valuen":"36","datatime":"10/15/2020 9:30:00 PM"},{"valuen":"36","datatime":"10/15/2020 9:45:00 PM"},{"valuen":"37.5","datatime":"10/15/2020 10:00:00 PM"},{"valuen":"37.5","datatime":"10/15/2020 10:15:00 PM"},{"valuen":"38","datatime":"10/15/2020 10:30:00 PM"},{"valuen":"27.5","datatime":"10/15/2020 10:45:00 PM"},{"valuen":"29","datatime":"10/15/2020 11:00:00 PM"},{"valuen":"30","datatime":"10/15/2020 11:15:00 PM"},{"valuen":"31.5","datatime":"10/15/2020 11:30:00 PM"},{"valuen":"32","datatime":"10/15/2020 11:45:00 PM"},{"valuen":"32","datatime":"10/16/2020 12:00:00 AM"},{"valuen":"32.5","datatime":"10/16/2020 12:15:00 AM"},{"valuen":"32.5","datatime":"10/16/2020 12:30:00 AM"},{"valuen":"32.5","datatime":"10/16/2020 12:45:00 AM"},{"valuen":"33","datatime":"10/16/2020 1:00:00 AM"},{"valuen":"33","datatime":"10/16/2020 1:15:00 AM"},{"valuen":"33","datatime":"10/16/2020 1:30:00 AM"},{"valuen":"33","datatime":"10/16/2020 1:45:00 AM"},{"valuen":"33","datatime":"10/16/2020 2:00:00 AM"},{"valuen":"32.5","datatime":"10/16/2020 2:15:00 AM"},{"valuen":"32.5","datatime":"10/16/2020 2:30:00 AM"},{"valuen":"32.5","datatime":"10/16/2020 2:45:00 AM"},{"valuen":"32.5","datatime":"10/16/2020 3:00:00 AM"},{"valuen":"32.5","datatime":"10/16/2020 3:15:00 AM"},{"valuen":"32","datatime":"10/16/2020 3:30:00 AM"},{"valuen":"31","datatime":"10/16/2020 3:45:00 AM"},{"valuen":"31.5","datatime":"10/16/2020 4:00:00 AM"},{"valuen":"31","datatime":"10/16/2020 4:15:00 AM"},{"valuen":"30.5","datatime":"10/16/2020 4:30:00 AM"},{"valuen":"38","datatime":"10/16/2020 4:45:00 AM"},{"valuen":"38","datatime":"10/16/2020 5:00:00 AM"},{"valuen":"36.5","datatime":"10/16/2020 5:15:00 AM"},{"valuen":"37","datatime":"10/16/2020 5:30:00 AM"},{"valuen":"37.5","datatime":"10/16/2020 5:45:00 AM"},{"valuen":"34.5","datatime":"10/16/2020 6:00:00 AM"},{"valuen":"31","datatime":"10/16/2020 6:15:00 AM"},{"valuen":"29.5","datatime":"10/16/2020 6:30:00 AM"},{"valuen":"33","datatime":"10/16/2020 6:45:00 AM"},{"valuen":"34.5","datatime":"10/16/2020 7:00:00 AM"},{"valuen":"34","datatime":"10/16/2020 7:15:00 AM"},{"valuen":"36","datatime":"10/16/2020 7:30:00 AM"},{"valuen":"35.5","datatime":"10/16/2020 7:45:00 AM"},{"valuen":"35","datatime":"10/16/2020 8:00:00 AM"},{"valuen":"35.5","datatime":"10/16/2020 8:15:00 AM"},{"valuen":"34.5","datatime":"10/16/2020 8:30:00 AM"},{"valuen":"34","datatime":"10/16/2020 8:45:00 AM"},{"valuen":"33.5","datatime":"10/16/2020 9:00:00 AM"},{"valuen":"33.5","datatime":"10/16/2020 9:15:00 AM"},{"valuen":"33.5","datatime":"10/16/2020 9:30:00 AM"},{"valuen":"34","datatime":"10/16/2020 9:45:00 AM"},{"valuen":"33.5","datatime":"10/16/2020 10:00:00 AM"},{"valuen":"33.5","datatime":"10/16/2020 10:15:00 AM"},{"valuen":"34","datatime":"10/16/2020 10:30:00 AM"},{"valuen":"33.5","datatime":"10/16/2020 10:45:00 AM"},{"valuen":"33.5","datatime":"10/16/2020 11:00:00 AM"},{"valuen":"35.5","datatime":"10/16/2020 11:15:00 AM"},{"valuen":"36","datatime":"10/16/2020 11:30:00 AM"},{"valuen":"36","datatime":"10/16/2020 11:45:00 AM"},{"valuen":"34","datatime":"10/16/2020 12:00:00 PM"},{"valuen":"35","datatime":"10/16/2020 12:15:00 PM"},{"valuen":"36.5","datatime":"10/16/2020 12:30:00 PM"},{"valuen":"37","datatime":"10/16/2020 12:45:00 PM"},{"valuen":"36.5","datatime":"10/16/2020 1:00:00 PM"},{"valuen":"34.5","datatime":"10/16/2020 1:15:00 PM"},{"valuen":"34.5","datatime":"10/16/2020 1:30:00 PM"},{"valuen":"35","datatime":"10/16/2020 1:45:00 PM"},{"valuen":"36.5","datatime":"10/16/2020 2:00:00 PM"},{"valuen":"37","datatime":"10/16/2020 2:15:00 PM"}]
+[
+	{
+		"value": 27.5,
+		"datatime": "10/15/2020 12:00:00 AM"
+	},
+	{
+		"value": 30,
+		"datatime": "10/15/2020 12:15:00 AM"
+	},
+	{
+		"value": 30,
+		"datatime": "10/15/2020 12:30:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/15/2020 12:45:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/15/2020 1:00:00 AM"
+	},
+	{
+		"value": 31,
+		"datatime": "10/15/2020 1:15:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/15/2020 1:30:00 AM"
+	},
+	{
+		"value": 31,
+		"datatime": "10/15/2020 1:45:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/15/2020 2:00:00 AM"
+	},
+	{
+		"value": 31,
+		"datatime": "10/15/2020 2:15:00 AM"
+	},
+	{
+		"value": 31.5,
+		"datatime": "10/15/2020 2:30:00 AM"
+	},
+	{
+		"value": 31,
+		"datatime": "10/15/2020 2:45:00 AM"
+	},
+	{
+		"value": 31.5,
+		"datatime": "10/15/2020 3:00:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/15/2020 3:15:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/15/2020 3:30:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/15/2020 3:45:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/15/2020 4:00:00 AM"
+	},
+	{
+		"value": 30,
+		"datatime": "10/15/2020 4:15:00 AM"
+	},
+	{
+		"value": 29,
+		"datatime": "10/15/2020 4:30:00 AM"
+	},
+	{
+		"value": 36.5,
+		"datatime": "10/15/2020 4:45:00 AM"
+	},
+	{
+		"value": 36,
+		"datatime": "10/15/2020 5:00:00 AM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/15/2020 5:15:00 AM"
+	},
+	{
+		"value": 36.5,
+		"datatime": "10/15/2020 5:30:00 AM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 5:45:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 6:00:00 AM"
+	},
+	{
+		"value": 31,
+		"datatime": "10/15/2020 6:15:00 AM"
+	},
+	{
+		"value": 31.5,
+		"datatime": "10/15/2020 6:30:00 AM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/15/2020 6:45:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/15/2020 7:00:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 7:15:00 AM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/15/2020 7:30:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/15/2020 7:45:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 8:00:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/15/2020 8:15:00 AM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/15/2020 8:30:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 8:45:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 9:00:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 9:15:00 AM"
+	},
+	{
+		"value": 31.5,
+		"datatime": "10/15/2020 9:30:00 AM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/15/2020 9:45:00 AM"
+	},
+	{
+		"value": 31.5,
+		"datatime": "10/15/2020 10:00:00 AM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/15/2020 10:15:00 AM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/15/2020 10:30:00 AM"
+	},
+	{
+		"value": 31.5,
+		"datatime": "10/15/2020 10:45:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 11:00:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 11:15:00 AM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/15/2020 11:30:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/15/2020 11:45:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 12:00:00 PM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 12:15:00 PM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 12:30:00 PM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 12:45:00 PM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/15/2020 1:00:00 PM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/15/2020 1:15:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 1:30:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 1:45:00 PM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/15/2020 2:00:00 PM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/15/2020 2:15:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 2:30:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 2:45:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 3:00:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 3:15:00 PM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/15/2020 3:30:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 3:45:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 4:00:00 PM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/15/2020 4:15:00 PM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/15/2020 4:30:00 PM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/15/2020 4:45:00 PM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 5:00:00 PM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 5:15:00 PM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/15/2020 5:30:00 PM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/15/2020 5:45:00 PM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/15/2020 6:00:00 PM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/15/2020 6:15:00 PM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/15/2020 6:30:00 PM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/15/2020 6:45:00 PM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/15/2020 7:00:00 PM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/15/2020 7:15:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 7:30:00 PM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/15/2020 7:45:00 PM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/15/2020 8:00:00 PM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/15/2020 8:15:00 PM"
+	},
+	{
+		"value": 35.5,
+		"datatime": "10/15/2020 8:30:00 PM"
+	},
+	{
+		"value": 36.5,
+		"datatime": "10/15/2020 8:45:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/15/2020 9:00:00 PM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/15/2020 9:15:00 PM"
+	},
+	{
+		"value": 36,
+		"datatime": "10/15/2020 9:30:00 PM"
+	},
+	{
+		"value": 36,
+		"datatime": "10/15/2020 9:45:00 PM"
+	},
+	{
+		"value": 37.5,
+		"datatime": "10/15/2020 10:00:00 PM"
+	},
+	{
+		"value": 37.5,
+		"datatime": "10/15/2020 10:15:00 PM"
+	},
+	{
+		"value": 38,
+		"datatime": "10/15/2020 10:30:00 PM"
+	},
+	{
+		"value": 27.5,
+		"datatime": "10/15/2020 10:45:00 PM"
+	},
+	{
+		"value": 29,
+		"datatime": "10/15/2020 11:00:00 PM"
+	},
+	{
+		"value": 30,
+		"datatime": "10/15/2020 11:15:00 PM"
+	},
+	{
+		"value": 31.5,
+		"datatime": "10/15/2020 11:30:00 PM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/15/2020 11:45:00 PM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/16/2020 12:00:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/16/2020 12:15:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/16/2020 12:30:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/16/2020 12:45:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/16/2020 1:00:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/16/2020 1:15:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/16/2020 1:30:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/16/2020 1:45:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/16/2020 2:00:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/16/2020 2:15:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/16/2020 2:30:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/16/2020 2:45:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/16/2020 3:00:00 AM"
+	},
+	{
+		"value": 32.5,
+		"datatime": "10/16/2020 3:15:00 AM"
+	},
+	{
+		"value": 32,
+		"datatime": "10/16/2020 3:30:00 AM"
+	},
+	{
+		"value": 31,
+		"datatime": "10/16/2020 3:45:00 AM"
+	},
+	{
+		"value": 31.5,
+		"datatime": "10/16/2020 4:00:00 AM"
+	},
+	{
+		"value": 31,
+		"datatime": "10/16/2020 4:15:00 AM"
+	},
+	{
+		"value": 30.5,
+		"datatime": "10/16/2020 4:30:00 AM"
+	},
+	{
+		"value": 38,
+		"datatime": "10/16/2020 4:45:00 AM"
+	},
+	{
+		"value": 38,
+		"datatime": "10/16/2020 5:00:00 AM"
+	},
+	{
+		"value": 36.5,
+		"datatime": "10/16/2020 5:15:00 AM"
+	},
+	{
+		"value": 37,
+		"datatime": "10/16/2020 5:30:00 AM"
+	},
+	{
+		"value": 37.5,
+		"datatime": "10/16/2020 5:45:00 AM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/16/2020 6:00:00 AM"
+	},
+	{
+		"value": 31,
+		"datatime": "10/16/2020 6:15:00 AM"
+	},
+	{
+		"value": 29.5,
+		"datatime": "10/16/2020 6:30:00 AM"
+	},
+	{
+		"value": 33,
+		"datatime": "10/16/2020 6:45:00 AM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/16/2020 7:00:00 AM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/16/2020 7:15:00 AM"
+	},
+	{
+		"value": 36,
+		"datatime": "10/16/2020 7:30:00 AM"
+	},
+	{
+		"value": 35.5,
+		"datatime": "10/16/2020 7:45:00 AM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/16/2020 8:00:00 AM"
+	},
+	{
+		"value": 35.5,
+		"datatime": "10/16/2020 8:15:00 AM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/16/2020 8:30:00 AM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/16/2020 8:45:00 AM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/16/2020 9:00:00 AM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/16/2020 9:15:00 AM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/16/2020 9:30:00 AM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/16/2020 9:45:00 AM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/16/2020 10:00:00 AM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/16/2020 10:15:00 AM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/16/2020 10:30:00 AM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/16/2020 10:45:00 AM"
+	},
+	{
+		"value": 33.5,
+		"datatime": "10/16/2020 11:00:00 AM"
+	},
+	{
+		"value": 35.5,
+		"datatime": "10/16/2020 11:15:00 AM"
+	},
+	{
+		"value": 36,
+		"datatime": "10/16/2020 11:30:00 AM"
+	},
+	{
+		"value": 36,
+		"datatime": "10/16/2020 11:45:00 AM"
+	},
+	{
+		"value": 34,
+		"datatime": "10/16/2020 12:00:00 PM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/16/2020 12:15:00 PM"
+	},
+	{
+		"value": 36.5,
+		"datatime": "10/16/2020 12:30:00 PM"
+	},
+	{
+		"value": 37,
+		"datatime": "10/16/2020 12:45:00 PM"
+	},
+	{
+		"value": 36.5,
+		"datatime": "10/16/2020 1:00:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/16/2020 1:15:00 PM"
+	},
+	{
+		"value": 34.5,
+		"datatime": "10/16/2020 1:30:00 PM"
+	},
+	{
+		"value": 35,
+		"datatime": "10/16/2020 1:45:00 PM"
+	},
+	{
+		"value": 36.5,
+		"datatime": "10/16/2020 2:00:00 PM"
+	},
+	{
+		"value": 37,
+		"datatime": "10/16/2020 2:15:00 PM"
+	}
+]
