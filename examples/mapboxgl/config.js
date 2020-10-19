@@ -199,7 +199,7 @@ var exampleConfig = {
                         name: "Cluster",
                         name_en: "Marker cluster",
                         version: "",
-                        thumbnail: "cluster.png",
+                        thumbnail: "cluster.gif",
                         fileName: "cluster"
                     }
                 ]
@@ -316,7 +316,7 @@ var exampleConfig = {
                     {
                         name: "Realtime Satellite Image",
                         name_en: "Realtime Satellite Image",
-                        thumbnail: "realtime_satelliteImage.png",
+                        thumbnail: "realtime_satelliteImage.gif",
                         fileName: "realtime_satelliteImage"
                     },
                     {

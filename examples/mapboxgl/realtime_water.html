@@ -58,67 +58,63 @@
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
         map.on('load', function () {
-            $.get("../data/waterdata.json", function (response) {
+            $.get("../data/water/dma.json", function (response) {
                 window.setInterval(function () {
-                    // var x = Math.floor(Math.random() * 332) + 162;
-                    // map.setFilter('water-color',["in","madoituong",''+x])
                     var color = getRandomColor();
                     var color1 = getRandomColor();
                     var color2 = getRandomColor();
-                    map.setPaintProperty('water-color', 'fill-color', ''+color);
-                    map.setPaintProperty('water-color1', 'fill-color', ''+color1);
-                    map.setPaintProperty('water-color2', 'fill-color', ''+color2);
-                }, 2000)
-                map.addSource('drone', {
+                   // map.setPaintProperty('water-color', 'fill-color', ''+color);
+                   // map.setPaintProperty('water-color1', 'fill-color', ''+color1);
+                   // map.setPaintProperty('water-color2', 'fill-color', ''+color2);
+                }, 1000)
+                map.addSource('dma', {
                     'type': 'geojson',
                     'data': response
                 });
+
                 map.addLayer({
                     'id': 'water',
-                    'type': 'line',
-                    'source': 'drone',
-                    'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
+                    'type': 'fill',
+                    'source': 'dma',
                     'paint': {
-                        'line-color': '#000',
-                        'line-width': 2
-                    },
+                        'fill-color': "#4a86e8",
+                        'fill-outline-color': '#000',
+                        'fill-opacity': 0.7
+                    }
                 });
-                map.addLayer({
-                    'id': 'water-color',
-                    'type': 'fill',
-                    'source': 'drone',
-                    'paint': {
-                        'fill-outline-color': '#484896',
-                        'fill-color': '#6e599f',
-                        'fill-opacity': 0.75
-                    },
-                    'filter': ['in', 'madoituong', '201']
-                })
-                map.addLayer({
-                    'id': 'water-color1',
-                    'type': 'fill',
-                    'source': 'drone',
-                    'paint': {
-                        'fill-outline-color': '#484896',
-                        'fill-color': 'orange',
-                        'fill-opacity': 0.75
-                    },
-                    'filter': ['in', 'madoituong', '203']
-                })
-                map.addLayer({
-                    'id': 'water-color2',
-                    'type': 'fill',
-                    'source': 'drone',
-                    'paint': {
-                        'fill-outline-color': '#484896',
-                        'fill-color': 'blue',
-                        'fill-opacity': 0.75
-                    },
-                    'filter': ['in', 'madoituong', '266']
-                })
+                // map.addLayer({
+                //     'id': 'water-color',
+                //     'type': 'fill',
+                //     'source': 'drone',
+                //     'paint': {
+                //         'fill-outline-color': '#484896',
+                //         'fill-color': '#6e599f',
+                //         'fill-opacity': 0.75
+                //     },
+                //     'filter': ['in', 'madoituong', '201']
+                // })
+                // map.addLayer({
+                //     'id': 'water-color1',
+                //     'type': 'fill',
+                //     'source': 'drone',
+                //     'paint': {
+                //         'fill-outline-color': '#484896',
+                //         'fill-color': 'orange',
+                //         'fill-opacity': 0.75
+                //     },
+                //     'filter': ['in', 'madoituong', '203']
+                // })
+                // map.addLayer({
+                //     'id': 'water-color2',
+                //     'type': 'fill',
+                //     'source': 'drone',
+                //     'paint': {
+                //         'fill-outline-color': '#484896',
+                //         'fill-color': 'blue',
+                //         'fill-opacity': 0.75
+                //     },
+                //     'filter': ['in', 'madoituong', '266']
+                // })
             });
         })
         function getRandomColor() {
