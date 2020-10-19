@@ -107,7 +107,7 @@ var exampleConfig = {
                     {
                         name: "Mapbox Vector Tile Hover",
                         name_en: "Mapbox Vector Tile Hover",
-                        thumbnail: "vectorTile_Map_hover.png",
+                        thumbnail: "vectorTile_Map_hover.gif",
                         fileName: "vectorTile_Map_hover"
                     },
                     {
