@@ -9,7 +9,7 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Pie Chart</title>
+    <title>Storm</title>
     <style>
         .map {
             width: 100%;
@@ -83,7 +83,16 @@
                             'coordinates': [feature.lon, feature.lat]
                         },
                         'properties': {
-                            'id': '' + feature.id
+                            'id': '' + feature.id,
+                            'area_wind_level_6': feature.area_wind_level_6,
+                            'area_wind_level_10': feature.area_wind_level_10,
+                            'area_wind_level_center': feature.area_wind_level_center,
+                            'date_received_str': feature.date_received_str,
+                            'p_min': feature.p_min,
+                            'received_time': feature.received_time,
+                            'storm_level': feature.storm_level,
+                            'time_received_str': feature.time_received_str,
+                            'v_max': feature.v_max
                         }
                     })
                     coordinates.push([feature.lon, feature.lat]);
@@ -137,15 +146,11 @@
                     "filter": ['in', 'id', '32031']
                 });
 
-
-
                 //Add Lines
-
                 var line = turf.lineString(coordinates)
                 var start = turf.point([126.5, 11]);
-                var stop = turf.point([106, 15.4]);
+                var stop = turf.point([110.2, 15.8]);
                 var sliced = turf.lineSlice(start, stop, line);
-
                 map.addLayer({
                     'id': 'route',
                     'type': 'line',
@@ -163,9 +168,28 @@
                     }
                 });
 
+                var start1 = turf.point([110.2, 15.8]);
+                var stop1 = turf.point([106, 15.4]);
+                var sliced1 = turf.lineSlice(start1, stop1, line);
+                map.addLayer({
+                    'id': 'route1',
+                    'type': 'line',
+                    'source': {
+                        'type': 'geojson',
+                        'data': sliced1
+                    },
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': 'red',
+                        'line-width': 2
+                    },
+                });
                 //Buffer
                 var point = turf.point([response[0][14].lon, response[0][14].lat]);
-                var buffered = turf.buffer(point, response[0][14].area_wind_level_center, { units: 'kilometers' });
+                var buffered = turf.buffer(point, response[0][14].area_wind_level_6, { units: 'kilometers' });
 
                 map.addLayer({
                     'id': 'min',
@@ -175,13 +199,25 @@
                         'data': buffered
                     },
                     'paint': {
-                        'fill-color': '#7a9972',
-                        'fill-opacity': 0.7,
+                        'fill-color': '#acd9c2',
+                        'fill-opacity': 0.5,
                         'fill-outline-color': '#fff',
                     }
                 })
-                map.moveLayer('min', 'points1');
+                var buffered2 = turf.buffer(point, response[0][14].area_wind_level_center, { units: 'kilometers' });
 
+                map.addLayer({
+                    'id': 'min1',
+                    'type': 'fill',
+                    'source': {
+                        'type': 'geojson',
+                        'data': buffered2
+                    },
+                    'paint': {
+                        'fill-color': '#fff',
+                        'fill-opacity': 0,
+                    }
+                })
                 var point1 = turf.point([response[0][15].lon, response[0][15].lat]);
                 var buffered1 = turf.buffer(point1, response[0][15].area_wind_level_center, { units: 'kilometers' });
                 map.addLayer({
@@ -192,16 +228,17 @@
                         'data': buffered1
                     },
                     'paint': {
-                        'fill-color': '#7a9972',
-                        'fill-opacity': 0.7,
+                        'fill-color': '#c3e2c6',
+                        'fill-opacity': 0.5,
                         'fill-outline-color': '#fff',
                     }
                 })
-                map.moveLayer('max', 'points2');
+                
+                
 
                 //Polygon
                 var buffer = turf.featureCollection([
-                    buffered,buffered1
+                    buffered, buffered1
                 ]);
 
                 var hull = turf.convex(buffer);
@@ -213,12 +250,110 @@
                         'data': hull
                     },
                     'paint': {
-                        'fill-color': '#7a9972',
-                        'fill-opacity': 0.7
+                        'fill-color': '#67be72',
+                        'fill-opacity': 0.5,
+                        'fill-outline-color': '#d292d4'
                     }
                 })
+                var buffer1 = turf.featureCollection([
+                    buffered2, buffered1
+                ]);
+
+                var hull1 = turf.convex(buffer1);
+                map.addLayer({
+                    'id': 'polygon1',
+                    'type': 'fill',
+                    'source': {
+                        'type': 'geojson',
+                        'data': hull1
+                    },
+                    'paint': {
+                        'fill-color': '#fff',
+                        'fill-opacity': 0.5,
+                        'fill-outline-color': '#d292d4'
+                    }
+                })
+                
+                map.moveLayer('route1', 'points1');
+                map.moveLayer('route', 'points1');
+                map.moveLayer('polygon1', 'points1');
+                map.moveLayer('min1', 'points1');
+                map.moveLayer('min', 'points1');
+                map.moveLayer('polygon', 'points1');
+                
+                map.moveLayer('max', 'points2');
+                
                 map.moveLayer('polygon', 'max');
+                map.moveLayer('polygon1', 'max');
                 map.moveLayer('polygon', 'min');
+                map.moveLayer('polygon1', 'min');
+            })
+
+            map.on('click', function (e) {
+                var bbox = [
+                    [e.point.x - 5, e.point.y - 5],
+                    [e.point.x + 5, e.point.y + 5]
+                ];
+                var features = map.queryRenderedFeatures(bbox, {
+                    layers: ['points','points1','points2']
+                });
+                if (features.length > 0) {
+                    var content = '';
+                    content += '<div style="width:170px">';
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '      <div style="width:70%">';
+                    content += '           <p style="font-weight: bold;">wind_level_6 : </p>'
+                    content += '      </div>'
+                    content += '      <div style="width:30%">'
+                    content += '           <p>' + features[0].properties.area_wind_level_6 + '</p>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '       <div style="width:70%">';
+                    content += '          <p style="font-weight: bold;">wind_level_10 : </p>'
+                    content += '      </div>'
+                    content += '      <div style="width:30%">'
+                    content += '          <p>' + features[0].properties.area_wind_level_10 + '</p>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '      <div style="width:70%">';
+                    content += '          <p style="font-weight: bold;">wind_level_center : </p>'
+                    content += '      </div>'
+                    content += '      <div style="width:30%">'
+                    content += '          <p>' + features[0].properties.area_wind_level_center + '</p>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '      <div style="width:70%">';
+                    content += '          <p style="font-weight: bold;">Pressure min : </p>'
+                    content += '      </div>'
+                    content += '      <div style="width:30%">'
+                    content += '          <p>' + features[0].properties.p_min + '</p>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '      <div style="width:70%">';
+                    content += '          <p style="font-weight: bold;">Storm level : </p>'
+                    content += '      </div>'
+                    content += '      <div style="width:30%">'
+                    content += '          <p>' + features[0].properties.storm_level + '</p>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '      <div style="width:70%">';
+                    content += '          <p style="font-weight: bold;">V_max : </p>'
+                    content += '      </div>'
+                    content += '      <div style="width:30%">'
+                    content += '          <p>' + features[0].properties.v_max + '</p>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '</div>'
+                    popup = new mapboxgl.Popup({});
+                    popup.setLngLat(e.lngLat)
+                        .setHTML(content)
+                        .addTo(map);
+                }
             })
             function guid12() {
                 function s4() {

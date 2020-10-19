@@ -30,8 +30,8 @@
         var map = new mapboxgl.Map({
             container: 'divMapId', // container id
             minZoom: 4,
-            center: [105, 17],
-            zoom: 4
+            center: [110.8572095386728, 16.105643201842312],
+            zoom: 5.0598853164770725  
         });
         var hoveredStateId = null;
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer(urlVectorService + "/resources/styles?apikey=" + tokenKey).addTo(map);
@@ -51,7 +51,6 @@
                 },
                 'filter': ["get", "CODE"]
             })
-            console.log(map.getStyle().layers)
         })
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
 

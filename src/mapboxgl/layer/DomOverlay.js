@@ -197,8 +197,8 @@ function preStyleEles(line, dot, dom, pix, chartType) {
     dom.style.textAlign = "center";
     dom.style.padding = '3px';
     // if has chartType, display chart above vertical line.
-    dom.style.left = (pix[0] - (isImg ? chartHeight / 2 : chartHeight)) + "px";
-    dom.style.top = (pix[1] - lineHeight - (chartType ? chartHeight : 20)) + "px";
+    dom.style.left = pix[0] - 166/2 + "px";
+    dom.style.top = pix[1] - 86/2 + "px";
 }
 
 function styleChartContainer(dom) {
