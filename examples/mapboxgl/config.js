@@ -770,9 +770,9 @@ var exampleConfig = {
 
 //icon css sideBar
 var sideBarIconConfig = {
-    ekmapServer: "fa-server",
+    ekmapServer: "fa-globe",
     viz: "fa-map",
-    clientspatial: "fa-map",
+    clientspatial: "fa-object-group",
     control: "fa-sliders"
 };
 

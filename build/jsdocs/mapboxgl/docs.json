@@ -3,7 +3,9 @@
         "recurse": true,
         "template": "../template",
         "configPath": "../mapboxgl",
-        "destination": "./docs/mapboxgl"
+        "destination": "./docs/mapboxgl",
+        "tutorials": "./tutorials",
+        "readme": "./README.md"
     },
     "disqus":"",
     "tags": {

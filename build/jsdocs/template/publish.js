@@ -617,7 +617,7 @@ exports.publish = function (taffyData, opts, tutorials) {
             content: tutorial.parse(),
             children: tutorial.children
         };
-
+        console.log(tutorialData);
         var tutorialPath = path.join(outdir, filename),
             html = view.render('tutorial.tmpl', tutorialData);
 
