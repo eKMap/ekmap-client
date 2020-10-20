@@ -8,4 +8,4 @@ eKMap Client for MapboxGL
 
 *   Mapbox GL JS API:<a href="https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">https://www.mapbox.com/mapbox-gl-js/api/</a>
 *   ECharts API:<a href="https://echarts.baidu.com/api.html#echarts" target="_blank">https://echarts.baidu.com/api.html#echarts</a>
-*   MapV API:<a href="https://github.com/huiyan-fe/mapv/blob/master/API.md" target="_blank">https://github.com/huiyan-fe/mapv/blob/master/API.md</a>
+*   HighCharts API:<a href="https://api.highcharts.com/highcharts/" target="_blank">https://api.highcharts.com/highcharts/</a>

@@ -50,14 +50,10 @@ app.use('/examples-bug', express.static('examples-bug'), serveIndex('examples-bu
 app.use('/dist', express.static('dist'), serveIndex('dist'));
 app.use('/build', express.static('build'), serveIndex('build'));
 app.use('/docs', express.static('docs'), serveIndex('docs'));
+app.use('/tutorials', express.static('tutorials'), serveIndex('tutorials'));
+app.use('/out', express.static('out'), serveIndex('out'));
 app.use('/web', express.static('web'), serveIndex('web'));
 
-app.use('/en/examples/template/header.html', express.static('web/en/web/template/header.html'));
-app.use('/en/examples', express.static('examples'), serveIndex('examples'));
-app.use('/en/docs', express.static('docs'), serveIndex('docs'));
-app.use('/en/dist', express.static('dist'), serveIndex('dist'));
-app.use('/en/build', express.static('build'), serveIndex('build'));
-app.use('/en', express.static('web/en'), serveIndex('web/en'));
 if (!product) {
     open(`http://localhost:8083/examples`);
 }

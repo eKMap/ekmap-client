@@ -1,35 +1,10 @@
 <?js
 var self = this;
-//nav格式:
-//{
-//   iServer:{
-//       Map:[],
-//        Data:[],
-//        default:[]  //在根目录下的文件
-//    }，
-//    iManager：{
-//        default:[]
-//    }
-//}
-
-//navOrder:
-//{
-//   "iServer": { 
-//        "name":"iServer",//显示值
-//        "content":{ //子目录内容
-//         "Map": {"name":"地图"} 
-//          "Data": {"name":"数据"}
-//      }
-//    },
-//    "iManager": {"name":"iManager"},
-//}
-
 function build(nav,navOrder,level){
      if(!nav){
          return;
      }
      
-    //根据order来决定构建的sidebar顺序
     for(order in navOrder){ 
         if(order === 'name'||order === 'name_en'){
             continue;
@@ -39,7 +14,6 @@ function build(nav,navOrder,level){
             build(nav,subOrder,level);
             continue;
         }
-        //增加default分类，因为nav中将默认根分类下的类放到default里
         subOrder['default']=[];
         
         var subNav = nav[order];

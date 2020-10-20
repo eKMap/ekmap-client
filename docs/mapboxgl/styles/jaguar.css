@@ -143,7 +143,7 @@ a:hover, a:active, a:focus{
 }
 
 .main {
-    padding: 20px 26px;
+    padding: 10px 20px;
     margin-left: 250px;
 }
 
@@ -532,4 +532,21 @@ footer {
     font-size: 13px;
     margin-top: 14px;
     margin-bottom: 14px;
+}
+
+.main-sidebar{
+    top: 60px;
+}
+
+.main-header .navbar{
+    background-color: #212121;
+}
+.main-header .navbar .nav>li>a {
+    color: #fff;
+}
+.navbar-menu:hover {
+    background-color: red !important;
+}
+.center:hover{
+    background-color: #333 !important;
 }
