@@ -11,7 +11,7 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>High Line Chart</title>
+    <title>High chart line</title>
     <style>
         body {
             margin: 0;
@@ -25,20 +25,14 @@
             width: 100%;
         }
         
-        #stat {
-            position: absolute;
-            top: 50%;
-            bottom: 0;
-            width: 100%;
-            height: 50%;
-            background: #FFF;
-            z-index: 1000;
-        }
-        
         #container {
-            height: 100%;
-            width: 100%;
-        }
+        position: absolute;
+        top: 60%;
+        bottom: 0;
+        width: 100%;
+        height: 40%;
+        z-index: 1000;
+    }
     </style>
 </head>
 
@@ -109,10 +103,10 @@
                     type: 'spline'
                 },
                 title: {
-                    text: e.features[0].properties.NAME + ' future temperature'
+                    text: e.features[0].properties.NAME
                 },
                 subtitle: {
-                    text: 'Source: WorldClimate.com'
+                    text: 'Future temperature'
                 },
                 xAxis: {
                     categories: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]

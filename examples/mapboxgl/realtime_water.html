@@ -18,12 +18,82 @@
         body {
             overflow: hidden;
         }
+
+        #selectedFeatures {
+            position: absolute;
+            left: 12px;
+            bottom: 15px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+            max-height: 250px;
+            max-width: 250px;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+
+        .dataNote {
+            padding: 10px;
+            margin: 0px;
+            list-style-type: none;
+        }
+
+        .noteType {
+            padding: 0px;
+            list-style-type: none;
+        }
+
+        .note {
+            font-size: 20px;
+            font-weight: 600;
+        }
     </style>
 </head>
 
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            <div>
+                <div style="text-align: center;">
+                    <span class="note">Note</span>
+                </div>
+                <ul class="dataNote">
+                    <li>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX/AAAZ4gk3AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <span style="padding-left: 15px;">
+                                    Polluted
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUA/wA0XsCoAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <span style="padding-left: 15px;">
+                                    Medium
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUAmf8q++MEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <span style="padding-left: 15px;">
+                                    Good
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <script>
@@ -56,17 +126,24 @@
             zoom: 9.415324050150357,
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        var frameCount = 5;
+        var currentImage = -5;
 
         map.on('load', function () {
             $.get("../data/water/dma.json", function (response) {
+                var features = response.features;
                 window.setInterval(function () {
-                    var color = getRandomColor();
-                    var color1 = getRandomColor();
-                    var color2 = getRandomColor();
-                   // map.setPaintProperty('water-color', 'fill-color', ''+color);
-                   // map.setPaintProperty('water-color1', 'fill-color', ''+color1);
-                   // map.setPaintProperty('water-color2', 'fill-color', ''+color2);
-                }, 1000)
+                    features.forEach(fea => {
+                        currentImage = (currentImage + 1) % frameCount;
+                        fea.properties.value = currentImage
+                    });
+                    map.getSource('dma').setData(response)
+                }, 3000)
+
+                features.forEach(fea => {
+                    currentImage = (currentImage + 1) % frameCount;
+                    fea.properties.value = currentImage
+                });
                 map.addSource('dma', {
                     'type': 'geojson',
                     'data': response
@@ -77,7 +154,17 @@
                     'type': 'fill',
                     'source': 'dma',
                     'paint': {
-                        'fill-color': "#4a86e8",
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'value'],
+                            0,
+                            '#FF0000',
+                            1,
+                            '#00FF00',
+                            4,
+                            '#0099FF'
+                        ],
                         'fill-outline-color': '#000',
                         'fill-opacity': 0.7
                     }
@@ -118,13 +205,13 @@
             });
         })
         function getRandomColor() {
-                var letters = '0123456789ABCDEF';
-                var color = '#';
-                for (var i = 0; i < 6; i++) {
-                    color += letters[Math.floor(Math.random() * 16)];
-                }
-                return color;
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
             }
+            return color;
+        }
     </script>
 </body>
 

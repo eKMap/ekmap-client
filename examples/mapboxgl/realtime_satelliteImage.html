@@ -16,24 +16,107 @@
         body {
             overflow: hidden;
         }
+
+        #menu-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            z-index: 9999;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.85);
+            -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #menu-bar div {
+            display: inline-block;
+            margin: 10px 4px;
+        }
+
+        #menu-bar div * {
+            vertical-align: middle;
+        }
+
+        input[type=button],
+        input[type=number],
+        select {
+            font-size: 12px;
+            font-weight: normal;
+            height: 28px;
+            cursor: pointer;
+            border: 0;
+            outline: 0;
+            margin: 0;
+            padding: 0 8px;
+            background-color: #fff;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            -webkit-appearance: none;
+            appearance: none;
+        }
     </style>
 </head>
 
 <body>
     <div style="width: 100%;">
+        <!-- <h2><b>Cloud Developments </b></h2>
+        <h4><i>(The running time in the upper left corner of the screen is world time - Vietnam time will be added with
+                +07)</i></h4>
+        <a href="#" id='recentPhoto' style="text-decoration:none;cursor:pointer;font-size:12px;color:BLUE;">
+            <h2><b>See the most recent photo</b></h2>
+        </a> -->
+        <div id="menu-bar">
+            <div class="" id="time-section"> <select title="Radar Time" id="select-time">
+                    <option id="option-time0" value="0">1:30 PM</option>
+                    <option id="option-time21" value="21">5:10 PM</option>
+                    <option id="option-time20" value="20">5:00 PM</option>
+                    <option id="option-time19" value="19">4:50 PM</option>
+                    <option id="option-time18" value="18">4:40 PM</option>
+                    <option id="option-time17" value="17">4:30 PM</option>
+                    <option id="option-time16" value="16">4:20 PM</option>
+                    <option id="option-time15" value="15">4:10 PM</option>
+                    <option id="option-time14" value="14">4:00 PM</option>
+                    <option id="option-time13" value="13">3:50 PM</option>
+                    <option id="option-time12" value="12">3:40 PM</option>
+                    <option id="option-time11" value="11">3:30 PM</option>
+                    <option id="option-time10" value="10">3:20 PM</option>
+                    <option id="option-time9" value="9">3:10 PM</option>
+                    <option id="option-time8" value="8">3:00 PM</option>
+                    <option id="option-time7" value="7">2:50 PM</option>
+                    <option id="option-time6" value="6">2:30 PM</option>
+                    <option id="option-time5" value="5">2:20 PM</option>
+                    <option id="option-time4" value="4">2:10 PM</option>
+                    <option id="option-time3" value="3">2:00 PM</option>
+                    <option id="option-time2" value="2">1:50 PM</option>
+                    <option id="option-time1" value="1">1:40 PM</option>
+                </select></div>
+            <div class="" id="play-section">
+                <input type="button" value="←" id="button-prev" class="small-hide">
+                <input type="button" value="Play" id="button-play">
+                <input type="button" value="→" id="button-next" class="small-hide">
+            </div>
+        </div>
         <div id="divMapId" class="map"></div>
     </div>
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            center: [105, 17],
-            zoom: 4
+            center: [118.65064808099055, 18.7111502239418],
+            zoom: 3.732292015558651
         });
         var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         var frameCount = 22;
         var currentImage = 0;
-
+        var url;
+        var interval;
         function getPath() {
             return (
                 //Data: https://nchmf.gov.vn/  
@@ -42,6 +125,9 @@
                 '_W.jpg'
             );
         }
+
+        var selectTime = document.getElementById("select-time");
+        var btn = document.getElementById("button-play");
 
         map.on('load', function () {
             map.addSource('radar', {
@@ -62,12 +148,43 @@
                     'raster-fade-duration': 0
                 }
             });
-
-            setInterval(function () {
-                currentImage = (currentImage + 1) % frameCount;
-                map.getSource('radar').updateImage({ url: getPath() });
-            }, 200);
         });
+
+        document.getElementById("button-play").onclick = function () {
+            if (btn.value === 'Stop') {
+                btn.value = 'Play'
+                clearInterval(interval);
+            }
+            else {
+                btn.value = 'Stop'
+                interval = setInterval(function () {
+                    currentImage = (currentImage + 1) % frameCount;
+                    url = getPath();
+                    selectTime.value = currentImage
+                    map.getSource('radar').updateImage({ url: url });
+                }, 200);
+            }
+        }
+
+        document.getElementById("button-prev").onclick = function () {
+            if (currentImage == 0)
+                currentImage = 22;
+            currentImage = (currentImage - 1) % frameCount;
+            url = getPath();
+            selectTime.value = currentImage
+            map.getSource('radar').updateImage({ url: url });
+        }
+
+        document.getElementById("button-next").onclick = function () {
+            currentImage = (currentImage + 1) % frameCount;
+            url = getPath();
+            selectTime.value = currentImage
+            map.getSource('radar').updateImage({ url: url });
+        }
+        // document.getElementById("recentPhoto").onclick = function () {
+        //     var link = document.getElementById("recentPhoto");
+        //     link.setAttribute("href", url);
+        // }
     </script>
 </body>
 

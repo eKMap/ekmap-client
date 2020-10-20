@@ -11,7 +11,7 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Heigh chart bar</title>
+    <title>Hight chart bar</title>
 </head>
 <style>
     body {
@@ -26,25 +26,19 @@
         width: 100%;
     }
     
-    #stat {
+    #container {
         position: absolute;
-        top: 50%;
+        top: 60%;
         bottom: 0;
         width: 100%;
-        height: 50%;
-        background: #FFF;
+        height: 40%;
         z-index: 1000;
-    }
-    
-    #container {
-        height: 100%;
-        width: 100%;
     }
 </style>
 
 <body>
     <div id='divMapId'></div>
-    <div id='stat'>
+    <div id='start'>
         <div id='container'></div>
     </div>
     <script type="text/javascript">
@@ -81,7 +75,6 @@
         function query() {
             $.get("../data/echarts_pie.json", function(response) {
                 var fs = response;
-                console.log(response);
                 map.addLayer({
                     "id": "points",
                     "type": "symbol",
@@ -99,6 +92,8 @@
         }
         var data1 = [];
         var data2 = [];
+        var start = document.getElementById('start');
+
         for (var i = 0; i < 7; i++) {
             var data = Math.random().toFixed(2);
             data1.push(data * Math.random() + 8);
@@ -106,6 +101,8 @@
         }
 
         map.on('click', 'points', function(e) {
+
+            start.style.position = ''
             var city = e.features[0].properties.NAME;
             var options = {
                 chart: {

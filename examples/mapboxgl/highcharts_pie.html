@@ -11,7 +11,7 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Heigh chart pie</title>
+    <title>Hight chart pie</title>
 </head>
 <style>
     body {
@@ -26,19 +26,13 @@
         width: 100%;
     }
     
-    #stat {
+    #container {
         position: absolute;
-        top: 50%;
+        top: 60%;
         bottom: 0;
         width: 100%;
-        height: 50%;
-        background: #FFF;
+        height: 40%;
         z-index: 1000;
-    }
-    
-    #container {
-        height: 100%;
-        width: 100%;
     }
 </style>
 
@@ -203,7 +197,10 @@
                     type: 'pie'
                 },
                 title: {
-                    text: city + ' commodity sales'
+                    text: city
+                },
+                subtitle: {
+                    text: 'Commodity sales'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

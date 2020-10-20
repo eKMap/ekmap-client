@@ -1,0 +1,91 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Data Rain</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var data;
+        var chart, div, popup = '';
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256,
+                    },
+                },
+                "layers": [{
+                    "id": "simple-tiles",
+                    "type": "raster",
+                    "source": "raster-tiles",
+                    "minzoom": 0,
+                    "maxzoom": 18
+                }]
+            },
+            center: [106.5090846096723, 16.787962287423255],
+            zoom: 5.1128594812072485
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.on('load', function () {
+            map.loadImage('./img/icon-rain.png', function (error, image) {
+                if (error) throw error;
+                map.addImage('positionRaint', image);
+            });
+            //Source: KTTV
+            $.get("../data/weather/rain.json ", function (response) {
+                map.addLayer({
+                    "id": "raint",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "positionRaint",
+                        "icon-size": 0.05
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": response
+                    }
+                });
+            })
+        })
+        map.on('click', 'raint',function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['raint']
+            });
+            var img = '<img src="'+ features[0].properties.chartUrl+'">';
+            new mapboxgl.Popup({maxWidth:1000})
+                .setLngLat(e.lngLat)
+                .setHTML(img)
+                .addTo(map);
+        })
+    </script>
+</body>
+
+</html>

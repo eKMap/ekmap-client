@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 2px 3px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            left: 30px;
+            top: -8px;
+            z-index: 1000;
+            padding: 1em;
+            max-height: 250px;
+            max-width: 250px;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="selectedFeatures" class="leaflet-bar map-text">
+        <div id="terrainMenu">
+            <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                <option value="BMC">KĐT BMC Thăng Long</option>
+                <option value="AIC">KĐT Mê Linh AIC</option>
+                <option value="TL2">KĐT Thanh Lâm - Đại Thịnh 2</option>
+                <option value="XP">KĐT Xuân Phương Viglacera</option>
+                <option value="N3">KĐT Nam vành đai 3</option>
+                <option value="CNPM">Điều chỉnh cục bộ ô E,G,H KĐT Công viên CNPM Hà Nội</option>
+                <option value="NG">KĐT Ngoại giao đoàn Hà Nội</option>
+                <option value="CNPM1">KĐT Công viên CNPM Hà Nộ</option>
+                <option value="CN">KĐT Bắc Cổ Nhuế - Chèm</option>
+                <option value="CV">Công viên dầu khí</option>
+                <option value="TV">KĐT Trung Văn</option>
+            </select></div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256
+                    }
+                },
+                "layers": [
+                    {
+                        "id": "raster-tiles",
+                        "type": "raster",
+                        "source": "raster-tiles",
+                        "minzoom": 0,
+                        "maxzoom": 22,
+                        'layout': {
+                            'visibility': 'visible',
+                        },
+                        'raster-opacity': 0.75,
+                    }
+                ]
+            },
+            center: [105.79915294543991, 21.06431227809489],
+            zoom: 13.47961006890345,
+            pitch: 60,
+            bearing: 36
+        });
+
+        map.on('load', function () {
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+            //Data
+            var features
+            $.get("../data/3d_buildings.json", function (response) {
+                map.addSource('floorplan', {
+                    'type': 'geojson',
+                    'data': response
+                });
+                map.addLayer({
+                    'id': 'room-extrusion',
+                    'type': 'fill-extrusion',
+                    'source': 'floorplan',
+                    'paint': {
+                        // Get the fill-extrusion-color from the source 'color' property.
+                        'fill-extrusion-color': 'blue',
+
+                        // Get fill-extrusion-height from the source 'height' property.
+                        'fill-extrusion-height': ['get', 'chieucao'],
+                    }
+                });
+            })
+        })
+
+        map.on('click', function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['room-extrusion']
+            });
+            console.log(features)
+        })
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            if (x == 'BMC')
+                map.flyTo({ center: [105.71573930917333, 21.1915848041358], zoom: 16 });
+                if (x == 'AIC')
+                map.flyTo({ center: [105.74493158120043, 21.16098249711949], zoom: 16 });
+                if (x == 'TL2')
+                map.flyTo({ center: [105.72749568216187, 21.19141208973052], zoom: 16 });
+                if (x == 'XP')
+                map.flyTo({ center: [105.7453450917975, 21.026041445147484], zoom: 16 });
+                if (x == 'N3')
+                map.flyTo({ center: [105.82471249762904 , 20.970882274143207], zoom: 16 });
+                if (x == 'CNPM')
+                map.flyTo({ center: [105.90833235980915 , 21.043638145247613], zoom: 16 });
+                if (x == 'NG')
+                map.flyTo({ center: [105.80357690556627 , 21.065041569551383], zoom: 16 });
+                if (x == 'CNPM1')
+                map.flyTo({ center: [105.9081385319987 , 21.051230321197764], zoom: 16 });
+                if (x == 'CN')
+                map.flyTo({ center: [105.78611280047045 , 21.075639877153307], zoom: 16 });
+                if (x == 'CV')
+                map.flyTo({ center: [105.77207271326125 , 21.006910474805764], zoom: 16 });
+                if (x == 'TV')
+                map.flyTo({ center: [105.79174691634523 , 20.99138374039005], zoom: 16 });
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>

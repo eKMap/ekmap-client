@@ -211,7 +211,7 @@ var exampleConfig = {
                     {
                         name: "flashing points",
                         name_en: "flashing points",
-                        thumbnail: "animation_flashing_point.png",
+                        thumbnail: "animation_flashing_point.gif",
                         fileName: "animation_flashing_point"
                     },
                     {
@@ -259,21 +259,33 @@ var exampleConfig = {
                     {
                         name: "bar highcharts",
                         name_en: "bar highcharts",
-                        thumbnail: "highcharts_bar.png",
+                        thumbnail: "highcharts_bar.gif",
                         fileName: "highcharts_bar"
                     },
                     {
                         name: "line highcharts",
                         name_en: "line highcharts",
-                        thumbnail: "highcharts_line.png",
+                        thumbnail: "highcharts_line.gif",
                         fileName: "highcharts_line"
                     },
                     {
                         name: "pie highcharts",
                         name_en: "pie highcharts",
-                        thumbnail: "highcharts_pie.png",
+                        thumbnail: "highcharts_pie.gif",
                         fileName: "highcharts_pie"
                     },
+                ]
+            },
+            ChartOnline: {
+                name: "Chart Online",
+                name_en: "Chart Online",
+                content: [
+                    {
+                        name: "Data rain",
+                        name_en: "Data rain",
+                        thumbnail: "data_rain.png",
+                        fileName: "data_rain"
+                    }
                 ]
             },
             threejs: {
@@ -287,13 +299,19 @@ var exampleConfig = {
                         thumbnail: "threejsLayer_buildings.png",
                         fileName: "threejsLayer_buildings"
                     },
-
                     {
                         name: "airplane(gltf)",
                         name_en: "airplane(gltf)",
                         version: "",
                         thumbnail: "threejsLayer_airplane.gif",
                         fileName: "threejsLayer_airplane"
+                    },
+                    {
+                        name: "3D buildings",
+                        name_en: "3D buildings",
+                        version: "",
+                        thumbnail: "data_3D.gif",
+                        fileName: "data_3D"
                     }
                 ]
             },
@@ -308,6 +326,18 @@ var exampleConfig = {
                         fileName: "layerChart"
                     },
                     {
+                        name: "Water HightChart",
+                        name_en: "Water HightChart",
+                        thumbnail: "highcharts_lineWater.png",
+                        fileName: "highcharts_lineWater"
+                    }
+                ]
+            },
+            Realtime: {
+                name: "Realtime",
+                name_en: "Realtime",
+                content: [
+                    {
                         name: "Realtime Water",
                         name_en: "Realtime Water",
                         thumbnail: "realtime_water.gif",
@@ -318,18 +348,6 @@ var exampleConfig = {
                         name_en: "Realtime Satellite Image",
                         thumbnail: "realtime_satelliteImage.gif",
                         fileName: "realtime_satelliteImage"
-                    },
-                    {
-                        name: "Water HightChart",
-                        name_en: "Water HightChart",
-                        thumbnail: "highcharts_lineWater.png",
-                        fileName: "highcharts_lineWater"
-                    },
-                    {
-                        name: "Data Storm",
-                        name_en: "Data Storm",
-                        thumbnail: "data_storm.png",
-                        fileName: "data_storm"
                     }
                 ]
             }
@@ -360,6 +378,12 @@ var exampleConfig = {
                         name_en: "Buffer",
                         thumbnail: "turfjs_Buffer.png",
                         fileName: "turfjs_Buffer"
+                    },
+                    {
+                        name: "Data Storm",
+                        name_en: "Data Storm",
+                        thumbnail: "data_storm.png",
+                        fileName: "data_storm"
                     }
                 ]
             }
