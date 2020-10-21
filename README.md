@@ -12,7 +12,7 @@ https://ekmap.github.io/ekmap-client/docs
 
 ## Tutorials
 
-https://ekmap.github.io/ekmap-client/tutorials
+https://ekmap.github.io/ekmap-client/out
 
 ## License
 [MIT License](./LICENSE)
