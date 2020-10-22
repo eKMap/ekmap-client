@@ -7,6 +7,7 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
+    <title>Realtime Satellite Image</title>
     <style>
         .map {
             width: 100%;
@@ -99,7 +100,7 @@
                 </select></div>
             <div class="" id="play-section">
                 <input type="button" value="←" id="button-prev" class="small-hide">
-                <input type="button" value="Play" id="button-play">
+                <input type="button" value="Stop" id="button-play">
                 <input type="button" value="→" id="button-next" class="small-hide">
             </div>
         </div>
@@ -148,6 +149,13 @@
                     'raster-fade-duration': 0
                 }
             });
+
+            interval = setInterval(function () {
+                currentImage = (currentImage + 1) % frameCount;
+                url = getPath();
+                selectTime.value = currentImage
+                map.getSource('radar').updateImage({ url: url });
+            }, 500);
         });
 
         document.getElementById("button-play").onclick = function () {
@@ -162,7 +170,7 @@
                     url = getPath();
                     selectTime.value = currentImage
                     map.getSource('radar').updateImage({ url: url });
-                }, 200);
+                }, 500);
             }
         }
 

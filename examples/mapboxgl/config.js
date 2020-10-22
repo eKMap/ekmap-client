@@ -305,13 +305,6 @@ var exampleConfig = {
                         version: "",
                         thumbnail: "threejsLayer_airplane.gif",
                         fileName: "threejsLayer_airplane"
-                    },
-                    {
-                        name: "3D buildings",
-                        name_en: "3D buildings",
-                        version: "",
-                        thumbnail: "data_3D.gif",
-                        fileName: "data_3D"
                     }
                 ]
             },
@@ -330,6 +323,19 @@ var exampleConfig = {
                         name_en: "Water HightChart",
                         thumbnail: "highcharts_lineWater.png",
                         fileName: "highcharts_lineWater"
+                    }
+                ]
+            },
+            '3DLayer': {
+                name: "3D Layer",
+                name_en: "3D Layer",
+                content: [
+                    {
+                        name: "3D buildings",
+                        name_en: "3D buildings",
+                        version: "",
+                        thumbnail: "data_3D.gif",
+                        fileName: "data_3D"
                     }
                 ]
             },

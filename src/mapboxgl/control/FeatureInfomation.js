@@ -19,7 +19,7 @@ import mapboxgl from 'mapbox-gl';
 export class FeatureInfomation extends mapboxgl.Evented {
 
     constructor(options) {
-        super(options);
+        super(options); 
         this.options = options ? options : {};
         this.setStyle = options ? options.setStyle : true;
     }

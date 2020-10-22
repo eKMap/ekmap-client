@@ -16,6 +16,69 @@
         body {
             overflow: hidden;
         }
+
+        .nameCountry {
+            color: #333333 !important;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .field {
+            color: #333333 !important;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            padding-right: 10px;
+        }
+
+        .value {
+            color: #333333 !important;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            left: 12px;
+            bottom: 15px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+            max-height: 200px;
+            max-width: 400px;
+            background-color: #ddeddd;
+            opacity: 0.8;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+
+        .dataNote {
+            padding: 10px;
+            margin: 0px;
+            list-style-type: none;
+        }
+
+        .noteType {
+            padding: 0px;
+            list-style-type: none;
+        }
+
+        .note {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .text1 {
+            padding-left: 32px;
+            font-size: 13px;
+        }
+
+        .text2 {
+            font-size: 13px;
+        }
     </style>
 </head>
 
@@ -24,6 +87,70 @@
 
     <div style="width: 100%;">
         <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            <div>
+                <div style="padding-left: 12px;">
+                    <span class="note">Note</span>
+                </div>
+                <ul class="dataNote">
+                    <li>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzM2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0icmdiKDIzOSwxNTgsMjM4KSIvPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0ibm9uZSIvPjwvZz48L3N2Zz4=">
+                                <span class="text1">
+                                    Areas where strong winds are greater than level 6
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzM2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0icmdiKDIzNSwgNjcsIDg2KSIvPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0ibm9uZSIvPjwvZz48L3N2Zz4=">
+                                <span class="text1">
+                                    Areas where strong winds are higher than level 10
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzM2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0icmdiKDQ4LDI0NywxMjEpIi8+PHBhdGggZD0iIE0gMTA0MyAzNTEgQyAxMDQzIDM1OS4yODQgMTAzNi4yODQgMzY2IDEwMjggMzY2IEMgMTAxOS43MTYgMzY2IDEwMTMgMzU5LjI4NCAxMDEzIDM1MSBDIDEwMTMgMzQyLjcxNiAxMDE5LjcxNiAzMzYgMTAyOCAzMzYgQyAxMDM2LjI4NCAzMzYgMTA0MyAzNDIuNzE2IDEwNDMgMzUxIFogIiBmaWxsPSJub25lIi8+PC9nPjwvc3ZnPg==">
+                                <span class="text1">
+                                    The stormy center, low pressure is able to pass through
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjgzOCAxODMgMzAgMjcuMjg3IiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxwYXRoIGQ9IiBNIDgzOCAyMDUuNTMgQyA4MzguMDA3IDIwNS40ODYgODM4LjAzOCAyMDUuNTA5IDgzOC4wMzggMjA1LjUzIEMgODM5Ljc2MiAyMDYuNDE0IDg0Mi4wODkgMjA3LjIzMSA4NDUuMDI1IDIwNi45NzMgQyA4NDUuNjIzIDIwNi45MiA4NDYuODQzIDIwNi43NjMgODQ2Ljg4NiAyMDYuMjg5IEMgODQ2LjkyMyAyMDUuODg2IDg0NS44NSAyMDUuMjk4IDg0NS40ODEgMjA0Ljk2IEMgODQzLjMwMSAyMDIuOTYyIDg0MS4zMzEgMTk5LjU2MSA4NDEuOTExIDE5NS4yNzYgQyA4NDIuMTE5IDE5My43NDIgODQyLjU0NSAxOTIuMzM3IDg0My4yMDMgMTkxLjE3NSBDIDg0NC40ODkgMTg4LjkgODQ2LjMzNyAxODcuMDg0IDg0OC41NTcgMTg1Ljc0NSBDIDg1MC44MDUgMTg0LjM4OCA4NTMuMzA5IDE4My4zMTUgODU2LjY0NiAxODMuMDQ5IEMgODU3LjQzMiAxODIuOTg2IDg1Ny45OTIgMTgyLjk4MiA4NTguODQ4IDE4My4wNDkgQyA4NjMuMDg3IDE4My4zOCA4NjUuODQgMTg1LjE5OCA4NjggMTg3Ljc1NyBDIDg2Ni4zMzQgMTg2LjkwMiA4NjMuOTA0IDE4Ni4wNzQgODYwLjkzNyAxODYuMzE0IEMgODYwLjM1OCAxODYuMzYxIDg1OS4xNTYgMTg2LjU0NCA4NTkuMTE0IDE4Ni45OTggQyA4NTkuMDggMTg3LjM2OCA4NjAuMTYyIDE4OC4wMzIgODYwLjQ4MSAxODguMzI3IEMgODYxLjg2NCAxODkuNjA3IDg2My4wMjYgMTkxLjE5OSA4NjMuNjcxIDE5My4yMjYgQyA4NjQuNjE1IDE5Ni4xOTMgODY0LjExMiAxOTkuNzUzIDg2Mi43OTcgMjAyLjA3NCBDIDg2MS41MTcgMjA0LjMzMyA4NTkuNzA0IDIwNi4yMzUgODU3LjQ4MSAyMDcuNTQyIEMgODU0Ljg2OCAyMDkuMDc5IDg1MS40NTUgMjEwLjU3OCA4NDcuMTE0IDIxMC4yMzggQyA4NDIuODk5IDIwOS45MDkgODQwLjE1MiAyMDguMDc1IDgzOCAyMDUuNTMgWiAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbD0icmdiKDUsNSw1KSIvPjwvc3ZnPg==">
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzg2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwMjggNDA5LjM4NyBDIDEwMjMuMzY4IDQwOS4zODcgMTAxOS42MTMgNDA1LjYzMiAxMDE5LjYxMyA0MDEgQyAxMDE5LjYxMyAzOTYuMzY4IDEwMjMuMzY4IDM5Mi42MTMgMTAyOCAzOTIuNjEzIEMgMTAzMi42MzIgMzkyLjYxMyAxMDM2LjM4NyAzOTYuMzY4IDEwMzYuMzg3IDQwMSBDIDEwMzYuMzg3IDQwNS42MzIgMTAzMi42MzIgNDA5LjM4NyAxMDI4IDQwOS4zODcgWiAgTSAxMDI4IDM4NiBDIDEwMTkuNzE2IDM4NiAxMDEzIDM5Mi43MTYgMTAxMyA0MDEgQyAxMDEzIDQwOS4yODQgMTAxOS43MTYgNDE2IDEwMjggNDE2IEMgMTAzNi4yODQgNDE2IDEwNDMgNDA5LjI4NCAxMDQzIDQwMSBDIDEwNDMgMzkyLjcxNiAxMDM2LjI4NCAzODYgMTAyOCAzODYgWiAiIGZpbGw9InJnYig1LDUsNSkiLz48cGF0aCBkPSIgTSAxMDI4IDQwOS4zODcgQyAxMDIzLjM2OCA0MDkuMzg3IDEwMTkuNjEzIDQwNS42MzIgMTAxOS42MTMgNDAxIEMgMTAxOS42MTMgMzk2LjM2OCAxMDIzLjM2OCAzOTIuNjEzIDEwMjggMzkyLjYxMyBDIDEwMzIuNjMyIDM5Mi42MTMgMTAzNi4zODcgMzk2LjM2OCAxMDM2LjM4NyA0MDEgQyAxMDM2LjM4NyA0MDUuNjMyIDEwMzIuNjMyIDQwOS4zODcgMTAyOCA0MDkuMzg3IFogIE0gMTAyOCAzODYgQyAxMDE5LjcxNiAzODYgMTAxMyAzOTIuNzE2IDEwMTMgNDAxIEMgMTAxMyA0MDkuMjg0IDEwMTkuNzE2IDQxNiAxMDI4IDQxNiBDIDEwMzYuMjg0IDQxNiAxMDQzIDQwOS4yODQgMTA0MyA0MDEgQyAxMDQzIDM5Mi43MTYgMTAzNi4yODQgMzg2IDEwMjggMzg2IFogIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9Im5vbmUiLz48L2c+PC9zdmc+">
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjY5NC4xMjkgMjY0IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDcyNC4xMjkgMjc5IEMgNzI0LjEyOSAyODcuMjg0IDcxNy40MTMgMjk0IDcwOS4xMjkgMjk0IEMgNzAwLjg0NSAyOTQgNjk0LjEyOSAyODcuMjg0IDY5NC4xMjkgMjc5IEMgNjk0LjEyOSAyNzAuNzE2IDcwMC44NDUgMjY0IDcwOS4xMjkgMjY0IEMgNzE3LjQxMyAyNjQgNzI0LjEyOSAyNzAuNzE2IDcyNC4xMjkgMjc5IFogIiBmaWxsPSJyZ2IoNSw1LDUpIi8+PHBhdGggZD0iIE0gNzI0LjEyOSAyNzkgQyA3MjQuMTI5IDI4Ny4yODQgNzE3LjQxMyAyOTQgNzA5LjEyOSAyOTQgQyA3MDAuODQ1IDI5NCA2OTQuMTI5IDI4Ny4yODQgNjk0LjEyOSAyNzkgQyA2OTQuMTI5IDI3MC43MTYgNzAwLjg0NSAyNjQgNzA5LjEyOSAyNjQgQyA3MTcuNDEzIDI2NCA3MjQuMTI5IDI3MC43MTYgNzI0LjEyOSAyNzkgWiAiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSIgTSA3MDguMDk0IDI4My41NCBMIDcwOC4wOTQgMjY5LjY3IEwgNzAyLjI3IDI2OS42NyBMIDcwMi4yNyAyODMuNTQgTCA3MDIuMjcgMjg4LjMzIEwgNzA4LjA5NCAyODguMzMgTCA3MTUuOTg3IDI4OC4zMyBMIDcxNS45ODcgMjgzLjU0IEwgNzA4LjA5NCAyODMuNTQgWiAiIGZpbGw9InJnYigyNTUsMjU1LDI1NSkiLz48cGF0aCBkPSIgTSA3MDguMDk0IDI4My41NCBMIDcwOC4wOTQgMjY5LjY3IEwgNzAyLjI3IDI2OS42NyBMIDcwMi4yNyAyODMuNTQgTCA3MDIuMjcgMjg4LjMzIEwgNzA4LjA5NCAyODguMzMgTCA3MTUuOTg3IDI4OC4zMyBMIDcxNS45ODcgMjgzLjU0IEwgNzA4LjA5NCAyODMuNTQgWiAiIGZpbGw9Im5vbmUiIHZlY3Rvci1lZmZlY3Q9Im5vbi1zY2FsaW5nLXN0cm9rZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9InJnYigyNTEsMjUxLDI0OSkiIHN0cm9rZS1vcGFjaXR5PSIxMDAiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS1taXRlcmxpbWl0PSIzIi8+PC9nPjwvc3ZnPg==">
+                                <span class="text2">
+                                    Location of storm, tropical low pressure, low area is over
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9Ijc3NC4xMjkgMTgzIDMwIDI3LjI4NyIgd2lkdGg9IjExIiBoZWlnaHQ9IjExIj48Zz48cGF0aCBkPSIgTSA3NzQuMTI5IDIwNS41MyBDIDc3NC4xMzYgMjA1LjQ4NyA3NzQuMTY3IDIwNS41MDkgNzc0LjE2NyAyMDUuNTMgQyA3NzUuODkxIDIwNi40MTUgNzc4LjIxOCAyMDcuMjMxIDc4MS4xNTQgMjA2Ljk3MyBDIDc4MS43NTIgMjA2LjkyIDc4Mi45NzIgMjA2Ljc2MyA3ODMuMDE1IDIwNi4yODkgQyA3ODMuMDUyIDIwNS44ODYgNzgxLjk3OSAyMDUuMjk4IDc4MS42MSAyMDQuOTYgQyA3NzkuNDMgMjAyLjk2MiA3NzcuNDYgMTk5LjU2MSA3NzguMDQgMTk1LjI3NiBDIDc3OC4yNDggMTkzLjc0MiA3NzguNjc0IDE5Mi4zMzcgNzc5LjMzMSAxOTEuMTc1IEMgNzgwLjYxOCAxODguOSA3ODIuNDY2IDE4Ny4wODQgNzg0LjY4NiAxODUuNzQ1IEMgNzg2LjkzNSAxODQuMzg4IDc4OS40MzggMTgzLjMxNSA3OTIuNzc1IDE4My4wNDkgQyA3OTMuNTYxIDE4Mi45ODYgNzk0LjEyMiAxODIuOTgyIDc5NC45NzcgMTgzLjA0OSBDIDc5OS4yMTYgMTgzLjM4IDgwMS45NjkgMTg1LjE5OCA4MDQuMTI5IDE4Ny43NTcgQyA4MDIuNDYzIDE4Ni45MDMgODAwLjAzMyAxODYuMDc0IDc5Ny4wNjYgMTg2LjMxNCBDIDc5Ni40ODcgMTg2LjM2MSA3OTUuMjg1IDE4Ni41NDQgNzk1LjI0MyAxODYuOTk4IEMgNzk1LjIwOSAxODcuMzY4IDc5Ni4yOTEgMTg4LjAzMiA3OTYuNjEgMTg4LjMyNyBDIDc5Ny45OTMgMTg5LjYwNyA3OTkuMTU1IDE5MS4xOTkgNzk5LjggMTkzLjIyNiBDIDgwMC43NDQgMTk2LjE5MyA4MDAuMjQxIDE5OS43NTMgNzk4LjkyNiAyMDIuMDc0IEMgNzk3LjY0NiAyMDQuMzMzIDc5NS44MzMgMjA2LjIzNSA3OTMuNjEgMjA3LjU0MiBDIDc5MC45OTcgMjA5LjA3OSA3ODcuNTg0IDIxMC41NzggNzgzLjI0MyAyMTAuMjM5IEMgNzc5LjAyOCAyMDkuOTA5IDc3Ni4yODEgMjA4LjA3NSA3NzQuMTI5IDIwNS41MyBaICBNIDc4NS44MjUgMTkzLjM3OCBDIDc4NS4yMjEgMTkzLjk4NyA3ODQuNjM0IDE5NC43NjMgNzg0LjQ5NiAxOTYuMTEyIEMgNzg0LjMxNyAxOTcuODY1IDc4NS4wMTMgMTk5LjExNiA3ODUuODYzIDE5OS45NDcgQyA3ODYuNzU2IDIwMC44MiA3ODguMDExIDIwMS40NTEgNzg5LjY2MSAyMDEuMjc3IEMgNzkxLjcyOSAyMDEuMDU4IDc5My41NTIgMTk5LjMzNiA3OTMuNzYyIDE5Ny4xMzcgQyA3OTMuOTMgMTk1LjM3NSA3OTMuMTk5IDE5NC4xODEgNzkyLjM5NSAxOTMuMzc4IEMgNzkxLjU4NiAxOTIuNTY5IDc5MC4zMTggMTkxLjgyIDc4OC41MjIgMTkyLjA0OSBDIDc4Ny4yNDUgMTkyLjIxMSA3ODYuNDg0IDE5Mi43MTMgNzg1LjgyNSAxOTMuMzc4IFogIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9InJnYigyNTUsMCwwKSIvPjwvZz48L3N2Zz4=">
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzg2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwMjggNDA5LjM4NyBDIDEwMjMuMzY4IDQwOS4zODcgMTAxOS42MTMgNDA1LjYzMiAxMDE5LjYxMyA0MDEgQyAxMDE5LjYxMyAzOTYuMzY4IDEwMjMuMzY4IDM5Mi42MTMgMTAyOCAzOTIuNjEzIEMgMTAzMi42MzIgMzkyLjYxMyAxMDM2LjM4NyAzOTYuMzY4IDEwMzYuMzg3IDQwMSBDIDEwMzYuMzg3IDQwNS42MzIgMTAzMi42MzIgNDA5LjM4NyAxMDI4IDQwOS4zODcgWiAgTSAxMDI4IDM4NiBDIDEwMTkuNzE2IDM4NiAxMDEzIDM5Mi43MTYgMTAxMyA0MDEgQyAxMDEzIDQwOS4yODQgMTAxOS43MTYgNDE2IDEwMjggNDE2IEMgMTAzNi4yODQgNDE2IDEwNDMgNDA5LjI4NCAxMDQzIDQwMSBDIDEwNDMgMzkyLjcxNiAxMDM2LjI4NCAzODYgMTAyOCAzODYgWiAiIGZpbGw9InJnYigyNTUsMCwwKSIvPjxwYXRoIGQ9IiBNIDEwMjggNDA5LjM4NyBDIDEwMjMuMzY4IDQwOS4zODcgMTAxOS42MTMgNDA1LjYzMiAxMDE5LjYxMyA0MDEgQyAxMDE5LjYxMyAzOTYuMzY4IDEwMjMuMzY4IDM5Mi42MTMgMTAyOCAzOTIuNjEzIEMgMTAzMi42MzIgMzkyLjYxMyAxMDM2LjM4NyAzOTYuMzY4IDEwMzYuMzg3IDQwMSBDIDEwMzYuMzg3IDQwNS42MzIgMTAzMi42MzIgNDA5LjM4NyAxMDI4IDQwOS4zODcgWiAgTSAxMDI4IDM4NiBDIDEwMTkuNzE2IDM4NiAxMDEzIDM5Mi43MTYgMTAxMyA0MDEgQyAxMDEzIDQwOS4yODQgMTAxOS43MTYgNDE2IDEwMjggNDE2IEMgMTAzNi4yODQgNDE2IDEwNDMgNDA5LjI4NCAxMDQzIDQwMSBDIDEwNDMgMzkyLjcxNiAxMDM2LjI4NCAzODYgMTAyOCAzODYgWiAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbD0ibm9uZSIvPjwvZz48L3N2Zz4=">
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjQ2MSA0ODkgMzAgMzAiIHdpZHRoPSIxMSIgaGVpZ2h0PSIxMSI+PGc+PHBhdGggZD0iIE0gNDgyLjg1OCA1MTMuMzMgTCA0NzQuOTY1IDUxMy4zMyBMIDQ2OS4xNDIgNTEzLjMzIEwgNDY5LjE0MiA1MDguNTQgTCA0NjkuMTQyIDQ5NC42NyBMIDQ3NC45NjUgNDk0LjY3IEwgNDc0Ljk2NSA1MDguNTQgTCA0ODIuODU4IDUwOC41NCBMIDQ4Mi44NTggNTEzLjMzIFogIE0gNDc2IDQ4OSBDIDQ2Ny43MTYgNDg5IDQ2MSA0OTUuNzE2IDQ2MSA1MDQgQyA0NjEgNTEyLjI4NCA0NjcuNzE2IDUxOSA0NzYgNTE5IEMgNDg0LjI4NCA1MTkgNDkxIDUxMi4yODQgNDkxIDUwNCBDIDQ5MSA0OTUuNzE2IDQ4NC4yODQgNDg5IDQ3NiA0ODkgWiAiIGZpbGw9InJnYigyNTUsMCwwKSIvPjxwYXRoIGQ9IiBNIDQ4Mi44NTggNTEzLjMzIEwgNDc0Ljk2NSA1MTMuMzMgTCA0NjkuMTQyIDUxMy4zMyBMIDQ2OS4xNDIgNTA4LjU0IEwgNDY5LjE0MiA0OTQuNjcgTCA0NzQuOTY1IDQ5NC42NyBMIDQ3NC45NjUgNTA4LjU0IEwgNDgyLjg1OCA1MDguNTQgTCA0ODIuODU4IDUxMy4zMyBaICBNIDQ3NiA0ODkgQyA0NjcuNzE2IDQ4OSA0NjEgNDk1LjcxNiA0NjEgNTA0IEMgNDYxIDUxMi4yODQgNDY3LjcxNiA1MTkgNDc2IDUxOSBDIDQ4NC4yODQgNTE5IDQ5MSA1MTIuMjg0IDQ5MSA1MDQgQyA0OTEgNDk1LjcxNiA0ODQuMjg0IDQ4OSA0NzYgNDg5IFogIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9Im5vbmUiLz48L2c+PC9zdmc+">
+                                <span class="text2">
+                                    Current and forecast storm location, tropical low pressure, low area
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
@@ -65,14 +192,21 @@
             if (error) throw error;
             map.addImage('positionPointHT', image);
         });
-        map.on('load', function () {
+        map.loadImage('../data/Bao_DaDiQua.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointBM', image);
+        });
+        map.loadImage('../data/Bao_HT.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointBHT', image);
+        });
+        var features = [];
 
+        map.on('load', function () {
             //Source Data: https://nchmf.gov.vn/ 
             $.get("../data/storm.json", function (response) {
-                var features = [];
-                var coordinates = [];
                 //Add Points
-                response[0].forEach(feature => {
+                response.forEach(feature => {
                     features.push({
                         'type': 'Feature',
                         'geometry': {
@@ -89,276 +223,323 @@
                             'received_time': feature.received_time,
                             'storm_level': feature.storm_level,
                             'time_received_str': feature.time_received_str,
-                            'v_max': feature.v_max
+                            'v_max': feature.v_max,
+                            'lon': feature.lon,
+                            'lat': feature.lat,
+                            'storm_name_en': feature.storm_name_vn
                         }
                     })
-                    coordinates.push([feature.lon, feature.lat]);
                 });
-
-                map.addLayer({
-                    "id": "points",
-                    "type": "symbol",
-                    "layout": {
-                        "icon-image": "positionPointDQ",
-                        "icon-size": 1
-                    },
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            'type': 'FeatureCollection',
-                            'features': features
+            }).done(function () {
+                $.get("../data/data_draw_storm.json", function (data) {
+                    map.addLayer({
+                        'id': 'polygon451',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[0]
+                        },
+                        'paint': {
+                            'fill-color': '#eccbec',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#c967ad'
                         }
-                    }
-                });
-                map.addLayer({
-                    "id": "points1",
-                    "type": "symbol",
-                    "layout": {
-                        "icon-image": "positionPointDB",
-                        "icon-size": 1.5
-                    },
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            'type': 'FeatureCollection',
-                            'features': features
+                    })
+
+                    map.addLayer({
+                        'id': 'polygon452',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[1]
+                        },
+                        'paint': {
+                            'fill-color': '#eab2b8',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#c967ad'
                         }
-                    },
-                    "filter": ['in', 'id', '32030']
-                });
-                map.addLayer({
-                    "id": "points2",
-                    "type": "symbol",
-                    "layout": {
-                        "icon-image": "positionPointHT",
-                        "icon-size": 1
-                    },
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            'type': 'FeatureCollection',
-                            'features': features
+                    })
+
+                    map.addLayer({
+                        'id': 'polygon453',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[2]
+                        },
+                        'paint': {
+                            'fill-color': '#67be72',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#fff'
                         }
-                    },
-                    "filter": ['in', 'id', '32031']
-                });
+                    })
 
-                //Add Lines
-                var line = turf.lineString(coordinates)
-                var start = turf.point([126.5, 11]);
-                var stop = turf.point([110.2, 15.8]);
-                var sliced = turf.lineSlice(start, stop, line);
-                map.addLayer({
-                    'id': 'route',
-                    'type': 'line',
-                    'source': {
-                        'type': 'geojson',
-                        'data': sliced
-                    },
-                    'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    'paint': {
-                        'line-color': '#000',
-                        'line-width': 2
-                    }
-                });
+                    map.addLayer({
+                        'id': 'polygon343',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[3]
+                        },
+                        'paint': {
+                            'fill-color': '#67be72',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#fff'
+                        }
+                    })
 
-                var start1 = turf.point([110.2, 15.8]);
-                var stop1 = turf.point([106, 15.4]);
-                var sliced1 = turf.lineSlice(start1, stop1, line);
-                map.addLayer({
-                    'id': 'route1',
-                    'type': 'line',
-                    'source': {
-                        'type': 'geojson',
-                        'data': sliced1
-                    },
-                    'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    'paint': {
-                        'line-color': 'red',
-                        'line-width': 2
-                    },
-                });
-                //Buffer
-                var point = turf.point([response[0][14].lon, response[0][14].lat]);
-                var buffered = turf.buffer(point, response[0][14].area_wind_level_6, { units: 'kilometers' });
+                    map.addLayer({
+                        'id': 'polygon233',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[4]
+                        },
+                        'paint': {
+                            'fill-color': '#67be72',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#fff'
+                        }
+                    })
 
-                map.addLayer({
-                    'id': 'min',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': buffered
-                    },
-                    'paint': {
-                        'fill-color': '#acd9c2',
-                        'fill-opacity': 0.5,
-                        'fill-outline-color': '#fff',
-                    }
+                    map.addLayer({
+                        'id': 'polygon123',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[5]
+                        },
+                        'paint': {
+                            'fill-color': '#67be72',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#fff'
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'buffered13',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[6]
+                        },
+                        'paint': {
+                            'fill-color': '#6aae75',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#fff',
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'buffered53',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[7]
+                        },
+                        'paint': {
+                            'fill-color': '#6ebe75',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#fff',
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'sliceBlack',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[8]
+                        },
+                        'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                        },
+                        'paint': {
+                            'line-color': '#000',
+                            'line-width': 2
+                        }
+                    });
+
+                    map.addLayer({
+                        'id': 'sliceRed',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[9]
+                        },
+                        'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                        },
+                        'paint': {
+                            'line-color': '#4e8a61',
+                            'line-width': 2
+                        },
+                    });
+                }).done(function () {
+                    map.addLayer({
+                        "id": "points1",
+                        "type": "symbol",
+                        "layout": {
+                            "icon-image": "positionPointDQ",
+                            "icon-size": 1
+                        },
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                        },
+                        "filter": ['in', 'id', '34754', '34755', '34756', '34757']
+                    });
+                    map.addLayer({
+                        "id": "points2",
+                        "type": "symbol",
+                        "layout": {
+                            "icon-image": "positionPointBM",
+                            "icon-size": 1.5
+                        },
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                        },
+                        "filter": ['in', 'id', '36328', '36330', '36331', '36690', '36691']
+                    });
+                    map.addLayer({
+                        "id": "points3",
+                        "type": "symbol",
+                        "layout": {
+                            "icon-image": "positionPointBHT",
+                            "icon-size": 1.7
+                        },
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                        },
+                        "filter": ['in', 'id', '36692', '36693', '36694', '36695']
+                    });
+
+                    map.addLayer({
+                        "id": "points4",
+                        "type": "symbol",
+                        "layout": {
+                            "icon-image": "positionPointDB",
+                            "icon-size": 1.7
+                        },
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                        },
+                        "filter": ['in', 'id', '36696']
+                    });
                 })
-                var buffered2 = turf.buffer(point, response[0][14].area_wind_level_center, { units: 'kilometers' });
-
-                map.addLayer({
-                    'id': 'min1',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': buffered2
-                    },
-                    'paint': {
-                        'fill-color': '#fff',
-                        'fill-opacity': 0,
-                    }
-                })
-                var point1 = turf.point([response[0][15].lon, response[0][15].lat]);
-                var buffered1 = turf.buffer(point1, response[0][15].area_wind_level_center, { units: 'kilometers' });
-                map.addLayer({
-                    'id': 'max',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': buffered1
-                    },
-                    'paint': {
-                        'fill-color': '#c3e2c6',
-                        'fill-opacity': 0.5,
-                        'fill-outline-color': '#fff',
-                    }
-                })
-                
-                //Polygon
-                var buffer = turf.featureCollection([
-                    buffered, buffered1
-                ]);
-
-                var hull = turf.convex(buffer);
-                map.addLayer({
-                    'id': 'polygon',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': hull
-                    },
-                    'paint': {
-                        'fill-color': '#67be72',
-                        'fill-opacity': 0.5,
-                        'fill-outline-color': '#d292d4'
-                    }
-                })
-                var buffer1 = turf.featureCollection([
-                    buffered2, buffered1
-                ]);
-
-                var hull1 = turf.convex(buffer1);
-                map.addLayer({
-                    'id': 'polygon1',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': hull1
-                    },
-                    'paint': {
-                        'fill-color': '#fff',
-                        'fill-opacity': 0.5,
-                        'fill-outline-color': '#d292d4'
-                    }
-                })
-                
-                map.moveLayer('route1', 'points1');
-                map.moveLayer('route', 'points1');
-                map.moveLayer('polygon1', 'points1');
-                map.moveLayer('min1', 'points1');
-                map.moveLayer('min', 'points1');
-                map.moveLayer('polygon', 'points1');
-                
-                map.moveLayer('max', 'points2');
-                
-                map.moveLayer('polygon', 'max');
-                map.moveLayer('polygon1', 'max');
-                map.moveLayer('polygon', 'min');
-                map.moveLayer('polygon1', 'min');
             })
+        })
 
-            map.on('click', function (e) {
-                var bbox = [
-                    [e.point.x - 5, e.point.y - 5],
-                    [e.point.x + 5, e.point.y + 5]
-                ];
-                var features = map.queryRenderedFeatures(bbox, {
-                    layers: ['points','points1','points2']
-                });
-                if (features.length > 0) {
-                    var content = '';
-                    content += '<div style="width:170px">';
-                    content += '   <div class="form-group row" style="display: flex;">';
-                    content += '      <div style="width:70%">';
-                    content += '           <p style="font-weight: bold;">wind_level_6 : </p>'
-                    content += '      </div>'
-                    content += '      <div style="width:30%">'
-                    content += '           <p>' + features[0].properties.area_wind_level_6 + '</p>'
-                    content += '      </div>'
-                    content += '   </div>'
-                    content += '   <div class="form-group row" style="display: flex;">';
-                    content += '       <div style="width:70%">';
-                    content += '          <p style="font-weight: bold;">wind_level_10 : </p>'
-                    content += '      </div>'
-                    content += '      <div style="width:30%">'
-                    content += '          <p>' + features[0].properties.area_wind_level_10 + '</p>'
-                    content += '      </div>'
-                    content += '   </div>'
-                    content += '   <div class="form-group row" style="display: flex;">';
-                    content += '      <div style="width:70%">';
-                    content += '          <p style="font-weight: bold;">wind_level_center : </p>'
-                    content += '      </div>'
-                    content += '      <div style="width:30%">'
-                    content += '          <p>' + features[0].properties.area_wind_level_center + '</p>'
-                    content += '      </div>'
-                    content += '   </div>'
-                    content += '   <div class="form-group row" style="display: flex;">';
-                    content += '      <div style="width:70%">';
-                    content += '          <p style="font-weight: bold;">Pressure min : </p>'
-                    content += '      </div>'
-                    content += '      <div style="width:30%">'
-                    content += '          <p>' + features[0].properties.p_min + '</p>'
-                    content += '      </div>'
-                    content += '   </div>'
-                    content += '   <div class="form-group row" style="display: flex;">';
-                    content += '      <div style="width:70%">';
-                    content += '          <p style="font-weight: bold;">Storm level : </p>'
-                    content += '      </div>'
-                    content += '      <div style="width:30%">'
-                    content += '          <p>' + features[0].properties.storm_level + '</p>'
-                    content += '      </div>'
-                    content += '   </div>'
-                    content += '   <div class="form-group row" style="display: flex;">';
-                    content += '      <div style="width:70%">';
-                    content += '          <p style="font-weight: bold;">V_max : </p>'
-                    content += '      </div>'
-                    content += '      <div style="width:30%">'
-                    content += '          <p>' + features[0].properties.v_max + '</p>'
-                    content += '      </div>'
-                    content += '   </div>'
-                    content += '</div>'
-                    popup = new mapboxgl.Popup({});
-                    popup.setLngLat(e.lngLat)
-                        .setHTML(content)
-                        .addTo(map);
-                }
-            })
-            function guid12() {
-                function s4() {
-                    return Math.floor((1 + Math.random()) * 0x10000)
-                        .toString(16)
-                        .substring(1);
-                }
-                return s4() + s4() + s4();
+        map.on('click', function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['points1', 'points2', 'points3', 'points4']
+            });
+            if (features.length > 0) {
+                var content = '';
+                content += '<div style="max-width:500px">';
+                content += '   <div class="form-group row" style="text-align: center">';
+                content += '       <a href="javascript:;" class="nameCountry">' + features[0].properties.storm_name_en + '</a>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '           <a href="javascript:;" class="field">Date : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '           <a href="javascript:;" class="value">' + features[0].properties.received_time + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Longitude : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.lon + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Latitude : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.lat + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Storm Level : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.storm_level + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Area Wind Speed > 6 : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.area_wind_level_6 + ' (km)</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Area Wind Speed > 10 : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.area_wind_level_10 + ' (km) </a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Wind Speed : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.v_max + ' (km/h)</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Pmin : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.p_min + ' (mb)</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '</div>'
+                popup = new mapboxgl.Popup({ maxWidth: 500 });
+                popup.setLngLat(e.lngLat)
+                    .setHTML(content)
+                    .addTo(map);
             }
         })
+        function guid12() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+            return s4() + s4() + s4();
+        }
     </script>
 </body>
 

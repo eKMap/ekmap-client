@@ -102,6 +102,7 @@
             center: [107.58856560217953, 16.3539350884014],
             style: {
                 "version": 8,
+                "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
                 "sources": {
                     "raster-tiles": {
                         "type": "raster",
@@ -169,17 +170,22 @@
                         'fill-opacity': 0.7
                     }
                 });
-                // map.addLayer({
-                //     'id': 'water-color',
-                //     'type': 'fill',
-                //     'source': 'drone',
-                //     'paint': {
-                //         'fill-outline-color': '#484896',
-                //         'fill-color': '#6e599f',
-                //         'fill-opacity': 0.75
-                //     },
-                //     'filter': ['in', 'madoituong', '201']
-                // })
+                map.addLayer({
+                    'id': 'water-labels',
+                    'type': 'symbol',
+                    'source': 'dma',
+                    'layout': {
+                        'text-field': [
+                            'format',
+                            ['get', 'name'],
+                            { 'font-scale': 0.7 }
+                        ]
+                        // 'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+                        // 'text-radial-offset': 0.5,
+                        // 'text-justify': 'auto',
+                        // 'icon-image': ['concat', ['get', 'icon'], '-15']
+                    }
+                });
                 // map.addLayer({
                 //     'id': 'water-color1',
                 //     'type': 'fill',

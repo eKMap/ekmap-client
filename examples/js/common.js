@@ -111,10 +111,9 @@ function guid12() {
     return s4() + s4() + s4();
 }
 
-function getRadius(data,minData,maxData,minRadius,maxRadius){
-    return (data - minData)/(maxData - minData) * (maxRadius - minRadius) + minRadius
+function getRadius(data, minData, maxData, minRadius, maxRadius) {
+    return (data - minData) / (maxData - minData) * (maxRadius - minRadius) + minRadius
 }
-
 
 //var tokenKey = "";
 var tokenKey = "1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x";

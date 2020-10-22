@@ -16,6 +16,24 @@
         body {
             overflow: hidden;
         }
+
+        .field {
+            color: #333333 !important;
+            font-size: 0.8rem;
+            text-decoration: none;
+            padding-right: 10px;
+        }
+
+        .value {
+            color: #333333 !important;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .form-group{
+            display: flex;
+            margin-left: 20px;
+        }
     </style>
 </head>
 
@@ -58,7 +76,7 @@
             //Source: KTTV
             $.get("../data/weather/rain.json ", function (response) {
                 map.addLayer({
-                    "id": "raint",
+                    "id": "rain",
                     "type": "symbol",
                     "layout": {
                         "icon-image": "positionRaint",
@@ -71,18 +89,38 @@
                 });
             })
         })
-        map.on('click', 'raint',function (e) {
+        map.on('click', 'rain', function (e) {
             var bbox = [
                 [e.point.x - 5, e.point.y - 5],
                 [e.point.x + 5, e.point.y + 5]
             ];
             var features = map.queryRenderedFeatures(bbox, {
-                layers: ['raint']
+                layers: ['rain']
             });
-            var img = '<img src="'+ features[0].properties.chartUrl+'">';
-            new mapboxgl.Popup({maxWidth:1000})
+            var img = '<img  style="max-width: 541px;" src="' + features[0].properties.chartUrl + '">';
+            var content = '';
+            content += '<div style="max-width:1000px">';
+            content += '   <div class="form-group">';
+            content += '      <div class="width:70%">';
+            content += '           <a href="javascript:;" class="field">Station name : </a>'
+            content += '      </div>'
+            content += '      <div class="width:30%">'
+            content += '           <a href="javascript:;" class="value">' + features[0].properties.label + '</a>'
+            content += '      </div>'
+            content += '   </div>'
+            content += '   <div class="form-group" style="margin-bottom:20px">';
+            content += '      <div class="width:70%">';
+            content += '          <a href="javascript:;" class="field">Province : </a>'
+            content += '      </div>'
+            content += '      <div class="width:30%">'
+            content += '          <a href="javascript:;" class="value">' + features[0].properties.provine + '</a>'
+            content += '      </div>'
+            content += '   </div>'
+            content += img
+            content += '</div>'
+            new mapboxgl.Popup({ maxWidth: 1000 })
                 .setLngLat(e.lngLat)
-                .setHTML(img)
+                .setHTML(content)
                 .addTo(map);
         })
     </script>

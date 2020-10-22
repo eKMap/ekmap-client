@@ -58,6 +58,7 @@
             container: 'divMapId',
             style: {
                 "version": 8,
+                "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
                 "sources": {
                     "raster-tiles": {
                         "type": "raster",
@@ -94,6 +95,14 @@
                     'data': response
                 });
                 map.addLayer({
+                    "id": "water-fills",
+                    "source": "drone",
+                    "type": "fill",
+                    'paint': {
+                        'fill-color': '#627BC1'
+                    }
+                });
+                map.addLayer({
                     'id': 'water',
                     'type': 'line',
                     'source': 'drone',
@@ -103,8 +112,31 @@
                     },
                     'paint': {
                         'line-color': '#000',
-                        'line-width': 2
+                        'line-width': 1
                     },
+                });
+                map.addLayer({
+                    'id': 'water-highlighted',
+                    'type': 'fill',
+                    'source': 'drone',
+                    'paint': {
+                        'fill-outline-color': '#484896',
+                        'fill-color': '#6e599f',
+                        'fill-opacity': 0.75
+                    },
+                    'filter': ['in', 'madoituong', '']
+                });
+                map.addLayer({
+                    'id': 'water-labels',
+                    'type': 'symbol',
+                    'source': 'drone',
+                    'layout': {
+                        'text-field': [
+                            'format',
+                            ['get', 'ten'],
+                            { 'font-scale': 0.7, "text-color": '#fff' }
+                        ]
+                    }
                 });
             })
             $.get("../data/water/p.json", function (response) {
@@ -126,8 +158,28 @@
             })
         }
 
+        map.on('click', 'water-fills', function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['water-fills']
+            });
+            var filter = features.reduce(
+                function (memo, feature) {
+                    memo.push(feature.properties.madoituong);
+                    return memo;
+                },
+                ['in', 'madoituong']
+            );
+            map.setFilter('water-highlighted', filter)
+            dataP = shuffle(dataP);
+            dataQ = shuffle(dataQ);
+            startHightChart();
+        })
+
         function startHightChart() {
-            console.log(count)
             if (count == 2) {
                 var options = {
                     chart: {
@@ -167,15 +219,26 @@
                     series: [{
                         name: 'P',
                         data: dataP,
-                        color:'red'
+                        color: 'red'
                     }, {
                         name: 'Q',
                         data: dataQ,
-                        color:'blue'
+                        color: 'blue'
                     }]
                 };
                 var chart = new Highcharts.Chart(options);
             }
+        }
+
+        function shuffle(a) {
+            var j, x, i;
+            for (i = a.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1));
+                x = a[i];
+                a[i] = a[j];
+                a[j] = x;
+            }
+            return a;
         }
     </script>
 </body>
