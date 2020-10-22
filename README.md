@@ -10,10 +10,6 @@ https://ekmap.github.io/ekmap-client
 
 https://ekmap.github.io/ekmap-client/docs
 
-## Tutorials
-
-https://ekmap.github.io/ekmap-client/out
-
 ## License
 [MIT License](./LICENSE)
 
