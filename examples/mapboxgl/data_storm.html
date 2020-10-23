@@ -5,6 +5,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="../../examples/js/common.js"></script>
     <title>Storm</title>
     <style>
@@ -18,25 +19,29 @@
         }
 
         .nameCountry {
-            color: #333333 !important;
-            font-size: 1.2rem;
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.1;
+            color: inherit;
             text-decoration: none;
         }
 
         .field {
             color: #333333 !important;
-            font-weight: 600;
-            font-size: 1rem;
             text-decoration: none;
-            padding-right: 10px;
+            font-family: 'Open Sans';
+            font-weight: 600;
         }
 
         .value {
             color: #333333 !important;
-            font-size: 1rem;
+            font-family: 'Open Sans';
             text-decoration: none;
+            font-weight: 500;
         }
-
+        .popup{
+            opacity: 0.8;
+        }
         #selectedFeatures {
             position: absolute;
             left: 12px;
@@ -79,6 +84,102 @@
         .text2 {
             font-size: 13px;
         }
+
+        .portlet-box-mini {
+            -webkit-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+            width: 300px;
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .portlet-box {
+            position: absolute;
+            top: 10px;
+            z-index: 50;
+            width: 300px;
+        }
+
+        .portlet-pos-right {
+            left: 65px;
+            top: 114px;
+        }
+
+        .portlet-box .portlet-title {
+            -webkit-border-radius: 2px 2px 0 0;
+            -moz-border-radius: 2px 2px 0 0;
+            border-radius: 2px 2px 0 0;
+            -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
+            background: #fff;
+            border-bottom: 1px solid #e0e5ea;
+        }
+
+        .portlet-box .portlet-title .portlet-title-inner {
+            position: relative;
+            display: block;
+            color: #2c2c2c;
+        }
+
+        .portlet-box .portlet-title .portlet-heading {
+            position: relative;
+            margin: 0;
+            display: block;
+            font-family: 'Open Sans';
+            font-weight: 600;
+            padding: 12px 15px 14px;
+            font-size: 1.6rem;
+            line-height: 1.2;
+        }
+
+        .portlet-box .portlet-title .portlet-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 35px;
+            height: 45px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .portlet-box .portlet-content .portlet-inner {
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #eceff1;
+            background-color: rgba(236, 239, 241, .7);
+        }
+
+        .map-select-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .map-select-list .map-select-item {
+            margin-bottom: 10px;
+        }
+
+        .map-select-list .map-select-item .radio__regular {
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .12);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .12);
+            padding: 10px;
+            background: #fff;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 
@@ -87,6 +188,33 @@
 
     <div style="width: 100%;">
         <div id="divMapId" class="map">
+        </div>
+        <div title="Chụp màn hình" class="mapboxgl-ctrl mapboxgl-ctrl-group"
+            style="font-size: 14px;position: absolute;z-index: 2;top: 115px;left: 17px;">
+            <button class="mapboxgl-ctrl-zoom-in" onclick="globalStart()"><i class="fa fa-globe"></i></button>
+        </div>
+        <div class="portlet-box portlet-box-mini portlet-pos-right box" id="map-layer" style="display: none;">
+            <div class="portlet-title">
+                <a class="portlet-title-inner" href="#" style="text-decoration: none;">
+                    <span class="portlet-heading">Display</span>
+                    <span class="portlet-close portlet-close-right">
+                        <span class="heading-arrow-rght">&nbsp;</span>
+                    </span>
+                </a>
+            </div>
+            <div class="portlet-content">
+                <div class="portlet-inner">
+                    <ul class="map-select-list">
+                        <li class="map-select-item">
+                            <div class="radio__regular">
+                                <input type="checkbox" name="colors" id="checkbox" onchange="onChange()">
+                                <label class="radio__regular__label" tabindex="1" for="radio-map-0"> Satellite image
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
             <div>
@@ -176,8 +304,8 @@
                     "maxzoom": 18
                 }]
             },
-            center: [106.5090846096723, 16.787962287423255],
-            zoom: 5.1128594812072485
+            center: [118.75066229858749, 15.150695090998738],
+            zoom: 4.792476909223467
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.loadImage('../data/ATND_DaDiQua.png', function (error, image) {
@@ -200,12 +328,30 @@
             if (error) throw error;
             map.addImage('positionPointBHT', image);
         });
-        var features = [];
 
         map.on('load', function () {
+            var features = []
+            map.addSource('radar', {
+                type: 'image',
+                url: '../../data/storm.jpg',
+                coordinates: [
+                    [94.9918863632, 39.998476501],
+                    [139.923662363, 39.998476501],
+                    [139.923662363, -4.93329949898],
+                    [94.9918863632, -4.93329949898],
+                ]
+            });
+            document.getElementById('checkbox').checked = true;
+            map.addLayer({
+                'id': 'radar-layer',
+                'type': 'raster',
+                'source': 'radar',
+                'paint': {
+                    'raster-fade-duration': 0
+                }
+            });
             //Source Data: https://nchmf.gov.vn/ 
             $.get("../data/storm.json", function (response) {
-                //Add Points
                 response.forEach(feature => {
                     features.push({
                         'type': 'Feature',
@@ -229,127 +375,167 @@
                             'storm_name_en': feature.storm_name_vn
                         }
                     })
-                });
+                })
             }).done(function () {
                 $.get("../data/data_draw_storm.json", function (data) {
                     map.addLayer({
-                        'id': 'polygon451',
+                        'id': 'polygon0',
                         'type': 'fill',
                         'source': {
                             'type': 'geojson',
                             'data': data[0]
                         },
                         'paint': {
-                            'fill-color': '#eccbec',
+                            'fill-color': '#48f08d',
                             'fill-opacity': 0.5,
-                            'fill-outline-color': '#c967ad'
                         }
                     })
 
                     map.addLayer({
-                        'id': 'polygon452',
+                        'id': 'polygon1',
                         'type': 'fill',
                         'source': {
                             'type': 'geojson',
                             'data': data[1]
                         },
                         'paint': {
-                            'fill-color': '#eab2b8',
+                            'fill-color': '#48f08d',
                             'fill-opacity': 0.5,
-                            'fill-outline-color': '#c967ad'
                         }
                     })
 
                     map.addLayer({
-                        'id': 'polygon453',
+                        'id': 'polygon2',
                         'type': 'fill',
                         'source': {
                             'type': 'geojson',
                             'data': data[2]
                         },
                         'paint': {
-                            'fill-color': '#67be72',
+                            'fill-color': '#48f08d',
                             'fill-opacity': 0.5,
-                            'fill-outline-color': '#fff'
                         }
                     })
 
                     map.addLayer({
-                        'id': 'polygon343',
+                        'id': 'polygon3',
                         'type': 'fill',
                         'source': {
                             'type': 'geojson',
                             'data': data[3]
                         },
                         'paint': {
-                            'fill-color': '#67be72',
+                            'fill-color': '#48f08d',
                             'fill-opacity': 0.5,
-                            'fill-outline-color': '#fff'
                         }
                     })
 
                     map.addLayer({
-                        'id': 'polygon233',
+                        'id': 'buffered1',
                         'type': 'fill',
                         'source': {
                             'type': 'geojson',
                             'data': data[4]
                         },
                         'paint': {
-                            'fill-color': '#67be72',
+                            'fill-color': '#e1a9eb',
                             'fill-opacity': 0.5,
-                            'fill-outline-color': '#fff'
+                            'fill-outline-color': '#f95ce7',
                         }
                     })
 
                     map.addLayer({
-                        'id': 'polygon123',
+                        'id': 'buffered2',
                         'type': 'fill',
                         'source': {
                             'type': 'geojson',
                             'data': data[5]
                         },
                         'paint': {
-                            'fill-color': '#67be72',
+                            'fill-color': '#de6071',
                             'fill-opacity': 0.5,
-                            'fill-outline-color': '#fff'
+                            'fill-outline-color': '#f95ce7',
                         }
                     })
 
                     map.addLayer({
-                        'id': 'buffered13',
-                        'type': 'fill',
+                        'id': 'buffered3',
+                        'type': 'line',
                         'source': {
                             'type': 'geojson',
                             'data': data[6]
                         },
                         'paint': {
-                            'fill-color': '#6aae75',
-                            'fill-opacity': 0.5,
-                            'fill-outline-color': '#fff',
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
                         }
                     })
 
                     map.addLayer({
-                        'id': 'buffered53',
-                        'type': 'fill',
+                        'id': 'buffered4',
+                        'type': 'line',
                         'source': {
                             'type': 'geojson',
                             'data': data[7]
                         },
                         'paint': {
-                            'fill-color': '#6ebe75',
-                            'fill-opacity': 0.5,
-                            'fill-outline-color': '#fff',
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
                         }
                     })
 
+
                     map.addLayer({
-                        'id': 'sliceBlack',
+                        'id': 'buffered5',
                         'type': 'line',
                         'source': {
                             'type': 'geojson',
                             'data': data[8]
+                        },
+                        'paint': {
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
+                        }
+                    })
+
+
+                    map.addLayer({
+                        'id': 'buffered6',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[9]
+                        },
+                        'paint': {
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'buffered7',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[10]
+                        },
+                        'paint': {
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'line1',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[11]
                         },
                         'layout': {
                             'line-join': 'round',
@@ -362,11 +548,11 @@
                     });
 
                     map.addLayer({
-                        'id': 'sliceRed',
+                        'id': 'line2',
                         'type': 'line',
                         'source': {
                             'type': 'geojson',
-                            'data': data[9]
+                            'data': data[12]
                         },
                         'layout': {
                             'line-join': 'round',
@@ -377,7 +563,8 @@
                             'line-width': 2
                         },
                     });
-                }).done(function () {
+
+                    //Point
                     map.addLayer({
                         "id": "points1",
                         "type": "symbol",
@@ -526,12 +713,13 @@
                 content += '      </div>'
                 content += '   </div>'
                 content += '</div>'
-                popup = new mapboxgl.Popup({ maxWidth: 500 });
+                popup = new mapboxgl.Popup({ maxWidth: 500,className: 'popup'});
                 popup.setLngLat(e.lngLat)
                     .setHTML(content)
                     .addTo(map);
             }
         })
+
         function guid12() {
             function s4() {
                 return Math.floor((1 + Math.random()) * 0x10000)
@@ -539,6 +727,25 @@
                     .substring(1);
             }
             return s4() + s4() + s4();
+        }
+
+        function globalStart() {
+            $('.box').slideToggle("fast");
+        }
+        function onChange() {
+            var checkbox = document.getElementById('checkbox').checked;
+            if (checkbox) {
+                map.addLayer({
+                    'id': 'radar-layer',
+                    'type': 'raster',
+                    'source': 'radar',
+                    'paint': {
+                        'raster-fade-duration': 0
+                    }
+                });
+                map.moveLayer('radar-layer', "polygon0")
+            } else
+                map.removeLayer('radar-layer')
         }
     </script>
 </body>

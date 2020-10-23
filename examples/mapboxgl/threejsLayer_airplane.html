@@ -31,7 +31,7 @@
 <div id="map"></div>
 <script>
     var map, threeLayer,
-        position = [104.0688174135384, 30.548051075500908];
+        position =  [106.6566358, 10.8184684];
 
     map = new mapboxgl.Map({
         container: 'map',
@@ -58,11 +58,11 @@
                     }
                 ]
             },
-        center: [104.0693966828, 30.5760411152],
-        zoom: 13.23,
+        center: position,
+        zoom: 13,
         // bearing: 0.8568,
         // pitch: 60,
-        bearing: 50,
+        // bearing: 50,
         pitch: 100,
 
     });
@@ -103,9 +103,9 @@
 
             (function animate() {
                 requestAnimationFrame(animate);
-                meshes.position.y -= 60;
+                meshes.position.y -= 50;
                 var center = map.getCenter().toArray();
-                center[1] += 0.00008;
+                center[1] += 0.0001;
                 map.setCenter(center);
                 renderer.render(scene, camera);
             })()
