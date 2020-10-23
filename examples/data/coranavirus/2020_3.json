@@ -1,0 +1,24 @@
+{
+"date": "2020-01-14",
+"features": [
+{
+"properties": {
+"geoid": [13.7666,100.5363],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [30.6251,114.3421],
+"total": 23,
+"new": 1
+}
+},
+{
+"properties": {
+"geoid": [34.8693,126.9017],
+"total": 2
+}
+}
+]
+}

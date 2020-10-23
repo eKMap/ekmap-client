@@ -39,9 +39,11 @@
             text-decoration: none;
             font-weight: 500;
         }
-        .popup{
+
+        .popup {
             opacity: 0.8;
         }
+
         #selectedFeatures {
             position: absolute;
             left: 12px;
@@ -713,12 +715,44 @@
                 content += '      </div>'
                 content += '   </div>'
                 content += '</div>'
-                popup = new mapboxgl.Popup({ maxWidth: 500,className: 'popup'});
+                popup = new mapboxgl.Popup({ maxWidth: 500, className: 'popup' });
                 popup.setLngLat(e.lngLat)
                     .setHTML(content)
                     .addTo(map);
             }
         })
+
+        map.on('mouseenter', 'points1', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'points1', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+        map.on('mouseenter', 'points2', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'points2', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+        map.on('mouseenter', 'points3', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'points3', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+        map.on('mouseenter', 'points4', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'points4', function () {
+            map.getCanvas().style.cursor = '';
+        });
 
         function guid12() {
             function s4() {

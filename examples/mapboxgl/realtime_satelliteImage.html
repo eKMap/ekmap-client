@@ -74,7 +74,7 @@
             <h2><b>See the most recent photo</b></h2>
         </a> -->
         <div id="menu-bar">
-            <div class="" id="time-section"> <select title="Radar Time" id="select-time">
+            <div class="" id="time-section"> <select title="Radar Time" id="select-time" onchange="changeTime()">
                     <option id="option-time0" value="0">1:30 PM</option>
                     <option id="option-time21" value="21">5:10 PM</option>
                     <option id="option-time20" value="20">5:00 PM</option>
@@ -158,6 +158,12 @@
             }, 500);
         });
 
+        function changeTime(){
+            currentImage = document.getElementById('select-time').value;
+            url = getPath();
+            selectTime.value = currentImage
+            map.getSource('radar').updateImage({ url: url });
+        }
         document.getElementById("button-play").onclick = function () {
             if (btn.value === 'Stop') {
                 btn.value = 'Play'

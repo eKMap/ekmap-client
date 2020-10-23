@@ -1,0 +1,1882 @@
+{
+"date": "2020-01-26",
+"features": [
+{
+"properties": {
+"geoid": [-32.2383,147.0045],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [-37.8136,144.9631],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [1.2802,103.8345],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [1.3221,103.8472],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [1.3535,103.8151],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [1.3955,103.8934],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [12.2388,109.1967],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [12.5303,99.7136],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [13.7666,100.5363],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [18.2919,109.5792],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [18.3696,109.718],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [18.3908,109.4197],
+"total": 10,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [18.568,109.9475],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [18.8379,110.2876],
+"total": 8
+}
+},
+{
+"properties": {
+"geoid": [19.0331,109.8512],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [19.1987,109.7462],
+"total": 8,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [19.486,110.3056],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [19.5712,109.4028],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [19.6917,109.9864],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [19.7446,110.771],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [19.7484,110.4894],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [19.8019,109.7128],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [19.8317,110.4222],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [19.8754,110.3326],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [2.0506,103.3899],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [20.0007,110.2936],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [21.1,110.1654],
+"total": 10,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [21.6767,109.328],
+"total": 18,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [21.884,107.9967],
+"total": 6,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [21.9314,100.9477],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [22.0377,111.7726],
+"total": 16,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [22.1589,113.5611],
+"total": 8,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [22.1667,113.55],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [22.1693,113.361],
+"total": 24,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [22.3807,114.1324],
+"total": 16,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [22.443,110.182],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [22.521,113.3859],
+"total": 8,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [22.6539,114.1291],
+"total": 70,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [22.9334,113.8738],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [23.0011,115.5411],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [23.0131,112.9444],
+"total": 28,
+"new": 16
+}
+},
+{
+"properties": {
+"geoid": [23.059,108.4629],
+"total": 10,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [23.2444,114.4983],
+"total": 16,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [23.3343,116.5856],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [23.3371,116.1185],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [23.3384,103.4879],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [23.3498,113.5364],
+"total": 78,
+"new": 44
+}
+},
+{
+"properties": {
+"geoid": [23.4817,110.9909],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [23.5416,112.2026],
+"total": 8,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [23.7595,120.9559],
+"total": 6,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [23.9886,106.2863],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [24.1429,102.2032],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [24.2048,116.0807],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [24.316,112.8749],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [24.5604,98.0846],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [24.6457,107.8409],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [24.676,118.1138],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [24.822,113.7723],
+"total": 8,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [24.9501,109.371],
+"total": 12,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [24.9785,98.9699],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [24.9801,104.3416],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [25.0797,121.2348],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [25.2114,118.2574],
+"total": 10,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [25.2671,105.4632],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [25.3587,110.5145],
+"total": 28,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [25.3924,102.8739],
+"total": 8
+}
+},
+{
+"properties": {
+"geoid": [25.4518,118.8892],
+"total": 18,
+"new": 18
+}
+},
+{
+"properties": {
+"geoid": [25.7137,115.2745],
+"total": 14,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [25.7304,100.037],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [25.7793,111.7296],
+"total": 8
+}
+},
+{
+"properties": {
+"geoid": [25.8181,113.1376],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [26.052,119.1789],
+"total": 28,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [26.4306,107.1928],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [26.796,112.5737],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [26.8431,106.7064],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [26.9153,110.8759],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [26.9423,100.5235],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [26.9753,114.8248],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [26.9767,119.4745],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [27.124,113.5158],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [27.5113,116.4344],
+"total": 12,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [27.5136,113.9029],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [27.555,110.0777],
+"total": 10
+}
+},
+{
+"properties": {
+"geoid": [27.6411,109.9751],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [27.6565,104.0039],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [27.7172,85.324],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [27.732,112.6022],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [27.7396,111.6133],
+"total": 10,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [27.8455,114.8515],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [27.9054,120.4404],
+"total": 28,
+"new": 24
+}
+},
+{
+"properties": {
+"geoid": [27.9737,108.5408],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [28.2008,119.5133],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [28.2188,116.6081],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [28.2276,113.1532],
+"total": 36
+}
+},
+{
+"properties": {
+"geoid": [28.3075,114.9732],
+"total": 12,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [28.4952,109.0143],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [28.5768,111.9523],
+"total": 8,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [28.6615,116.0257],
+"total": 16,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [28.6973,109.7267],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [28.775,121.1116],
+"total": 30
+}
+},
+{
+"properties": {
+"geoid": [28.7769,117.4692],
+"total": 12,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [28.9356,118.674],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [29.0682,113.254],
+"total": 12
+}
+},
+{
+"properties": {
+"geoid": [29.1175,119.9524],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [29.293,105.8705],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [29.3025,111.5202],
+"total": 14,
+"new": 14
+}
+},
+{
+"properties": {
+"geoid": [29.31,117.2708],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [29.3255,115.4418],
+"total": 8,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [29.4151,106.4452],
+"total": 8
+}
+},
+{
+"properties": {
+"geoid": [29.4319,106.3625],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [29.5648,106.189],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [29.6209,106.707],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [29.6426,106.567],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [29.6524,105.7388],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [29.6609,107.3324],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [29.7115,121.4792],
+"total": 16,
+"new": 16
+}
+},
+{
+"properties": {
+"geoid": [29.7353,120.636],
+"total": 8,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [29.8139,106.7437],
+"total": 8
+}
+},
+{
+"properties": {
+"geoid": [29.8146,106.0291],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [29.8897,107.823],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [29.9017,119.4715],
+"total": 42,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [29.9076,118.0713],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [29.922,102.6656],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [29.9572,107.1356],
+"total": 8
+}
+},
+{
+"properties": {
+"geoid": [3.139,101.6869],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [30.0943,108.2932],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [30.0965,122.1883],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [30.1151,106.3081],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [30.2403,116.6771],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [30.2598,107.4326],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [30.2853,117.3658],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [30.3385,107.9107],
+"total": 10
+}
+},
+{
+"properties": {
+"geoid": [30.4272,106.6635],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [30.6112,116.5956],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [30.6251,114.3421],
+"total": 140
+}
+},
+{
+"properties": {
+"geoid": [30.6333,105.4711],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [30.6399,120.7547],
+"total": 16,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [30.6612,107.7139],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [30.6882,118.8534],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [30.7029,103.8256],
+"total": 66,
+"new": 26
+}
+},
+{
+"properties": {
+"geoid": [30.7061,108.4023],
+"total": 26
+}
+},
+{
+"properties": {
+"geoid": [30.7458,119.8686],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [30.755,116.5411],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [30.9447,117.8965],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [30.9552,109.3445],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [30.9689,116.9416],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [31.0385,108.8523],
+"total": 8,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [31.1177,109.8962],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [31.1342,104.4301],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [31.15,118.1285],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [31.173,111.5727],
+"total": 1
+}
+},
+{
+"properties": {
+"geoid": [31.2045,121.4555],
+"total": 50,
+"new": 14
+}
+},
+{
+"properties": {
+"geoid": [31.2697,117.32],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [31.2734,108.3787],
+"total": 8
+}
+},
+{
+"properties": {
+"geoid": [31.3701,107.6465],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [31.378,120.6418],
+"total": 12,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [31.5058,109.3486],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [31.5281,120.0767],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [31.6259,119.6369],
+"total": 10
+}
+},
+{
+"properties": {
+"geoid": [31.6288,118.356],
+"total": 14,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [31.647,117.7166],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [31.7594,116.3151],
+"total": 6,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [31.7786,117.3319],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [31.7944,117.3428],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [31.8283,117.2248],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [31.8534,104.7008],
+"total": 10,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [31.8847,108.7309],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [31.8954,117.3384],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [31.93,118.8424],
+"total": 12
+}
+},
+{
+"properties": {
+"geoid": [32.0012,117.5681],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [32.0164,119.4537],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [32.1975,121.0053],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [32.5454,118.1027],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [32.5725,120.0575],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [32.7398,119.4729],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [32.7574,116.734],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [32.7618,108.9258],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [32.9188,115.7036],
+"total": 20
+}
+},
+{
+"properties": {
+"geoid": [32.9242,114.1505],
+"total": 14,
+"new": 14
+}
+},
+{
+"properties": {
+"geoid": [33.0453,112.2833],
+"total": 30
+}
+},
+{
+"properties": {
+"geoid": [33.0928,107.1014],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [33.357,118.9639],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [33.4367,116.1808],
+"total": 12
+}
+},
+{
+"properties": {
+"geoid": [33.5234,120.1736],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [33.6493,109.9016],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [33.6554,113.8999],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [33.7239,114.8773],
+"total": 10,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [33.7272,116.7424],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [33.7868,118.5202],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [33.7969,113.0108],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [33.8609,117.2092],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [34.0365,108.9274],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [34.1073,108.7872],
+"total": 10,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [34.108,105.0565],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [34.2725,108.8962],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [34.2936,112.0323],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [34.3636,111.1065],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [34.534,119.1325],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [34.6293,113.468],
+"total": 36,
+"new": 14
+}
+},
+{
+"properties": {
+"geoid": [34.7887,108.3897],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [34.8693,126.9017],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [35.1227,104.4519],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [35.1534,115.6914],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [35.1881,111.0727],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [35.196,109.0307],
+"total": 10,
+"new": 10
+}
+},
+{
+"properties": {
+"geoid": [35.2655,114.084],
+"total": 50,
+"new": 48
+}
+},
+{
+"properties": {
+"geoid": [35.3124,118.2809],
+"total": 14
+}
+},
+{
+"properties": {
+"geoid": [35.3746,116.7332],
+"total": 10,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [35.4156,139.339],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [35.5832,119.1358],
+"total": 8,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [35.6301,103.2798],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [35.7114,139.4468],
+"total": 6,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [35.7653,140.3856],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [35.8789,114.3525],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [35.9557,106.1836],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [36.2283,111.3768],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [36.3513,103.6554],
+"total": 14,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [36.4422,109.3161],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [36.4548,120.1436],
+"total": 22,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [36.4576,115.8797],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [36.4774,112.9151],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [36.5532,119.0713],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [36.5538,114.5421],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [36.6035,103.2668],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [36.6041,118.0508],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [36.7341,117.0851],
+"total": 10,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [36.8261,101.4437],
+"total": 8,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [37.0548,105.4777],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [37.1217,121.9821],
+"total": 6
+}
+},
+{
+"properties": {
+"geoid": [37.2418,116.6525],
+"total": 6,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [37.2422,120.8051],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [37.3288,112.962],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [37.462,126.4434],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [37.5021,117.827],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [37.5581,126.7906],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [37.5667,126.9667],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [37.6836,111.2616],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [37.96,112.3157],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [38.0647,113.4968],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [38.1336,114.4384],
+"total": 10
+}
+},
+{
+"properties": {
+"geoid": [38.2349,106.3496],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [38.2685,116.7593],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [38.9258,99.8806],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [39.0227,115.1701],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [39.2971,117.3333],
+"total": 20,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [39.4231,108.6337],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [39.5994,122.2224],
+"total": 10
+}
+},
+{
+"properties": {
+"geoid": [39.6198,112.6405],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [39.6424,116.4172],
+"total": 8,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [39.8029,116.7363],
+"total": 14,
+"new": 14
+}
+},
+{
+"properties": {
+"geoid": [39.8306,116.2499],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [39.9064,113.7186],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [39.9109,116.3591],
+"total": 14,
+"new": 12
+}
+},
+{
+"properties": {
+"geoid": [39.9113,116.4106],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [39.9271,116.1737],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [39.9461,116.5128],
+"total": 12,
+"new": 12
+}
+},
+{
+"properties": {
+"geoid": [40.1853,116.4151],
+"total": 20
+}
+},
+{
+"properties": {
+"geoid": [40.2079,116.2063],
+"total": 14,
+"new": 8
+}
+},
+{
+"properties": {
+"geoid": [40.5461,124.4043],
+"total": 10,
+"new": 6
+}
+},
+{
+"properties": {
+"geoid": [41.3532,117.5457],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [41.4708,121.6189],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [41.5142,120.0166],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [42.1001,123.1391],
+"total": 14
+}
+},
+{
+"properties": {
+"geoid": [43.2263,118.8826],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [43.4679,82.0969],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [43.5886,126.8481],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [43.7253,-79.387],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [43.7304,87.7853],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [44.2435,115.5438],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [44.388,125.769],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [44.6065,129.8858],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [44.8038,124.4795],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [44.8378,-0.5792],
+"total": 1
+}
+},
+{
+"properties": {
+"geoid": [45.6466,127.9588],
+"total": 16,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [46.3561,124.699],
+"total": 6,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [46.9008,126.6487],
+"total": 4,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [47.2681,132.2524],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [47.7089,124.5514],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [48.8567,2.3423],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [49.5324,117.4943],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [49.7178,121.2179],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [33.3484,-112.4918],
+"total": 1,
+"new": 1
+}
+},
+{
+"properties": {
+"geoid": [34.3083,-118.2282],
+"total": 1,
+"new": 1
+}
+},
+{
+"properties": {
+"geoid": [33.7015,-117.7646],
+"total": 1,
+"new": 1
+}
+},
+{
+"properties": {
+"geoid": [41.8414,-87.8166],
+"total": 1
+}
+},
+{
+"properties": {
+"geoid": [47.4914,-121.8346],
+"total": 1
+}
+}
+]
+}

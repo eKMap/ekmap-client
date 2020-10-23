@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="../../examples/js/common.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <title>Timeline Coranavirus</title>
+    <style type="text/css">
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #range-slider {
+            position: absolute;
+            left: 0.5rem;
+            right: 0.5rem;
+            bottom: 2.75rem;
+            padding: 0.25rem 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 0.8rem;
+            color: #fff;
+            line-height: 1;
+            border-radius: 0.2rem;
+            background-color: rgba(70, 70, 70, 0.8);
+            z-index: 3;
+        }
+
+        #spread {
+            display: flex;
+            align-items: center;
+            padding: 0.2rem;
+            color: #fff;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            background-color: #66cc66;
+            border-radius: 0.2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        input[type=range] {
+            flex: 1;
+            margin: 0 0.5rem;
+            height: 1px;
+            -webkit-appearance: none;
+            cursor: ew-resize;
+        }
+
+        #range-slider label {
+            display: flex;
+            align-items: baseline;
+            font-size: 0.7rem;
+            color: #dedede;
+            line-height: 1rem;
+            text-transform: uppercase;
+            min-width: 4.5rem;
+        }
+
+        .spread-label {
+            background: #66cc66;
+            border: none;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="range-slider" style="display: flex;">
+            <input type="button" class="spread-label" value="PAUSE" id="button-play">
+            <input id="slider" type="range" value="1" min="0" max="144" step="1" onchange="changeTime()">
+            <label><span id="date">2020-01-11</span></label>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var map = new mapboxgl.Map({
+            container: "divMapId",
+            style: {
+                version: 8,
+                sources: {
+                    "raster-tiles": {
+                        type: "raster",
+                        tiles: urlOSMStandard,
+                        tileSize: 256,
+                    },
+                },
+                layers: [
+                    {
+                        id: "simple-tiles",
+                        type: "raster",
+                        source: "raster-tiles",
+                        minzoom: 0,
+                        maxzoom: 20,
+                    },
+                ],
+            },
+            center: [106.20498485851135, 20.262531684980956],
+            zoom: 2
+        });
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var value = 0;
+        var count = -1;
+        var data = [];
+        map.on('load', function () {
+            for (var i = 0; i < 144; i++) {
+                widgets.loader.showLoader("data loading...");
+                var string = "../data/coranavirus/2020_" + i + ".json"
+                $.get(string, function (response) {
+                    var listdata = response.features;
+                    var features = [];
+                    for (var i = 0; i < listdata.length; i++) {
+                        features.push({
+                            "type": "Feature",
+                            "properties": {
+                                "date": response.date
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    listdata[i].properties.geoid[1],
+                                    listdata[i].properties.geoid[0]
+                                ]
+                            },
+                        })
+                    }
+                    data.push(features)
+                }).done(function () {
+                    count++
+                    if (count == 133) {
+                        widgets.loader.removeLoader();
+                        var geojson = {
+                            "type": "FeatureCollection",
+                            "features": data[0]
+                        }
+                        heatMapLayer = new mapboxgl.ekmap.HeatMapLayer("heatmap", {
+                            "map": map,
+                            "id": "heatmap",
+                            "radius": 10,
+                        });
+                        heatMapLayer.addFeatures(geojson);
+                        map.addLayer(heatMapLayer);
+                        interval = setInterval(function () {
+                            if (getValue() == 144)
+                                clearInterval(interval);
+                            document.getElementById('slider').value = getValue();
+                            document.getElementById('date').textContent = data[value][0].properties.date
+                            var geojson = {
+                                "type": "FeatureCollection",
+                                "features": data[value]
+                            }
+                            map.getSource('heatmap').setData(geojson)
+                        }, 300);
+                    }
+                })
+            }
+        })
+
+        var btn = document.getElementById('button-play');
+        document.getElementById("button-play").onclick = function () {
+            if (btn.value === 'PAUSE') {
+                btn.value = 'PLAY'
+                clearInterval(interval);
+            }
+            else {
+                btn.value = 'PAUSE'
+                interval = setInterval(function () {
+                    document.getElementById('slider').value = getValue()
+                    var geojson = {
+                        "type": "FeatureCollection",
+                        "features": data[value]
+                    }
+                    map.getSource('heatmap').setData(geojson)
+                }, 300);
+            }
+        }
+
+        function getValue() {
+            value++;
+            return value
+        }
+
+        function changeTime() {
+            value = document.getElementById('slider').value;
+            var geojson = {
+                "type": "FeatureCollection",
+                "features": data[value]
+            }
+            map.getSource('heatmap').setData(geojson)
+        }
+    </script>
+</body>
+
+</html>

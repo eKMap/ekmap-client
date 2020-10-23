@@ -73,6 +73,10 @@
             font-size: 1rem;
             text-decoration: none;
         }
+
+        .popup{
+            opacity: 0.8;
+        }
     </style>
 </head>
 
@@ -250,10 +254,10 @@
                     content += '      </div>'
                     content += '   </div>'
                     content += '</div>'
-                    popup = new mapboxgl.Popup({})
+                    popup = new mapboxgl.Popup({className:'popup'})
                         .setLngLat(e.lngLat)
                         .setHTML(content)
-                        .addTo(map);
+                        .addTo(map)
                 }
                 hoveredStateId = fea.id;
             }

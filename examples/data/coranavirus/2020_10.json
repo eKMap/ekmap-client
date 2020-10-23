@@ -1,0 +1,159 @@
+{
+"date": "2020-01-21",
+"features": [
+{
+"properties": {
+"geoid": [13.7666,100.5363],
+"total": 4
+}
+},
+{
+"properties": {
+"geoid": [21.1,110.1654],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [22.1667,113.55],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [22.1693,113.361],
+"total": 8,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [22.6539,114.1291],
+"total": 18,
+"new": 16
+}
+},
+{
+"properties": {
+"geoid": [25.0797,121.2348],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [25.3924,102.8739],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [27.9054,120.4404],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [28.2188,116.6081],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [28.2276,113.1532],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [29.9572,107.1356],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [30.6251,114.3421],
+"total": 140
+}
+},
+{
+"properties": {
+"geoid": [30.7029,103.8256],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [30.7061,108.4023],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [31.1177,109.8962],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [31.2045,121.4555],
+"total": 10
+}
+},
+{
+"properties": {
+"geoid": [34.6293,113.468],
+"total": 2,
+"new": 2
+}
+},
+{
+"properties": {
+"geoid": [34.8693,126.9017],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [35.4156,139.339],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [35.7114,139.4468],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [37.462,126.4434],
+"total": 2
+}
+},
+{
+"properties": {
+"geoid": [39.6424,116.4172],
+"total": 4,
+"new": 4
+}
+},
+{
+"properties": {
+"geoid": [40.2079,116.2063],
+"total": 4,
+"new": 4
+}
+}
+]
+}

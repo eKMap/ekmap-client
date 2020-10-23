@@ -356,7 +356,20 @@ var exampleConfig = {
                         fileName: "realtime_satelliteImage"
                     }
                 ]
-            }
+            },
+            Timeline: {
+                name: "Timeline",
+                name_en: "Timeline",
+                content: [
+                    {
+                        name: "Timeline Coronavirus",
+                        name_en: "Timeline Coronavirus",
+                        thumbnail: "timeline_heatMapCov.gif",
+                        fileName: "timeline_heatMapCov"
+                    }
+                ]
+            },
+
         }
     },
     clientspatial: {
