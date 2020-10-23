@@ -118,8 +118,8 @@
                     },
                 ],
             },
-            center: [106.20498485851135, 20.262531684980956],
-            zoom: 2
+            center: [86.03741935555786, 20.52132704497795],
+            zoom: 1.5457634357955412
         });
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         var value = 0;
@@ -164,15 +164,19 @@
                         heatMapLayer.addFeatures(geojson);
                         map.addLayer(heatMapLayer);
                         interval = setInterval(function () {
-                            if (getValue() == 144)
+                            var x = getValue()
+                            console.log(x)
+                            if (x == 143)
                                 clearInterval(interval);
-                            document.getElementById('slider').value = getValue();
-                            document.getElementById('date').textContent = data[value][0].properties.date
-                            var geojson = {
-                                "type": "FeatureCollection",
-                                "features": data[value]
+                            else {
+                                document.getElementById('slider').value = x;
+                                document.getElementById('date').textContent = data[value][0].properties.date
+                                var geojson = {
+                                    "type": "FeatureCollection",
+                                    "features": data[value]
+                                }
+                                map.getSource('heatmap').setData(geojson)
                             }
-                            map.getSource('heatmap').setData(geojson)
                         }, 300);
                     }
                 })
@@ -188,12 +192,20 @@
             else {
                 btn.value = 'PAUSE'
                 interval = setInterval(function () {
-                    document.getElementById('slider').value = getValue()
-                    var geojson = {
-                        "type": "FeatureCollection",
-                        "features": data[value]
+                    var x = getValue()
+                    console.log(x)
+                    if (x == 143)
+                        clearInterval(interval);
+                    else {
+                        document.getElementById('slider').value = x
+
+                        document.getElementById('date').textContent = data[value][0].properties.date
+                        var geojson = {
+                            "type": "FeatureCollection",
+                            "features": data[value]
+                        }
+                        map.getSource('heatmap').setData(geojson)
                     }
-                    map.getSource('heatmap').setData(geojson)
                 }, 300);
             }
         }
@@ -205,6 +217,7 @@
 
         function changeTime() {
             value = document.getElementById('slider').value;
+            document.getElementById('date').textContent = data[value][0].properties.date
             var geojson = {
                 "type": "FeatureCollection",
                 "features": data[value]
