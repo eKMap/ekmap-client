@@ -1,0 +1,195 @@
+{
+	"result": [
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "df5de12e-a44c-6294-c9c0-401dcdb7c285",
+			"sorter": 117,
+			"name": "Vinhomes Symphony",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>Địa điểm: Hà Nội</b></li><li><b>Diện tích: Dưới 50m2, 50-100m2</b></li><li><b>Số phòng ngủ: 1 Phòng ngủ, 2 Phòng ngủ, 3 Phòng ngủ</b></li><li><b>Loại hình: Căn hộ</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 21.0501315,
+				"lon": 106.836729,
+				"zoom": 13,
+				"bearing": 150,
+				"rotation": 0.0,
+				"perspective": 0.0
+			},
+			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-symphony/600-450-symphony.jpg"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "30ca1415-0774-7fe1-91bd-8b958ee607ff",
+			"sorter": 1065,
+			"name": "Vinhomes Green Villas",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>Địa điểm: Hà Nội</b></li><li><b>Diện tích: 150-300m2, Trên 300m2</b></li><li><b>Số phòng ngủ: 3 Phòng ngủ, 4 Phòng ngủ, Trên 4 Phòng ngủ</b></li><li><b>Loại hình: Biệt thự</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 21.002302,
+				"lon": 105.760174,
+				"zoom": 12.3,
+				"bearing": 27,
+				"rotation": 0.0,
+				"perspective": 0.0
+			},
+			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-green-villas/1336-green-villas-1336x1002.jpg"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "f8adfeb4-27dd-967e-edd3-0e10bc159145",
+			"sorter": 1102,
+			"name": "Vinhomes Ocean Park",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>Địa điểm: Hà Nội</b></li><li><b>Diện tích: Dưới 50m², 50-300m²</b></li><li><b>Số phòng ngủ: 1 Phòng ngủ, 2 Phòng ngủ, 3 Phòng ngủ, 4 Phòng ngủ</b></li><li><b>Loại hình: Căn hộ, Biệt thự</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 20.9915,
+				"lon": 105.945378,
+				"zoom": 13.3,
+				"bearing": 180,
+				"rotation": 0.0,
+				"perspective": 0.0
+			},
+			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vincity-ocean-park/vincity-ocean-park-anh-pc-thumnail.jpg"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "269ec059-0251-42d8-6015-bfc55f482197",
+			"sorter": 1249,
+			"name": "Vinhomes Smart City",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>Địa điểm: Hà Nội</b></li><li><b>Diện tích: Dưới 50m², 50-150m²</b></li><li><b>Số phòng ngủ: 1 Phòng ngủ, 2 Phòng ngủ, 3 Phòng ngủ</b></li><li><b>Loại hình: Căn hộ</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 21.010044,
+				"lon": 105.73922,
+				"zoom": 11.6,
+				"bearing": 90,
+				"rotation": 0.0,
+				"perspective": 0.0
+			},
+			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-smart-city/600-450.png"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "bcb7fcb2-f62d-b046-52e6-e36bf4c891c3",
+			"sorter": 1369,
+			"name": "Vinhomes West Point",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>Địa điểm: Hà Nội</b></li><li><b>Diện tích: 50-150m²</b></li><li><b>Số phòng ngủ: 2 Phòng ngủ</b></li><li><b>Loại hình: Căn hộ</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 21.0115895,
+				"lon": 105.7858903,
+				"zoom": 12,
+				"bearing": 45,
+				"rotation": 0.0,
+				"perspective": 0.0
+			},
+			"image": "https://media.vinhomes.vn/storage/vinhomes-2018/bds-ban/west-point/anh-minh-hoa/anh-dai-dien.jpg"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "e6ce44f0-4829-df81-7c3c-09a2f322f5db",
+			"sorter": 1513,
+			"name": "Vinhomes Riverside",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>&#272;&#7883;a &#273;i&#7875;m: H&#224; N&#7897;i</b></li><li><b>Di&#7879;n t&#237;ch: 150-300m&#178;, Tr&#234;n 300m&#178;</b></li><li><b>S&#7889; ph&#242;ng ng&#7911;: 3 Ph&#242;ng ng&#7911;</b></li><li><b>Lo&#7841;i h&#236;nh: Bi&#7879;t th&#7921;</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 21.020201,
+				"lon": 105.781023,
+				"zoom": 13.5,
+				"bearing": 27,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"image": "https://media.vinhomes.vn/storage/anh-dai-dien_44.jpg"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "900faebe-c9d4-ebee-7ca6-8521405a09a6",
+			"sorter": 1561,
+			"name": "Vinhomes Thăng Long",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>&#272;&#7883;a &#273;i&#7875;m: H&#224; N&#7897;i</b></li><li><b>Di&#7879;n t&#237;ch: Tr&#234;n 300m&#178;, 50-300m&#178;</b></li><li><b>S&#7889; ph&#242;ng ng&#7911;: 1 Ph&#242;ng ng&#7911;, 2 Ph&#242;ng ng&#7911;, Tr&#234;n 4 Ph&#242;ng ng&#7911;</b></li><li><b>Lo&#7841;i h&#236;nh: Bi&#7879;t th&#7921;, Nh&#224; ph&#7889; th&#432;&#417;ng m&#7841;i</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 20.999044,
+				"lon": 105.720363,
+				"zoom": 11.5,
+				"bearing": 150,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"image": "https://media.vinhomes.vn/storage/anh-dai-dien_34.jpg"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "46cb2f61-fe66-f868-3b13-8c67d5bd5d05",
+			"sorter": 1597,
+			"name": "Vinhomes Gardenia",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>&#272;&#7883;a &#273;i&#7875;m: H&#224; N&#7897;i</b></li><li><b>Di&#7879;n t&#237;ch: Tr&#234;n 300m&#178;, 50-300m&#178;</b></li><li><b>S&#7889; ph&#242;ng ng&#7911;: 1 Ph&#242;ng ng&#7911;, 2 Ph&#242;ng ng&#7911;, 3 Ph&#242;ng ng&#7911;, 4 Ph&#242;ng ng&#7911;</b></li><li><b>Lo&#7841;i h&#236;nh: C&#259;n h&#7897;, Nh&#224; ph&#7889; th&#432;&#417;ng m&#7841;i</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 21.0372964,
+				"lon": 105.7606132,
+				"zoom": 12.7,
+				"bearing": 180,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"image": "https://media.vinhomes.vn/storage/anh-dai-dien_33.jpg"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "7414f58e-b696-0230-6d67-7c43b7a7e5d4",
+			"sorter": 1657,
+			"name": "Vinhomes Green Bay",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>&#272;&#7883;a &#273;i&#7875;m: H&#224; N&#7897;i</b></li><li><b>Di&#7879;n t&#237;ch: Tr&#234;n 300m&#178;, 50-300m&#178;</b></li><li><b>S&#7889; ph&#242;ng ng&#7911;: 2 Ph&#242;ng ng&#7911;</b></li><li><b>Lo&#7841;i h&#236;nh: Bi&#7879;t th&#7921;, C&#259;n h&#7897;, Nh&#224; ph&#7889; th&#432;&#417;ng m&#7841;i</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 21.0007735,
+				"lon": 105.7876057,
+				"zoom": 12.3,
+				"bearing": 90,
+				"rotation": 0,
+				"perspective": 0
+				
+			},
+			"image": "https://media.vinhomes.vn/storage/Untitled-1_13.jpg"
+		},
+		{
+			"appId": "9a7a22831882",
+			"maLienKet": "f75fc7f7-4e14-bf04-197a-40eb9abaae1d",
+			"sorter": 1681,
+			"name": "Vinhomes Metropolis",
+			"address": "Hà Nội",
+			"description": "<p></p><ul><li><b>Địa điểm: Hà Nội</b></li><li><b>Diện tích: Từ 50-100m²</b></li><li><b>Số phòng ngủ: 2 Phòng ngủ</b></li><li><b>Loại hình: Căn hộ, Căn hộ dịch vụ</b></li></ul><p></p><p></p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 21.0317246,
+				"lon": 105.8119308,
+				"zoom": 13.3,
+				"bearing": 45,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"image": "https://media.vinhomes.vn/storage/phoi-canh-du-an-one-verandah-quan-2-2_2.jpg"
+		}
+	]
+}

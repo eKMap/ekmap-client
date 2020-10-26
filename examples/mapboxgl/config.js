@@ -386,7 +386,31 @@ var exampleConfig = {
                         fileName: "video_storm"
                     }
                 ]
-            }
+            },
+            StoryMap: {
+                name: "Story Map",
+                name_en: "Story Map",
+                content: [
+                    {
+                        name: "Vinhomes real estate",
+                        name_en: "Vinhomes real estate",
+                        thumbnail: "storyMap_vinhomes.png",
+                        fileName: "storyMap_vinhomes"
+                    }
+                ]
+            },
+            MapTour: {
+                name: "Map Tour",
+                name_en: "Map Tour",
+                content: [
+                    {
+                        name: "Tour Hue - Hoi An - Da Nang",
+                        name_en: "Tour Hue - Hoi An - Da Nang",
+                        thumbnail: "mapTour.gif",
+                        fileName: "mapTour"
+                    }
+                ]
+            },
 
         }
     },

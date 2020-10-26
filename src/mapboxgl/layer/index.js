@@ -8,6 +8,8 @@ export { TiledRoadMapLayer } from './TiledRoadMapLayer';
 
 export { TiledAdminMapLayer } from './TiledAdminMapLayer';
 
+export { TiledVietNamMapLayer } from './TiledVietNamMapLayer';
+
 export { TiledOSMapLayer } from './TiledOSMapLayer';
 
 export { FeatureLayer } from './FeatureLayer';

@@ -1,0 +1,490 @@
+{
+	"result": [
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "6cNBuDP3tKbs",
+			"sorter": 0,
+			"name": "Day 1 - Hue Arrival",
+			"address": "Phu Bai Airport, TT. Phú Bài, Thua Thien Hue, Vietnam",
+			"description": "<p><span>Hue is the&#160;</span>low key<span>&#160;former imperial capital of Vietnam and has a rich history. The town is dotted with mesmerizing tombs and mausoleums of the last emperors of Vietnam which reveal fascinating insights into the lives of the imperial families and their subjects.</span><br></p><p>This evening is free at leisure.</p>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 16.39777500000001,
+				"lon": 107.700048,
+				"zoom": 18.4762525624107,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "6cNBuDP3tKbs",
+					"url": "/demo/Shortlist/00ec295dbd03/6cNBuDP3tKbs/images/118e9b44-103d-4c4f-8c43-4dc1034d9887.png",
+					"caption": "118e9b44-103d-4c4f-8c43-4dc1034d9887.png (82.3 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "6cNBuDP3tKbs",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": "Day 2 - Hue Imperial Citadel",
+			"previousName": null,
+			"nextMaLienKet": "Jo24H8DiXsa9",
+			"previousMaLienKet": null,
+			"countLocation": 9
+		},
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "Jo24H8DiXsa9",
+			"sorter": 1,
+			"name": "Day 2 - Hue Imperial Citadel",
+			"address": "Hue Royal Palace, Huế, Thua Thien Hue, Vietnam",
+			"description": "<span>This morning ride from your hotel by cyclo to the the former Imperial Citadel where the Nguyen Dynasty ruled between 1802 and 1945.</span>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 16.467624999999999,
+				"lon": 107.579218,
+				"zoom": 15.884775558905894,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "Jo24H8DiXsa9",
+					"url": "/demo/Shortlist/00ec295dbd03/Jo24H8DiXsa9/images/d24e2ed9-77b5-4723-91aa-2d47c2025e2f.png",
+					"caption": "d24e2ed9-77b5-4723-91aa-2d47c2025e2f.png (56.9 Kb)",
+					"credit": "",
+					"creditURL": ""
+				},
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "Jo24H8DiXsa9",
+					"url": "/demo/Shortlist/00ec295dbd03/Jo24H8DiXsa9/images/8d1dd5cf-781f-4adc-8b81-af874e727a36.png",
+					"caption": "8d1dd5cf-781f-4adc-8b81-af874e727a36.png (192.2 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "Jo24H8DiXsa9",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": "Day 2 - Thien Mu Pagoda",
+			"previousName": "Day 1 - Hue Arrival",
+			"nextMaLienKet": "ahje3U6ZfovQ",
+			"previousMaLienKet": "6cNBuDP3tKbs",
+			"countLocation": 9
+		},
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "ahje3U6ZfovQ",
+			"sorter": 2,
+			"name": "Day 2 - Thien Mu Pagoda",
+			"address": "Thien Mu Pagoda, Huế, Thua Thien Hue, Vietnam",
+			"description": "<span>The pagoda has seven stories and is often the subject of folk tales by locals. It is also regarded as the unofficial symbol of the former imperial capital. Some&#160;</span><span>steep steps but well worth the effort.</span>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 16.453172723768505,
+				"lon": 107.54482531779097,
+				"zoom": 19,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "ahje3U6ZfovQ",
+					"url": "/demo/Shortlist/00ec295dbd03/ahje3U6ZfovQ/images/e54c263c-7f81-41fd-a221-4dc58d90dbf4.png",
+					"caption": "e54c263c-7f81-41fd-a221-4dc58d90dbf4.png (73.5 Kb)",
+					"credit": "",
+					"creditURL": ""
+				},
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "ahje3U6ZfovQ",
+					"url": "/demo/Shortlist/00ec295dbd03/ahje3U6ZfovQ/images/cb3a8932-ac41-431d-af56-f2b8ad8c6e6d.png",
+					"caption": "cb3a8932-ac41-431d-af56-f2b8ad8c6e6d.png (61.3 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "ahje3U6ZfovQ",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": "Day 3 - Minh Mang Mausoleum",
+			"previousName": "Day 2 - Hue Imperial Citadel",
+			"nextMaLienKet": "yo1Bw2zYIOts",
+			"previousMaLienKet": "Jo24H8DiXsa9",
+			"countLocation": 9
+		},
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "yo1Bw2zYIOts",
+			"sorter": 3,
+			"name": "Day 3 - Minh Mang Mausoleum",
+			"address": "Minh Mang Tomb, Quốc lộ 49, Hương Thọ, Thua Thien Hue, Vietnam",
+			"description": "<span>Following breakfast depart for the Mausoleum of Minh Mang, located in a tranquil setting of gardens and ponds, inspired by the Chinese Confucianism, a harmonious design of balance and symmetry for the emperor&#8217;s resting place.</span>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 16.387732,
+				"lon": 107.56822900000002,
+				"zoom": 18.464586550581548,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "yo1Bw2zYIOts",
+					"url": "/demo/Shortlist/00ec295dbd03/yo1Bw2zYIOts/images/362130aa-f6eb-43d8-b75e-7db21d607a75.png",
+					"caption": "362130aa-f6eb-43d8-b75e-7db21d607a75.png (68.2 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "yo1Bw2zYIOts",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": "Day 3 - Khai Dinh’s Tomb",
+			"previousName": "Day 2 - Thien Mu Pagoda",
+			"nextMaLienKet": "21DLcweQOfWg",
+			"previousMaLienKet": "ahje3U6ZfovQ",
+			"countLocation": 9
+		},
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "21DLcweQOfWg",
+			"sorter": 4,
+			"name": "Day 3 - Khai Dinh’s Tomb",
+			"address": "Lăng Khải Định (Ứng Lăng), Khải Định, Huế, Vietnam",
+			"description": "<span>We continue to visit Khai Dinh&#8217;s Tomb which is traditional Vietnamese in design with a European touch making it unique from the other tombs in Hue.</span>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 16.399049000000006,
+				"lon": 107.590368,
+				"zoom": 18.007883959110577,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "21DLcweQOfWg",
+					"url": "/demo/Shortlist/00ec295dbd03/21DLcweQOfWg/images/43d84b25-84ee-42c7-9c55-96a9081792b0.png",
+					"caption": "43d84b25-84ee-42c7-9c55-96a9081792b0.png (96.6 Kb)",
+					"credit": "",
+					"creditURL": ""
+				},
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "21DLcweQOfWg",
+					"url": "/demo/Shortlist/00ec295dbd03/21DLcweQOfWg/images/4d4fc3cf-6d5d-456e-b83d-5f82fe9713bf.png",
+					"caption": "4d4fc3cf-6d5d-456e-b83d-5f82fe9713bf.png (78.4 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "21DLcweQOfWg",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": "Day 3 - To Hoi An",
+			"previousName": "Day 3 - Minh Mang Mausoleum",
+			"nextMaLienKet": "2SIRhntxlfWc",
+			"previousMaLienKet": "yo1Bw2zYIOts",
+			"countLocation": 9
+		},
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "2SIRhntxlfWc",
+			"sorter": 5,
+			"name": "Day 3 - To Hoi An",
+			"address": "Lang Co Beach, Phú Lộc, Thua Thien Hue, Vietnam",
+			"description": "<span>Following lunch transfer from Hue for Hoi An, a major Asian trading port in the 17th and 18th centuries whose architecture and relaxed lifestyle has changed little over the years. The scenic route passes through the wonderfully photogenic fishing village of Lang Co before climbing over the Pass of Ocean Clouds.</span>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 16.245976999999998,
+				"lon": 108.074573,
+				"zoom": 16.67876398174198,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "2SIRhntxlfWc",
+					"url": "/demo/Shortlist/00ec295dbd03/2SIRhntxlfWc/images/758ab835-7941-42ca-a0e5-94d9ecafd387.png",
+					"caption": "758ab835-7941-42ca-a0e5-94d9ecafd387.png (39.3 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "2SIRhntxlfWc",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": "Day 4 - Hoi An Old City",
+			"previousName": "Day 3 - Khai Dinh’s Tomb",
+			"nextMaLienKet": "fBOITLRtQp9N",
+			"previousMaLienKet": "21DLcweQOfWg",
+			"countLocation": 9
+		},
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "fBOITLRtQp9N",
+			"sorter": 6,
+			"name": "Day 4 - Hoi An Old City",
+			"address": "Hội An, Quang Nam Province, Vietnam",
+			"description": "<span>After breakfast take a walking tour of the ancient town center to visit former merchants&#8217; houses, the 400 year-old Japanese Covered Bridge, a Chinese communal hall and the colorful market.</span>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 15.876366000000005,
+				"lon": 108.32640600000002,
+				"zoom": 18.46101551982507,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "fBOITLRtQp9N",
+					"url": "/demo/Shortlist/00ec295dbd03/fBOITLRtQp9N/images/a8e77469-0078-47df-a244-655114b8fc58.png",
+					"caption": "a8e77469-0078-47df-a244-655114b8fc58.png (66.5 Kb)",
+					"credit": "",
+					"creditURL": ""
+				},
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "fBOITLRtQp9N",
+					"url": "/demo/Shortlist/00ec295dbd03/fBOITLRtQp9N/images/30174ad2-1dc5-4082-92e0-1eed759d4edd.png",
+					"caption": "30174ad2-1dc5-4082-92e0-1eed759d4edd.png (86.1 Kb)",
+					"credit": "",
+					"creditURL": ""
+				},
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "fBOITLRtQp9N",
+					"url": "/demo/Shortlist/00ec295dbd03/fBOITLRtQp9N/images/9a8d0c00-22a2-4e6f-9c5e-16abc7a37efd.png",
+					"caption": "9a8d0c00-22a2-4e6f-9c5e-16abc7a37efd.png (67.5 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "fBOITLRtQp9N",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": "Day 4 - Life start Foundation Workshop",
+			"previousName": "Day 3 - To Hoi An",
+			"nextMaLienKet": "A2fjZc87s1zb",
+			"previousMaLienKet": "2SIRhntxlfWc",
+			"countLocation": 9
+		},
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "A2fjZc87s1zb",
+			"sorter": 7,
+			"name": "Day 4 - Life start Foundation Workshop",
+			"address": "Lifestart Foundation Workshop, Hội An, Quang Nam Province, Vietnam",
+			"description": "<span>This afternoon, experience a tour with the Life start Foundation. It is a registered, non-profit charity organization helping the disadvantaged find community, learn life skills and obtain vocational livelihoods through handicraft. The cost of this tour directly supports disadvantaged Life start community members.</span>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 15.888209000000004,
+				"lon": 108.330239,
+				"zoom": 18.779465778544976,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "A2fjZc87s1zb",
+					"url": "/demo/Shortlist/00ec295dbd03/A2fjZc87s1zb/images/daba32de-0221-48ff-b5fe-aabab15c14ed.png",
+					"caption": "daba32de-0221-48ff-b5fe-aabab15c14ed.png (73.2 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "A2fjZc87s1zb",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": "Day 5 - Hoi An Departure",
+			"previousName": "Day 4 - Hoi An Old City",
+			"nextMaLienKet": "L2FWR5Vh37vr",
+			"previousMaLienKet": "fBOITLRtQp9N",
+			"countLocation": 9
+		},
+		{
+			"appId": "00ec295dbd03",
+			"maLienKet": "L2FWR5Vh37vr",
+			"sorter": 8,
+			"name": "Day 5 - Hoi An Departure",
+			"address": "DaNang International Airport(DIA), Duy Tân, Danang, Da Nang, Vietnam",
+			"description": "<span>Today is free for last minute shopping or sightseeing before departing to Danang Airport for your onward flight.</span>",
+			"mapView": {
+				"maLienKet": null,
+				"appId": null,
+				"lat": 16.056328000000009,
+				"lon": 108.200841,
+				"zoom": 15.949043806864685,
+				"rotation": 0,
+				"perspective": 0
+			},
+			"actionButton": {
+				"appId": null,
+				"text": null,
+				"url": null,
+				"clickOpen": null
+			},
+			"images": [
+				{
+					"appId": "00ec295dbd03",
+					"maLienKet": "L2FWR5Vh37vr",
+					"url": "/demo/Shortlist/00ec295dbd03/L2FWR5Vh37vr/images/46b059cb-263d-4511-894a-bdf5d6eccf02.png",
+					"caption": "46b059cb-263d-4511-894a-bdf5d6eccf02.png (343.4 Kb)",
+					"credit": "",
+					"creditURL": ""
+				}
+			],
+			"videos": [],
+			"pdfs": [],
+			"docs": [],
+			"categories": null,
+			"mapStyle": {
+				"appId": "00ec295dbd03",
+				"maLienKet": "L2FWR5Vh37vr",
+				"styleType": "Icon",
+				"styleConfig": "{\"cat\":\"map\",\"name\":\"pin29\",\"externalGraphic\":\"http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000\",\"graphicName\":\"\",\"pointRadius\":0,\"graphicWidth\":25,\"graphicHeight\":25,\"graphicXOffset\":-12.5,\"graphicYOffset\":-12.5,\"strokeWidth\":0,\"fillColor\":\"#ff0000\",\"fillOpacity\":1,\"strokeColor\":\"#ff0000\",\"strokeOpacity\":0,\"typeStyle\":\"ICON\"}"
+			},
+			"dataExtension": null,
+			"nextName": null,
+			"previousName": "Day 4 - Life start Foundation Workshop",
+			"nextMaLienKet": null,
+			"previousMaLienKet": "A2fjZc87s1zb",
+			"countLocation": 9
+		}
+	],
+	"targetUrl": null,
+	"success": true,
+	"error": null,
+	"unAuthorizedRequest": false,
+	"__abp": true
+}
