@@ -1,0 +1,196 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Realtime car</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 18px;
+            left: 60px;
+        }
+
+        .overlay button {
+            font: 600 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            background-color: #3386c0;
+            color: #fff;
+            display: inline-block;
+            margin: 0;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div class="overlay">
+            <button id="replay">Replay</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                    "raster-tiles": {
+                        "type": "raster",
+                        "tiles": urlOSMStandard,
+                        "tileSize": 256,
+                    },
+                },
+                "layers": [{
+                    "id": "simple-tiles",
+                    "type": "raster",
+                    "source": "raster-tiles",
+                    "minzoom": 0,
+                    "maxzoom": 18
+                }]
+            },
+            center: [105.66771871049923, 21.011594023323028],
+            zoom: 12.165135620720719
+        });
+        var origin = [105.78701677181785, 21.030421887134903];
+        var destination = [105.52364530421451, 20.994812188546017];
+        var counter = 0;
+        var arc = [];
+        var endFly;
+        var timer;
+        var point = {
+            'type': 'FeatureCollection',
+            'features': [
+                {
+                    'type': 'Feature',
+                    'properties': {},
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': origin
+                    }
+                }
+            ]
+        };
+
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.on('load', function () {
+            map.loadImage('../data/car.png', function (error, image) {
+                if (error) throw error;
+                map.addImage('positionCar', image);
+            });
+            //Source: KTTV
+            $.get("../data/route.json", function (response) {
+
+                map.addSource('route', {
+                    'type': 'geojson',
+                    'data': response
+                });
+                var lineDistance = turf.lineDistance(response.features[0].geometry, { units: 'kilometers' });
+
+                for (var i = 2; i < lineDistance * 1000; i += 2) {
+                    var segment = turf.along(response.features[0].geometry, i / 1000, { units: 'kilometers' });
+                    arc.push(segment.geometry.coordinates);
+                }
+
+                map.addSource('point', {
+                    'type': 'geojson',
+                    'data': point
+                });
+
+                map.addLayer({
+                    'id': 'route',
+                    'source': 'route',
+                    'type': 'line',
+                    'paint': {
+                        'line-width': 3,
+                        'line-color': '#007cbf'
+                    }
+                });
+
+                map.addLayer({
+                    'id': 'point',
+                    'source': 'point',
+                    'type': 'symbol',
+                    'layout': {
+                        'icon-image': 'positionCar',
+                        "icon-size": 0.2,
+                        'icon-rotate': ['get', 'bearing'],
+                        'icon-rotation-alignment': 'map',
+                        'icon-allow-overlap': true,
+                        'icon-ignore-placement': true
+                    }
+                });
+                map.setPitch(30);
+            }).done(function () {
+                animate(counter)
+            })
+
+            function animate(counter) {
+
+                // Request the next frame of animation so long the end has not been reached.
+                timer = window.setInterval(function () {
+                    if (counter == 0) {
+                        map.flyTo({
+                            center: [105.7864968524334, 21.030328889386084],
+                            speed: 0.5,
+                            zoom: 15,
+                            easing(t) {
+                                if (t == 1)
+                                    endFly = 1;
+                                return t;
+                            }
+                        });
+                    }
+
+                    if (counter < arc.length) {
+                        if (endFly)
+                            map.panTo(arc[counter]);
+                        point.features[0].geometry.coordinates = arc[counter];
+                        point.features[0].properties.bearing = turf.bearing(
+                            turf.point(
+                                arc[counter >= arc.length ? counter - 1 : counter]
+                            ),
+                            turf.point(
+                                arc[counter >= arc.length ? counter: counter +1]
+                            )
+                        );
+                        map.getSource('point').setData(point);
+                        counter = counter + 1;
+                    } else {
+                        window.clearInterval(timer);
+                    }
+                },0.05);
+            }
+
+            document.getElementById('replay').addEventListener('click', function () {
+                if (endFly) {
+                    window.clearInterval(timer);
+                    endFly = null;
+                }
+                point.features[0].geometry.coordinates = origin;
+                map.getSource('point').setData(point);
+                counter = 0;
+                animate(counter);
+            });
+        })
+    </script>
+</body>
+
+</html>

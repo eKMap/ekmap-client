@@ -116,7 +116,7 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_select.gif",
                         fileName: "vectorTile_Map_select"
                     }
-                    
+
                 ]
             },
             control: {
@@ -354,6 +354,12 @@ var exampleConfig = {
                         name_en: "Realtime Satellite Image",
                         thumbnail: "realtime_satelliteImage.gif",
                         fileName: "realtime_satelliteImage"
+                    },
+                    {
+                        name: "Realtime Car",
+                        name_en: "Realtime Car",
+                        thumbnail: "realtime_car.gif",
+                        fileName: "realtime_car"
                     }
                 ]
             },
@@ -369,6 +375,18 @@ var exampleConfig = {
                     }
                 ]
             },
+            Video: {
+                name: "Video",
+                name_en: "Video",
+                content: [
+                    {
+                        name: "Video Storm",
+                        name_en: "Video Storm",
+                        thumbnail: "video_storm.gif",
+                        fileName: "video_storm"
+                    }
+                ]
+            }
 
         }
     },

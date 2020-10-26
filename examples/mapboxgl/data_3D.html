@@ -74,7 +74,7 @@
             text-decoration: none;
         }
 
-        .popup{
+        .popup {
             opacity: 0.8;
         }
     </style>
@@ -133,8 +133,6 @@
         map.on('load', function () {
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             //Data
-            var features
-            var x
             var y = [{
                 'ten': 'A',
                 'mau': 'red'
@@ -142,8 +140,6 @@
                 'ten': 'B',
                 'mau': 'blue'
             }];
-            var color = getRandomColor();
-            var k;
             widgets.loader.showLoader("data loading...");
             $.get("../data/3d_buildings.json", function (response) {
                 map.addSource('floorplan', {
@@ -186,36 +182,27 @@
         function changeMenu() {
             var x = document.getElementById("mySelect").value;
             if (x == 'BMC')
-                map.flyTo({ center: [105.7163513067436, 21.193957863945272], zoom: 15.697175623863695 });
+                map.flyTo({ center: [105.7163513067436, 21.193957863945272], zoom: 15.697175623863695, bearing: 85, pitch: 60 });
             if (x == 'AIC')
-                map.flyTo({ center: [105.74493158120043, 21.16098249711949], zoom: 16 });
+                map.flyTo({ center: [105.7462764404338, 21.164371567384677], zoom: 16, bearing: 180, pitch: 60, speed: 0.5 });
             if (x == 'TL2')
-                map.flyTo({ center: [105.7222061108555, 21.192929003235562], zoom: 16 });
+                map.flyTo({ center: [105.7222061108555, 21.192929003235562], zoom: 16, bearing: 90, pitch: 60,speed: 0.5 });
             if (x == 'XP')
-                map.flyTo({ center: [105.74124806791201, 21.026821176690348], zoom: 16 });
+                map.flyTo({ center: [105.74124806791201, 21.026821176690348], zoom: 16, bearing: 180, pitch: 60 });
             if (x == 'N3')
-                map.flyTo({ center: [105.81593103875502, 20.972893307536708], zoom: 16 });
+                map.flyTo({ center: [105.81593103875502, 20.972893307536708], zoom: 16, pitch: 60, bearing: 90 });
             if (x == 'CNPM')
-                map.flyTo({ center: [105.91160416175228, 21.04370956624021], zoom: 14.788702495454782 });
+                map.flyTo({ center: [105.91160416175228, 21.04370956624021], zoom: 15.2, bearing: 180, pitch: 60 });
             if (x == 'NG')
-                map.flyTo({ center: [105.79647277714764, 21.065133341577095], zoom: 15.697175623863695 });
+                map.flyTo({ center: [105.79647277714764, 21.065133341577095], zoom: 15.697175623863695, bearing: 90 });
             if (x == 'CNPM1')
-                map.flyTo({ center: [105.91109091323847, 21.04752526574765], zoom: 14.788702495454782 });
+                map.flyTo({ center: [105.91109091323847, 21.04752526574765], zoom: 14.788702495454782, bearing: 180 });
             if (x == 'CN')
-                map.flyTo({ center: [105.77896690988177, 21.07315158374307], zoom: 15.12664326328604 });
+                map.flyTo({ center: [105.77896690988177, 21.07315158374307], zoom: 15.12664326328604, bearing: 90 });
             if (x == 'CV')
-                map.flyTo({ center: [105.77418432894603, 21.00972716409872], zoom: 15.242939059659237 });
+                map.flyTo({ center: [105.77418432894603, 21.00972716409872], zoom: 15.242939059659237, bearing: 180 });
             if (x == 'TV')
-                map.flyTo({ center: [105.78971515266926, 20.991829072312754], zoom: 16.588090556425136 });
-        }
-
-        function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
+                map.flyTo({ center: [105.78971515266926, 20.991829072312754], zoom: 16.588090556425136, bearing: 90 });
         }
 
         var popup;
@@ -254,7 +241,7 @@
                     content += '      </div>'
                     content += '   </div>'
                     content += '</div>'
-                    popup = new mapboxgl.Popup({className:'popup'})
+                    popup = new mapboxgl.Popup({ className: 'popup' })
                         .setLngLat(e.lngLat)
                         .setHTML(content)
                         .addTo(map)
