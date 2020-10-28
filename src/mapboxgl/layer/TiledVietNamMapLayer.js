@@ -2,8 +2,8 @@ import mapboxgl from 'mapbox-gl';
 import { TiledMapLayer } from './TiledMapLayer';
 
 /**
- * @class mapboxgl.ekmap.TiledAdminMapLayer
- * @classdesc The TiledAdminMapLayer class.
+ * @class mapboxgl.ekmap.TiledVietNamMapLayer
+ * @classdesc The TiledVietNamMapLayer class.
  * @category  Layer
  * @param {Object} options  Construction parameters.
  * @param {string} options.token  Will use this token to authenticate all calls to the service.

@@ -153,17 +153,19 @@
 
         .textTitle {
             text-align: center;
-            font-size: 20px;
-            color: #646c9a;
-            font-weight: 600;
             margin-bottom: 0px;
             margin-top: 40px;
+            color: #121212;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.125;
         }
 
         .kt-widget19__text-appInfo {
-            font-size: 13px;
-            font-weight: 300;
-            font-family: Poppins;
+            color: #7a7a7a;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.2;
         }
 
         .btn-cont {
@@ -213,14 +215,13 @@
         }
 
         .item-image {
-            max-width: 8.5rem;
+            max-width: 100%;
             margin-right: .5rem;
             border-radius: 4px;
             cursor: pointer;
-            -o-object-fit: cover;
             object-fit: cover;
-            height: 8.5rem;
-            width: 8.5rem;
+            height: 15.5rem;
+            width: 100%;
         }
 
         .item-name a {
@@ -236,6 +237,7 @@
 
         .col {
             width: 100%;
+            padding: 15px;
         }
 
         .img_select {
@@ -277,13 +279,32 @@
         .font-des {
             font-size: 13px;
             font-weight: 300;
-            color: #646c9a;
-            font-family: Poppins;
+            color: #7a7a7a;
+        }
+
+        .color .mapboxgl-popup-content {
+            background-color: #9fcd42;
+        }
+
+        .color .mapboxgl-popup-tip {
+            border-top-color: #9fcd42;
+        }
+
+        .color-text-popup {
+            color: #fff
+        }
+
+        .has-text-grey {
+            color: #7a7a7a !important;
+            font-size: 11px;
+            font-weight: 300;
         }
     </style>
 </head>
 
 <body>
+    <script src="https://unpkg.com/@turf/turf@5.1.6/turf.min.js"></script>
+
     <div style="width: 100%;">
         <div id="divMapId" class="map">
             <div id="left" class="sidebar flex-center left collapsed">
@@ -298,40 +319,23 @@
                                 </div>
                                 <div class="kt-widget19__content">
                                     <div class="kt-widget19__info">
-                                        <p class="textTitle"> Bất động sản Vinhomes </p>
+                                        <p class="textTitle">Central Vietnam Tour, Hue and Hoi An</p>
                                     </div>
                                 </div><br>
                                 <line-clamp row="6" _nghost-lti-c12="">
                                     <div _ngcontent-lti-c12="" class="box"
                                         style="-webkit-line-clamp: initial; height: auto; visibility: visible;">
                                         <div class="kt-widget19__text-appInfo">
-                                            <p>Địa chỉ: Tòa nhà văn phòng Symphony, Đường Chu Huy Mân, Khu đô thị sinh
-                                                thái Vinhomes Riverside, Phường Phúc Lợi, Quận Long Biên, Thành phố Hà
-                                                Nội, Việt Nam.</p>
+                                            <p>Hue and Hoi An are two of the best places in the country to experience
+                                                the traditions, culture and rhythms of Vietnam.</p>
                                         </div>
                                         <a _ngcontent-lti-c12="" class="btn-toggle" href="javascript:void(0)"><i
                                                 _ngcontent-lti-c12="" class="flaticon2-up"></i></a>
                                     </div>
                                 </line-clamp>
-                                <div class="btn-contact">
-                                    <a class="btn btn-lg btn-label-brand btn-cont" href="https://vinhomes.vn"
-                                        target="_blank" style="background-color: rgb(204, 144, 54);"> Website </a></div>
                             </div>
                         </div>
                         <div class="kt-portlet__body kt-padding-0 " id="listData">
-                            <!-- <div class="kt-portlet item-container" style="cursor:pointer;">
-                                <div class="form-group form-group-last row">
-                                    <div class="col item-name">
-                                        <img class="img_select" height="20"
-                                            src="http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000">
-                                        <a class="col-form-label" href="javascript:;">
-                                            Vinhomes Symphony </a>
-                                    </div>
-                                    <div class="item-image-container"><img alt="" class="item-image"
-                                            src="https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-symphony/600-450-symphony.jpg">
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                     <div class="sidbear-toggle rounded-rect left" onclick="toggleSidebar('left')">
@@ -347,6 +351,7 @@
             container: 'divMapId',
             style: {
                 "version": 8,
+                "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
                 "sources": {
                     "raster-tiles": {
                         "type": "raster",
@@ -368,21 +373,38 @@
                     }
                 ]
             },
-            center: [103.9, 22.2],
-            zoom: 6
+            center: [107.87145256218912, 16.176363055197896],
+            zoom: 9.844199397806728,
+            pitch: 50,
         });
         var popup;
+        var features = [];
+        var coordinates = [];
+        var hoveredStateId = null;
+        var popup = null;
         toggleSidebar('left');
 
         map.on('load', function () {
+            widgets.loader.showLoader("data loading...");
             var divData = document.getElementById('listData');
-            $.get("../../examples/data/data_Vinhome.json", function (response) {
-
+            $.get("../../examples/data/data_tour.json", function (response) {
                 var listData = response.result;
                 listData.forEach(feature => {
-                    new mapboxgl.Marker({
-                        'color': 'red'
-                    }).setLngLat([feature.mapView.lon, feature.mapView.lat]).addTo(map);
+                    features.push({
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [feature.mapView.lon, feature.mapView.lat]
+                        },
+                        'properties': {
+                            'number': feature.sorter + 1,
+                            'description': feature.name,
+                            'lon': feature.mapView.lon,
+                            'lat': feature.mapView.lat
+                        },
+                        'id': feature.sorter + 1
+                    })
+                    coordinates.push([feature.mapView.lon, feature.mapView.lat]);
                     var div = document.createElement('div');
                     var div2 = document.createElement('div');
                     div2.className = "kt-portlet item-container";
@@ -390,50 +412,159 @@
                     div2.onclick = function () {
                         map.flyTo({
                             center: [feature.mapView.lon, feature.mapView.lat],
-                            zoom: feature.mapView.zoom,
-                            bearing: feature.mapView.bearing
+                            zoom: feature.mapView.zoom
                         })
                         if (popup)
                             popup.remove();
-                        popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500})
-                            .setLngLat([feature.mapView.lon, feature.mapView.lat])
-                            .setHTML("<h3>" + feature.name + "</h3>")
+                        popup = popup = new mapboxgl.Popup({ offset: 23, className: 'color', closeButton: false, anchor: 'bottom' })
+                            .setLngLat(new mapboxgl.LngLat(feature.mapView.lon, feature.mapView.lat))
+                            .setHTML("<h4 class='color-text-popup'>" + feature.name + "</h4>")
+                            .setMaxWidth("300px")
                             .addTo(map)
                     }
                     var div3 = document.createElement('div');
-                    div3.className = "form-group form-group-last row";
+                    div3.className = "form-group-last row";
                     div.className = 'col item-name';
                     var image = document.createElement('img');
-                    image.src = "http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000";
+                    image.src = feature.images;
                     image.className = 'img_select';
                     image.height = 20;
                     var a = document.createElement('a');
                     a.className = 'col-form-label';
                     a.innerHTML = feature.name;
                     a.href = "javascript:;";
+                    var divSpan = document.createElement('div');
+                    divSpan.style.marginBottom = "-10px";
+                    divSpan.style.marginTop = "-5px"
+                    var span = document.createElement('span');
+                    span.className = 'has-text-grey';
+                    span.innerHTML = feature.address;
+                    divSpan.appendChild(span)
                     var div4 = document.createElement('div');
                     div4.className = 'font-des';
                     var frag = document.createRange().createContextualFragment(feature.description);
-                    console.log(frag)
                     div4.appendChild(frag);
                     div.appendChild(image);
                     div.appendChild(a)
+                    div.appendChild(divSpan)
                     div.appendChild(div4)
                     var div1 = document.createElement('div');
                     div1.className = "item-image-container";
                     var image1 = document.createElement('img');
-                    image1.src = feature.image;
+                    image1.src = feature.background;
                     image1.className = 'item-image';
-                    div1.appendChild(image1);
                     div3.appendChild(div);
                     div3.appendChild(div1);
+                    div2.appendChild(image1);
                     div2.appendChild(div3);
                     divData.appendChild(div2);
                 });
             }).done(function () {
-                console.log(divData)
+                map.addSource('point', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'FeatureCollection',
+                        'features': features
+                    }
+                })
+                map.addLayer({
+                    'id': 'point-tour',
+                    'type': 'circle',
+                    'source': 'point',
+                    'paint': {
+                        'circle-radius': 25,
+                        'circle-color': '#95cd22',
+                        "circle-stroke-color": '#a7cd5a',
+                        "circle-stroke-width": 15,
+                        "circle-stroke-opacity": [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            0
+                        ],
+
+                    }
+                })
+                map.addLayer({
+                    'id': 'water-labels',
+                    'type': 'symbol',
+                    'source': 'point',
+                    'layout': {
+                        'text-field': [
+                            'format',
+                            ['get', 'number'],
+                            {
+                                'font-scale': 1.2,
+                                'text-color': '#fff',
+                            }
+                        ]
+                    }
+                });
+
+                //Line
+                var line = turf.lineString(coordinates)
+                var start = turf.point([107.700048, 16.39777500000001]);
+                var stop = turf.point([108.200841, 16.056328000000009]);
+                var slice = turf.lineSlice(start, stop, line);
+
+                map.addLayer({
+                    'id': 'slice',
+                    'type': 'line',
+                    'source': {
+                        'type': 'geojson',
+                        'data': slice
+                    },
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': '#696969',
+                        'line-width': 5,
+                        "line-dasharray": [3, 2]
+                    },
+                });
+                map.moveLayer('slice', 'point-tour')
+                widgets.loader.removeLoader();
             })
         })
+
+        map.on('mousemove', 'point-tour', function (e) {
+            if (e.features.length > 0) {
+                if (hoveredStateId) {
+                    map.setFeatureState(
+                        { source: 'point', id: hoveredStateId },
+                        { hover: false }
+                    );
+                } else {
+                    if (popup)
+                        popup.remove()
+                    popup = new mapboxgl.Popup({ offset: 23, className: 'color', closeButton: false, anchor: 'bottom' })
+                        .setLngLat(new mapboxgl.LngLat(e.features[0].properties.lon, e.features[0].properties.lat))
+                        .setHTML("<h4 class='color-text-popup'>" + e.features[0].properties.description + "</h4>")
+                        .setMaxWidth("300px")
+                        .addTo(map)
+                }
+                hoveredStateId = e.features[0].id;
+                map.setFeatureState(
+                    { source: 'point', id: hoveredStateId },
+                    { hover: true }
+                );
+
+            }
+        });
+
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on('mouseleave', 'point-tour', function () {
+            if (hoveredStateId) {
+                map.setFeatureState(
+                    { source: 'point', id: hoveredStateId },
+                    { hover: false }
+                );
+            }
+            hoveredStateId = null;
+        });
 
         function toggleSidebar(id) {
             var elem = document.getElementById(id);

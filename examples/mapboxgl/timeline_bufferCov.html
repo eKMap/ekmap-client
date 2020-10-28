@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>RealTime Buffer</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 130px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .timelineInfo {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+        }
+
+        .tlStatsControl {
+            height: 68px;
+            flex: 100%;
+            max-width: 100%;
+            display: flex;
+            background: rgba(247, 247, 247, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .tlStats {
+            flex: 60%;
+            max-width: 60%;
+            padding-left: 24px;
+            padding-top: 4px;
+            line-height: 28px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .tlDate,
+        .tlConfirmed,
+        .tlFatal {
+            display: inline-block;
+            margin-right: 60px;
+        }
+
+        .tlControl {
+            flex: 40%;
+            max-width: 40%;
+            padding-right: 24px;
+            padding-top: 18px;
+        }
+
+        .tlControl .switchDateBtn.active {
+            cursor: pointer;
+        }
+
+        .tlControl div {
+            float: right;
+        }
+
+        .tlControl .switchDateBtn svg {
+            margin-top: 7px;
+        }
+
+        svg {
+            display: block;
+        }
+
+        .tlControl #playPauseBtn {
+            width: 32px;
+            height: 32px;
+            background: #00809D;
+            border-radius: 16px;
+            cursor: pointer;
+            margin-left: 18px;
+            margin-right: 18px;
+        }
+
+        .tlControl #playPauseBtn svg {
+            margin: 7px auto auto 11px;
+        }
+
+        .tlControl .switchDateBtn.active {
+            cursor: pointer;
+        }
+
+        .tlProgress {
+            height: 58px;
+            background: #FFFFFF;
+            opacity: 0.9;
+            backdrop-filter: blur(8px);
+        }
+
+        .tlSliderWrapper {
+            height: 26px;
+            padding-top: 4px;
+        }
+
+        .tlSlider {
+            width: calc(100% - 48px);
+            margin-left: 24px;
+            margin-right: 24px;
+            border-radius: 10px;
+            height: 2px;
+            outline: none;
+            -webkit-appearance: none;
+            position: fixed;
+            bottom: 35px;
+            z-index: 2;
+        }
+
+        input[type="range"i] {
+            appearance: slider-horizontal;
+            color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
+            cursor: default;
+            padding: initial;
+            border: initial;
+            margin: 2px;
+        }
+
+        input {
+            -webkit-writing-mode: horizontal-tb !important;
+            text-rendering: auto;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+            -webkit-rtl-ordering: logical;
+            font: 400 13.3333px Arial;
+        }
+
+        .tlEndpoint.covered {
+            width: 8px;
+            height: 8px;
+            background: #00809D;
+            border-radius: 4px;
+        }
+
+        .tlEndpoint.label {
+            background: none;
+            height: 20px;
+            line-height: 20px;
+            font-size: 13px;
+            bottom: 8px;
+            color: #767676;
+            max-width: 80px;
+            width: auto;
+        }
+
+        .tlEndpoint {
+            width: 8px;
+            height: 8px;
+            background: #CCCCCC;
+            border-radius: 4px;
+            position: fixed;
+            bottom: 34px;
+            right: 24px;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/@turf/turf@5.1.6/turf.min.js"></script>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map"></div>
+        <div class="timelineInfo">
+            <div class="tlStatsControl">
+                <div class="tlStats">
+                    <div class="tlDate">
+                        <div>On the day of</div>
+                        <div>Feb 15, 2020</div>
+                    </div>
+                    <div class="tlConfirmed">
+                        <div>Total confirmed cases</div>
+                        <div>66,884</div>
+                    </div>
+                    <div class="tlFatal">
+                        <div>Fatal</div>
+                        <div>1,526</div>
+                    </div>
+                </div>
+                <div class="tlControl">
+                    <div class="switchDateBtn"><svg width="13" height="14" viewBox="0 0 13 14" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 13.7969V0.304688L9.60156 7L0 13.7969ZM11 0H12.5V14H11V0Z" fill="#CCCCCC"></path>
+                        </svg></div>
+                    <div id="playPauseBtn"><svg width="10" height="16" viewBox="0 0 10 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.5 0.5H9.375V15.5H7.5V0.5ZM0.625 15.5V0.5H2.5V15.5H0.625Z" fill="white"></path>
+                        </svg></div>
+                    <div class="switchDateBtn"><svg width="13" height="14" viewBox="0 0 13 14" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.39844 7L13 0.304688V13.7969L3.39844 7ZM0.5 14V0H2V14H0.5Z" fill="#CCCCCC">
+                            </path>
+                        </svg></div>
+                </div>
+            </div>
+            <div class="tlProgress">
+                <div class="tlSliderWrapper"><input class="tlSlider" type="range" min="0" max="278" step="1" value="24"
+                        style="background: linear-gradient(to right, rgb(0, 128, 157) 0%, rgb(0, 128, 157) 8.60215%, rgb(204, 204, 204) 8.60215%, rgb(204, 204, 204) 100%);">
+                    <div class="tlEndpoint covered"></div>
+                    <div class="tlEndpoint covered" style="left: 52.5612px;"></div>
+                    <div class="tlEndpoint" style="left: 149.888px;"></div>
+                    <div class="tlEndpoint" style="left: 253.928px;"></div>
+                    <div class="tlEndpoint" style="left: 354.612px;"></div>
+                    <div class="tlEndpoint" style="left: 458.651px;"></div>
+                    <div class="tlEndpoint" style="left: 559.335px;"></div>
+                    <div class="tlEndpoint" style="left: 663.374px;"></div>
+                    <div class="tlEndpoint" style="left: 767.414px;"></div>
+                    <div class="tlEndpoint" style="left: 868.097px;"></div>
+                    <div class="tlEndpoint covered label" style="left: 52.5612px;">Feb</div>
+                    <div class="tlEndpoint label" style="left: 149.888px;">Mar</div>
+                    <div class="tlEndpoint label" style="left: 253.928px;">Apr</div>
+                    <div class="tlEndpoint label" style="left: 354.612px;">May</div>
+                    <div class="tlEndpoint label" style="left: 458.651px;">Jun</div>
+                    <div class="tlEndpoint label" style="left: 559.335px;">Jul</div>
+                    <div class="tlEndpoint label" style="left: 663.374px;">Aug</div>
+                    <div class="tlEndpoint label" style="left: 767.414px;">Sep</div>
+                    <div class="tlEndpoint label" style="left: 868.097px;">Oct</div>
+                    <div class="tlEndpoint"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105, 17],
+            zoom: 3
+        });
+        var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var title = "2020_";
+        var tail = ".json";
+        var pt, dataLayer = [],
+            buffered,
+            long, lat, total, data12;
+        var data = [];
+        var dataLayer = [];
+        var count = 0,
+            x = 1,
+            minData = 500,
+            maxData = 1000000,
+            minRadius = 30,
+            maxRadius = 1000;
+        map.on('load', function () {
+            widgets.loader.showLoader("data loading...");
+            for (var i = 0; i < 50; i++) {
+                $.get("../data/coranavirus/2020_" + i + ".json", function (response) {
+                    var covid = response.features;
+                    covid.forEach(items => {
+                        long = items.properties.geoid[1];
+                        lat = items.properties.geoid[0];
+                        total =
+                            pt = {
+                                "type": "Feature",
+                                "properties": {},
+                                "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [long, lat]
+                                }
+                            }
+                        data12 = items.properties.total;
+                        var a = getRadius(data12, minData, maxData, minRadius, maxRadius);
+                        buffered = turf.buffer(pt, a, {
+                            units: 'kilometers'
+                        });
+                        dataLayer.push(buffered)
+                    })
+                    data.push(dataLayer);
+
+                }).done(function () {
+                    count++;
+                    if (count == 49) {
+                        widgets.loader.removeLoader();
+                        map.addSource('states', {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'FeatureCollection',
+                                'features': data[0]
+                            }
+                        });
+                        map.addLayer({
+                            'id': 'states',
+                            'type': 'fill',
+                            'source': 'states',
+                            'paint': {
+                                'fill-color': '#770404',
+                                'fill-opacity': 0.7,
+                            }
+                        });
+                        console.log(data)
+                        var timer = window.setInterval(function () {
+                            console.log(x)
+                            var datatong = {
+                                'type': 'FeatureCollection',
+                                'features': data[x]
+                            };
+                            x++;
+                            map.getSource('states').setData(datatong);
+                            if (x == 49)
+                                window.clearInterval(timer);
+                        }, 500);
+                    }
+                })
+            }
+        })
+
+        function getRadius(data12, minData, maxData, minRadius, maxRadius) {
+            return (data12 - minData) / (maxData - minData) * (maxRadius - minRadius) + minRadius;
+        }
+    </script>
+</body>
+
+</html>

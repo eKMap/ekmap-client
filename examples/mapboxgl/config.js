@@ -368,10 +368,22 @@ var exampleConfig = {
                 name_en: "Timeline",
                 content: [
                     {
-                        name: "Timeline Coronavirus",
-                        name_en: "Timeline Coronavirus",
+                        name: "Timeline Coronavirus (Heatmap)",
+                        name_en: "Timeline Coronavirus (Heatmap)",
                         thumbnail: "timeline_heatMapCov.gif",
                         fileName: "timeline_heatMapCov"
+                    },
+                    {
+                        name: "Timeline Coronavirus (Area)",
+                        name_en: "Timeline Coronavirus (Area)",
+                        thumbnail: "timeline_fillCov.gif",
+                        fileName: "timeline_fillCov"
+                    },
+                    {
+                        name: "Timeline Coronavirus (Buffer)",
+                        name_en: "Timeline Coronavirus (Buffer)",
+                        thumbnail: "timeline_bufferCov.gif",
+                        fileName: "timeline_bufferCov"
                     }
                 ]
             },
@@ -394,7 +406,7 @@ var exampleConfig = {
                     {
                         name: "Vinhomes real estate",
                         name_en: "Vinhomes real estate",
-                        thumbnail: "storyMap_vinhomes.png",
+                        thumbnail: "storyMap_vinhomes.gif",
                         fileName: "storyMap_vinhomes"
                     }
                 ]

@@ -375,6 +375,7 @@
         toggleSidebar('left');
 
         map.on('load', function () {
+            widgets.loader.showLoader("data loading...");
             var divData = document.getElementById('listData');
             $.get("../../examples/data/data_Vinhome.json", function (response) {
 
@@ -430,6 +431,7 @@
                     divData.appendChild(div2);
                 });
             }).done(function () {
+                widgets.loader.removeLoader();
             })
         })
 
