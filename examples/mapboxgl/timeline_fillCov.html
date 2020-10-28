@@ -106,7 +106,7 @@
         #selectedFeatures {
             position: absolute;
             left: 30px;
-            top: -8px;
+            top: 60px;
             z-index: 1000;
             padding: 1em;
             max-height: 250px;
@@ -161,6 +161,7 @@
             font-size: 12.8px;
             line-height: 1.2;
             overflow-y: hidden;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -168,8 +169,10 @@
 <body>
     <div style="width: 100%;">
         <h2 class="header">COVID-19: Government Response Stringency Index, <span id='date'>JAN 21, 2020</span></h2>
-        <p class="title"><span>This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to
-            100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region.</span></p>
+        <p class="title"><span>This is a composite measure based on nine response indicators including school closures,
+                workplace closures, and travel bans, rescaled to a value from 0 to
+                100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response
+                level of the strictest sub-region.</span></p>
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
@@ -187,7 +190,7 @@
         <div id="range-slider" style="display: flex;">
             <input type="button" class="spread-label" value="PAUSE" id="button-play">
             <input id="slider" type="range" value="0" min="0" max="280" step="1" onchange="changeTime()">
-            <label><span id="date">JAN 21, 2020</span></label>
+            <label><span id="date1">JAN 21, 2020</span></label>
         </div>
         <div id="note" class="leaflet-bar map-text">
             <div>
@@ -306,25 +309,6 @@
     <script type="text/javascript">
         var map = new mapboxgl.Map({
             container: "divMapId",
-            style: {
-                version: 8,
-                sources: {
-                    "raster-tiles": {
-                        type: "raster",
-                        tiles: urlOSMStandard,
-                        tileSize: 256,
-                    },
-                },
-                layers: [
-                    {
-                        id: "simple-tiles",
-                        type: "raster",
-                        source: "raster-tiles",
-                        minzoom: 0,
-                        maxzoom: 20,
-                    },
-                ],
-            },
             center: [11.164340403295512, 2.079745662755286],
             zoom: 2.116295796373197,
             pitch: 40
@@ -335,94 +319,98 @@
         var features;
         var listData = [];
         var x = 0;
-        map.on('load', function () {
-            $.get('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json', function (response) {
-                data = JSON.parse(response);
-                features = data.features;
-            }).done(function () {
-                map.addLayer({
-                    'id': 'fill-world',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': data
-                    },
-                    'paint': {
-                        'fill-color': [
-                            'interpolate',
-                            ['linear'],
-                            ['get', 'total'],
-                            -0.5,
-                            '#eee',
-                            0,
-                            '#ffffd9',
-                            10,
-                            '#edf8b1',
-                            20,
-                            '#c7e9b4',
-                            30,
-                            '#7fcdbb',
-                            40,
-                            '#41b6c4',
-                            50,
-                            '#1d91c0',
-                            60,
-                            '#225ea8',
-                            70,
-                            '#253494',
-                            80,
-                            '#172976',
-                            90,
-                            '#081d58',
-                        ],
-                        'fill-opacity': 1
-                    }
-                });
-            })
-            widgets.loader.showLoader("data loading...");
-            d3.json('../data/covid-data.json', function (response) {
-                listData = response;
-                console.log(listData)
-                // for (var d = new Date(2020, 0, 21); d <= new Date(); d.setDate(d.getDate() + 1)) {
-                //     var day = moment(d).format('YYYY-MM-DD');
-                //     var a = [];
-                //     features.forEach(country => {
-                //         if (dataWorld[country.id]) {
-                //             var dataDate = dataWorld[country.id].data;
-                //             dataDate.forEach(data => {
-                //                 if (data.date == day) {
-                //                     var x = data.stringency_index ? data.stringency_index : -0.5
-                //                     a.push({
-                //                         type: "Feature",
-                //                         id: country.id,
-                //                         properties: {
-                //                             name: country.properties.name,
-                //                             total: x
-                //                         },
-                //                         geometry: country.geometry
-                //                     });
-                //                 }
-                //             })
-                //         }
-                //     });
-                //     listData.push({
-                //         'type': 'FeatureCollection',
-                //         'features': a,
-                //         'day': moment(day).format('ll')
-                //     })
-                // }
-                widgets.loader.removeLoader();
-                interval = setInterval(function () {
-                    if (x == 281)
-                        clearInterval(interval);
-                    else {
-                        document.getElementById('slider').value = x;
-                        document.getElementById('date').textContent = listData[x].day
-                        map.getSource('fill-world').setData(listData[x])
-                    }
-                    x++
-                }, 100);
-            })
+
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
+        $.get('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json', function (response) {
+            data = JSON.parse(response);
+            features = data.features;
+        }).done(function () {
+            map.addLayer({
+                'id': 'fill-world',
+                'type': 'fill',
+                'source': {
+                    'type': 'geojson',
+                    'data': data
+                },
+                'paint': {
+                    'fill-color': [
+                        'interpolate',
+                        ['linear'],
+                        ['get', 'total'],
+                        -0.5,
+                        '#eee',
+                        0,
+                        '#ffffd9',
+                        10,
+                        '#edf8b1',
+                        20,
+                        '#c7e9b4',
+                        30,
+                        '#7fcdbb',
+                        40,
+                        '#41b6c4',
+                        50,
+                        '#1d91c0',
+                        60,
+                        '#225ea8',
+                        70,
+                        '#253494',
+                        80,
+                        '#172976',
+                        90,
+                        '#081d58',
+                    ],
+                    'fill-opacity': 1
+                }
+            });
+        })
+        widgets.loader.showLoader("data loading...");
+        d3.json('../data/covid-data.json', function (response) {
+            listData = response;
+            console.log(listData)
+            // for (var d = new Date(2020, 0, 21); d <= new Date(); d.setDate(d.getDate() + 1)) {
+            //     var day = moment(d).format('YYYY-MM-DD');
+            //     var a = [];
+            //     features.forEach(country => {
+            //         if (dataWorld[country.id]) {
+            //             var dataDate = dataWorld[country.id].data;
+            //             dataDate.forEach(data => {
+            //                 if (data.date == day) {
+            //                     var x = data.stringency_index ? data.stringency_index : -0.5
+            //                     a.push({
+            //                         type: "Feature",
+            //                         id: country.id,
+            //                         properties: {
+            //                             name: country.properties.name,
+            //                             total: x
+            //                         },
+            //                         geometry: country.geometry
+            //                     });
+            //                 }
+            //             })
+            //         }
+            //     });
+            //     listData.push({
+            //         'type': 'FeatureCollection',
+            //         'features': a,
+            //         'day': moment(day).format('ll')
+            //     })
+            // }
+            widgets.loader.removeLoader();
+            interval = setInterval(function () {
+                if (x == 281)
+                    clearInterval(interval);
+                else {
+                    document.getElementById('slider').value = x;
+                    document.getElementById('date').textContent = listData[x].day
+                    document.getElementById('date1').textContent = listData[x].day
+                    map.getSource('fill-world').setData(listData[x])
+                }
+                x++
+            }, 100);
         })
 
         var btn = document.getElementById('button-play');
@@ -438,8 +426,8 @@
                         clearInterval(interval);
                     else {
                         document.getElementById('slider').value = x
-
                         document.getElementById('date').textContent = listData[x].day
+                        document.getElementById('date1').textContent = listData[x].day
                         map.getSource('fill-world').setData(listData[x])
                     }
                     x++
@@ -450,6 +438,7 @@
         function changeTime() {
             x = document.getElementById('slider').value;
             document.getElementById('date').textContent = listData[x].day
+            document.getElementById('date1').textContent = listData[x].day
             map.getSource('fill-world').setData(listData[x])
         }
 

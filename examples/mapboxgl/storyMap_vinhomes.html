@@ -345,94 +345,82 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
-                },
-                "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    }
-                ]
-            },
             center: [105.79930031798517, 21.02292215577198],
             zoom: 11.819951961785312
         });
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
+
         var popup;
         toggleSidebar('left');
 
-        map.on('load', function () {
-            widgets.loader.showLoader("data loading...");
-            var divData = document.getElementById('listData');
-            $.get("../../examples/data/data_Vinhome.json", function (response) {
-
-                var listData = response.result;
-                listData.forEach(feature => {
-                    new mapboxgl.Marker({
-                        'color': 'red'
-                    }).setLngLat([feature.mapView.lon, feature.mapView.lat]).addTo(map);
-                    var div = document.createElement('div');
-                    var div2 = document.createElement('div');
-                    div2.className = "kt-portlet item-container";
-                    div2.style.cursor = "pointer";
-                    div2.onclick = function () {
-                        map.flyTo({
-                            center: [feature.mapView.lon, feature.mapView.lat],
-                            zoom: feature.mapView.zoom,
-                            bearing: feature.mapView.bearing
-                        })
-                        if (popup)
-                            popup.remove();
-                        popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500})
-                            .setLngLat([feature.mapView.lon, feature.mapView.lat])
-                            .setHTML("<h3>" + feature.name + "</h3>")
-                            .addTo(map)
-                    }
-                    var div3 = document.createElement('div');
-                    div3.className = "form-group form-group-last row";
-                    div.className = 'col item-name';
-                    var image = document.createElement('img');
-                    image.src = "http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000";
-                    image.className = 'img_select';
-                    image.height = 20;
-                    var a = document.createElement('a');
-                    a.className = 'col-form-label';
-                    a.innerHTML = feature.name;
-                    a.href = "javascript:;";
-                    var div4 = document.createElement('div');
-                    div4.className = 'font-des';
-                    var frag = document.createRange().createContextualFragment(feature.description);
-                    div4.appendChild(frag);
-                    div.appendChild(image);
-                    div.appendChild(a)
-                    div.appendChild(div4)
-                    var div1 = document.createElement('div');
-                    div1.className = "item-image-container";
-                    var image1 = document.createElement('img');
-                    image1.src = feature.image;
-                    image1.className = 'item-image';
-                    div1.appendChild(image1);
-                    div3.appendChild(div);
-                    div3.appendChild(div1);
-                    div2.appendChild(div3);
-                    divData.appendChild(div2);
-                });
-            }).done(function () {
-                widgets.loader.removeLoader();
-            })
+        widgets.loader.showLoader("data loading...");
+        var divData = document.getElementById('listData');
+        $.get("../../examples/data/data_Vinhome.json", function (response) {
+            var listData = response.result;
+            listData.forEach(feature => {
+                new mapboxgl.Marker({
+                    'color': 'red'
+                }).setLngLat([feature.mapView.lon, feature.mapView.lat]).addTo(map);
+                var div = document.createElement('div');
+                var div2 = document.createElement('div');
+                div2.className = "kt-portlet item-container";
+                div2.style.cursor = "pointer";
+                div2.onclick = function () {
+                    map.flyTo({
+                        center: [feature.mapView.lon, feature.mapView.lat],
+                        zoom: feature.mapView.zoom,
+                        bearing: feature.mapView.bearing,
+                        pitch: feature.mapView.pitch
+                    })
+                    if (popup)
+                        popup.remove();
+                    popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500 })
+                        .setLngLat([feature.mapView.lon, feature.mapView.lat])
+                        .setHTML("<h3>" + feature.name + "</h3>")
+                        .addTo(map)
+                }
+                div2.onmouseover = function () {
+                    if (popup)
+                        popup.remove();
+                    popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500 })
+                        .setLngLat([feature.mapView.lon, feature.mapView.lat])
+                        .setHTML("<h3>" + feature.name + "</h3>")
+                        .addTo(map)
+                };
+                var div3 = document.createElement('div');
+                div3.className = "form-group form-group-last row";
+                div.className = 'col item-name';
+                var image = document.createElement('img');
+                image.src = "http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000";
+                image.className = 'img_select';
+                image.height = 20;
+                var a = document.createElement('a');
+                a.className = 'col-form-label';
+                a.innerHTML = feature.name;
+                a.href = "javascript:;";
+                var div4 = document.createElement('div');
+                div4.className = 'font-des';
+                var frag = document.createRange().createContextualFragment(feature.description);
+                div4.appendChild(frag);
+                div.appendChild(image);
+                div.appendChild(a)
+                div.appendChild(div4)
+                var div1 = document.createElement('div');
+                div1.className = "item-image-container";
+                var image1 = document.createElement('img');
+                image1.src = feature.image;
+                image1.className = 'item-image';
+                div1.appendChild(image1);
+                div3.appendChild(div);
+                div3.appendChild(div1);
+                div2.appendChild(div3);
+                divData.appendChild(div2);
+            });
+        }).done(function () {
+            widgets.loader.removeLoader();
         })
 
         function toggleSidebar(id) {

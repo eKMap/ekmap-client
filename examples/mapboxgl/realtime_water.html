@@ -104,24 +104,8 @@
                 "version": 8,
                 "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
                 },
                 "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    }
                 ]
             },
             zoom: 9.415324050150357,
@@ -131,6 +115,9 @@
         var currentImage = -5;
 
         map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
             $.get("../data/water/dma.json", function (response) {
                 var features = response.features;
                 window.setInterval(function () {

@@ -9,6 +9,8 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script type="text/javascript" src="./js/ThreeApplication.js"></script>
     <script src="../../examples/js/common.js"></script>
+    <title>ThreejsLayer Building</title>
+
     <style>
         html,
         body {
@@ -33,38 +35,15 @@
         map = new mapboxgl.Map({
             container: 'map',
             center: [104.07099170795755, 30.560115990796447],
-            style: {
-                "version": 8,
-                "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
-                },
-                "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    }
-                ]
-            },
             zoom: 18,
             pitch: 60,
             bearing: 36
         });
-        
-        map.on('load', function () {
-            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-            //addThreeLayer();
-        })
+
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
 
         function addThreeLayer() {

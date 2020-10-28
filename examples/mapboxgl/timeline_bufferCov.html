@@ -247,86 +247,73 @@
             center: [105, 17],
             zoom: 3
         });
-        var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
+
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
-        var title = "2020_";
-        var tail = ".json";
         var pt, dataLayer = [],
             buffered,
             long, lat, total, data12;
         var data = [];
-        var dataLayer = [];
         var count = 0,
             x = 1,
-            minData = 500,
-            maxData = 1000000,
-            minRadius = 30,
-            maxRadius = 1000;
-        map.on('load', function () {
-            widgets.loader.showLoader("data loading...");
-            for (var i = 0; i < 50; i++) {
-                $.get("../data/coranavirus/2020_" + i + ".json", function (response) {
-                    var covid = response.features;
-                    covid.forEach(items => {
-                        long = items.properties.geoid[1];
-                        lat = items.properties.geoid[0];
-                        total =
-                            pt = {
-                                "type": "Feature",
-                                "properties": {},
-                                "geometry": {
-                                    "type": "Point",
-                                    "coordinates": [long, lat]
-                                }
-                            }
-                        data12 = items.properties.total;
-                        var a = getRadius(data12, minData, maxData, minRadius, maxRadius);
-                        buffered = turf.buffer(pt, a, {
-                            units: 'kilometers'
-                        });
-                        dataLayer.push(buffered)
-                    })
-                    data.push(dataLayer);
-
-                }).done(function () {
-                    count++;
-                    if (count == 49) {
-                        widgets.loader.removeLoader();
-                        map.addSource('states', {
-                            'type': 'geojson',
-                            'data': {
-                                'type': 'FeatureCollection',
-                                'features': data[0]
-                            }
-                        });
-                        map.addLayer({
-                            'id': 'states',
-                            'type': 'fill',
-                            'source': 'states',
-                            'paint': {
-                                'fill-color': '#770404',
-                                'fill-opacity': 0.7,
-                            }
-                        });
-                        console.log(data)
-                        var timer = window.setInterval(function () {
-                            console.log(x)
-                            var datatong = {
-                                'type': 'FeatureCollection',
-                                'features': data[x]
-                            };
-                            x++;
-                            map.getSource('states').setData(datatong);
-                            if (x == 49)
-                                window.clearInterval(timer);
-                        }, 500);
-                    }
+            minData = 1,
+            maxData = 1000,
+            minRadius = 10,
+            maxRadius = 40;
+        widgets.loader.showLoader("data loading...");
+        for (var i = 0; i < 40; i++) {
+            $.get("../data/coranavirus/2020_" + i + ".json", function (response) {
+                var dataLayer = [];
+                var covid = response.features;
+                covid.forEach(items => {
+                    long = items.properties.geoid[1];
+                    lat = items.properties.geoid[0];
+                    var point = turf.point([long, lat]);
+                    data12 = items.properties.total;
+                    var a = getRadius(data12, minData, maxData, minRadius, maxRadius);
+                    console.log(a)
+                    buffered = turf.buffer(point, a, {
+                        units: 'kilometers'
+                    });
+                    dataLayer.push(buffered)
                 })
-            }
-        })
-
-        function getRadius(data12, minData, maxData, minRadius, maxRadius) {
-            return (data12 - minData) / (maxData - minData) * (maxRadius - minRadius) + minRadius;
+                data.push(dataLayer);
+            }).done(function () {
+                count++;
+                if (count == 39) {
+                    widgets.loader.removeLoader();
+                    map.addSource('states', {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'FeatureCollection',
+                            'features': data[0]
+                        }
+                    });
+                    map.addLayer({
+                        'id': 'states',
+                        'type': 'fill',
+                        'source': 'states',
+                        'paint': {
+                            'fill-color': '#770404',
+                            'fill-opacity': 0.7,
+                        }
+                    });
+                    var timer = window.setInterval(function () {
+                        console.log(x)
+                        var datatong = {
+                            'type': 'FeatureCollection',
+                            'features': data[x]
+                        };
+                        x++;
+                        map.getSource('states').setData(datatong);
+                        if (x == 39)
+                            window.clearInterval(timer);
+                    }, 500);
+                }
+            })
         }
     </script>
 </body>

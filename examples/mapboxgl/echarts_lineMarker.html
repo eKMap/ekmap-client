@@ -5,6 +5,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Line Chart</title>
     <style>
@@ -30,32 +31,12 @@
         var chart, div, popup = '';
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
-                },
-                "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    }
-                ]
-            },
             center: [106.1471579608559, 20.416161703696787],
             zoom: 8.383742725041827
         });
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.loadImage('./img/marker-icon.png', function (error, image) {
             if (error) throw error;

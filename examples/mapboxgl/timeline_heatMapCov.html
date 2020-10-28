@@ -99,26 +99,7 @@
     <script type="text/javascript">
         var map = new mapboxgl.Map({
             container: "divMapId",
-            style: {
-                version: 8,
-                sources: {
-                    "raster-tiles": {
-                        type: "raster",
-                        tiles: urlOSMStandard,
-                        tileSize: 256,
-                    },
-                },
-                layers: [
-                    {
-                        id: "simple-tiles",
-                        type: "raster",
-                        source: "raster-tiles",
-                        minzoom: 0,
-                        maxzoom: 20,
-                    },
-                ],
-            },
-            center: [11.164340403295512,2.079745662755286],
+            center: [11.164340403295512, 2.079745662755286],
             zoom: 2.116295796373197,
 
         });
@@ -126,62 +107,65 @@
         var value = 0;
         var count = -1;
         var data = [];
-        map.on('load', function () {
-            for (var i = 0; i < 144; i++) {
-                widgets.loader.showLoader("data loading...");
-                var string = "../data/coranavirus/2020_" + i + ".json"
-                $.get(string, function (response) {
-                    var listdata = response.features;
-                    var features = [];
-                    for (var i = 0; i < listdata.length; i++) {
-                        features.push({
-                            "type": "Feature",
-                            "properties": {
-                                "date": response.date
-                            },
-                            "geometry": {
-                                "type": "Point",
-                                "coordinates": [
-                                    listdata[i].properties.geoid[1],
-                                    listdata[i].properties.geoid[0]
-                                ]
-                            },
-                        })
+
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        
+        for (var i = 0; i < 144; i++) {
+            widgets.loader.showLoader("data loading...");
+            var string = "../data/coranavirus/2020_" + i + ".json"
+            $.get(string, function (response) {
+                var listdata = response.features;
+                var features = [];
+                for (var i = 0; i < listdata.length; i++) {
+                    features.push({
+                        "type": "Feature",
+                        "properties": {
+                            "date": response.date
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                listdata[i].properties.geoid[1],
+                                listdata[i].properties.geoid[0]
+                            ]
+                        },
+                    })
+                }
+                data.push(features)
+            }).done(function () {
+                count++
+                if (count == 133) {
+                    widgets.loader.removeLoader();
+                    var geojson = {
+                        "type": "FeatureCollection",
+                        "features": data[0]
                     }
-                    data.push(features)
-                }).done(function () {
-                    count++
-                    if (count == 133) {
-                        widgets.loader.removeLoader();
-                        var geojson = {
-                            "type": "FeatureCollection",
-                            "features": data[0]
-                        }
-                        heatMapLayer = new mapboxgl.ekmap.HeatMapLayer("heatmap", {
-                            "map": map,
-                            "id": "heatmap",
-                            "radius": 10,
-                        });
-                        heatMapLayer.addFeatures(geojson);
-                        map.addLayer(heatMapLayer);
-                        interval = setInterval(function () {
-                            var x = getValue()
-                            if (x == 143)
-                                clearInterval(interval);
-                            else {
-                                document.getElementById('slider').value = x;
-                                document.getElementById('date').textContent = data[value][0].properties.date
-                                var geojson = {
-                                    "type": "FeatureCollection",
-                                    "features": data[value]
-                                }
-                                map.getSource('heatmap').setData(geojson)
+                    heatMapLayer = new mapboxgl.ekmap.HeatMapLayer("heatmap", {
+                        "map": map,
+                        "id": "heatmap",
+                        "radius": 10,
+                    });
+                    heatMapLayer.addFeatures(geojson);
+                    map.addLayer(heatMapLayer);
+                    interval = setInterval(function () {
+                        var x = getValue()
+                        if (x == 143)
+                            clearInterval(interval);
+                        else {
+                            document.getElementById('slider').value = x;
+                            document.getElementById('date').textContent = data[value][0].properties.date
+                            var geojson = {
+                                "type": "FeatureCollection",
+                                "features": data[value]
                             }
-                        }, 300);
-                    }
-                })
-            }
-        })
+                            map.getSource('heatmap').setData(geojson)
+                        }
+                    }, 300);
+                }
+            })
+        }
 
         var btn = document.getElementById('button-play');
         document.getElementById("button-play").onclick = function () {

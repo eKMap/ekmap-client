@@ -353,30 +353,15 @@
                 "version": 8,
                 "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
                 },
                 "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    }
                 ]
             },
             center: [107.87145256218912, 16.176363055197896],
             zoom: 9.844199397806728,
             pitch: 50,
         });
+        map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
         var popup;
         var features = [];
         var coordinates = [];
@@ -385,6 +370,9 @@
         toggleSidebar('left');
 
         map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
             widgets.loader.showLoader("data loading...");
             var divData = document.getElementById('listData');
             $.get("../../examples/data/data_tour.json", function (response) {

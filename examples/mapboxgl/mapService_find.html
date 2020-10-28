@@ -145,24 +145,8 @@ The toggleSidebar() function removes this class from the element in order to exp
             style: {
                 "version": 8,
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
                 },
                 "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    }
                 ]
             },
             center: [103.9, 22.2],
@@ -170,6 +154,9 @@ The toggleSidebar() function removes this class from the element in order to exp
         });
         var tiledMap;
         map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
             tiledMap = new mapboxgl.ekmap.TiledMapLayer({
                 url: urlMapService,
                 token: tokenKey

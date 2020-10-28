@@ -50,24 +50,8 @@
             style: {
                 "version": 8,
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
                 },
                 "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    }
                 ]
             },
             zoom: 7
@@ -75,13 +59,17 @@
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var featureLayer
         map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+
             featureLayer = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
                 token: tokenKey
             }).addTo(map);
         })
         var idDelete;
-       
+
         map.on('click', function (obj) {
             var bbox = [
                 [obj.point.x - 5, obj.point.y - 5],

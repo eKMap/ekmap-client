@@ -363,30 +363,6 @@ var exampleConfig = {
                     }
                 ]
             },
-            Timeline: {
-                name: "Timeline",
-                name_en: "Timeline",
-                content: [
-                    {
-                        name: "Timeline Coronavirus (Heatmap)",
-                        name_en: "Timeline Coronavirus (Heatmap)",
-                        thumbnail: "timeline_heatMapCov.gif",
-                        fileName: "timeline_heatMapCov"
-                    },
-                    {
-                        name: "Timeline Coronavirus (Area)",
-                        name_en: "Timeline Coronavirus (Area)",
-                        thumbnail: "timeline_fillCov.gif",
-                        fileName: "timeline_fillCov"
-                    },
-                    {
-                        name: "Timeline Coronavirus (Buffer)",
-                        name_en: "Timeline Coronavirus (Buffer)",
-                        thumbnail: "timeline_bufferCov.gif",
-                        fileName: "timeline_bufferCov"
-                    }
-                ]
-            },
             Video: {
                 name: "Video",
                 name_en: "Video",
@@ -408,22 +384,34 @@ var exampleConfig = {
                         name_en: "Vinhomes real estate",
                         thumbnail: "storyMap_vinhomes.gif",
                         fileName: "storyMap_vinhomes"
-                    }
-                ]
-            },
-            MapTour: {
-                name: "Map Tour",
-                name_en: "Map Tour",
-                content: [
+                    },
                     {
                         name: "Tour Hue - Hoi An - Da Nang",
                         name_en: "Tour Hue - Hoi An - Da Nang",
                         thumbnail: "mapTour.gif",
                         fileName: "mapTour"
-                    }
-                ]
-            },
+                    },
+                    {
+                        name: "Timeline Coronavirus (Heatmap)",
+                        name_en: "Timeline Coronavirus (Heatmap)",
+                        thumbnail: "timeline_heatMapCov.gif",
+                        fileName: "timeline_heatMapCov"
+                    },
+                    {
+                        name: "Timeline Coronavirus (Area)",
+                        name_en: "Timeline Coronavirus (Area)",
+                        thumbnail: "timeline_fillCov.gif",
+                        fileName: "timeline_fillCov"
+                    },
+                    // {
+                    //     name: "Timeline Coronavirus (Buffer)",
+                    //     name_en: "Timeline Coronavirus (Buffer)",
+                    //     thumbnail: "timeline_bufferCov.gif",
+                    //     fileName: "timeline_bufferCov"
+                    // }
 
+                ]
+            }
         }
     },
     clientspatial: {

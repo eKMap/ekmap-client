@@ -70,6 +70,7 @@
                 var confirmed = province.Confirmed;
                 var radius;
                 radius = getRadius(confirmed,1,394,10,60);
+                console.log(radius)
                 var buffered = turf.buffer(point, radius, { units: 'kilometers' });
                 buffered.properties.id = province.Province_Id;
                 buffered.properties.name = province.Province_Name;

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -41,20 +40,8 @@
             style: {
                 version: 8,
                 sources: {
-                    "raster-tiles": {
-                        type: "raster",
-                        tiles: urlOSMStandard,
-                        tileSize: 256,
-                    },
                 },
                 layers: [
-                    {
-                        id: "simple-tiles",
-                        type: "raster",
-                        source: "raster-tiles",
-                        minzoom: 0,
-                        maxzoom: 20,
-                    },
                 ],
             },
             center: [106.20498485851135, 20.262531684980956],
@@ -63,6 +50,10 @@
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
         map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            
             //Data Source: https://namdinh.gov.vn/sothongtintruyenthong/1223/28318/44734/101964/Danh-sach-tram-BTS/Danh-sach-tram-BTS-kiem-dinh-nam-2018--Viettel-.aspx 
             $.get("../data/heatmapBTS.json", function (response) {
                 var features = [];
@@ -98,4 +89,5 @@
         })
     </script>
 </body>
+
 </html>

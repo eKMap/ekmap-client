@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
@@ -18,6 +19,7 @@
         }
     </style>
 </head>
+
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
@@ -30,31 +32,19 @@
             style: {
                 "version": 8,
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
                 },
                 "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    }
                 ]
             },
             zoom: 7
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        
+
         map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+
             var tiledMap = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
                 token: tokenKey
@@ -82,7 +72,7 @@
 
             var lngLatBounds = new mapboxgl.LngLatBounds([106.2838283376874, 21.281957265184587], [104.49305685331223, 20.079412404984694])
 
-            tiledMap.on("loadend",function(){
+            tiledMap.on("loadend", function () {
                 tiledMap.queryByBound(lngLatBounds, function (serviceResult) {
                     var filter = serviceResult.reduce(
                         function (memo, feature) {
@@ -97,4 +87,5 @@
         })
     </script>
 </body>
+
 </html>

@@ -10,6 +10,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Highcharts Line water</title>
     <style>
@@ -60,27 +61,17 @@
                 "version": 8,
                 "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    }
                 },
-                "layers": [{
-                    "id": "raster-tiles",
-                    "type": "raster",
-                    "source": "raster-tiles",
-                    "minzoom": 0,
-                    "maxzoom": 22,
-                    'layout': {
-                        'visibility': 'visible',
-                    },
-                    'raster-opacity': 0.75,
-                }]
+                "layers": []
             },
             center: [107.60731810104676, 16.147953874376654],
             zoom: 8.869560614354818
         });
+        map.on('load',function(){
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+        })
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.loadImage('./img/marker-icon.png', function (error, image) {
             if (error) throw error;

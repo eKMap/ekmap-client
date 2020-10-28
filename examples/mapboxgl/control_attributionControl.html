@@ -5,6 +5,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
     <title>Attribution Control</title>
     <style>
         .map {
@@ -32,7 +33,8 @@
             zoom: 4,
             attributionControl: false,
         });
-        var roadMap = new mapboxgl.ekmap.TiledOSMapLayer({
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
         }).addTo(map)
         map.addControl(new mapboxgl.AttributionControl({
             compact: true

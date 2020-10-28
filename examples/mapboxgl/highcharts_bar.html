@@ -10,6 +10,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Hight chart bar</title>
 </head>
@@ -48,23 +49,17 @@
             style: {
                 "version": 8,
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256,
-                    },
                 },
-                "layers": [{
-                    "id": "simple-tiles",
-                    "type": "raster",
-                    "source": "raster-tiles",
-                    "minzoom": 0,
-                    "maxzoom": 18
-                }]
+                "layers": []
             },
             center: [106.5090846096723, 16.787962287423255],
             zoom: 5.1128594812072485
         });
+        map.on('load',function(){
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+        })
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.loadImage('./img/marker-icon.png', function(error, image) {
             if (error) throw error;

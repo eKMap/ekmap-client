@@ -30,49 +30,32 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256
-                    },
-                    'video': {
-                        'type': 'video',
-                        'urls': [
-                            '../data/storm.mp4'
-                        ],
-                        'coordinates': [
-                            [94.9918863632, 39.998476501],
-                            [139.923662363, 39.998476501],
-                            [139.923662363, -4.93329949898],
-                            [94.9918863632, -4.93329949898],
-                        ]
-                    }
-                },
-                "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "raster-tiles",
-                        "minzoom": 0,
-                        "maxzoom": 22,
-                        'layout': {
-                            'visibility': 'visible',
-                        },
-                        'raster-opacity': 0.75,
-                    },
-                    {
-                        'id': 'video',
-                        'type': 'raster',
-                        'source': 'video'
-                    }
-                ]
-            },
             center: [118.65064808099055, 18.7111502239418],
             zoom: 3.732292015558651
         });
+        
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
+        map.addSource('video', {
+            'type': 'video',
+            'urls': [
+                '../data/storm.mp4'
+            ],
+            'coordinates': [
+                [94.9918863632, 39.998476501],
+                [139.923662363, 39.998476501],
+                [139.923662363, -4.93329949898],
+                [94.9918863632, -4.93329949898],
+            ]
+        })
+
+        map.addLayer({
+            'id': 'video',
+            'type': 'raster',
+            'source': 'video'
+        })
 
         var playingVideo = true;
 

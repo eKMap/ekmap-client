@@ -5,6 +5,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="../../examples/js/common.js"></script>
     <title>Storm</title>
@@ -292,19 +293,8 @@
             style: {
                 "version": 8,
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256,
-                    },
                 },
-                "layers": [{
-                    "id": "simple-tiles",
-                    "type": "raster",
-                    "source": "raster-tiles",
-                    "minzoom": 0,
-                    "maxzoom": 18
-                }]
+                "layers": []
             },
             center: [118.75066229858749, 15.150695090998738],
             zoom: 4.792476909223467
@@ -332,6 +322,9 @@
         });
 
         map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
             var features = []
             map.addSource('radar', {
                 type: 'image',

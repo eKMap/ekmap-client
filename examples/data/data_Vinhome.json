@@ -14,7 +14,7 @@
 				"lon": 106.836729,
 				"zoom": 13,
 				"bearing": 150,
-				"rotation": 0.0,
+				"pitch": 60,
 				"perspective": 0.0
 			},
 			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-symphony/600-450-symphony.jpg"
@@ -33,7 +33,7 @@
 				"lon": 105.760174,
 				"zoom": 12.3,
 				"bearing": 27,
-				"rotation": 0.0,
+				"pitch": 0,
 				"perspective": 0.0
 			},
 			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-green-villas/1336-green-villas-1336x1002.jpg"
@@ -52,7 +52,7 @@
 				"lon": 105.945378,
 				"zoom": 13.3,
 				"bearing": 180,
-				"rotation": 0.0,
+				"pitch": 60,
 				"perspective": 0.0
 			},
 			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vincity-ocean-park/vincity-ocean-park-anh-pc-thumnail.jpg"
@@ -71,7 +71,7 @@
 				"lon": 105.73922,
 				"zoom": 11.6,
 				"bearing": 90,
-				"rotation": 0.0,
+				"pitch": 40,
 				"perspective": 0.0
 			},
 			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-smart-city/600-450.png"
@@ -90,7 +90,7 @@
 				"lon": 105.7858903,
 				"zoom": 12,
 				"bearing": 45,
-				"rotation": 0.0,
+				"pitch": 60,
 				"perspective": 0.0
 			},
 			"image": "https://media.vinhomes.vn/storage/vinhomes-2018/bds-ban/west-point/anh-minh-hoa/anh-dai-dien.jpg"
@@ -109,7 +109,7 @@
 				"lon": 105.781023,
 				"zoom": 13.5,
 				"bearing": 27,
-				"rotation": 0,
+				"pitch": 30,
 				"perspective": 0
 			},
 			"image": "https://media.vinhomes.vn/storage/anh-dai-dien_44.jpg"
@@ -128,7 +128,7 @@
 				"lon": 105.720363,
 				"zoom": 11.5,
 				"bearing": 150,
-				"rotation": 0,
+				"pitch": 60,
 				"perspective": 0
 			},
 			"image": "https://media.vinhomes.vn/storage/anh-dai-dien_34.jpg"
@@ -147,7 +147,7 @@
 				"lon": 105.7606132,
 				"zoom": 12.7,
 				"bearing": 180,
-				"rotation": 0,
+				"pitch": 0,
 				"perspective": 0
 			},
 			"image": "https://media.vinhomes.vn/storage/anh-dai-dien_33.jpg"
@@ -166,7 +166,7 @@
 				"lon": 105.7876057,
 				"zoom": 12.3,
 				"bearing": 90,
-				"rotation": 0,
+				"pitch": 30,
 				"perspective": 0
 				
 			},
@@ -186,7 +186,7 @@
 				"lon": 105.8119308,
 				"zoom": 13.3,
 				"bearing": 45,
-				"rotation": 0,
+				"pitch": 60,
 				"perspective": 0
 			},
 			"image": "https://media.vinhomes.vn/storage/phoi-canh-du-an-one-verandah-quan-2-2_2.jpg"

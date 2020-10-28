@@ -38,7 +38,7 @@ export class FeatureInfomation extends mapboxgl.Evented {
         this._map.on('click', function (e) {
             var layers = me._map.getStyle().layers;
             layers.forEach(layer => {
-                if (layer.metadata && layer.metadata.type == 'overlayer' && layer.layout.visibility === "visible") {
+                if (layer.metadata.url && layer.metadata.type == 'overlayer' && layer.layout.visibility === "visible") {
                     var mapService = new mapboxgl.ekmap.MapService({
                         url: layer.metadata.url,
                         token: layer.metadata.token

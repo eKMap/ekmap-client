@@ -4,6 +4,7 @@
     <meta charset='utf-8' />
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Realtime car</title>
@@ -52,19 +53,8 @@
             style: {
                 "version": 8,
                 "sources": {
-                    "raster-tiles": {
-                        "type": "raster",
-                        "tiles": urlOSMStandard,
-                        "tileSize": 256,
-                    },
                 },
-                "layers": [{
-                    "id": "simple-tiles",
-                    "type": "raster",
-                    "source": "raster-tiles",
-                    "minzoom": 0,
-                    "maxzoom": 18
-                }]
+                "layers": []
             },
             center: [105.66771871049923, 21.011594023323028],
             zoom: 12.165135620720719
@@ -75,6 +65,7 @@
         var arc = [];
         var endFly;
         var timer;
+        var marker
         var point = {
             'type': 'FeatureCollection',
             'features': [
@@ -91,9 +82,12 @@
 
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.on('load', function () {
-            map.loadImage('../data/car.png', function (error, image) {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
+            map.loadImage('../data/marker.png', function (error, image) {
                 if (error) throw error;
-                map.addImage('positionCar', image);
+                map.addImage('positionMarker', image);
             });
             //Source: KTTV
             $.get("../data/route.json", function (response) {
@@ -123,21 +117,22 @@
                         'line-color': '#007cbf'
                     }
                 });
-
-                map.addLayer({
-                    'id': 'point',
-                    'source': 'point',
-                    'type': 'symbol',
-                    'layout': {
-                        'icon-image': 'positionCar',
-                        "icon-size": 0.2,
-                        'icon-rotate': ['get', 'bearing'],
-                        'icon-rotation-alignment': 'map',
-                        'icon-allow-overlap': true,
-                        'icon-ignore-placement': true
-                    }
-                });
-                map.setPitch(30);
+                marker = new mapboxgl.Marker()
+                    .setLngLat([105.78699777621455, 21.030424911549954])
+                    .addTo(map);
+                // map.addLayer({
+                //     'id': 'point',
+                //     'source': 'point',
+                //     'type': 'symbol',
+                //     'layout': {
+                //         'icon-image': 'positionMarker',
+                //         "icon-size": 2,
+                //         'icon-rotate': ['get', 'bearing'],
+                //         'icon-rotation-alignment': 'map',
+                //         'icon-allow-overlap': true,
+                //         'icon-ignore-placement': true
+                //     }
+                // });
             }).done(function () {
                 animate(counter)
             })
@@ -147,10 +142,11 @@
                 // Request the next frame of animation so long the end has not been reached.
                 timer = window.setInterval(function () {
                     if (counter == 0) {
+                        console.log('t')
                         map.flyTo({
                             center: [105.7864968524334, 21.030328889386084],
-                            speed: 0.5,
-                            zoom: 15,
+                            speed: 1,
+                            zoom: 14,
                             easing(t) {
                                 if (t == 1)
                                     endFly = 1;
@@ -160,23 +156,32 @@
                     }
 
                     if (counter < arc.length) {
-                        if (endFly)
+                        if (endFly) {
                             map.panTo(arc[counter]);
-                        point.features[0].geometry.coordinates = arc[counter];
-                        point.features[0].properties.bearing = turf.bearing(
-                            turf.point(
-                                arc[counter >= arc.length ? counter - 1 : counter]
-                            ),
-                            turf.point(
-                                arc[counter >= arc.length ? counter: counter +1]
-                            )
-                        );
-                        map.getSource('point').setData(point);
+                            map.setBearing(turf.bearing(
+                                turf.point(
+                                    arc[counter >= arc.length ? counter - 1 : counter]
+                                ),
+                                turf.point(
+                                    arc[counter >= arc.length ? counter : counter + 1]
+                                )
+                            ));
+                        }
+                        marker.setLngLat(arc[counter])
+                        // point.features[0].geometry.coordinates = arc[counter];
+                        // point.features[0].properties.bearing = turf.bearing(
+                        //     turf.point(
+                        //         arc[counter >= arc.length ? counter - 1 : counter]
+                        //     ),
+                        //     turf.point(
+                        //         arc[counter >= arc.length ? counter: counter +1]
+                        //     )
+                        // );
                         counter = counter + 1;
                     } else {
                         window.clearInterval(timer);
                     }
-                },0.05);
+                }, 50);
             }
 
             document.getElementById('replay').addEventListener('click', function () {

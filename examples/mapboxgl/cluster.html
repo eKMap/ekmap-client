@@ -41,20 +41,8 @@
                 version: 8,
                 glyphs: urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
                 sources: {
-                    "raster-tiles": {
-                        type: "raster",
-                        tiles: urlOSMStandard,
-                        tileSize: 256,
-                    },
                 },
                 layers: [
-                    {
-                        id: "simple-tiles",
-                        type: "raster",
-                        source: "raster-tiles",
-                        minzoom: 0,
-                        maxzoom: 9,
-                    },
                 ],
             },
             center: [58.117655641467195, 12.140828304833803],
@@ -65,6 +53,10 @@
 
 
         map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+
             //Data Source: https://earthquake.usgs.gov/earthquakes
             $.get("../data/earthquake.json", function (response) {
                 var geojson = response;
