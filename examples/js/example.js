@@ -110,12 +110,12 @@ function createGalleryChart(example) {
         version = example.version;
 
     var chartDiv = $("<div class='col-md-3'></div>");
-    var chart = $("<div class='chart' style='max-width: none;height: 25rem;'></div>");
+    var chart = $("<div class='chart' style='max-width: none;height: 24rem;'></div>");
     var link = $("<a class='chart-link' style='width: 100% !important;'x target='_blank' href='" + target + "#" + href + "'></a>");
     var divHeader = $("<div style='text-align: center'></div>");
     // var div = $("<div class='col-md-6' style='padding:10px'></div>")
     var chartTitle = $("<p style='color: #1a94fb;padding: 2px;overflow: hidden;height: 36px;line-height: 36px;text-overflow: ellipsis;white-space: nowrap;margin: 0;font-weight: 700;font-size: 16px;'>" + title + "</p>");
-    var chartSmall = $("<p style='color: #1a94fb;'>"+ '('+ href + '.html)'  +"</p>")
+    var chartSmall = $("<p style='color: #1a94fb;margin: 0 !important;'>"+ '('+ href + '.html)'  +"</p>")
     var divBody = $("<div style='display: flex;'></div>");
     var divSubject = $("<div class='col-md-6' style='padding: 10px;'></div>")
     var chartSubject = $("<p style='color: #2c3b41;padding: 2px;font-size: 14.4px;'>" + subject + "</p>");
