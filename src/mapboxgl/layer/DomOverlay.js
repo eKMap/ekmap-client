@@ -13,7 +13,7 @@ import Overlay from './Overlay';
  * @param {string} options.type Type of Chart.
  * @param {Array.<string>} options.fields List fields display and fields properties data.
  * @param {Array.<string>} options.colors Color corresponds to the data. 
- * 
+ * @param {string} options.backgroundColor If type is 'bar', backgroundColor will hepl set backgroundColor for bar chart. (Default: 'rgb(245, 222, 179)').
  * @extends {mapboxgl.Overlay}
  */
 export class DomOverlay extends Overlay {
@@ -24,6 +24,7 @@ export class DomOverlay extends Overlay {
         this.redraw = _redraw.bind(this);
         this.features = opts.features;
         this.fields = opts.fields;
+        this.backgroundColor = opts.backgroundColor;
         this.domOpts = [];
         this.features.forEach(fea => {
             var data = []
@@ -116,6 +117,7 @@ const lineHeight = 60, dotRadius = 4, chartHeight = 80;
  */
 function _redraw() {
     let doms = this.domOpts;
+    var me = this;
     if (doms && Array.isArray(doms)) {
         // append each of domPopups to domContainer.
         for (let i = 0; i < doms.length; i++) {
@@ -146,7 +148,7 @@ function _redraw() {
             } else if (chartData != undefined && chartType != undefined) {
                 if (Util.isChanged(this.lastData[i], chartData)) {
                     // setChart would contaminate input Data.
-                    Util.setChart(dom, dataClone, chartType, chartHeight * 2);
+                    Util.setChart(dom, dataClone, chartType, chartHeight * 2,me.backgroundColor);
                     this.lastData[i] = chartData;
                 }
             } else {

@@ -379,14 +379,14 @@ export class Util {
         }
     }
 
-    static setChart(dom, data, type, height) {
+    static setChart(dom, data, type, height,backgroundColor) {
         if (!Chart) {
             return;
         }
         let canv = document.createElement('canvas'),
             ctx = canv.getContext('2d');
         if (type == 'bar')
-            canv.style.backgroundColor = 'rgb(245, 222, 179)';
+            canv.style.backgroundColor = backgroundColor? backgroundColor :'rgb(245, 222, 179)';
         else
             canv.style.backgroundColor = 'rgba(0,0,0,0.0)';
 

@@ -33,6 +33,9 @@
             center: [105, 17],
             zoom: 4
         });
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer(urlVectorService + "/resources/styles?apikey=" + tokenKey).addTo(map);
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>

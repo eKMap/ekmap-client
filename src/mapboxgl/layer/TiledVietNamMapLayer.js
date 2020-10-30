@@ -7,6 +7,7 @@ import { TiledMapLayer } from './TiledMapLayer';
  * @category  Layer
  * @param {Object} options  Construction parameters.
  * @param {string} options.token  Will use this token to authenticate all calls to the service.
+ * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
  * @extends {mapboxgl.ekmap.TiledMapLayer}
  * @example
  * var map = new mapboxgl.Map({
@@ -38,12 +39,14 @@ export class TiledVietNamMapLayer extends TiledMapLayer {
             })
         if (this.urlsToken.length > 0) {
             this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
-                urls: this.urlsToken
+                urls: this.urlsToken,
+                attribution: this.options.attribution ? this.options.attribution : ''
             })
         }
         else {
             this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
-                urls: this.urls
+                urls: this.urls,
+                attribution: this.options.attribution ? this.options.attribution : ''
             })
         }
     }

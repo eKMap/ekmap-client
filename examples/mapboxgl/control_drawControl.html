@@ -7,7 +7,7 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Scale Control</title>
+    <title>Draw Control</title>
     <style>
         .map {
             width: 100%;
@@ -37,9 +37,9 @@
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map)
-        var Draw = new MapboxDraw();
+        var draw = new MapboxDraw();
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.addControl(Draw, 'top-left');
+        map.addControl(draw, 'top-left');
     </script>
 </body>
 

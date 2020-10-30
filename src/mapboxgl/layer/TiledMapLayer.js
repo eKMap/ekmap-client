@@ -5,9 +5,10 @@ import mapboxgl from 'mapbox-gl';
  * @class mapboxgl.ekmap.TiledMapLayer
  * @classdesc The TiledMapLayer class.
  * @category  Layer
- * @param {Object} options - Construction parameters.
- * @param {string} options.url - Required: URL of the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Map Service} with a tile cache.
- * @param {string} options.token - Will use this token to authenticate all calls to the service.
+ * @param {Object} options Construction parameters.
+ * @param {string} options.url Required: URL of the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Map Service} with a tile cache.
+ * @param {string} options.token Will use this token to authenticate all calls to the service.
+ * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
  * @extends {mapboxgl.Evented}
  */
 export class TiledMapLayer extends mapboxgl.Evented {
@@ -57,6 +58,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
         var id = Math.round(Math.random() * 100);
         if (this.tileUrl) {
             map.addSource(nameID + id, {
+                "attribution": this.options.attribution ? this.options.attribution :'',
                 "type": "raster",
                 "tiles": [this.tileUrl],
                 "tileSize": 256
@@ -81,6 +83,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
             
         if (this.tileUrls) {
             map.addSource(nameID + id, {
+                "attribution": this.options.attribution ? this.options.attribution :'',
                 "type": "raster",
                 "tiles": this.tileUrls,
                 "tileSize": 256

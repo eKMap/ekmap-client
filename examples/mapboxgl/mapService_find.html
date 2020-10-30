@@ -149,10 +149,11 @@ The toggleSidebar() function removes this class from the element in order to exp
                 "layers": [
                 ]
             },
-            center: [103.9, 22.2],
+            center: [105.84458007821308, 19.241020208575208],
             zoom: 6
         });
         var tiledMap;
+        map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
         map.on('load', function () {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN

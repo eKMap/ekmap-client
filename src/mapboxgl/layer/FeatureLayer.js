@@ -202,7 +202,7 @@ export class FeatureLayer extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.FeatureLayer.prototype.queryByBound
-     * @description  is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
+     * @description  is an abstraction for the query API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
      * @param {mapboxgl.LngLatBounds} lngLatBounds
      * @param {RequestCallback} callback
      */
@@ -212,7 +212,7 @@ export class FeatureLayer extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.FeatureLayer.prototype.queryByGeometry
-     * @description  is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
+     * @description  is an abstraction for the query API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
      * @param {string} geometry The geometry to apply as the spatial filter. The structure of the geometry is the same as the structure of the JSON geometry objects returned by the ArcGIS REST API. In addition to the JSON structures, for envelopes and points, you can specify the geometry with a simpler comma-separated syntax.
      * @param {RequestCallback} callback
      */

@@ -17,6 +17,7 @@
     <script src="../../examples/js/common.js"></script>
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <title>Timeline Coranavirus (Heatmap)</title>
     <style type="text/css">
         .map {
@@ -92,7 +93,7 @@
         </div>
         <div id="range-slider" style="display: flex;">
             <input type="button" class="spread-label" value="PAUSE" id="button-play">
-            <input id="slider" type="range" value="1" min="0" max="144" step="1" onchange="changeTime()">
+            <input id="slider" type="range" value="1" min="0" max="132" step="1" onchange="changeTime()">
             <label><span id="date">2020-01-11</span></label>
         </div>
     </div>
@@ -107,17 +108,19 @@
         var value = 0;
         var count = -1;
         var data = [];
+        var dataNew = []
+        var features = [];
 
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map);
-        
+
         for (var i = 0; i < 144; i++) {
             widgets.loader.showLoader("data loading...");
             var string = "../data/coranavirus/2020_" + i + ".json"
             $.get(string, function (response) {
                 var listdata = response.features;
-                var features = [];
+                features = [];
                 for (var i = 0; i < listdata.length; i++) {
                     features.push({
                         "type": "Feature",
@@ -133,10 +136,17 @@
                         },
                     })
                 }
-                data.push(features)
             }).done(function () {
+                data.push(features)
                 count++
                 if (count == 133) {
+                    for (var d = new Date(2020, 0, 11); d <= new Date(2020, 5, 2); d.setDate(d.getDate() + 1)) {
+                        var day = moment(d).format('YYYY-MM-DD');
+                        data.forEach(arr => {
+                            if (arr[0].properties.date == day)
+                                dataNew.push(arr)
+                        });
+                    }
                     widgets.loader.removeLoader();
                     var geojson = {
                         "type": "FeatureCollection",
@@ -151,14 +161,14 @@
                     map.addLayer(heatMapLayer);
                     interval = setInterval(function () {
                         var x = getValue()
-                        if (x == 143)
+                        if (x == 133)
                             clearInterval(interval);
                         else {
                             document.getElementById('slider').value = x;
-                            document.getElementById('date').textContent = data[value][0].properties.date
+                            document.getElementById('date').textContent = dataNew[value][0].properties.date
                             var geojson = {
                                 "type": "FeatureCollection",
-                                "features": data[value]
+                                "features": dataNew[value]
                             }
                             map.getSource('heatmap').setData(geojson)
                         }
@@ -177,15 +187,15 @@
                 btn.value = 'PAUSE'
                 interval = setInterval(function () {
                     var x = getValue()
-                    if (x == 143)
+                    if (x == 133)
                         clearInterval(interval);
                     else {
                         document.getElementById('slider').value = x
 
-                        document.getElementById('date').textContent = data[value][0].properties.date
+                        document.getElementById('date').textContent = dataNew[value][0].properties.date
                         var geojson = {
                             "type": "FeatureCollection",
-                            "features": data[value]
+                            "features": dataNew[value]
                         }
                         map.getSource('heatmap').setData(geojson)
                     }
@@ -200,10 +210,10 @@
 
         function changeTime() {
             value = document.getElementById('slider').value;
-            document.getElementById('date').textContent = data[value][0].properties.date
+            document.getElementById('date').textContent = dataNew[value][0].properties.date
             var geojson = {
                 "type": "FeatureCollection",
-                "features": data[value]
+                "features": dataNew[value]
             }
             map.getSource('heatmap').setData(geojson)
         }

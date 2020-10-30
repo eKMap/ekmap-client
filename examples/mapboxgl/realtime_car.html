@@ -66,20 +66,19 @@
         var endFly;
         var timer;
         var marker
-        var point = {
+        var dataLine = {
             'type': 'FeatureCollection',
             'features': [
                 {
                     'type': 'Feature',
                     'properties': {},
                     'geometry': {
-                        'type': 'Point',
-                        'coordinates': origin
+                        'type': 'LineString',
+                        'coordinates': [origin]
                     }
                 }
             ]
-        };
-
+        }
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.on('load', function () {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
@@ -96,6 +95,7 @@
                     'type': 'geojson',
                     'data': response
                 });
+
                 var lineDistance = turf.lineDistance(response.features[0].geometry, { units: 'kilometers' });
 
                 for (var i = 2; i < lineDistance * 1000; i += 2) {
@@ -103,36 +103,23 @@
                     arc.push(segment.geometry.coordinates);
                 }
 
-                map.addSource('point', {
+                map.addSource('line', {
                     'type': 'geojson',
-                    'data': point
+                    'data': dataLine
                 });
 
-                // map.addLayer({
-                //     'id': 'route',
-                //     'source': 'route',
-                //     'type': 'line',
-                //     'paint': {
-                //         'line-width': 3,
-                //         'line-color': '#007cbf'
-                //     }
-                // });
+                map.addLayer({
+                    'id': 'route',
+                    'source': 'line',
+                    'type': 'line',
+                    'paint': {
+                        'line-width': 3,
+                        'line-color': '#007cbf'
+                    }
+                });
                 marker = new mapboxgl.Marker()
                     .setLngLat([105.78699777621455, 21.030424911549954])
                     .addTo(map);
-                // map.addLayer({
-                //     'id': 'point',
-                //     'source': 'point',
-                //     'type': 'symbol',
-                //     'layout': {
-                //         'icon-image': 'positionMarker',
-                //         "icon-size": 2,
-                //         'icon-rotate': ['get', 'bearing'],
-                //         'icon-rotation-alignment': 'map',
-                //         'icon-allow-overlap': true,
-                //         'icon-ignore-placement': true
-                //     }
-                // });
             }).done(function () {
                 animate(counter)
             })
@@ -142,7 +129,6 @@
                 // Request the next frame of animation so long the end has not been reached.
                 timer = window.setInterval(function () {
                     if (counter == 0) {
-                        console.log('t')
                         map.flyTo({
                             center: [105.7864968524334, 21.030328889386084],
                             speed: 1,
@@ -157,7 +143,6 @@
 
                     if (counter < arc.length) {
                         if (endFly) {
-                            map.panTo(arc[counter]);
                             map.setBearing(turf.bearing(
                                 turf.point(
                                     arc[counter >= arc.length ? counter - 1 : counter]
@@ -166,8 +151,12 @@
                                     arc[counter >= arc.length ? counter : counter + 1]
                                 )
                             ));
+                            dataLine.features[0].geometry.coordinates.push(arc[counter])
+                            map.getSource('line').setData(dataLine)
+                            map.panTo(arc[counter]);
                         }
                         marker.setLngLat(arc[counter])
+
                         // point.features[0].geometry.coordinates = arc[counter];
                         // point.features[0].properties.bearing = turf.bearing(
                         //     turf.point(
@@ -189,9 +178,10 @@
                     window.clearInterval(timer);
                     endFly = null;
                 }
-                point.features[0].geometry.coordinates = origin;
-                map.getSource('point').setData(point);
+                dataLine.features[0].geometry.coordinates.push(origin);
+                map.getSource('line').setData(dataLine);
                 counter = 0;
+                marker.setLngLat(arc[counter])
                 animate(counter);
             });
         })

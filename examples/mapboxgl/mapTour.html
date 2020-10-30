@@ -404,12 +404,44 @@
                         })
                         if (popup)
                             popup.remove();
+                        hoveredStateID = feature.countLocation
                         popup = popup = new mapboxgl.Popup({ offset: 23, className: 'color', closeButton: false, anchor: 'bottom' })
                             .setLngLat(new mapboxgl.LngLat(feature.mapView.lon, feature.mapView.lat))
                             .setHTML("<h4 class='color-text-popup'>" + feature.name + "</h4>")
                             .setMaxWidth("300px")
                             .addTo(map)
                     }
+                    div2.onmousemove = function () {
+                        if (hoveredStateId) {
+                            map.setFeatureState(
+                                { source: 'point', id: hoveredStateId },
+                                { hover: false }
+                            );
+                        } else {
+                            if (popup)
+                                popup.remove();
+                            popup = new mapboxgl.Popup({ offset: 23, className: 'color', closeButton: false, anchor: 'bottom' })
+                                .setLngLat(new mapboxgl.LngLat(feature.mapView.lon, feature.mapView.lat))
+                                .setHTML("<h4 class='color-text-popup'>" + feature.name + "</h4>")
+                                .setMaxWidth("300px")
+                                .addTo(map)
+                        }
+                        hoveredStateId = feature.sorter + 1;
+                        map.setFeatureState(
+                            { source: 'point', id: hoveredStateId },
+                            { hover: true }
+                        );
+
+                    };
+                    div2.onmouseleave = function () {
+                        if (hoveredStateId) {
+                            map.setFeatureState(
+                                { source: 'point', id: hoveredStateId },
+                                { hover: false }
+                            );
+                        }
+                        hoveredStateId = null;
+                    };
                     var div3 = document.createElement('div');
                     div3.className = "form-group-last row";
                     div.className = 'col item-name';

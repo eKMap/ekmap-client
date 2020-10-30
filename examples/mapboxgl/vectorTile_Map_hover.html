@@ -7,7 +7,7 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Vector Tile Layer</title>
+    <title>Vector Tile Layer (Hover)</title>
     <style>
         .map {
             width: 100%;
@@ -45,12 +45,14 @@
             },
             minZoom: 4,
             center: [110.8572095386728, 16.105643201842312],
-            zoom: 5.0598853164770725    
+            zoom: 5.0598853164770725
         });
         var hoveredStateId = null;
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.on('load', function () {
-            new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
+            new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
             map.addLayer({
                 "id": "state-fills",
                 "source": "vector-tiles",
