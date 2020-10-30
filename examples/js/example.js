@@ -110,17 +110,17 @@ function createGalleryChart(example) {
         version = example.version;
 
     var chartDiv = $("<div class='col-md-3'></div>");
-    var chart = $("<div class='chart' style='max-width: none;height: 24rem;'></div>");
+    var chart = $("<div class='chart' style='max-width: none;height: 21rem;'></div>");
     var link = $("<a class='chart-link' style='width: 100% !important;'x target='_blank' href='" + target + "#" + href + "'></a>");
     var divHeader = $("<div style='text-align: center'></div>");
     // var div = $("<div class='col-md-6' style='padding:10px'></div>")
     var chartTitle = $("<p style='color: #1a94fb;padding: 2px;overflow: hidden;height: 36px;line-height: 36px;text-overflow: ellipsis;white-space: nowrap;margin: 0;font-weight: 700;font-size: 16px;'>" + title + "</p>");
-    var chartSmall = $("<p style='color: #1a94fb;margin: 0 !important;'>"+ '('+ href + '.html)'  +"</p>")
+    var chartSmall = $("<p style='color: #94ac7c;margin: 0 !important;'>"+ '('+ href + '.html)'  +"</p>")
     var divBody = $("<div style='display: flex;'></div>");
     var divSubject = $("<div class='col-md-6' style='padding: 10px;'></div>")
     var chartSubject = $("<p style='color: #2c3b41;padding: 2px;font-size: 14.4px;'>" + subject + "</p>");
     var newTip = $('<svg xmlns="http://www.w3.org/2000/svg" class="new-example" style="width:8px !important;height:8px;right: 1px;top: 1px;position: absolute;"><circle cx="4" cy="4" r="4" fill="#e14d57"></circle></svg>');
-    var thumb = $("<img class='col-md-6' src='" + thumbnail + "' data-original='" + thumbnail + "' style='display: inline;padding: 10px;border-radius: 4px; height: 18rem;object-fit: cover;'>");
+    var thumb = $("<img class='col-md-6' src='" + thumbnail + "' data-original='" + thumbnail + "' style='display: inline;padding: 10px;border-radius: 4px; height: 15rem;object-fit: cover;'>");
 
     chartTitle.appendTo(divHeader);
     chartSmall.appendTo(divHeader);

@@ -6,6 +6,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Turfjs Voronoi</title>
     <style>
@@ -29,43 +30,72 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            center: [105, 17],
-            zoom: 5
+            center: [105.73695676666705, 20.967868701058933],
+            zoom: 9.641103242570315
         });
 
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map);
-        
+
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
         var options = {
-            bbox: [103.93415448887777, 19.23020794355574, 107.5003423821745, 22.394971481516805]
+            bbox: [105.49444188609516, 20.61618427060094, 105.98811702114466, 21.32137946373699]
         };
         var points = turf.randomPoint(100, options);
 
-        var voronoiPolygons = turf.voronoi(points, options);
-        var features = points.features;
-        features.forEach(feature => {
-            var marker = new mapboxgl.Marker({
-                'color': 'red'
+        //Data Source: https://moitruongthudo.vn/ 
+        $.get("../data/echarts_scatter.json", function (response) {
+            var voronoiPolygons = turf.voronoi(response, options);
+            console.log(voronoiPolygons)
+            map.addLayer({
+                'id': 'polygon',
+                'type': 'fill',
+                'source': {
+                    'type': 'geojson',
+                    'data': voronoiPolygons
+                },
+                'paint': {
+                    'fill-color': 'orange',
+                    'fill-opacity': 0.7,
+                    'fill-outline-color': 'black'
+                }
             })
-                .setLngLat(feature.geometry.coordinates)
-                .addTo(map);
-        });
-        
-        map.addLayer({
-            'id': 'park-boundary',
-            'type': 'fill',
-            'source': {
-                'type': 'geojson',
-                'data': voronoiPolygons
-            },
-            'paint': {
-                'fill-color': 'orange',
-                'fill-opacity': 0.7,
-                'fill-outline-color':'black'
-            }
+
+            map.addLayer({
+                'id': 'points',
+                'type': 'circle',
+                'source': {
+                    'type': 'geojson',
+                    'data': response
+                },
+                'paint': {
+                    'circle-radius': 6,
+                    'circle-color': '#B42222'
+                }
+            });
+
+            map.moveLayer('polygon', 'points')
+        })
+
+        map.on('click', function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['polygon']
+            });
+            console.log(features)
+            var filter = features.reduce(
+                function (memo, feature) {
+                    console.log(feature)
+                    memo.push(feature.properties.OBJECTID);
+                    return memo;
+                },
+                ['in', 'OBJECTID']
+            );
         })
     </script>
 </body>

@@ -83,15 +83,6 @@
                                 </span>
                             </li>
                         </ul>
-                        <ul class="noteType">
-                            <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUAmf8q++MEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
-                                <span style="padding-left: 15px;">
-                                    No store
-                                </span>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </div>
@@ -129,13 +120,19 @@
                     ['linear'],
                     ['get', 'count'],
                     0,
-                    'blue',
-                    0.1,
                     'yellow',
                     1000,
-                    'red',
+                    'red'
                 ],
-                'fill-opacity': 0.7,
+                'fill-opacity': [
+                    'interpolate',
+                    ['linear'],
+                    ['get', 'count'],
+                    0,
+                    0,
+                    1,
+                    0.7
+                ],
                 'fill-outline-color': 'black'
             }
         })
@@ -151,7 +148,6 @@
             });
             var points = turf.points(listPoint);
 
-
             for (var x = 0; x < Object.keys(hexgrid.features).length; x++) {
                 var polygon = hexgrid.features[x].geometry.coordinates;
                 var searchWithin = turf.polygon(polygon);
@@ -163,8 +159,10 @@
                     },
                     "geometry": hexgrid.features[x].geometry
                 })
+               console.log(ptsWithin.features.length)
             }
         }).done(function () {
+            console.log(fea)
             var dataDensity = {
                 "type": "FeatureCollection",
                 "features": fea
