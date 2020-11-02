@@ -8,7 +8,7 @@
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Data 3D</title>
+    <title>3D</title>
     <style>
         html,
         body {
@@ -101,15 +101,10 @@
             </select></div>
     </div>
     <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZHVvbmdudiIsImEiOiJjajhvbXdqY3QwNHJ4MnBwY2FuZGxqbGVrIn0.Le_Wh6q_wt4bDJgqAduJgA';
         var map = new mapboxgl.Map({
             container: 'map',
-            style: {
-                "version": 8,
-                "sources": {
-                },
-                "layers": [
-                ]
-            },
+             style: 'mapbox://styles/mapbox/satellite-streets-v11',
             center: [105.7163513067436, 21.193957863945272],
             zoom: 15.697175623863695,
             pitch: 60,
