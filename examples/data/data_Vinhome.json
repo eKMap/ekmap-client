@@ -12,7 +12,7 @@
 				"appId": null,
 				"lat": 21.0501315,
 				"lon": 106.836729,
-				"zoom": 13,
+				"zoom": 15.1,
 				"bearing": 150,
 				"pitch": 60,
 				"perspective": 0.0
@@ -31,7 +31,7 @@
 				"appId": null,
 				"lat": 21.002302,
 				"lon": 105.760174,
-				"zoom": 12.3,
+				"zoom": 13.5,
 				"bearing": 27,
 				"pitch": 45,
 				"perspective": 0.0
@@ -50,7 +50,7 @@
 				"appId": null,
 				"lat": 20.9915,
 				"lon": 105.945378,
-				"zoom": 13.3,
+				"zoom": 14.7,
 				"bearing": 180,
 				"pitch": 60,
 				"perspective": 0.0
@@ -69,7 +69,7 @@
 				"appId": null,
 				"lat": 21.010044,
 				"lon": 105.73922,
-				"zoom": 11.6,
+				"zoom": 15.2,
 				"bearing": 90,
 				"pitch": 40,
 				"perspective": 0.0
@@ -88,7 +88,7 @@
 				"appId": null,
 				"lat": 21.0115895,
 				"lon": 105.7858903,
-				"zoom": 12,
+				"zoom": 13.6,
 				"bearing": 45,
 				"pitch": 60,
 				"perspective": 0.0
@@ -107,7 +107,7 @@
 				"appId": null,
 				"lat": 21.020201,
 				"lon": 105.781023,
-				"zoom": 13.5,
+				"zoom": 15,
 				"bearing": 27,
 				"pitch": 30,
 				"perspective": 0
@@ -126,7 +126,7 @@
 				"appId": null,
 				"lat": 20.999044,
 				"lon": 105.720363,
-				"zoom": 11.5,
+				"zoom": 14,
 				"bearing": 150,
 				"pitch": 60,
 				"perspective": 0
@@ -145,7 +145,7 @@
 				"appId": null,
 				"lat": 21.0372964,
 				"lon": 105.7606132,
-				"zoom": 12.7,
+				"zoom": 14.5,
 				"bearing": 180,
 				"pitch": 30,
 				"perspective": 0
@@ -164,7 +164,7 @@
 				"appId": null,
 				"lat": 21.0007735,
 				"lon": 105.7876057,
-				"zoom": 12.3,
+				"zoom": 14.3,
 				"bearing": 90,
 				"pitch": 30,
 				"perspective": 0
@@ -184,7 +184,7 @@
 				"appId": null,
 				"lat": 21.0317246,
 				"lon": 105.8119308,
-				"zoom": 13.3,
+				"zoom": 14.3,
 				"bearing": 45,
 				"pitch": 60,
 				"perspective": 0
