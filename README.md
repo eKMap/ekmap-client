@@ -18,7 +18,7 @@ npm install
 
 Use the `npm run dev` command to
 
-Go to http://localhost:8083/ to test the examples.
+Go to http://localhost:8083/ to test.
 
 ### Samples
 
