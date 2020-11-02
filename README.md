@@ -16,7 +16,7 @@ npm install
 
 ### Run on your PC
 
-Use the `npm start` command to
+Use the `npm run dev` command to
 
 Go to http://localhost:8083/ to test the examples.
 
