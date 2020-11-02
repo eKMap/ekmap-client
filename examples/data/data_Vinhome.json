@@ -33,7 +33,7 @@
 				"lon": 105.760174,
 				"zoom": 12.3,
 				"bearing": 27,
-				"pitch": 0,
+				"pitch": 45,
 				"perspective": 0.0
 			},
 			"image": "https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-green-villas/1336-green-villas-1336x1002.jpg"
@@ -147,7 +147,7 @@
 				"lon": 105.7606132,
 				"zoom": 12.7,
 				"bearing": 180,
-				"pitch": 0,
+				"pitch": 30,
 				"perspective": 0
 			},
 			"image": "https://media.vinhomes.vn/storage/anh-dai-dien_33.jpg"
