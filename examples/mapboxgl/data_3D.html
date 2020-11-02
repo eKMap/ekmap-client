@@ -112,10 +112,6 @@
         });
 
         map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             //Data
             var y = [{
