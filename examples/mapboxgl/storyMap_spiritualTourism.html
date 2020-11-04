@@ -178,10 +178,10 @@
                         <div class="carousel slide multi-item-carousel" id="theCarousel">
                             <div class="carousel-inner" id='caroselInner'>
                             </div>
-                            <!-- <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i
+                            <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i
                                     class="glyphicon glyphicon-chevron-left"></i></a>
                             <a class="right carousel-control" href="#theCarousel" data-slide="next"><i
-                                    class="glyphicon glyphicon-chevron-right"></i></a> -->
+                                    class="glyphicon glyphicon-chevron-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -245,12 +245,12 @@
             var btnCollapse = document.getElementById('btnCollapse');
             var iconCollapse = document.getElementById('iconCollapse');
             var collapseDiv = document.getElementById('collapseDiv');
-            collapseDiv.setAttribute('aria-expanded',true);
-            collapseDiv.setAttribute('class','collapse in');
+            collapseDiv.setAttribute('aria-expanded', true);
+            collapseDiv.setAttribute('class', 'collapse in');
 
             btnCollapse.onclick = function () {
                 console.log(collapseDiv.getAttribute('class'))
-                if (collapseDiv.getAttribute('class')=='collapse in')
+                if (collapseDiv.getAttribute('class') == 'collapse in')
                     iconCollapse.setAttribute('class', 'fa fa-chevron-up');
                 else
                     iconCollapse.setAttribute('class', 'fa fa-chevron-down');
@@ -302,35 +302,36 @@
                         next = $(this).siblings(':first');
                     }
                     next.children(':first-child').clone().appendTo($(this));
-                    for (var i = 0; i < 8; i++) {
+                    for (var i = 0; i < 10; i++) {
                         next = next.next();
-
                         if (!next.length) {
                             next = $(this).siblings(':first');
                         }
-
                         next.children(':first-child').clone().appendTo($(this));
                     }
+
+
                 });
                 var x = $('.carousel').parent();
-                var pager = x.find('.item.active').find('div');
-                pager.on('click', function () {
-                    var index = pager.index(this) + '';
-                    for (var i = 0; i < 10; i++) {
-                        if (index == i + '') {
-                            name.textContent = features[i].properties.name;
-                            imgSelected.setAttribute('src', features[i].properties.image)
-                            nameImg.innerHTML = "Welcome to " + features[i].properties.name + '!';
-                            desImg.innerHTML = features[i].properties.description + '<br><hr><font size="1" color="Grey"><i>Photo source: Collector</i></font>';
+                var pager = x.find('.item').find('div');
+                pager.on('click', function (e) {
+                    var index = e.currentTarget.outerText[0] + e.currentTarget.outerText[1]
+                    console.log(index)
+                    for (var i = 1; i < 11; i++) {
+                        if (index == i) {
+                            name.textContent = features[i - 1].properties.name;
+                            imgSelected.setAttribute('src', features[i - 1].properties.image)
+                            nameImg.innerHTML = "Welcome to " + features[i - 1].properties.name + '!';
+                            desImg.innerHTML = features[i - 1].properties.description + '<br><hr><font size="1" color="Grey"><i>Photo source: Collector</i></font>';
                             map.flyTo({
-                                center: features[i].geometry.coordinates,
+                                center: features[i - 1].geometry.coordinates,
                                 zoom: 12,
                             })
                             if (popup)
                                 popup.remove();
-                            popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500, closeButton: false})
-                                .setLngLat(features[i].geometry.coordinates)
-                                .setHTML("<h3>" + features[i].properties.name + "</h3>")
+                            popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500, closeButton: false })
+                                .setLngLat(features[i - 1].geometry.coordinates)
+                                .setHTML("<h3>" + features[i - 1].properties.name + "</h3>")
                                 .addTo(map)
                         }
                     }
