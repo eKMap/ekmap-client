@@ -123,3 +123,6 @@ var widgets = {
     widgets.loader.removeLoader = removeLoader;
 
 })(widgets, window.jQuery);
+
+
+

@@ -67,7 +67,7 @@ var exampleConfig = {
                         fileName: "featureService_getFeaturesByBound",
                         subject: "Use getFeaturesByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
                         description: ""
-                        
+
                     },
                     {
                         name: "Geometry query",
@@ -343,6 +343,14 @@ var exampleConfig = {
                         subject: "Use highcharts to display pie.",
                         description: ""
                     },
+                    {
+                        name: "Water HightChart",
+                        name_en: "Water HightChart",
+                        thumbnail: "highcharts_lineWater.png",
+                        fileName: "highcharts_lineWater",
+                        subject: "Detailed display of SCADA measuring point chart data.",
+                        description: ""
+                    }
                 ]
             },
             ChartOnline: {
@@ -388,19 +396,11 @@ var exampleConfig = {
                 name_en: "Layer Chart",
                 content: [
                     {
-                        name: "Layer Chart",
-                        name_en: "Layer Chart",
+                        name: "Statistical Chart",
+                        name_en: "Statistical Chart",
                         thumbnail: "layerChart.png",
                         fileName: "layerChart",
                         subject: "Use mapboxgl.ekmap.DomOverlay.",
-                        description: ""
-                    },
-                    {
-                        name: "Water HightChart",
-                        name_en: "Water HightChart",
-                        thumbnail: "highcharts_lineWater.png",
-                        fileName: "highcharts_lineWater",
-                        subject: "Detailed display of SCADA measuring point chart data.",
                         description: ""
                     }
                 ]
@@ -505,7 +505,15 @@ var exampleConfig = {
                     //     name_en: "Timeline Coronavirus (Buffer)",
                     //     thumbnail: "timeline_bufferCov.gif",
                     //     fileName: "timeline_bufferCov"
-                    // }
+                    // },
+                    {
+                        name: "Spiritual Tourism",
+                        name_en: "Spiritual Tourism",
+                        thumbnail: "storyMap_spiritualTourism.gif",
+                        fileName: "storyMap_spiritualTourism",
+                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
+                        description: ""
+                    },
 
                 ]
             }

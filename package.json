@@ -90,6 +90,7 @@
     "fetch-jsonp": "1.1.3",
     "jsonsql": "0.2.5",
     "leaflet": "1.6.0",
+    "lightslider": "^1.1.6",
     "lodash.remove": "^4.7.0",
     "lodash.topairs": "4.3.0",
     "mapbox-gl": "1.6.1",

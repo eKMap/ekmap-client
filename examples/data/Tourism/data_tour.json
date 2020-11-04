@@ -1,0 +1,165 @@
+{
+	"features": [
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Tran Quoc Pagoda",
+				"image": "../data/Tourism/tranquoc.jpg",
+				"description":"Combined with the elegant and harmonious landscape of the poetic West Lake, Tran Quoc Pagoda has been ranked one of the 16 most beautiful temples in the world voted by the newspaper Dailymail in 2016. The first days of the year, go to ceremony and visit. Visiting the most ancient temple in Vietnam with famous architectural beauty near and far is also an interesting experience to start a new year."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.8347447,
+					21.0479776
+				]
+			},
+			"id": 0
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Quan Su Pagoda",
+				"image": "../data/Tourism/quansu.jpg",
+				"description":"Built in the reign of King Le The Tong, Quan Su Pagoda is now over 500 years old. Formerly the headquarters of the entire Buddhist Association of Tonkin, now the center of the Vietnamese Buddhist Church, this temple has witnessed many historical events of Buddhism in the country. Most typical can be mentioned the unity of Buddhism in Vietnam and the integration between Buddhism in the country and Buddhism in the world ..."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.84315,
+					21.0244984
+				]
+			},
+			"id": 1
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Ngoc Son Temple",
+				"image": "../data/Tourism/ngocson.jpg",
+				"description":"For a long time, Ngoc Son Temple, The Huc Bridge, Research Station, But Tower ... have become a famous architectural complex, considered a symbol of Hanoi capital in the eyes of domestic and international tourists. Rarely is an architectural ensemble that converges such solemnity, spiritual solemnity and harmony, architectural and artistic specialties."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.8501506,
+					21.0307332
+				]
+			},
+			"id": 2
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Quan Thanh Temple",
+				"image": "../data/Tourism/quanthanh.jpg",
+				"description":"Quan Thanh Temple, which is a place of worship for one of the four gods that defended ancient Thang Long citadel: Huyen Thien Tran Vu. Located here is a bronze statue 4m taller than Huyen Thien Tran Vu, a god revered in the folk consciousness with many thrilling anecdotes, repeatedly defending and saving the country. Coming to the temple, visitors can admire the architectural, cultural and artistic values of the relic located on the banks of this West Lake."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.834271,
+					21.0430102
+				]
+			},
+			"id": 3
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Huong Pagoda",
+				"image": "../data/Tourism/chuahuong.jpg",
+				"description":"Huong Pagoda complex is located in Huong Son commune, My Duc district, about 50km from the center of Hanoi. Coming to Huong pagoda, visitors not only to worship the pagoda and pray for peace but also to enjoy the poetic scenery of the mountains here."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.7759897,
+					20.6075975
+				]
+			},
+			"id": 4
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "West lake",
+				"image": "../data/Tourism/tayho.jpg",
+				"description":"Many people believe that coming to Tay Ho palace at the beginning of the year can pray for luck and fortune in the new year. The palace is located on a peninsula of Nghi Tam village, jutting out West Lake, where it is dedicated to Lieu Hanh. Visiting Tay Ho Palace, visitors can enjoy the fresh air of West Lake, immerse in the spring weather with cool breezes at the beginning of the season."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.8150671,
+					21.0580518
+				]
+			},
+			"id": 5
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Dam Temple",
+				"image": "../data/Tourism/dendam.jpg",
+				"description":"Located in Xam Duong village, Ninh So commune, Thuong Tin district, Hanoi, Dam Temple has ancient architecture, open space with trees and lake. The temple column is made of wood, the roof is covered with tiles that have faded from time to time. The temple grounds also planted many old trees, including banyan tree that is over 100 years old."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.8906239,
+					20.9055041
+				]
+			},
+			"id": 6
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Bach Ma Temple",
+				"image": "../data/Tourism/bachma.jpg",
+				"description":"Considered one of the oldest and most sacred temples in Hanoi, Bach Ma Temple is famous for the anecdotes of King Ly Thai To's citadel. After successful construction, the king set up a temple to give thanks to God Long Do. Currently the temple still preserves a lot of ancient artifacts and ancient rituals. Coming here, visitors will admire the magic horses at the main palaces, if they come right on the occasion of the festival, visitors will see the rituals and learn about the religious culture of the Vietnamese people, pray for peace. , good luck for family and relatives."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.8488197,
+					21.0357876
+				]
+			},
+			"id": 7
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Phuc Khanh Pagoda",
+				"image": "../data/Tourism/phuckhanh.jpg",
+				"description":"Located at 382 Tay Son Street, Dong Da District, Hanoi, Phuc Khanh Pagoda has a reputation for being sacred to the people of Hanoi. Built under the reign of Hau Le, this famous temple was associated with the war of King Quang Trung - Nguyen Hue, was the shelter of the Nguyen Dynasty's military officers in defeating the Qing army. The pagoda has become a famous place of worship as well as good luck in the Hanoi area."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.8190823,
+					21.0044078
+				]
+			},
+			"id": 8
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "One Pillar Pagoda",
+				"image": "../data/Tourism/motcot.jpg",
+				"description":"One Pillar Pagoda, also known as Dien Huu Pagoda, is located in the visiting cluster of President Ho Chi Minh's mausoleum - fish pond, Uncle Ho's stilt house - One Pillar Pagoda and Ho Chi Minh Museum. The pagoda was built in 1049 under the reign of King Ly Thai Tong. The temple has only one compartment placed on a pillar in the middle of a lotus lake. The highlight of the temple lies in the unique texture and architecture that looks like a lotus on the water, commonly known as One Pillar Pagoda."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					105.8314341,
+					21.0358582
+				]
+			},
+			"id": 9
+		}
+	],
+	"type": "FeatureCollection"
+}

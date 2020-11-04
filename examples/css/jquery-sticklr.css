@@ -235,7 +235,7 @@
 }
 
 .sticklr > li > ul > li {
-    border: none !ie;
+    border: none !important;
 }
 
 .sticklr > li > ul > li > a {
@@ -249,7 +249,7 @@
     min-height: 20px;
     text-decoration: none;
     white-space: nowrap;
-    background-color: transparent !ie;
+    background-color: transparent !important;
 }
 .sticklr > li > ul > li > span {
     display: block;
@@ -263,7 +263,7 @@
     min-height: 20px;
     text-decoration: none;
     white-space: nowrap;
-    background-color: transparent !ie;
+    background-color: transparent !important;
 }
 
 .sticklr > li > ul > li > input {
@@ -278,7 +278,7 @@
     text-decoration: none;
     text-align: center;
     white-space: nowrap;
-    background-color: transparent !ie;
+    background-color: transparent !important;
 }
 
 .sticklr > li > ul > li > a:hover {
@@ -299,7 +299,7 @@
     background-color: #e6e6e6;
     cursor: default;
     font-weight: bold;
-    background-color: transparent !ie;
+    background-color: transparent !important;
 }
 .sticklr > li > ul > li.sticklr-title > span {
     padding-left: 10px;
@@ -310,13 +310,13 @@
 
 .sticklr > li > ul > li.sticklr-title > a:hover {
     background-color: #e6e6e6;
-    background-color: transparent !ie;
+    background-color: transparent !important;
 }
 
 .sticklr > li > ul > li.sticklr-title > input:hover {
     cursor: pointer;
     background-color: #e6e6e6;
-    background-color: transparent !ie;
+    background-color: transparent !important;
 }
 
 .sticklr > li > ul > li > table {
