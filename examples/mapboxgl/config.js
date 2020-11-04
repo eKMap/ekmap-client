@@ -509,7 +509,7 @@ var exampleConfig = {
                     {
                         name: "Spiritual Tourism",
                         name_en: "Spiritual Tourism",
-                        thumbnail: "storyMap_spiritualTourism.gif",
+                        thumbnail: "storyMap_spiritualTourism.png",
                         fileName: "storyMap_spiritualTourism",
                         subject: "Tracking a moving position, information of the rest stops when the car goes there.",
                         description: ""
