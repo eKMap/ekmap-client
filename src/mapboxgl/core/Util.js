@@ -88,6 +88,11 @@ export class Util {
                 } else if (type === '[object Date]') {
                     value = param.valueOf();
                 } else {
+                    var param = param + '';
+                    if (param.indexOf(':'))
+                        param = param.replace(":", "%3A");
+                    if (param.indexOf('/'))
+                        param = param.replace("/", "%2F");
                     value = param;
                 }
                 data += encodeURIComponent(key) + '=' + value;
@@ -200,13 +205,15 @@ export class Util {
     }
 
     static getUrlParams(options) {
-        if (options.url.indexOf('?') !== -1) {
-            options.requestParams = options.requestParams || {};
-            var queryString = options.url.substring(options.url.indexOf('?') + 1);
-            options.url = options.url.split('?')[0];
-            options.requestParams = JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+        if(options.url){
+            if (options.url.indexOf('?') !== -1) {
+                options.requestParams = options.requestParams || {};
+                var queryString = options.url.substring(options.url.indexOf('?') + 1);
+                options.url = options.url.split('?')[0];
+                options.requestParams = JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+            }
+            options.url = this.cleanUrl(options.url.split('?')[0]);
         }
-        options.url = this.cleanUrl(options.url.split('?')[0]);
         return options;
     }
 
@@ -330,7 +337,7 @@ export class Util {
      * @private
      * @description add img, video element to domContainer.
      * @param {Array} dom dom container..
-     * @param {Array} res urls of img/video loaded to dom. 
+     * @param {Array} res urls of img/video loaded to dom.
      */
     static setResource(dom, res) {
         if (!(res instanceof Array)) return;
@@ -379,14 +386,14 @@ export class Util {
         }
     }
 
-    static setChart(dom, data, type, height,backgroundColor) {
+    static setChart(dom, data, type, height, backgroundColor) {
         if (!Chart) {
             return;
         }
         let canv = document.createElement('canvas'),
             ctx = canv.getContext('2d');
         if (type == 'bar')
-            canv.style.backgroundColor = backgroundColor? backgroundColor :'rgb(245, 222, 179)';
+            canv.style.backgroundColor = backgroundColor ? backgroundColor : 'rgb(245, 222, 179)';
         else
             canv.style.backgroundColor = 'rgba(0,0,0,0.0)';
 
@@ -409,6 +416,14 @@ export class Util {
         canv.width = height; canv.style.width = canv.width + 'px';
         dom.appendChild(canv);
         return chart;
+    }
+
+    static getParamString(obj, existingUrl, uppercase) {
+        var params = [];
+        for (var i in obj) {
+            params.push(encodeURIComponent(uppercase ? i.toUpperCase() : i) + '=' + encodeURIComponent(obj[i]));
+        }
+        return ((!existingUrl || existingUrl.indexOf('?') === -1) ? '?' : '&') + params.join('&');
     }
 }
 

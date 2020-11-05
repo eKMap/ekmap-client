@@ -69,7 +69,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="mapboxgl.ekmap.control.FeatureInfomation.html">Class: FeatureInfomation</h1>
+        <h1 class="page-title" data-filename="mapboxgl.ekmap.WMS.html">Class: WMS</h1>
         
 
 
@@ -77,11 +77,11 @@
 <section>
     
 <header>
-    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a><a href="mapboxgl.ekmap.control.html">.control</a>.</span>FeatureInfomation
+    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a>.</span>WMS
     
     </h2>
     
-        <div class="class-description"><p>FeatureInfomation.</p></div>
+        <div class="class-description"><p>Instantiates a WMS tile layer object given a base URL of the WMS service and a WMS parameters/options object..</p></div>
     
 </header>  
 
@@ -93,14 +93,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="FeatureInfomation">
+        <h4 class="name" id="WMS">
             
-            new mapboxgl.ekmap.control.FeatureInfomation<span class="signature">(options)</span>
+            new mapboxgl.ekmap.WMS<span class="signature">(baseUrl, options)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/FeatureInfomation.js, line 5
+            layer/WMS.js, line 4
         </div>
         
     </div>
@@ -138,6 +138,29 @@
 	
         <tr>
             
+                <td class="name"><code>baseUrl</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a base URL of the WMS service.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
                 <td class="name"><code>options</code></td>
             
             
@@ -154,7 +177,7 @@
             
             <td class="description last">
                 
-                <p>Construction parameters.</p>
+                <p>Control options.</p>
                 
 
 <table class="params">
@@ -179,13 +202,13 @@
 	
         <tr>
             
-                <td class="name"><code>setStyle</code></td>
+                <td class="name"><code>layers</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Boolean</span>
+<span class="param-type">string</span>
 
 
             
@@ -194,14 +217,240 @@
             
                 <td class="default">
                 
-                    true
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>(required) Comma-separated list of WMS layers to show.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>styles</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
                 
                 </td>
             
             
             <td class="description last">
                 
-                <p>If setStyle = false, the selected feature will not set style and vice versa it will set style default.</p></td>
+                <p>Comma-separated list of WMS styles.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>tileSize</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    256
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>bbox</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>format</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    'image/jpeg'
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>WMS image format (use 'image/png' for layers with transparency).</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>transparent</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>If true, the WMS service will return images with transparency.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>version</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    '1.1.1'
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Version of the WMS service to use.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>crs</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">CRS</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Coordinate Reference System to use for the WMS requests, defaults to map CRS. Don't change this if you're not sure what it means.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>uppercase</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>If true, WMS request parameter keys will be uppercase.</p></td>
         </tr>
 	
 	
@@ -242,11 +491,6 @@
 
     
     
-    <h5>Fires</h5>
-    <ul>
-        <li>mapboxgl.ekmap.FeatureInfomation#event:selectfeatures</li>
-    </ul>
-    
 
     
 
@@ -261,7 +505,7 @@
         
 
     
-    <pre class="prettyprint"><code>(start code) map.addControl(new mapboxgl.ekmap.control.FeatureInfomation({ setStyle: true }),'bottom-right');(end)</code></pre>
+    <pre class="prettyprint"><code>var map = new mapboxgl.Map({    container: 'divMapId',    zoom: 3.9996619013972636,    center: [-96.52559859275812, 39.21792880745451]});var wms = new mapboxgl.ekmap.WMS('https://demo.geo-solutions.it/geoserver/topp/wms', {    layers: 'topp:states',    transparent: true,    bbox: '{bbox-epsg-3857}'}).addTo(map);</code></pre>
     
 
     
@@ -294,81 +538,6 @@
     
 
     
-        <h3 class="subsection-title">Events</h3>
-
-        <dl>
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="event:selectfeatures">
-            
-            selectfeatures
-        </h4>
-    
-        
-        <div class="tag-source">
-            control/FeatureInfomation.js, line 153
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Fired when the feature is selected.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        </dl>
-    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -377,14 +546,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="onAdd">
+        <h4 class="name" id="addTo">
             
-            onAdd<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{HTMLElement}</span>
+            addTo<span class="signature">(map)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/FeatureInfomation.js, line 27
+            layer/WMS.js, line 63
         </div>
         
     </div>
@@ -395,7 +564,7 @@
     
     
     <div class="description">
-        <p>Register a control on the map and give it a chance to register event listeners and resources. This method is called by Map#addControl internally.</p>
+        <p>Adds the layer to the given map or layer group.</p>
     </div>
     
 
@@ -432,7 +601,7 @@
             <td class="type">
             
                 
-<span class="param-type">Map</span>
+<span class="param-type"><a href="https://www.mapbox.com/mapbox-gl-js/api/#map">mapboxgl.Map</a></span>
 
 
             
@@ -442,7 +611,7 @@
             
             <td class="description last">
                 
-                <p>the Map this control will be added to.</p></td>
+                <p>Adds the layer to the given map or layer group.</p></td>
         </tr>
 	
 	
@@ -489,174 +658,9 @@
     
 
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        HTMLElement
-                        
-                    
-            </td>
-            <td class="description last">The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.</td>
-        </tr>
-    
-    </tbody>
-</table>
 
-    
-    
-    
-</dd>
+this
 
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onRemove">
-            
-            onRemove<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{undefined}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            control/FeatureInfomation.js, line 175
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Unregister a control on the map and give it a chance to detach event listeners and resources. This method is called by Map#removeControl internally.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>map</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Map</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>the Map this control will be removed from.</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        undefined
-                        
-                    
-            </td>
-            <td class="description last">there is no required return value for this method.</td>
-        </tr>
-    
-    </tbody>
-</table>
 
     
     

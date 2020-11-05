@@ -18,6 +18,12 @@ export { ThreeLayer } from './ThreeLayer';
 
 export { DomOverlay } from './DomOverlay';
 
+export { WMS } from './WMS';
+
+export { WFS } from './WFS';
+
+
+
 
 
 

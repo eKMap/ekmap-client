@@ -563,6 +563,34 @@ var exampleConfig = {
             }
         }
     },
+    OGC: {
+        name: "OGC",
+        name_en: "OGC",
+        content: {
+            OGC: {
+                name: "OGC",
+                name_en: "OGC",
+                content: [
+                    {
+                        name: "Web Map Service",
+                        name_en: "Web Map Service",
+                        thumbnail: "ogc_wms.png",
+                        fileName: "ogc_wms",
+                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
+                        description: ""
+                    },
+                    {
+                        name: "Web Feature Service",
+                        name_en: "Web Feature Service",
+                        thumbnail: "ogc_wfs.png",
+                        fileName: "ogc_wfs",
+                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
+                        description: ""
+                    }
+                ]
+            }
+        }
+    },
     control: {
         name: "Control",
         name_en: "Control",

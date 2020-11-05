@@ -27,7 +27,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
 
                 this.service = new mapboxgl.ekmap.MapService(options);
             }
-            if (options.urls) 
+            if (options.urls)
                 this.tileUrls = options.urls
             // Remove subdomain in url
             // https://github.com/Esri/esri-leaflet/issues/991
@@ -37,9 +37,9 @@ export class TiledMapLayer extends mapboxgl.Evented {
             //    this.tileUrl = this.tileUrl.replace('://tiles', '://tiles{s}');
             //    options.subdomains = ['1', '2', '3', '4'];
             //}
-
             if (this.options.token) {
                 this.tileUrl += ('?token=' + this.options.token);
+
             }
             //return new mapboxgl.ekmap.MapService(this.tileUrl);
             // init layer by calling TileLayers initialize method
@@ -58,7 +58,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
         var id = Math.round(Math.random() * 100);
         if (this.tileUrl) {
             map.addSource(nameID + id, {
-                "attribution": this.options.attribution ? this.options.attribution :'',
+                "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": [this.tileUrl],
                 "tileSize": 256
@@ -80,10 +80,10 @@ export class TiledMapLayer extends mapboxgl.Evented {
                     }
                 })
         }
-            
+
         if (this.tileUrls) {
             map.addSource(nameID + id, {
-                "attribution": this.options.attribution ? this.options.attribution :'',
+                "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": this.tileUrls,
                 "tileSize": 256
@@ -121,8 +121,6 @@ export class TiledMapLayer extends mapboxgl.Evented {
                     }
                 })
         }
-            
-        
         return this;
     }
 
