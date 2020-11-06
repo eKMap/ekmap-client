@@ -121,17 +121,15 @@
         </div>
     </div>
     <script type="text/javascript">
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {
-                },
-                "layers": []
-            },
+            style: 'mapbox://styles/mapbox/satellite-streets-v11',
             center: [105.66771871049923, 21.011594023323028],
-            zoom: 12.165135620720719
+            zoom: 12.165135620720719,
+            pitch: 100,
         });
+
         var origin = [105.78701677181785, 21.030421887134903];
         var destination = [105.52364530421451, 20.994812188546017];
         var counter = 0;
@@ -156,9 +154,6 @@
         }
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map);
             map.loadImage('../data/marker.png', function (error, image) {
                 if (error) throw error;
                 map.addImage('positionMarker', image);
