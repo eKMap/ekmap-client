@@ -32,9 +32,6 @@
             zoom: 3.9996619013972636,
             center: [-96.52559859275812, 39.21792880745451]
         });
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map)
         var wms;
         wms = new mapboxgl.ekmap.WMS('https://demo.geo-solutions.it/geoserver/topp/wms', {
             layers: 'topp:states',
