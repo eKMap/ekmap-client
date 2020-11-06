@@ -538,7 +538,7 @@ var exampleConfig = {
                     {
                         name: "Voronoi",
                         name_en: "Voronoi",
-                        thumbnail: "turfjs_Voronoi.png",
+                        thumbnail: "turfjs_Voronoi.gif",
                         fileName: "turfjs_Voronoi",
                         subject: "Tracking a moving position, information of the rest stops when the car goes there.",
                         description: ""

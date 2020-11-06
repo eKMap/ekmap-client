@@ -92,84 +92,125 @@
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105.60200498678955, 21.029573713872082],
+            style: {
+                version: 8,
+                glyphs: urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
+                sources: {
+                },
+                layers: [
+                ],
+            },
             zoom: 8.796068848824532
         });
-
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map);
-
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
-        var bbox = [105.18513830324133, 20.448421821750017, 106.12865461448217, 21.521363590051706]
-        var cellSide = 5;
-        var options = { units: 'miles' };
-
-        var hexgrid = turf.hexGrid(bbox, cellSide, options);
-
-        map.addLayer({
-            'id': 'hexagon',
-            'type': 'fill',
-            'source': {
-                'type': 'geojson',
-                'data': hexgrid
-            },
-            'paint': {
-                'fill-color': [
-                    'interpolate',
-                    ['linear'],
-                    ['get', 'count'],
-                    0,
-                    'yellow',
-                    1000,
-                    'red'
-                ],
-                'fill-opacity': [
-                    'interpolate',
-                    ['linear'],
-                    ['get', 'count'],
-                    0,
-                    0,
-                    1,
-                    0.7
-                ],
-                'fill-outline-color': 'black'
-            }
-        })
-        var listPoint = [];
-        var hex;
-        var fea = [];
         widgets.loader.showLoader("data loading...");
+        map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
 
-        $.get('../data/hanoi.json', function (response) {
-            var features = response.features;
-            features.forEach(fea => {
-                listPoint.push(fea.geometry.coordinates)
-            });
-            var points = turf.points(listPoint);
+            map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
-            for (var x = 0; x < Object.keys(hexgrid.features).length; x++) {
-                var polygon = hexgrid.features[x].geometry.coordinates;
-                var searchWithin = turf.polygon(polygon);
-                var ptsWithin = turf.pointsWithinPolygon(points, searchWithin);
-                fea.push({
-                    "type": "Feature",
-                    "properties": {
-                        "count": ptsWithin.features.length
+            var bbox = [105.18513830324133, 20.448421821750017, 106.12865461448217, 21.521363590051706]
+            var cellSide = 5;
+            var options = { units: 'miles' };
+
+            var hexgrid = turf.hexGrid(bbox, cellSide, options);
+            console.log(hexgrid)
+            var listPoint = [];
+            var hex;
+            var fea = [];
+            $.get('../data/hanoi.json', function (response) {
+                var features = response.features;
+                features.forEach(fea => {
+                    listPoint.push(fea.geometry.coordinates)
+                });
+                var points = turf.points(listPoint);
+                for (var x = 0; x < Object.keys(hexgrid.features).length; x++) {
+                    var polygon = hexgrid.features[x].geometry.coordinates;
+                    var searchWithin = turf.polygon(polygon);
+                    var ptsWithin = turf.pointsWithinPolygon(points, searchWithin);
+                    if (ptsWithin.features.length > 0)
+                        fea.push({
+                            "type": "Feature",
+                            "properties": {
+                                "count": ptsWithin.features.length
+                            },
+                            "geometry": hexgrid.features[x].geometry
+                        })
+
+                }
+            }).done(function () {
+                var dataDensity = {
+                    "type": "FeatureCollection",
+                    "features": fea
+                }
+                map.addLayer({
+                    'id': 'line',
+                    'type': 'line',
+                    'source': {
+                        'type': 'geojson',
+                        'data': dataDensity,
                     },
-                    "geometry": hexgrid.features[x].geometry
+                    'paint': {
+                        'line-color': 'orange',
+                        'line-width': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'count'],
+                            0,
+                            0,
+                            1,
+                            20
+                        ],
+                        'line-opacity': 0.2
+                    }
                 })
-               console.log(ptsWithin.features.length)
-            }
-        }).done(function () {
-            console.log(fea)
-            var dataDensity = {
-                "type": "FeatureCollection",
-                "features": fea
-            }
-            map.getSource('hexagon').setData(dataDensity)
-            widgets.loader.removeLoader();
+
+                map.addLayer({
+                    'id': 'hexagon',
+                    'type': 'fill',
+                    'source': {
+                        'type': 'geojson',
+                        'data': dataDensity,
+                    },
+                    'paint': {
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'count'],
+                            0,
+                            'yellow',
+                            1000,
+                            'red'
+                        ],
+                        'fill-opacity': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'count'],
+                            0,
+                            0,
+                            1,
+                            0.7
+                        ]
+                    }
+                })
+                map.addLayer({
+                    id: "cluster-count",
+                    type: "symbol",
+                    source: {
+                        'type': 'geojson',
+                        'data': dataDensity,
+                    },
+                    filter: ["has", "count"],
+                    layout: {
+                        'text-field': '{count}',
+                        'text-size': 12,
+                    }
+                });
+                widgets.loader.removeLoader();
+            })
         })
+
     </script>
 </body>
 
