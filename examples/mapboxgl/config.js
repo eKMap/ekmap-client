@@ -567,9 +567,9 @@ var exampleConfig = {
         name: "OGC",
         name_en: "OGC",
         content: {
-            OGC: {
-                name: "OGC",
-                name_en: "OGC",
+            WMS: {
+                name: "WMS",
+                name_en: "WMS",
                 content: [
                     {
                         name: "Web Map Service",
@@ -578,7 +578,13 @@ var exampleConfig = {
                         fileName: "ogc_wms",
                         subject: "Tracking a moving position, information of the rest stops when the car goes there.",
                         description: ""
-                    },
+                    }
+                ]
+            },
+             WFS: {
+                name: "WFS",
+                name_en: "WFS",
+                content: [
                     {
                         name: "Web Feature Service",
                         name_en: "Web Feature Service",
@@ -687,13 +693,15 @@ var sideBarIconConfig = {
     ekmapServer: "fa-globe",
     viz: "fa-map",
     clientspatial: "fa-object-group",
-    control: "fa-sliders"
+    control: "fa-sliders",
+    OGC: "fa-globe"
 };
 
 
 var exampleIconConfig = {
     ekmapServer: "fa-server",
     viz: "fa-map",
-    control: "fa-sliders"
+    control: "fa-sliders",
+    OGC: "fa-globe"
 };
 window.mapboxglExampleConfig = exampleConfig;
