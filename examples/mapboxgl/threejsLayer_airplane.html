@@ -47,10 +47,6 @@
             pitch: 100
         });
 
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
         loaderModels();
