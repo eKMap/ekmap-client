@@ -125,7 +125,7 @@ function createIFrame() {
     div.style.backgroundColor = '#1a94fb14';
     div.style.display = 'block';
     div.style.height = '80px';
-
+    div.style.margin =  "8px 8px 0px 8px";
 
     var divLeft = document.createElement("div");
     divLeft.style.width = '90%';

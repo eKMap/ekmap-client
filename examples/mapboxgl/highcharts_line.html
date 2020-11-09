@@ -14,31 +14,29 @@
     <script src="../../examples/js/common.js"></script>
     <title>High chart line</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
         }
-        
-        #divMapId {
+
+        body {
+            overflow: hidden;
+            margin: 8px;
+        }
+
+        #container {
             position: absolute;
-            top: 0;
+            top: 60%;
             bottom: 0;
             width: 100%;
+            height: 40%;
+            z-index: 1000;
         }
-        
-        #container {
-        position: absolute;
-        top: 60%;
-        bottom: 0;
-        width: 100%;
-        height: 40%;
-        z-index: 1000;
-    }
     </style>
 </head>
 
 <body>
-    <div id='divMapId'></div>
+    <div id='divMapId' class='map'></div>
     <div id='stat'>
         <div id='container'></div>
     </div>
@@ -58,7 +56,7 @@
             center: [106.1471579608559, 20.416161703696787],
             zoom: 8.383742725041827
         });
-        map.on('load',function(){
+        map.on('load', function () {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
@@ -68,14 +66,14 @@
             compact: false
         }));
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon.png', function(error, image) {
+        map.loadImage('./img/marker-icon.png', function (error, image) {
             if (error) throw error;
             map.addImage('positionPoint', image);
         });
         query();
 
         function query() {
-            $.get("../data/echarts_lineMarker.json", function(response) {
+            $.get("../data/echarts_lineMarker.json", function (response) {
                 map.addLayer({
                     "id": "points",
                     "type": "symbol",
@@ -91,7 +89,7 @@
                 });
             })
         }
-        map.on('click', 'points', function(e) {
+        map.on('click', 'points', function (e) {
             console.log(e)
             var options = {
                 chart: {
@@ -112,7 +110,7 @@
                         text: 'Temperature'
                     },
                     labels: {
-                        formatter: function() {
+                        formatter: function () {
                             return this.value + '°';
                         }
                     }

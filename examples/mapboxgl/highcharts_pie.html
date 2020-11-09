@@ -15,18 +15,16 @@
     <title>Hight chart pie</title>
 </head>
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-    }
-    
-    #divMapId {
-        position: absolute;
-        top: 0;
-        bottom: 0;
+    .map {
         width: 100%;
+        height: calc(100vh - 20px);
     }
-    
+
+    body {
+        overflow: hidden;
+        margin: 8px;
+    }
+
     #container {
         position: absolute;
         top: 60%;
@@ -38,7 +36,7 @@
 </style>
 
 <body>
-    <div id='divMapId'></div>
+    <div id='divMapId' class="map"></div>
     <div id='stat'>
         <div id='container'></div>
     </div>
@@ -57,7 +55,7 @@
             center: [106.5090846096723, 16.787962287423255],
             zoom: 5.1128594812072485
         });
-        map.on('load',function(){
+        map.on('load', function () {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
@@ -67,7 +65,7 @@
             compact: false
         }));
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon.png', function(error, image) {
+        map.loadImage('./img/marker-icon.png', function (error, image) {
             if (error) throw error;
             map.addImage('positionPoint', image);
         });
@@ -169,7 +167,7 @@
         query();
 
         function query() {
-            $.get("../data/echarts_pie.json", function(response) {
+            $.get("../data/echarts_pie.json", function (response) {
                 var fs = response;
                 map.addLayer({
                     "id": "points",
@@ -187,7 +185,7 @@
             });
         }
 
-        map.on('click', 'points', function(e) {
+        map.on('click', 'points', function (e) {
             var city = e.features[0].properties.NAME;
             var options = {
                 chart: {

@@ -14,16 +14,14 @@
     <script src="../../examples/js/common.js"></script>
     <title>Highcharts Line water</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
         }
 
-        #divMapId {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
+        body {
+            overflow: hidden;
+            margin: 8px;
         }
 
         #stat {
@@ -44,7 +42,7 @@
 </head>
 
 <body>
-    <div id='divMapId'></div>
+    <div id='divMapId' class='map'></div>
     <div id='stat'>
         <div id='container'></div>
     </div>
@@ -69,7 +67,7 @@
             center: [107.60731810104676, 16.147953874376654],
             zoom: 8.869560614354818
         });
-        map.on('load',function(){
+        map.on('load', function () {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
