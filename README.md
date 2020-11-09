@@ -20,7 +20,7 @@ Use the `npm run dev` command to
 
 Go to http://localhost:8083/examples to test.
 
-### Samples
+### Samples Online
 
 https://ekmap.github.io/ekmap-client
 
