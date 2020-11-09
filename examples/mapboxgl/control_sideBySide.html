@@ -100,7 +100,7 @@
 				map1.addSource("b1" + i.toString(), {
 					'type': 'raster',
 					'tileSize': 256,
-					'tiles': layer.tileUrls
+					'attribution': '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
 				})
 				map1.addLayer({
 					'id': "b1" + i.toString(),
@@ -139,7 +139,8 @@
 				map2.addSource("b" + i.toString(), {
 					'type': 'raster',
 					'tileSize': 256,
-					'tiles': layer.tileUrls
+					'tiles': layer.tileUrls,
+					'attribution': '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
 				})
 				map2.addLayer({
 					'id': "b" + i.toString(),

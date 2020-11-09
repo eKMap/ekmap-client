@@ -36,22 +36,16 @@
     <script>
         var map, threeLayer,
             position = [106.6566358, 10.8184684];
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
-        map = new mapboxgl.Map({
+
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
+        var map = new mapboxgl.Map({
             container: 'map',
+             style: 'mapbox://styles/mapbox/satellite-streets-v11',
             center: position,
             zoom: 13,
-            // bearing: 0.8568,
-            // pitch: 60,
-            // bearing: 50,
-            pitch: 100,
-
+            pitch: 100
         });
-
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map);
 
         map.addControl(new mapboxgl.AttributionControl({
             customAttribution: attribution,
