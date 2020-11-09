@@ -347,6 +347,8 @@
     </div>
     <hr />
     <script>
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             style: {
@@ -361,6 +363,10 @@
             zoom: 9.844199397806728,
             pitch: 50,
         });
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
         var popup;
         var features = [];

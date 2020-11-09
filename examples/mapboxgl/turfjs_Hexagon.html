@@ -89,6 +89,8 @@
         </div>
     </div>
     <script>
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105.60200498678955, 21.029573713872082],
@@ -108,6 +110,10 @@
                 token: tokenVN
             }).addTo(map);
 
+            map.addControl(new mapboxgl.AttributionControl({
+                customAttribution: attribution,
+                compact: false
+            }));
             map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
             var bbox = [105.18513830324133, 20.448421821750017, 106.12865461448217, 21.521363590051706]
@@ -115,7 +121,6 @@
             var options = { units: 'miles' };
 
             var hexgrid = turf.hexGrid(bbox, cellSide, options);
-            console.log(hexgrid)
             var listPoint = [];
             var hex;
             var fea = [];
@@ -149,7 +154,7 @@
                     'type': 'line',
                     'source': {
                         'type': 'geojson',
-                        'data': dataDensity,
+                        'data': dataDensity
                     },
                     'paint': {
                         'line-color': 'orange',
@@ -171,7 +176,7 @@
                     'type': 'fill',
                     'source': {
                         'type': 'geojson',
-                        'data': dataDensity,
+                        'data': dataDensity
                     },
                     'paint': {
                         'fill-color': [
@@ -199,7 +204,7 @@
                     type: "symbol",
                     source: {
                         'type': 'geojson',
-                        'data': dataDensity,
+                        'data': dataDensity
                     },
                     filter: ["has", "count"],
                     layout: {

@@ -43,6 +43,8 @@
         </div>
     </div>
     <script>
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             style: {
@@ -55,6 +57,10 @@
             center: [105.20886162772933, 16.518572979240204],
             zoom: 5.193739308697748
         });
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
         var tiledMap;

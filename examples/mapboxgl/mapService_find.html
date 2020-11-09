@@ -140,6 +140,8 @@ The toggleSidebar() function removes this class from the element in order to exp
     </div>
     <hr />
     <script>
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             style: {
@@ -153,6 +155,10 @@ The toggleSidebar() function removes this class from the element in order to exp
             zoom: 6
         });
         var tiledMap;
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
         map.on('load', function () {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({

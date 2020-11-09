@@ -141,6 +141,8 @@
     </div>
     </div>
     <script>
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105, 17],
@@ -148,6 +150,10 @@
         });
         var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
 
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         var pt, buffered, long, lat, dataTotal, tongngay = 0;
         var totalcase_day = [];

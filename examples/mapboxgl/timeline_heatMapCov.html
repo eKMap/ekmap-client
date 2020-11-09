@@ -98,12 +98,18 @@
         </div>
     </div>
     <script type="text/javascript">
+    var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: "divMapId",
             center: [11.164340403295512, 2.079745662755286],
             zoom: 2.116295796373197,
 
         });
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         var value = 0;
         var count = -1;

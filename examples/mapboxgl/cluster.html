@@ -35,6 +35,8 @@
         </div>
     </div>
     <script type="text/javascript">
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: "divMapId",
             style: {
@@ -50,7 +52,10 @@
         });
 
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
 
         map.on('load', function () {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
@@ -67,7 +72,6 @@
                     clusterMaxZoom: 14,
                     clusterRadius: 100
                 });
-                console.log(geojson)
 
                 map.addLayer({
                     id: "clusters",

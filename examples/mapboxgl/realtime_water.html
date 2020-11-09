@@ -97,6 +97,8 @@
         </div>
     </div>
     <script>
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [107.58856560217953, 16.3539350884014],
@@ -110,6 +112,10 @@
             },
             zoom: 9.415324050150357,
         });
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var frameCount = 5;
         var currentImage = -5;
@@ -169,34 +175,8 @@
                                 'font-scale': 0.7
                             }
                         ]
-                        // 'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-                        // 'text-radial-offset': 0.5,
-                        // 'text-justify': 'auto',
-                        // 'icon-image': ['concat', ['get', 'icon'], '-15']
                     }
                 });
-                // map.addLayer({
-                //     'id': 'water-color1',
-                //     'type': 'fill',
-                //     'source': 'drone',
-                //     'paint': {
-                //         'fill-outline-color': '#484896',
-                //         'fill-color': 'orange',
-                //         'fill-opacity': 0.75
-                //     },
-                //     'filter': ['in', 'madoituong', '203']
-                // })
-                // map.addLayer({
-                //     'id': 'water-color2',
-                //     'type': 'fill',
-                //     'source': 'drone',
-                //     'paint': {
-                //         'fill-outline-color': '#484896',
-                //         'fill-color': 'blue',
-                //         'fill-opacity': 0.75
-                //     },
-                //     'filter': ['in', 'madoituong', '266']
-                // })
             });
         })
         function getRandomColor() {

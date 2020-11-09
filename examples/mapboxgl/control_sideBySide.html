@@ -1,46 +1,50 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en">
-	<meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
-    <title>Side By Side</title>
-    <style>
-        .map {
-            width: 100%;
-            height: calc(100vh - 20px);
-        }
+<meta charset="utf-8" />
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+<script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
+<title>Side By Side</title>
+<style>
+	.map {
+		width: 100%;
+		height: calc(100vh - 20px);
+	}
 
-        body {
-            overflow: hidden;
-		}
-		.marker {
-			display: block;
-			border: none;
-			padding: 0;
-		}
-    </style>
-  <body>
+	body {
+		overflow: hidden;
+	}
+
+	.marker {
+		display: block;
+		border: none;
+		padding: 0;
+	}
+</style>
+
+<body>
 	<div style="float: left; width: 49%;">
 		<div id="map1" class="map"></div>
 	</div>
 	<div style="float: right; width: 49%;">
 		<div id="map2" class="map"></div>
 	</div>
-	<hr/>
-	
-    <script>
+	<hr />
+
+	<script>
 		var el = document.createElement('div');
 		el.className = 'marker';
-		el.style.backgroundImage ="url('./../img/target.png')";
+		el.style.backgroundImage = "url('./../img/target.png')";
 		el.style.width = '32px';
 		el.style.height = '32px';
 		var map1, map2, maps = [];
 		var marker;
 		var fnMove = {
 		};
+		var attribution = "<a href='https://www.openstreetmap.org/#map=6/16.113/105.806' target='_blank'>© OpenStreetMap </a>" +
+			"by contributors"
 		var mapconfig1 = {
-			"layers":  [{
+			"layers": [{
 				"name": "OSM Standard",
 				"tileUrls": [
 					'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -49,13 +53,13 @@
 				],
 				"raster-opacity": 1
 			}],
-			"center": [107.19,16.22],
+			"center": [107.19, 16.22],
 			"minZoom": 0,
 			"maxZoom": 20,
 			"zoom": 5,
 		}
-		var mapconfig2 ={
-			"layers":  [{
+		var mapconfig2 = {
+			"layers": [{
 				"name": "OSM Humanitarian",
 				"tileUrls": [
 					'https://tile-a.openstreetmap.fr/hot/{z}/{x}/{y}.png',
@@ -64,12 +68,12 @@
 				],
 				"raster-opacity": 1
 			}],
-			"center": [107.19,16.22],
+			"center": [107.19, 16.22],
 			"minZoom": 0,
 			"maxZoom": 20,
 			"zoom": 5,
 		}
-		$(document).ready(function(){
+		$(document).ready(function () {
 			initMap();
 		})
 		function initMap() {
@@ -77,7 +81,7 @@
 			loadMap2();
 			syncMaps();
 		}
-		function loadMap1(){
+		function loadMap1() {
 			map1 = new mapboxgl.Map({
 				container: 'map1', // container id
 				center: mapconfig1.center,
@@ -85,19 +89,23 @@
 				maxZoom: mapconfig1.maxZoom,
 				zoom: mapconfig1.zoom,
 			});
+			map1.addControl(new mapboxgl.AttributionControl({
+				customAttribution: attribution,
+				compact: false
+			}));
 			map1.addControl(new mapboxgl.NavigationControl(), 'top-left');
 			maps.push(map1);
-			for(var i = 0; i < mapconfig1.layers.length; i++){
+			for (var i = 0; i < mapconfig1.layers.length; i++) {
 				let layer = mapconfig1.layers[i];
-				map1.addSource("b1" + i.toString(),{
+				map1.addSource("b1" + i.toString(), {
 					'type': 'raster',
 					'tileSize': 256,
 					'tiles': layer.tileUrls
 				})
 				map1.addLayer({
-					'id': "b1" +i.toString(),
+					'id': "b1" + i.toString(),
 					'type': 'raster',
-					'source': "b1" +i.toString(),
+					'source': "b1" + i.toString(),
 					'minzoom': 0,
 					'maxzoom': 22,
 					'paint': {
@@ -105,14 +113,14 @@
 					}
 				})
 			}
-			map1.on('mousemove', function(e){
-				if(marker) marker.remove();
+			map1.on('mousemove', function (e) {
+				if (marker) marker.remove();
 				marker = new mapboxgl.Marker(el)
-				.setLngLat(e.lngLat)
-				.addTo(map2);
+					.setLngLat(e.lngLat)
+					.addTo(map2);
 			})
 		}
-		function loadMap2(){
+		function loadMap2() {
 			map2 = new mapboxgl.Map({
 				container: 'map2', // container id
 				center: mapconfig2.center,
@@ -120,19 +128,23 @@
 				maxZoom: mapconfig2.maxZoom,
 				zoom: mapconfig2.zoom,
 			});
+			map2.addControl(new mapboxgl.AttributionControl({
+				customAttribution: attribution,
+				compact: false
+			}));
 			map2.addControl(new mapboxgl.NavigationControl(), 'top-left');
 			maps.push(map2);
-			for(var i = 0; i < mapconfig2.layers.length; i++){
+			for (var i = 0; i < mapconfig2.layers.length; i++) {
 				let layer = mapconfig2.layers[i];
-				map2.addSource("b" + i.toString(),{
+				map2.addSource("b" + i.toString(), {
 					'type': 'raster',
 					'tileSize': 256,
 					'tiles': layer.tileUrls
 				})
 				map2.addLayer({
-					'id': "b" +i.toString(),
+					'id': "b" + i.toString(),
 					'type': 'raster',
-					'source': "b" +i.toString(),
+					'source': "b" + i.toString(),
 					'minzoom': 0,
 					'maxzoom': 22,
 					'paint': {
@@ -140,58 +152,59 @@
 					}
 				})
 			}
-			map2.on('mousemove', function(e){
-				if(marker) marker.remove();
+			map2.on('mousemove', function (e) {
+				if (marker) marker.remove();
 				marker = new mapboxgl.Marker(el)
-				.setLngLat(e.lngLat)
-				.addTo(map1);
+					.setLngLat(e.lngLat)
+					.addTo(map1);
 			})
 		}
-		
-		function moveToMapPosition (master, clones) {
-		  var center = master.getCenter();
-		  var zoom = master.getZoom();
-		  var bearing = master.getBearing();
-		  var pitch = master.getPitch();
 
-		  clones.forEach(function (clone) {
-			clone.jumpTo({
-			  center: center,
-			  zoom: zoom,
-			  bearing: bearing,
-			  pitch: pitch
+		function moveToMapPosition(master, clones) {
+			var center = master.getCenter();
+			var zoom = master.getZoom();
+			var bearing = master.getBearing();
+			var pitch = master.getPitch();
+
+			clones.forEach(function (clone) {
+				clone.jumpTo({
+					center: center,
+					zoom: zoom,
+					bearing: bearing,
+					pitch: pitch
+				});
 			});
-		  });
 		}
 
-		function syncMaps () {
-		  var fns = [];
-		  maps.forEach(function (map, index) {
-			fns[index] = sync.bind(null, map, maps.filter(function (o, i) { return i !== index; }));
-		  });
-
-		  function on () {
+		function syncMaps() {
+			var fns = [];
 			maps.forEach(function (map, index) {
-			  map.on('move', fns[index]);
+				fns[index] = sync.bind(null, map, maps.filter(function (o, i) { return i !== index; }));
 			});
-		  }
 
-		  function off () {
-			maps.forEach(function (map, index) {
-			  map.off('move', fns[index]);
-			});
-		  }
+			function on() {
+				maps.forEach(function (map, index) {
+					map.on('move', fns[index]);
+				});
+			}
 
-		  function sync (master, clones) {
-			off();
-			moveToMapPosition(master, clones);
+			function off() {
+				maps.forEach(function (map, index) {
+					map.off('move', fns[index]);
+				});
+			}
+
+			function sync(master, clones) {
+				off();
+				moveToMapPosition(master, clones);
+				on();
+			}
+
 			on();
-		  }
-
-		  on();
-		  return function(){  off(); fns = []; };
+			return function () { off(); fns = []; };
 		}
 
 	</script>
-  </body>
+</body>
+
 </html>

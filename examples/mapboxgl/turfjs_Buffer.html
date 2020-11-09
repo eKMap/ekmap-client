@@ -48,15 +48,13 @@
         <div id="divMapId" class="map"></div>
     </div>
     <script>
-        var attribution = "<a href='https://carto.com/' target='_blank'>© Carto </a>" +
-            "with <span>© <a href='https://iclient.viegis.io' target='_blank'>EkMap Client</a> | </span>" +
-            " Map Data <span>© <a href='http://support.viegis.com.cn/product/iServer.aspx' target='_blank'>Viegis iServer</a></span> ";
+        var attribution = "© Map" +
+            " by <a href='https://carto.com/' target='_blank'> Carto</a>"
 
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105, 17],
-            zoom: 5,
-            attributionControl: false
+            zoom: 5
         });
         //Url by: https://carto.com/help/building-maps/basemap-list/
         var maps = new mapboxgl.ekmap.TiledMapLayer({
@@ -64,12 +62,12 @@
                 "https://a.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
                 "https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
                 "https://c.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png"
-            ],
-            attribution: attribution
+            ]
         }).addTo(map)
 
         map.addControl(new mapboxgl.AttributionControl({
-            compact: true
+            customAttribution: attribution,
+            compact: false
         }));
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         var features = [];

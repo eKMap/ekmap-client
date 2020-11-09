@@ -24,9 +24,8 @@
         </div>
     </div>
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Mapbox </a>" +
-            "with <span>© <a href='https://iclient.viegis.io' target='_blank'>VieGis iClient</a> | </span>" +
-            " Map Data <span>© <a href='http://support.viegis.com.cn/product/iServer.aspx' target='_blank'>Viegis iServer</a></span> ";
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [103.9, 22.2],
@@ -37,7 +36,8 @@
             token: tokenVN
         }).addTo(map)
         map.addControl(new mapboxgl.AttributionControl({
-            compact: true
+            customAttribution: attribution,
+            compact: false
         }));
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     </script>

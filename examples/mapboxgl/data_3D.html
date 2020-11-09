@@ -193,7 +193,7 @@
                 var fea = e.features[0];
                 if (!hoveredStateId) {
                     var content = '';
-                    content += '<div style="width:150px">';
+                    content += '<div>';
                     content += '   <div class="form-group row" style="text-align: center">';
                     content += '       <a href="javascript:;" class="nameCountry">' + fea.properties.ten + '</a>'
                     content += '   </div>'
@@ -217,6 +217,7 @@
                     popup = new mapboxgl.Popup({ className: 'popup' })
                         .setLngLat(e.lngLat)
                         .setHTML(content)
+                        .setMaxWidth("500px")
                         .addTo(map)
                 }
                 hoveredStateId = fea.id;

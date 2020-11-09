@@ -22,12 +22,19 @@
         <div id="divMapId" class="map"></div>
     </div>
     <script>
+        var attribution = "<a href='https://www.openstreetmap.org/#map=6/16.113/105.806' target='_blank'>© OpenStreetMap </a>" +
+			"by contributors"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105, 17],
             zoom: 4
         });
         var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
+
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>

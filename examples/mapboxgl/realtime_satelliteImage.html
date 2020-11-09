@@ -108,14 +108,20 @@
         <div id="divMapId" class="map"></div>
     </div>
     <script>
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [118.65064808099055, 18.7111502239418],
             zoom: 3.732292015558651
         });
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map);
+            token: tokenVN
+        }).addTo(map);
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         var frameCount = 22;
         var currentImage = 0;
@@ -161,10 +167,9 @@
             }, 500);
         });
 
-        function changeTime(){
-            currentImage = document.getElementById('select-time').value;
+        function changeTime() {
+            currentImage = parseInt(document.getElementById('select-time').value);
             url = getPath();
-            selectTime.value = currentImage
             map.getSource('radar').updateImage({ url: url });
         }
         document.getElementById("button-play").onclick = function () {
@@ -176,6 +181,7 @@
                 btn.value = 'Stop'
                 interval = setInterval(function () {
                     currentImage = (currentImage + 1) % frameCount;
+                    console.log(currentImage)
                     url = getPath();
                     selectTime.value = currentImage
                     map.getSource('radar').updateImage({ url: url });

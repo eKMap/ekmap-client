@@ -35,6 +35,8 @@
         </div>
     </div>
     <script type="text/javascript">
+     var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: "divMapId",
             style: {
@@ -47,6 +49,11 @@
             center: [106.20498485851135, 20.262531684980956],
             zoom: 9.070731400697946
         });
+
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
         map.on('load', function () {

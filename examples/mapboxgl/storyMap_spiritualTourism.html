@@ -219,6 +219,8 @@
     </div>
 
     <script>
+        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105.8347447, 21.0479776],
@@ -230,7 +232,11 @@
         var features = [];
         var popup;
         var caroselInner
-        map.addControl(new mapboxgl.NavigationControl(), "top-right");
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }),"top-right");
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
         $(document).ready(function () {
             var name = document.getElementById('namePagoda');
             var imgSelected = document.getElementById('imgSelected');
@@ -285,8 +291,7 @@
                 });
             }).done(function () {
                 $('.multi-item-carousel').carousel({
-                    interval: false,
-                    wrap: false
+                    interval: false
                 });
                 $('.carousel .item').each(function () {
                     var next = $(this).next();
