@@ -70,7 +70,7 @@ html, body, .wrapper {
 
 #innerPage {
     width: 100%;
-    height: calc(100vh - 150px);
+    height: calc(100vh - 140px);
     border: none;
 }
 

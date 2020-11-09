@@ -214,7 +214,7 @@
                     content += '      </div>'
                     content += '   </div>'
                     content += '</div>'
-                    popup = new mapboxgl.Popup({ className: 'popup' })
+                    popup = new mapboxgl.Popup({ className: 'popup', closeButton: false })
                         .setLngLat(e.lngLat)
                         .setHTML(content)
                         .setMaxWidth("500px")

@@ -508,12 +508,12 @@ var exampleConfig = {
                         description: ""
                     },
                     {
-                        name: "Timeline Coronavirus (Area)",
-                        name_en: "Timeline Coronavirus (Area)",
+                        name: "COVID-19: Government Response Stringency",
+                        name_en: "COVID-19: Government Response Stringency",
                         thumbnail: "timeline_fillCov.gif",
                         fileName: "timeline_fillCov",
                         subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
                     },
                     // {
                     //     name: "Timeline Coronavirus (Buffer)",
@@ -522,12 +522,12 @@ var exampleConfig = {
                     //     fileName: "timeline_bufferCov"
                     // },
                     {
-                        name: "Spiritual Tourism",
-                        name_en: "Spiritual Tourism",
+                        name: "Spiritual Tourism Map Tour",
+                        name_en: "Spiritual Tourism Map Tour",
                         thumbnail: "storyMap_spiritualTourism.png",
                         fileName: "storyMap_spiritualTourism",
                         subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        description: "10 attractive spiritual tourist attractions in Hanoi capital."
                     },
 
                 ]

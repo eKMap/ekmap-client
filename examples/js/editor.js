@@ -121,18 +121,45 @@ function createIFrame() {
     var hash = window.location.hash;
     var id = hash.split("#")[1];
     var div = document.createElement("div");
-    div.style.padding = '5px 5px 5px 20px';
-    div.style.backgroundColor = 'white';
-    var h2 = document.createElement("h2");
+    // div.style.padding = '5px 5px 5px 20px';
+    div.style.backgroundColor = '#1a94fb14';
+    div.style.display = 'block';
+    div.style.height = '80px';
+
+
+    var divLeft = document.createElement("div");
+    divLeft.style.width = '90%';
+    divLeft.style.float = 'left';
+    divLeft.style.padding= "15px 5px 5px 20px";
+
+    var divRight = document.createElement("div");
+    divRight.style.width = '10%';
+    divRight.style.float = 'right';
+    divRight.style.textAlign= "center";
+
+
+    var span = document.createElement("span");
+    span.style.fontSize = '20px';
+    span.style.fontWeight = '500';
+    span.style.lineHeight = '35px';
+
     var p = document.createElement("p");
     p.style.marginBottom = '0px';
+    p.style.fontSize = '13px';
+
+    var img = document.createElement("img");
+    img.style.margin = '25px';
+    img.style.width = '70%';
+    img.setAttribute("src","http://ekgis.com.vn/wp-content/uploads/2014/08/ekgislogonew.png")
+
+    
     var k = 0;
     for (var key in config) {
         for (var key1 in config[key].content) {
             var arr = config[key].content[key1].content;
             arr.forEach(element => {
                 if (element.fileName == id && element.description) {
-                    h2.innerHTML = element.name;
+                    span.innerHTML = element.name;
                     p.innerHTML = element.description;
                     k = 1;
                 }
@@ -140,11 +167,14 @@ function createIFrame() {
         }
     }
     if (k == 0) {
-        h2.innerHTML = "This is title";
+        span.innerHTML = "This is title";
         p.innerHTML = "This is description";
     }
-    div.append(h2);
-    div.append(p)
+    divLeft.append(span);
+    divLeft.append(p);
+    divRight.append(img);
+    div.append(divLeft);
+    div.append(divRight);
     var preViewPane = $("#previewPane");
     preViewPane.empty();
     var iframe = document.createElement("iframe");

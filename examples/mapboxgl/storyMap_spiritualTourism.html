@@ -39,7 +39,7 @@
         .containerCaro {
             position: absolute;
             z-index: 1;
-            bottom: 80px;
+            bottom: 10px;
             width: calc(100vw);
             max-height: 124px !important;
         }
@@ -49,7 +49,7 @@
             z-index: 1;
             top: 145px;
             width: calc(100vw/2.5);
-            bottom: 224px;
+            bottom: 145px;;
         }
 
 
@@ -160,11 +160,6 @@
 <body>
 
     <div style="width: 100%;">
-        <div style="padding: 5px 5px 5px 20px;">
-            <h2>Spiritual Tourism Map Tour, <span style="font-weight: 700;" id='namePagoda'>Tran Quoc
-                    Pagoda</span></h2>
-            <p><span>10 attractive spiritual tourist attractions in Hanoi capital.</span></p>
-        </div>
         <div id="divMapId" class="map">
             <div class="containerCaro container">
                 <div class="row">
@@ -235,10 +230,9 @@
         map.addControl(new mapboxgl.AttributionControl({
             customAttribution: attribution,
             compact: false
-        }),"top-right");
+        }),"top-left");
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         $(document).ready(function () {
-            var name = document.getElementById('namePagoda');
             var imgSelected = document.getElementById('imgSelected');
             var nameImg = document.getElementById('nameImg');
             var desImg = document.getElementById('desImg');
@@ -316,7 +310,6 @@
                     var index = e.currentTarget.outerText[0] + e.currentTarget.outerText[1]
                     for (var i = 1; i < 11; i++) {
                         if (index == i) {
-                            name.textContent = features[i - 1].properties.name;
                             imgSelected.setAttribute('src', features[i - 1].properties.image)
                             nameImg.innerHTML = "Welcome to " + features[i - 1].properties.name + '!';
                             desImg.innerHTML = features[i - 1].properties.description + '<br><hr><font size="1" color="Grey"><i>Photo source: Collector</i></font>';
