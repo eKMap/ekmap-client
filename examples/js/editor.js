@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    window.initI18N(function(){
-    initPage();
-    bindEvents();
-    sidebarScrollFix();
-});
+    window.initI18N(function () {
+        initPage();
+        bindEvents();
+        sidebarScrollFix();
+    });
 });
 
 var aceEditor;
@@ -60,6 +60,7 @@ function loadExampleHtml() {
     var href = window.location.toString();
     var mapUrl = href.substr(0, href.lastIndexOf('/') + 1);
     mapUrl = mapUrl + locationParam + ".html";
+
     if (!mapUrl) {
         return;
     }
@@ -99,7 +100,7 @@ function run() {
 function loadPreview(content) {
     var iFrame = createIFrame(),
         iframeDocument = iFrame.contentWindow.document;
-    iFrame.contentWindow.resources=window.resources?window.resources.resources:{};
+    iFrame.contentWindow.resources = window.resources ? window.resources.resources : {};
     iframeDocument.open();
     iframeDocument.write(content);
     iframeDocument.close();
@@ -116,11 +117,40 @@ function loadPreview(content) {
 }
 
 function createIFrame() {
+    var config = exampleConfig;
+    var hash = window.location.hash;
+    var id = hash.split("#")[1];
+    var div = document.createElement("div");
+    div.style.padding = '5px 5px 5px 20px';
+    div.style.backgroundColor = 'white';
+    var h2 = document.createElement("h2");
+    var p = document.createElement("p");
+    p.style.marginBottom = '0px';
+    var k = 0;
+    for (var key in config) {
+        for (var key1 in config[key].content) {
+            var arr = config[key].content[key1].content;
+            arr.forEach(element => {
+                if (element.fileName == id && element.description) {
+                    h2.innerHTML = element.name;
+                    p.innerHTML = element.description;
+                    k = 1;
+                }
+            });
+        }
+    }
+    if (k == 0) {
+        h2.innerHTML = "This is title";
+        p.innerHTML = "This is description";
+    }
+    div.append(h2);
+    div.append(p)
     var preViewPane = $("#previewPane");
     preViewPane.empty();
     var iframe = document.createElement("iframe");
     $(iframe).attr("id", "innerPage");
     $(iframe).attr("name", "innerPage");
+    preViewPane.append(div)
     preViewPane.append(iframe);
     return iframe;
 }

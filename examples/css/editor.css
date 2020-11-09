@@ -70,7 +70,7 @@ html, body, .wrapper {
 
 #innerPage {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 150px);
     border: none;
 }
 
@@ -93,8 +93,8 @@ html, body, .wrapper {
     cursor: pointer;
     z-index: 900;
     position: absolute;
-    top: 4px;
-    right: 0;
+    top: 100px;
+    right: 8px;
     padding: 0 10px;
     min-width: 54px;
     height: 30px;

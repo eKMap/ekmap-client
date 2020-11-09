@@ -52,7 +52,7 @@ export class TiledVietNamMapLayer extends TiledMapLayer {
     }
 
     /**
-     * @function mapboxgl.ekmap.TiledAdminMapLayer.prototype.addTo
+     * @function mapboxgl.ekmap.TiledVietNamMapLayer.prototype.addTo
      * @description Adds the layer to the given map or layer group.
      * @param {mapboxgl.Map} map - Adds the layer to the given map or layer group.
      * @returns this

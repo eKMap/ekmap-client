@@ -41,6 +41,24 @@
             backdrop-filter: blur(8px);
         }
         
+        .tlControl {
+            flex: 40%;
+            max-width: 40%;
+            padding-right: 24px;
+            padding-top: 18px;
+        }
+        
+        .tlControl #button-play {
+            cursor: pointer;
+            margin-left: 18px;
+            margin-right: 18px;
+            float: right;
+        }
+        
+        .tlControl div {
+            float: right;
+        }
+        
         .tlStats {
             flex: 60%;
             max-width: 60%;
@@ -116,20 +134,20 @@
             <div class="tlStatsControl">
                 <div class="tlStats">
                     <div class="tlDate">
-                        <input type="button" class="spread-label" value="PAUSE" id="button-play">
-                    </div>
-                    <div class="tlConfirmed">
                         <div>Ngày</div>
                         <div style="font-size: 24px;">
                             <span id="date"></span>
                         </div>
                     </div>
-                    <div class="tlFatal">
+                    <div class="tlConfirmed">
                         <div>Tổng ca </div>
                         <div style="font-size:24px;color: #DE3700;">
                             <span id="total_case"></span>
                         </div>
                     </div>
+                </div>
+                <div class="tlControl">
+                    <input type="button" class="spread-label" value="PAUSE" id="button-play">
                 </div>
             </div>
             <div class="tlProgress">
@@ -141,8 +159,6 @@
     </div>
     </div>
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105, 17],
@@ -150,12 +166,8 @@
         });
         var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
 
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
-        var pt, buffered, long, lat, dataTotal, tongngay = 0;
+        var pt, buffered, long, lat, dataTotal, totalday = 0;
         var totalcase_day = [];
         var data = [];
         var count = 0,
@@ -175,9 +187,8 @@
                 covid.forEach(items => {
                     long = items.properties.geoid[1];
                     lat = items.properties.geoid[0];
-                    tongngay += items.properties.total;
                     if (items.properties.new)
-                        tongngay += items.properties.new;
+                        totalday += items.properties.new;
                     var point = turf.point([long, lat]);
                     dataTotal = items.properties.total;
                     var a = getRadius(dataTotal, minData, maxData, minRadius, maxRadius);
@@ -186,13 +197,11 @@
                     });
                     dataLayer.push(buffered)
                 })
-                console.log(tongngay)
-                totalcase_day.push(tongngay);
+                totalcase_day.push(totalday);
                 data.push(dataLayer);
             }).done(function() {
                 count++;
                 if (count == 143) {
-                    console.log(totalcase_day)
                     widgets.loader.removeLoader();
                     map.addSource('states', {
                         'type': 'geojson',
@@ -216,20 +225,18 @@
                         if (x == 143)
                             clearInterval(interval);
                         else {
-                            var datatong = {
+                            var datacase = {
                                 'type': 'FeatureCollection',
                                 'features': data[x]
                             };
                             x++;
-                            map.getSource('states').setData(datatong);
+                            map.getSource('states').setData(datacase);
                             if (x == 143) {
                                 window.clearInterval(timer);
                             }
                             document.getElementById('tlSlider').value = x;
                             document.getElementById('date').innerHTML = date[x];
-                            document.getElementById('total_case').innerHTML = new Intl.NumberFormat('en-IN', {
-                                maximumSignificantDigits: 3
-                            }).format(totalcase_day[x]);
+                            document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
                         }
                     }, 300);
                 }
@@ -252,21 +259,18 @@
                     if (x == 143)
                         clearInterval(interval);
                     else {
-                        var datatong = {
+                        var datacase = {
                             'type': 'FeatureCollection',
                             'features': data[x]
                         };
                         x++;
-                        map.getSource('states').setData(datatong);
+                        map.getSource('states').setData(datacase);
                         if (x == 143) {
                             window.clearInterval(timer);
                         }
                         document.getElementById('tlSlider').value = x;
                         document.getElementById('date').innerHTML = date[x];
-                        // document.getElementById('total_case').innerHTML = new Intl.NumberFormat().format(totalcase_day[x]);
-                        document.getElementById('total_case').innerHTML = new Intl.NumberFormat('en-IN', {
-                            maximumSignificantDigits: 3
-                        }).format(totalcase_day[x]);
+                        document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
                     }
                 }, 300);
             }
@@ -280,18 +284,40 @@
         function changeTime() {
             value = document.getElementById('tlSlider').value;
             document.getElementById('date').innerHTML = date[x];
-            var datatong = {
+            var datacase = {
                 'type': 'FeatureCollection',
                 'features': data[x]
             };
             x++;
-            map.getSource('states').setData(datatong);
+            map.getSource('states').setData(datacase);
             if (x == 143) {
                 window.clearInterval(timer);
             }
-            document.getElementById('total_case').innerHTML = new Intl.NumberFormat('en-IN', {
-                maximumSignificantDigits: 3
-            }).format(totalcase_day[x]);
+            document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
+        }
+
+        function formatNumber(values, type) {
+            var x = values + "";
+
+            if (x.length / 3 > 1) {
+
+                var y = Array.from(x);
+                var z = "";
+                var k = 0;
+                for (let i = x.length; i > 0; i--) {
+                    if (k == 0) {
+                        z = y[i - 1] + z
+                    } else if (k % 3 == 0) {
+                        z = y[i - 1] + type + z
+                    } else {
+                        z = y[i - 1] + z
+                    }
+                    k++;
+                }
+                return z;
+            } else {
+                return values;
+            }
         }
     </script>
 </body>

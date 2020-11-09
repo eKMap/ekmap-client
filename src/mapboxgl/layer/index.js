@@ -22,6 +22,9 @@ export { WMS } from './WMS';
 
 export { WFS } from './WFS';
 
+export { BasemapLayer } from './BasemapLayer';
+
+
 
 
 

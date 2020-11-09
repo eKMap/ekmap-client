@@ -20,7 +20,7 @@ var exampleConfig = {
                         thumbnail: "mapService_find.png",
                         fileName: "mapService_find",
                         subject: "Use the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.",
-                        description: ""
+                        description:  "Enter the name of the province, highway or PPC to see a list of information by search name."
                     },
                     {
                         name: "Bounds query",
@@ -28,7 +28,7 @@ var exampleConfig = {
                         thumbnail: "mapService_queryByBound.png",
                         fileName: "mapService_queryByBound",
                         subject: "Use queryByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-                        description: ""
+                        description: "Create bound, displaying data on the bound area."
                     },
                     {
                         name: "Geometry query",
@@ -36,7 +36,7 @@ var exampleConfig = {
                         thumbnail: "mapService_queryByGeometry.png",
                         fileName: "mapService_queryByGeometry",
                         subject: "Use queryByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-                        description: ""
+                        description: "Create polygon, display data on polygon"
                     },
                     {
                         name: "Identify",
@@ -44,7 +44,7 @@ var exampleConfig = {
                         thumbnail: "mapService_identify.png",
                         fileName: "mapService_identify",
                         subject: "Use identify of mapboxgle.ekmap.TiledMapLayer resource to discover features at a geographic location",
-                        description: ""
+                        description: "Click on the map to see what provincial or national highways are at that location"
                     },
                     {
                         name: "Image Tile ZYX",
@@ -52,7 +52,7 @@ var exampleConfig = {
                         thumbnail: "mapService_ImageTileZYX.png",
                         fileName: "mapService_ImageTileZYX",
                         subject: "Use mapboxgl.ekmap.TiledMapLayer to add image tile ZYX to your map.",
-                        description: ""
+                        description: "Upload data as images"
                     },
                 ]
             },
@@ -66,7 +66,7 @@ var exampleConfig = {
                         thumbnail: "featureService_queryByBound.png",
                         fileName: "featureService_getFeaturesByBound",
                         subject: "Use getFeaturesByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-                        description: ""
+                        description: "Create bound, displaying data on the bound area."
 
                     },
                     {
@@ -75,7 +75,7 @@ var exampleConfig = {
                         thumbnail: "featureService_queryByGeometry.png",
                         fileName: "featureService_getFeaturesByGeometry",
                         subject: "Use getFeaturesByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-                        description: ""
+                        description: "Create polygon, display data on polygon"
                     },
                     {
                         name: "Apply Edits",
@@ -83,7 +83,7 @@ var exampleConfig = {
                         thumbnail: "featureService_applyEditsFeatures.png",
                         fileName: "featureService_applyEditsFeatures",
                         subject: "Use applyEditsFeatures of mapboxgl.ekmap.FeatureLayer to add, edit, or delete operations.",
-                        description: ""
+                        description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete)."
                     },
                     {
                         name: "Add Features",
@@ -91,7 +91,7 @@ var exampleConfig = {
                         thumbnail: "featureService_addFeatures.png",
                         fileName: "featureService_addFeatures",
                         subject: "Use addFeatures of mapboxgl.ekmap.FeatureLayer to add points to the map.",
-                        description: ""
+                        description: "Click on the map to add points (marker color selectable)."
                     },
                     {
                         name: "Update Features",
@@ -99,7 +99,7 @@ var exampleConfig = {
                         thumbnail: "featureService_updateFeatures.png",
                         fileName: "featureService_updateFeatures",
                         subject: "Use updateFeatures of mapboxgl.ekmap.FeatureLayer to update location points on the map.",
-                        description: ""
+                        description: "Update location. Select the feature to change, then choose the desired position."
                     },
                     {
                         name: "Delete Features",
@@ -107,7 +107,7 @@ var exampleConfig = {
                         thumbnail: "featureService_deleteFeatures.png",
                         fileName: "featureService_deleteFeatures",
                         subject: "Use deleteFeatures of mapboxgl.ekmap.FeatureLayer to delete points on the map.",
-                        description: ""
+                        description: "Select feature to delete on the map to delete"
                     },
                 ]
             },
@@ -210,8 +210,23 @@ var exampleConfig = {
                         fileName: "tiledMap_osmMap",
                         subject: "Use mapboxgl.ekmap.TiledOSMapLayer",
                         description: ""
+                    },
+                    {
+                        name: "Showing an ArcGIS basemap",
+                        name_en: "Showing an ArcGIS basemap",
+                        thumbnail: "basemapLayer.png",
+                        fileName: "basemapLayer",
+                        subject: "Use mapboxgl.ekmap.TiledOSMapLayer",
+                        description: "Display an ArcGIS Online basemap."
+                    },
+                    {
+                        name: "Basemap with labels",
+                        name_en: "Basemap with labels",
+                        thumbnail: "basemapLayer_labels.png",
+                        fileName: "basemapLayer_labels",
+                        subject: "Use mapboxgl.ekmap.TiledOSMapLayer",
+                        description: "Showing an ArcGIS Online basemap with a separate label layer."
                     }
-
                 ]
             },
             heat: {
@@ -220,8 +235,8 @@ var exampleConfig = {
                 version: "",
                 content: [
                     {
-                        name: "random points",
-                        name_en: "random points",
+                        name: "Random Points",
+                        name_en: "Random Points",
                         version: "",
                         thumbnail: "heatMapLayer_mbgl.png",
                         fileName: "heatMapLayer_mbgl",
@@ -260,16 +275,16 @@ var exampleConfig = {
                 name_en: "Animation",
                 content: [
                     {
-                        name: "flashing points",
-                        name_en: "flashing points",
+                        name: "Flashing Points",
+                        name_en: "Flashing Points",
                         thumbnail: "animation_flashing_point.gif",
                         fileName: "animation_flashing_point",
                         subject: "Add an animated icon to the map that was generated at runtime with a Canvas.",
                         description: ""
                     },
                     {
-                        name: "point",
-                        name_en: "point",
+                        name: "Point",
+                        name_en: "Point",
                         thumbnail: "animation_point.gif",
                         fileName: "animation_point",
                         subject: "Animate the position of a point by updating a GeoJSON source on each frame.",
@@ -282,32 +297,32 @@ var exampleConfig = {
                 name_en: "ECharts",
                 content: [
                     {
-                        name: "line chart",
-                        name_en: "line chart",
+                        name: "Line Chart",
+                        name_en: "Line Chart",
                         thumbnail: "echarts_lineMarker.gif",
                         fileName: "echarts_lineMarker",
                         subject: "Use echarts to display line chart.",
                         description: ""
                     },
                     {
-                        name: "bar chart",
-                        name_en: "bar chart",
+                        name: "Bar Chart",
+                        name_en: "Bar Chart",
                         thumbnail: "echarts_bar.gif",
                         fileName: "echarts_bar",
                         subject: "Use echarts to display bar chart.",
                         description: ""
                     },
                     {
-                        name: "scatter chart",
-                        name_en: "scatter chart",
+                        name: "Scatter Chart",
+                        name_en: "Scatter Chart",
                         thumbnail: "echarts_scatter.gif",
                         fileName: "echarts_scatter",
                         subject: "Use echarts to display scatter chart.",
                         description: ""
                     },
                     {
-                        name: "pie chart",
-                        name_en: "pie chart",
+                        name: "Pie Chart",
+                        name_en: "Pie Chart",
                         thumbnail: "echarts_pie.gif",
                         fileName: "echarts_pie",
                         subject: "Use echarts to display pie chart.",
@@ -320,24 +335,24 @@ var exampleConfig = {
                 name_en: "Hight Chart",
                 content: [
                     {
-                        name: "bar highcharts",
-                        name_en: "bar highcharts",
+                        name: "Bar Highcharts",
+                        name_en: "Bar Highcharts",
                         thumbnail: "highcharts_bar.gif",
                         fileName: "highcharts_bar",
                         subject: "Use highcharts to display bar.",
                         description: ""
                     },
                     {
-                        name: "line highcharts",
-                        name_en: "line highcharts",
+                        name: "Line Highcharts",
+                        name_en: "Line Highcharts",
                         thumbnail: "highcharts_line.gif",
                         fileName: "highcharts_line",
                         subject: "Use highcharts to display line.",
                         description: ""
                     },
                     {
-                        name: "pie highcharts",
-                        name_en: "pie highcharts",
+                        name: "Pie Highcharts",
+                        name_en: "Pie Highcharts",
                         thumbnail: "highcharts_pie.gif",
                         fileName: "highcharts_pie",
                         subject: "Use highcharts to display pie.",
@@ -372,8 +387,8 @@ var exampleConfig = {
                 name_en: "threejs",
                 content: [
                     {
-                        name: "buildings",
-                        name_en: "buildings",
+                        name: "Buildings",
+                        name_en: "Buildings",
                         version: "",
                         thumbnail: "threejsLayer_buildings.png",
                         fileName: "threejsLayer_buildings",
@@ -381,8 +396,8 @@ var exampleConfig = {
                         description: ""
                     },
                     {
-                        name: "airplane(gltf)",
-                        name_en: "airplane(gltf)",
+                        name: "Airplane(gltf)",
+                        name_en: "Airplane(gltf)",
                         version: "",
                         thumbnail: "threejsLayer_airplane.gif",
                         fileName: "threejsLayer_airplane",
@@ -581,7 +596,7 @@ var exampleConfig = {
                     }
                 ]
             },
-             WFS: {
+            WFS: {
                 name: "WFS",
                 name_en: "WFS",
                 content: [

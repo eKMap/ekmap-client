@@ -68,7 +68,7 @@
                 token: tokenKey
             }).addTo(map);
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-            var legend = new mapboxgl.ekmap.control.Legend([tiledMap]);
+            var legend = new mapboxgl.ekmap.control.Legend({layers: [tiledMap]});
             map.addControl(legend, "bottom-left");
             map.addControl(new mapboxgl.AttributionControl({
                 customAttribution: attribution,
