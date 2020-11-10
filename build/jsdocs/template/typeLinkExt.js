@@ -12,7 +12,7 @@ var typeLinks = {
     //mapv
     "Mapv.DataSet": mapv + 'data/DataSet.md',
     "Mapv.BaiduMapLayer": mapv + 'map/baidu-map/Layer.md',
-    
+    "MapMouseEvent": 'https://docs.mapbox.com/mapbox-gl-js/api/events/#mapmouseevent',
 	//GeoJSON
     "GeoJSONObject": geojsonapi
     

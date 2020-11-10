@@ -24,8 +24,6 @@
         </div>
     </div>
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [103.9, 22.2],
@@ -37,10 +35,6 @@
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var scale = new mapboxgl.ScaleControl({});
         map.addControl(scale, 'bottom-left');
-        map.addControl(new mapboxgl.AttributionControl({
-                customAttribution: attribution,
-                compact: false
-            }));
         scale.setUnit('metric');
     </script>
 </body>

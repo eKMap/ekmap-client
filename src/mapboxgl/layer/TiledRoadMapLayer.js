@@ -1,6 +1,6 @@
 import { Util } from '../core/Util';
 import mapboxgl from 'mapbox-gl';
-import { TiledMapLayer } from './TiledMapLayer';
+import { TileLayer } from './TileLayer';
 
 /**
  * @class mapboxgl.ekmap.TiledRoadMapLayer
@@ -8,7 +8,7 @@ import { TiledMapLayer } from './TiledMapLayer';
  * @category Layer
  * @param {Object} options - Control options.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
- * @extends {mapboxgl.ekmap.TiledMapLayer}
+ * @extends {mapboxgl.ekmap.TileLayer}
  * @example
  * var map = new mapboxgl.Map({
  *     container: 'map1',
@@ -18,7 +18,7 @@ import { TiledMapLayer } from './TiledMapLayer';
  * var roadMap = new mapboxgl.ekmap.TiledRoadMapLayer({})
  *   .addTo(map);
  */
-export class TiledRoadMapLayer extends TiledMapLayer {
+export class TiledRoadMapLayer extends TileLayer {
 
     constructor(options) {
         super();
@@ -36,12 +36,12 @@ export class TiledRoadMapLayer extends TiledMapLayer {
                 this.urlsToken.push(url);
             })
         if (this.urlsToken.length > 0) {
-            this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
+            this.TileLayer = new mapboxgl.ekmap.TileLayer({
                 urls: this.urlsToken
             })
         }
         else {
-            this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
+            this.TileLayer = new mapboxgl.ekmap.TileLayer({
                 urls: this.urls
             })
         }
@@ -54,7 +54,7 @@ export class TiledRoadMapLayer extends TiledMapLayer {
      * @returns this
      */
     addTo(map) {
-        return this.tiledMapLayer.addTo(map);
+        return this.TileLayer.addTo(map);
     }
 }
 

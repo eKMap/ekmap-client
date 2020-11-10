@@ -10,12 +10,13 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.layers (required) Comma-separated list of WMS layers to show.
  * @param {string} options.styles Comma-separated list of WMS styles.
  * @param {string} options.tileSize=256 
- * @param {string} options.bbox 
+ * @param {string} options.bbox ='{bbox-epsg-3857}'
  * @param {string} options.format='image/jpeg' WMS image format (use 'image/png' for layers with transparency).
  * @param {boolean} options.transparent=false If true, the WMS service will return images with transparency.
  * @param {string} options.version='1.1.1' Version of the WMS service to use.
  * @param {CRS} options.crs=null Coordinate Reference System to use for the WMS requests, defaults to map CRS. Don't change this if you're not sure what it means.
  * @param {boolean} options.uppercase=false If true, WMS request parameter keys will be uppercase.
+ * @param {boolean} options.onClick=true Fired when a pointing device (usually a mouse) is pressed and released at the same point on the map.<br> If false, not fired.
  * @extends {mapboxgl.Evented}
  * @example
  * var map = new mapboxgl.Map({
@@ -26,7 +27,6 @@ import mapboxgl from 'mapbox-gl';
  * var wms = new mapboxgl.ekmap.WMS('https://demo.geo-solutions.it/geoserver/topp/wms', {
  *     layers: 'topp:states',
  *     transparent: true,
- *     bbox: '{bbox-epsg-3857}'
  * }).addTo(map);
  */
 export class WMS extends mapboxgl.Evented {
@@ -43,7 +43,8 @@ export class WMS extends mapboxgl.Evented {
             transparent: false,
             version: '1.1.1',
             tileSize: 256,
-            bbox: ''
+            bbox: '{bbox-epsg-3857}',
+            onClick: true
         }
         var wmsParams = Util.extend({}, this.defaultWmsParams);
         // all keys that are not TileLayer options go to WMS params
@@ -88,18 +89,30 @@ export class WMS extends mapboxgl.Evented {
                 'paint': {}
             }
         );
-        this._map.on('click', function (e) {
-            me.getFeatureInfo(e)
-        });
+        if (this.wmsParams.onClick)
+            this._map.on('click', function (e) {
+                me.getFeatureInfo(e)
+            });
         return this;
     }
 
+    /**
+     * @private
+     * @function mapboxgl.ekmap.WMS.prototype.getTileSize
+     * @returns mapboxgl.Point
+     */
     getTileSize() {
         var s = this.defaultWmsParams.tileSize;
         return s instanceof mapboxgl.Point ? s : new mapboxgl.Point(s, s);
     }
 
-    getFeatureInfo(evt) {
+    /**
+     * @function mapboxgl.ekmap.WMS.prototype.getFeatureInfo
+     * @description Get feature infomation.
+     * @param {MapMouseEvent} evt The event object (e) of MapMouseEvent.
+     * @param {RequestCallback} callback
+     */
+    getFeatureInfo(evt, callback) {
         var sw = new mapboxgl.LngLat(evt.lngLat.lng - 1, evt.lngLat.lat - 1);
         var ne = new mapboxgl.LngLat(evt.lngLat.lng + 1, evt.lngLat.lat + 1);
         var bounds = new mapboxgl.LngLatBounds(sw, ne);
@@ -109,7 +122,7 @@ export class WMS extends mapboxgl.Evented {
             url: url,
             success: function (data, status, xhr) {
                 var err = typeof data === 'string' ? null : data;
-                showResults(err, evt.lngLat, data);
+                showResults(err, evt.lngLat, data, callback);
             },
             error: function (xhr, status, error) {
                 showResults(error);
@@ -117,6 +130,13 @@ export class WMS extends mapboxgl.Evented {
         });
     }
 
+    /**
+     * @private
+     * @function mapboxgl.ekmap.WMS.prototype.getFeatureInfoUrl
+     * @description Adds the layer to the given map or layer group.
+     * @param {mapboxgl.Map} map - Adds the layer to the given map or layer group.
+     * @returns this
+     */
     getFeatureInfoUrl(bounds) {
         // Construct a GetFeatureInfo request URL given a point
         // var point = this._map.latLngToContainerPoint(lngLat, this._map.getZoom()),
@@ -136,7 +156,7 @@ export class WMS extends mapboxgl.Evented {
             width: tileSize.x * realRetina,
             layers: this.wmsParams.layers,
             query_layers: this.wmsParams.layers,
-            info_format: 'text/html'
+            info_format: this.wmsParams.onClick ? 'text/html' : 'application/json'
         };
 
         params[params.version === '1.3.0' ? 'i' : 'x'] = 50;
@@ -145,8 +165,19 @@ export class WMS extends mapboxgl.Evented {
         return this._url + Util.getParamString(params, this._url, true);
     }
 
-    showGetFeatureInfo(err, latlng, content) {
-        if (err) { console.log(err); return; } // do nothing if there's an error
+    /**
+     * @private
+     * @function mapboxgl.ekmap.WMS.prototype.showGetFeatureInfo
+     * @description Adds the layer to the given map or layer group.
+     * @param {mapboxgl.Map} map - Adds the layer to the given map or layer group.
+     * @returns this
+     */
+    showGetFeatureInfo(err, latlng, content, callback) {
+        //content: json
+        if (err) {
+            return callback(err);
+        }
+        //content: html
         var content = String(content);
         // Otherwise show the content in a popup, or something.
         new mapboxgl.Popup({ maxWidth: 800 })

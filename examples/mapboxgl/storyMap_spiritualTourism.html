@@ -30,6 +30,7 @@
 
         body {
             overflow: hidden;
+            margin: 8px;
         }
 
         /* .multi-item-carousel .carousel-inner>.item {
@@ -40,7 +41,8 @@
             position: absolute;
             z-index: 1;
             bottom: 10px;
-            width: calc(100vw);
+            width: 100%;
+            padding: 0px !important;
             max-height: 124px !important;
         }
 
@@ -49,7 +51,8 @@
             z-index: 1;
             top: 145px;
             width: calc(100vw/2.5);
-            bottom: 145px;;
+            bottom: 145px;
+            padding: 0px !important;
         }
 
 
@@ -151,7 +154,8 @@
             padding-right: 10px;
             font-size: 14px;
         }
-        .control-l-r{
+
+        .control-l-r {
             width: 15px;
         }
     </style>
@@ -177,11 +181,11 @@
             </div>
             <div class="container containerImg">
                 <div class="row" style="height: 100%;">
-                    <div class="col-md-12"style="height: 100%;">
+                    <div class="col-md-12" style="height: 100%;">
                         <img class="imgSelected" src="../data/Tourism/tranquoc.jpg" id='imgSelected'>
                     </div>
                     <div class="col-md-12" id="placardContainer"
-                        style="height: auto; top: auto; bottom: 2px; left: 1px;  display: block;">
+                        style="height: auto; top: auto; left: 0px;  display: block; padding: 0px;">
                         <div id="toggle">
                             <button class="btn" style="background-color: black; opacity: 0.7;border-radius: unset;"
                                 type="button" data-toggle="collapse" data-target="#collapseDiv" aria-expanded="true"
@@ -214,8 +218,6 @@
     </div>
 
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105.8347447, 21.0479776],
@@ -227,10 +229,6 @@
         var features = [];
         var popup;
         var caroselInner
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }),"top-left");
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         $(document).ready(function () {
             var imgSelected = document.getElementById('imgSelected');
@@ -281,7 +279,6 @@
                     divCol.appendChild(p);
                     divItem.appendChild(divCol);
                     caroselInner.appendChild(divItem);
-
                 });
             }).done(function () {
                 $('.multi-item-carousel').carousel({

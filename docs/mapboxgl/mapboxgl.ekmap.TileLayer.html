@@ -69,7 +69,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="mapboxgl.ekmap.Overlay.html">Class: Overlay</h1>
+        <h1 class="page-title" data-filename="mapboxgl.ekmap.TileLayer.html">Class: TileLayer</h1>
         
 
 
@@ -77,11 +77,11 @@
 <section>
     
 <header>
-    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a>.</span>Overlay
+    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a>.</span>TileLayer
     
     </h2>
     
-        <div class="class-description"><p>mapboxgl.ekmap.Overlay</p></div>
+        <div class="class-description"><p>The TileLayer class.</p></div>
     
 </header>  
 
@@ -93,14 +93,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="Overlay">
+        <h4 class="name" id="TileLayer">
             
-            new mapboxgl.ekmap.Overlay<span class="signature">(options)</span>
+            new mapboxgl.ekmap.TileLayer<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/Overlay.js, line 3
+            layer/TileLayer.js, line 4
         </div>
         
     </div>
@@ -177,13 +177,13 @@
 	
         <tr>
             
-                <td class="name"><code>map</code></td>
+                <td class="name"><code>url</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type"><a href="https://www.mapbox.com/mapbox-gl-js/api/#map">mapboxgl.Map</a></span>
+<span class="param-type">string</span>
 
 
             
@@ -193,7 +193,30 @@
             
             <td class="description last">
                 
-                <p>Adds the layer to the given map or layer group.</p></td>
+                <p>Required: URL of the <a href="https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm">Map Service</a> with a tile cache.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>token</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Will use this token to authenticate all calls to the service.</p></td>
         </tr>
 	
 	
@@ -256,7 +279,7 @@
             
             
             
-            <li>mapboxgl.Overlay</li>
+            <li><a href="https://www.mapbox.com/mapbox-gl-js/api/#Evented">mapboxgl.Evented</a></li>
             
             
         </ul>
@@ -274,6 +297,135 @@
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="addTo">
+            
+            addTo<span class="signature">(map)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            layer/TileLayer.js, line 34
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Adds the layer to the given map or layer group.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://www.mapbox.com/mapbox-gl-js/api/#map">mapboxgl.Map</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Adds the layer to the given map or layer group.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+
+this
+
+
+    
+    
+    
+</dd>
+
+        </dl>
     
     
     

@@ -74,11 +74,26 @@ export class WFS extends mapboxgl.Evented {
             );
             /**
             * @event mapboxgl.ekmap.WFS#load
-            * @description Fired when the layer of WMS loaded.
+            * @description Fired when the layer of WFS loaded.
             */
             me.fire('load');
         })
         return this;
+    }
+
+    /**
+    * @function mapboxgl.ekmap.WFS.prototype.getFeature
+    * @description Adds the layer to the given map or layer group.
+    * @returns geojson
+    */
+    getFeature(callback) {
+        var baseUrl = this._url + '?' + Util.serialize(this.WFSParams);
+        var result;
+        $.get(baseUrl, function (res) {
+            result = res;
+        }).done(function(){
+            return callback(result);
+        })
     }
 }
 

@@ -29,8 +29,6 @@
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css"
         type="text/css" />
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [103.9, 22.2],
@@ -41,10 +39,6 @@
         }).addTo(map)
         var draw = new MapboxDraw();
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
         map.addControl(draw, 'top-left');
     </script>
 </body>

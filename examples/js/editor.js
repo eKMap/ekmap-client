@@ -132,11 +132,10 @@ function createIFrame() {
     divLeft.style.float = 'left';
     divLeft.style.padding= "15px 5px 5px 20px";
 
-    var divRight = document.createElement("div");
-    divRight.style.width = '10%';
-    divRight.style.float = 'right';
-    divRight.style.textAlign= "center";
-
+    // var divRight = document.createElement("div");
+    // divRight.style.width = '10%';
+    // divRight.style.float = 'right';
+    // divRight.style.textAlign= "center";
 
     var span = document.createElement("span");
     span.style.fontSize = '20px';
@@ -147,12 +146,10 @@ function createIFrame() {
     p.style.marginBottom = '0px';
     p.style.fontSize = '13px';
 
-    var img = document.createElement("img");
-    img.style.margin = '25px';
-    img.style.width = '70%';
-    img.setAttribute("src","http://ekgis.com.vn/wp-content/uploads/2014/08/ekgislogonew.png")
-
-    
+    // var img = document.createElement("img");
+    // img.style.margin = '25px';
+    // img.style.width = '70%';
+    // img.setAttribute("src","http://ekgis.com.vn/wp-content/uploads/2014/08/ekgislogonew.png")
     var k = 0;
     for (var key in config) {
         for (var key1 in config[key].content) {
@@ -172,9 +169,9 @@ function createIFrame() {
     }
     divLeft.append(span);
     divLeft.append(p);
-    divRight.append(img);
+    // divRight.append(img);
     div.append(divLeft);
-    div.append(divRight);
+    // div.append(divRight);
     var preViewPane = $("#previewPane");
     preViewPane.empty();
     var iframe = document.createElement("iframe");

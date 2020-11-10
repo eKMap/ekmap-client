@@ -89,8 +89,6 @@
         </div>
     </div>
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105.60200498678955, 21.029573713872082],
@@ -109,11 +107,6 @@
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map);
-
-            map.addControl(new mapboxgl.AttributionControl({
-                customAttribution: attribution,
-                compact: false
-            }));
             map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
             var bbox = [105.18513830324133, 20.448421821750017, 106.12865461448217, 21.521363590051706]
@@ -184,12 +177,6 @@
                             ['linear'],
                             ['get', 'count'],
                             0,
-                            'yellow',
-                            200,
-                            'yellow',
-                            400,
-                            'yellow',
-                            992,
                             'yellow',
                             1000,
                             'red'

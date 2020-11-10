@@ -1,6 +1,6 @@
 import { Util } from '../core/Util';
 import mapboxgl from 'mapbox-gl';
-import { TiledMapLayer } from './TiledMapLayer';
+import { TileLayer } from './TileLayer';
 
 /**
  * @class mapboxgl.ekmap.TiledOSMapLayer
@@ -8,7 +8,7 @@ import { TiledMapLayer } from './TiledMapLayer';
  * @category Layer
  * @param {Object} options - Control options.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
- * @extends {mapboxgl.ekmap.TiledMapLayer}
+ * @extends {mapboxgl.ekmap.TileLayer}
  * @example
  * var map = new mapboxgl.Map({
  *     container: 'divMapId',
@@ -18,7 +18,7 @@ import { TiledMapLayer } from './TiledMapLayer';
  * var OSMap = new mapboxgl.ekmap.TiledOSMapLayer({})
  *   .addTo(map);
  */
-export class TiledOSMapLayer extends TiledMapLayer {
+export class TiledOSMapLayer extends TileLayer {
 
     constructor(options) {
         super();
@@ -35,13 +35,17 @@ export class TiledOSMapLayer extends TiledMapLayer {
                 this.urlsToken.push(url);
             })
         if (this.urlsToken.length > 0) {
-            this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
-                urls: this.urlsToken
+            this.TileLayer = new mapboxgl.ekmap.TileLayer({
+                urls: this.urlsToken,
+                attribution: "<a href='https://www.openstreetmap.org/' target='_blank' style='color: blue'>© OpenStreetMap </a>" +
+                    "contributors"
             })
         }
         else {
-            this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
-                urls: this.urls
+            this.TileLayer = new mapboxgl.ekmap.TileLayer({
+                urls: this.urls,
+                attribution: "<a href='https://www.openstreetmap.org/' target='_blank' style='color: blue'>© OpenStreetMap </a>" +
+                    "contributors"
             })
         }
     }
@@ -53,7 +57,7 @@ export class TiledOSMapLayer extends TiledMapLayer {
      * @returns this
      */
     addTo(map) {
-        return this.tiledMapLayer.addTo(map);
+        return this.TileLayer.addTo(map);
     }
 }
 

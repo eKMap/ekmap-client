@@ -346,13 +346,13 @@
         mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
         var map = new mapboxgl.Map({
             container: 'divMapId',
-             style: 'mapbox://styles/mapbox/satellite-streets-v11',
+            style: 'mapbox://styles/mapbox/satellite-streets-v11',
             center: [105.79930031798517, 21.02292215577198],
             zoom: 11.819951961785312,
             pitch: 60,
             bearing: 36
         });
-       
+
         map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
         var popup;
@@ -380,7 +380,7 @@
                     })
                     if (popup)
                         popup.remove();
-                    popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500 })
+                    popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500, closeButton: false })
                         .setLngLat([feature.mapView.lon, feature.mapView.lat])
                         .setHTML("<h3>" + feature.name + "</h3>")
                         .addTo(map)
@@ -388,7 +388,7 @@
                 div2.onmouseover = function () {
                     if (popup)
                         popup.remove();
-                    popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500 })
+                    popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500, closeButton: false })
                         .setLngLat([feature.mapView.lon, feature.mapView.lat])
                         .setHTML("<h3>" + feature.name + "</h3>")
                         .addTo(map)

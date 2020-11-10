@@ -16,7 +16,6 @@ var ThreeApplication = {
         return this;
     },
 
-    //threeLayer主要用来设置模型在地图上位置
     setTargetLayer: function (threeLayer) {
         this.threeLayer = threeLayer;
         return this;
@@ -27,19 +26,17 @@ var ThreeApplication = {
     },
 
     start: function () {
-        //程序入口开始
         SceneBuilder.preLoader(ThreeApplication).load();
     }
 };
 
 
 var SceneBuilder = {
-    //预加载模型数据
     preLoader: function (app) {
 
         var manager, slowLoopIntervalId, is3DDataLoaded = false;
         function loadData(onComplete) {
-            var url = '../../data/ThreeBuildingData.json';
+            var url = '../data/ThreeBuildingData.json';
             $.ajax({
                 dataType: 'json',
                 url: url,

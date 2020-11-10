@@ -137,7 +137,7 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_hover.gif",
                         fileName: "vectorTile_Map_hover",
                         subject: "Using events and feature states to create a per feature hover effect.",
-                        description: ""
+                        description: "Using events and feature states to create a per feature hover effect."
                     },
                     {
                         name: "Mapbox Vector Tile Select",
@@ -145,7 +145,7 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_select.gif",
                         fileName: "vectorTile_Map_select",
                         subject: "Vector tile select on the map.",
-                        description: ""
+                        description: "Click on the map to query features using queryRenderedFeatures."
                     }
 
                 ]
@@ -159,16 +159,16 @@ var exampleConfig = {
                         name_en: "Legend Control",
                         thumbnail: "control_legendControl.png",
                         fileName: "control_legendControl",
-                        subject: "Use control legend of mapboxgl.ekmap.control. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
-                        description: ""
+                        subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
+                        description: "Click on the button below control: navigationControl to display Legend"
                     },
                     {
                         name: "Feature Infomation Control",
                         name_en: "Feature Infomation ",
                         thumbnail: "control_featureInfomationControl.png",
                         fileName: "control_featureInfomationControl",
-                        subject: "Use control featureInfomation of mapboxgl.ekmap.control to retrieve the selected object.",
-                        description: ""
+                        subject: "Use control featureInfomation to retrieve the selected object.",
+                        description: "Click on the map to retrieve the selected object."
                     }
                 ]
             }
@@ -196,20 +196,20 @@ var exampleConfig = {
                     //     fileName: "tiledMap_roadmap"
                     // },
                     {
-                        name: "Viet Nam Map",
-                        name_en: "Viet Nam Map",
+                        name: "VietNam Map",
+                        name_en: "VietNam Map",
                         thumbnail: "tiledMap_vnMap.png",
                         fileName: "tiledMap_vnMap",
-                        subject: "Use mapboxgl.ekmap.TiledVietNamMapLayer",
-                        description: ""
+                        subject: "VietNam Map ",
+                        description: "Use mapboxgl.ekmap.TiledVietNamMapLayer to display VietNam map layer on the map"
                     },
                     {
                         name: "OSM Standard",
                         name_en: "OSM Standard",
                         thumbnail: "tiledMap_osmMap.png",
                         fileName: "tiledMap_osmMap",
-                        subject: "Use mapboxgl.ekmap.TiledOSMapLayer",
-                        description: ""
+                        subject: "OSM Standard",
+                        description: "Use mapboxgl.ekmap.TiledOSMapLayer to display OSM Standard layer on the map"
                     },
                     {
                         name: "Showing an ArcGIS basemap",
@@ -249,8 +249,8 @@ var exampleConfig = {
                         version: "",
                         thumbnail: "heatMapLayer.png",
                         fileName: "heatMapLayer",
-                        subject: "Use mapboxgl.ekmap.HeatMapLayer add layer heatmap to the map",
-                        description: ""
+                        subject: "Add layer heatmap to the map",
+                        description: "Use mapboxgl.ekmap.HeatMapLayer to add layer heatmap to the map"
                     },
                 ]
             },
@@ -266,7 +266,7 @@ var exampleConfig = {
                         thumbnail: "cluster.gif",
                         fileName: "cluster",
                         subject: "Use Mapbox GL JS' built-in functions to visualize points as clusters.",
-                        description: ""
+                        description: "Use Mapbox GL JS' built-in functions to visualize points as clusters."
                     }
                 ]
             },
@@ -280,7 +280,7 @@ var exampleConfig = {
                         thumbnail: "animation_flashing_point.gif",
                         fileName: "animation_flashing_point",
                         subject: "Add an animated icon to the map that was generated at runtime with a Canvas.",
-                        description: ""
+                        description: "Add an animated icon to the map that was generated at runtime with a Canvas."
                     },
                     {
                         name: "Point",
@@ -288,7 +288,7 @@ var exampleConfig = {
                         thumbnail: "animation_point.gif",
                         fileName: "animation_point",
                         subject: "Animate the position of a point by updating a GeoJSON source on each frame.",
-                        description: ""
+                        description: "Animate the position of a point by updating a GeoJSON source on each frame."
                     }
                 ]
             },
@@ -302,7 +302,7 @@ var exampleConfig = {
                         thumbnail: "echarts_lineMarker.gif",
                         fileName: "echarts_lineMarker",
                         subject: "Use echarts to display line chart.",
-                        description: ""
+                        description: "Click point on map to display future temperature line chart (data random)."
                     },
                     {
                         name: "Bar Chart",
@@ -310,7 +310,7 @@ var exampleConfig = {
                         thumbnail: "echarts_bar.gif",
                         fileName: "echarts_bar",
                         subject: "Use echarts to display bar chart.",
-                        description: ""
+                        description: "Click point on map to display bar chart (data random)."
                     },
                     {
                         name: "Scatter Chart",
@@ -318,7 +318,7 @@ var exampleConfig = {
                         thumbnail: "echarts_scatter.gif",
                         fileName: "echarts_scatter",
                         subject: "Use echarts to display scatter chart.",
-                        description: ""
+                        description: "Click point on map to display fine dust concentration PM2.5 on a day scatter chart (data source: https://moitruongthudo.vn/)."
                     },
                     {
                         name: "Pie Chart",
@@ -326,7 +326,7 @@ var exampleConfig = {
                         thumbnail: "echarts_pie.gif",
                         fileName: "echarts_pie",
                         subject: "Use echarts to display pie chart.",
-                        description: ""
+                        description: "Click point on map to display pie chart."
                     }
                 ]
             },
@@ -340,7 +340,7 @@ var exampleConfig = {
                         thumbnail: "highcharts_bar.gif",
                         fileName: "highcharts_bar",
                         subject: "Use highcharts to display bar.",
-                        description: ""
+                        description: "Click point on map to display Bar Highcharts (data random)."
                     },
                     {
                         name: "Line Highcharts",
@@ -348,7 +348,7 @@ var exampleConfig = {
                         thumbnail: "highcharts_line.gif",
                         fileName: "highcharts_line",
                         subject: "Use highcharts to display line.",
-                        description: ""
+                        description: "Click point on map to display future temperature Line Highcharts (data random)."
                     },
                     {
                         name: "Pie Highcharts",
@@ -356,7 +356,7 @@ var exampleConfig = {
                         thumbnail: "highcharts_pie.gif",
                         fileName: "highcharts_pie",
                         subject: "Use highcharts to display pie.",
-                        description: ""
+                        description: "Click point on map to display commodity percent by Pie Highcharts (data random)."
                     },
                     {
                         name: "Water HightChart",
@@ -364,7 +364,7 @@ var exampleConfig = {
                         thumbnail: "highcharts_lineWater.png",
                         fileName: "highcharts_lineWater",
                         subject: "Detailed display of SCADA measuring point chart data.",
-                        description: ""
+                        description: "Detailed display of SCADA measuring point chart data. Click an area on the map to view data in that area."
                     }
                 ]
             },
@@ -377,8 +377,8 @@ var exampleConfig = {
                         name_en: "Data rain",
                         thumbnail: "data_rain.png",
                         fileName: "data_rain",
-                        subject: "Display flood warning data, rainfall information in Central - Vietnam.",
-                        description: ""
+                        subject: "Use chart online to display flood warning data, rainfall information in Central - Vietnam.",
+                        description: "Click point on the map to show flood warning data, rainfall information in Central - Vietnam by chart online."
                     }
                 ]
             },
@@ -392,8 +392,8 @@ var exampleConfig = {
                         version: "",
                         thumbnail: "threejsLayer_buildings.png",
                         fileName: "threejsLayer_buildings",
-                        subject: "Use mapboxgl.ekmap.ThreeLayer.",
-                        description: ""
+                        subject: "Use ThreeLayer to display buildings.",
+                        description: "Use mapboxgl.ekmap.ThreeLayer to display buildings."
                     },
                     {
                         name: "Airplane(gltf)",
@@ -401,8 +401,8 @@ var exampleConfig = {
                         version: "",
                         thumbnail: "threejsLayer_airplane.gif",
                         fileName: "threejsLayer_airplane",
-                        subject: "Use mapboxgl.ekmap.ThreeLayer.",
-                        description: ""
+                        subject: "Use ThreeLayer to display airplane.",
+                        description: "Use mapboxgl.ekmap.ThreeLayer to display airplane."
                     }
                 ]
             },
@@ -415,7 +415,7 @@ var exampleConfig = {
                         name_en: "Statistical Chart",
                         thumbnail: "layerChart.png",
                         fileName: "layerChart",
-                        subject: "Use mapboxgl.ekmap.DomOverlay.",
+                        subject: "Use DomOverlay to simulate measurement point position data with parameters (P, Q +, Q-, Pin).",
                         description: ""
                     }
                 ]

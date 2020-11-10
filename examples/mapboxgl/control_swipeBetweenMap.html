@@ -33,8 +33,6 @@
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css"
         type="text/css" />
     <script>
-       var attribution = "<a href='https://www.openstreetmap.org/#map=6/16.113/105.806' target='_blank'>© OpenStreetMap </a>" +
-			"by contributors"
         var beforeMap = new mapboxgl.Map({
             container: 'before',
             style: {
@@ -56,7 +54,6 @@
             },
             center: [103.9, 22.2],
             zoom: 0,
-            attributionControl: false,
         });
         var afterMap = new mapboxgl.Map({
             container: 'after',
@@ -82,19 +79,10 @@
             },
             center: [103.9, 22.2],
             zoom: 0,
-            attributionControl: false,
         });
         var container = '#comparison-container';
         beforeMap.addControl(new mapboxgl.NavigationControl(), 'top-left');
         afterMap.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        afterMap.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
-        beforeMap.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
         var mapC = new mapboxgl.ekmap.control.Swipe(beforeMap, afterMap, container);
     </script>
 </body>

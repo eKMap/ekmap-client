@@ -28,8 +28,6 @@
     <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
     <script type="text/javascript">
         var chart, div, popup = '', features = [];
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105.77029421156942, 21.010523871795243],
@@ -39,10 +37,6 @@
             token: tokenVN
         }).addTo(map)
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
         map.loadImage('./img/marker-icon.png', function (error, image) {
             if (error) throw error;
             map.addImage('positionPoint', image);

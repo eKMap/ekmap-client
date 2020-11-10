@@ -108,8 +108,6 @@
         <div id="divMapId" class="map"></div>
     </div>
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [118.65064808099055, 18.7111502239418],
@@ -118,10 +116,6 @@
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map);
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
         var frameCount = 22;
         var currentImage = 0;

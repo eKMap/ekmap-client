@@ -32,8 +32,8 @@
             zoom: 4
         });
         
-        new mapboxgl.ekmap.BasemapLayer('Imagery').addTo(map);
-        new mapboxgl.ekmap.BasemapLayer('ImageryLabels').addTo(map);
+        new mapboxgl.ekmap.BasemapArcgisLayer('Imagery').addTo(map);
+        new mapboxgl.ekmap.BasemapArcgisLayer('ImageryLabels').addTo(map);
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>

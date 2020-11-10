@@ -205,7 +205,7 @@ export class Util {
     }
 
     static getUrlParams(options) {
-        if(options.url){
+        if (options.url) {
             if (options.url.indexOf('?') !== -1) {
                 options.requestParams = options.requestParams || {};
                 var queryString = options.url.substring(options.url.indexOf('?') + 1);
@@ -404,11 +404,16 @@ export class Util {
                 legend: {
                     display: false
                 },
-                // title: {
-                //     display: true,
-                //     fontColor: 'red',
-                //     fontSize: 15,
-                //     text: 'Custom Chart Title'
+                // plugins: {
+                //     labels: {
+                //         render: function (args) {
+                //             return args.value;
+                //         },
+                //         fontSize: 10,
+                //         fontStyle: 'normal',
+                //         fontColor: '#fff',
+                //         fontFamily: '"Lucida Console", Monaco, monospace'
+                //     }
                 // }
             }
         });

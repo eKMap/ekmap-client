@@ -69,7 +69,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="mapboxgl.ekmap.control.SnapShot.html">Class: SnapShot</h1>
+        <h1 class="page-title" data-filename="mapboxgl.ekmap.BasemapArcgisLayer.html">Class: BasemapArcgisLayer</h1>
         
 
 
@@ -77,11 +77,11 @@
 <section>
     
 <header>
-    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a><a href="mapboxgl.ekmap.control.html">.control</a>.</span>SnapShot
+    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a>.</span>BasemapArcgisLayer
     
     </h2>
     
-        <div class="class-description"><p>SnapShot.</p></div>
+        <div class="class-description"><p>The BasemapArcgisLayer class.</p></div>
     
 </header>  
 
@@ -93,14 +93,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="SnapShot">
+        <h4 class="name" id="BasemapArcgisLayer">
             
-            new mapboxgl.ekmap.control.SnapShot<span class="signature">()</span>
+            new mapboxgl.ekmap.BasemapArcgisLayer<span class="signature">(basemapType)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/SnapShot.js, line 4
+            layer/BasemapArcgisLayer.js, line 6
         </div>
         
     </div>
@@ -115,6 +115,51 @@
     
     
     
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>basemapType</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>basemapType refers to the specific basemap you'd like to add. <br>Use one of &quot;Streets&quot;, &quot;Topographic&quot;, &quot;Oceans&quot;, &quot;OceansLabels&quot;, &quot;NationalGeographic&quot;, &quot;Physical&quot;, &quot;Gray&quot;, &quot;GrayLabels&quot;, &quot;DarkGray&quot;, &quot;DarkGrayLabels&quot;, &quot;Imagery&quot;, &quot;ImageryLabels&quot;, &quot;ImageryTransportation&quot;, &quot;ImageryClarity&quot;, &quot;ImageryFirefly&quot;, ShadedRelief&quot;, &quot;ShadedReliefLabels&quot;, &quot;Terrain&quot;, &quot;TerrainLabels&quot; or &quot;USATopo&quot;.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
     
     
     
@@ -158,7 +203,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config.... }) map.addControl(new mapboxgl.ekmap.control.SnapShot(),'bottom-right');</code></pre>
+    <pre class="prettyprint"><code>var map = new mapboxgl.Map({    container: 'map1',    center: [103.9, 22.2],    zoom: 6});var baseMap = new mapboxgl.ekmap.BasemapArcgisLayer('Topographic')  .addTo(map);</code></pre>
     
 
     
@@ -167,6 +212,17 @@
     
     </div>
     
+    
+        <h3 class="subsection-title">Extends</h3>
+        <ul>
+            
+            
+            
+            
+            <li><a href="mapboxgl.ekmap.TileLayer.html">mapboxgl.ekmap.TileLayer</a></li>
+            
+            
+        </ul>
     
 
     
@@ -188,14 +244,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="onAdd">
+        <h4 class="name" id="addTo">
             
-            onAdd<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{HTMLElement}</span>
+            addTo<span class="signature">(map)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/SnapShot.js, line 21
+            layer/BasemapArcgisLayer.js, line 172
         </div>
         
     </div>
@@ -206,7 +262,7 @@
     
     
     <div class="description">
-        <p>Register a control on the map and give it a chance to register event listeners and resources. This method is called by Map#addControl internally.</p>
+        <p>Adds the layer to the given map or layer group.</p>
     </div>
     
 
@@ -243,7 +299,7 @@
             <td class="type">
             
                 
-<span class="param-type">Map</span>
+<span class="param-type"><a href="https://www.mapbox.com/mapbox-gl-js/api/#map">mapboxgl.Map</a></span>
 
 
             
@@ -253,7 +309,7 @@
             
             <td class="description last">
                 
-                <p>the Map this control will be added to.</p></td>
+                <p>Adds the layer to the given map or layer group.</p></td>
         </tr>
 	
 	
@@ -300,174 +356,9 @@
     
 
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        HTMLElement
-                        
-                    
-            </td>
-            <td class="description last">The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.</td>
-        </tr>
-    
-    </tbody>
-</table>
 
-    
-    
-    
-</dd>
+this
 
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onRemove">
-            
-            onRemove<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{undefined}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            control/SnapShot.js, line 49
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Unregister a control on the map and give it a chance to detach event listeners and resources. This method is called by Map#removeControl internally.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>map</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Map</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>the Map this control will be removed from.</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        undefined
-                        
-                    
-            </td>
-            <td class="description last">there is no required return value for this method.</td>
-        </tr>
-    
-    </tbody>
-</table>
 
     
     

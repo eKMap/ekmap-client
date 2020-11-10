@@ -1,5 +1,5 @@
 import mapboxgl from 'mapbox-gl';
-import { TiledMapLayer } from './TiledMapLayer';
+import { TileLayer } from './TileLayer';
 
 /**
  * @class mapboxgl.ekmap.TiledVietNamMapLayer
@@ -8,7 +8,7 @@ import { TiledMapLayer } from './TiledMapLayer';
  * @param {Object} options  Construction parameters.
  * @param {string} options.token  Will use this token to authenticate all calls to the service.
  * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
- * @extends {mapboxgl.ekmap.TiledMapLayer}
+ * @extends {mapboxgl.ekmap.TileLayer}
  * @example
  * var map = new mapboxgl.Map({
  *     container: 'map1',
@@ -20,7 +20,7 @@ import { TiledMapLayer } from './TiledMapLayer';
  * })
  *   .addTo(map);
  */
-export class TiledVietNamMapLayer extends TiledMapLayer {
+export class TiledVietNamMapLayer extends TileLayer {
 
     constructor(options) {
         super();
@@ -38,15 +38,17 @@ export class TiledVietNamMapLayer extends TiledMapLayer {
                 this.urlsToken.push(url);
             })
         if (this.urlsToken.length > 0) {
-            this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
+            this.TileLayer = new mapboxgl.ekmap.TileLayer({
                 urls: this.urlsToken,
-                attribution: this.options.attribution ? this.options.attribution : ''
+                attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+                "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>"
             })
         }
         else {
-            this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
+            this.TileLayer = new mapboxgl.ekmap.TileLayer({
                 urls: this.urls,
-                attribution: this.options.attribution ? this.options.attribution : ''
+                attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+                "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>"
             })
         }
     }
@@ -58,7 +60,7 @@ export class TiledVietNamMapLayer extends TiledMapLayer {
      * @returns this
      */
     addTo(map) {
-        return this.tiledMapLayer.addTo(map);
+        return this.TileLayer.addTo(map);
     }
 }
 

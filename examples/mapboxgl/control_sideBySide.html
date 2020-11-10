@@ -41,8 +41,6 @@
 		var marker;
 		var fnMove = {
 		};
-		var attribution = "<a href='https://www.openstreetmap.org/#map=6/16.113/105.806' target='_blank'>© OpenStreetMap </a>" +
-			"by contributors"
 		var mapconfig1 = {
 			"layers": [{
 				"name": "OSM Standard",
@@ -89,10 +87,6 @@
 				maxZoom: mapconfig1.maxZoom,
 				zoom: mapconfig1.zoom,
 			});
-			map1.addControl(new mapboxgl.AttributionControl({
-				customAttribution: attribution,
-				compact: false
-			}));
 			map1.addControl(new mapboxgl.NavigationControl(), 'top-left');
 			maps.push(map1);
 			for (var i = 0; i < mapconfig1.layers.length; i++) {
@@ -128,10 +122,6 @@
 				maxZoom: mapconfig2.maxZoom,
 				zoom: mapconfig2.zoom,
 			});
-			map2.addControl(new mapboxgl.AttributionControl({
-				customAttribution: attribution,
-				compact: false
-			}));
 			map2.addControl(new mapboxgl.NavigationControl(), 'top-left');
 			maps.push(map2);
 			for (var i = 0; i < mapconfig2.layers.length; i++) {

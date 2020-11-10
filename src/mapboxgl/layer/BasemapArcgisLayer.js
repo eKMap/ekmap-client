@@ -1,29 +1,29 @@
 
 import mapboxgl from 'mapbox-gl';
 import { Util } from '../core/Util';
-import { TiledMapLayer } from './TiledMapLayer';
+import { TileLayer } from './TileLayer';
 
 /**
- * @class mapboxgl.ekmap.BasemapLayer
- * @classdesc The BasemapLayer class.
+ * @class mapboxgl.ekmap.BasemapArcgisLayer
+ * @classdesc The BasemapArcgisLayer class.
  * @category  Layer
- * @param {string} key Key refers to the specific basemap you'd like to add. <br>Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Physical", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ImageryClarity", "ImageryFirefly", ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo".
- * @extends {mapboxgl.ekmap.TiledMapLayer}
+ * @param {string} basemapType basemapType refers to the specific basemap you'd like to add. <br>Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Physical", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ImageryClarity", "ImageryFirefly", ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo".
+ * @extends {mapboxgl.ekmap.TileLayer}
  * @example
  * var map = new mapboxgl.Map({
  *     container: 'map1',
  *     center: [103.9, 22.2],
  *     zoom: 6
  * });
- * var baseMap = new mapboxgl.ekmap.BasemapLayer('Topographic')
+ * var baseMap = new mapboxgl.ekmap.BasemapArcgisLayer('Topographic')
  *   .addTo(map);
  */
 
 var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
-export class BasemapLayer extends TiledMapLayer {
+export class BasemapArcgisLayer extends TileLayer {
 
-    constructor(key) {
+    constructor(basemapType) {
         super();
         var config;
         var tiles = {
@@ -153,30 +153,31 @@ export class BasemapLayer extends TiledMapLayer {
                 }
             }
         }
-        if (typeof key === 'string' && tiles[key]) {
-            config = tiles[key];
+        if (typeof basemapType === 'string' && tiles[basemapType]) {
+            config = tiles[basemapType];
         } else {
-            throw new Error('mapboxgl.viegis.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Physical", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ImageryClarity", "ImageryFirefly", ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo"');
+            throw new Error('mapboxgl.viegis.BasemapArcgisLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Physical", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ImageryClarity", "ImageryFirefly", ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo"');
         }
         if (this.options.token && config.urlTemplate.indexOf('token=') === -1) {
             config.urlTemplate += ('?token=' + this.options.token);
         }
 
-        this.tiledMapLayer = new mapboxgl.ekmap.TiledMapLayer({
+        this.TileLayer = new mapboxgl.ekmap.TileLayer({
             url: config.urlTemplate,
-            attribution: config.options.attribution ? config.options.attribution : ''
+            attribution: "<a href='"+config.options.attributionUrl+"' target='_blank'>"+config.options.attribution+"</a>"
         })
+        
     }
 
     /**
-     * @function mapboxgl.ekmap.BasemapLayer.prototype.addTo
+     * @function mapboxgl.ekmap.BasemapArcgisLayer.prototype.addTo
      * @description Adds the layer to the given map or layer group.
      * @param {mapboxgl.Map} map - Adds the layer to the given map or layer group.
      * @returns this
      */
     addTo(map) {
-        return this.tiledMapLayer.addTo(map);
+        return this.TileLayer.addTo(map);
     }
 }
 
-mapboxgl.ekmap.BasemapLayer = BasemapLayer;
+mapboxgl.ekmap.BasemapArcgisLayer = BasemapArcgisLayer;

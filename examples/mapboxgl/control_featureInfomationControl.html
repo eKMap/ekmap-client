@@ -45,8 +45,6 @@
         </div>
     </div>
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             style: {
@@ -70,10 +68,6 @@
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             var legend = new mapboxgl.ekmap.control.Legend({layers: [tiledMap]});
             map.addControl(legend, "bottom-left");
-            map.addControl(new mapboxgl.AttributionControl({
-                customAttribution: attribution,
-                compact: false
-            }));
             var featureInfo = new mapboxgl.ekmap.control.FeatureInfomation();
             map.addControl(featureInfo);
 

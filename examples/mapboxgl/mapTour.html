@@ -347,8 +347,6 @@
     </div>
     <hr />
     <script>
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             style: {
@@ -363,10 +361,6 @@
             zoom: 9.844199397806728,
             pitch: 50,
         });
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
         map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
         var popup;
         var features = [];
@@ -382,6 +376,7 @@
             widgets.loader.showLoader("data loading...");
             var divData = document.getElementById('listData');
             $.get("../../examples/data/data_tour.json", function (response) {
+                console.log(response)
                 var listData = response.result;
                 listData.forEach(feature => {
                     features.push({

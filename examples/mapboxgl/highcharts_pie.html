@@ -42,8 +42,6 @@
     </div>
     <script type="text/javascript">
         var chart, div, popup = '';
-        var attribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-            "by <a href='http://ekgis.com.vn/' target='_blank'>eKGIS</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
             style: {
@@ -60,10 +58,6 @@
                 token: tokenVN
             }).addTo(map)
         })
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.loadImage('./img/marker-icon.png', function (error, image) {
             if (error) throw error;

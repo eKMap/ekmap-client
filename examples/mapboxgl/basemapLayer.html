@@ -32,7 +32,7 @@
             zoom: 4
         });
         
-        new mapboxgl.ekmap.BasemapLayer('Streets').addTo(map);
+        new mapboxgl.ekmap.BasemapArcgisLayer('Streets').addTo(map);
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>
