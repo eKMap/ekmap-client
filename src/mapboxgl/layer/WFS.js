@@ -23,7 +23,10 @@ import mapboxgl from 'mapbox-gl';
  * });
  * var wfs = new mapboxgl.ekmap.WFS('https://demo.geo-solutions.it/geoserver/topp/ows', {
  *     typeName: 'topp:states'
- * }).addTo(map);
+ * })
+ * wfs.getFeature(function(e){
+ *     //JSON data
+ * })
  */
 export class WFS extends mapboxgl.Evented {
 

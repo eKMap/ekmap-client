@@ -60,7 +60,7 @@
             }).addTo(map)
         })
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon.png', function (error, image) {
+        map.loadImage('./img/marker-icon-red.png', function (error, image) {
             if (error) throw error;
             map.addImage('positionPoint', image);
         });
@@ -73,7 +73,7 @@
                     "type": "symbol",
                     "layout": {
                         "icon-image": "positionPoint",
-                        "icon-size": 0.8,
+                        "icon-size": 0.1,
                         "icon-offset": [0, -15]
                     },
                     "source": {

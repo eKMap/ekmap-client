@@ -49,10 +49,12 @@
         .containerImg {
             position: absolute;
             z-index: 1;
-            top: 145px;
+            top: 15px;
             width: calc(100vw/2.5);
-            bottom: 145px;
+            height: calc(100vh - 179px);
+            /* bottom: 145px; */
             padding: 0px !important;
+            border: 1px solid #B4B4B4;
         }
 
 
@@ -218,18 +220,19 @@
     </div>
 
     <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
+
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            center: [105.8347447, 21.0479776],
-            zoom: 13
-        });
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map);
+            center: [105.80757781121588, 21.018112581368356],
+            zoom: 13.873356736713973,
+            style: 'mapbox://styles/mapbox/satellite-streets-v11',
+            pitch: 100
+        })
         var features = [];
         var popup;
         var caroselInner
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        // map.addControl(new mapboxgl.NavigationControl(), "top-left");
         $(document).ready(function () {
             var imgSelected = document.getElementById('imgSelected');
             var nameImg = document.getElementById('nameImg');
@@ -237,6 +240,7 @@
             var btnCollapse = document.getElementById('btnCollapse');
             var iconCollapse = document.getElementById('iconCollapse');
             var collapseDiv = document.getElementById('collapseDiv');
+            var divCol;
             collapseDiv.setAttribute('aria-expanded', true);
             collapseDiv.setAttribute('class', 'collapse in');
 
@@ -262,9 +266,9 @@
                     else
                         divItem.setAttribute('class', 'item');
 
-                    var divCol = document.createElement('div');
-                    divCol.className = 'col-md-1';
-                    divCol.style.cursor = 'pointer'
+                    divCol = document.createElement('div');
+                    divCol.className = 'col-md-1 col-sm-2';
+                    divCol.style.cursor = 'pointer';
                     var span = document.createElement('span');
                     span.setAttribute('class', 'number-green');
                     span.innerHTML = fea.id + 1;
@@ -303,8 +307,24 @@
                 });
                 var x = $('.carousel').parent();
                 var pager = x.find('.item').find('div');
+                var arr = [];
+                var indexSelected
+                for (var i = 0; i < 120; i++)
+                    arr.push(pager[i])
                 pager.on('click', function (e) {
-                    var index = e.currentTarget.outerText[0] + e.currentTarget.outerText[1]
+                    arr.forEach(div => {
+                        if (div.style.backgroundColor == 'lightsalmon') {
+                            div.style.backgroundColor = ''
+                            div.style.border = '';
+                            div.style.borderRadius = '';
+                        }
+                    });
+                    var target = e.currentTarget;
+                    target.style.backgroundColor = 'lightsalmon';
+                    target.style.border = 'black solid 2px';
+                    target.style.borderRadius = '5px';
+                    var index = e.currentTarget.outerText[0] + e.currentTarget.outerText[1];
+                    indexSelected = index;
                     for (var i = 1; i < 11; i++) {
                         if (index == i) {
                             imgSelected.setAttribute('src', features[i - 1].properties.image)
@@ -323,6 +343,31 @@
                         }
                     }
                 })
+
+                var itemSelected;
+                pager.on('mousemove', function (e) {
+                    var index = e.currentTarget.outerText[0] + e.currentTarget.outerText[1]
+                    arr.forEach(div => {
+                        if (div.style.backgroundColor == 'darkgray' && itemSelected != index) {
+                            div.style.backgroundColor = ''
+                        }
+                    });
+                    if (!itemSelected && index != indexSelected) {
+                        var target = e.currentTarget;
+                        target.style.backgroundColor = 'darkgray';
+                    }
+                    itemSelected = index
+                });
+
+                pager.on('mouseleave', function () {
+                    if (itemSelected) {
+                        arr.forEach(div => {
+                            if (div.style.backgroundColor == 'darkgray')
+                                div.style.backgroundColor = ''
+                        });
+                    }
+                    itemSelected = null
+                });
             })
 
         });

@@ -1,16 +1,26 @@
 import mapboxgl from 'mapbox-gl';
+import { Util } from '../core/Util';
 
 /**
  * @class mapboxgl.ekmap.VectorTiledMapLayer
  * @classdesc The VectorTiledMapLayer class.
  * @category Layer
- * @param {string} url - Url Vector Tile Services.
+ * @param {Object} options Construction parameters.
+ * @param {string} options.url 
+ * @param {string} options.token Will use this token to authenticate all calls to the service.
  * @extends {mapboxgl.Evented}
  */
 export class VectorTiledMapLayer extends mapboxgl.Evented {
-    constructor(url) {
-        super(); 
-        this.url = url;
+    constructor(options) {
+        super();
+        this.options = options ? options : {};
+        if (options) {
+            options = Util.setOptions(this, options);
+            if (options.url)
+                this.tileUrl = options.url
+        }
+        if (options.token)
+            this.tileUrl += ('?token=' + this.options.token);
     }
 
     /**
@@ -20,7 +30,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
      * @returns this
      */
     addTo(map) {
-        map.setStyle(this.url);
+        map.setStyle(this.tileUrl);
         return this;
     }
 }

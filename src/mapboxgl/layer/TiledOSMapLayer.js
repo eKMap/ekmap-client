@@ -4,7 +4,7 @@ import { TileLayer } from './TileLayer';
 
 /**
  * @class mapboxgl.ekmap.TiledOSMapLayer
- * @classdesc The TiledOSMapLayer class.
+ * @classdesc The TiledOSMapLayer class use url of {@link https://www.openstreetmap.org|openstreetmap}.
  * @category Layer
  * @param {Object} options - Control options.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.

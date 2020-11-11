@@ -38,7 +38,10 @@
             zoom: 4
         });
         
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer(urlVectorService + "/resources/styles?apikey=" + tokenKey).addTo(map);
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService + "/resources/styles",
+            token: tokenKey
+        }).addTo(map);
        
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>

@@ -118,6 +118,7 @@
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map);
+            widgets.loader.showLoader("data loading...");
             $.get("../data/water/dma.json", function (response) {
                 var features = response.features;
                 window.setInterval(function () {
@@ -171,7 +172,9 @@
                         ]
                     }
                 });
-            });
+            }).done(function () {
+                widgets.loader.removeLoader();
+            })
         })
         function getRandomColor() {
             var letters = '0123456789ABCDEF';

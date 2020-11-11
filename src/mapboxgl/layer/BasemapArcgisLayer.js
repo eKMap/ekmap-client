@@ -5,7 +5,7 @@ import { TileLayer } from './TileLayer';
 
 /**
  * @class mapboxgl.ekmap.BasemapArcgisLayer
- * @classdesc The BasemapArcgisLayer class.
+ * @classdesc The BasemapArcgisLayer class use some arcgis layer and url of them from {@link https://github.com/Esri/esri-leaflet/blob/master/src/Layers/BasemapLayer.js|source}.
  * @category  Layer
  * @param {string} basemapType basemapType refers to the specific basemap you'd like to add. <br>Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Physical", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ImageryClarity", "ImageryFirefly", ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo".
  * @extends {mapboxgl.ekmap.TileLayer}

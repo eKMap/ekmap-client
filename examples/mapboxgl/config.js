@@ -216,7 +216,7 @@ var exampleConfig = {
                         name_en: "Showing an ArcGIS basemap",
                         thumbnail: "basemapLayer.png",
                         fileName: "basemapLayer",
-                        subject: "Use mapboxgl.ekmap.TiledOSMapLayer",
+                        subject: "Display an ArcGIS Online basemap.",
                         description: "Display an ArcGIS Online basemap."
                     },
                     {
@@ -224,7 +224,7 @@ var exampleConfig = {
                         name_en: "Basemap with labels",
                         thumbnail: "basemapLayer_labels.png",
                         fileName: "basemapLayer_labels",
-                        subject: "Use mapboxgl.ekmap.TiledOSMapLayer",
+                        subject: "Showing an ArcGIS Online basemap with a separate label layer",
                         description: "Showing an ArcGIS Online basemap with a separate label layer."
                     }
                 ]
@@ -416,7 +416,7 @@ var exampleConfig = {
                         thumbnail: "layerChart.png",
                         fileName: "layerChart",
                         subject: "Use DomOverlay to simulate measurement point position data with parameters (P, Q +, Q-, Pin).",
-                        description: ""
+                        description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively."
                     }
                 ]
             },
@@ -431,7 +431,7 @@ var exampleConfig = {
                         thumbnail: "data_3D.gif",
                         fileName: "data_3D",
                         subject: "3D data display shows the altitude of some Hanoi planning areas.",
-                        description: ""
+                        description: "3D data display shows the altitude of some Hanoi planning areas."
                     }
                 ]
             },
@@ -444,8 +444,8 @@ var exampleConfig = {
                         name_en: "Realtime Water",
                         thumbnail: "realtime_water.gif",
                         fileName: "realtime_water",
-                        subject: "Display pressure zone data according to realtime data.",
-                        description: ""
+                        subject: "Display pressure zone data according to real time data.",
+                        description: "Display pressure zone data according to real time data."
                     },
                     {
                         name: "Realtime Satellite Image",
@@ -453,7 +453,7 @@ var exampleConfig = {
                         thumbnail: "realtime_satelliteImage.gif",
                         fileName: "realtime_satelliteImage",
                         subject: "Displays a list of satellite imagery over time.",
-                        description: ""
+                        description: "Displays a list of satellite imagery over time."
                     },
                     {
                         name: "Realtime Car",
@@ -461,7 +461,7 @@ var exampleConfig = {
                         thumbnail: "realtime_car.gif",
                         fileName: "realtime_car",
                         subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        description: "Tracking a moving position, information of the rest stops when the car goes there."
                     }
                 ]
             },
@@ -474,8 +474,8 @@ var exampleConfig = {
                         name_en: "Video Storm",
                         thumbnail: "video_storm.gif",
                         fileName: "video_storm",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Description of storm path in the form of video on the map.",
+                        description: "Video path of Typhoon Saudel entering the South China Sea, forecast jerks to level 14."
                     }
                 ]
             },
@@ -489,30 +489,30 @@ var exampleConfig = {
                         thumbnail: "storyMap_vinhomes.gif",
                         fileName: "storyMap_vinhomes",
                         subject: "Display map of real estate project list Vinhomes.",
-                        description: ""
+                        description: "Display map of real estate project list Vinhomes."
                     },
                     {
                         name: "Tour Hue - Hoi An - Da Nang",
                         name_en: "Tour Hue - Hoi An - Da Nang",
                         thumbnail: "mapTour.png",
                         fileName: "mapTour",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Hue - Hoi An - Da Nang tours.",
+                        description: "Display map of Hue - Hoi An - Da Nang tours."
                     },
                     {
                         name: "Timeline Coronavirus (Heatmap)",
                         name_en: "Timeline Coronavirus (Heatmap)",
                         thumbnail: "timeline_heatMapCov.gif",
                         fileName: "timeline_heatMapCov",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Displays the timeline map showing the increase in COVID19 cases around the world.",
+                        description: "Displays the timeline map showing the increase in COVID19 cases around the world."
                     },
                     {
                         name: "COVID-19: Government Response Stringency",
                         name_en: "COVID-19: Government Response Stringency",
                         thumbnail: "timeline_fillCov.gif",
                         fileName: "timeline_fillCov",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
+                        subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
                         description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
                     },
                     // {
@@ -526,7 +526,7 @@ var exampleConfig = {
                         name_en: "Spiritual Tourism Map Tour",
                         thumbnail: "storyMap_spiritualTourism.png",
                         fileName: "storyMap_spiritualTourism",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
+                        subject: "10 attractive spiritual tourist attractions in Hanoi capital.",
                         description: "10 attractive spiritual tourist attractions in Hanoi capital."
                     },
 
@@ -547,32 +547,32 @@ var exampleConfig = {
                         name_en: "Hexagon",
                         thumbnail: "turfjs_Hexagon.png",
                         fileName: "turfjs_Hexagon",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Display density of points of sale in Hanoi.",
+                        description: "Display density of point of sale in Hanoi. The higher the density, the red, the lower the density is yellow."
                     },
                     {
                         name: "Voronoi",
                         name_en: "Voronoi",
                         thumbnail: "turfjs_Voronoi.gif",
                         fileName: "turfjs_Voronoi",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Use the PM2.5 measuring points to calculate the Voronoi region.",
+                        description: "Click in the area, it will highlight and display PM2.5 value information by station in that voronoi region"
                     },
                     {
                         name: "Buffer",
                         name_en: "Buffer",
                         thumbnail: "turfjs_Buffer.png",
                         fileName: "turfjs_Buffer",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Displays map showing COVID19 cases in VietNam",
+                        description: "Displays map showing COVID19 cases in VietNam"
                     },
                     {
                         name: "Data Storm",
                         name_en: "Data Storm",
                         thumbnail: "data_storm.png",
                         fileName: "data_storm",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Displays the route of a storm information number 7 (2020) in Vietnam.",
+                        description: "Displays the route of a storm information number 7 (2020) in Vietnam."
                     }
                 ]
             }
@@ -591,8 +591,8 @@ var exampleConfig = {
                         name_en: "Web Map Service",
                         thumbnail: "ogc_wms.png",
                         fileName: "ogc_wms",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Use the Web Map Services service to display US states data.",
+                        description: "Click on the map to get info."
                     }
                 ]
             },
@@ -605,8 +605,8 @@ var exampleConfig = {
                         name_en: "Web Feature Service",
                         thumbnail: "ogc_wfs.png",
                         fileName: "ogc_wfs",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
+                        description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data)."
                     }
                 ]
             }
@@ -625,40 +625,40 @@ var exampleConfig = {
                         name_en: "Navigation Control",
                         thumbnail: "control_navigationControl.png",
                         fileName: "control_navigationControl",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Navigation Control",
+                        description: "A NavigationControl control contains zoom buttons and a compass."
                     },
                     {
                         name: "Scale Control",
                         name_en: "Scale Control",
                         thumbnail: "control_scaleControl.png",
                         fileName: "control_scaleControl",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Scale Control",
+                        description: "A ScaleControl control displays the ratio of a distance on the map to the corresponding distance on the ground."
                     },
                     {
                         name: "Fullscreen Control",
                         name_en: "Fullscreen Control",
                         thumbnail: "control_fullscreenControl.png",
                         fileName: "control_fullscreenControl",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Fullscreen Control",
+                        description: "A FullscreenControl control contains a button for toggling the map in and out of fullscreen mode."
                     },
                     {
                         name: "Geolocate Control",
                         name_en: "Geolocate Control",
                         thumbnail: "control_geolocateControl.png",
                         fileName: "control_geolocateControl",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Geolocate Control",
+                        description: "A GeolocateControl control provides a button that uses the browser's geolocation API to locate the user on the map."
                     },
                     {
                         name: "Attribution Control",
                         name_en: "Attribution Control",
                         thumbnail: "control_attributionControl.png",
                         fileName: "control_attributionControl",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Attribution Control",
+                        description: "An AttributionControl control presents the map's attribution information."
                     }
                 ]
             },
@@ -671,32 +671,32 @@ var exampleConfig = {
                         name_en: "Draw Control",
                         thumbnail: "control_drawControl.png",
                         fileName: "control_drawControl",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Use plugin mapbox-gl-draw. It adds support for drawing and editing features on maps. ",
+                        description: "A DrawControl control contains some buttons for drawing and editing features on map."
                     },
                     {
                         name: "Swipe between maps",
                         name_en: "Swipe between maps",
                         thumbnail: "control_swipeBetweenMap.png",
                         fileName: "control_swipeBetweenMap",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Swipe Control.",
+                        description: "Is a control that adds split screen to compare two map layers. Layers can be added to the left or right of the map."
                     },
                     {
                         name: "Side By Side",
                         name_en: "Side By Side",
                         thumbnail: "control_sideBySide.png",
                         fileName: "control_sideBySide",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Side By Side.",
+                        description: "Side By Side"
                     },
                     {
                         name: "Snapshot maps",
                         name_en: "Snapshot maps",
                         thumbnail: "control_snapShotControl.png",
                         fileName: "control_snapShotControl",
-                        subject: "Tracking a moving position, information of the rest stops when the car goes there.",
-                        description: ""
+                        subject: "Snapshot Control",
+                        description: "A SnapshotControl control contains a button for screenshot."
                     }]
             }
         }

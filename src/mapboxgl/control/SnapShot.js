@@ -8,7 +8,8 @@ import mapboxgl from 'mapbox-gl';
  *
  * @example
  *  var map = new mapboxgl.Map({
- *      //config....
+ *      //config....,
+ *      preserveDrawingBuffer: true
  *  })
  *  map.addControl(new mapboxgl.ekmap.control.SnapShot(),'bottom-right');
  */

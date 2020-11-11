@@ -33,7 +33,10 @@
             zoom: 5.0598853164770725  
         });
         var hoveredStateId = null;
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer(urlVectorService + "/resources/styles?apikey=" + tokenKey).addTo(map);
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService + "/resources/styles",
+            token: tokenKey
+        }).addTo(map);
         map.on('load', function () {
             map.addLayer({
                 'id': 'areaSelect',
