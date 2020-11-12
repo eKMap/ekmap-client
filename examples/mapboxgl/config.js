@@ -515,12 +515,12 @@ var exampleConfig = {
                         subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
                         description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
                     },
-                    // {
-                    //     name: "Timeline Coronavirus (Buffer)",
-                    //     name_en: "Timeline Coronavirus (Buffer)",
-                    //     thumbnail: "timeline_bufferCov.gif",
-                    //     fileName: "timeline_bufferCov"
-                    // },
+                    {
+                        name: "Timeline Coronavirus (Buffer)",
+                        name_en: "Timeline Coronavirus (Buffer)",
+                        thumbnail: "timeline_bufferCov.gif",
+                        fileName: "timeline_bufferCov"
+                    },
                     {
                         name: "Spiritual Tourism Map Tour",
                         name_en: "Spiritual Tourism Map Tour",

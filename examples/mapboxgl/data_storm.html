@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Storm</title>
     <style>
@@ -348,6 +349,7 @@
                 }
             });
             //Source Data: https://nchmf.gov.vn/ 
+            widgets.loader.showLoader("data loading...");
             $.get("../data/storm.json", function (response) {
                 response.forEach(feature => {
                     features.push({
@@ -594,12 +596,21 @@
                         },
                         "filter": ['in', 'id', '36328', '36330', '36331', '36690', '36691']
                     });
+
                     map.addLayer({
                         "id": "points3",
                         "type": "symbol",
                         "layout": {
                             "icon-image": "positionPointBHT",
-                            "icon-size": 1.7
+                            "icon-size": 1.7,
+                            'text-field': [
+                                'format',
+                                ['get', 'date_received_str'],
+                                {
+                                    'font-scale': 0.7,
+                                }
+                            ],
+                            'text-offset': [0, -1.5]
                         },
                         "source": {
                             "type": "geojson",
@@ -610,12 +621,21 @@
                         },
                         "filter": ['in', 'id', '36692', '36693', '36694', '36695']
                     });
+
                     map.addLayer({
                         "id": "points4",
                         "type": "symbol",
                         "layout": {
                             "icon-image": "positionPointDB",
-                            "icon-size": 1.7
+                            "icon-size": 1.7,
+                            'text-field': [
+                                'format',
+                                ['get', 'date_received_str'],
+                                {
+                                    'font-scale': 0.7,
+                                }
+                            ],
+                            'text-offset': [0, -1.5]
                         },
                         "source": {
                             "type": "geojson",
@@ -626,27 +646,8 @@
                         },
                         "filter": ['in', 'id', '36696']
                     });
-                    // map.addLayer({
-                    //     'id': "dateStorm",
-                    //     'type': "symbol",
-                    //     "source": {
-                    //         "type": "geojson",
-                    //         "data": {
-                    //             'type': 'FeatureCollection',
-                    //             'features': features
-                    //         }
-                    //     },
-                    //     "filter": ['in', 'id', '1'],
-                    //     'layout': {
-                    //         'text-field': [
-                    //             'format',
-                    //             ['get', 'date_received_str'],
-                    //             {
-                    //                 'font-scale': 0.5
-                    //             }
-                    //         ],
-                    //     }
-                    // });
+                }).done(function () {
+                    widgets.loader.removeLoader();
                 })
             })
         })

@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
@@ -14,24 +15,26 @@
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
     <title>TimeLine Buffer Covid</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 100px);
         }
-        
+
         body {
             overflow: hidden;
         }
-        
+
         .timelineInfo {
             position: absolute;
             bottom: 0px;
             width: 100%;
         }
-        
+
         .tlStatsControl {
             height: 68px;
             flex: 100%;
@@ -40,25 +43,25 @@
             background: rgba(247, 247, 247, 0.8);
             backdrop-filter: blur(8px);
         }
-        
+
         .tlControl {
             flex: 40%;
             max-width: 40%;
             padding-right: 24px;
             padding-top: 18px;
         }
-        
+
         .tlControl #button-play {
             cursor: pointer;
             margin-left: 18px;
             margin-right: 18px;
             float: right;
         }
-        
+
         .tlControl div {
             float: right;
         }
-        
+
         .tlStats {
             flex: 60%;
             max-width: 60%;
@@ -68,26 +71,26 @@
             font-size: 13px;
             font-weight: bold;
         }
-        
+
         .tlDate,
         .tlConfirmed,
         .tlFatal {
             display: inline-block;
             margin-right: 60px;
         }
-        
+
         .tlProgress {
             height: 58px;
             background: #FFFFFF;
             opacity: 0.9;
             backdrop-filter: blur(8px);
         }
-        
+
         .tlSliderWrapper {
             height: 26px;
             padding-top: 4px;
         }
-        
+
         .tlSlider {
             width: calc(100% - 48px);
             margin-left: 24px;
@@ -100,7 +103,7 @@
             bottom: 35px;
             z-index: 2;
         }
-        
+
         input[type="range"i] {
             appearance: slider-horizontal;
             color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
@@ -109,7 +112,7 @@
             border: initial;
             margin: 2px;
         }
-        
+
         input {
             -webkit-writing-mode: horizontal-tb !important;
             text-rendering: auto;
@@ -134,13 +137,13 @@
             <div class="tlStatsControl">
                 <div class="tlStats">
                     <div class="tlDate">
-                        <div>Ngày</div>
+                        <div>On the day of</div>
                         <div style="font-size: 24px;">
                             <span id="date"></span>
                         </div>
                     </div>
                     <div class="tlConfirmed">
-                        <div>Tổng ca </div>
+                        <div>Total confirmed cases</div>
                         <div style="font-size:24px;color: #DE3700;">
                             <span id="total_case"></span>
                         </div>
@@ -152,7 +155,9 @@
             </div>
             <div class="tlProgress">
                 <div class="tlSliderWrapper">
-                    <input class="tlSlider" id="tlSlider" type="range" min="0" max="142" step="1" value="1" onchange="changeTime()" style="background: linear-gradient(to right, rgb(0, 128, 157) 0%, rgb(0, 128, 157) 8.60215%, rgb(204, 204, 204) 8.60215%, rgb(204, 204, 204) 100%);">
+                    <input class="tlSlider" id="tlSlider" type="range" min="0" max="142" step="1" value="1"
+                        onchange="changeTime()"
+                        style="background: linear-gradient(to right, rgb(0, 128, 157) 0%, rgb(0, 128, 157) 8.60215%, rgb(204, 204, 204) 8.60215%, rgb(204, 204, 204) 100%);">
                 </div>
             </div>
         </div>
@@ -161,26 +166,30 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            center: [105, 17],
-            zoom: 3
+            center: [11.164340403295512, 2.079745662755286],
+            zoom: 2.116295796373197,
+            pitch: 40,
         });
-        var maps = new mapboxgl.ekmap.TiledOSMapLayer().addTo(map);
-
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
-        var pt, buffered, long, lat, dataTotal, totalday = 0;
+        var pt, buffered, long, lat, dataTotal, covid, totalday = 0;
         var totalcase_day = [];
         var data = [];
+        var dataNew = [];
         var count = 0,
             value = 0,
             x = 1,
+            y = 0,
             minData = 1,
             maxData = 204377,
-            minRadius = 10,
-            maxRadius = 40,
+            minRadius = 20,
+            maxRadius = 100,
             date = [];
         widgets.loader.showLoader("data loading...");
         for (var i = 0; i < 144; i++) {
-            $.get("../data/coranavirus/2020_" + i + ".json", function(response) {
+            $.get("../data/coranavirus/2020_" + i + ".json", function (response) {
                 var dataLayer = [];
                 var covid = response.features;
                 date.push(response.date);
@@ -195,19 +204,26 @@
                     buffered = turf.buffer(point, a, {
                         units: 'kilometers'
                     });
-                    dataLayer.push(buffered)
+                    dataLayer.push(buffered);
                 })
                 totalcase_day.push(totalday);
-                data.push(dataLayer);
-            }).done(function() {
+                data.push({
+                    dataLayer,
+                    'ngay': date[y]
+                });
+                y++;
+            }).done(function () {
                 count++;
                 if (count == 143) {
+                    data.sort(function (a, b) {
+                        return new Date(a.ngay) - new Date(b.ngay);
+                    });
                     widgets.loader.removeLoader();
                     map.addSource('states', {
                         'type': 'geojson',
                         'data': {
                             'type': 'FeatureCollection',
-                            'features': data[0]
+                            'features': data[0].dataLayer
                         }
                     });
                     map.addLayer({
@@ -220,25 +236,25 @@
                         }
                     });
 
-                    interval = setInterval(function() {
+                    interval = setInterval(function () {
                         var x = getValue();
                         if (x == 143)
                             clearInterval(interval);
                         else {
+                            document.getElementById('tlSlider').value = x;
+                            document.getElementById('date').innerHTML = data[x].ngay;
+                            document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
                             var datacase = {
                                 'type': 'FeatureCollection',
-                                'features': data[x]
+                                'features': data[x].dataLayer
                             };
                             x++;
                             map.getSource('states').setData(datacase);
                             if (x == 143) {
                                 window.clearInterval(timer);
                             }
-                            document.getElementById('tlSlider').value = x;
-                            document.getElementById('date').innerHTML = date[x];
-                            document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
                         }
-                    }, 300);
+                    }, 500);
                 }
             })
         }
@@ -248,29 +264,29 @@
         }
 
         var btn = document.getElementById('button-play');
-        document.getElementById("button-play").onclick = function() {
+        document.getElementById("button-play").onclick = function () {
             if (btn.value === 'PAUSE') {
                 btn.value = 'PLAY'
                 clearInterval(interval);
             } else {
                 btn.value = 'PAUSE'
-                interval = setInterval(function() {
+                interval = setInterval(function () {
                     var x = getValue();
                     if (x == 143)
                         clearInterval(interval);
                     else {
+                        document.getElementById('tlSlider').value = x;
+                        document.getElementById('date').innerHTML = data[x].ngay;
+                        document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
                         var datacase = {
                             'type': 'FeatureCollection',
-                            'features': data[x]
+                            'features': data[x].dataLayer
                         };
                         x++;
                         map.getSource('states').setData(datacase);
                         if (x == 143) {
                             window.clearInterval(timer);
                         }
-                        document.getElementById('tlSlider').value = x;
-                        document.getElementById('date').innerHTML = date[x];
-                        document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
                     }
                 }, 300);
             }
@@ -283,17 +299,17 @@
 
         function changeTime() {
             value = document.getElementById('tlSlider').value;
-            document.getElementById('date').innerHTML = date[x];
+            document.getElementById('date').innerHTML = data[value].ngay;
+            document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[value], ',');
             var datacase = {
                 'type': 'FeatureCollection',
-                'features': data[x]
+                'features': data[value].dataLayer
             };
             x++;
             map.getSource('states').setData(datacase);
             if (x == 143) {
                 window.clearInterval(timer);
             }
-            document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
         }
 
         function formatNumber(values, type) {

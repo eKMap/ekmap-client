@@ -26,7 +26,7 @@ import mapboxgl from 'mapbox-gl';
  * });
  * var wms = new mapboxgl.ekmap.WMS('https://demo.geo-solutions.it/geoserver/topp/wms', {
  *     layers: 'topp:states',
- *     transparent: true,
+ *     transparent: true
  * }).addTo(map);
  */
 export class WMS extends mapboxgl.Evented {
@@ -90,7 +90,7 @@ export class WMS extends mapboxgl.Evented {
             }
         );
         if (this.wmsParams.onClick)
-            this._map.on('click', function (e) {
+            this._map.on('click',function (e) {
                 me.getFeatureInfo(e)
             });
         return this;

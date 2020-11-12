@@ -3,7 +3,7 @@ import { TileLayer } from './TileLayer';
 
 /**
  * @class mapboxgl.ekmap.TiledAdminMapLayer
- * @classdesc The TiledAdminMapLayer class.
+ * @classdesc Provide map layer with XYZ Administrative Tile form built by eKGIS.
  * @category  Layer
  * @param {Object} options  Construction parameters.
  * @param {string} options.token  Will use this token to authenticate all calls to the service.

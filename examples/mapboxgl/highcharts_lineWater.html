@@ -155,7 +155,9 @@
             var features = map.queryRenderedFeatures(bbox, {
                 layers: ['water-fills']
             });
-            var filter = features.reduce(
+            var arr = [];
+            arr.push(features[0])
+            var filter = arr.reduce(
                 function (memo, feature) {
                     memo.push(feature.properties.madoituong);
                     return memo;

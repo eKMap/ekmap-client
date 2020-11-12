@@ -4,7 +4,7 @@ import { TileLayer } from './TileLayer';
 
 /**
  * @class mapboxgl.ekmap.TiledRoadMapLayer
- * @classdesc The TiledRoadMapLayer class.
+ * @classdesc Provide map layer with Traffic Tile pattern XYZ built by eKGIS.
  * @category Layer
  * @param {Object} options - Control options.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
@@ -15,7 +15,9 @@ import { TileLayer } from './TileLayer';
  *     center: [103.9, 22.2],
  *     zoom: 6
  * });
- * var roadMap = new mapboxgl.ekmap.TiledRoadMapLayer({})
+ * var roadMap = new mapboxgl.ekmap.TiledRoadMapLayer({
+ *      token: {YOUR_API_KEY}
+ * })
  *   .addTo(map);
  */
 export class TiledRoadMapLayer extends TileLayer {

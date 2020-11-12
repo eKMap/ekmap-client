@@ -15,7 +15,9 @@ import { TileLayer } from './TileLayer';
  *     center: [103.9, 22.2],
  *     zoom: 6
  * });
- * var OSMap = new mapboxgl.ekmap.TiledOSMapLayer({})
+ * var OSMap = new mapboxgl.ekmap.TiledOSMapLayer({
+ *      token: {YOUR_API_KEY}
+ * })
  *   .addTo(map);
  */
 export class TiledOSMapLayer extends TileLayer {

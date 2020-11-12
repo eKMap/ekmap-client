@@ -92,12 +92,11 @@ export class HeatMapLayer extends mapboxgl.Evented {
      *          {
      *              "type": "feature",
      *              "geometry": {
-     *                  "type": "Point",  //只支持point类型
+     *                  "type": "Point", 
      *                  "coordinates": [0, 0]
      *              },
      *              "properties": {
-     *                  "height": Math.random()*9,
-     *                  "geoRadius": useGeoRadius?radius:null
+     *                  //id, name, ...
      *              }
      *          }
      *      ]
