@@ -123,6 +123,7 @@
             max-height: 350px;
             max-width: 250px;
             opacity: 0.9;
+            border: 1px solid #000;
         }
 
         .leaflet-bar.map-text a {
@@ -315,10 +316,10 @@
         var listData = [];
         var x = 0;
 
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map);
-
+        // var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+        //     token: tokenVN
+        // }).addTo(map);
+        widgets.loader.showLoader("data loading...");
         $.get('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json', function (response) {
             data = JSON.parse(response);
             features = data.features;
@@ -361,8 +362,20 @@
                     'fill-opacity': 1
                 }
             });
+            map.addLayer({
+                'id': 'line-world',
+                'type': 'line',
+                'source': {
+                    'type': 'geojson',
+                    'data': data
+                },
+                'paint': {
+                    'line-color': '#000',
+                    'line-opacity': 1,
+                    'line-width': 1.2
+                }
+            })
         })
-        widgets.loader.showLoader("data loading...");
         d3.json('../data/covid-data.json', function (response) {
             listData = response;
             widgets.loader.removeLoader();

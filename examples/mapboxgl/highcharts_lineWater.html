@@ -165,9 +165,11 @@
                 ['in', 'madoituong']
             );
             map.setFilter('water-highlighted', filter)
-            dataP = shuffle(dataP);
-            dataQ = shuffle(dataQ);
-            startHightChart();
+            if (arr.length > 0) {
+                dataP = shuffle(dataP);
+                dataQ = shuffle(dataQ);
+                startHightChart();
+            }
         })
 
         function startHightChart() {

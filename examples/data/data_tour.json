@@ -13,7 +13,7 @@
 				"lat": 16.39777500000001,
 				"lon": 107.700048,
 				"zoom": 14,
-				"rotation": 0,
+				"bearing": -60,
 				"perspective": 0
 			},
 			"actionButton": {
@@ -45,7 +45,7 @@
 				"lat": 16.467624999999999,
 				"lon": 107.579218,
 				"zoom": 13.7,
-				"rotation": 0,
+				"bearing": -115,
 				"perspective": 0
 			},
 			"actionButton": {
@@ -77,7 +77,7 @@
 				"lat": 16.453172723768505,
 				"lon": 107.54482531779097,
 				"zoom": 12.6,
-				"rotation": 0,
+				"bearing": 160,
 				"perspective": 0
 			},
 			"actionButton": {
@@ -109,7 +109,7 @@
 				"lat": 16.387732,
 				"lon": 107.56822900000002,
 				"zoom": 13,
-				"rotation": 0,
+				"bearing": 60,
 				"perspective": 0
 			},
 			"actionButton": {
@@ -141,7 +141,7 @@
 				"lat": 16.399049000000006,
 				"lon": 107.590368,
 				"zoom": 13.5,
-				"rotation": 0,
+				"bearing": 110,
 				"perspective": 0
 			},
 			"actionButton": {
@@ -173,7 +173,7 @@
 				"lat": 16.245976999999998,
 				"lon": 108.074573,
 				"zoom": 12,
-				"rotation": 0,
+				"bearing": 145,
 				"perspective": 0
 			},
 			"actionButton": {
@@ -205,7 +205,7 @@
 				"lat": 15.876366000000005,
 				"lon": 108.32640600000002,
 				"zoom": 13.5,
-				"rotation": 0,
+				"bearing": 25,
 				"perspective": 0
 			},
 			"actionButton": {
@@ -237,7 +237,7 @@
 				"lat": 15.888209000000004,
 				"lon": 108.330239,
 				"zoom": 14,
-				"rotation": 0,
+				"bearing": -35,
 				"perspective": 0
 			},
 			"actionButton": {
@@ -269,7 +269,7 @@
 				"lat": 16.056328000000009,
 				"lon": 108.200841,
 				"zoom": 13.5,
-				"rotation": 0,
+				"bearing": -35,
 				"perspective": 0
 			},
 			"actionButton": {

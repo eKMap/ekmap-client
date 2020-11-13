@@ -201,6 +201,8 @@
                     var point = turf.point([long, lat]);
                     dataTotal = items.properties.total;
                     var a = getRadius(dataTotal, minData, maxData, minRadius, maxRadius);
+                    if(a>21)
+                    console.log(a)
                     buffered = turf.buffer(point, a, {
                         units: 'kilometers'
                     });

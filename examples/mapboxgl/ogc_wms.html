@@ -35,7 +35,7 @@
         var wms;
         wms = new mapboxgl.ekmap.WMS('https://demo.geo-solutions.it/geoserver/topp/wms', {
             layers: 'topp:states',
-            transparent: true,
+            transparent: true
         }).addTo(map);
         
         map.addControl(new mapboxgl.NavigationControl(), "top-left");

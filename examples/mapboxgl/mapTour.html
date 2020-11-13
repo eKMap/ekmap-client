@@ -401,7 +401,13 @@
                     div2.onclick = function () {
                         map.flyTo({
                             center: [feature.mapView.lon, feature.mapView.lat],
-                            zoom: feature.mapView.zoom
+                            zoom: feature.mapView.zoom,
+                            easing(t) {
+                                if (t == 1) {
+                                    map.setBearing(feature.mapView.bearing);
+                                }
+                                return t;
+                            }
                         })
                         if (popup)
                             popup.remove();
