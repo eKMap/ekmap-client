@@ -6,6 +6,8 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Vector Tile Layer</title>
     <style>
@@ -13,9 +15,36 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -24,21 +53,25 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Click on the map to execute <a href='#'>Feature Infomation Control</a>
+            <button id="activeControl" class="btn-green">Click</button>
+        </div>
     </div>
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId', // container id
             minZoom: 4,
             center: [110.8572095386728, 16.105643201842312],
-            zoom: 5.0598853164770725  
+            zoom: 5.0598853164770725
         });
         var hoveredStateId = null;
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
             url: urlVectorService + "/resources/styles",
             token: tokenKey
         }).addTo(map);
-        map.on('load', function () {
-            map.addLayer({ 
+        map.on('load', function() {
+            map.addLayer({
                 'id': 'areaSelect',
                 'type': 'line',
                 'source': '35',
@@ -53,44 +86,18 @@
                 },
                 'filter': ["get", "CODE"]
             })
+            var select = new mapboxgl.ekmap.control.Select({
+                showButton: false,
+                target: 'activeControl',
+                setStyle: false
+            })
+            map.addControl(select);
+            select.on('selectfeatures', function(e) {
+                var code = e.properties.CODE;
+                map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
+            })
         })
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
-        map.on('click', '480', function (e) {
-            var bbox = [
-                [e.point.x - 5, e.point.y - 5],
-                [e.point.x + 5, e.point.y + 5]
-            ];
-            var features = map.queryRenderedFeatures(bbox, {
-                layers: ['480']
-            });
-            var fea = null;
-            var filter = features.reduce(
-                function (memo, feature) {
-                    fea = feature;
-                    return memo;
-                },
-                ['get', 'CODE']
-            );
-            var code = fea.properties.CODE;
-            var coordinates = [fea.properties.xDaiDien, fea.properties.yDaiDien];
-            var description = '<h4>' + fea.properties.NAME + '</h4>';
-            new mapboxgl.Popup()
-                .setLngLat(coordinates)
-                .setHTML(description)
-                .addTo(map);
-            map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
-        })
-
-        // Change the cursor to a pointer when the mouse is over the places layer.
-        map.on('mouseenter', '480', function () {
-            map.getCanvas().style.cursor = 'pointer';
-        });
-
-        // Change it back to a pointer when it leaves.
-        map.on('mouseleave', '480', function () {
-            map.getCanvas().style.cursor = '';
-        });
     </script>
 </body>
 

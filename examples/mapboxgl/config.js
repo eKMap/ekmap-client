@@ -121,17 +121,9 @@ var exampleConfig = {
                         description: ""
                     },
                     {
-                        name: "Mapbox Vector Tile Full",
-                        name_en: "Mapbox Vector Tile Full",
-                        thumbnail: "vectorTile_Map_full.png",
-                        fileName: "vectorTile_Map_full",
-                        subject: "Add vector tile.",
-                        description: ""
-                    },
-                    {
                         name: "Mapbox Vector Tile Overlay",
                         name_en: "Mapbox Vector Tile Overlay",
-                        thumbnail: "vectorTile_Map_overlay.png",
+                        thumbnail: "vectorTile_Map_full.png",
                         fileName: "vectorTile_Map_overlay",
                         subject: "Add vector tile overlay to the map.",
                         description: ""
