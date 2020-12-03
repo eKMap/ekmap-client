@@ -102,9 +102,7 @@ export class Select extends mapboxgl.Evented {
                 [e.point.x - 5, e.point.y - 5],
                 [e.point.x + 5, e.point.y + 5]
             ];
-            var features = map.queryRenderedFeatures(bbox, {
-                layers: arr
-            });
+            var features = map.queryRenderedFeatures(bbox);
             var fea = null;
             var filter = features.reduce(
                 function(memo, feature) {
@@ -116,7 +114,7 @@ export class Select extends mapboxgl.Evented {
              * @event mapboxgl.ekmap.control.Select#selectfeatures
              * @description Fired when the feature is selected.
              */
-            me.fire("selectfeatures", fea);
+            me.fire("selectfeatures", features);
             if (me.setStyle) {
                 var code = fea.properties.CODE;
                 var coordinates = [fea.properties.xDaiDien, fea.properties.yDaiDien];
