@@ -1,0 +1,43 @@
+
+<header class="header-wrapper main-header ekmapclient-header">
+
+    <nav class="navbar navbar-static-top">
+        <div class="nav-header"></div>
+    </nav>
+</header>
+
+
+<aside class="sidebar-wrapper main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar" id="sidebar">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" title="fold">
+            <div class="fa  fa-bars fold"></div>
+        </a>
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" id="sidebar-menu"></ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+
+<div class="content-wrapper edit-container">
+
+    <section class="content">
+        <span class="fa  fa-compress" id="showCodeBtn" data-i18n="editor.source"></span>
+        <div class="pane" id="codePane" style="display: none">
+            <div class="codePaneTool"><span data-i18n="editor.title"></span>
+                <div class="fa fa-play-circle-o editorBtn" id="runBtn" onclick="run()" data-i18n="editor.run"></div>
+                <div class="fa fa-undo editorBtn" id="resetBtn" onclick="refresh()" data-i18n="editor.reset"></div>
+            </div>
+            <div id="editor">
+
+            </div>
+        </div>
+        <div class="col-md-12 pane" id="previewPane">
+            <!--<iframe id='innerPage' name='innerPage'></iframe>-->
+        </div>
+    </section>
+
+</div>
+
+
+

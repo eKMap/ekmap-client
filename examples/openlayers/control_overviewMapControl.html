@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Overview Map Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        map = new ol.Map({
+            target: 'divMapId',
+            view: new ol.View({
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 5.193739308697748,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
+        });
+
+        var source = new ol.source.OSM();
+
+        var layer = new ol.layer.Tile({
+            source: source
+        });
+        map.addLayer(layer);
+
+        map.addControl(new ol.control.OverviewMap({
+            view: new ol.View({
+                projection: 'EPSG:4326',
+                multiWorld: true,
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 5.193739308697748,
+            }),
+            collapsed: false,
+            layers: [
+                new ol.layer.Tile({
+                    source: source
+                })
+            ]
+        }));
+    </script>
+</body>
+
+</html>

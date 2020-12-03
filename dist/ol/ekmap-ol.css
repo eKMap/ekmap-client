@@ -1,0 +1,85 @@
+/*!
+ * 
+ *          ekmap-ol.(https://ekgis.com.vn/)
+ *          Copyright© 2009 - 2020 eKGIS
+ *          license: Apache-2.0
+ *          version: v0.0.1
+ *         
+ */
+.ekmap {
+    color: red;
+}
+
+@media (min-width:769px) {
+    .ekmap-bl-layer {
+        bottom: 1em;
+        left: 10px;
+        z-index: 5;
+        background: url(https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9) 0% 0% / cover no-repeat rgb(255, 255, 255);
+    }
+    .ekmap-bl-bg {
+        width: 94px;
+        height: 64px;
+    }
+    .ekmap-bl-bg-text {
+        color: #fff;
+        background-color: rgba(0, 0, 0, .5);
+        font-size: 11px;
+        text-align: center;
+    }
+}
+
+@media (max-width:768px) {
+    .ekmap-bl-layer {
+        left: 10px;
+        z-index: 5;
+        background: url(https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9) 0% 0% / cover no-repeat rgb(255, 255, 255);
+    }
+    .ekmap-bl-bg {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+    }
+    .ekmap-bl-bg-text {
+        font-size: 0px;
+    }
+}
+
+.ekmap-bl-layer.active {
+    border-color: red;
+}
+
+.ekmap-bl-bg {
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 1em;
+}
+
+.ekmap-bl {
+    left: .5em!important;
+    right: auto!important;
+    bottom: 0!important;
+}
+
+.ekmap-bl-layer-bt {
+    cursor: pointer;
+    width: 20px;
+    background-color: #fff;
+}
+
+
+/* .ekmap-bl-layer-open .ekmap-bl-layer-bt {
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-width: 10px;
+    margin-top: -.7em;
+    margin-left: -10px;
+    border-right-color: #333;
+} */

@@ -47,22 +47,21 @@ export class TileLayer extends mapboxgl.Evented {
                 "tiles": [this.tileUrl],
                 "tileSize": 256
             });
-            map.addLayer(
-                {
-                    "id": nameID + id,
-                    "type": "raster",
-                    "source": nameID + id,
-                    "minzoom": 0,
-                    "maxzoom": 22,
-                    'layout': {
-                        'visibility': 'visible'
-                    },
-                    'metadata': {
-                        'type': 'overlayer',
-                        'url': this.options.url,
-                        'token': this.options.token ? this.options.token : ""
-                    }
-                })
+            map.addLayer({
+                "id": nameID + id,
+                "type": "raster",
+                "source": nameID + id,
+                "minzoom": 0,
+                "maxzoom": 22,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'metadata': {
+                    'type': 'overlayer',
+                    'url': this.options.url,
+                    'token': this.options.token ? this.options.token : ""
+                }
+            })
         }
 
         if (this.tileUrls) {
@@ -72,20 +71,20 @@ export class TileLayer extends mapboxgl.Evented {
                 "tiles": this.tileUrls,
                 "tileSize": 256
             });
-            map.addLayer(
-                {
-                    "id": nameID + id,
-                    "type": "raster",
-                    "source": nameID + id,
-                    "minzoom": 0,
-                    "maxzoom": 22,
-                    'layout': {
-                        'visibility': 'visible'
-                    },
-                    'metadata': {
-                        'type': 'overlayer'
-                    }
-                })
+            map.addLayer({
+                "id": nameID + id,
+                "type": "raster",
+                "source": nameID + id,
+                "minzoom": 0,
+                "maxzoom": 22,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'metadata': {
+                    'type': 'overlayer',
+                    'url': ''
+                }
+            })
         }
         return this;
     }

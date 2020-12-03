@@ -1,0 +1,123 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Data Rain</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .field {
+            color: #333333 !important;
+            font-size: 0.8rem;
+            text-decoration: none;
+            padding-right: 10px;
+        }
+
+        .value {
+            color: #333333 !important;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .form-group{
+            display: flex;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var data;
+        var chart, div, popup = '';
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                },
+                "layers": []
+            },
+            center: [106.5090846096723, 16.787962287423255],
+            zoom: 5.1128594812072485
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
+            
+            map.loadImage('./img/icon-rain.png', function (error, image) {
+                if (error) throw error;
+                map.addImage('positionRaint', image);
+            });
+            //Source: KTTV
+            $.get("../data/weather/rain.json ", function (response) {
+                map.addLayer({
+                    "id": "rain",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "positionRaint",
+                        "icon-size": 0.05
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": response
+                    }
+                });
+            })
+        })
+        map.on('click', 'rain', function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['rain']
+            });
+            var img = '<img  style="max-width: 541px;" src="' + features[0].properties.chartUrl + '">';
+            var content = '';
+            content += '<div style="max-width:1000px">';
+            content += '   <div class="form-group">';
+            content += '      <div class="width:70%">';
+            content += '           <a href="javascript:;" class="field">Station name : </a>'
+            content += '      </div>'
+            content += '      <div class="width:30%">'
+            content += '           <a href="javascript:;" class="value">' + features[0].properties.label + '</a>'
+            content += '      </div>'
+            content += '   </div>'
+            content += '   <div class="form-group" style="margin-bottom:20px">';
+            content += '      <div class="width:70%">';
+            content += '          <a href="javascript:;" class="field">Province : </a>'
+            content += '      </div>'
+            content += '      <div class="width:30%">'
+            content += '          <a href="javascript:;" class="value">' + features[0].properties.provine + '</a>'
+            content += '      </div>'
+            content += '   </div>'
+            content += img
+            content += '</div>'
+            new mapboxgl.Popup({ maxWidth: 1000})
+                .setLngLat(e.lngLat)
+                .setHTML(content)
+                .addTo(map);
+        })
+    </script>
+</body>
+
+</html>

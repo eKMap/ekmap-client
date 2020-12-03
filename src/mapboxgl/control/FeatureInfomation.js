@@ -7,6 +7,7 @@ import mapboxgl from 'mapbox-gl';
  * @category  Control
  * @classdesc FeatureInfomation.
  * @param {Object} options Construction parameters.
+ * @param {string} options.icon=fa-flickr Icon of button.
  * @param {Boolean} options.setStyle=true If setStyle = false, the selected feature will not set style and vice versa it will set style default.
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.FeatureInfomation#selectfeatures
@@ -19,9 +20,13 @@ import mapboxgl from 'mapbox-gl';
 export class FeatureInfomation extends mapboxgl.Evented {
 
     constructor(options) {
-        super(options); 
+        super(options);
         this.options = options ? options : {};
+        if (!this.options.icon)
+            this.options.icon = 'fa fa-flickr'
         this.setStyle = options ? options.setStyle : true;
+        this.active = false;
+        this._map = '';
     }
 
     /**
@@ -33,17 +38,35 @@ export class FeatureInfomation extends mapboxgl.Evented {
     onAdd(map) {
         this._map = map;
         this._container = document.createElement('div');
-        this._container.className = 'mapboxgl-ctrl';
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.style.fontSize = "14px"
+
+        let input = this.createLayerInputToggle();
+        this._container.appendChild(input)
+        var cursorDom = $('.mapboxgl-canvas-container')
         var me = this;
-        this._map.on('click', function (e) {
-            var layers = me._map.getStyle().layers;
+        this._container.addEventListener("click", function(e) {
+            this.active = !this.active
+            if (this.active) {
+                cursorDom[0].style.cursor = 'crosshair';
+                me.fire('click', me);
+                me._map.on('click', onClick);
+            } else {
+                cursorDom[0].style.cursor = 'grab';
+                me._map.off('click', onClick)
+            }
+        });
+
+        function onClick(e) {
+            var layers = map.getStyle().layers;
             layers.forEach(layer => {
-                if (layer.metadata.url && layer.metadata.type == 'overlayer' && layer.layout.visibility === "visible") {
+                if (layer.metadata && layer.metadata.url && layer.metadata.type == 'overlayer' && layer.layout.visibility === "visible") {
                     var mapService = new mapboxgl.ekmap.MapService({
                         url: layer.metadata.url,
                         token: layer.metadata.token
                     });
-                    mapService.identify().on(me._map).at(e.lngLat).run(function (obj) {
+                    mapService.identify().on(map).at(e.lngLat).run(function(obj) {
+                        console.log(obj)
                         var features = [];
                         if (obj.length > 0 && me.setStyle) {
                             for (var i = 0; i < obj.length; i++) {
@@ -95,13 +118,13 @@ export class FeatureInfomation extends mapboxgl.Evented {
                                     'type': 'FeatureCollection',
                                     'features': features
                                 }
-                                if (!me._map.getSource('feature-info')) {
-                                    me._map.addSource('feature-info', {
+                                if (!map.getSource('feature-info')) {
+                                    map.addSource('feature-info', {
                                         'type': 'geojson',
                                         'data': data
                                     })
 
-                                    me._map.addLayer({
+                                    map.addLayer({
                                         'id': 'point',
                                         'type': 'circle',
                                         'source': 'feature-info',
@@ -112,7 +135,7 @@ export class FeatureInfomation extends mapboxgl.Evented {
                                         'filter': ['in', 'name']
                                     })
 
-                                    me._map.addLayer({
+                                    map.addLayer({
                                         'id': 'line',
                                         'type': 'line',
                                         'source': 'feature-info',
@@ -127,12 +150,11 @@ export class FeatureInfomation extends mapboxgl.Evented {
                                         'filter': ['in', 'name']
                                     })
 
-                                    me._map.addLayer({
+                                    map.addLayer({
                                         'id': 'area',
                                         'type': 'fill',
                                         'source': 'feature-info',
-                                        'layout': {
-                                        },
+                                        'layout': {},
                                         'paint': {
                                             'fill-outline-color': '#484896',
                                             'fill-color': '#6e599f',
@@ -140,13 +162,13 @@ export class FeatureInfomation extends mapboxgl.Evented {
                                         },
                                         'filter': ['in', 'name']
                                     })
-                                    me.setFilter(me._map);
+                                    me.setFilter(map);
                                 } else {
-                                    me._map.getSource('feature-info').setData(data);
-                                    me.setFilter(me._map);
+                                    map.getSource('feature-info').setData(data);
+                                    me.setFilter(map);
                                 }
-                                if (me._map.getLayer('point') && me._map.getLayer('line'))
-                                    me._map.moveLayer('line', 'point');
+                                if (map.getLayer('point') && map.getLayer('line'))
+                                    map.moveLayer('line', 'point');
                             }
                             obj.coordinate = e.lngLat;
                         }
@@ -158,9 +180,10 @@ export class FeatureInfomation extends mapboxgl.Evented {
                     }, "");
                 }
             });
-        });
+        }
         return this._container;
     }
+
 
     /**
      * @private
@@ -198,6 +221,15 @@ export class FeatureInfomation extends mapboxgl.Evented {
                 map.removeSource('area');
             }
         }
+    }
+
+    createLayerInputToggle() {
+        let button = document.createElement("button");
+        let icon = document.createElement("i");
+        icon.className = this.options.icon;
+        button.className = "mapboxgl-ctrl-zoom-in"
+        button.appendChild(icon);
+        return button
     }
 }
 

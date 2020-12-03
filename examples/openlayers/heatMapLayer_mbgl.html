@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="../../examples/js/common.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <title>Heat Map Layer</title>
+    <style type="text/css">
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+            margin: 8px;
+        }
+
+        #toolbar {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            width: 300px;
+            text-align: center;
+            z-index: 100;
+            border-radius: 4px;
+        }
+
+        .panel {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid transparent;
+        }
+
+        .panel-primary .panel-heading {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+
+        .panel-heading {
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+
+        .panel-title {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 16px;
+            color: inherit;
+        }
+
+        .input-group-addon {
+            padding: 10px 12px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1;
+            color: #555;
+            text-align: center;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+
+        .panel-body {
+            padding: 15px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toolbar" class="panel panel-primary">
+        <div class="panel-heading">
+            <h5 class="panel-title text-center">Heat Map Layer</h5>
+        </div>
+        <div class="panel-body content">
+            <div class="panel">
+                <div class="input-group">
+                    <span class="input-group-addon">Counts</span>
+                    <input type="text" class="form-control" id="heatNums" value="5000" />
+                </div>
+            </div>
+            <div class="panel">
+                <div class="input-group">
+                    <span class="input-group-addon">Radius</span>
+                    <input class="form-control" style="width: 50px;" value="50" id="heatradius" />
+                    <select class="form-control" style="width: auto;" id="radiusUnit">
+                        <option value="px">px</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-default" onclick="createHeatPoints()">Start drawing</button>&nbsp;
+            &nbsp;
+            <button type="button" class="btn btn-default" onclick="clearHeatPoints()">Clear</button>
+        </div>
+    </div>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var map = new mapboxgl.Map({
+            container: "divMapId",
+            renderWorldCopies: false,
+            center: [103.9, 22.2],
+            zoom: 4
+        });
+
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+        function createHeatPoints() {
+            clearHeatPoints();
+            var num = parseInt(document.getElementById("heatNums").value);
+            var radius = parseInt(document.getElementById("heatradius").value);
+            var unit = document.getElementById("radiusUnit").value;
+            var features = [];
+            for (var i = 0; i < num; i++) {
+                features[i] = {
+                    type: "Feature",
+                    geometry: {
+                        type: "Point",
+                        coordinates: [
+                            Math.random() * 360 - 180,
+                            Math.random() * 160 - 80,
+                        ],
+                    },
+                    properties: {
+                        value: Math.random() * 9,
+                    },
+                };
+            }
+
+            var heatPoints = {
+                type: "FeatureCollection",
+                features: features,
+            };
+
+            map.addSource("heatmap", {
+                type: "geojson",
+                data: heatPoints,
+            });
+
+            map.addLayer({
+                id: "heatmap",
+                type: "heatmap",
+                source: "heatmap",
+                paint: {
+                    "heatmap-weight": 1,
+                    "heatmap-intensity": 2,
+                    "heatmap-color": [
+                        "interpolate",
+                        ["linear"],
+                        ["heatmap-density"],
+                        0,
+                        "rgba(33,102,172,0)",
+                        0.2,
+                        "rgb(103,169,207)",
+                        0.4,
+                        "rgb(209,229,240)",
+                        0.6,
+                        "rgb(253,219,199)",
+                        0.8,
+                        "rgb(239,138,98)",
+                        1,
+                        "rgb(178,24,43)",
+                    ],
+                    "heatmap-radius": radius,
+                },
+            });
+        }
+
+        function clearHeatPoints() {
+            if (map.getLayer("heatmap")) {
+                map.removeLayer("heatmap");
+                map.removeSource("heatmap")
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -11,7 +11,7 @@ import { TileLayer } from './TileLayer';
  * @extends {mapboxgl.ekmap.TileLayer}
  * @example
  * var map = new mapboxgl.Map({
- *     container: 'map1',
+ *     container: 'map',
  *     center: [103.9, 22.2],
  *     zoom: 6
  * });

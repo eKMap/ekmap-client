@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Video Storme</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <hr />
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [116.29, 15.75],
+            zoom: 4.3
+        });
+
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+        map.addSource('video', {
+            'type': 'video',
+            'urls': [
+                '../data/storm.mp4'
+            ],
+            'coordinates': [
+                [99.4860840068072, 24.798099762745814],
+                [128.18237309177036,24.798099762745814],
+                [128.18237309177036, 8.45215489377107],
+                [99.4860840068072, 8.45215489377107]
+            ]
+        })
+
+        map.addLayer({
+            'id': 'video',
+            'type': 'raster',
+            'source': 'video'
+        })
+
+        var playingVideo = true;
+
+        map.on('click', function () {
+            playingVideo = !playingVideo;
+            if (playingVideo) map.getSource('video').play();
+            else map.getSource('video').pause();
+        });
+
+    </script>
+</body>
+
+</html>

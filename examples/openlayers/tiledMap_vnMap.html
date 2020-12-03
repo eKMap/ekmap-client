@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>VietNam Map</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map"></div>
+    </div>
+    <script>
+        var map = new ol.Map({
+            target: 'divMapId',
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [105, 17],
+                zoom: 4,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
+        });
+        var layer = new ol.layer.Tile({
+            source: new ol.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }),
+            projection: 'EPSG:4326'
+        });
+        map.addLayer(layer);
+    </script>
+</body>
+
+</html>

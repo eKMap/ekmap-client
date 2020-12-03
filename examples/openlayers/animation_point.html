@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Animation Point</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map"></div>
+    </div>
+    <script>
+        
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105, 17],
+            zoom: 4.5
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        
+        var radius = 20;
+
+        function pointOnCircle(angle) {
+            return {
+                'type': 'Point',
+                'coordinates': [Math.cos(angle) + 105, Math.cos(angle) * 10 + 17]
+            };
+        }
+
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+
+        map.addSource('point', {
+            'type': 'geojson',
+            'data': pointOnCircle(0)
+        });
+
+        map.addLayer({
+            'id': 'point',
+            'source': 'point',
+            'type': 'circle',
+            'paint': {
+                'circle-radius': 10,
+                'circle-color': '#007cbf'
+            }
+        });
+
+        function animateMarker(timestamp) {
+            map.getSource('point').setData(pointOnCircle(timestamp / 1000));
+            requestAnimationFrame(animateMarker);
+        }
+
+        // Start the animation.
+        animateMarker(0);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+{
+    "opts": {
+        "recurse": true,
+        "template": "../template",
+        "configPath": "../openlayers",
+        "destination": "./docs/openlayers"
+    },
+    "disqus":"",
+    "tags": {
+        "allowUnknownTags": true,
+        "linkdoc-openlayers":"https://openlayers.org/en/latest/apidoc/"
+    },
+    "i18n": {
+        "defaultLang": "en",
+        "possibleLang": ["en"],
+        "dbFilePath":"./build/jsdocs/openlayers"
+    },
+    "source": {
+        "includePattern": ".+\\.js?$",
+        "excludePattern": "",
+        "include": [
+            "src/openlayers"
+        ],
+        "exclude": [
+        ]
+    },
+    "plugins": ["plugins/markdown"],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": false
+        }
+    }
+}

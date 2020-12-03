@@ -30,7 +30,9 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
      * @returns this
      */
     addTo(map) {
+        var me = this
         map.setStyle(this.tileUrl);
+        me.fire('loadend', me);
         return this;
     }
 }

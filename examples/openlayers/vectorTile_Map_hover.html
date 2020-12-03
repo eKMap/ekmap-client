@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Vector Tile Layer (Hover)</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId', // container id
+            style: {
+                "version": 8,
+                "sources": {
+                    "vector-tiles": {
+                        "type": "vector",
+                        "tiles": [urlVectorService + "/tile/{z}/{y}/{x}.pdf?apikey=" + tokenKey]
+                    },
+                },
+                "glyphs": urlVectorService + "/resources/fonts/{fontstack}/{range}.pbf",
+                "layers": []
+            },
+            minZoom: 4,
+            center: [110.8572095386728, 16.105643201842312],
+            zoom: 5.0598853164770725
+        });
+        var hoveredStateId = null;
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.on('load', function () {
+            new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            map.addLayer({
+                "id": "state-fills",
+                "source": "vector-tiles",
+                "type": "fill",
+                "source-layer": "480",
+                "layout": {},
+                'paint': {
+                    'fill-color': '#627BC1',
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        1,
+                        0.5
+                    ]
+                }
+            });
+            map.addLayer({
+                'id': 'state-borders',
+                'type': 'line',
+                'source': 'vector-tiles',
+                "source-layer": "480",
+                'layout': {},
+                'paint': {
+                    'line-color': '#627BC1',
+                    'line-width': 2
+                }
+            });
+        })
+
+        map.on('mousemove', 'state-fills', function (e) {
+            if (e.features.length > 0) {
+                if (hoveredStateId) {
+                    map.setFeatureState(
+                        { source: 'vector-tiles', id: hoveredStateId, sourceLayer: '480' },
+                        { hover: false }
+                    );
+                }
+                hoveredStateId = e.features[0].id;
+                map.setFeatureState(
+                    { source: 'vector-tiles', id: hoveredStateId, sourceLayer: '480' },
+                    { hover: true }
+                );
+            }
+        });
+
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on('mouseleave', 'state-fills', function () {
+            if (hoveredStateId) {
+                map.setFeatureState(
+                    { source: 'vector-tiles', id: hoveredStateId, sourceLayer: '480' },
+                    { hover: false }
+                );
+            }
+            hoveredStateId = null;
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,343 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Realtime car</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 18px;
+            left: 60px;
+        }
+
+        .overlay button {
+            font: 600 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            background-color: #3386c0;
+            color: #fff;
+            display: inline-block;
+            margin: 0;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .overlay input {
+            font: 600 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            background-color: #3386c0;
+            color: #fff;
+            display: inline-block;
+            margin: 0;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .kt-portlet {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-shadow: 0 0 13px 0 rgba(82, 63, 105, .05);
+            box-shadow: 0 0 13px 0 rgba(82, 63, 105, .05);
+            background-color: #fff;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            display: flex;
+        }
+
+        .col {
+            width: 100%;
+            text-align: center;
+        }
+
+        .img_select {
+            padding-right: 10px;
+            width: 25px;
+            height: 25px;
+        }
+
+        .item-name a {
+            text-decoration: unset;
+            font-size: 1.375rem;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 1.75rem;
+            color: black;
+        }
+
+        .font-des {
+            font-size: 13px;
+            font-weight: 300;
+            color: #646c9a;
+            font-family: Poppins;
+        }
+
+        .item-image-container {
+            width: 60%;
+            padding-top: 10px;
+        }
+
+        .item-image {
+            border-radius: 4px;
+            cursor: pointer;
+            -o-object-fit: cover;
+            object-fit: fill;
+            width: 426px;
+            height: 240px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div class="overlay">
+            <button id="replay">Replay</button>
+            <input type="button" class="spread-label" value="Pause" id="button-play">
+        </div>
+    </div>
+    <script type="text/javascript">
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: 'mapbox://styles/mapbox/satellite-streets-v11',
+            center: [105.66771871049923, 21.011594023323028],
+            zoom: 12.165135620720719,
+            pitch: 100,
+        });
+
+        var origin = [105.78701677181785, 21.030421887134903];
+        var destination = [105.52364530421451, 20.994812188546017];
+        var counter = 0;
+        var arc = [];
+        var isPaused = false;
+        var endFly;
+        var timer;
+        var marker;
+        var popup;
+        var dataLine = {
+            'type': 'FeatureCollection',
+            'features': [
+                {
+                    'type': 'Feature',
+                    'properties': {},
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates': [origin]
+                    }
+                }
+            ]
+        }
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.on('load', function () {
+            map.loadImage('../data/marker.png', function (error, image) {
+                if (error) throw error;
+                map.addImage('positionMarker', image);
+            });
+            //Source: KTTV
+            $.get("../data/route.json", function (response) {
+
+                map.addSource('route', {
+                    'type': 'geojson',
+                    'data': response
+                });
+
+                var lineDistance = turf.lineDistance(response.features[0].geometry, { units: 'kilometers' });
+
+                for (var i = 2; i < lineDistance * 1000; i += 2) {
+                    var segment = turf.along(response.features[0].geometry, i / 1000, { units: 'kilometers' });
+                    arc.push(segment.geometry.coordinates);
+                }
+
+                map.addSource('line', {
+                    'type': 'geojson',
+                    'data': dataLine
+                });
+
+                map.addLayer({
+                    'id': 'route',
+                    'source': 'line',
+                    'type': 'line',
+                    'paint': {
+                        'line-width': 3,
+                        'line-color': '#007cbf'
+                    }
+                });
+                marker = new mapboxgl.Marker()
+                    .setLngLat([105.78699777621455, 21.030424911549954])
+                    .addTo(map);
+            }).done(function () {
+                animate(counter)
+            })
+
+            function animate(counter) {
+
+                // Request the next frame of animation so long the end has not been reached.
+                timer = window.setInterval(function () {
+                    if (counter == 0) {
+                        map.flyTo({
+                            center: [105.7864968524334, 21.030328889386084],
+                            speed: 1,
+                            zoom: 14,
+                            easing(t) {
+                                if (t == 1) {
+                                    map.setPitch(30);
+                                    endFly = 1;
+                                }
+                                return t;
+                            }
+                        });
+                    }
+
+                    if (counter < arc.length && !isPaused) {
+                        if (endFly) {
+                            map.setBearing(turf.bearing(
+                                turf.point(
+                                    arc[counter >= arc.length ? counter - 1 : counter]
+                                ),
+                                turf.point(
+                                    arc[counter >= arc.length ? counter : counter + 1]
+                                )
+                            ));
+                            dataLine.features[0].geometry.coordinates.push(arc[counter])
+                            map.getSource('line').setData(dataLine)
+                            map.panTo(arc[counter]);
+                        }
+                        marker.setLngLat(arc[counter])
+                        if (counter == 1428) {
+                            isPaused = true;
+                            var content = '';
+                            content += '<div class="kt-portle" style="cursor: pointer;">'
+                            content += '    <div class="form-group form-group-last row">'
+                            content += '        <div class="col item-name">'
+                            content += '            <img src="./img/marker-icon-red.png" class="img_select" height="20">'
+                            content += '            <a class="col-form-label" href="javascript:;">Bến xe Mỹ Đình</a>'
+                            content += '        <div class="item-image-container">'
+                            content += '            <img src="https://lh5.googleusercontent.com/p/AF1QipNzWD5pKH3x6y8IsaKQQ4-wEfbNzYKucAodAKBS=w426-h240-k-no" class="item-image">';
+                            content += '        </div>'
+                            content += '    </div>'
+                            content += '</div>'
+                            popup = new mapboxgl.Popup({ closeButton: false })
+                                .setLngLat(arc[1428])
+                                .setHTML(content)
+                                .setMaxWidth("500px")
+                                .addTo(map);
+                            setTimeout(() => {
+                                isPaused = false
+                                popup.remove();
+                            }, 5000)
+                        }
+                        if (counter == 1988) {
+                            isPaused = true;
+                            var content = '';
+                            content += '<div class="kt-portle " style="cursor: pointer;">'
+                            content += '    <div class="form-group form-group-last row">'
+                            content += '        <div class="col item-name">'
+                            content += '            <img src="./img/marker-icon-red.png" class="img_select" height="20">'
+                            content += '            <a class="col-form-label" href="javascript:;">Trung Tâm Hội Nghị Quốc Gia Việt Nam</a>'
+                            content += '        <div class="item-image-container">'
+                            content += '            <img src="https://lh5.googleusercontent.com/p/AF1QipMV7En3Z0Tyk8SMfQp-yu1wbOw1px1-hHXLGbgV=w459-h240-k-no" class="item-image">';
+                            content += '        </div>'
+                            content += '    </div>'
+                            content += '</div>'
+                            popup = new mapboxgl.Popup({ closeButton: false })
+                                .setLngLat(arc[1988])
+                                .setHTML(content)
+                                .setMaxWidth("500px")
+                                .addTo(map);
+                            setTimeout(() => {
+                                isPaused = false;
+                                popup.remove();
+                            }, 5000)
+                        }
+                        if (counter == 2222) {
+                            isPaused = true;
+                            var content = '';
+                            content += '<div class="kt-portle " style="cursor: pointer;">'
+                            content += '    <div class="form-group form-group-last row">'
+                            content += '        <div class="col item-name">'
+                            content += '            <img src="./img/marker-icon-red.png" class="img_select" height="20">'
+                            content += '            <a class="col-form-label" href="javascript:;">Đại lộ Thăng Long</a>'
+                            content += '        <div class="item-image-container">'
+                            content += '            <img src="//maps.gstatic.com/tactile/pane/default_geocode-1x.png" class="item-image">';
+                            content += '        </div>'
+                            content += '    </div>'
+                            content += '</div>'
+                            popup = new mapboxgl.Popup({ closeButton: false })
+                                .setLngLat(arc[2444])
+                                .setHTML(content)
+                                .setMaxWidth("500px")
+                                .addTo(map);
+                            setTimeout(() => {
+                                isPaused = false;
+                                popup.remove();
+                            }, 5000)
+                        }
+                        counter++;
+                    } else {
+                        if (counter > arc.length)
+                            window.clearInterval(timer);
+                    }
+                }, 10);
+            }
+            var btn = document.getElementById('button-play');
+
+            document.getElementById('replay').addEventListener('click', function () {
+                if (endFly) {
+                    window.clearInterval(timer);
+                    endFly = null;
+                }
+                if (btn.value == 'Play')
+                    btn.value = 'Pause';
+
+                dataLine.features[0].geometry.coordinates = []
+                dataLine.features[0].geometry.coordinates.push(origin);
+                map.getSource('line').setData(dataLine);
+                counter = 0;
+                marker.setLngLat(arc[counter])
+                animate(counter);
+            });
+
+            document.getElementById("button-play").onclick = function (e) {
+                if (btn.value === 'Pause') {
+                    btn.value = 'Play'
+                    e.preventDefault();
+                    isPaused = true;
+                }
+                else {
+                    btn.value = 'Pause';
+                    e.preventDefault();
+                    isPaused = false;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

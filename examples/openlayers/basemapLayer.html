@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Showing an ArcGIS basemap</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 9px 3px 0px 10px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            left: 30px;
+            top: -8px;
+            z-index: 1000;
+            padding: 1em;
+            max-height: 250px;
+            max-width: 250px;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map"></div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            <div id="terrainMenu">
+                <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                    <option value="Streets">Streets</option>
+                    <option value="Topographic">Topographic</option>
+                    <option value="Oceans">Oceans</option>
+                    <option value="OceansLabels">OceansLabels</option>
+                    <option value="NationalGeographic">NationalGeographic</option>
+                    <option value="DarkGray">DarkGray</option>
+                    <option value="DarkGrayLabels">DarkGrayLabels</option>
+                    <option value="Gray">Gray</option>
+                    <option value="GrayLabels">GrayLabels</option>
+                    <option value="Imagery">Imagery</option>
+                    <option value="ImageryLabels">ImageryLabels</option>
+                    <option value="ImageryTransportation">ImageryTransportation</option>
+                    <option value="ShadedRelief">ShadedRelief</option>
+                    <option value="ShadedReliefLabels">ShadedReliefLabels</option>
+                    <option value="Terrain">Terrain</option>
+                    <option value="TerrainLabels">TerrainLabels</option>
+                    <option value="USATopo">USATopo</option>
+                    <option value="ImageryClarity">ImageryClarity</option>
+                    <option value="Physical">Physical</option>
+                    <option value="ImageryFirefly">ImageryFirefly</option>
+                </select></div>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105, 17],
+            zoom: 4
+        });
+        new mapboxgl.ekmap.BasemapArcgisLayer('Streets').addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        function changeMenu() {
+            var layers = map.getStyle().layers;
+            map.removeLayer(layers[0].id)
+            var x = document.getElementById("mySelect").value;
+            if (x == 'Streets')
+                new mapboxgl.ekmap.BasemapArcgisLayer('Streets').addTo(map);
+            if (x == 'Topographic')
+                new mapboxgl.ekmap.BasemapArcgisLayer('Topographic').addTo(map);
+            if (x == 'Oceans')
+                new mapboxgl.ekmap.BasemapArcgisLayer('Oceans').addTo(map);
+            if (x == 'OceansLabels')
+                new mapboxgl.ekmap.BasemapArcgisLayer('OceansLabels').addTo(map);
+            if (x == 'NationalGeographic')
+                new mapboxgl.ekmap.BasemapArcgisLayer('NationalGeographic').addTo(map);
+            if (x == 'DarkGray')
+                new mapboxgl.ekmap.BasemapArcgisLayer('DarkGray').addTo(map);
+            if (x == 'DarkGrayLabels')
+                new mapboxgl.ekmap.BasemapArcgisLayer('DarkGrayLabels').addTo(map);
+            if (x == 'Gray')
+                new mapboxgl.ekmap.BasemapArcgisLayer('Gray').addTo(map);
+            if (x == 'GrayLabels')
+                new mapboxgl.ekmap.BasemapArcgisLayer('GrayLabels').addTo(map);
+            if (x == 'Imagery')
+                new mapboxgl.ekmap.BasemapArcgisLayer('Imagery').addTo(map);
+            if (x == 'ImageryLabels')
+                new mapboxgl.ekmap.BasemapArcgisLayer('ImageryLabels').addTo(map);
+            if (x == 'ShadedRelief')
+                new mapboxgl.ekmap.BasemapArcgisLayer('ShadedRelief').addTo(map);
+            if (x == 'ImageryTransportation')
+                new mapboxgl.ekmap.BasemapArcgisLayer('ImageryTransportation').addTo(map);
+            if (x == 'ShadedReliefLabels')
+                new mapboxgl.ekmap.BasemapArcgisLayer('ShadedReliefLabels').addTo(map);
+            if (x == 'Terrain')
+                new mapboxgl.ekmap.BasemapArcgisLayer('Terrain').addTo(map);
+            if (x == 'TerrainLabels')
+                new mapboxgl.ekmap.BasemapArcgisLayer('TerrainLabels').addTo(map);
+            if (x == 'USATopo')
+                new mapboxgl.ekmap.BasemapArcgisLayer('USATopo').addTo(map);
+            if (x == 'ImageryClarity')
+                new mapboxgl.ekmap.BasemapArcgisLayer('ImageryClarity').addTo(map);
+            if (x == 'Physical')
+                new mapboxgl.ekmap.BasemapArcgisLayer('Physical').addTo(map);
+            if (x == 'ImageryFirefly')
+                new mapboxgl.ekmap.BasemapArcgisLayer('ImageryFirefly').addTo(map);
+        }
+    </script>
+</body>
+
+</html>

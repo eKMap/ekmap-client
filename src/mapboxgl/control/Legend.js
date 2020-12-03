@@ -36,7 +36,7 @@ export class Legend extends mapboxgl.Evented {
      * @param {Map} map the Map this control will be added to.
      * @returns {HTMLElement}  The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.
      */
-    onAdd(map) {
+    onAdd(map) {    
         this._map = map;
         let me = this; //might use this later
 

@@ -29,14 +29,14 @@ export class TiledMapLayer extends mapboxgl.Evented {
             }
             if (options.urls)
                 this.tileUrls = options.urls
-            // Remove subdomain in url
-            // https://github.com/Esri/esri-leaflet/issues/991
-            //this.service.addEventParent(this);
-            //var arcgisonline = new RegExp(/tiles.arcgis(online)?\.com/g);
-            //if (arcgisonline.test(options.url)) {
-            //    this.tileUrl = this.tileUrl.replace('://tiles', '://tiles{s}');
-            //    options.subdomains = ['1', '2', '3', '4'];
-            //}
+                // Remove subdomain in url
+                // https://github.com/Esri/esri-leaflet/issues/991
+                //this.service.addEventParent(this);
+                //var arcgisonline = new RegExp(/tiles.arcgis(online)?\.com/g);
+                //if (arcgisonline.test(options.url)) {
+                //    this.tileUrl = this.tileUrl.replace('://tiles', '://tiles{s}');
+                //    options.subdomains = ['1', '2', '3', '4'];
+                //}
             if (this.options.token) {
                 this.tileUrl += ('?token=' + this.options.token);
 
@@ -63,22 +63,21 @@ export class TiledMapLayer extends mapboxgl.Evented {
                 "tiles": [this.tileUrl],
                 "tileSize": 256
             });
-            map.addLayer(
-                {
-                    "id": nameID + id,
-                    "type": "raster",
-                    "source": nameID + id,
-                    "minzoom": 0,
-                    "maxzoom": 22,
-                    'layout': {
-                        'visibility': 'visible'
-                    },
-                    'metadata': {
-                        'type': 'overlayer',
-                        'url': this.options.url,
-                        'token': this.options.token ? this.options.token : ""
-                    }
-                })
+            map.addLayer({
+                "id": nameID + id,
+                "type": "raster",
+                "source": nameID + id,
+                "minzoom": 0,
+                "maxzoom": 22,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'metadata': {
+                    'type': 'overlayer',
+                    'url': this.options.url,
+                    'token': this.options.token ? this.options.token : ""
+                }
+            })
         }
 
         if (this.tileUrls) {
@@ -88,38 +87,20 @@ export class TiledMapLayer extends mapboxgl.Evented {
                 "tiles": this.tileUrls,
                 "tileSize": 256
             });
-            map.addLayer(
-                {
-                    "id": nameID + id,
-                    "type": "raster",
-                    "source": nameID + id,
-                    "minzoom": 0,
-                    "maxzoom": 22,
-                    'layout': {
-                        'visibility': 'visible'
-                    },
-                    'metadata': {
-                        'type': 'overlayer',
-                        //'url': 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/VietNam/MapServer/',
-                        //'layers': [
-                        //    {
-                        //        id: 'Thủy điện',
-                        //        geometryType: 'esriGeometryPoint',
-                        //        url: 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/VietNam/FeatureServer/0/'
-                        //    },
-                        //    {
-                        //        id: 'Đường giao thông',
-                        //        geometryType: 'esriGeometryPolyline',
-                        //        url: 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/VietNam/FeatureServer/1/'
-                        //    },
-                        //    {
-                        //        id: 'Địa phận tỉnh',
-                        //        geometryType: 'esriGeometryPolygon',
-                        //        url: 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/VietNam/FeatureServer/2/'
-                        //    }
-                        //]
-                    }
-                })
+            map.addLayer({
+                "id": nameID + id,
+                "type": "raster",
+                "source": nameID + id,
+                "minzoom": 0,
+                "maxzoom": 22,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'metadata': {
+                    'type': 'overlayer',
+                    'url': ''
+                }
+            })
         }
         return this;
     }

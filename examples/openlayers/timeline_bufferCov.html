@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>TimeLine Buffer Covid</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 100px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .timelineInfo {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+        }
+
+        .tlStatsControl {
+            height: 68px;
+            flex: 100%;
+            max-width: 100%;
+            display: flex;
+            background: rgba(247, 247, 247, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .tlControl {
+            flex: 40%;
+            max-width: 40%;
+            padding-right: 24px;
+            padding-top: 18px;
+        }
+
+        .tlControl #button-play {
+            cursor: pointer;
+            margin-left: 18px;
+            margin-right: 18px;
+            float: right;
+        }
+
+        .tlControl div {
+            float: right;
+        }
+
+        .tlStats {
+            flex: 60%;
+            max-width: 60%;
+            padding-left: 24px;
+            padding-top: 4px;
+            line-height: 28px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .tlDate,
+        .tlConfirmed,
+        .tlFatal {
+            display: inline-block;
+            margin-right: 60px;
+        }
+
+        .tlProgress {
+            height: 58px;
+            background: #FFFFFF;
+            opacity: 0.9;
+            backdrop-filter: blur(8px);
+        }
+
+        .tlSliderWrapper {
+            height: 26px;
+            padding-top: 4px;
+        }
+
+        .tlSlider {
+            width: calc(100% - 48px);
+            margin-left: 24px;
+            margin-right: 24px;
+            border-radius: 10px;
+            height: 2px;
+            outline: none;
+            -webkit-appearance: none;
+            position: fixed;
+            bottom: 35px;
+            z-index: 2;
+        }
+
+        input[type="range"i] {
+            appearance: slider-horizontal;
+            color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
+            cursor: default;
+            padding: initial;
+            border: initial;
+            margin: 2px;
+        }
+
+        input {
+            -webkit-writing-mode: horizontal-tb !important;
+            text-rendering: auto;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+            -webkit-rtl-ordering: logical;
+            font: 400 13.3333px Arial;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/@turf/turf@5.1.6/turf.min.js"></script>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map"></div>
+        <div class="timelineInfo">
+            <div class="tlStatsControl">
+                <div class="tlStats">
+                    <div class="tlDate">
+                        <div>On the day of</div>
+                        <div style="font-size: 24px;">
+                            <span id="date"></span>
+                        </div>
+                    </div>
+                    <div class="tlConfirmed">
+                        <div>Total confirmed cases</div>
+                        <div style="font-size:24px;color: #DE3700;">
+                            <span id="total_case"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tlControl">
+                    <input type="button" class="spread-label" value="PAUSE" id="button-play">
+                </div>
+            </div>
+            <div class="tlProgress">
+                <div class="tlSliderWrapper">
+                    <input class="tlSlider" id="tlSlider" type="range" min="0" max="142" step="1" value="1"
+                        onchange="changeTime()"
+                        style="background: linear-gradient(to right, rgb(0, 128, 157) 0%, rgb(0, 128, 157) 8.60215%, rgb(204, 204, 204) 8.60215%, rgb(204, 204, 204) 100%);">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [11.164340403295512, 2.079745662755286],
+            zoom: 2.116295796373197,
+            pitch: 40,
+        });
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var pt, buffered, long, lat, dataTotal, covid, totalday = 0;
+        var totalcase_day = [];
+        var data = [];
+        var dataNew = [];
+        var count = 0,
+            value = 0,
+            x = 1,
+            y = 0,
+            minData = 1,
+            maxData = 204377,
+            minRadius = 20,
+            maxRadius = 100,
+            date = [];
+        widgets.loader.showLoader("data loading...");
+        for (var i = 0; i < 144; i++) {
+            $.get("../data/coranavirus/2020_" + i + ".json", function (response) {
+                var dataLayer = [];
+                var covid = response.features;
+                date.push(response.date);
+                covid.forEach(items => {
+                    long = items.properties.geoid[1];
+                    lat = items.properties.geoid[0];
+                    if (items.properties.new)
+                        totalday += items.properties.new;
+                    var point = turf.point([long, lat]);
+                    dataTotal = items.properties.total;
+                    var a = getRadius(dataTotal, minData, maxData, minRadius, maxRadius);
+                    if(a>21)
+                    console.log(a)
+                    buffered = turf.buffer(point, a, {
+                        units: 'kilometers'
+                    });
+                    dataLayer.push(buffered);
+                })
+                totalcase_day.push(totalday);
+                data.push({
+                    dataLayer,
+                    'ngay': date[y]
+                });
+                y++;
+            }).done(function () {
+                count++;
+                if (count == 143) {
+                    data.sort(function (a, b) {
+                        return new Date(a.ngay) - new Date(b.ngay);
+                    });
+                    widgets.loader.removeLoader();
+                    map.addSource('states', {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'FeatureCollection',
+                            'features': data[0].dataLayer
+                        }
+                    });
+                    map.addLayer({
+                        'id': 'states',
+                        'type': 'fill',
+                        'source': 'states',
+                        'paint': {
+                            'fill-color': '#770404',
+                            'fill-opacity': 0.7,
+                        }
+                    });
+
+                    interval = setInterval(function () {
+                        var x = getValue();
+                        if (x == 143)
+                            clearInterval(interval);
+                        else {
+                            document.getElementById('tlSlider').value = x;
+                            document.getElementById('date').innerHTML = data[x].ngay;
+                            document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
+                            var datacase = {
+                                'type': 'FeatureCollection',
+                                'features': data[x].dataLayer
+                            };
+                            x++;
+                            map.getSource('states').setData(datacase);
+                            if (x == 143) {
+                                window.clearInterval(timer);
+                            }
+                        }
+                    }, 500);
+                }
+            })
+        }
+
+        function getRadius(Data, minData, maxData, minRadius, maxRadius) {
+            return (Data - minData) / (maxData - minData) * (maxRadius - minRadius) + minRadius;
+        }
+
+        var btn = document.getElementById('button-play');
+        document.getElementById("button-play").onclick = function () {
+            if (btn.value === 'PAUSE') {
+                btn.value = 'PLAY'
+                clearInterval(interval);
+            } else {
+                btn.value = 'PAUSE'
+                interval = setInterval(function () {
+                    var x = getValue();
+                    if (x == 143)
+                        clearInterval(interval);
+                    else {
+                        document.getElementById('tlSlider').value = x;
+                        document.getElementById('date').innerHTML = data[x].ngay;
+                        document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[x], ',');
+                        var datacase = {
+                            'type': 'FeatureCollection',
+                            'features': data[x].dataLayer
+                        };
+                        x++;
+                        map.getSource('states').setData(datacase);
+                        if (x == 143) {
+                            window.clearInterval(timer);
+                        }
+                    }
+                }, 300);
+            }
+        }
+
+        function getValue() {
+            value++;
+            return value
+        }
+
+        function changeTime() {
+            value = document.getElementById('tlSlider').value;
+            document.getElementById('date').innerHTML = data[value].ngay;
+            document.getElementById('total_case').innerHTML = formatNumber(totalcase_day[value], ',');
+            var datacase = {
+                'type': 'FeatureCollection',
+                'features': data[value].dataLayer
+            };
+            x++;
+            map.getSource('states').setData(datacase);
+            if (x == 143) {
+                window.clearInterval(timer);
+            }
+        }
+
+        function formatNumber(values, type) {
+            var x = values + "";
+
+            if (x.length / 3 > 1) {
+
+                var y = Array.from(x);
+                var z = "";
+                var k = 0;
+                for (let i = x.length; i > 0; i--) {
+                    if (k == 0) {
+                        z = y[i - 1] + z
+                    } else if (k % 3 == 0) {
+                        z = y[i - 1] + type + z
+                    } else {
+                        z = y[i - 1] + z
+                    }
+                    k++;
+                }
+                return z;
+            } else {
+                return values;
+            }
+        }
+    </script>
+</body>
+
+</html>

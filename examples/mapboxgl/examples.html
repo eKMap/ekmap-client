@@ -24,7 +24,7 @@
 <!-- ./wrapper -->
 <div class="wrapper"></div>
 <script>
-    $('.wrapper').load("../template/example.html", function () {
+    $('.wrapper').load("../templateMapboxgl/example.html", function () {
         var navigation = {
             nav: {
                 title: "eKMap Client SDKs",
@@ -32,7 +32,7 @@
                 isLocal: window.isLocal
             }
         };
-        utils.loadTemplate(".ekmapclient-header", "../template/header.html", navigation);
+        utils.loadTemplate(".ekmapclient-header", "../templateMapboxgl/header.html", navigation);
 
         $body = $('body');
        // $body.append("<script type='text/javascript' src='../openlayers/config.js'><\/script>");
@@ -44,7 +44,7 @@
         $body.append("<script type='text/javascript' src='../js/common.js'><\/script>");
         $body.append("<script type='text/javascript' src='../js/sidebar.js'><\/script>");
         $body.append("<script type='text/javascript' src='../js/example.js'><\/script>");
-        utils.loadTemplate(".ekmapclient-footer", "../template/footer.html", navigation);
+        utils.loadTemplate(".ekmapclient-footer", "../templateMapboxglMapboxgl/footer.html", navigation);
     });
 </script>
 <!-- ./wrapper end-->

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Layer Switch</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 25px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="map" class="map">
+        </div>
+    </div>
+    <input id="swipe" type="range" style="width: 100%;">
+    <script>
+        var world = new ol.layer.Tile({
+            source: new ol.source.OSM(),
+            opacity: 0.5
+        });
+
+        var worldNight = new ol.layer.Tile({
+            source: new ol.source.OSM(),
+        });
+
+        var map = new ol.Map({
+            layers: [world, worldNight],
+            target: 'map',
+            controls: ol.control.defaults({ attributionOptions: { collapsed: false } }),
+            view: new ol.View({
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 5.193739308697748,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
+        });
+
+        var swipe = document.getElementById('swipe');
+        worldNight.on('prerender', function (event) {
+            var ctx = event.context;
+            var width = ctx.canvas.width * (swipe.value / 100);
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(width, 0, ctx.canvas.width - width, ctx.canvas.height);
+            ctx.clip();
+        });
+        worldNight.on('postrender', function (event) {
+            var ctx = event.context;
+            ctx.restore();
+        });
+
+        swipe.addEventListener('input', function () {
+            map.render();
+        }, false);
+    </script>
+</body>
+
+</html>

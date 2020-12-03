@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Delete features</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Click the point on the map to delete.
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105.6685713, 20.9003181],
+            style: {
+                "version": 8,
+                "sources": {
+                },
+                "layers": [
+                ]
+            },
+            zoom: 7
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        var featureLayer
+        map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+
+            featureLayer = new mapboxgl.ekmap.FeatureLayer({
+                url: urlFeatureLayer,
+                token: tokenKey
+            }).addTo(map);
+        })
+        var idDelete;
+
+        map.on('click', function (obj) {
+            var bbox = [
+                [obj.point.x - 5, obj.point.y - 5],
+                [obj.point.x + 5, obj.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['point']
+            });
+            if (features.length > 0) {
+                idDelete = features[0].properties.OBJECTID;
+                widgets.loader.showLoader("data loading...");
+                featureLayer.deleteFeature(idDelete, function (e) {
+                    alert('Deleted successfully!');
+                    featureLayer.refresh();
+                    widgets.loader.removeLoader();
+                });
+            }
+            else
+                alert('Click again !')
+        })
+    </script>
+</body>
+
+</html>

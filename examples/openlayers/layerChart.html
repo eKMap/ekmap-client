@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script> -->
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Layer Chart</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+
+        .line-heading {
+            font-weight: normal;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: #323232;
+        }
+
+        .ekmap-client-item-list__list-item {
+            box-shadow: 0 1px 0 rgba(110, 110, 110, 0.3);
+            padding: 3px 3px;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 2px;
+            margin-bottom: 6px;
+            border: 1px solid rgba(110, 110, 110, 0.3);
+            min-height: 48px;
+            border-color: transparent;
+            transition: border 250ms ease-in-out;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .or-wrap {
+            background-color: #e0e0e0;
+            height: 1px;
+            margin: 2em 0;
+            overflow: visible;
+        }
+
+        .or-text {
+            background: #fff;
+            line-height: 0;
+            padding: 0 1em;
+            position: relative;
+            bottom: 0.75em;
+        }
+
+        .ekmap-client-item-list__list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ekmap-client-button {
+            align-items: center;
+            background-color: #0079c1;
+            border: 1px solid #0079c1;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            font-family: inherit;
+            font-size: 14px;
+            min-height: 32px;
+            justify-content: center;
+            overflow: hidden;
+            padding: 6px 7px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            transition: background-color 125ms ease-in-out, border 125ms ease-in-out;
+        }
+
+        .ekmap-client-feature-form__label {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            margin-bottom: 12px;
+            position: relative;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            <div id="addFeatureDiv" style="display: block">
+                <h3 class="list-heading">Options:</h3>
+                Chart type:
+                <select id="graph" onchange="doAnimate();" style="margin-bottom: 5px;">
+                    <option value="pie">pie</option>
+                    <option value="doughnut">donut</option>
+                    <option value="bar">bar</option>
+                </select>
+                <br />
+                Colors scheme:
+                <select id="color" onchange="doAnimate()" style="margin-bottom: 5px;">
+                    <option value="classic">Classic</option>
+                    <option value="dark">Dark</option>
+                    <option value="pale">Pale</option>
+                    <option value="pastel">Pastel</option>
+                    <option value="neon">Neon</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <br />
+                <button onclick="doAnimate();">Animate!</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [106.813834123584, 15.77458200059695],
+            style: {
+                "version": 8,
+                "sources": {
+                },
+                "layers": [
+                ]
+            },
+            zoom: 5.479005488986576,
+            pitch: 45,
+            bearing: 0,
+            light: {
+                'anchor': 'viewport',
+                'color': 'white',
+                'intensity': 0.7
+            }
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        var domLayer;
+        var listColor;
+        var doms = [];
+        var features;
+
+        map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            $.get("../data/water_quality.json", function (response) {
+                features = response.features;
+            }).done(function () {
+                createDomLayer('pie', ['#008000', '#ffa500', '#ff0000', '#0000ff']);
+            })
+        });
+
+        function createDomLayer(typeGraph, colors) {
+            var me = this;
+            if (domLayer)
+                domLayer.clearDoms();
+            domLayer = new mapboxgl.ekmap.DomOverlay({
+                type: typeGraph,
+                map: map,
+                features: features,
+                fields: ['P', 'Q+', 'Q-', 'Pin'],
+                colors: colors
+            })
+        }
+
+        function doAnimate() {
+            var typeGraph = document.getElementById("graph").value;
+            var color = document.getElementById("color").value;
+            if (color == 'classic')
+                colors = ['#008000', '#ffa500', '#ff0000', '#0000ff']
+            if (color == 'dark')
+                colors = ['#006600', '#960', '#900', '#000033']
+            if (color == 'pale')
+                colors = ['#3b7', '#fd0', '#f64', '#336699']
+            if (color == 'pastel')
+                colors = ['#7d7', '#fb4', '#f66', '#7799cc']
+            if (color == 'neon')
+                colors = ['#f0f', '#ff0', '#0f0', '#00ffff']
+            if (color == 'custom')
+                colors = ['#f0f', '#f00', '#00f', '#008000']
+            createDomLayer(typeGraph, colors)
+        }
+    </script>
+</body>
+
+</html>

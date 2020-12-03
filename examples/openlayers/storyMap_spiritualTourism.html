@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Spiritual Tourism</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+            margin: 8px;
+        }
+
+        /* .multi-item-carousel .carousel-inner>.item {
+            transition: 500ms ease-in-out left;
+        }  */
+
+        .containerCaro {
+            position: absolute;
+            z-index: 1;
+            bottom: 10px;
+            width: 100%;
+            padding: 0px !important;
+            max-height: 124px !important;
+        }
+
+        .containerImg {
+            position: absolute;
+            z-index: 1;
+            top: 15px;
+            width: calc(100vw/2.5);
+            height: calc(100vh - 179px);
+            /* bottom: 145px; */
+            padding: 0px !important;
+            border: 1px solid #B4B4B4;
+        }
+
+
+        .carousel-inner {
+            background-color: rgba(168, 176, 158, 0.85);
+        }
+
+        .img-responsive {
+            padding: 5px 5px 5px;
+            width: 140px !important;
+            height: 94px;
+            object-fit: cover;
+        }
+
+        .carousel-inner span {
+            background-color: #369A22;
+            position: absolute;
+            display: inline-block;
+            content: counter(item);
+            counter-increment: item;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #FFF;
+            padding-right: 1px;
+            padding-bottom: 1px;
+            left: 20px;
+            top: 5px;
+        }
+
+        .carousel-inner div {
+            color: #fff;
+        }
+
+        a {
+            text-align: center;
+        }
+
+        .carousel-inner div:hover {
+            text-decoration: none !important;
+        }
+
+        .name {
+            text-align: center;
+        }
+
+        .imgSelected {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        body.modern-layout #toggle {
+            margin-left: 55px;
+        }
+
+        #toggle {
+            width: 36px;
+            height: 33px;
+            margin-left: 0px;
+            cursor: pointer;
+        }
+
+        #placard {
+            display: inline-table;
+            position: relative;
+            width: 100%;
+            color: #FFF;
+            z-index: 5;
+            word-wrap: break-word;
+            background-color: black;
+            opacity: 0.8;
+            padding-bottom: 10px;
+        }
+
+        #placardContainer {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            display: none;
+            overflow: hidden;
+        }
+
+        #placard .name {
+            padding: 10px 0 15px 10px;
+            font-size: 20px;
+            width: 44%;
+            float: left;
+            margin-top: 0;
+        }
+
+        #placard .description {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            position: relative;
+            width: 55%;
+            float: right;
+            padding-right: 10px;
+            font-size: 14px;
+        }
+
+        .control-l-r {
+            width: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+            <div class="containerCaro container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="carousel slide multi-item-carousel" id="theCarousel">
+                            <div class="carousel-inner" id='caroselInner'>
+                            </div>
+                            <a class="left carousel-control control-l-r" href="#theCarousel" data-slide="prev"><i
+                                    class="glyphicon glyphicon-chevron-left" style="font-size: 20px;"></i></a>
+                            <a class="right carousel-control control-l-r" href="#theCarousel" data-slide="next"><i
+                                    class="glyphicon glyphicon-chevron-right" style="font-size: 20px;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container containerImg">
+                <div class="row" style="height: 100%;">
+                    <div class="col-md-12" style="height: 100%;">
+                        <img class="imgSelected" src="../data/Tourism/tranquoc.jpg" id='imgSelected'>
+                    </div>
+                    <div class="col-md-12" id="placardContainer"
+                        style="height: auto; top: auto; left: 0px;  display: block; padding: 0px;">
+                        <div id="toggle">
+                            <button class="btn" style="background-color: black; opacity: 0.7;border-radius: unset;"
+                                type="button" data-toggle="collapse" data-target="#collapseDiv" aria-expanded="true"
+                                aria-controls="collapseDiv" id='btnCollapse'>
+                                <i id='iconCollapse' class="fa fa-chevron-down" style="color: #fff;"></i>
+                            </button>
+                        </div>
+                        <div class="collapse" id="collapseDiv">
+                            <div id="placard-bg" style="max-height: 380px;">
+                                <div id="placard" style="max-width: none;">
+                                    <div id="nameImg" class="name" tabindex="0">Welcome to Tran Quoc Pagoda!</div>
+                                    <div id="desImg" class="description" tabindex="0"
+                                        style="max-height: inherit; overflow-y: auto;">
+                                        Combined with the elegant and harmonious landscape of the poetic West Lake, Tran
+                                        Quoc Pagoda has been ranked one of the 16 most beautiful temples in the world
+                                        voted by the newspaper Dailymail in 2016. The first days of the year, go to
+                                        ceremony and visit. Visiting the most ancient temple in Vietnam with famous
+                                        architectural beauty near and far is also an interesting experience to start a
+                                        new year.<br>
+                                        <hr>
+                                        <font size="1" color="Grey"><i>Photo source: Collector</i></font>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
+
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105.80757781121588, 21.018112581368356],
+            zoom: 13.873356736713973,
+            style: 'mapbox://styles/mapbox/satellite-streets-v11',
+            pitch: 100
+        })
+        var features = [];
+        var popup;
+        var caroselInner
+        // map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        $(document).ready(function () {
+            var imgSelected = document.getElementById('imgSelected');
+            var nameImg = document.getElementById('nameImg');
+            var desImg = document.getElementById('desImg');
+            var btnCollapse = document.getElementById('btnCollapse');
+            var iconCollapse = document.getElementById('iconCollapse');
+            var collapseDiv = document.getElementById('collapseDiv');
+            var divCol;
+            collapseDiv.setAttribute('aria-expanded', true);
+            collapseDiv.setAttribute('class', 'collapse in');
+
+            btnCollapse.onclick = function () {
+                if (collapseDiv.getAttribute('class') == 'collapse in')
+                    iconCollapse.setAttribute('class', 'fa fa-chevron-up');
+                else
+                    iconCollapse.setAttribute('class', 'fa fa-chevron-down');
+            }
+
+            $.get('../data/Tourism/data_tour.json', function (response) {
+                features = response.features;
+                var divItem = document.createElement('div');
+                caroselInner = document.getElementById('caroselInner');
+                features.forEach(fea => {
+                    new mapboxgl.Marker({
+                        'color': 'red'
+                    }).setLngLat(fea.geometry.coordinates).addTo(map);
+                    var divItem = document.createElement('div');
+
+                    if (fea.id == '0')
+                        divItem.setAttribute('class', 'item active');
+                    else
+                        divItem.setAttribute('class', 'item');
+
+                    divCol = document.createElement('div');
+                    divCol.className = 'col-md-1 col-sm-2 col-xs-6';
+                    divCol.style.cursor = 'pointer';
+                    var span = document.createElement('span');
+                    span.setAttribute('class', 'number-green');
+                    span.innerHTML = fea.id + 1;
+                    var img = document.createElement('img');
+                    img.setAttribute('src', fea.properties.image);
+                    img.className = "img-responsive";
+                    var p = document.createElement('p');
+                    p.className = 'name';
+                    p.innerHTML = fea.properties.name;
+                    divCol.appendChild(span);
+                    divCol.appendChild(img);
+                    divCol.appendChild(p);
+                    divItem.appendChild(divCol);
+                    caroselInner.appendChild(divItem);
+                });
+            }).done(function () {
+                $('.multi-item-carousel').carousel({
+                    interval: false
+                });
+                $('.carousel .item').each(function () {
+                    var next = $(this).next();
+
+                    if (!next.length) {
+                        next = $(this).siblings(':first');
+                    }
+                    next.children(':first-child').clone().appendTo($(this));
+                    for (var i = 0; i < 10; i++) {
+                        next = next.next();
+                        if (!next.length) {
+                            next = $(this).siblings(':first');
+                        }
+                        next.children(':first-child').clone().appendTo($(this));
+                    }
+
+
+                });
+                var x = $('.carousel').parent();
+                var pager = x.find('.item').find('div');
+                var arr = [];
+                var indexSelected
+                for (var i = 0; i < 120; i++)
+                    arr.push(pager[i])
+                pager.on('click', function (e) {
+                    arr.forEach(div => {
+                        if (div.style.backgroundColor == 'lightsalmon') {
+                            div.style.backgroundColor = ''
+                            div.style.border = '';
+                            div.style.borderRadius = '';
+                        }
+                    });
+                    var target = e.currentTarget;
+                    target.style.backgroundColor = 'lightsalmon';
+                    target.style.border = 'black solid 2px';
+                    target.style.borderRadius = '5px';
+                    var index = e.currentTarget.outerText[0] + e.currentTarget.outerText[1];
+                    indexSelected = index;
+                    for (var i = 1; i < 11; i++) {
+                        if (index == i) {
+                            imgSelected.setAttribute('src', features[i - 1].properties.image)
+                            nameImg.innerHTML = "Welcome to " + features[i - 1].properties.name + '!';
+                            desImg.innerHTML = features[i - 1].properties.description + '<br><hr><font size="1" color="Grey"><i>Photo source: Collector</i></font>';
+                            map.flyTo({
+                                center: features[i - 1].geometry.coordinates,
+                                zoom: 12,
+                            })
+                            if (popup)
+                                popup.remove();
+                            popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500, closeButton: false })
+                                .setLngLat(features[i - 1].geometry.coordinates)
+                                .setHTML("<h3>" + features[i - 1].properties.name + "</h3>")
+                                .addTo(map)
+                        }
+                    }
+                })
+
+                var itemSelected;
+                pager.on('mousemove', function (e) {
+                    var index = e.currentTarget.outerText[0] + e.currentTarget.outerText[1]
+                    arr.forEach(div => {
+                        if (div.style.backgroundColor == 'darkgray' && itemSelected != index) {
+                            div.style.backgroundColor = ''
+                        }
+                    });
+                    if (!itemSelected && index != indexSelected) {
+                        var target = e.currentTarget;
+                        target.style.backgroundColor = 'darkgray';
+                    }
+                    itemSelected = index
+                });
+
+                pager.on('mouseleave', function () {
+                    if (itemSelected) {
+                        arr.forEach(div => {
+                            if (div.style.backgroundColor == 'darkgray')
+                                div.style.backgroundColor = ''
+                        });
+                    }
+                    itemSelected = null
+                });
+            })
+
+        });
+    </script>
+</body>
+
+</html>

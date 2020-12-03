@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Identify</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Click on the map to execute <a href='#'>Identify</a>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {
+                },
+                "layers": [
+                ]
+            },
+            center: [105.20886162772933, 16.518572979240204],
+            zoom: 5.193739308697748
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+        var tiledMap;
+        map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            this.tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                url: urlMapService,
+                token: tokenKey
+            }).addTo(map);
+        })
+        var pane = document.getElementById('selectedFeatures');
+        map.on('click', function (e) {
+            pane.innerHTML = 'Loading';
+            this.tiledMap.identify()
+                .on(map)
+                .at(e.lngLat)
+                .run(function (obj) {
+                    if (obj.length > 0) {
+                        var soilDescriptionLine = 'Địa phận tỉnh: ';
+                        var soilDescriptionPoint = 'Quốc lộ: ';
+                        obj.forEach(feature => {
+                            if (feature.layerName == 'DiaPhanTinh') {
+                                soilDescriptionLine += feature.attributes.NAME + ','
+                            }
+                            if (feature.layerName == 'Quoc_lo')
+                                soilDescriptionPoint += feature.attributes.TenCu + ','
+                        })
+                        if (soilDescriptionLine == 'Địa phận tỉnh: ')
+                            soilDescriptionLine = 'Địa phận tỉnh: không có đường địa phận tỉnh nào';
+                        if (soilDescriptionPoint == 'Quốc lộ: ')
+                            soilDescriptionPoint = 'Quốc lộ: không có quốc lộ nào';
+                        pane.innerHTML = soilDescriptionLine + "<br />" + soilDescriptionPoint;
+                    } else {
+                        pane.innerHTML = 'No features identified.';
+                    }
+                })
+        })
+    </script>
+</body>
+
+</html>

@@ -13,14 +13,13 @@ var exampleConfig = {
             map: {
                 name: "Map service",
                 name_en: "Map service",
-                content: [
-                    {
+                content: [{
                         name: "Map Find Service",
                         name_en: "Map Find Service",
                         thumbnail: "mapService_find.png",
                         fileName: "mapService_find",
                         subject: "Use the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.",
-                        description:  "Enter the name of the province, highway or PPC to see a list of information by search name."
+                        description: "Enter the name of the province, highway or PPC to see a list of information by search name."
                     },
                     {
                         name: "Bounds query",
@@ -59,8 +58,7 @@ var exampleConfig = {
             data: {
                 name: "Data service",
                 name_en: "Data service",
-                content: [
-                    {
+                content: [{
                         name: "Bounds query",
                         name_en: "Bounds query",
                         thumbnail: "featureService_queryByBound.png",
@@ -114,13 +112,20 @@ var exampleConfig = {
             vectortile: {
                 name: "Vector Tile Services",
                 name_en: "Vector Tile Services",
-                content: [
-                    {
+                content: [{
                         name: "Mapbox Vector Tile",
                         name_en: "Mapbox Vector Tile",
                         thumbnail: "vectorTile_Map.png",
                         fileName: "vectorTile_Map",
-                        subject: "Use mapboxgl.ekmap.VectorTiledMapLayer to add vector tile.",
+                        subject: "Add vector tile.",
+                        description: ""
+                    },
+                    {
+                        name: "Mapbox Vector Tile Full",
+                        name_en: "Mapbox Vector Tile Full",
+                        thumbnail: "vectorTile_Map_full.png",
+                        fileName: "vectorTile_Map_full",
+                        subject: "Add vector tile.",
                         description: ""
                     },
                     {
@@ -147,14 +152,12 @@ var exampleConfig = {
                         subject: "Vector tile select on the map.",
                         description: "Click on the map to query features using queryRenderedFeatures."
                     }
-
                 ]
             },
             control: {
                 name: "Control",
                 name_en: "Control",
-                content: [
-                    {
+                content: [{
                         name: "Legend Control",
                         name_en: "Legend Control",
                         thumbnail: "control_legendControl.png",
@@ -233,8 +236,7 @@ var exampleConfig = {
                 name: "Heat map",
                 name_en: "Heat map",
                 version: "",
-                content: [
-                    {
+                content: [{
                         name: "Random Points",
                         name_en: "Random Points",
                         version: "",
@@ -258,23 +260,20 @@ var exampleConfig = {
                 name: "Cluster",
                 name_en: "Cluster",
                 version: "",
-                content: [
-                    {
-                        name: "Cluster",
-                        name_en: "Marker cluster",
-                        version: "",
-                        thumbnail: "cluster.gif",
-                        fileName: "cluster",
-                        subject: "Use Mapbox GL JS' built-in functions to visualize points as clusters.",
-                        description: "Use Mapbox GL JS' built-in functions to visualize points as clusters."
-                    }
-                ]
+                content: [{
+                    name: "Cluster",
+                    name_en: "Marker cluster",
+                    version: "",
+                    thumbnail: "cluster.gif",
+                    fileName: "cluster",
+                    subject: "Use Mapbox GL JS' built-in functions to visualize points as clusters.",
+                    description: "Use Mapbox GL JS' built-in functions to visualize points as clusters."
+                }]
             },
             animation: {
                 name: "Animation",
                 name_en: "Animation",
-                content: [
-                    {
+                content: [{
                         name: "Flashing Points",
                         name_en: "Flashing Points",
                         thumbnail: "animation_flashing_point.gif",
@@ -295,8 +294,7 @@ var exampleConfig = {
             ECharts: {
                 name: "ECharts",
                 name_en: "ECharts",
-                content: [
-                    {
+                content: [{
                         name: "Line Chart",
                         name_en: "Line Chart",
                         thumbnail: "echarts_lineMarker.gif",
@@ -333,8 +331,7 @@ var exampleConfig = {
             HightChart: {
                 name: "Hight Chart",
                 name_en: "Hight Chart",
-                content: [
-                    {
+                content: [{
                         name: "Bar Highcharts",
                         name_en: "Bar Highcharts",
                         thumbnail: "highcharts_bar.gif",
@@ -371,22 +368,19 @@ var exampleConfig = {
             ChartOnline: {
                 name: "Chart Online",
                 name_en: "Chart Online",
-                content: [
-                    {
-                        name: "Data rain",
-                        name_en: "Data rain",
-                        thumbnail: "data_rain.png",
-                        fileName: "data_rain",
-                        subject: "Use chart online to display flood warning data, rainfall information in Central - Vietnam.",
-                        description: "Click point on the map to show flood warning data, rainfall information in Central - Vietnam by chart online."
-                    }
-                ]
+                content: [{
+                    name: "Data rain",
+                    name_en: "Data rain",
+                    thumbnail: "data_rain.png",
+                    fileName: "data_rain",
+                    subject: "Use chart online to display flood warning data, rainfall information in Central - Vietnam.",
+                    description: "Click point on the map to show flood warning data, rainfall information in Central - Vietnam by chart online."
+                }]
             },
             threejs: {
                 name: "threejs",
                 name_en: "threejs",
-                content: [
-                    {
+                content: [{
                         name: "Buildings",
                         name_en: "Buildings",
                         version: "",
@@ -409,37 +403,32 @@ var exampleConfig = {
             LayerChart: {
                 name: "Layer Chart",
                 name_en: "Layer Chart",
-                content: [
-                    {
-                        name: "Statistical Chart",
-                        name_en: "Statistical Chart",
-                        thumbnail: "layerChart.png",
-                        fileName: "layerChart",
-                        subject: "Use DomOverlay to simulate measurement point position data with parameters (P, Q +, Q-, Pin).",
-                        description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively."
-                    }
-                ]
+                content: [{
+                    name: "Statistical Chart",
+                    name_en: "Statistical Chart",
+                    thumbnail: "layerChart.png",
+                    fileName: "layerChart",
+                    subject: "Use DomOverlay to simulate measurement point position data with parameters (P, Q +, Q-, Pin).",
+                    description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively."
+                }]
             },
             '3DLayer': {
                 name: "3D Layer",
                 name_en: "3D Layer",
-                content: [
-                    {
-                        name: "3D buildings",
-                        name_en: "3D buildings",
-                        version: "",
-                        thumbnail: "data_3D.gif",
-                        fileName: "data_3D",
-                        subject: "3D data display shows the altitude of some Hanoi planning areas.",
-                        description: "3D data display shows the altitude of some Hanoi planning areas."
-                    }
-                ]
+                content: [{
+                    name: "3D buildings",
+                    name_en: "3D buildings",
+                    version: "",
+                    thumbnail: "data_3D.gif",
+                    fileName: "data_3D",
+                    subject: "3D data display shows the altitude of some Hanoi planning areas.",
+                    description: "3D data display shows the altitude of some Hanoi planning areas."
+                }]
             },
             Realtime: {
                 name: "Realtime",
                 name_en: "Realtime",
-                content: [
-                    {
+                content: [{
                         name: "Realtime Water",
                         name_en: "Realtime Water",
                         thumbnail: "realtime_water.gif",
@@ -468,22 +457,19 @@ var exampleConfig = {
             Video: {
                 name: "Video",
                 name_en: "Video",
-                content: [
-                    {
-                        name: "Video Storm",
-                        name_en: "Video Storm",
-                        thumbnail: "video_storm.gif",
-                        fileName: "video_storm",
-                        subject: "Description of storm path in the form of video on the map.",
-                        description: "Video path of Typhoon Saudel entering the South China Sea, forecast jerks to level 14."
-                    }
-                ]
+                content: [{
+                    name: "Video Storm",
+                    name_en: "Video Storm",
+                    thumbnail: "video_storm.gif",
+                    fileName: "video_storm",
+                    subject: "Description of storm path in the form of video on the map.",
+                    description: "Video path of Typhoon Saudel entering the South China Sea, forecast jerks to level 14."
+                }]
             },
             StoryMap: {
                 name: "Story Map",
                 name_en: "Story Map",
-                content: [
-                    {
+                content: [{
                         name: "Vinhomes real estate",
                         name_en: "Vinhomes real estate",
                         thumbnail: "storyMap_vinhomes.gif",
@@ -541,8 +527,7 @@ var exampleConfig = {
             turfjs: {
                 name: "turfjs",
                 name_en: "turfjs",
-                content: [
-                    {
+                content: [{
                         name: "Hexagon",
                         name_en: "Hexagon",
                         thumbnail: "turfjs_Hexagon.png",
@@ -585,30 +570,26 @@ var exampleConfig = {
             WMS: {
                 name: "WMS",
                 name_en: "WMS",
-                content: [
-                    {
-                        name: "Web Map Service",
-                        name_en: "Web Map Service",
-                        thumbnail: "ogc_wms.png",
-                        fileName: "ogc_wms",
-                        subject: "Use the Web Map Services service to display US states data.",
-                        description: "Click on the map to get info."
-                    }
-                ]
+                content: [{
+                    name: "Web Map Service",
+                    name_en: "Web Map Service",
+                    thumbnail: "ogc_wms.png",
+                    fileName: "ogc_wms",
+                    subject: "Use the Web Map Services service to display US states data.",
+                    description: "Click on the map to get info."
+                }]
             },
             WFS: {
                 name: "WFS",
                 name_en: "WFS",
-                content: [
-                    {
-                        name: "Web Feature Service",
-                        name_en: "Web Feature Service",
-                        thumbnail: "ogc_wfs.png",
-                        fileName: "ogc_wfs",
-                        subject: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
-                        description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data)."
-                    }
-                ]
+                content: [{
+                    name: "Web Feature Service",
+                    name_en: "Web Feature Service",
+                    thumbnail: "ogc_wfs.png",
+                    fileName: "ogc_wfs",
+                    subject: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
+                    description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data)."
+                }]
             }
         }
     },
@@ -619,8 +600,7 @@ var exampleConfig = {
             BasicControl: {
                 name: "Control",
                 name_en: "Basic Control",
-                content: [
-                    {
+                content: [{
                         name: "Navigation Control",
                         name_en: "Navigation Control",
                         thumbnail: "control_navigationControl.png",
@@ -659,14 +639,21 @@ var exampleConfig = {
                         fileName: "control_attributionControl",
                         subject: "Attribution Control",
                         description: "An AttributionControl control presents the map's attribution information."
+                    },
+                    {
+                        name: "Button Control",
+                        name_en: "Button Control",
+                        thumbnail: "control_buttonControl.png",
+                        fileName: "control_buttonControl",
+                        subject: "Button Control",
+                        description: "Fire event when click button."
                     }
                 ]
             },
             AdvancedControl: {
                 name: "Control",
                 name_en: "Advanced Control",
-                content: [
-                    {
+                content: [{
                         name: "Draw Control",
                         name_en: "Draw Control",
                         thumbnail: "control_drawControl.png",

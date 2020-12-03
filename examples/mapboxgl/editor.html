@@ -22,7 +22,7 @@
 <!-- ./wrapper -->
 <div class="wrapper"></div>
 <script>
-    $('.wrapper').load("../template/editor.html", function () {
+    $('.wrapper').load("../templateMapboxgl/editor.html", function () {
         var navigation = {
             nav: {
                 title: "SuperMap ekmapclientient 10i",
@@ -30,7 +30,7 @@
                 isLocal: window.isLocal
             }
         };
-        utils.loadTemplate(".ekmapclient-header", "../template/header.html", navigation);
+        utils.loadTemplate(".ekmapclient-header", "../templateMapboxgl/header.html", navigation);
         $body = $('body');
         // $body.append("<script type='text/javascript' src='../openlayers/config.js'><\/script>");
         // $body.append("<script type='text/javascript' src='../leaflet/config.js'><\/script>");

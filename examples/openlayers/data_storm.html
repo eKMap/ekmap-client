@@ -1,0 +1,803 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Storm</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .nameCountry {
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.1;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .field {
+            color: #333333 !important;
+            text-decoration: none;
+            font-family: 'Open Sans';
+            font-weight: 600;
+        }
+
+        .value {
+            color: #333333 !important;
+            font-family: 'Open Sans';
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .popup {
+            opacity: 0.8;
+        }
+
+        #selectedFeatures {
+            position: absolute;
+            left: 12px;
+            bottom: 15px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+            max-height: 200px;
+            max-width: 400px;
+            background-color: #ddeddd;
+            opacity: 0.8;
+        }
+
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+
+        .dataNote {
+            padding: 10px;
+            margin: 0px;
+            list-style-type: none;
+        }
+
+        .noteType {
+            padding: 0px;
+            list-style-type: none;
+        }
+
+        .note {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .text1 {
+            padding-left: 32px;
+            font-size: 13px;
+        }
+
+        .text2 {
+            font-size: 13px;
+        }
+
+        .portlet-box-mini {
+            -webkit-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+            width: 300px;
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .portlet-box {
+            position: absolute;
+            top: 10px;
+            z-index: 50;
+            width: 300px;
+        }
+
+        .portlet-pos-right {
+            left: 65px;
+            top: 114px;
+        }
+
+        .portlet-box .portlet-title {
+            -webkit-border-radius: 2px 2px 0 0;
+            -moz-border-radius: 2px 2px 0 0;
+            border-radius: 2px 2px 0 0;
+            -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
+            background: #fff;
+            border-bottom: 1px solid #e0e5ea;
+        }
+
+        .portlet-box .portlet-title .portlet-title-inner {
+            position: relative;
+            display: block;
+            color: #2c2c2c;
+        }
+
+        .portlet-box .portlet-title .portlet-heading {
+            position: relative;
+            margin: 0;
+            display: block;
+            font-family: 'Open Sans';
+            font-weight: 600;
+            padding: 12px 15px 14px;
+            font-size: 1.6rem;
+            line-height: 1.2;
+        }
+
+        .portlet-box .portlet-title .portlet-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 35px;
+            height: 45px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .portlet-box .portlet-content .portlet-inner {
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #eceff1;
+            background-color: rgba(236, 239, 241, .7);
+        }
+
+        .map-select-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .map-select-list .map-select-item {
+            margin-bottom: 10px;
+        }
+
+        .map-select-list .map-select-item .radio__regular {
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .12);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .12);
+            padding: 10px;
+            background: #fff;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/@turf/turf@5.1.6/turf.min.js"></script>
+
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div title="Chụp màn hình" class="mapboxgl-ctrl mapboxgl-ctrl-group"
+            style="font-size: 14px;position: absolute;z-index: 2;top: 115px;left: 17px;">
+            <button class="mapboxgl-ctrl-zoom-in" onclick="globalStart()"><i class="fa fa-globe"></i></button>
+        </div>
+        <div class="portlet-box portlet-box-mini portlet-pos-right box" id="map-layer" style="display: none;">
+            <div class="portlet-title">
+                <a class="portlet-title-inner" href="#" style="text-decoration: none;">
+                    <span class="portlet-heading">Display</span>
+                    <span class="portlet-close portlet-close-right">
+                        <span class="heading-arrow-rght">&nbsp;</span>
+                    </span>
+                </a>
+            </div>
+            <div class="portlet-content">
+                <div class="portlet-inner">
+                    <ul class="map-select-list">
+                        <li class="map-select-item">
+                            <div class="radio__regular">
+                                <input type="checkbox" name="colors" id="checkbox" onchange="onChange()">
+                                <label class="radio__regular__label" tabindex="1" for="radio-map-0"> Satellite image
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            <div>
+                <div style="padding-left: 12px;">
+                    <span class="note">Note</span>
+                </div>
+                <ul class="dataNote">
+                    <li>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzM2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0icmdiKDIzOSwxNTgsMjM4KSIvPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0ibm9uZSIvPjwvZz48L3N2Zz4=">
+                                <span class="text1">
+                                    Areas where strong winds are greater than level 6
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzM2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0icmdiKDIzNSwgNjcsIDg2KSIvPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0ibm9uZSIvPjwvZz48L3N2Zz4=">
+                                <span class="text1">
+                                    Areas where strong winds are higher than level 10
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzM2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwNDMgMzUxIEMgMTA0MyAzNTkuMjg0IDEwMzYuMjg0IDM2NiAxMDI4IDM2NiBDIDEwMTkuNzE2IDM2NiAxMDEzIDM1OS4yODQgMTAxMyAzNTEgQyAxMDEzIDM0Mi43MTYgMTAxOS43MTYgMzM2IDEwMjggMzM2IEMgMTAzNi4yODQgMzM2IDEwNDMgMzQyLjcxNiAxMDQzIDM1MSBaICIgZmlsbD0icmdiKDQ4LDI0NywxMjEpIi8+PHBhdGggZD0iIE0gMTA0MyAzNTEgQyAxMDQzIDM1OS4yODQgMTAzNi4yODQgMzY2IDEwMjggMzY2IEMgMTAxOS43MTYgMzY2IDEwMTMgMzU5LjI4NCAxMDEzIDM1MSBDIDEwMTMgMzQyLjcxNiAxMDE5LjcxNiAzMzYgMTAyOCAzMzYgQyAxMDM2LjI4NCAzMzYgMTA0MyAzNDIuNzE2IDEwNDMgMzUxIFogIiBmaWxsPSJub25lIi8+PC9nPjwvc3ZnPg==">
+                                <span class="text1">
+                                    The stormy center, low pressure is able to pass through
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjgzOCAxODMgMzAgMjcuMjg3IiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxwYXRoIGQ9IiBNIDgzOCAyMDUuNTMgQyA4MzguMDA3IDIwNS40ODYgODM4LjAzOCAyMDUuNTA5IDgzOC4wMzggMjA1LjUzIEMgODM5Ljc2MiAyMDYuNDE0IDg0Mi4wODkgMjA3LjIzMSA4NDUuMDI1IDIwNi45NzMgQyA4NDUuNjIzIDIwNi45MiA4NDYuODQzIDIwNi43NjMgODQ2Ljg4NiAyMDYuMjg5IEMgODQ2LjkyMyAyMDUuODg2IDg0NS44NSAyMDUuMjk4IDg0NS40ODEgMjA0Ljk2IEMgODQzLjMwMSAyMDIuOTYyIDg0MS4zMzEgMTk5LjU2MSA4NDEuOTExIDE5NS4yNzYgQyA4NDIuMTE5IDE5My43NDIgODQyLjU0NSAxOTIuMzM3IDg0My4yMDMgMTkxLjE3NSBDIDg0NC40ODkgMTg4LjkgODQ2LjMzNyAxODcuMDg0IDg0OC41NTcgMTg1Ljc0NSBDIDg1MC44MDUgMTg0LjM4OCA4NTMuMzA5IDE4My4zMTUgODU2LjY0NiAxODMuMDQ5IEMgODU3LjQzMiAxODIuOTg2IDg1Ny45OTIgMTgyLjk4MiA4NTguODQ4IDE4My4wNDkgQyA4NjMuMDg3IDE4My4zOCA4NjUuODQgMTg1LjE5OCA4NjggMTg3Ljc1NyBDIDg2Ni4zMzQgMTg2LjkwMiA4NjMuOTA0IDE4Ni4wNzQgODYwLjkzNyAxODYuMzE0IEMgODYwLjM1OCAxODYuMzYxIDg1OS4xNTYgMTg2LjU0NCA4NTkuMTE0IDE4Ni45OTggQyA4NTkuMDggMTg3LjM2OCA4NjAuMTYyIDE4OC4wMzIgODYwLjQ4MSAxODguMzI3IEMgODYxLjg2NCAxODkuNjA3IDg2My4wMjYgMTkxLjE5OSA4NjMuNjcxIDE5My4yMjYgQyA4NjQuNjE1IDE5Ni4xOTMgODY0LjExMiAxOTkuNzUzIDg2Mi43OTcgMjAyLjA3NCBDIDg2MS41MTcgMjA0LjMzMyA4NTkuNzA0IDIwNi4yMzUgODU3LjQ4MSAyMDcuNTQyIEMgODU0Ljg2OCAyMDkuMDc5IDg1MS40NTUgMjEwLjU3OCA4NDcuMTE0IDIxMC4yMzggQyA4NDIuODk5IDIwOS45MDkgODQwLjE1MiAyMDguMDc1IDgzOCAyMDUuNTMgWiAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbD0icmdiKDUsNSw1KSIvPjwvc3ZnPg==">
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzg2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwMjggNDA5LjM4NyBDIDEwMjMuMzY4IDQwOS4zODcgMTAxOS42MTMgNDA1LjYzMiAxMDE5LjYxMyA0MDEgQyAxMDE5LjYxMyAzOTYuMzY4IDEwMjMuMzY4IDM5Mi42MTMgMTAyOCAzOTIuNjEzIEMgMTAzMi42MzIgMzkyLjYxMyAxMDM2LjM4NyAzOTYuMzY4IDEwMzYuMzg3IDQwMSBDIDEwMzYuMzg3IDQwNS42MzIgMTAzMi42MzIgNDA5LjM4NyAxMDI4IDQwOS4zODcgWiAgTSAxMDI4IDM4NiBDIDEwMTkuNzE2IDM4NiAxMDEzIDM5Mi43MTYgMTAxMyA0MDEgQyAxMDEzIDQwOS4yODQgMTAxOS43MTYgNDE2IDEwMjggNDE2IEMgMTAzNi4yODQgNDE2IDEwNDMgNDA5LjI4NCAxMDQzIDQwMSBDIDEwNDMgMzkyLjcxNiAxMDM2LjI4NCAzODYgMTAyOCAzODYgWiAiIGZpbGw9InJnYig1LDUsNSkiLz48cGF0aCBkPSIgTSAxMDI4IDQwOS4zODcgQyAxMDIzLjM2OCA0MDkuMzg3IDEwMTkuNjEzIDQwNS42MzIgMTAxOS42MTMgNDAxIEMgMTAxOS42MTMgMzk2LjM2OCAxMDIzLjM2OCAzOTIuNjEzIDEwMjggMzkyLjYxMyBDIDEwMzIuNjMyIDM5Mi42MTMgMTAzNi4zODcgMzk2LjM2OCAxMDM2LjM4NyA0MDEgQyAxMDM2LjM4NyA0MDUuNjMyIDEwMzIuNjMyIDQwOS4zODcgMTAyOCA0MDkuMzg3IFogIE0gMTAyOCAzODYgQyAxMDE5LjcxNiAzODYgMTAxMyAzOTIuNzE2IDEwMTMgNDAxIEMgMTAxMyA0MDkuMjg0IDEwMTkuNzE2IDQxNiAxMDI4IDQxNiBDIDEwMzYuMjg0IDQxNiAxMDQzIDQwOS4yODQgMTA0MyA0MDEgQyAxMDQzIDM5Mi43MTYgMTAzNi4yODQgMzg2IDEwMjggMzg2IFogIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9Im5vbmUiLz48L2c+PC9zdmc+">
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjY5NC4xMjkgMjY0IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDcyNC4xMjkgMjc5IEMgNzI0LjEyOSAyODcuMjg0IDcxNy40MTMgMjk0IDcwOS4xMjkgMjk0IEMgNzAwLjg0NSAyOTQgNjk0LjEyOSAyODcuMjg0IDY5NC4xMjkgMjc5IEMgNjk0LjEyOSAyNzAuNzE2IDcwMC44NDUgMjY0IDcwOS4xMjkgMjY0IEMgNzE3LjQxMyAyNjQgNzI0LjEyOSAyNzAuNzE2IDcyNC4xMjkgMjc5IFogIiBmaWxsPSJyZ2IoNSw1LDUpIi8+PHBhdGggZD0iIE0gNzI0LjEyOSAyNzkgQyA3MjQuMTI5IDI4Ny4yODQgNzE3LjQxMyAyOTQgNzA5LjEyOSAyOTQgQyA3MDAuODQ1IDI5NCA2OTQuMTI5IDI4Ny4yODQgNjk0LjEyOSAyNzkgQyA2OTQuMTI5IDI3MC43MTYgNzAwLjg0NSAyNjQgNzA5LjEyOSAyNjQgQyA3MTcuNDEzIDI2NCA3MjQuMTI5IDI3MC43MTYgNzI0LjEyOSAyNzkgWiAiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSIgTSA3MDguMDk0IDI4My41NCBMIDcwOC4wOTQgMjY5LjY3IEwgNzAyLjI3IDI2OS42NyBMIDcwMi4yNyAyODMuNTQgTCA3MDIuMjcgMjg4LjMzIEwgNzA4LjA5NCAyODguMzMgTCA3MTUuOTg3IDI4OC4zMyBMIDcxNS45ODcgMjgzLjU0IEwgNzA4LjA5NCAyODMuNTQgWiAiIGZpbGw9InJnYigyNTUsMjU1LDI1NSkiLz48cGF0aCBkPSIgTSA3MDguMDk0IDI4My41NCBMIDcwOC4wOTQgMjY5LjY3IEwgNzAyLjI3IDI2OS42NyBMIDcwMi4yNyAyODMuNTQgTCA3MDIuMjcgMjg4LjMzIEwgNzA4LjA5NCAyODguMzMgTCA3MTUuOTg3IDI4OC4zMyBMIDcxNS45ODcgMjgzLjU0IEwgNzA4LjA5NCAyODMuNTQgWiAiIGZpbGw9Im5vbmUiIHZlY3Rvci1lZmZlY3Q9Im5vbi1zY2FsaW5nLXN0cm9rZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9InJnYigyNTEsMjUxLDI0OSkiIHN0cm9rZS1vcGFjaXR5PSIxMDAiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS1taXRlcmxpbWl0PSIzIi8+PC9nPjwvc3ZnPg==">
+                                <span class="text2">
+                                    Location of storm, tropical low pressure, low area is over
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9Ijc3NC4xMjkgMTgzIDMwIDI3LjI4NyIgd2lkdGg9IjExIiBoZWlnaHQ9IjExIj48Zz48cGF0aCBkPSIgTSA3NzQuMTI5IDIwNS41MyBDIDc3NC4xMzYgMjA1LjQ4NyA3NzQuMTY3IDIwNS41MDkgNzc0LjE2NyAyMDUuNTMgQyA3NzUuODkxIDIwNi40MTUgNzc4LjIxOCAyMDcuMjMxIDc4MS4xNTQgMjA2Ljk3MyBDIDc4MS43NTIgMjA2LjkyIDc4Mi45NzIgMjA2Ljc2MyA3ODMuMDE1IDIwNi4yODkgQyA3ODMuMDUyIDIwNS44ODYgNzgxLjk3OSAyMDUuMjk4IDc4MS42MSAyMDQuOTYgQyA3NzkuNDMgMjAyLjk2MiA3NzcuNDYgMTk5LjU2MSA3NzguMDQgMTk1LjI3NiBDIDc3OC4yNDggMTkzLjc0MiA3NzguNjc0IDE5Mi4zMzcgNzc5LjMzMSAxOTEuMTc1IEMgNzgwLjYxOCAxODguOSA3ODIuNDY2IDE4Ny4wODQgNzg0LjY4NiAxODUuNzQ1IEMgNzg2LjkzNSAxODQuMzg4IDc4OS40MzggMTgzLjMxNSA3OTIuNzc1IDE4My4wNDkgQyA3OTMuNTYxIDE4Mi45ODYgNzk0LjEyMiAxODIuOTgyIDc5NC45NzcgMTgzLjA0OSBDIDc5OS4yMTYgMTgzLjM4IDgwMS45NjkgMTg1LjE5OCA4MDQuMTI5IDE4Ny43NTcgQyA4MDIuNDYzIDE4Ni45MDMgODAwLjAzMyAxODYuMDc0IDc5Ny4wNjYgMTg2LjMxNCBDIDc5Ni40ODcgMTg2LjM2MSA3OTUuMjg1IDE4Ni41NDQgNzk1LjI0MyAxODYuOTk4IEMgNzk1LjIwOSAxODcuMzY4IDc5Ni4yOTEgMTg4LjAzMiA3OTYuNjEgMTg4LjMyNyBDIDc5Ny45OTMgMTg5LjYwNyA3OTkuMTU1IDE5MS4xOTkgNzk5LjggMTkzLjIyNiBDIDgwMC43NDQgMTk2LjE5MyA4MDAuMjQxIDE5OS43NTMgNzk4LjkyNiAyMDIuMDc0IEMgNzk3LjY0NiAyMDQuMzMzIDc5NS44MzMgMjA2LjIzNSA3OTMuNjEgMjA3LjU0MiBDIDc5MC45OTcgMjA5LjA3OSA3ODcuNTg0IDIxMC41NzggNzgzLjI0MyAyMTAuMjM5IEMgNzc5LjAyOCAyMDkuOTA5IDc3Ni4yODEgMjA4LjA3NSA3NzQuMTI5IDIwNS41MyBaICBNIDc4NS44MjUgMTkzLjM3OCBDIDc4NS4yMjEgMTkzLjk4NyA3ODQuNjM0IDE5NC43NjMgNzg0LjQ5NiAxOTYuMTEyIEMgNzg0LjMxNyAxOTcuODY1IDc4NS4wMTMgMTk5LjExNiA3ODUuODYzIDE5OS45NDcgQyA3ODYuNzU2IDIwMC44MiA3ODguMDExIDIwMS40NTEgNzg5LjY2MSAyMDEuMjc3IEMgNzkxLjcyOSAyMDEuMDU4IDc5My41NTIgMTk5LjMzNiA3OTMuNzYyIDE5Ny4xMzcgQyA3OTMuOTMgMTk1LjM3NSA3OTMuMTk5IDE5NC4xODEgNzkyLjM5NSAxOTMuMzc4IEMgNzkxLjU4NiAxOTIuNTY5IDc5MC4zMTggMTkxLjgyIDc4OC41MjIgMTkyLjA0OSBDIDc4Ny4yNDUgMTkyLjIxMSA3ODYuNDg0IDE5Mi43MTMgNzg1LjgyNSAxOTMuMzc4IFogIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9InJnYigyNTUsMCwwKSIvPjwvZz48L3N2Zz4=">
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjEwMTMgMzg2IDMwIDMwIiB3aWR0aD0iMTEiIGhlaWdodD0iMTEiPjxnPjxwYXRoIGQ9IiBNIDEwMjggNDA5LjM4NyBDIDEwMjMuMzY4IDQwOS4zODcgMTAxOS42MTMgNDA1LjYzMiAxMDE5LjYxMyA0MDEgQyAxMDE5LjYxMyAzOTYuMzY4IDEwMjMuMzY4IDM5Mi42MTMgMTAyOCAzOTIuNjEzIEMgMTAzMi42MzIgMzkyLjYxMyAxMDM2LjM4NyAzOTYuMzY4IDEwMzYuMzg3IDQwMSBDIDEwMzYuMzg3IDQwNS42MzIgMTAzMi42MzIgNDA5LjM4NyAxMDI4IDQwOS4zODcgWiAgTSAxMDI4IDM4NiBDIDEwMTkuNzE2IDM4NiAxMDEzIDM5Mi43MTYgMTAxMyA0MDEgQyAxMDEzIDQwOS4yODQgMTAxOS43MTYgNDE2IDEwMjggNDE2IEMgMTAzNi4yODQgNDE2IDEwNDMgNDA5LjI4NCAxMDQzIDQwMSBDIDEwNDMgMzkyLjcxNiAxMDM2LjI4NCAzODYgMTAyOCAzODYgWiAiIGZpbGw9InJnYigyNTUsMCwwKSIvPjxwYXRoIGQ9IiBNIDEwMjggNDA5LjM4NyBDIDEwMjMuMzY4IDQwOS4zODcgMTAxOS42MTMgNDA1LjYzMiAxMDE5LjYxMyA0MDEgQyAxMDE5LjYxMyAzOTYuMzY4IDEwMjMuMzY4IDM5Mi42MTMgMTAyOCAzOTIuNjEzIEMgMTAzMi42MzIgMzkyLjYxMyAxMDM2LjM4NyAzOTYuMzY4IDEwMzYuMzg3IDQwMSBDIDEwMzYuMzg3IDQwNS42MzIgMTAzMi42MzIgNDA5LjM4NyAxMDI4IDQwOS4zODcgWiAgTSAxMDI4IDM4NiBDIDEwMTkuNzE2IDM4NiAxMDEzIDM5Mi43MTYgMTAxMyA0MDEgQyAxMDEzIDQwOS4yODQgMTAxOS43MTYgNDE2IDEwMjggNDE2IEMgMTAzNi4yODQgNDE2IDEwNDMgNDA5LjI4NCAxMDQzIDQwMSBDIDEwNDMgMzkyLjcxNiAxMDM2LjI4NCAzODYgMTAyOCAzODYgWiAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbD0ibm9uZSIvPjwvZz48L3N2Zz4=">
+                                <img width="13" height="13"
+                                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhLS0gR2VuZXJhdG9yOiBHcmF2aXQuaW8gLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiIHZpZXdCb3g9IjQ2MSA0ODkgMzAgMzAiIHdpZHRoPSIxMSIgaGVpZ2h0PSIxMSI+PGc+PHBhdGggZD0iIE0gNDgyLjg1OCA1MTMuMzMgTCA0NzQuOTY1IDUxMy4zMyBMIDQ2OS4xNDIgNTEzLjMzIEwgNDY5LjE0MiA1MDguNTQgTCA0NjkuMTQyIDQ5NC42NyBMIDQ3NC45NjUgNDk0LjY3IEwgNDc0Ljk2NSA1MDguNTQgTCA0ODIuODU4IDUwOC41NCBMIDQ4Mi44NTggNTEzLjMzIFogIE0gNDc2IDQ4OSBDIDQ2Ny43MTYgNDg5IDQ2MSA0OTUuNzE2IDQ2MSA1MDQgQyA0NjEgNTEyLjI4NCA0NjcuNzE2IDUxOSA0NzYgNTE5IEMgNDg0LjI4NCA1MTkgNDkxIDUxMi4yODQgNDkxIDUwNCBDIDQ5MSA0OTUuNzE2IDQ4NC4yODQgNDg5IDQ3NiA0ODkgWiAiIGZpbGw9InJnYigyNTUsMCwwKSIvPjxwYXRoIGQ9IiBNIDQ4Mi44NTggNTEzLjMzIEwgNDc0Ljk2NSA1MTMuMzMgTCA0NjkuMTQyIDUxMy4zMyBMIDQ2OS4xNDIgNTA4LjU0IEwgNDY5LjE0MiA0OTQuNjcgTCA0NzQuOTY1IDQ5NC42NyBMIDQ3NC45NjUgNTA4LjU0IEwgNDgyLjg1OCA1MDguNTQgTCA0ODIuODU4IDUxMy4zMyBaICBNIDQ3NiA0ODkgQyA0NjcuNzE2IDQ4OSA0NjEgNDk1LjcxNiA0NjEgNTA0IEMgNDYxIDUxMi4yODQgNDY3LjcxNiA1MTkgNDc2IDUxOSBDIDQ4NC4yODQgNTE5IDQ5MSA1MTIuMjg0IDQ5MSA1MDQgQyA0OTEgNDk1LjcxNiA0ODQuMjg0IDQ4OSA0NzYgNDg5IFogIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9Im5vbmUiLz48L2c+PC9zdmc+">
+                                <span class="text2">
+                                    Current and forecast storm location, tropical low pressure, low area
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
+    <script type="text/javascript">
+        var data;
+        var chart, div, popup = '';
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                version: 8,
+                glyphs: urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
+                sources: {
+                },
+                layers: [
+                ],
+            },
+            center: [118.75066229858749, 15.150695090998738],
+            zoom: 4.792476909223467
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.loadImage('../data/ATND_DaDiQua.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointDQ', image);
+        });
+        map.loadImage('../data/ApThap_DuBao.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointDB', image);
+        });
+        map.loadImage('../data/ATND_HT.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointHT', image);
+        });
+        map.loadImage('../data/Bao_DaDiQua.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointBM', image);
+        });
+        map.loadImage('../data/Bao_HT.png', function (error, image) {
+            if (error) throw error;
+            map.addImage('positionPointBHT', image);
+        });
+
+        map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            var features = []
+            map.addSource('radar', {
+                type: 'image',
+                url: '../data/storm.jpg',
+                coordinates: [
+                    [94.9918863632, 39.998476501],
+                    [139.923662363, 39.998476501],
+                    [139.923662363, -4.93329949898],
+                    [94.9918863632, -4.93329949898],
+                ]
+            });
+            document.getElementById('checkbox').checked = true;
+            map.addLayer({
+                'id': 'radar-layer',
+                'type': 'raster',
+                'source': 'radar',
+                'paint': {
+                    'raster-fade-duration': 0
+                }
+            });
+            //Source Data: https://nchmf.gov.vn/ 
+            widgets.loader.showLoader("data loading...");
+            $.get("../data/storm.json", function (response) {
+                response.forEach(feature => {
+                    features.push({
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [feature.lon, feature.lat]
+                        },
+                        'properties': {
+                            'id': '' + feature.id,
+                            'area_wind_level_6': feature.area_wind_level_6,
+                            'area_wind_level_10': feature.area_wind_level_10,
+                            'area_wind_level_center': feature.area_wind_level_center,
+                            'date_received_str': feature.date_received_str,
+                            'p_min': feature.p_min,
+                            'received_time': feature.received_time,
+                            'storm_level': feature.storm_level,
+                            'time_received_str': feature.time_received_str,
+                            'v_max': feature.v_max,
+                            'lon': feature.lon,
+                            'lat': feature.lat,
+                            'storm_name_en': feature.storm_name_vn
+                        }
+                    })
+                })
+            }).done(function () {
+                $.get("../data/data_draw_storm.json", function (data) {
+                    map.addLayer({
+                        'id': 'polygon0',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[0]
+                        },
+                        'paint': {
+                            'fill-color': '#48f08d',
+                            'fill-opacity': 0.5,
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'polygon1',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[1]
+                        },
+                        'paint': {
+                            'fill-color': '#48f08d',
+                            'fill-opacity': 0.5,
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'polygon2',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[2]
+                        },
+                        'paint': {
+                            'fill-color': '#48f08d',
+                            'fill-opacity': 0.5,
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'polygon3',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[3]
+                        },
+                        'paint': {
+                            'fill-color': '#48f08d',
+                            'fill-opacity': 0.5,
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'buffered1',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[4]
+                        },
+                        'paint': {
+                            'fill-color': '#e1a9eb',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#f95ce7',
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'buffered2',
+                        'type': 'fill',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[5]
+                        },
+                        'paint': {
+                            'fill-color': '#de6071',
+                            'fill-opacity': 0.5,
+                            'fill-outline-color': '#f95ce7',
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'buffered3',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[6]
+                        },
+                        'paint': {
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'buffered4',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[7]
+                        },
+                        'paint': {
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
+                        }
+                    })
+
+
+                    map.addLayer({
+                        'id': 'buffered5',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[8]
+                        },
+                        'paint': {
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
+                        }
+                    })
+
+
+                    map.addLayer({
+                        'id': 'buffered6',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[9]
+                        },
+                        'paint': {
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'buffered7',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[10]
+                        },
+                        'paint': {
+                            'line-color': '#fff',
+                            'line-opacity': 1,
+                            'line-width': 1.2
+                        }
+                    })
+
+                    map.addLayer({
+                        'id': 'line1',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[11]
+                        },
+                        'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                        },
+                        'paint': {
+                            'line-color': '#000',
+                            'line-width': 2
+                        }
+                    });
+
+                    map.addLayer({
+                        'id': 'line2',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': data[12]
+                        },
+                        'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                        },
+                        'paint': {
+                            'line-color': '#4e8a61',
+                            'line-width': 2
+                        },
+                    });
+
+                    //Point
+                    map.addLayer({
+                        "id": "points1",
+                        "type": "symbol",
+                        "layout": {
+                            "icon-image": "positionPointDQ",
+                            "icon-size": 1
+                        },
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                        },
+                        "filter": ['in', 'id', '34754', '34755', '34756', '34757']
+                    });
+                    map.addLayer({
+                        "id": "points2",
+                        "type": "symbol",
+                        "layout": {
+                            "icon-image": "positionPointBM",
+                            "icon-size": 1.5
+                        },
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                        },
+                        "filter": ['in', 'id', '36328', '36330', '36331', '36690', '36691']
+                    });
+
+                    map.addLayer({
+                        "id": "points3",
+                        "type": "symbol",
+                        "layout": {
+                            "icon-image": "positionPointBHT",
+                            "icon-size": 1.7,
+                            'text-field': [
+                                'format',
+                                ['get', 'date_received_str'],
+                                {
+                                    'font-scale': 0.7,
+                                }
+                            ],
+                            'text-offset': [0, -1.5]
+                        },
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                        },
+                        "filter": ['in', 'id', '36692', '36693', '36694', '36695']
+                    });
+
+                    map.addLayer({
+                        "id": "points4",
+                        "type": "symbol",
+                        "layout": {
+                            "icon-image": "positionPointDB",
+                            "icon-size": 1.7,
+                            'text-field': [
+                                'format',
+                                ['get', 'date_received_str'],
+                                {
+                                    'font-scale': 0.7,
+                                }
+                            ],
+                            'text-offset': [0, -1.5]
+                        },
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                        },
+                        "filter": ['in', 'id', '36696']
+                    });
+                }).done(function () {
+                    widgets.loader.removeLoader();
+                })
+            })
+        })
+
+        map.on('click', function (e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['points1', 'points2', 'points3', 'points4']
+            });
+            if (features.length > 0) {
+                var content = '';
+                content += '<div style="max-width:500px">';
+                content += '   <div class="form-group row" style="text-align: center">';
+                content += '       <a href="javascript:;" class="nameCountry">' + features[0].properties.storm_name_en + '</a>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '           <a href="javascript:;" class="field">Date : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '           <a href="javascript:;" class="value">' + features[0].properties.received_time + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Longitude : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.lon + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Latitude : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.lat + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Storm Level : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.storm_level + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Area Wind Speed > 6 : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.area_wind_level_6 + ' (km)</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Area Wind Speed > 10 : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.area_wind_level_10 + ' (km) </a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Wind Speed : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.v_max + ' (km/h)</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Pmin : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features[0].properties.p_min + ' (mb)</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '</div>'
+                popup = new mapboxgl.Popup({ maxWidth: 500, className: 'popup' });
+                popup.setLngLat(e.lngLat)
+                    .setHTML(content)
+                    .addTo(map);
+            }
+        })
+
+        map.on('mouseenter', 'points1', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'points1', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+        map.on('mouseenter', 'points2', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'points2', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+        map.on('mouseenter', 'points3', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'points3', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+        map.on('mouseenter', 'points4', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'points4', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+        function guid12() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+            return s4() + s4() + s4();
+        }
+
+        function globalStart() {
+            $('.box').slideToggle("fast");
+        }
+        function onChange() {
+            var checkbox = document.getElementById('checkbox').checked;
+            if (checkbox) {
+                map.addLayer({
+                    'id': 'radar-layer',
+                    'type': 'raster',
+                    'source': 'radar',
+                    'paint': {
+                        'raster-fade-duration': 0
+                    }
+                });
+                map.moveLayer('radar-layer', "polygon0")
+            } else
+                map.removeLayer('radar-layer')
+        }
+    </script>
+</body>
+
+</html>
