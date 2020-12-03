@@ -1,4 +1,3 @@
-import { MapService } from '../services/MapService';
 import '../core/Base';
 import mapboxgl from 'mapbox-gl';
 
@@ -8,7 +7,9 @@ import mapboxgl from 'mapbox-gl';
  * @classdesc FeatureInfomation.
  * @param {Object} options Construction parameters.
  * @param {string} options.icon=fa-flickr Icon of button.
+ * @param {Boolean} options.showButton=true If showButton = false, button control is not displayed.
  * @param {Boolean} options.setStyle=true If setStyle = false, the selected feature will not set style and vice versa it will set style default.
+ * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.FeatureInfomation#selectfeatures
  * @example
@@ -22,11 +23,12 @@ export class FeatureInfomation extends mapboxgl.Evented {
     constructor(options) {
         super(options);
         this.options = options ? options : {};
-        if (!this.options.icon)
-            this.options.icon = 'fa fa-flickr'
-        this.setStyle = options ? options.setStyle : true;
+        this.setStyle = this.options.setStyle != undefined ? this.options.setStyle : true;
+        this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
+        this.icon = this.options.icon ? this.options.icon : 'fa fa-flickr';
         this.active = false;
-        this._map = '';
+        this.target = this.options.target;
+
     }
 
     /**
@@ -42,20 +44,37 @@ export class FeatureInfomation extends mapboxgl.Evented {
         this._container.style.fontSize = "14px"
 
         let input = this.createLayerInputToggle();
-        this._container.appendChild(input)
         var cursorDom = $('.mapboxgl-canvas-container')
         var me = this;
-        this._container.addEventListener("click", function(e) {
-            this.active = !this.active
-            if (this.active) {
+        if (me.showButton)
+            me._container.appendChild(input);
+        else {
+            input.addEventListener("click", function(e) {
+                me.active = !me.active
+                if (me.active) {
+                    cursorDom[0].style.cursor = 'crosshair';
+                    me.fire('click', me);
+                    me._map.on('click', onClick);
+                } else {
+                    cursorDom[0].style.cursor = 'grab';
+                    me.fire('unclick', me);
+                    me._map.off('click', onClick)
+                }
+            });
+        }
+        me._container.addEventListener("click", function(e) {
+            me.active = !me.active
+            if (me.active) {
                 cursorDom[0].style.cursor = 'crosshair';
                 me.fire('click', me);
                 me._map.on('click', onClick);
             } else {
                 cursorDom[0].style.cursor = 'grab';
+                me.fire('unclick', me);
                 me._map.off('click', onClick)
             }
         });
+        return me._container
 
         function onClick(e) {
             var layers = map.getStyle().layers;
@@ -66,7 +85,6 @@ export class FeatureInfomation extends mapboxgl.Evented {
                         token: layer.metadata.token
                     });
                     mapService.identify().on(map).at(e.lngLat).run(function(obj) {
-                        console.log(obj)
                         var features = [];
                         if (obj.length > 0 && me.setStyle) {
                             for (var i = 0; i < obj.length; i++) {
@@ -119,6 +137,7 @@ export class FeatureInfomation extends mapboxgl.Evented {
                                     'features': features
                                 }
                                 if (!map.getSource('feature-info')) {
+
                                     map.addSource('feature-info', {
                                         'type': 'geojson',
                                         'data': data
@@ -181,7 +200,7 @@ export class FeatureInfomation extends mapboxgl.Evented {
                 }
             });
         }
-        return this._container;
+
     }
 
 
@@ -224,11 +243,15 @@ export class FeatureInfomation extends mapboxgl.Evented {
     }
 
     createLayerInputToggle() {
-        let button = document.createElement("button");
-        let icon = document.createElement("i");
-        icon.className = this.options.icon;
-        button.className = "mapboxgl-ctrl-zoom-in"
-        button.appendChild(icon);
+        if (!this.target) {
+            var button = document.createElement("button");
+            var icon = document.createElement("i");
+            icon.className = this.icon;
+            button.className = "mapboxgl-ctrl-zoom-in"
+            button.appendChild(icon);
+        } else {
+            var button = document.getElementById(this.target);
+        }
         return button
     }
 }

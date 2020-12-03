@@ -33,6 +33,19 @@
             color: #79BD8F;
             display: inline;
         }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -42,6 +55,7 @@
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
             Click on the map to execute <a href='#'>Feature Infomation Control</a>
+            <button id="activeControl" class="btn-green">Click</button>
         </div>
     </div>
     <script>
@@ -68,7 +82,10 @@
                 layers: [tiledMap]
             });
             map.addControl(legend, "bottom-left");
-            var featureInfo = new mapboxgl.ekmap.control.FeatureInfomation();
+            var featureInfo = new mapboxgl.ekmap.control.FeatureInfomation({
+                showButton: false,
+                target: 'activeControl'
+            });
             map.addControl(featureInfo, 'top-left');
 
             featureInfo.on("selectfeatures", function(obj) {})
