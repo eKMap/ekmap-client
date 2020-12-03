@@ -73,21 +73,24 @@
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
+
             var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
                 url: urlMapService,
                 token: tokenKey
             }).addTo(map);
+
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             var legend = new mapboxgl.ekmap.control.Legend({
                 layers: [tiledMap]
             });
+
             map.addControl(legend, "bottom-left");
             var featureInfo = new mapboxgl.ekmap.control.FeatureInfomation({
                 showButton: false,
                 target: 'activeControl'
             });
-            map.addControl(featureInfo, 'top-left');
 
+            map.addControl(featureInfo, 'top-left');
             featureInfo.on("selectfeatures", function(obj) {})
         })
     </script>
