@@ -54,7 +54,7 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Click on the map to execute <a href='#'>Feature Infomation Control</a>
+            Click on the map to execute <a href='#'>Select Control</a>
             <button id="activeControl" class="btn-green">Click</button>
         </div>
     </div>
@@ -93,8 +93,9 @@
             })
             map.addControl(select);
             select.on('selectfeatures', function(e) {
-                var code = e.properties.CODE;
-                map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
+                console.log(e)
+                    // var code = e.properties.CODE;
+                    // map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
             })
         })
         map.addControl(new mapboxgl.NavigationControl(), "top-left");

@@ -61,23 +61,23 @@ export class Select extends mapboxgl.Evented {
                 }
             });
         }
-        if (me.setStyle) {
-            map.addLayer({
-                'id': 'areaSelect',
-                'type': 'line',
-                'source': '35',
-                'source-layer': '480',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': '#90c258',
-                    'line-width': 2,
-                },
-                'filter': ["get", "CODE"]
-            })
-        }
+        // if (me.setStyle) {
+        //     map.addLayer({
+        //         'id': 'areaSelect',
+        //         'type': 'line',
+        //         'source': '35',
+        //         'source-layer': '480',
+        //         'layout': {
+        //             'line-join': 'round',
+        //             'line-cap': 'round'
+        //         },
+        //         'paint': {
+        //             'line-color': '#90c258',
+        //             'line-width': 2,
+        //         },
+        //         'filter': ["get", "CODE"]
+        //     })
+        // }
         me._container.addEventListener("click", function(e) {
             me.active = !me.active
             if (me.active) {
@@ -93,20 +93,15 @@ export class Select extends mapboxgl.Evented {
         return me._container
 
         function onClick(e) {
-            var arr = []
-            var layers = map.getStyle().layers;
-            layers.forEach(layer => {
-                arr.push(layer.id)
-            });
             var bbox = [
                 [e.point.x - 5, e.point.y - 5],
                 [e.point.x + 5, e.point.y + 5]
             ];
             var features = map.queryRenderedFeatures(bbox);
-            var fea = null;
+            var fea = [];
             var filter = features.reduce(
                 function(memo, feature) {
-                    fea = feature;
+                    fea.push(feature)
                     return memo;
                 }, ['get', 'CODE']
             );
@@ -114,17 +109,17 @@ export class Select extends mapboxgl.Evented {
              * @event mapboxgl.ekmap.control.Select#selectfeatures
              * @description Fired when the feature is selected.
              */
-            me.fire("selectfeatures", features);
-            if (me.setStyle) {
-                var code = fea.properties.CODE;
-                var coordinates = [fea.properties.xDaiDien, fea.properties.yDaiDien];
-                var description = '<h4>' + fea.properties.NAME + '</h4>';
-                new mapboxgl.Popup()
-                    .setLngLat(coordinates)
-                    .setHTML(description)
-                    .addTo(map);
-                map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
-            }
+            me.fire("selectfeatures", { features: features });
+            // if (me.setStyle) {
+            //     var code = fea.properties.CODE;
+            //     var coordinates = [fea.properties.xDaiDien, fea.properties.yDaiDien];
+            //     var description = '<h4>' + fea.properties.NAME + '</h4>';
+            //     new mapboxgl.Popup()
+            //         .setLngLat(coordinates)
+            //         .setHTML(description)
+            //         .addTo(map);
+            //     map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
+            // }
         }
     }
 
