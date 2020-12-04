@@ -13,5 +13,8 @@ from './Legend';
 export { Button }
 from './Button';
 
+export { Draw }
+from './Draw';
+
 export { Select }
 from './vectorTile_Select';

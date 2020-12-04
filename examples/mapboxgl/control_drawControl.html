@@ -13,7 +13,7 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -26,8 +26,7 @@
         </div>
     </div>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css"
-        type="text/css" />
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css" type="text/css" />
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
@@ -37,7 +36,7 @@
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map)
-        var draw = new MapboxDraw();
+        var draw = new mapboxgl.ekmap.control.Draw();
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.addControl(draw, 'top-left');
     </script>

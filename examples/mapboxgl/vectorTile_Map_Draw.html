@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag@1.0.1/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Draw Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Click on the map to execute <a href='#'>Feature Infomation Control</a>
+            <button onclick="actionDraw()" class="btn-green">Acticon Draw</button>
+            <div id="calculated-area"></div>
+        </div>
+    </div>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css" type="text/css" />
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [103.9, 22.2],
+            zoom: 4
+        });
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+        var draw = new mapboxgl.ekmap.control.Draw({
+            modes: {
+                ...MapboxDraw.modes,
+                'draw_rectangle_drag': mapboxGLDrawRectangleDrag,
+            },
+            displayControlsDefault: false,
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.addControl(draw, 'top-left');
+
+        function actionDraw() {
+            var me = this;
+            if (draw)
+                draw.deleteAll()
+            draw.changeMode('draw_polygon');
+            map.once('draw.create', updateAreaPolygon);
+            map.on('draw.update', updateAreaPolygon);
+        }
+
+        function updateAreaPolygon(e) {
+            var answer = document.getElementById('calculated-area');
+            if (e.features.length > 0) {
+                var polygon = turf.polygon(e.features[0].geometry.coordinates);
+                var area = turf.area(polygon);
+                console.log(area)
+                if (area > 10000)
+                    answer.innerHTML =
+                    '<p><strong>' +
+                    Math.round((area / 1000000) * 100) / 100 + ' ' + 'km<sup>2</sup>' +
+                    '</strong></p>'
+                else
+                    answer.innerHTML =
+                    '<p><strong>' +
+                    Math.round(area * 100) / 100 + ' ' + 'm2<sup>2</sup>' +
+                    '</strong></p>'
+            } else {
+                answer.innerHTML = '';
+                if (e.type !== 'draw.delete')
+                    alert('Use the draw tools to draw a polygon!');
+            }
+        }
+    </script>
+</body>
+
+</html>

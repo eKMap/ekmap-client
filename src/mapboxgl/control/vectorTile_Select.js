@@ -24,9 +24,9 @@ export class Select extends mapboxgl.Evented {
         super(options);
         this.options = options ? options : {};
         this.setStyle = this.options.setStyle != undefined ? this.options.setStyle : true;
-        this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.icon = this.options.icon ? this.options.icon : 'fa fa-flickr';
         this.active = false;
+        this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.target = this.options.target;
     }
 

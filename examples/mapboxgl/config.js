@@ -143,6 +143,22 @@ var exampleConfig = {
                         fileName: "vectorTile_Map_select",
                         subject: "Vector tile select on the map.",
                         description: "Click on the map to query features using queryRenderedFeatures."
+                    },
+                    {
+                        name: "Resize Map",
+                        name_en: "Resize Map",
+                        thumbnail: "resizeMap.gif",
+                        fileName: "resizeMap",
+                        subject: "Resize Map.",
+                        description: "Click button"
+                    },
+                    {
+                        name: "Draw",
+                        name_en: "Draw",
+                        thumbnail: "vectorTile_Map_full.png",
+                        fileName: "vectorTile_Map_Draw",
+                        subject: "Draw.",
+                        description: "Click button action draw and the area"
                     }
                 ]
             },

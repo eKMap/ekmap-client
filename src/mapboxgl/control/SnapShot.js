@@ -1,6 +1,5 @@
 import '../core/Base';
 import mapboxgl from 'mapbox-gl';
-
 /**
  * @class mapboxgl.ekmap.control.SnapShot
  * @category  Control
@@ -15,8 +14,11 @@ import mapboxgl from 'mapbox-gl';
  */
 export class SnapShot extends mapboxgl.Evented {
 
-    constructor() {
-        super();
+    constructor(options) {
+        super(options);
+        this.options = options ? options : {};
+        this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
+        this.target = this.options.target;
     }
 
     /**
@@ -34,13 +36,20 @@ export class SnapShot extends mapboxgl.Evented {
         this._div.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         //this._div.style.padding = "8px";
         this._div.style.fontSize = "14px"
-
-        let input = this.createLayerInputToggle('Long', true, 'test', "");
-        this._div.appendChild(input)
-
-        this._div.addEventListener("click", function (e) {
+        let input = this.createLayerInputToggle();
+        if (this.showButton)
+            this._div.appendChild(input)
+        else {
+            input.addEventListener("click", function(e) {
+                var nameImg = 'map_' + me.guid12() + '.png';
+                me._map.getCanvas().toBlob(function(blob) {
+                    saveAs(blob, nameImg);
+                })
+            })
+        }
+        this._div.addEventListener("click", function(e) {
             var nameImg = 'map_' + me.guid12() + '.png';
-            me._map.getCanvas().toBlob(function (blob) {
+            me._map.getCanvas().toBlob(function(blob) {
                 saveAs(blob, nameImg);
             })
         })
@@ -59,24 +68,27 @@ export class SnapShot extends mapboxgl.Evented {
         this._map = undefined;
     }
 
-
     /**
-    * @private
-    * @description Create layer input
-    */
+     * @private
+     * @description Create layer input
+     */
     createLayerInputToggle() {
-        let button = document.createElement("button");
-        let icon = document.createElement("i");
-        icon.className = "fa fa-camera";
-        button.className = "mapboxgl-ctrl-zoom-in"
-        button.appendChild(icon);
-        return button
+        if (!this.target) {
+            let button = document.createElement("button");
+            let icon = document.createElement("i");
+            icon.className = "fa fa-camera";
+            button.className = "mapboxgl-ctrl-zoom-in"
+            button.appendChild(icon);
+        } else {
+            var button = document.getElementById(this.target);
+        }
+        return button;
     }
 
     /**
-    * @private
-    * @description Create id
-    */
+     * @private
+     * @description Create id
+     */
     guid12() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
