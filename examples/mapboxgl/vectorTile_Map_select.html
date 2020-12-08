@@ -77,10 +77,16 @@
                 setStyle: false
             })
             map.addControl(select);
+            select.on('startselect', function() {
+                console.log('Start select')
+            })
             select.on('selectfeatures', function(e) {
                 console.log(e)
                     // var code = e.properties.CODE;
                     // map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
+            })
+            select.on('unselect', function() {
+                console.log('Stop select')
             })
         })
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
