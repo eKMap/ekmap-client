@@ -23,7 +23,7 @@ import { Parse } from '../core/Parse';
 export class FeatureService extends ServiceBase {
     constructor(options) {
         super(options);
-        if (options.url){
+        if (options.url) {
             this.options = Util.getUrlParams(options);
         }
     }
@@ -39,7 +39,7 @@ export class FeatureService extends ServiceBase {
         params.returnIdsOnly = true;
         params.f = 'json';
         var service = new FeatureService(this.options);
-        return service.request('query', params, function (error, response) {
+        return service.request('query', params, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -56,14 +56,14 @@ export class FeatureService extends ServiceBase {
         if (this.options.isModern || isArcgisOnline(this.options.url)) {
             this.params.f = 'geojson';
 
-            return service.request('query', params, function (error, response) {
+            return service.request('query', params, function(error, response) {
                 this._trapSQLerrors(error);
                 callback.call(context, error, response, response);
             }, this);
 
             // otherwise convert it in the callback then pass it on
         } else {
-            return service.request('query', params, function (error, response) {
+            return service.request('query', params, function(error, response) {
                 this._trapSQLerrors(error);
                 callback.call(context, error, (response && responseToFeatureCollection(response)), response);
             }, this);
@@ -97,63 +97,63 @@ export class FeatureService extends ServiceBase {
         data.push(fea)
         var dataPost = JSON.stringify(data)
         var service = new FeatureService(this.options);
-        return service.post('addFeatures', dataPost, function (error, response) {
+        return service.post('addFeatures', dataPost, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
 
     /**
-    * @function mapboxgl.ekmap.FeatureService.prototype.updateFeature
-    * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
-    * @param {GeoJSONObject} params Infomation feature.
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
-    */
+     * @function mapboxgl.ekmap.FeatureService.prototype.updateFeature
+     * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
+     * @param {GeoJSONObject} params Infomation feature.
+     * @param {Function} callback The callback of result data returned by the server side.
+     * @param {Object} context
+     * @returns {this}
+     */
     updateFeature(params, callback, context) {
         this.updateFeatures(params, callback, context);
     }
 
     /**
-    * @private
-    * @function mapboxgl.ekmap.FeatureService.prototype.updateFeatures
-    * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
-    * @param {GeoJSONObject} params - Infomation feature.
-    */
+     * @private
+     * @function mapboxgl.ekmap.FeatureService.prototype.updateFeatures
+     * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
+     * @param {GeoJSONObject} params - Infomation feature.
+     */
     updateFeatures(params, callback, context) {
         var fea = Parse.geojsonToArcGIS(params);
         var data = [];
         data.push(fea)
         var dataPost = JSON.stringify(data)
         var service = new FeatureService(this.options);
-        return service.post('updateFeatures', dataPost, function (error, response) {
+        return service.post('updateFeatures', dataPost, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
 
     /**
-    * @function mapboxgl.ekmap.FeatureService.prototype.deleteFeature
-    * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
-    * @param {Interger} id Id of feature.
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
-    */
+     * @function mapboxgl.ekmap.FeatureService.prototype.deleteFeature
+     * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
+     * @param {Interger} id Id of feature.
+     * @param {Function} callback The callback of result data returned by the server side.
+     * @param {Object} context
+     * @returns {this}
+     */
     deleteFeature(id, callback, context) {
         this.deleteFeatures(id, callback, context);
     }
 
     /**
-    * @function mapboxgl.ekmap.FeatureService.prototype.deleteFeatures
-    * @description Removes an array of features with the provided ids from the feature layer. This will also remove the features from the map if they exist.
-    * @param {Integers} ids List id of features.
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
-    */
+     * @function mapboxgl.ekmap.FeatureService.prototype.deleteFeatures
+     * @description Removes an array of features with the provided ids from the feature layer. This will also remove the features from the map if they exist.
+     * @param {Integers} ids List id of features.
+     * @param {Function} callback The callback of result data returned by the server side.
+     * @param {Object} context
+     * @returns {this}
+     */
     deleteFeatures(ids, callback, context) {
         var service = new FeatureService(this.options);
-        return service.post('deleteFeatures', ids, function (error, response) {
+        return service.post('deleteFeatures', ids, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -193,7 +193,7 @@ export class FeatureService extends ServiceBase {
         param.f = 'geojson';
         param.returnGeometry = true;
         var service = new FeatureService(this.options);
-        return service.request('query', param, function (error, response) {
+        return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -212,7 +212,7 @@ export class FeatureService extends ServiceBase {
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
         var service = new FeatureService(this.options);
-        return service.request('query', param, function (error, response) {
+        return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -248,7 +248,7 @@ export class FeatureService extends ServiceBase {
                 param.geometryType = 'esriGeometryPolyline'
         }
         var service = new FeatureService(this.options);
-        return service.request('query', param, function (error, response) {
+        return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -283,8 +283,7 @@ export class FeatureService extends ServiceBase {
         else
             param.deletes = false;
         var service = new FeatureService(this.options);
-        console.log(param)
-        return service.post('applyEdits', param, function (error, response) {
+        return service.post('applyEdits', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }

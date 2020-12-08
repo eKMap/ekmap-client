@@ -37,6 +37,7 @@ export class Select extends mapboxgl.Evented {
      * @returns {HTMLElement}  The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.
      */
     onAdd(map) {
+
         this._map = map;
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
@@ -52,12 +53,20 @@ export class Select extends mapboxgl.Evented {
                 me.active = !me.active
                 if (me.active) {
                     cursorDom[0].style.cursor = 'crosshair';
-                    me.fire('click', me);
+                    /**
+                     * @event mapboxgl.ekmap.control.Select#startselect
+                     * @description Fired when start control.
+                     */
+                    me.fire('startselect', me);
                     me._map.on('click', onClick);
                 } else {
                     cursorDom[0].style.cursor = 'grab';
-                    me.fire('unclick', me);
+                    /**
+                     * @event mapboxgl.ekmap.control.Select#unclick
+                     * @description Fired when cancel control.
+                     */
                     me._map.off('click', onClick)
+                    me.fire('unselect', me);
                 }
             });
         }
@@ -82,12 +91,12 @@ export class Select extends mapboxgl.Evented {
             me.active = !me.active
             if (me.active) {
                 cursorDom[0].style.cursor = 'crosshair';
-                me.fire('click', me);
+                me.fire('startselect', me);
                 me._map.on('click', onClick);
             } else {
                 cursorDom[0].style.cursor = 'grab';
-                me.fire('unclick', me);
                 me._map.off('click', onClick)
+                me.fire('unselect', me);
             }
         });
         return me._container

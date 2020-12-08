@@ -156,8 +156,16 @@ var exampleConfig = {
                         name: "Draw",
                         name_en: "Draw",
                         thumbnail: "vectorTile_Map_full.png",
-                        fileName: "vectorTile_Map_Draw",
+                        fileName: "vectorTile_Map_draw",
                         subject: "Draw.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Geometry Query",
+                        name_en: "Geometry Query",
+                        thumbnail: "vectorTile_Map_geometryQuery.png",
+                        fileName: "vectorTile_Map_geometryQuery",
+                        subject: "Geometry Query.",
                         description: "Click button action draw and the area"
                     }
                 ]

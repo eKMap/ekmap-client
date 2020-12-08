@@ -1,6 +1,6 @@
-window.initI18N = function (callback) {
+window.initI18N = function(callback) {
     var path = getCommonScriptPath();
-    Localization.initializeI18N(path, function () {
+    Localization.initializeI18N(path, function() {
         if (window.isSite) {
             localize();
         }
@@ -9,7 +9,7 @@ window.initI18N = function (callback) {
         onLoadCallBack();
         callback && callback();
     });
-    $('.ekmapclient-header').on('click', '.lang-option', function () {
+    $('.ekmapclient-header').on('click', '.lang-option', function() {
         var value = $(this).data('lang');
         utils.setLanguage(value);
         $('#lang').html($(this).html());
@@ -54,7 +54,7 @@ function resetCurrentVersionLink() {
 
     var version = window.version;
     version = version.toString();
-    $(".ekmapclient-nav-version").each(function (key, item) {
+    $(".ekmapclient-nav-version").each(function(key, item) {
         if (item.href) {
             var reg = new RegExp("(.*)\/(" + version + ")(\/.*)");
             var match = item.href.match(reg);
@@ -88,7 +88,8 @@ function localize() {
 
 function getCommonScriptPath() {
     var r = new RegExp("(^|(.*?\\/))(common\.js)(\\?|$)"),
-        s = document.getElementsByTagName('script'), relativePath;
+        s = document.getElementsByTagName('script'),
+        relativePath;
     for (var i = 0; i < s.length; i++) {
         var src = s[i].getAttribute('src');
         if (src) {
@@ -134,8 +135,6 @@ var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/35/FeatureServer
 //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
 var urlMapLayer = urlServicesHost + '/gserver/rest/services/35/MapServer/478'
 var urlMapService = urlServicesHost + '/gserver/rest/services/35/MapServer'
-//var urlMapService = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
+    //var urlMapService = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
 
 var urlVectorService = urlServicesHost + '/gserver/rest/services/35/VectorTileServer';
-
-

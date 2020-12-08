@@ -71,21 +71,6 @@
             token: tokenKey
         }).addTo(map);
         map.on('load', function() {
-            map.addLayer({
-                'id': 'areaSelect',
-                'type': 'line',
-                'source': '35',
-                'source-layer': '480',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': '#90c258',
-                    'line-width': 2,
-                },
-                'filter': ["get", "CODE"]
-            })
             var select = new mapboxgl.ekmap.control.Select({
                 showButton: false,
                 target: 'activeControl',

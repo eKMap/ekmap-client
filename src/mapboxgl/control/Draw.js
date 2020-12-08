@@ -14,10 +14,7 @@ import mapboxgl from 'mapbox-gl';
  *  var map = new mapboxgl.Map({
  *      //config....,
  *  })
- *  map.addControl(new mapboxgl.ekmap.control.Draw({
- *      icon: //Icon of Draw
- * }),'bottom-right');
- * @fires mapboxgl.ekmap.control.Draw#click
+ * var  draw  =  new  mapboxgl.ekmap.control.Draw ( drawOptions ) ;
  */
 export class Draw extends mapboxgl.Evented {
 
@@ -26,7 +23,7 @@ export class Draw extends mapboxgl.Evented {
         this.options = options ? options : {};
         this.controls = this.options.controls ? this.options.controls : {};
         this.displayControlsDefault = this.options.displayControlsDefault != undefined ? this.options.displayControlsDefault : true;
-        this.modes = this.options.modes ? this.options.modes : {...MapboxDraw.modes };
+        this.modes = this.options.modes ? this.options.modes : {...MapboxDraw.modes, 'draw_rectangle_drag': mapboxGLDrawRectangleDrag };
         this.draw = '';
     }
 
@@ -42,7 +39,7 @@ export class Draw extends mapboxgl.Evented {
         this._div = document.createElement('div');
         this._div.title = "Click Draw";
         this._div.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        this._div.style.fontSize = "14px"
+        this._div.style.fontSize = "14px";
         this.draw = new MapboxDraw({
             displayControlsDefault: this.displayControlsDefault,
             controls: this.controls,
