@@ -167,6 +167,22 @@ var exampleConfig = {
                         fileName: "vectorTile_Map_geometryQuery",
                         subject: "Geometry Query.",
                         description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Reverse Geocoder",
+                        name_en: "Reverse Geocoder",
+                        thumbnail: "vectorTile_Map_reverseGeocoder.png",
+                        fileName: "vectorTile_Map_reverseGeocoder",
+                        subject: "Reverse Geocoder.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Geocoder",
+                        name_en: "Geocoder",
+                        thumbnail: "vectorTile_Map_geocoder.png",
+                        fileName: "vectorTile_Map_geocoder",
+                        subject: "Geocoder.",
+                        description: "Click button action draw and the area"
                     }
                 ]
             },

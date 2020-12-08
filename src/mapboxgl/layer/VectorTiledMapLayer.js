@@ -51,7 +51,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
             listLayer.forEach(layer => {
                 if (layer.type == 'fill')
                     map.addLayer({
-                        "id": "areaSelect",
+                        "id": "areaResult",
                         "source": layer.source,
                         "type": "line",
                         "source-layer": layer.id,
@@ -70,7 +70,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                     });
                 if (layer.type == 'line')
                     map.addLayer({
-                        "id": "lineSelect",
+                        "id": "lineResult",
                         "source": layer.source,
                         "type": "line",
                         "source-layer": layer.id,
@@ -89,7 +89,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                     });
                 if (layer.type == 'circle')
                     map.addLayer({
-                        'id': 'pointSelect',
+                        'id': 'pointResult',
                         'type': 'circle',
                         "source": layer.source,
                         "source-layer": layer.id,
@@ -111,47 +111,48 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
     /**
      * @function mapboxgl.ekmap.MapService.prototype.queryByGeometry
      * @description  Is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.。
-     * @param {Object} geometry The geometry to apply as the spatial filter. The structure of the geometry is the same as the structure of the JSON geometry objects returned by the ArcGIS REST API. In addition to the JSON structures, for envelopes and points, you can specify the geometry with a simpler comma-separated syntax.
+     * @param {Object} polygon The geometry to apply as the spatial filter. The structure of the geometry is the same as the structure of the JSON geometry objects returned by the ArcGIS REST API. In addition to the JSON structures, for envelopes and points, you can specify the geometry with a simpler comma-separated syntax.
      * @param {RequestCallback} callback The callback of result data returned by the server side.
      */
     queryByGeometry(polygon, callback) {
         var polygonBoundingBox = turf.bbox(polygon);
-
         var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
         var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
 
         var northEastPointPixel = this.map.project(northEast);
         var southWestPointPixel = this.map.project(southWest);
-        var features = this.map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], {
-            layers: this.arr
+
+        //Remoce Feature State
+        var featuresCheck = map.queryRenderedFeatures();
+        featuresCheck.forEach(feature => {
+            if (feature.state.hover != undefined) {
+                map.removeFeatureState({
+                    source: feature.source,
+                    sourceLayer: feature.sourceLayer,
+                    id: feature.id
+                })
+            }
         });
-        console.log(features)
+
+        //Add Feature State
+        var features = this.map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], {
+            layers: ['479', '478']
+        });
         features.forEach(feature => {
+            // var f = {
+            //     "type": "Feature",
+            //     "geometry": Object.assign({}, feature.geometry),
+            //     "properties": Object.assign({}, feature.properties)
+            // }
+            //console.log(f);
             if (!(undefined === turf.intersect(feature, polygon))) {
-                if (feature.sourceLayer == '480')
-                    this.map.setFeatureState({
-                        source: '35',
-                        sourceLayer: '480',
-                        id: feature.id
-                    }, {
-                        hover: true
-                    });
-                if (feature.sourceLayer == '479')
-                    this.map.setFeatureState({
-                        source: '35',
-                        sourceLayer: '479',
-                        id: feature.id
-                    }, {
-                        hover: true
-                    });
-                if (feature.sourceLayer == '478')
-                    this.map.setFeatureState({
-                        source: '35',
-                        sourceLayer: '478',
-                        id: feature.id
-                    }, {
-                        hover: true
-                    });
+                this.map.setFeatureState({
+                    source: feature.source,
+                    sourceLayer: feature.sourceLayer,
+                    id: feature.id
+                }, {
+                    hover: true
+                });
             }
         });
         return callback(features);

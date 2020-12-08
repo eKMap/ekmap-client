@@ -8,8 +8,9 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
     <script src="../../examples/js/common.js"></script>
-    <title>Vector Tile Layer</title>
+    <title>Geocoder</title>
     <style>
         .map {
             width: 100%;
@@ -71,30 +72,14 @@
             token: tokenKey
         }).addTo(map);
         map.on('load', function() {
-            var select = new mapboxgl.ekmap.control.Select({
-                showButton: false,
-                target: 'activeControl',
-                setStyle: true
-            })
-            map.addControl(select);
-            select.on('startselect', function() {
-                console.log('Start select')
 
+            var select = new mapboxgl.ekmap.control.Geocoder({
+                target: 'activeControl'
             })
-            select.on('selectfeatures', function(e) {
-                console.log(e)
-                select.flyTo(103, {
-                        center: [105.8203125, 21.035800796222006],
-                        zoom: 9
-                    })
-                    // var code = e.properties.CODE;
-                    // map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
-            })
-            select.on('unselect', function() {
-                console.log('Stop select')
-            })
+
+            map.addControl(select);
+            map.addControl(new mapboxgl.NavigationControl(), "top-left");
         })
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>
 

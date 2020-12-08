@@ -18,3 +18,9 @@ from './Draw';
 
 export { Select }
 from './vectorTile_Select';
+
+export { Reverse }
+from './Reverse';
+
+export { Geocoder }
+from './Geocoder';

@@ -120,8 +120,8 @@
                 var polygon = e.features[0]
                 var polygon1 = turf.polygon(e.features[0].geometry.coordinates);
 
-                maps.queryByGeometry(polygon, function(e) {
-                    var features = e;
+                maps.queryByGeometry(polygon, function(evt) {
+                    var features = evt;
                     console.log(features)
 
                 });
