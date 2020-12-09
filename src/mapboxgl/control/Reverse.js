@@ -30,9 +30,9 @@ export class Reverse extends mapboxgl.Evented {
         this.target = this.options.target;
         this.provider = this.options.provider != undefined ? this.options.provider : 'eKGIS';
         if (this.provider == 'eKGIS')
-            this.url = 'http://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address';
+            this.url = 'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address';
         if (this.provider == 'OSM')
-            this.url = 'https://nominatim.openstreetmap.org/reverse/';
+            this.url = 'httpss://nominatim.openstreetmap.org/reverse/';
     }
 
     /**
