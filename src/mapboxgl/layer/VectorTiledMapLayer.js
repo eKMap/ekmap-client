@@ -44,7 +44,6 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         //Style point,line,polygon
         map.on('load', function() {
             var layers = map.getStyle().layers;
-            console.log(layers)
             var listLayer = [];
             layers.forEach(layer => {
                 var idCheck = layer.id % 2;
@@ -146,9 +145,11 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         });
 
         //Add Feature State
+        console.log(this.layerPointLine)
         var features = this.map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], {
             layers: this.layerPointLine
         });
+        console.log(features)
         features.forEach(feature => {
             // var f = {
             //     "type": "Feature",
