@@ -67,7 +67,7 @@
             zoom: 5.0598853164770725
         });
         var hoveredStateId = null;
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+        var vectorTileLayer = new mapboxgl.ekmap.VectorTiledMapLayer({
             url: urlVectorService + "/resources/styles",
             token: tokenKey
         }).addTo(map);
@@ -83,7 +83,7 @@
 
             })
             select.on('selectfeatures', function(e) {
-                select.flyTo(103, {
+                vectorTileLayer.flyTo(103, 2951, {
                         zoom: 9
                     })
                     // var code = e.properties.CODE;
