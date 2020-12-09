@@ -104,7 +104,7 @@ export class FeatureService extends ServiceBase {
 
     /**
      * @function mapboxgl.ekmap.FeatureService.prototype.updateFeature
-     * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
+     * @description Update the provided feature on the Feature Service This also updates the feature on the map. To update the point location on the map. Please use function {@link mapboxgl.ekmap.FeatureService.html#refresh|refresh()} then update.
      * @param {GeoJSONObject} params Infomation feature.
      * @param {Function} callback The callback of result data returned by the server side.
      * @param {Object} context
@@ -133,7 +133,7 @@ export class FeatureService extends ServiceBase {
 
     /**
      * @function mapboxgl.ekmap.FeatureService.prototype.deleteFeature
-     * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
+     * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link mapboxgl.ekmap.FeatureService.html#refresh|refresh()} then delete.
      * @param {Interger} id Id of feature.
      * @param {Function} callback The callback of result data returned by the server side.
      * @param {Object} context
@@ -166,7 +166,8 @@ export class FeatureService extends ServiceBase {
      */
     query(params, callback, context) {
         var param = {};
-        param.where = params.where;
+        if (params.where)
+            param.where = params.where;
         if (params.orderByFields)
             param.orderByFields = params.orderByFields
         if (params.geometry) {
@@ -189,6 +190,8 @@ export class FeatureService extends ServiceBase {
             if (params.geometry.type == 'LineString')
                 param.geometryType = 'esriGeometryPolyline'
         }
+        if (params.objectIds)
+            param.objectIds = params.objectIds
         param.outFields = '*';
         param.f = 'geojson';
         param.returnGeometry = true;
@@ -286,6 +289,34 @@ export class FeatureService extends ServiceBase {
         return service.post('applyEdits', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
+    }
+
+    /**
+     * @function mapboxgl.ekmap.FeatureService.prototype.refresh
+     * @description Redraws all features from the feature layer that exist on the map.
+     */
+    refresh() {
+        var me = this;
+        var data = {};
+        var params = {
+            where: '1=1'
+        };
+
+        this.query(params, function(result) {
+            data = {
+                'type': 'FeatureCollection',
+                'features': result
+            };
+            if (me.map.getLayer('point')) {
+                me.map.getSource('point').setData(data);
+            }
+            if (me.map.getLayer('line')) {
+                me.map.getSource('line').setData(data);
+            }
+            if (me.map.getLayer('area')) {
+                me.map.getSource('area').setData(data);
+            }
+        });
     }
 }
 

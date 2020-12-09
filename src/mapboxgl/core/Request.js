@@ -18,7 +18,7 @@ export class Request {
         }
         // Load complete
         //this.dispatchEvent({ type: 'loadstart' });
-        ajax.onload = function () {
+        ajax.onload = function() {
             // self._request = null;
             // self.dispatchEvent({ type: 'loadend' });
             if (this.status >= 200 && this.status < 400) {
@@ -38,16 +38,17 @@ export class Request {
                     if (response.objectIdFieldName) {
                         callback(response)
                     }
+                    if (response.osm_type) {
+                        callback(response)
+                    }
                 } catch (e) {
 
                 }
-            } else {
-            }
+            } else {}
         };
 
         // Oops
-        ajax.onerror = function () {
-        };
+        ajax.onerror = function() {};
         // GO!
         if (data)
             ajax.send(JSON.stringify(data));
@@ -65,8 +66,8 @@ export class Request {
      */
     get(options) {
         var ajax = new gclient_ajax(options);
-        if (options.success) ajax.on('success', function (e) { options.success(e.response, e); });
-        if (options.error) ajax.on('error', function (e) { options.error(e); });
+        if (options.success) ajax.on('success', function(e) { options.success(e.response, e); });
+        if (options.error) ajax.on('error', function(e) { options.error(e); });
         ajax.send(options.url, options.data, options.options);
     };
 
@@ -111,7 +112,7 @@ export class Request {
             }
         }
         // Load complete
-        ajax.onload = function () {
+        ajax.onload = function() {
             // self._request = null;
             // self.dispatchEvent({ type: 'loadend' });
             if (this.status >= 200 && this.status < 400) {
@@ -120,21 +121,17 @@ export class Request {
                 try {
                     response = JSON.parse(this.response);
                     callback(response)
-                    
-                } catch (e) {
-                }
-            } else {
-            }
+
+                } catch (e) {}
+            } else {}
         };
 
         // Oops
-        ajax.onerror = function () {
-        };
+        ajax.onerror = function() {};
         // GO!
         if (dataPost) {
             ajax.send(dataPost);
-        }
-        else
+        } else
             ajax.post();
     };
 
@@ -149,8 +146,8 @@ export class Request {
      */
     put(options) {
         var ajax = new gclient_ajax(options);
-        if (options.success) ajax.on('success', function (e) { options.success(e.response, e); });
-        if (options.error) ajax.on('error', function (e) { options.error(e); });
+        if (options.success) ajax.on('success', function(e) { options.success(e.response, e); });
+        if (options.error) ajax.on('error', function(e) { options.error(e); });
         ajax.send(options.url, options.data, options.options, "PUT");
     };
 }

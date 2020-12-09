@@ -179,34 +179,7 @@
 	
         <tr>
             
-                <td class="name"><code>coordinates</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">LngLatLike</span>
-
-
-            
-            </td>
-            
-            
-                <td class="default">
-                
-                </td>
-            
-            
-            <td class="description last">
-                
-                <p>Will use this token to authenticate all calls to the service.</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>token</code></td>
+                <td class="name"><code>icon</code></td>
             
             
             <td class="type">
@@ -221,12 +194,14 @@
             
                 <td class="default">
                 
+                    fa-flickr
+                
                 </td>
             
             
             <td class="description last">
                 
-                <p>Will use this token to authenticate all calls to the service.</p></td>
+                <p>Icon of button.</p></td>
         </tr>
 	
 	
@@ -248,6 +223,35 @@
             
                 <td class="default">
                 
+                    eKGIS
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>tokenkey</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
                 </td>
             
             
@@ -260,13 +264,13 @@
 	
         <tr>
             
-                <td class="name"><code>placeholder</code></td>
+                <td class="name"><code>showButton</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -275,14 +279,43 @@
             
                 <td class="default">
                 
-                    Search
+                    true
                 
                 </td>
             
             
             <td class="description last">
                 
-                <p>Override the default placeholder attribute value.</p></td>
+                <p>If showButton = false, button control is not displayed.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>setStyle</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>If setStyle = false, the Reverseed feature will not set style and vice versa it will set style default.</p></td>
         </tr>
 	
 	
@@ -397,6 +430,294 @@
     
 
     
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="event:selectfeatures">
+            
+            selectfeatures
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/Reverse.js, line 103
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Fired when the feature is selected.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="event:selectfeatures">
+            
+            selectfeatures
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/Reverse.js, line 120
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Fired when the feature is selected.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="event:startReverse">
+            
+            startReverse
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/Reverse.js, line 60
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Fired when start control.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="event:unReverse">
+            
+            unReverse
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/Reverse.js, line 68
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Fired when cancel control.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -412,7 +733,7 @@
     
         
         <div class="tag-source">
-            control/Reverse.js, line 35
+            control/Reverse.js, line 38
         </div>
         
     </div>
@@ -557,7 +878,7 @@
     
         
         <div class="tag-source">
-            control/Reverse.js, line 116
+            control/Reverse.js, line 131
         </div>
         
     </div>
@@ -705,7 +1026,7 @@
 
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Tue Dec 08 2020 16:56:46 GMT+0700 (Indochina Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Wed Dec 09 2020 16:18:24 GMT+0700 (Indochina Time)
         </footer>
     </div>
 </div>

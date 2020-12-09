@@ -73,11 +73,16 @@
             token: tokenKey
         }).addTo(map);
         map.on('load', function() {
-
-            var select = new mapboxgl.ekmap.control.Reverse({
-                target: 'test'
+            var reverse = new mapboxgl.ekmap.control.Reverse({
+                target: 'activeControl',
+                showButton: false,
+                provider: 'eKGIS',
+                tokenKey: '83F55C73-7D2A-4C97-903C-7BA6559DC0A4'
             })
-            map.addControl(select, 'bottom-left');
+            map.addControl(reverse);
+            reverse.on('selectfeatures', function(result) {
+                console.log(result)
+            })
             map.addControl(new mapboxgl.NavigationControl(), "top-left");
         })
     </script>

@@ -24,6 +24,10 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
             this.tileUrl += ('?token=' + this.options.token);
         this.map = '';
         this.arr = [];
+        this.layerPointLine = [];
+        this.featuresCheck = '';
+
+        this.urlFeatureService = options.url.replace("VectorTileServer/resources/styles", "FeatureServer/")
     }
 
     /**
@@ -36,10 +40,11 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         this.map = map;
         var me = this;
         map.setStyle(this.tileUrl);
-        //Style point,line,polygon
         me.fire('loadend', me);
+        //Style point,line,polygon
         map.on('load', function() {
             var layers = map.getStyle().layers;
+            console.log(layers)
             var listLayer = [];
             layers.forEach(layer => {
                 var idCheck = layer.id % 2;
@@ -51,7 +56,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
             listLayer.forEach(layer => {
                 if (layer.type == 'fill')
                     map.addLayer({
-                        "id": "areaResult",
+                        "id": "areaResult" + guid12(),
                         "source": layer.source,
                         "type": "line",
                         "source-layer": layer.id,
@@ -68,9 +73,10 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                             'line-width': 2,
                         }
                     });
-                if (layer.type == 'line')
+                if (layer.type == 'line') {
+                    me.layerPointLine.push(layer.id);
                     map.addLayer({
-                        "id": "lineResult",
+                        "id": "lineResult" + guid12(),
                         "source": layer.source,
                         "type": "line",
                         "source-layer": layer.id,
@@ -87,9 +93,12 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                             'line-width': 2,
                         }
                     });
-                if (layer.type == 'circle')
+                }
+
+                if (layer.type == 'circle') {
+                    me.layerPointLine.push(layer.id);
                     map.addLayer({
-                        'id': 'pointResult',
+                        'id': 'pointResult' + guid12(),
                         'type': 'circle',
                         "source": layer.source,
                         "source-layer": layer.id,
@@ -103,13 +112,15 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                             "circle-stroke-width": 3,
                         },
                     });
+                }
+
             });
         })
         return this;
     }
 
     /**
-     * @function mapboxgl.ekmap.MapService.prototype.queryByGeometry
+     * @function mapboxgl.ekmap.VectorTiledMapLayer.prototype.queryByGeometry
      * @description  Is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.。
      * @param {Object} polygon The geometry to apply as the spatial filter. The structure of the geometry is the same as the structure of the JSON geometry objects returned by the ArcGIS REST API. In addition to the JSON structures, for envelopes and points, you can specify the geometry with a simpler comma-separated syntax.
      * @param {RequestCallback} callback The callback of result data returned by the server side.
@@ -136,7 +147,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
 
         //Add Feature State
         var features = this.map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], {
-            layers: ['479', '478']
+            layers: this.layerPointLine
         });
         features.forEach(feature => {
             // var f = {
@@ -156,6 +167,77 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
             }
         });
         return callback(features);
+    }
+
+    /**
+     * @function mapboxgl.ekmap.VectorTiledMapLayer.prototype.flyTo
+     * @description Changes any combination of center, zoom, highlight, bearing, and pitch, animating the transition along a curve that evokes flight
+     * @param {String} featureId Id of feature you want to flyTo.
+     * @param {Object} params the Map this control will be removed from.
+     * @param {LngLatLike} params.center The desired center.
+     * @param {Number} params.zoom The desired zoom level.
+     * @param {Number} params.bearing The desired bearing in degrees. The bearing is the compass direction that is "up". For example, bearing: 90 orients the map so that east is up.
+     * @param {Number} params.pitch The desired pitch in degrees. The pitch is the angle towards the horizon measured in degrees with a range between 0 and 60 degrees. <br>For example, pitch: 0 provides the appearance of looking straight down at the map, while pitch: 60 tilts the user's perspective towards the horizon. Increasing the pitch value is often used to display 3D objects.
+     * 
+     * @returns {Map} this.
+     */
+    flyTo(featureId, sourceLayer, params) {
+        var featureService = new mapboxgl.ekmap.FeatureService({
+            url: this.urlFeatureService + sourceLayer,
+            token: this.options.token
+        })
+        var me = this;
+        featureService.query({ objectIds: featureId }, function(obj) {
+            var feature = obj[0]
+            if (feature.geometry.type == "Point")
+                params.center = feature.geometry.coordinates;
+            else {
+                var param = {
+                    type: 'Feature',
+                    properties: feature.properties,
+                    geometry: feature.geometry
+                }
+                var centroid = turf.centroid(param);
+                params.center = centroid.geometry.coordinates;
+            }
+            me.map.flyTo(params)
+        })
+    }
+
+    /**
+     * @function mapboxgl.ekmap.control.Select.prototype.onRemove
+     * @description Unregister a control on the map and give it a chance to detach event listeners and resources. This method is called by Map#removeControl internally.
+     * @param {Map} map the Map this control will be removed from.
+     * @returns {undefined}  there is no required return value for this method.
+     */
+    setHighlight(featureId, sourceLayer) {
+        // var featureService = new mapboxgl.ekmap.FeatureService({
+        //     url: this.urlFeatureService + sourceLayer,
+        //     token: this.options.token
+        // })
+        // var me = this;
+        // featureService.query({ objectIds: featureId }, function(obj) {
+        //     this.map.setFeatureState({
+        //         source: feature.source,
+        //         sourceLayer: feature.sourceLayer,
+        //         id: featureId
+        //     }, {
+        //         hover: true
+        //     });
+        // })
+        // this.featuresCheck = this.map.queryRenderedFeatures();
+        // this.featuresCheck.forEach(feature => {
+        //     if (feature.state.hover != undefined) {
+        //         this.map.removeFeatureState({
+        //             source: feature.source,
+        //             sourceLayer: feature.sourceLayer,
+        //             id: feature.id
+        //         })
+        //     }
+        //     if (feature.id == featureId) {
+
+        //     }
+        // });
     }
 }
 

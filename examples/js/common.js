@@ -137,4 +137,4 @@ var urlMapLayer = urlServicesHost + '/gserver/rest/services/35/MapServer/478'
 var urlMapService = urlServicesHost + '/gserver/rest/services/35/MapServer'
     //var urlMapService = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
 
-var urlVectorService = urlServicesHost + '/gserver/rest/services/35/VectorTileServer';
+var urlVectorService = urlServicesHost + '/gserver/rest/services/114/VectorTileServer';

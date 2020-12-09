@@ -10,6 +10,8 @@ import { Request } from '../core/Request';
  * @param {Object} options The optional parameters.
  * @param {string} options.url (Required) The URL to the MapService.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
+ * @param {string} options.tokenKey - Will use this token to authenticate all calls to the service.
+ * 
  */
 export class ServiceBase extends mapboxgl.Evented {
 
@@ -36,6 +38,9 @@ export class ServiceBase extends mapboxgl.Evented {
         }, true);
         if (this.options.token) {
             params.token = this.options.token;
+        }
+        if (this.options.tokenKey) {
+            params.tokenKey = this.options.tokenKey;
         }
         if (this.options.requestParams) {
             Util.extend(params, this.options.requestParams);
@@ -74,7 +79,7 @@ export class ServiceBase extends mapboxgl.Evented {
     }
 
     _createServiceCallback(method, path, params, callback, context) {
-        return Util.bind(function (error, response) {
+        return Util.bind(function(error, response) {
             if (error && (error.code === 499 || error.code === 498)) {
                 this._authenticating = true;
 

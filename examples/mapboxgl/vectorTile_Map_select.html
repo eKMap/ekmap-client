@@ -8,6 +8,7 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
     <script src="../../examples/js/common.js"></script>
     <title>Vector Tile Layer</title>
     <style>
@@ -82,9 +83,7 @@
 
             })
             select.on('selectfeatures', function(e) {
-                console.log(e)
                 select.flyTo(103, {
-                        center: [105.8203125, 21.035800796222006],
                         zoom: 9
                     })
                     // var code = e.properties.CODE;

@@ -62,7 +62,7 @@ export class Util {
 
         var args = slice.call(arguments, 2);
 
-        return function () {
+        return function() {
             return fn.apply(obj, args.length ? args.concat(slice.call(arguments)) : arguments);
         };
     }
@@ -278,14 +278,14 @@ export class Util {
 
         var args = slice.call(arguments, 2);
 
-        return function () {
+        return function() {
             return fn.apply(obj, args.length ? args.concat(slice.call(arguments)) : arguments);
         };
     }
 
     static cancelAnimFrame(id) {
         var cancelFn = window.cancelAnimationFrame || this.getPrefixed('CancelAnimationFrame') ||
-            this.getPrefixed('CancelRequestAnimationFrame') || function (id) { window.clearTimeout(id); };
+            this.getPrefixed('CancelRequestAnimationFrame') || function(id) { window.clearTimeout(id); };
         if (id) {
             cancelFn.call(window, id);
         }
@@ -417,8 +417,10 @@ export class Util {
                 // }
             }
         });
-        canv.height = height; canv.style.height = canv.height + 'px';
-        canv.width = height; canv.style.width = canv.width + 'px';
+        canv.height = height;
+        canv.style.height = canv.height + 'px';
+        canv.width = height;
+        canv.style.width = canv.width + 'px';
         dom.appendChild(canv);
         return chart;
     }
@@ -429,6 +431,15 @@ export class Util {
             params.push(encodeURIComponent(uppercase ? i.toUpperCase() : i) + '=' + encodeURIComponent(obj[i]));
         }
         return ((!existingUrl || existingUrl.indexOf('?') === -1) ? '?' : '&') + params.join('&');
+    }
+
+    static getSourceId(map) {
+        var layers = map.getStyle().layers;
+        var idCheck = layers[0].id % 2;
+        if (!isNaN(idCheck)) {
+            var lay = map.getLayer(layers[0].id);
+            return lay.source;
+        }
     }
 }
 

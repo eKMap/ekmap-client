@@ -1,7 +1,6 @@
 import '../core/Base';
 import mapboxgl from 'mapbox-gl';
-import { map } from 'leaflet';
-import { feature } from '@turf/turf';
+import { Util } from '../core/Util';
 
 /**
  * @class mapboxgl.ekmap.control.Select
@@ -147,42 +146,6 @@ export class Select extends mapboxgl.Evented {
             var button = document.getElementById(this.target);
         }
         return button
-    }
-
-    /**
-     * @function mapboxgl.ekmap.control.Select.prototype.flyTo
-     * @description Changes any combination of center, zoom, highlight, bearing, and pitch, animating the transition along a curve that evokes flight
-     * @param {String} featureId Id of feature you want to flyTo.
-     * @param {Object} params the Map this control will be removed from.
-     * @param {LngLatLike} params.center The desired center.
-     * @param {Number} params.zoom The desired zoom level.
-     * @param {Number} params.bearing The desired bearing in degrees. The bearing is the compass direction that is "up". For example, bearing: 90 orients the map so that east is up.
-     * @param {Number} params.pitch The desired pitch in degrees. The pitch is the angle towards the horizon measured in degrees with a range between 0 and 60 degrees. <br>For example, pitch: 0 provides the appearance of looking straight down at the map, while pitch: 60 tilts the user's perspective towards the horizon. Increasing the pitch value is often used to display 3D objects.
-     * 
-     * @returns {Map} this.
-     */
-    flyTo(featureId, params) {
-        this._map.flyTo(params)
-        this.featuresCheck = this._map.queryRenderedFeatures();
-        this.featuresCheck.forEach(feature => {
-            if (feature.state.hover != undefined) {
-                this._map.removeFeatureState({
-                    source: feature.source,
-                    sourceLayer: feature.sourceLayer,
-                    id: feature.id
-                })
-            }
-            if (feature.id == featureId) {
-                this._map.setFeatureState({
-                    source: feature.source,
-                    sourceLayer: feature.sourceLayer,
-                    id: featureId
-                }, {
-                    hover: true
-                });
-            }
-        });
-
     }
 }
 
