@@ -53,6 +53,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                 }
             });
             listLayer.forEach(layer => {
+                console.log(layer)
                 if (layer.type == 'fill')
                     map.addLayer({
                         "id": "areaResult" + guid12(),
