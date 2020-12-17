@@ -53,7 +53,7 @@ export class DrawCircle extends mapboxgl.Evented {
         input.addEventListener("click", function(e) {
             me.active = !me.active
             if (me.active) {
-                cursorDom[0].style.cursor = 'crosshair';
+                cursorDom[0].style.cursor = 'help';
                 /**
                  * @event mapboxgl.ekmap.control.DrawCircle#startDrawCircle
                  * @description Fired when start control.
@@ -72,8 +72,6 @@ export class DrawCircle extends mapboxgl.Evented {
                 me.fire('unDrawCircle', me);
             }
         })
-
-
         if (!this.target)
             this._div.appendChild(input)
 
