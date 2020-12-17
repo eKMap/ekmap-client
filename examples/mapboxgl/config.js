@@ -156,7 +156,7 @@ var exampleConfig = {
                         name: "Draw",
                         name_en: "Draw",
                         thumbnail: "vectorTile_Map_full.png",
-                        fileName: "vectorTile_Map_draw",
+                        fileName: "vectorTile_Map_drawS",
                         subject: "Draw.",
                         description: "Click button action draw and the area"
                     },
