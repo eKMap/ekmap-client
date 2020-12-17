@@ -175,7 +175,6 @@ export class TreeLayer extends mapboxgl.Evented {
     }
 
     _radioButtonControlAdd(layerId, div) {
-        console.log(layerId)
         const radioButton = document.createElement('input');
         radioButton.setAttribute('type', 'radio');
         radioButton.style.marginRight = '1rem';
@@ -184,7 +183,6 @@ export class TreeLayer extends mapboxgl.Evented {
         radioButton.id = layerId;
         if (layerId === Object.keys(this._baseLayersOption)[0]) {
             radioButton.checked = true;
-            console.log('vao')
             this._map.setLayoutProperty(layerId, 'visibility', 'visible');
         } else {
             this._map.setLayoutProperty(layerId, 'visibility', 'none');
@@ -215,7 +213,6 @@ export class TreeLayer extends mapboxgl.Evented {
         checkBox.style.marginRight = '1rem';
         checkBox.style.height = '1.2rem';
         checkBox.style.width = '1.2rem';
-        console.log(map.getLayer(layerId))
         var layer = map.getLayer(layerId);
         if (layer.visibility == 'none')
             checkBox.checked = false;
