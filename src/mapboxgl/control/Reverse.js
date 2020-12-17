@@ -9,14 +9,15 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.icon=fa-flickr Icon of button.
  * @param {string} options.provider=eKGIS
  * @param {string} options.tokenkey Will use this token to authenticate all calls to the service.
- * @param {Boolean} options.showButton=true If showButton = false, button control is not displayed.
  * @param {Boolean} options.setStyle=true If setStyle = false, the Reverseed feature will not set style and vice versa it will set style default.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
  * 
  * @example
  * (start code)
- *  map.addControl(new mapboxgl.ekmap.control.Reverse({ setStyle: true }),'bottom-right');
+ *  map.addControl(new mapboxgl.ekmap.control.Reverse({  target: // the id attribute of target,
+ *             provider: 'OSM',
+ *             tokenKey: '83F55C73-7D2A-4C97-903C-7BA6559DC0A4' }),'bottom-right');
  * (end)
  */
 
@@ -29,6 +30,7 @@ export class Reverse extends mapboxgl.Evented {
         this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.target = this.options.target;
         this.provider = this.options.provider != undefined ? this.options.provider : 'eKGIS';
+        this.listeners = {};
         if (this.provider == 'eKGIS')
             this.url = 'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address';
         if (this.provider == 'OSM')
@@ -45,12 +47,12 @@ export class Reverse extends mapboxgl.Evented {
         this._map = map;
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        this._container.style.fontSize = "14px"
+        this._container.style.fontSize = "14px";
         this.featuresCheck = map.queryRenderedFeatures();
         let input = this.createLayerInputToggle();
         var cursorDom = $('.mapboxgl-canvas-container')
         var me = this;
-        if (me.showButton)
+        if (!me.target)
             me._container.appendChild(input);
         else {
             input.addEventListener("click", function(e) {
@@ -62,14 +64,17 @@ export class Reverse extends mapboxgl.Evented {
                      * @description Fired when start control.
                      */
                     me.fire('startReverse', me);
-                    me._map.on('click', onClick);
+                    me.offEvent();
+                    me.listeners["click"] = me.onClick.bind(me);
+                    me._map.on('click', me.listeners["click"]);
                 } else {
                     cursorDom[0].style.cursor = 'grab';
                     /**
                      * @event mapboxgl.ekmap.control.Reverse#unReverse
                      * @description Fired when cancel control.
                      */
-                    me._map.off('click', onClick)
+                    // me._map.off('click', me.onClick)
+                    me.offEvent();
                     me.fire('unReverse', me);
                 }
             });
@@ -80,52 +85,18 @@ export class Reverse extends mapboxgl.Evented {
             if (me.active) {
                 cursorDom[0].style.cursor = 'crosshair';
                 me.fire('startReverse', me);
-                me._map.on('click', onClick);
+                me.offEvent();
+                me.listeners["click"] = me.onClick.bind(me);
+                me._map.on('click', me.listeners["click"]);
             } else {
                 cursorDom[0].style.cursor = 'grab';
-                me._map.off('click', onClick)
+                //me._map.off('click', me.onClick)
+
+                me.offEvent();
                 me.fire('unReverse', me);
             }
         });
         return me._container
-
-        function onClick(e) {
-
-            var service = new mapboxgl.ekmap.ServiceBase({
-                url: me.url,
-                tokenKey: me.options.tokenKey
-            });
-            if (me.provider == 'eKGIS') {
-                var params = {
-                    latlng: [e.lngLat.lat, e.lngLat.lng]
-                }
-                service.request('json', params, function(response) {
-                    /**
-                     * @event mapboxgl.ekmap.control.Reverse#selectfeatures
-                     * @description Fired when the feature is selected.
-                     */
-                    me.fire("selectfeatures", { result: response });
-                }, me);
-            }
-
-
-            if (me.provider == 'OSM') {
-                var params = {
-                    format: 'json',
-                    lat: e.lngLat.lat,
-                    lon: e.lngLat.lng,
-                    addressdetails: 1
-                }
-                service.request('reverse', params, function(response) {
-                    /**
-                     * @event mapboxgl.ekmap.control.Reverse#selectfeatures
-                     * @description Fired when the feature is selected.
-                     */
-                    me.fire("selectfeatures", { result: response });
-                }, me);
-            }
-
-        }
     }
 
     /**
@@ -139,6 +110,13 @@ export class Reverse extends mapboxgl.Evented {
         this._map = undefined;
     }
 
+    offEvent() {
+        for (var evt in this.listeners) {
+            this._map.off('click', this.listeners[evt]);
+        }
+        this.listeners = {};
+    }
+
     createLayerInputToggle() {
         if (!this.target) {
             var button = document.createElement("button");
@@ -150,6 +128,58 @@ export class Reverse extends mapboxgl.Evented {
             var button = document.getElementById(this.target);
         }
         return button
+    }
+
+
+    onClick(e) {
+        var me = this;
+
+        var service = new mapboxgl.ekmap.ServiceBase({
+            url: me.url,
+            tokenKey: me.options.tokenKey
+        });
+        if (me.provider == 'eKGIS') {
+            var params = {
+                latlng: [e.lngLat.lat, e.lngLat.lng]
+            }
+            service.request('json', params, function(response) {
+                /**
+                 * @event mapboxgl.ekmap.control.Reverse#selectfeatures
+                 * @description Fired when the feature is selected.
+                 */
+                me.fire("selectfeatures", { result: response });
+            }, me);
+        }
+
+
+        if (me.provider == 'OSM') {
+            var params = {
+                format: 'json',
+                lat: e.lngLat.lat,
+                lon: e.lngLat.lng,
+                addressdetails: 1
+            }
+            service.request('reverse', params, function(response) {
+                /**
+                 * @event mapboxgl.ekmap.control.Reverse#selectfeatures
+                 * @description Fired when the feature is selected.
+                 */
+                me.fire("selectfeatures", { result: response });
+            }, me);
+        }
+    }
+
+    /**
+     * @function mapboxgl.ekmap.control.Reverse.prototype.deactivate
+     * @description Deactivate control Reverse.
+     */
+    deactivate() {
+        var cursorDom = $('.mapboxgl-canvas-container')
+        cursorDom[0].style.cursor = 'grab';
+        this.offEvent();
+        // this._map.off('click', this.onClick);
+        this.fire('unReverse', this);
+        this.active = false;
     }
 }
 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=LToNeFm7nBcUG8D6KGUPy2QFeX3nsEuGc_vd5G9FrfliPqsq4uJE6RYyDvnypqDtDGdvBX3VUSFs3vB9IA_kWovaUQMi6GELBZfsoISSprY" charset="UTF-8"></script>
+    <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=_r_wfEkpgC6TkfKoOe8VZdYcrOVPw1OE6CPycUTS8KsrnEI6ZHdYI1s1MI9nJ96JJZ8AQAWH_tB0gCfn2RDRuMy_MS6FZklXOQx_MxCEvxU" charset="UTF-8"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link href="../../dist/mapboxgl/gclient.min.css" rel="stylesheet">
+    <script src="../../examples/js/common.js"></script>
+    <title>Base Layer Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <button id='test'></button>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {},
+                "layers": []
+            },
+            center: [105.20886162772933, 16.518572979240204],
+            zoom: 5.193739308697748
+        });
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN,
+                id: 'vnMap',
+                visibility: 'none'
+            }).addTo(map);
+            var adminMap = new mapboxgl.ekmap.TiledAdminMapLayer({
+                id: 'adminMap',
+                name: 'Admin Map',
+            }).addTo(map);
+            var roadMap = new mapboxgl.ekmap.TiledRoadMapLayer({
+                id: 'roadMap',
+                name: 'Road Map',
+                visibility: 'none'
+            }).addTo(map);
+            var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                url: urlMapService,
+                token: tokenKey,
+                id: 'tilelayer'
+            }).addTo(map);
+
+            var BaseLayer = new mapboxgl.ekmap.control.BaseLayer();
+            map.addControl(BaseLayer, 'bottom-left');
+            // NavigationControl
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        })
+    </script>
+</body>
+
+</html>

@@ -144,14 +144,14 @@ var exampleConfig = {
                         subject: "Vector tile select on the map.",
                         description: "Click on the map to query features using queryRenderedFeatures."
                     },
-                    {
-                        name: "Resize Map",
-                        name_en: "Resize Map",
-                        thumbnail: "resizeMap.gif",
-                        fileName: "resizeMap",
-                        subject: "Resize Map.",
-                        description: "Click button"
-                    },
+                    // {
+                    //     name: "Resize Map",
+                    //     name_en: "Resize Map",
+                    //     thumbnail: "resizeMap.gif",
+                    //     fileName: "resizeMap",
+                    //     subject: "Resize Map.",
+                    //     description: "Click button"
+                    // },
                     {
                         name: "Draw",
                         name_en: "Draw",
@@ -166,22 +166,6 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_geometryQuery.png",
                         fileName: "vectorTile_Map_geometryQuery",
                         subject: "Geometry Query.",
-                        description: "Click button action draw and the area"
-                    },
-                    {
-                        name: "Reverse Geocoder",
-                        name_en: "Reverse Geocoder",
-                        thumbnail: "vectorTile_Map_reverseGeocoder.png",
-                        fileName: "vectorTile_Map_reverseGeocoder",
-                        subject: "Reverse Geocoder.",
-                        description: "Click button action draw and the area"
-                    },
-                    {
-                        name: "Geocoder",
-                        name_en: "Geocoder",
-                        thumbnail: "vectorTile_Map_geocoder.png",
-                        fileName: "vectorTile_Map_geocoder",
-                        subject: "Geocoder.",
                         description: "Click button action draw and the area"
                     }
                 ]
@@ -716,6 +700,46 @@ var exampleConfig = {
                         fileName: "control_snapShotControl",
                         subject: "Snapshot Control",
                         description: "A SnapshotControl control contains a button for screenshot."
+                    },
+                    {
+                        name: "Reverse Geocoder",
+                        name_en: "Reverse Geocoder",
+                        thumbnail: "vectorTile_Map_reverseGeocoder.gif",
+                        fileName: "vectorTile_Map_reverseGeocoder",
+                        subject: "Reverse Geocoder.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Geocoder",
+                        name_en: "Geocoder",
+                        thumbnail: "vectorTile_Map_geocoder.gif",
+                        fileName: "vectorTile_Map_geocoder",
+                        subject: "Geocoder.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Tree Layer",
+                        name_en: "Tree Layer",
+                        thumbnail: "control_treeLayerControl.png",
+                        fileName: "control_treeLayerControl",
+                        subject: "Tree Layer.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Base Layer",
+                        name_en: "Base Layer",
+                        thumbnail: "control_baseLayerControl.png",
+                        fileName: "control_baseLayerControl",
+                        subject: "Base Layer.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Draw Circle",
+                        name_en: "Draw Circle",
+                        thumbnail: "control_drawCircleControl.gif",
+                        fileName: "control_drawCircleControl",
+                        subject: "Draw Circle.",
+                        description: "Click button action draw and the area"
                     }
                 ]
             }

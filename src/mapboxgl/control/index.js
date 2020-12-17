@@ -22,5 +22,14 @@ from './vectorTile_Select';
 export { Reverse }
 from './Reverse';
 
+export { TreeLayer }
+from './TreeLayer';
+
+export { BaseLayer }
+from './BaseLayer';
+
+export { DrawCircle }
+from './DrawCircle'
+
 export { Geocoder }
-from './Geocoder';
+from './Geocoder/Geocoder';

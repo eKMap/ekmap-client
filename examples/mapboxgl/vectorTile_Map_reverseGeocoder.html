@@ -47,6 +47,19 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+        
+        .btn-red {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -56,33 +69,57 @@
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
             Click on the map to execute <a href='#'>Select Control</a>
-            <button id="activeControl" class="btn-green">Click</button>
-            <div id="test"></div>
+            <button id="activeControl" class="btn-green">Active Select</button>
+            <button id="deactivateControl" class="btn-red">Deactivate</button>
+            <div id="calculated-area"></div>
         </div>
     </div>
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId', // container id
             minZoom: 4,
-            center: [110.8572095386728, 16.105643201842312],
-            zoom: 5.0598853164770725
+            center: [103.95153329327843, 21.194802200558613],
+            zoom: 9.229193798995448
         });
-        var hoveredStateId = null;
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
             url: urlVectorService + "/resources/styles",
             token: tokenKey
         }).addTo(map);
         map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            var layers = map.getStyle().layers;
+            map.moveLayer(layers[layers.length - 1].id, layers[0].id)
             var reverse = new mapboxgl.ekmap.control.Reverse({
                 target: 'activeControl',
                 showButton: false,
-                provider: 'eKGIS',
+                provider: 'OSM',
                 tokenKey: '83F55C73-7D2A-4C97-903C-7BA6559DC0A4'
             })
             map.addControl(reverse);
-            reverse.on('selectfeatures', function(result) {
-                console.log(result)
+            var answer = document.getElementById('calculated-area');
+
+            reverse.on('startReverse', function() {
+                console.log('Start reverse');
             })
+
+            reverse.on('selectfeatures', function(evt) {
+                answer.innerHTML = '<p><strong>' + evt.result.display_name + '</strong></p>' +
+                    '<p><strong>Kinh độ: ' + evt.result.lon + '</strong></p>' +
+                    '<p><strong>Vĩ độ: ' + evt.result.lat + '</strong></p>'
+            })
+
+            reverse.on('unReverse', function() {
+                console.log('Stop reverse');
+            })
+
+            var x = document.getElementById('deactivateControl');
+            x.addEventListener("click", function(e) {
+                //deactivate control
+                reverse.deactivate();
+            });
+
             map.addControl(new mapboxgl.NavigationControl(), "top-left");
         })
     </script>

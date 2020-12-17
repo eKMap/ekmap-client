@@ -8,6 +8,10 @@ import { TileLayer } from './TileLayer';
  * @category Layer
  * @param {Object} options - Control options.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
+ * @param {string} options.id Id of layer and source.
+ * @param {string} options.name Name of layer.
+ * @param {string} options.visibility=visible Show or hide layer.
+ * 
  * @extends {mapboxgl.ekmap.TileLayer}
  * @example
  * var map = new mapboxgl.Map({
@@ -39,12 +43,19 @@ export class TiledRoadMapLayer extends TileLayer {
             })
         if (this.urlsToken.length > 0) {
             this.TileLayer = new mapboxgl.ekmap.TileLayer({
-                urls: this.urlsToken
+                urls: this.urlsToken,
+                id: this.options.id,
+                name: this.options.name,
+                visibility: this.options.visibility,
+                image: 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
             })
-        }
-        else {
+        } else {
             this.TileLayer = new mapboxgl.ekmap.TileLayer({
-                urls: this.urls
+                urls: this.urls,
+                id: this.options.id,
+                name: this.options.name,
+                visibility: this.options.visibility,
+                image: 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
             })
         }
     }

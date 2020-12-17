@@ -26,7 +26,7 @@ export class Legend extends mapboxgl.Evented {
     constructor(options) {
         super(options);
         this.options = options ? options : {};
-        this.layers = Util.isArray(this.options.layers)? this.options.layers : [this.options.layers];
+        this.layers = Util.isArray(this.options.layers) ? this.options.layers : [this.options.layers];
         this.target = this.options.target;
     }
 
@@ -36,17 +36,17 @@ export class Legend extends mapboxgl.Evented {
      * @param {Map} map the Map this control will be added to.
      * @returns {HTMLElement}  The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.
      */
-    onAdd(map) {    
+    onAdd(map) {
         this._map = map;
         let me = this; //might use this later
 
-        if(!this.target){
+        if (!this.target) {
             this.button = document.createElement("button");
             let icon = document.createElement("i");
             icon.className = "fa fa-bars";
             this.button.className = "mapboxgl-ctrl-zoom-in"
             this.button.appendChild(icon);
-            this.button.addEventListener("click", function (e) {
+            this.button.addEventListener("click", function(e) {
                 event.preventDefault();
                 event.stopPropagation();
                 if (me._panel) {
@@ -56,19 +56,9 @@ export class Legend extends mapboxgl.Evented {
                 me._panel = me.createLayerInputToggle();
                 me._div.appendChild(me._panel);
             })
-        }
-        else{
-            this.button = document.getElementById(this.target);
-            this.button.addEventListener("click", function (e) {
-                event.preventDefault();
-                event.stopPropagation();
-                if (me._panel) {
-                    me._div.removeChild(me._panel);
-                }
-                me.button.style.display = "none";
-                me._panel = me.createLayerInputToggle();
-                me._div.appendChild(me._panel);
-            })
+        } else {
+            var panel = document.getElementById(this.target);
+            this.createLayerInputToggle(panel)
         }
         this._div = document.createElement('div');
         this._div.setAttribute("id", "container");
@@ -83,7 +73,8 @@ export class Legend extends mapboxgl.Evented {
                 me.close();
             }
         });
-        this._div.appendChild(this.button);
+        if (this.button)
+            this._div.appendChild(this.button);
         return this._div;
     }
 
@@ -101,35 +92,39 @@ export class Legend extends mapboxgl.Evented {
 
 
     /**
-    * @private
-    * @description Create layer input
-    */
-    createLayerInputToggle() {
+     * @private
+     * @description Create layer input
+     */
+    createLayerInputToggle(divTarget) {
         var me = this;
-        var div = document.createElement("div");
+        if (!divTarget) {
+            var div = document.createElement("div");
+            this.closeButton = document.createElement('a');
+            this.closeButton.style.position = 'absolute';
+            this.closeButton.style.top = '0';
+            this.closeButton.style.right = '0';
+            this.imgClose = document.createElement('img');
+            this.imgClose.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC");
+            this.imgClose.style.padding = '5px';
+            this.imgClose.style.cursor = 'pointer';
+            this.closeButton.appendChild(this.imgClose);
+            div.appendChild(this.closeButton);
+            this.closeButton.addEventListener("click", event => {
+                event.preventDefault();
+                event.stopPropagation();
+                me.close();
+            })
+        } else
+            var div = divTarget;
         div.style.maxHeight = "300px";
         div.style.padding = "1rem";
-        this.closeButton = document.createElement('a');
-        this.closeButton.style.position = 'absolute';
-        this.closeButton.style.top = '0';
-        this.closeButton.style.right = '0';
-        this.imgClose = document.createElement('img');
-        this.imgClose.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC");
-        this.imgClose.style.padding = '5px';
-        this.imgClose.style.cursor = 'pointer';
-        this.closeButton.appendChild(this.imgClose);
-        div.appendChild(this.closeButton);
-        this.closeButton.addEventListener("click", event => {
-            event.preventDefault();
-            event.stopPropagation();
-            me.close();
-        })
+
         var ul = document.createElement("ul");
         ul.style.padding = "10px";
         ul.style.margin = "0";
         ul.style.listStyleType = "none"
         this.layers.forEach(layer => {
-            layer.legend(function (list) {
+            layer.legend(function(list) {
                 var listLenged = list.layers.slice();
                 for (var i = 0; i < listLenged.length; i++) {
                     var li = document.createElement("li");
@@ -164,9 +159,9 @@ export class Legend extends mapboxgl.Evented {
     }
 
     /**
-    * @private
-    * @description Close layer input
-    */
+     * @private
+     * @description Close layer input
+     */
     close() {
         if (this._panel) {
             this._div.removeChild(this._panel);

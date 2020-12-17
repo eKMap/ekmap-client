@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=7f3ihiLuUkQG-3pBTCZEL50p5zBthutXBcDLS8aClxb-rTXJeax2JXez2awjyQ1-HEe4N4lvXQqD2N7FZVI7xEw3SmVaXPPytbM3LFTo-CA" charset="UTF-8"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
@@ -55,30 +56,38 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Click on the map to execute <a href='#'>Select Control</a>
-            <button id="activeControl" class="btn-green">Click</button>
+            <div id="geocoder"></div>
         </div>
     </div>
     <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibG9uZ2NoZWxzZWF0OSIsImEiOiJja2Q5eGgzZ2swNnh2Mnd0MW9xdG5vbDFuIn0.G4kTs0XK20VSLMTF9iCc_Q';
         var map = new mapboxgl.Map({
             container: 'divMapId', // container id
             minZoom: 4,
-            center: [110.8572095386728, 16.105643201842312],
-            zoom: 5.0598853164770725
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [103.95153329327843, 21.194802200558613],
+            zoom: 9.229193798995448
         });
         var hoveredStateId = null;
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService + "/resources/styles",
-            token: tokenKey
-        }).addTo(map);
+        // var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+        //     url: urlVectorService + "/resources/styles",
+        //     token: tokenKey
+        // }).addTo(map);
+        var geocoder = new mapboxgl.ekmap.control.Geocoder({
+            accessToken: 'pk.eyJ1IjoibG9uZ2NoZWxzZWF0OSIsImEiOiJja2Q5eGgzZ2swNnh2Mnd0MW9xdG5vbDFuIn0.G4kTs0XK20VSLMTF9iCc_Q',
+            target: 'geocoder'
+        })
+
+        map.addControl(geocoder);
+
+        geocoder.on('result', function(evt) {
+            console.log(evt)
+        })
+
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
         map.on('load', function() {
 
-            var select = new mapboxgl.ekmap.control.Geocoder({
-                target: 'activeControl'
-            })
 
-            map.addControl(select);
-            map.addControl(new mapboxgl.NavigationControl(), "top-left");
         })
     </script>
 </body>

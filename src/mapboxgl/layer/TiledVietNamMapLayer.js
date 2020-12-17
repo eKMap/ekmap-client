@@ -8,6 +8,9 @@ import { TileLayer } from './TileLayer';
  * @param {Object} options  Construction parameters.
  * @param {string} options.token  Will use this token to authenticate all calls to the service.
  * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
+ * @param {string} options.id Id of layer and source.
+ * @param {string} options.visibility=visible Show or hide layer.
+ * 
  * @extends {mapboxgl.ekmap.TileLayer}
  * @example
  * var map = new mapboxgl.Map({
@@ -41,14 +44,21 @@ export class TiledVietNamMapLayer extends TileLayer {
             this.TileLayer = new mapboxgl.ekmap.TileLayer({
                 urls: this.urlsToken,
                 attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-                "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>"
+                    "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>",
+                name: 'VietNam Map',
+                id: this.options.id,
+                visibility: this.options.visibility,
+                image: 'https://map.ekgis.vn/Common/images/vnmap.png'
             })
-        }
-        else {
+        } else {
             this.TileLayer = new mapboxgl.ekmap.TileLayer({
                 urls: this.urls,
                 attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-                "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>"
+                    "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>",
+                id: this.options.id,
+                name: 'VietNam Map',
+                visibility: this.options.visibility,
+                image: 'https://map.ekgis.vn/Common/images/vnmap.png'
             })
         }
     }

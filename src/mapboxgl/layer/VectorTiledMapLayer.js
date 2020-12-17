@@ -53,8 +53,6 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                 }
             });
             listLayer.forEach(layer => {
-                console.log(layer)
-                console.log('vao')
                 if (layer.type == 'fill')
                     map.addLayer({
                         "id": "areaResult" + guid12(),
@@ -147,11 +145,9 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         });
 
         //Add Feature State
-        console.log(this.layerPointLine)
         var features = this.map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], {
             layers: this.layerPointLine
         });
-        console.log(features)
         features.forEach(feature => {
             // var f = {
             //     "type": "Feature",

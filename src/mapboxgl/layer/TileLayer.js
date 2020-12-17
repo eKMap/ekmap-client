@@ -8,6 +8,11 @@ import mapboxgl from 'mapbox-gl';
  * @param {Object} options Construction parameters.
  * @param {string} options.url Required: URL of the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Map Service} with a tile cache.
  * @param {string} options.token Will use this token to authenticate all calls to the service.
+ * @param {string} options.id Id of layer and source.
+ * @param {string} options.name Name of layer.
+ * @param {string} options.visibility=visible show or hide layer.
+ * 
+ * 
  * @extends {mapboxgl.Evented}
  */
 export class TileLayer extends mapboxgl.Evented {
@@ -38,50 +43,58 @@ export class TileLayer extends mapboxgl.Evented {
      * @returns this
      */
     addTo(map) {
-        var nameID = 'raster-tiles';
-        var id = Math.round(Math.random() * 100);
+        var nameID = 'raster-tiles' + guid12();
+        if (this.options.id)
+            var id = this.options.id;
+        else
+            var id = nameID;
+
         if (this.tileUrl) {
-            map.addSource(nameID + id, {
+            map.addSource(id, {
                 "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": [this.tileUrl],
                 "tileSize": 256
             });
             map.addLayer({
-                "id": nameID + id,
+                "id": id,
                 "type": "raster",
-                "source": nameID + id,
+                "source": id,
                 "minzoom": 0,
                 "maxzoom": 22,
                 'layout': {
-                    'visibility': 'visible'
+                    'visibility': this.options.visibility ? this.options.visibility : 'visible'
                 },
                 'metadata': {
-                    'type': 'overlayer',
+                    'type': 'baselayer',
+                    'name': this.options.name,
                     'url': this.options.url,
-                    'token': this.options.token ? this.options.token : ""
+                    'image': this.options.image,
+                    'token': this.options.token ? this.options.token : "",
                 }
             })
         }
 
         if (this.tileUrls) {
-            map.addSource(nameID + id, {
+            map.addSource(id, {
                 "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": this.tileUrls,
                 "tileSize": 256
             });
             map.addLayer({
-                "id": nameID + id,
+                "id": id,
                 "type": "raster",
-                "source": nameID + id,
+                "source": id,
                 "minzoom": 0,
                 "maxzoom": 22,
                 'layout': {
-                    'visibility': 'visible'
+                    'visibility': this.options.visibility ? this.options.visibility : 'visible'
                 },
                 'metadata': {
-                    'type': 'overlayer',
+                    'type': 'baselayer',
+                    'name': this.options.name,
+                    'image': this.options.image,
                     'url': ''
                 }
             })

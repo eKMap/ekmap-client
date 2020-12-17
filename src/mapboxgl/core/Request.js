@@ -41,6 +41,9 @@ export class Request {
                     if (response.osm_type) {
                         callback(response)
                     }
+                    if (response.length > 0 && response[0].osm_type) {
+                        callback(response)
+                    }
                 } catch (e) {
 
                 }

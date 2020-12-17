@@ -17,7 +17,6 @@ export class SnapShot extends mapboxgl.Evented {
     constructor(options) {
         super(options);
         this.options = options ? options : {};
-        this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.target = this.options.target;
     }
 
@@ -37,22 +36,15 @@ export class SnapShot extends mapboxgl.Evented {
         //this._div.style.padding = "8px";
         this._div.style.fontSize = "14px"
         let input = this.createLayerInputToggle();
-        if (this.showButton)
-            this._div.appendChild(input)
-        else {
-            input.addEventListener("click", function(e) {
-                var nameImg = 'map_' + me.guid12() + '.png';
-                me._map.getCanvas().toBlob(function(blob) {
-                    saveAs(blob, nameImg);
-                })
-            })
-        }
-        this._div.addEventListener("click", function(e) {
+        input.addEventListener("click", function(e) {
             var nameImg = 'map_' + me.guid12() + '.png';
             me._map.getCanvas().toBlob(function(blob) {
                 saveAs(blob, nameImg);
             })
         })
+        if (!this.target)
+            this._div.appendChild(input)
+
         return this._div;
     }
 
@@ -74,8 +66,8 @@ export class SnapShot extends mapboxgl.Evented {
      */
     createLayerInputToggle() {
         if (!this.target) {
-            let button = document.createElement("button");
-            let icon = document.createElement("i");
+            var button = document.createElement("button");
+            var icon = document.createElement("i");
             icon.className = "fa fa-camera";
             button.className = "mapboxgl-ctrl-zoom-in"
             button.appendChild(icon);
