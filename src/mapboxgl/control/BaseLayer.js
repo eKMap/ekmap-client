@@ -55,12 +55,6 @@ export class BaseLayer extends mapboxgl.Evented {
         let me = this; //might use this later
         this._container = document.createElement('div');
         this._container.setAttribute("id", "container");
-        this._container.style.overflow = "auto";
-        this._container.style.overflowX = "hidden";
-        this._container.style.fontSize = "14px";
-        this._container.style.width = "500px";
-        this._container.style.boxShadow = "none";
-        this._container.style.height = "500px";
 
         this._container.style.background = "transparent";
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
@@ -117,7 +111,7 @@ export class BaseLayer extends mapboxgl.Evented {
 
         for (var i = len - 1; i >= 0; i--) {
             var layer = layers[i];
-            if (layer.metadata.type != null && layer.metadata.type == "baselayer") {
+            if (layer.metadata && layer.metadata.type && layer.metadata.type == "baselayer") {
                 baseLayers.push(layer);
                 if (layer.layout.visibility == "visible") {
                     baseActive = layer;
@@ -298,7 +292,7 @@ export class BaseLayer extends mapboxgl.Evented {
             len = layers.length;
         for (var i = len - 1; i >= 0; i--) {
             var layer = layers[i];
-            if (layer.metadata.type != null && layer.metadata.type == 'baselayer') {
+            if (layer.metadata && layer.metadata.type && layer.metadata.type == 'baselayer') {
                 arr.push(layer);
             }
         }

@@ -32,6 +32,7 @@ export class Select extends mapboxgl.Evented {
         this.active = false;
         this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.target = this.options.target;
+        this.listeners = {};
     }
 
     /**
@@ -62,14 +63,16 @@ export class Select extends mapboxgl.Evented {
                      * @description Fired when start control.
                      */
                     me.fire('startselect', me);
-                    me._map.on('click', me.onClick);
+                    me.offEvent();
+                    me.listeners["click"] = me.onClick.bind(me);
+                    me._map.on('click', me.listeners["click"]);
                 } else {
                     cursorDom[0].style.cursor = 'grab';
                     /**
                      * @event mapboxgl.ekmap.control.Select#unselect
                      * @description Fired when cancel control.
                      */
-                    me._map.off('click', me.onClick)
+                    me.offEvent();
                     me.fire('unselect', me);
                 }
             });
@@ -80,10 +83,12 @@ export class Select extends mapboxgl.Evented {
             if (me.active) {
                 cursorDom[0].style.cursor = 'crosshair';
                 me.fire('startselect', me);
-                me._map.on('click', me.onClick);
+                me.offEvent();
+                me.listeners["click"] = me.onClick.bind(me);
+                me._map.on('click', me.listeners["click"]);
             } else {
                 cursorDom[0].style.cursor = 'grab';
-                me._map.off('click', me.onClick)
+                me.offEvent();
                 me.fire('unselect', me);
             }
         });
@@ -99,6 +104,13 @@ export class Select extends mapboxgl.Evented {
     onRemove() {
         this._container.parentNode.removeChild(this._container);
         this._map = undefined;
+    }
+
+    offEvent() {
+        for (var evt in this.listeners) {
+            this._map.off('click', this.listeners[evt]);
+        }
+        this.listeners = {};
     }
 
     createLayerInputToggle() {
@@ -136,17 +148,17 @@ export class Select extends mapboxgl.Evented {
          * @description Fired when the feature is selected.
          */
         me.fire("selectfeatures", { features: features });
-        if (me.setStyle) {
-            features.forEach(feature => {
-                map.setFeatureState({
-                    source: feature.source,
-                    sourceLayer: feature.sourceLayer,
-                    id: feature.id
-                }, {
-                    hover: true
-                });
-            })
-        }
+        // if (me.setStyle) {
+        //     features.forEach(feature => {
+        //         map.setFeatureState({
+        //             source: feature.source,
+        //             sourceLayer: feature.sourceLayer,
+        //             id: feature.id
+        //         }, {
+        //             hover: true
+        //         });
+        //     })
+        // }
     }
 
     /**
@@ -156,7 +168,7 @@ export class Select extends mapboxgl.Evented {
     deactivate() {
         var cursorDom = $('.mapboxgl-canvas-container')
         cursorDom[0].style.cursor = 'grab';
-        this._map.off('click', this.onClick);
+        this.offEvent();
         this.fire('unselect', this);
         this.active = false;
     }

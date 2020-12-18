@@ -11,7 +11,7 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <link href="../../dist/mapboxgl/ekmap-mapboxgl.css" rel="stylesheet">
     <script src="../../examples/js/common.js"></script>
-    <title>Tree Layer Control</title>
+    <title>Tree Layer Vector Tile Control</title>
     <style>
         .map {
             width: 100%;
@@ -33,49 +33,28 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {},
-                "layers": []
-            },
-            center: [105.27979773383765, 17.155985832275704],
-            zoom: 4.823549468384888
+            center: [103.93422987963572, 21.306082013420507],
+            zoom: 14.871024212757812
         });
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService + "/resources/styles",
+            token: tokenKey
+        }).addTo(map);
         map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN,
                 id: 'vnMap'
             }).addTo(map);
-            var adminMap = new mapboxgl.ekmap.TiledAdminMapLayer({
-                id: 'adminMap'
-            }).addTo(map);
-            var roadMap = new mapboxgl.ekmap.TiledRoadMapLayer({
-                id: 'roadMap'
-            }).addTo(map);
-            var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapService,
-                token: tokenKey,
-                id: 'tilelayer'
-            }).addTo(map);
+
+            var layers = map.getStyle().layers;
+            map.moveLayer('vnMap', layers[0].id);
+
             // NavigationControl
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
-            //BaseLayer
-            const mapBaseLayer = {
-                roadMap: "Road Map",
-                adminMap: "Admin Map",
-                vnMap: "VietNam Map",
-            };
-
-            // OverLayer
-            const mapOverLayer = {
-                tilelayer: "Tile Layer",
-            };
-
             // TreeLayerControl
             let Opacity = new mapboxgl.ekmap.control.TreeLayer({
-                baseLayers: mapBaseLayer,
-                overLayers: mapOverLayer,
+                vectorTiledMapLayer: maps,
                 opacityControl: true
             });
             map.addControl(Opacity, 'top-left');

@@ -726,6 +726,14 @@ var exampleConfig = {
                         description: "Click button action draw and the area"
                     },
                     {
+                        name: "Tree Layer (VectorTile)",
+                        name_en: "Tree Layer (VectorTile)",
+                        thumbnail: "control_treeLayer_vectorTiledControl.png",
+                        fileName: "control_treeLayer_vectorTiledControl",
+                        subject: "Tree Layer (VectorTile).",
+                        description: "Click button action draw and the area"
+                    },
+                    {
                         name: "Base Layer",
                         name_en: "Base Layer",
                         thumbnail: "control_baseLayerControl.png",
