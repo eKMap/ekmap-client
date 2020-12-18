@@ -64,7 +64,7 @@ export class TreeLayer extends mapboxgl.Evented {
         if (this._vectorTiledOption !== null)
             this._vectorTiledOption = this._vectorTiledOption.objectLayer
         this._opacityControlOption = options.opacityControl || false;
-        this.className = options.className || null;
+        this.className = 'mapboxgl-ctrl mapboxgl-ctrl-group' + ' ' + (options.className !== undefined ? options.className : '');
     }
 
     /**
@@ -78,11 +78,7 @@ export class TreeLayer extends mapboxgl.Evented {
         let me = this; //might use this later
         this.div = document.createElement("div");
         this.button = document.createElement("button");
-        if (this.className)
-            this.button.className = this.className;
-        else
-            this.button.className = 'mapboxgl-btn-treelayer'
-
+        this.button.className = 'mapboxgl-btn-treelayer'
 
         this.button.addEventListener("click", function(e) {
             event.preventDefault();
@@ -100,7 +96,7 @@ export class TreeLayer extends mapboxgl.Evented {
         me._container.style.overflowX = "hidden";
         me._container.style.fontSize = "14px";
         me._container.style.background = "#fff";
-        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.className = this.className;
         //this._container.style.padding = "8px";
         $(document).click((event) => {
             if (!$(event.target).closest('#container').length) {
@@ -250,7 +246,6 @@ export class TreeLayer extends mapboxgl.Evented {
         const layerName = document.createElement('span');
         layerName.style.fontSize = '1.2rem';
         if (this._vectorTiledOption !== null) {
-            console.log(this._vectorTiledOption)
             layerName.appendChild(document.createTextNode(this._vectorTiledOption[layerId]));
         }
 
