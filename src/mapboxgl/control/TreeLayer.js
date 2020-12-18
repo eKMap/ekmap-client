@@ -193,8 +193,8 @@ export class TreeLayer extends mapboxgl.Evented {
         const radioButton = document.createElement('input');
         radioButton.setAttribute('type', 'radio');
         radioButton.style.marginRight = '1rem';
-        radioButton.style.height = '1.2rem';
-        radioButton.style.width = '1.2rem';
+        radioButton.style.height = '0.8rem';
+        radioButton.style.width = '0.8rem';
         radioButton.id = layerId;
         if (layerId === Object.keys(this._baseLayersOption)[0]) {
             radioButton.checked = true;
@@ -217,7 +217,7 @@ export class TreeLayer extends mapboxgl.Evented {
 
         const layerName = document.createElement('span');
         layerName.appendChild(document.createTextNode(this._baseLayersOption[layerId]));
-        layerName.style.fontSize = '1.2rem';
+        layerName.style.fontSize = '0.8rem';
         div.appendChild(layerName);
     }
 
@@ -226,8 +226,8 @@ export class TreeLayer extends mapboxgl.Evented {
         checkBox.setAttribute('type', 'checkbox');
         checkBox.id = layerId;
         checkBox.style.marginRight = '1rem';
-        checkBox.style.height = '1.2rem';
-        checkBox.style.width = '1.2rem';
+        checkBox.style.height = '0.8rem';
+        checkBox.style.width = '0.8rem';
         var layer = this._map.getLayer(layerId);
         if (layer.visibility == 'none')
             checkBox.checked = false;
@@ -244,7 +244,7 @@ export class TreeLayer extends mapboxgl.Evented {
         });
 
         const layerName = document.createElement('span');
-        layerName.style.fontSize = '1.2rem';
+        layerName.style.fontSize = '0.8rem';
         if (this._vectorTiledOption !== null) {
             layerName.appendChild(document.createTextNode(this._vectorTiledOption[layerId]));
         }

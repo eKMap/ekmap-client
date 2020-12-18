@@ -30,6 +30,8 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         this.featuresCheck = '';
 
         this.urlFeatureService = options.url.replace("VectorTileServer/resources/styles", "FeatureServer/")
+        this.urlMapService = options.url.replace("VectorTileServer/resources/styles", "MapServer/")
+
     }
 
     /**
@@ -254,6 +256,20 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
 
         //     }
         // });
+    }
+
+    /**
+     * @function mapboxgl.ekmap.VectorTiledMapLayer.prototype.legend
+     * @description legend of Tiled Map Layer.
+     * @param {RequestCallback} callback
+     *
+     */
+    legend(callback, context) {
+        var service = new mapboxgl.ekmap.MapService({
+            url: this.urlMapService,
+            token: this.options.token
+        })
+        return service.legend(callback, context);
     }
 }
 
