@@ -86,10 +86,11 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+            <!-- <select id="mySelect" class="cesium-button" onchange="changeMenu()">
                 <option value="OSM">OSM</option>
                 <option value="EK">eKGIS</option>
-            </select> Click on the map to execute <a href='#'>Select Control</a>
+            </select>  -->
+            Click on the map to execute <a href='#'>Select Control</a>
             <button id="activeControl" class="btn-green">Active Select</button>
             <button id="deactivateControl" class="btn-red">Deactivate</button>
             <div id="calculated-area"></div>
@@ -103,7 +104,7 @@
             zoom: 9.229193798995448
         });
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService + "/resources/styles",
+            url: urlVectorService,
             token: tokenKey
         }).addTo(map);
         var reverse
@@ -145,15 +146,15 @@
             map.addControl(new mapboxgl.NavigationControl(), "top-left");
         })
 
-        function changeMenu() {
-            var x = document.getElementById("mySelect").value;
-            if (x == 'OSM') {
-                reverse.onRemove()
-            }
-            if (x == 'EK') {
-                reverse.onRemove()
-            }
-        }
+        // function changeMenu() {
+        //     var x = document.getElementById("mySelect").value;
+        //     if (x == 'OSM') {
+        //         reverse.onRemove()
+        //     }
+        //     if (x == 'EK') {
+        //         reverse.onRemove()
+        //     }
+        // }
     </script>
 </body>
 

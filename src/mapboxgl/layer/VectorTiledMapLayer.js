@@ -17,8 +17,10 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         this.options = options ? options : {};
         if (options) {
             options = Util.setOptions(this, options);
-            if (options.url)
-                this.tileUrl = options.url
+            if (options.url) {
+                options = Util.getUrlParams(options);
+                this.tileUrl = options.url + 'resources/styles'
+            }
         }
         if (options.token)
             this.tileUrl += ('?token=' + this.options.token);
@@ -28,9 +30,9 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         this.objectLayer = {};
         this.layerPointLine = [];
         this.featuresCheck = '';
+        this.urlFeatureService = options.url.replace("VectorTileServer", "FeatureServer")
+        this.urlMapService = options.url.replace("VectorTileServer", "MapServer")
 
-        this.urlFeatureService = options.url.replace("VectorTileServer/resources/styles", "FeatureServer/")
-        this.urlMapService = options.url.replace("VectorTileServer/resources/styles", "MapServer/")
 
     }
 

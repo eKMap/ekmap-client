@@ -3,9 +3,6 @@
 
 <head>
     <meta charset="utf-8" />
-    <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=csZuttst5ZBLyBcnzkqPz2MpAdY46Nvbqkkkp--1g-fXn1HhLps0r8OksB8TmpafNeCt81pezkon9JJ4Y2nk8as6FHMnKBBMWismgiV_4b_RSR7to2She4oICcVbs4lEOSZ6CkYbWaIoS3GTYmSlhQ"
-        charset="UTF-8"></script>
-    <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=_r_wfEkpgC6TkfKoOe8VZdYcrOVPw1OE6CPycUTS8KsrnEI6ZHdYI1s1MI9nJ96JJZ8AQAWH_tB0gCfn2RDRuMy_MS6FZklXOQx_MxCEvxU" charset="UTF-8"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -39,7 +36,7 @@
             zoom: 14.871024212757812
         });
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService + "/resources/styles",
+            url: urlVectorService,
             token: tokenKey
         }).addTo(map);
         map.on('load', function() {

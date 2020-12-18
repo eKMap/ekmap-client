@@ -217,7 +217,6 @@ export class TreeLayer extends mapboxgl.Evented {
 
         const layerName = document.createElement('span');
         layerName.appendChild(document.createTextNode(this._baseLayersOption[layerId]));
-        layerName.style.fontSize = '0.8rem';
         div.appendChild(layerName);
     }
 
@@ -244,7 +243,6 @@ export class TreeLayer extends mapboxgl.Evented {
         });
 
         const layerName = document.createElement('span');
-        layerName.style.fontSize = '0.8rem';
         if (this._vectorTiledOption !== null) {
             layerName.appendChild(document.createTextNode(this._vectorTiledOption[layerId]));
         }
