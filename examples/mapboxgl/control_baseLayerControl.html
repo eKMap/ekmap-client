@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
+    <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=-znVzRioBtJ8PKrvX7yH9ciYhrhsZtCkuqdz-3liTgWCeErYcmbhBEq4ymQpLtz79KsIHsJYyLTKjKFlrU86-TOnBTzlX-kGuWVKrhkUaW_Gw7Rv35mZ--6k-UEii8xU"
+        charset="UTF-8"></script>
     <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=LToNeFm7nBcUG8D6KGUPy2QFeX3nsEuGc_vd5G9FrfliPqsq4uJE6RYyDvnypqDtDGdvBX3VUSFs3vB9IA_kWovaUQMi6GELBZfsoISSprY" charset="UTF-8"></script>
     <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=_r_wfEkpgC6TkfKoOe8VZdYcrOVPw1OE6CPycUTS8KsrnEI6ZHdYI1s1MI9nJ96JJZ8AQAWH_tB0gCfn2RDRuMy_MS6FZklXOQx_MxCEvxU" charset="UTF-8"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
@@ -34,14 +36,14 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {},
-                "layers": []
-            },
             center: [105.20886162772933, 16.518572979240204],
             zoom: 5.193739308697748
         });
+
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService + "/resources/styles",
+            token: tokenKey
+        }).addTo(map);
         map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN,
@@ -57,12 +59,11 @@
                 name: 'Road Map',
                 visibility: 'none'
             }).addTo(map);
-            var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapService,
-                token: tokenKey,
-                id: 'tilelayer'
-            }).addTo(map);
 
+            var layers = map.getStyle().layers;
+            map.moveLayer('vnMap', layers[0].id);
+            map.moveLayer("adminMap", layers[0].id);
+            map.moveLayer("roadMap", layers[0].id);
             var BaseLayer = new mapboxgl.ekmap.control.BaseLayer();
             map.addControl(BaseLayer, 'bottom-left');
             // NavigationControl

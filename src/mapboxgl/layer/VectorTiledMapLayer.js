@@ -59,6 +59,10 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                         "source": layer.source,
                         "type": "line",
                         "source-layer": layer.id,
+                        "metadata": {
+                            'name': '',
+                            'type': '',
+                        },
                         'layout': {
                             'line-join': 'round',
                             'line-cap': 'round'
@@ -79,6 +83,10 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                         "source": layer.source,
                         "type": "line",
                         "source-layer": layer.id,
+                        "metadata": {
+                            'name': '',
+                            'type': '',
+                        },
                         'layout': {
                             'line-join': 'round',
                             'line-cap': 'round'
@@ -101,6 +109,10 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                         'type': 'circle',
                         "source": layer.source,
                         "source-layer": layer.id,
+                        "metadata": {
+                            'name': '',
+                            'type': '',
+                        },
                         'paint': {
                             "circle-color": "red",
                             "circle-stroke-color": [

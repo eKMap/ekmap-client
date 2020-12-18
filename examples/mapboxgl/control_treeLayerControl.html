@@ -57,6 +57,11 @@
                 token: tokenKey,
                 id: 'tilelayer'
             }).addTo(map);
+            var tiledMap1 = new mapboxgl.ekmap.TiledMapLayer({
+                url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/MapServer',
+                token: tokenKey,
+                id: 'tilelayer1'
+            }).addTo(map);
             // NavigationControl
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
@@ -69,7 +74,8 @@
 
             // OverLayer
             const mapOverLayer = {
-                tilelayer: "Tile Layer"
+                tilelayer: "Tile Layer 1",
+                tilelayer1: "Tile Layer 2"
             };
 
             // TreeLayerControl
