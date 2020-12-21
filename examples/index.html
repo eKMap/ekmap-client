@@ -1,7 +1,69 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="refresh" content="0;url=./mapboxgl/examples.html">
+<html class="not-ie">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>eKMap Client SDKs</title>  
+    <meta name="description" content="A lightweight set of tools for using ArcGIS services with Leaflet.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- stylesheet -->
+	  <link rel="stylesheet" href="./css/style.css">
+		<style>
+			.row, .panel{
+				display:flex;
+			}
+			.card{
+				flex:1;
+			}
+			.panel{
+				width:50% !important; 
+			}
+			body{
+				background-image: url('./img/bg.jpg');
+				background-color:rgba(36, 132, 210, 0.35);
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 2;
+			}
+			body, html{
+				overflow:hidden;
+			}
+		</style>
 </head>
-<body></body>
+<body>
+  <div class="page-content plugins">
+    <div class="container">
+      <a class="site-nav" href="https://github.com/eKMap/ekmap-client">eKMap Client SDKs</a>
+      <nav id="site-nav-wrapper" class="site-nav-wrapper">
+        <a class="site-nav" href="http://ekgis.com.vn/">About Us</a>
+        <a class="site-nav" href="https://github.com/eKMap/ekmap-client">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map" tabindex="0">
+	
+	</div>
+	<div class="container">
+	  <div class="row clearfix">
+		<div class="panel">
+		  <div class="card">
+			<h3><a href="./mapboxgl/examples.html#ekmapServer">for MapboxGL</a></h3>
+			<p>
+			  GIS Web Client for JavaScript based on MapboxGL-JS
+			</p>
+		  </div>
+		</div>
+
+		<div class="panel">
+		  <div class="card">
+			<h3><a href="./openlayers/examples.html#ekmapServer">for OpenLayers</a></h3>
+			<p>
+			  GIS Web Client for JavaScript based on OpenLayer 3
+			</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</div>
+</body>
 </html>
