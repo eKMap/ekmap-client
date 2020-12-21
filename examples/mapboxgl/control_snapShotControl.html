@@ -17,6 +17,33 @@
         body {
             overflow: hidden;
         }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -24,9 +51,12 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Click on the map to execute <a href='#'>Select Control</a>
+            <button id="activeControl" class="btn-green">SnapShot</button>
+        </div>
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="//cdn.jsdelivr.net/canvas-toblob/0.1/canvas-toBlob.min.js"></script>
     <script type="text/javascript" src="//cdn.rawgit.com/eligrey/FileSaver.js/1.3.3/FileSaver.min.js"></script>
     <script>
         var map = new mapboxgl.Map({
@@ -38,7 +68,9 @@
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map)
-        map.addControl(new mapboxgl.ekmap.control.SnapShot(), 'top-left');
+        map.addControl(new mapboxgl.ekmap.control.SnapShot({
+            'target': 'activeControl'
+        }), 'top-left');
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     </script>
 </body>

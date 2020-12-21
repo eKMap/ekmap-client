@@ -107,6 +107,7 @@ export class Reverse extends mapboxgl.Evented {
      */
     onRemove() {
         this._container.parentNode.removeChild(this._container);
+        this.deactivate();
         this._map = undefined;
     }
 

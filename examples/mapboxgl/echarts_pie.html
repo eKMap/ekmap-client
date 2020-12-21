@@ -1,6 +1,3 @@
-<!--********************************************************************
-* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
-*********************************************************************-->
 <html>
 
 <head>
@@ -16,7 +13,7 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -38,54 +35,104 @@
             zoom: 5.1128594812072485
         });
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
+            token: tokenVN
+        }).addTo(map)
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon-red.png', function (error, image) {
+        map.loadImage('./img/marker-icon-red.png', function(error, image) {
             if (error) throw error;
             map.addImage('positionPoint', image);
         });
 
         var categoryDataMap = {
-            "Hà Nội": [
-                { value: 335, name: 'class A' },
-                { value: 679, name: 'class B' },
-                { value: 1299, name: 'class C' }
-            ],
-            "Đà Nẵng": [
-                { value: 117, name: 'class A' },
-                { value: 1267, name: 'class B' },
-                { value: 1048, name: 'class C' }
-            ], "Thành phố Hồ Chí Minh": [
-                { value: 475, name: 'class A' },
-                { value: 1450, name: 'class B' },
-                { value: 875, name: 'class C' }
-            ]
+            "Hà Nội": [{
+                value: 335,
+                name: 'class A'
+            }, {
+                value: 679,
+                name: 'class B'
+            }, {
+                value: 1299,
+                name: 'class C'
+            }],
+            "Đà Nẵng": [{
+                value: 117,
+                name: 'class A'
+            }, {
+                value: 1267,
+                name: 'class B'
+            }, {
+                value: 1048,
+                name: 'class C'
+            }],
+            "Thành phố Hồ Chí Minh": [{
+                value: 475,
+                name: 'class A'
+            }, {
+                value: 1450,
+                name: 'class B'
+            }, {
+                value: 875,
+                name: 'class C'
+            }]
         };
         var dataMap = {
-            "Hà Nội": [
-                { value: 335, name: 'commodity A' },
-                { value: 310, name: 'commodity B' },
-                { value: 234, name: 'commodity C' },
-                { value: 135, name: 'commodity D' },
-                { value: 1048, name: 'commodity E' },
-                { value: 251, name: 'commodity F' }
-            ],
-            "Đà Nẵng": [
-                { value: 117, name: 'commodity A' },
-                { value: 284, name: 'commodity B' },
-                { value: 768, name: 'commodity C' },
-                { value: 215, name: 'commodity D' },
-                { value: 901, name: 'commodity E' },
-                { value: 148, name: 'commodity F' }
-            ], "Thành phố Hồ Chí Minh": [
-                { value: 475, name: 'commodity A' },
-                { value: 29, name: 'commodity B' },
-                { value: 430, name: 'commodity C' },
-                { value: 981, name: 'commodity D' },
-                { value: 732, name: 'commodity E' },
-                { value: 143, name: 'commodity F' }
-            ]
+            "Hà Nội": [{
+                value: 335,
+                name: 'commodity A'
+            }, {
+                value: 310,
+                name: 'commodity B'
+            }, {
+                value: 234,
+                name: 'commodity C'
+            }, {
+                value: 135,
+                name: 'commodity D'
+            }, {
+                value: 1048,
+                name: 'commodity E'
+            }, {
+                value: 251,
+                name: 'commodity F'
+            }],
+            "Đà Nẵng": [{
+                value: 117,
+                name: 'commodity A'
+            }, {
+                value: 284,
+                name: 'commodity B'
+            }, {
+                value: 768,
+                name: 'commodity C'
+            }, {
+                value: 215,
+                name: 'commodity D'
+            }, {
+                value: 901,
+                name: 'commodity E'
+            }, {
+                value: 148,
+                name: 'commodity F'
+            }],
+            "Thành phố Hồ Chí Minh": [{
+                value: 475,
+                name: 'commodity A'
+            }, {
+                value: 29,
+                name: 'commodity B'
+            }, {
+                value: 430,
+                name: 'commodity C'
+            }, {
+                value: 981,
+                name: 'commodity D'
+            }, {
+                value: 732,
+                name: 'commodity E'
+            }, {
+                value: 143,
+                name: 'commodity F'
+            }]
         };
 
         var option = {
@@ -112,32 +159,29 @@
                 },
                 data: ['commodity A', 'commodity B', 'commodity C', 'commodity D', 'commodity E', 'commodity F']
             },
-            series: [
-                {
-                    name: 'comodity class',
-                    type: 'pie',
-                    selectedMode: 'single',
-                    radius: [0, '30%'],
+            series: [{
+                name: 'comodity class',
+                type: 'pie',
+                selectedMode: 'single',
+                radius: [0, '30%'],
 
-                    label: {
-                        normal: {
-                            position: 'inner'
-                        }
-                    },
-                    labelLine: {
-                        normal: {
-                            show: false
-                        }
-                    },
-                    data: categoryDataMap['Hà Nội']
+                label: {
+                    normal: {
+                        position: 'inner'
+                    }
                 },
-                {
-                    name: 'commodity',
-                    type: 'pie',
-                    radius: ['40%', '55%'],
-                    data: dataMap['Hà Nội']
-                }
-            ]
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: categoryDataMap['Hà Nội']
+            }, {
+                name: 'commodity',
+                type: 'pie',
+                radius: ['40%', '55%'],
+                data: dataMap['Hà Nội']
+            }]
         };
 
         div = document.createElement('div');
@@ -151,7 +195,7 @@
 
 
         function query() {
-            $.get("../data/echarts_pie.json", function (response) {
+            $.get("../data/echarts_pie.json", function(response) {
                 var fs = response;
                 map.addLayer({
                     "id": "points",
@@ -159,7 +203,7 @@
                     "layout": {
                         "icon-image": "positionPoint",
                         "icon-size": 0.1,
-                        "icon-offset": [0, -15] 
+                        "icon-offset": [0, -15]
                     },
                     "source": {
                         "type": "geojson",
@@ -167,8 +211,10 @@
                     }
                 });
 
-                map.on('click', 'points', function (e) {
-                    popup = new mapboxgl.Popup({ maxWidth: 'none' });
+                map.on('click', 'points', function(e) {
+                    popup = new mapboxgl.Popup({
+                        maxWidth: 'none'
+                    });
                     popup.setLngLat(e.lngLat.toArray())
                         .setDOMContent(div) // sets a popup on this marker
                         .addTo(map);
@@ -178,16 +224,13 @@
                         title: {
                             text: city + ' commodity sales'
                         },
-                        series: [
-                            {
-                                name: 'commodity class',
-                                data: categoryDataMap[city]
-                            },
-                            {
-                                name: 'commodity',
-                                data: dataMap[city]
-                            }
-                        ]
+                        series: [{
+                            name: 'commodity class',
+                            data: categoryDataMap[city]
+                        }, {
+                            name: 'commodity',
+                            data: dataMap[city]
+                        }]
                     });
                 });
             })

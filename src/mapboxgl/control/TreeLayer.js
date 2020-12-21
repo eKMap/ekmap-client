@@ -1,6 +1,7 @@
 import '../core/Base';
 import mapboxgl from 'mapbox-gl';
 import { Util } from '../core/Util';
+import { map } from 'leaflet';
 /**
  * @class mapboxgl.ekmap.control.TreeLayer
  * @category  Control
@@ -59,8 +60,11 @@ export class TreeLayer extends mapboxgl.Evented {
         super(options);
         this._baseLayersOption = options.baseLayers || null;
         this._overLayersOption = options.overLayers || null;
+        this._vectorTiledOption = options.vectorTiledMapLayer || null;
+        if (this._vectorTiledOption !== null)
+            this._vectorTiledOption = this._vectorTiledOption.objectLayer
         this._opacityControlOption = options.opacityControl || false;
-        this.className = options.className || null;
+        this.className = 'mapboxgl-ctrl mapboxgl-ctrl-group' + ' ' + (options.className !== undefined ? options.className : '');
     }
 
     /**
@@ -74,11 +78,7 @@ export class TreeLayer extends mapboxgl.Evented {
         let me = this; //might use this later
         this.div = document.createElement("div");
         this.button = document.createElement("button");
-        if (this.className)
-            this.button.className = this.className;
-        else
-            this.button.className = 'mapboxgl-btn-treelayer'
-
+        this.button.className = 'mapboxgl-btn-treelayer'
 
         this.button.addEventListener("click", function(e) {
             event.preventDefault();
@@ -96,7 +96,7 @@ export class TreeLayer extends mapboxgl.Evented {
         me._container.style.overflowX = "hidden";
         me._container.style.fontSize = "14px";
         me._container.style.background = "#fff";
-        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.className = this.className;
         //this._container.style.padding = "8px";
         $(document).click((event) => {
             if (!$(event.target).closest('#container').length) {
@@ -129,11 +129,13 @@ export class TreeLayer extends mapboxgl.Evented {
         var div = document.createElement("div");
         div.id = 'opacity-control';
         div.style.maxHeight = "300px";
-        div.style.padding = "1rem";
+        div.style.maxWidth = "300px";
+        div.style.padding = "20px";
+        div.className = 'scrollbar';
         this.closeButton = document.createElement('a');
         this.closeButton.style.position = 'absolute';
         this.closeButton.style.top = '0';
-        this.closeButton.style.right = '0';
+        this.closeButton.style.right = '5px';
         this.imgClose = document.createElement('img');
         this.imgClose.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC");
         this.imgClose.style.padding = '5px';
@@ -154,13 +156,26 @@ export class TreeLayer extends mapboxgl.Evented {
             });
         }
 
-        if (this._baseLayersOption !== null && this._overLayersOption !== null) {
+        if ((this._baseLayersOption !== null && this._overLayersOption !== null) || (this._baseLayersOption !== null && this._vectorTiledOption !== null) || this._vectorTiledOption !== null) {
             const hr = document.createElement('hr');
             div.appendChild(hr);
         }
 
         if (this._overLayersOption !== null) {
             Object.keys(this._overLayersOption).forEach((layer) => {
+                const layerId = layer;
+                const br = document.createElement('br');
+                this._checkBoxControlAdd(layerId, div);
+                div.appendChild(br);
+                if (this._opacityControlOption) {
+                    this._rangeControlAdd(layerId, div);
+                    div.appendChild(br);
+                }
+            });
+        }
+
+        if (this._vectorTiledOption !== null) {
+            Object.keys(this._vectorTiledOption).forEach((layer) => {
                 const layerId = layer;
                 const br = document.createElement('br');
                 this._checkBoxControlAdd(layerId, div);
@@ -178,8 +193,8 @@ export class TreeLayer extends mapboxgl.Evented {
         const radioButton = document.createElement('input');
         radioButton.setAttribute('type', 'radio');
         radioButton.style.marginRight = '1rem';
-        radioButton.style.height = '1.2rem';
-        radioButton.style.width = '1.2rem';
+        radioButton.style.height = '0.8rem';
+        radioButton.style.width = '0.8rem';
         radioButton.id = layerId;
         if (layerId === Object.keys(this._baseLayersOption)[0]) {
             radioButton.checked = true;
@@ -202,7 +217,6 @@ export class TreeLayer extends mapboxgl.Evented {
 
         const layerName = document.createElement('span');
         layerName.appendChild(document.createTextNode(this._baseLayersOption[layerId]));
-        layerName.style.fontSize = '1.2rem';
         div.appendChild(layerName);
     }
 
@@ -211,9 +225,9 @@ export class TreeLayer extends mapboxgl.Evented {
         checkBox.setAttribute('type', 'checkbox');
         checkBox.id = layerId;
         checkBox.style.marginRight = '1rem';
-        checkBox.style.height = '1.2rem';
-        checkBox.style.width = '1.2rem';
-        var layer = map.getLayer(layerId);
+        checkBox.style.height = '0.8rem';
+        checkBox.style.width = '0.8rem';
+        var layer = this._map.getLayer(layerId);
         if (layer.visibility == 'none')
             checkBox.checked = false;
         else
@@ -229,8 +243,12 @@ export class TreeLayer extends mapboxgl.Evented {
         });
 
         const layerName = document.createElement('span');
-        layerName.style.fontSize = '1.2rem';
-        layerName.appendChild(document.createTextNode(this._overLayersOption[layerId]));
+        if (this._vectorTiledOption !== null) {
+            layerName.appendChild(document.createTextNode(this._vectorTiledOption[layerId]));
+        }
+
+        if (this._overLayersOption !== null)
+            layerName.appendChild(document.createTextNode(this._overLayersOption[layerId]));
         var divInput = document.createElement('div');
         divInput.appendChild(checkBox)
         divInput.appendChild(layerName)
@@ -254,7 +272,18 @@ export class TreeLayer extends mapboxgl.Evented {
 
         range.addEventListener('input', (event) => {
             const rgValue = event.target.value;
-            this._map.setPaintProperty(layerId, 'raster-opacity', Number(rgValue / 100));
+            if (this._map.getLayer(layerId).type == 'raster')
+                this._map.setPaintProperty(layerId, 'raster-opacity', Number(rgValue / 100));
+            if (this._map.getLayer(layerId).type == 'symbol') {
+                this._map.setPaintProperty(layerId, 'icon-opacity', Number(rgValue / 100));
+                this._map.setPaintProperty(layerId, 'text-opacity', Number(rgValue / 100));
+            }
+            if (this._map.getLayer(layerId).type == 'circle')
+                this._map.setPaintProperty(layerId, 'circle-opacity', Number(rgValue / 100));
+            if (this._map.getLayer(layerId).type == 'line')
+                this._map.setPaintProperty(layerId, 'line-opacity', Number(rgValue / 100));
+            if (this._map.getLayer(layerId).type == 'fill')
+                this._map.setPaintProperty(layerId, 'fill-opacity', Number(rgValue / 100));
         });
 
     }

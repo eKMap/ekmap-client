@@ -17,17 +17,23 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         this.options = options ? options : {};
         if (options) {
             options = Util.setOptions(this, options);
-            if (options.url)
-                this.tileUrl = options.url
+            if (options.url) {
+                options = Util.getUrlParams(options);
+                this.tileUrl = options.url + 'resources/styles'
+            }
         }
         if (options.token)
             this.tileUrl += ('?token=' + this.options.token);
         this.map = '';
         this.arr = [];
+        this.name = [];
+        this.objectLayer = {};
         this.layerPointLine = [];
         this.featuresCheck = '';
+        this.urlFeatureService = options.url.replace("VectorTileServer", "FeatureServer")
+        this.urlMapService = options.url.replace("VectorTileServer", "MapServer")
 
-        this.urlFeatureService = options.url.replace("VectorTileServer/resources/styles", "FeatureServer/")
+
     }
 
     /**
@@ -41,81 +47,96 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         var me = this;
         map.setStyle(this.tileUrl);
         me.fire('loadend', me);
+        var listLayer = [];
         //Style point,line,polygon
         map.on('load', function() {
             var layers = map.getStyle().layers;
-            var listLayer = [];
             layers.forEach(layer => {
                 var idCheck = layer.id % 2;
                 if (!isNaN(idCheck)) {
                     listLayer.push(layer)
                     me.arr.push(layer.id)
+                    me.name.push(layer.metadata.name)
                 }
             });
-            listLayer.forEach(layer => {
-                if (layer.type == 'fill')
-                    map.addLayer({
-                        "id": "areaResult" + guid12(),
-                        "source": layer.source,
-                        "type": "line",
-                        "source-layer": layer.id,
-                        'layout': {
-                            'line-join': 'round',
-                            'line-cap': 'round'
-                        },
-                        'paint': {
-                            'line-color': [
-                                'case', ['boolean', ['feature-state', 'hover'], false],
-                                '#484896',
-                                'transparent'
-                            ],
-                            'line-width': 2,
-                        }
-                    });
-                if (layer.type == 'line') {
-                    me.layerPointLine.push(layer.id);
-                    map.addLayer({
-                        "id": "lineResult" + guid12(),
-                        "source": layer.source,
-                        "type": "line",
-                        "source-layer": layer.id,
-                        'layout': {
-                            'line-join': 'round',
-                            'line-cap': 'round'
-                        },
-                        'paint': {
-                            'line-color': [
-                                'case', ['boolean', ['feature-state', 'hover'], false],
-                                'blue',
-                                'transparent'
-                            ],
-                            'line-width': 2,
-                        }
-                    });
-                }
+            // listLayer.forEach(layer => {
+            //     if (layer.type == 'fill')
+            //         map.addLayer({
+            //             "id": "areaResult" + guid12(),
+            //             "source": layer.source,
+            //             "type": "line",
+            //             "source-layer": layer.id,
+            //             "metadata": {
+            //                 'name': '',
+            //                 'type': '',
+            //             },
+            //             'layout': {
+            //                 'line-join': 'round',
+            //                 'line-cap': 'round'
+            //             },
+            //             'paint': {
+            //                 'line-color': [
+            //                     'case', ['boolean', ['feature-state', 'hover'], false],
+            //                     '#484896',
+            //                     'transparent'
+            //                 ],
+            //                 'line-width': 2,
+            //             }
+            //         });
+            //     if (layer.type == 'line') {
+            //         me.layerPointLine.push(layer.id);
+            //         map.addLayer({
+            //             "id": "lineResult" + guid12(),
+            //             "source": layer.source,
+            //             "type": "line",
+            //             "source-layer": layer.id,
+            //             "metadata": {
+            //                 'name': '',
+            //                 'type': '',
+            //             },
+            //             'layout': {
+            //                 'line-join': 'round',
+            //                 'line-cap': 'round'
+            //             },
+            //             'paint': {
+            //                 'line-color': [
+            //                     'case', ['boolean', ['feature-state', 'hover'], false],
+            //                     'blue',
+            //                     'transparent'
+            //                 ],
+            //                 'line-width': 2,
+            //             }
+            //         });
+            //     }
 
-                if (layer.type == 'circle') {
-                    me.layerPointLine.push(layer.id);
-                    map.addLayer({
-                        'id': 'pointResult' + guid12(),
-                        'type': 'circle',
-                        "source": layer.source,
-                        "source-layer": layer.id,
-                        'paint': {
-                            "circle-color": "red",
-                            "circle-stroke-color": [
-                                'case', ['boolean', ['feature-state', 'hover'], false],
-                                '#00ffff',
-                                'transparent'
-                            ],
-                            "circle-stroke-width": 3,
-                        },
-                    });
-                }
+            //     if (layer.type == 'circle') {
+            //         me.layerPointLine.push(layer.id);
+            //         map.addLayer({
+            //             'id': 'pointResult' + guid12(),
+            //             'type': 'circle',
+            //             "source": layer.source,
+            //             "source-layer": layer.id,
+            //             "metadata": {
+            //                 'name': '',
+            //                 'type': '',
+            //             },
+            //             'paint': {
+            //                 "circle-color": "red",
+            //                 "circle-stroke-color": [
+            //                     'case', ['boolean', ['feature-state', 'hover'], false],
+            //                     '#00ffff',
+            //                     'transparent'
+            //                 ],
+            //                 "circle-stroke-width": 3,
+            //             },
+            //         });
+            //     }
+            // });
 
-            });
+            me.arr.forEach((key, i) => me.objectLayer[key] = me.name[i]);
         })
         return this;
+
     }
 
     /**
@@ -237,6 +258,20 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
 
         //     }
         // });
+    }
+
+    /**
+     * @function mapboxgl.ekmap.VectorTiledMapLayer.prototype.legend
+     * @description legend of Tiled Map Layer.
+     * @param {RequestCallback} callback
+     *
+     */
+    legend(callback, context) {
+        var service = new mapboxgl.ekmap.MapService({
+            url: this.urlMapService,
+            token: this.options.token
+        })
+        return service.legend(callback, context);
     }
 }
 

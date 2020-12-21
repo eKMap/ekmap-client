@@ -71,7 +71,7 @@
             zoom: 4
         });
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService + "/resources/styles",
+            url: urlVectorService,
             token: tokenKey
         }).addTo(map);
 
@@ -89,24 +89,25 @@
             });
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             map.addControl(draw, 'top-left');
-            map.addLayer({
-                "id": "areaSelect",
-                "source": "35",
-                "type": "line",
-                "source-layer": "480",
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': [
-                        'case', ['boolean', ['feature-state', 'hover'], false],
-                        'red',
-                        'transparent'
-                    ],
-                    'line-width': 2,
-                }
-            });
+            console.log(map.getStyle().layers)
+                // map.addLayer({
+                //     "id": "areaSelect",
+                //     "source": "35",
+                //     "type": "line",
+                //     "source-layer": "480",
+                //     'layout': {
+                //         'line-join': 'round',
+                //         'line-cap': 'round'
+                //     },
+                //     'paint': {
+                //         'line-color': [
+                //             'case', ['boolean', ['feature-state', 'hover'], false],
+                //             'red',
+                //             'transparent'
+                //         ],
+                //         'line-width': 2,
+                //     }
+                // });
         })
 
         function actionDraw() {
