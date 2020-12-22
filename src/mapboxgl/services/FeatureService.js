@@ -169,7 +169,11 @@ export class FeatureService extends ServiceBase {
         if (params.where)
             param.where = params.where;
         if (params.orderByFields)
-            param.orderByFields = params.orderByFields
+            param.orderByFields = params.orderByFields;
+        if (params.layerDefs) {
+            param.f = 'json';
+            param.layerDefs = params.layerDefs
+        }
         if (params.geometry) {
             var geom = params.geometry;
             if (params.geometry.type == 'Point') {
@@ -192,9 +196,12 @@ export class FeatureService extends ServiceBase {
         }
         if (params.objectIds)
             param.objectIds = params.objectIds
-        param.outFields = '*';
-        param.f = 'geojson';
-        param.returnGeometry = true;
+
+        if (!params.layerDefs) {
+            param.outFields = '*';
+            param.returnGeometry = true;
+            param.f = 'geojson';
+        }
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
@@ -227,7 +234,15 @@ export class FeatureService extends ServiceBase {
      * @param {RequestCallback} callback
      */
     queryByGeometry(params, callback, context) {
+        //Kiểm tra xem có selected chưa. Nếu có thì removeLayer
+        var layers = this.map.getStyle().layers;
+        layers.forEach(layer => {
+            if (layer.id.indexOf('queryEK-') != -1) {
+                this.map.removeLayer(layer.id)
+            }
+        });
         var param = {};
+        var me = this;
         param.f = 'geojson';
         param.outFields = '*';
         if (params) {
@@ -252,6 +267,72 @@ export class FeatureService extends ServiceBase {
         }
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
+            var features = error;
+            features.forEach(feature => {
+                if (feature.geometryType == "esriGeometryPolyline") {
+                    var list = feature.features;
+                    list.forEach(element => {
+                        me.map.addLayer({
+                            'id': "queryEK-" + guid12(),
+                            'type': 'line',
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': 'blue',
+                                'line-width': 2
+                            },
+                            "source": {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'LineString',
+                                        'coordinates': element.geometry.paths[0]
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+
+                if (feature.geometryType == "esriGeometryPoint") {
+                    var list = feature.features;
+                    list.forEach(element => {
+                        me.map.addLayer({
+                            "id": "queryEK-" + guid12(),
+                            "type": "circle",
+                            "paint": {
+                                "circle-color": "red",
+                                "circle-stroke-color": '#00ffff',
+                                "circle-stroke-width": 3,
+                            },
+                            "source": {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'Point',
+                                        'coordinates': [element.geometry.x, element.geometry.y]
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+
+                // if (feature.geometryType == "esriGeometryPolygon") {
+                //     var filter = feature.reduce(
+                //         function(memo, fea) {
+                //             memo.push(fea.properties.OBJECTID);
+                //             return memo;
+                //         }, ['in', 'OBJECTID']
+                //     );
+                //     map.setFilter('area-selected', filter);
+                // }
+            });
+
             callback.call(context, error, response, response);
         }, this);
     }
@@ -315,6 +396,30 @@ export class FeatureService extends ServiceBase {
             }
             if (me.map.getLayer('area')) {
                 me.map.getSource('area').setData(data);
+            }
+        });
+    }
+
+    /**
+     * @function mapboxgl.ekmap.FeatureService.prototype.on
+     * @description 
+     * @param {mapboxgl.Map} map The map is defined.
+     * @returns {this}
+     */
+    on(map) {
+        this.map = map
+        return this;
+    }
+
+    /**
+     * @function mapboxgl.ekmap.FeatureService.prototype.removeFeature
+     * @description Remove feature selected.
+     */
+    removeFeature() {
+        var layers = this.map.getStyle().layers;
+        layers.forEach(layer => {
+            if (layer.id.indexOf('queryEK-') != -1) {
+                this.map.removeLayer(layer.id)
             }
         });
     }

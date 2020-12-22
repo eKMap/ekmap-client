@@ -77,7 +77,6 @@ export class Util {
                 var param = params[key];
                 var type = Object.prototype.toString.call(param);
                 var value;
-
                 if (data.length) {
                     data += '&';
                 }
@@ -89,7 +88,7 @@ export class Util {
                     value = param.valueOf();
                 } else {
                     var param = param + '';
-                    if (param.indexOf(':'))
+                    if (param.indexOf(':') && key != 'layerDefs')
                         param = param.replace(":", "%3A");
                     if (param.indexOf('/'))
                         param = param.replace("/", "%2F");

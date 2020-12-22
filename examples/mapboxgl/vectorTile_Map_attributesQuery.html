@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag@1.0.1/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Find By Attributes</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+            width: 400px;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 9px 3px 0px 10px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .test {
+            height: 250px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .row {
+            display: flex;
+            padding-bottom: 10px;
+        }
+        
+        #calculated-area {
+            padding-top: 10px;
+        }
+        
+        .btn-blue {
+            background-color: #4545ff;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        #table-attributes {
+            height: 250px;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            <div id="terrainMenu">
+                Tìm kiếm theo thuộc tính trên <a href='#'>source-layer</a>
+                <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                    <option value="2949">2949</option>
+                    <option value="2950">2950</option>
+                    <option value="2951">2951</option>
+                    <option value="2952">2952</option>
+                    <option value="2954">2954</option>
+                    <option value="2955">2955</option>
+                    <option value="2956">2956</option>
+                </select>
+            </div>
+            <div id="calculated-area">
+                <button style="float: right;" onclick="onFind()" class="btn-blue">Tìm kiếm</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css" type="text/css" />
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [103.93422987963572, 21.306082013420507],
+            zoom: 14.871024212757812
+        });
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService,
+            token: tokenKey
+        }).addTo(map);
+
+        var draw;
+        var listLayersServer = [];
+        var layerName = ['2949', '2950', '2951', '2952', '2954', '2955', '2956'];
+        var data = [];
+        var fields = [];
+        var listFields = [];
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            var layers = map.getStyle().layers;
+            map.moveLayer(layers[layers.length - 1].id, layers[0].id)
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+            var service = new mapboxgl.ekmap.MapService({
+                'url': 'https://viegisserver.ekgis.vn/gserver/rest/services/114/MapServer',
+                'token': tokenKey
+            })
+            service.getLayers(function(obj) {
+                listLayersServer = obj.layers;
+                changeMenu();
+            })
+        })
+
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            filed(x)
+        }
+
+        function filed(id) {
+            listFields = [];
+            listLayersServer.forEach(layer => {
+                if (layer.id == id) {
+                    var fields = layer.fields;
+                    fields.forEach(element => {
+                        listFields.push({
+                            text: element.alias,
+                            value: element.alias,
+                        })
+                    });
+                }
+            });
+            var z = document.getElementById('table-attributes');
+            console.log(z)
+            if (z)
+                z.remove();
+            console.log(z)
+            var div3 = document.createElement('div');
+            div3.id = 'table-attributes'
+            listFields.forEach(element => {
+                var div = document.createElement('div');
+                div.className = 'row'
+
+                var div1 = document.createElement('div');
+                div1.style.width = '150px'
+                div1.innerHTML = element.text;
+
+                var div2 = document.createElement('div');
+                div2.style.width = '150px'
+
+                var input = document.createElement('input');
+                input.id = element.value;
+                input.value = '';
+                div2.appendChild(input);
+
+                div.appendChild(div1);
+                div.appendChild(div2);
+                div3.appendChild(div);
+
+                var y = document.getElementById("terrainMenu");
+                y.appendChild(div3)
+            });
+        }
+
+        function onFind() {
+            var str = '';
+            var z = 0;
+            var param = {};
+            listFields.forEach(element => {
+                var x = document.getElementById(element.text).value;
+                if (x != null && x != '') {
+                    z++;
+                    if (z > 1) {
+                        if (!parseInt(x))
+                            str += " and " + element.text + " like N'%" + x + "%'";
+                        if (parseInt(x) > 0)
+                            str += " and " + element.text + " =" + x;
+                    } else {
+                        if (!parseInt(x))
+                            str += element.text + " like N'%" + x + "%'";
+                        if (parseInt(x) > 0)
+                            str += element.text + " =" + x;
+                    }
+
+                    console.log(str)
+                }
+            });
+            param.where = str;
+
+            var x = document.getElementById("mySelect").value;
+            var url = 'https://viegisserver.ekgis.vn/gserver/rest/services/114/FeatureServer/' + x;
+            var featureService = new mapboxgl.ekmap.FeatureService({
+                url: url,
+                token: tokenKey
+            });
+            featureService.query(param, function(obj) {
+                console.log(obj)
+            })
+        }
+    </script>
+</body>
+
+</html>

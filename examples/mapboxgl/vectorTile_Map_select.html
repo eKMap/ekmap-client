@@ -60,6 +60,19 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+        
+        .btn-orange {
+            background-color: orange;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -71,6 +84,7 @@
             Click on the map to execute <a href='#'>Select Control</a>
             <button id="activeControl" class="btn-green">Active Select</button>
             <button id="deactivateControl" class="btn-red">Deactivate</button>
+            <button id="removeFeature" class="btn-orange">Remove feature selected</button>
         </div>
     </div>
     <script>
@@ -87,7 +101,6 @@
         }).addTo(map);
         map.on('load', function() {
             var select = new mapboxgl.ekmap.control.Select({
-                showButton: false,
                 target: 'activeControl',
                 setStyle: true
             })
@@ -98,9 +111,9 @@
             })
             select.on('selectfeatures', function(e) {
                 console.log(e)
-                vectorTileLayer.flyTo(103, 2951, {
-                        zoom: 9
-                    })
+                    // vectorTileLayer.flyTo(103, 2951, {
+                    //         zoom: 9
+                    //     })
                     // var code = e.properties.CODE;
                     // map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
             })
@@ -112,8 +125,11 @@
             x.addEventListener("click", function(e) {
                 //deactivate control
                 select.deactivate();
+            });
 
-                //Remove feature selected
+            var y = document.getElementById('removeFeature');
+            y.addEventListener("click", function(e) {
+                //deactivate control
                 select.removeFeature();
             });
         })

@@ -51,7 +51,7 @@ export class MapService extends ServiceBase {
      */
     find(params, callback, context) {
         var me = this;
-        this.legend(function (obj) {
+        this.legend(function(obj) {
             var layers = [];
             var list = obj.layers;
             list.forEach(layer => {
@@ -62,11 +62,11 @@ export class MapService extends ServiceBase {
             param.layers = layers.toString();
             param.f = 'json';
             var service = new MapService(me.options);
-            return service.request('find', param, function (error, response) {
+            return service.request('find', param, function(error, response) {
                 callback.call(context, error, response, response);
             }, me);
         })
-       
+
     }
 
     /**
@@ -85,7 +85,7 @@ export class MapService extends ServiceBase {
         param.objectIds = params.objectId;
         param.f = 'json';
         var service = new MapService(this.options);
-        return service.request('query', param, function (error, response) {
+        return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -97,9 +97,9 @@ export class MapService extends ServiceBase {
      */
     getLayers(callback, context) {
         var params = {};
-        params.f = 'pjson';
+        params.f = 'json';
         var service = new MapService(this.options);
-        return service.request('layers', params, function (error, response) {
+        return service.request('layers', params, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -113,7 +113,7 @@ export class MapService extends ServiceBase {
         var params = {};
         params.f = 'json';
         var service = new MapService(this.options);
-        return service.request('legend', params, function (error, response) {
+        return service.request('legend', params, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -131,7 +131,7 @@ export class MapService extends ServiceBase {
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
         var service = new MapService(this.options);
-        return service.request('query', param, function (error, response) {
+        return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
@@ -166,7 +166,7 @@ export class MapService extends ServiceBase {
                 param.geometryType = 'esriGeometryPolyline'
         }
         var service = new MapService(this.options);
-        return service.request('query', param, function (error, response) {
+        return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }

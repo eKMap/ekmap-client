@@ -228,6 +228,7 @@ export class TreeLayer extends mapboxgl.Evented {
         checkBox.style.height = '0.8rem';
         checkBox.style.width = '0.8rem';
         var layer = this._map.getLayer(layerId);
+        // this._map.getLayoutProperty(layerId, 'visibility')
         if (layer.visibility == 'none')
             checkBox.checked = false;
         else

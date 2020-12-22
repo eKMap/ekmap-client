@@ -50,7 +50,7 @@ export class FeatureLayer extends mapboxgl.Evented {
          * @description Fired when the feature layer load start.
          */
         me.fire('loadstart', me);
-        this.service.query(params, function (result) {
+        this.service.query(params, function(result) {
             if (result[0].geometry.type == "Point") {
                 map.addSource('point', {
                     "type": "geojson",
@@ -70,18 +70,18 @@ export class FeatureLayer extends mapboxgl.Evented {
                     "source": 'point'
                 });
 
-                map.addLayer({
-                    "id": "point-selected",
-                    "type": "circle",
-                    "paint": {
-                        "circle-radius": 10,
-                        "circle-color": "red",
-                        "circle-stroke-color": '#00ffff',
-                        "circle-stroke-width": 3,
-                    },
-                    'filter': ['in', 'OBJECTID', ''],
-                    "source": 'point'
-                });
+                // map.addLayer({
+                //     "id": "point-selected",
+                //     "type": "circle",
+                //     "paint": {
+                //         "circle-radius": 10,
+                //         "circle-color": "red",
+                //         "circle-stroke-color": '#00ffff',
+                //         "circle-stroke-width": 3,
+                //     },
+                //     'filter': ['in', 'OBJECTID', ''],
+                //     "source": 'point'
+                // });
             }
             if (result[0].geometry.type == "LineString") {
                 map.addSource('line', {
@@ -91,7 +91,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                         'features': result
                     }
                 });
-                
+
                 map.addLayer({
                     'id': "line",
                     'type': 'line',
@@ -106,20 +106,18 @@ export class FeatureLayer extends mapboxgl.Evented {
                     "source": "line"
                 });
 
-                map.addLayer({
-                    'id': "line-selected",
-                    'type': 'line',
-                    'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    'paint': {
-                        'line-color': 'blue',
-                        'line-width': 5
-                    },
-                    'filter': ['in', 'OBJECTID', ''],
-                    "source": "line"
-                });
+                // map.addLayer({
+                //     "id": "point-selected",
+                //     "type": "circle",
+                //     "paint": {
+                //         "circle-radius": 10,
+                //         "circle-color": "red",
+                //         "circle-stroke-color": '#00ffff',
+                //         "circle-stroke-width": 3,
+                //     },
+                //     'filter': ['in', 'OBJECTID', ''],
+                //     "source": 'point'
+                // });
             }
             if (result[0].geometry.type == "LineString") {
                 map.addSource('area', {
@@ -145,8 +143,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                         'line-color': '#90c258',
                         'line-width': 5,
                         'line-gradient': [
-                            'interpolate',
-                            ['linear'],
+                            'interpolate', ['linear'],
                             ['line-progress'],
                             0,
                             'blue',
@@ -165,27 +162,38 @@ export class FeatureLayer extends mapboxgl.Evented {
                     'source': 'area'
                 })
 
-                map.addLayer({
-                    'id': 'area-selected',
-                    'type': 'line',
-                    'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    'paint': {
-                        'line-color': 'white',
-                        'line-width': 5
-                    },
-                    'filter': ['in', 'OBJECTID', ''],
-                    "source": 'area'
-                })
+                // map.addLayer({
+                //     'id': 'area-selected',
+                //     'type': 'line',
+                //     'layout': {
+                //         'line-join': 'round',
+                //         'line-cap': 'round'
+                //     },
+                //     'paint': {
+                //         'line-color': 'white',
+                //         'line-width': 5
+                //     },
+                //     'filter': ['in', 'OBJECTID', ''],
+                //     "source": 'area'
+                // })
             }
             /**
-            * @event mapboxgl.ekmap.FeatureLayer#loadend
-            * @description Fired when the feature layer load end. 
-            */
+             * @event mapboxgl.ekmap.FeatureLayer#loadend
+             * @description Fired when the feature layer load end. 
+             */
             me.fire('loadend', me);
         })
+        return this;
+    }
+
+    /**
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.on
+     * @description 
+     * @param {mapboxgl.Map} map The map is defined.
+     * @returns {this}
+     */
+    on(map) {
+        this.map = map
         return this;
     }
 
@@ -231,8 +239,8 @@ export class FeatureLayer extends mapboxgl.Evented {
     addFeature(params, callback, context) {
         var coor = params.geometry.coordinates;
         var marker = new mapboxgl.Marker({
-            'color': params.color ? params.color : ''
-        })
+                'color': params.color ? params.color : ''
+            })
             .setLngLat(coor)
             .addTo(this.map);
         this.addFeatures(params, callback, context);
@@ -246,71 +254,71 @@ export class FeatureLayer extends mapboxgl.Evented {
      * @param {Function} callback
      * @param {Object} context
      * @returns {this}
-    */
+     */
     addFeatures(params, callback, context) {
         return this.service.addFeatures(params, callback, context);
     }
 
     /**
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.updateFeature
-    * @description Update the provided feature on the Feature Layer. This also updates the feature on the map. To update the point location on the map. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then update.
-    * @param {GeoJSONObject} feature Infomation feature by geoJSON.
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
-    */
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.updateFeature
+     * @description Update the provided feature on the Feature Layer. This also updates the feature on the map. To update the point location on the map. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then update.
+     * @param {GeoJSONObject} feature Infomation feature by geoJSON.
+     * @param {Function} callback The callback of result data returned by the server side.
+     * @param {Object} context
+     * @returns {this}
+     */
     updateFeature(feature, callback, context) {
         this.updateFeatures(feature, callback, context);
     }
 
     /**
-    * @private
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.updateFeatures
-    * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
-    * @param {GeoJSONObject} geojson Infomation feature by geoJSON.
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    */
+     * @private
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.updateFeatures
+     * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
+     * @param {GeoJSONObject} geojson Infomation feature by geoJSON.
+     * @param {Function} callback The callback of result data returned by the server side.
+     * @param {Object} context
+     */
     updateFeatures(geojson, callback, context) {
         return this.service.updateFeatures(geojson, callback, context);
     }
 
     /**
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.deleteFeature
-    * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then delete.
-    * @param {Interger} id Id of feature.
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
-    */
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.deleteFeature
+     * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then delete.
+     * @param {Interger} id Id of feature.
+     * @param {Function} callback The callback of result data returned by the server side.
+     * @param {Object} context
+     * @returns {this}
+     */
     deleteFeature(id, callback, context) {
         this.deleteFeatures(id, callback, context);
     }
 
     /**
-    * @private
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.deleteFeatures
-    * @description Removes an array of features with the provided ids from the feature layer. This will also remove the features from the map if they exist.
-    * @param {Interger} ids List id of features.
-    * @param {Function} callback The callback of result data returned by the server side.
-    * @param {Object} context
-    * @returns {this}
-    */
+     * @private
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.deleteFeatures
+     * @description Removes an array of features with the provided ids from the feature layer. This will also remove the features from the map if they exist.
+     * @param {Interger} ids List id of features.
+     * @param {Function} callback The callback of result data returned by the server side.
+     * @param {Object} context
+     * @returns {this}
+     */
     deleteFeatures(ids, callback, context) {
         return this.service.deleteFeatures(ids, callback, context)
     }
 
     /**
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.refresh
-    * @description Redraws all features from the feature layer that exist on the map.
-    */
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.refresh
+     * @description Redraws all features from the feature layer that exist on the map.
+     */
     refresh() {
         var me = this;
         var data = {};
         var params = {
             where: '1=1'
         };
-        this.service.query(params, function (result) {
+        this.service.query(params, function(result) {
             data = {
                 'type': 'FeatureCollection',
                 'features': result
@@ -332,20 +340,20 @@ export class FeatureLayer extends mapboxgl.Evented {
     }
 
     /**
-    * @function mapboxgl.ekmap.FeatureLayer.prototype.applyEdits
-    * @description This operation adds, updates, and deletes features to the associated feature layer. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then applyEdits.
-    * @param {Object} params Options.
-    * @param {GeoJSONObject} params.adds GeoJSON of feature add (To change point color, set 'color' for options GeoJSON).
-    * @param {GeoJSONObject} params.updates GeoJSON of feature update.
-    * @param {Interger} params.deletes Id of feature delete.
-    * @param {RequestCallback} callback
-    */
+     * @function mapboxgl.ekmap.FeatureLayer.prototype.applyEdits
+     * @description This operation adds, updates, and deletes features to the associated feature layer. Please use function {@link mapboxgl.ekmap.FeatureLayer.html#refresh|refresh()} then applyEdits.
+     * @param {Object} params Options.
+     * @param {GeoJSONObject} params.adds GeoJSON of feature add (To change point color, set 'color' for options GeoJSON).
+     * @param {GeoJSONObject} params.updates GeoJSON of feature update.
+     * @param {Interger} params.deletes Id of feature delete.
+     * @param {RequestCallback} callback
+     */
     applyEdits(params, callback, context) {
         if (params.adds) {
             var coor = params.adds.geometry.coordinates;
             var marker = new mapboxgl.Marker({
-                'color': params.adds.color ? params.adds.color : ''
-            })
+                    'color': params.adds.color ? params.adds.color : ''
+                })
                 .setLngLat(coor)
                 .addTo(this.map);
         }

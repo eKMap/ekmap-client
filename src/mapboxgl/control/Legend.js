@@ -99,6 +99,8 @@ export class Legend extends mapboxgl.Evented {
         var me = this;
         if (!divTarget) {
             var div = document.createElement("div");
+            div.className = 'scrollbar';
+            div.id = 'opacity-control';
             this.closeButton = document.createElement('a');
             this.closeButton.style.position = 'absolute';
             this.closeButton.style.top = '0';

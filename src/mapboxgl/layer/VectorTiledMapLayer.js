@@ -59,79 +59,79 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                     me.name.push(layer.metadata.name)
                 }
             });
-            // listLayer.forEach(layer => {
-            //     if (layer.type == 'fill')
-            //         map.addLayer({
-            //             "id": "areaResult" + guid12(),
-            //             "source": layer.source,
-            //             "type": "line",
-            //             "source-layer": layer.id,
-            //             "metadata": {
-            //                 'name': '',
-            //                 'type': '',
-            //             },
-            //             'layout': {
-            //                 'line-join': 'round',
-            //                 'line-cap': 'round'
-            //             },
-            //             'paint': {
-            //                 'line-color': [
-            //                     'case', ['boolean', ['feature-state', 'hover'], false],
-            //                     '#484896',
-            //                     'transparent'
-            //                 ],
-            //                 'line-width': 2,
-            //             }
-            //         });
-            //     if (layer.type == 'line') {
-            //         me.layerPointLine.push(layer.id);
-            //         map.addLayer({
-            //             "id": "lineResult" + guid12(),
-            //             "source": layer.source,
-            //             "type": "line",
-            //             "source-layer": layer.id,
-            //             "metadata": {
-            //                 'name': '',
-            //                 'type': '',
-            //             },
-            //             'layout': {
-            //                 'line-join': 'round',
-            //                 'line-cap': 'round'
-            //             },
-            //             'paint': {
-            //                 'line-color': [
-            //                     'case', ['boolean', ['feature-state', 'hover'], false],
-            //                     'blue',
-            //                     'transparent'
-            //                 ],
-            //                 'line-width': 2,
-            //             }
-            //         });
-            //     }
+            listLayer.forEach(layer => {
+                // if (layer.type == 'fill')
+                //     map.addLayer({
+                //         "id": "areaResult" + guid12(),
+                //         "source": layer.source,
+                //         "type": "line",
+                //         "source-layer": layer.id,
+                //         "metadata": {
+                //             'name': '',
+                //             'type': '',
+                //         },
+                //         'layout': {
+                //             'line-join': 'round',
+                //             'line-cap': 'round'
+                //         },
+                //         'paint': {
+                //             'line-color': [
+                //                 'case', ['boolean', ['feature-state', 'hover'], false],
+                //                 '#484896',
+                //                 'transparent'
+                //             ],
+                //             'line-width': 2,
+                //         }
+                //     });
+                if (layer.type == 'line') {
+                    me.layerPointLine.push(layer.id);
+                    // map.addLayer({
+                    //     "id": "lineResult" + guid12(),
+                    //     "source": layer.source,
+                    //     "type": "line",
+                    //     "source-layer": layer.id,
+                    //     "metadata": {
+                    //         'name': '',
+                    //         'type': '',
+                    //     },
+                    //     'layout': {
+                    //         'line-join': 'round',
+                    //         'line-cap': 'round'
+                    //     },
+                    //     'paint': {
+                    //         'line-color': [
+                    //             'case', ['boolean', ['feature-state', 'hover'], false],
+                    //             'blue',
+                    //             'transparent'
+                    //         ],
+                    //         'line-width': 2,
+                    //     }
+                    // });
+                }
 
-            //     if (layer.type == 'circle') {
-            //         me.layerPointLine.push(layer.id);
-            //         map.addLayer({
-            //             'id': 'pointResult' + guid12(),
-            //             'type': 'circle',
-            //             "source": layer.source,
-            //             "source-layer": layer.id,
-            //             "metadata": {
-            //                 'name': '',
-            //                 'type': '',
-            //             },
-            //             'paint': {
-            //                 "circle-color": "red",
-            //                 "circle-stroke-color": [
-            //                     'case', ['boolean', ['feature-state', 'hover'], false],
-            //                     '#00ffff',
-            //                     'transparent'
-            //                 ],
-            //                 "circle-stroke-width": 3,
-            //             },
-            //         });
-            //     }
-            // });
+                if (layer.type == 'circle') {
+                    me.layerPointLine.push(layer.id);
+                    // map.addLayer({
+                    //     'id': 'pointResult' + guid12(),
+                    //     'type': 'circle',
+                    //     "source": layer.source,
+                    //     "source-layer": layer.id,
+                    //     "metadata": {
+                    //         'name': '',
+                    //         'type': '',
+                    //     },
+                    //     'paint': {
+                    //         "circle-color": "red",
+                    //         "circle-stroke-color": [
+                    //             'case', ['boolean', ['feature-state', 'hover'], false],
+                    //             '#00ffff',
+                    //             'transparent'
+                    //         ],
+                    //         "circle-stroke-width": 3,
+                    //     },
+                    // });
+                }
+            });
 
             me.arr.forEach((key, i) => me.objectLayer[key] = me.name[i]);
         })
@@ -143,9 +143,24 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
      * @function mapboxgl.ekmap.VectorTiledMapLayer.prototype.queryByGeometry
      * @description  Is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.。
      * @param {Object} polygon The geometry to apply as the spatial filter. The structure of the geometry is the same as the structure of the JSON geometry objects returned by the ArcGIS REST API. In addition to the JSON structures, for envelopes and points, you can specify the geometry with a simpler comma-separated syntax.
+     * @param {Object} param Option style selected.
+     * @param {String} param.circleColor='red' Circle color.
+     * @param {String} param.strokeColor='#00ffff' Circle stroke color.
+     * @param {Number} param.strokeWidth=3 Circle stroke width.
+     * @param {String} param.lineColor='blue' Line color.
+     * @param {Number} param.lineWidth=2 Line width.
+     * 
      * @param {RequestCallback} callback The callback of result data returned by the server side.
      */
-    queryByGeometry(polygon, callback) {
+    queryByGeometry(polygon, param, callback) {
+        param = param || {}
+            //Kiểm tra xem có selected chưa. Nếu có thì removeLayer
+        var layers = map.getStyle().layers;
+        layers.forEach(layer => {
+            if (layer.id.indexOf('queryEK-') != -1) {
+                this.map.removeLayer(layer.id)
+            }
+        });
         var polygonBoundingBox = turf.bbox(polygon);
         var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
         var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
@@ -170,20 +185,54 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
             layers: this.layerPointLine
         });
         features.forEach(feature => {
-            // var f = {
-            //     "type": "Feature",
-            //     "geometry": Object.assign({}, feature.geometry),
-            //     "properties": Object.assign({}, feature.properties)
-            // }
-            //console.log(f);
             if (!(undefined === turf.intersect(feature, polygon))) {
-                this.map.setFeatureState({
-                    source: feature.source,
-                    sourceLayer: feature.sourceLayer,
-                    id: feature.id
-                }, {
-                    hover: true
-                });
+                if (feature._geometry.type == 'Point') {
+                    map.addLayer({
+                        'id': 'queryEK-' + guid12(),
+                        'type': 'circle',
+                        "source": {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'geometry': feature._geometry
+                            }
+                        },
+                        "metadata": {
+                            'name': '',
+                            'type': '',
+                        },
+                        'paint': {
+                            "circle-color": param.circleColor != undefined ? param.circleColor : "red",
+                            "circle-stroke-color": param.strokeColor != undefined ? param.strokeColor : '#00ffff',
+                            "circle-stroke-width": param.strokeWidth != undefined ? param.strokeWidth : 3,
+                        },
+                    });
+                }
+                if (feature._geometry.type == "LineString") {
+                    map.addLayer({
+                        "id": "queryEK-" + guid12(),
+                        "source": {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'geometry': feature._geometry
+                            }
+                        },
+                        "type": "line",
+                        "metadata": {
+                            'name': '',
+                            'type': '',
+                        },
+                        'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                        },
+                        'paint': {
+                            'line-color': param.lineColor != undefined ? param.lineColor : 'blue',
+                            'line-width': param.lineWidth != undefined ? param.lineWidth : 2,
+                        }
+                    });
+                }
             }
         });
         return callback(features);

@@ -47,6 +47,19 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+        
+        .btn-orange {
+            background-color: orange;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -57,7 +70,7 @@
         <div id="selectedFeatures" class="leaflet-bar map-text">
             Click on the map to execute <a href='#'>Feature Infomation Control</a>
             <button onclick="actionDraw()" class="btn-green">Acticon Draw</button>
-            <button onclick="actionFly()" class="btn-green">Acticon Fly To Feature</button>
+            <button onclick="removeFeature()" class="btn-orange">Remove Feature Selected</button>
 
             <div id="calculated-area"></div>
         </div>
@@ -77,7 +90,7 @@
 
         var draw;
         var listId = [];
-
+        var featureService;
         map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
@@ -120,16 +133,20 @@
                 var polygon = e.features[0]
                 var polygon1 = turf.polygon(e.features[0].geometry.coordinates);
 
-                maps.queryByGeometry(polygon, function(evt) {
+                featureService = new mapboxgl.ekmap.FeatureService({
+                    url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/FeatureServer',
+                    token: tokenKey
+                })
+                featureService.on(map).queryByGeometry(polygon1.geometry, function(evt) {
                     var features = evt;
                     console.log(features)
-
                 });
             }
         }
 
-        function actionFly() {
-
+        function removeFeature() {
+            if (featureService)
+                featureService.removeFeature();
         }
     </script>
 </body>

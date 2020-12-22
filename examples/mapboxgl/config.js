@@ -167,6 +167,22 @@ var exampleConfig = {
                         fileName: "vectorTile_Map_geometryQuery",
                         subject: "Geometry Query.",
                         description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Attributes Query",
+                        name_en: "Attributes Query",
+                        thumbnail: "vectorTile_Map_attributesQuery.png",
+                        fileName: "vectorTile_Map_attributesQuery",
+                        subject: "Attributes Query.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Update Feature Attributes",
+                        name_en: "Update Feature Attributes",
+                        thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
+                        fileName: "vectorTile_Map_updateFeatureAttributes",
+                        subject: "Update Feature Attributes.",
+                        description: "Use control Select to get point information and use service to change that point information"
                     }
                 ]
             },

@@ -8,9 +8,13 @@ import { Util } from '../core/Util';
  * @classdesc Select.
  * @param {Object} options Construction parameters.
  * @param {string} options.icon=fa-flickr Icon of button.
- * @param {Boolean} options.showButton=true If showButton = false, button control is not displayed.
  * @param {Boolean} options.setStyle=true If setStyle = false, the selected feature will not set style and vice versa it will set style default.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
+ * @param {String} options.circleColor='red' Circle color.
+ * @param {String} options.strokeColor='#00ffff' Circle stroke color.
+ * @param {Number} options.strokeWidth=3 Circle stroke width.
+ * @param {String} options.lineColor='blue' Line color.
+ * @param {Number} options.lineWidth=2 Line width.
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.Select#selectfeatures
  * @fires mapboxgl.ekmap.Select#startselect
@@ -51,47 +55,32 @@ export class Select extends mapboxgl.Evented {
         let input = this.createLayerInputToggle();
         var cursorDom = $('.mapboxgl-canvas-container')
         var me = this;
-        if (me.showButton)
-            me._container.appendChild(input);
-        else {
-            input.addEventListener("click", function(e) {
-                me.active = !me.active
-                if (me.active) {
-                    cursorDom[0].style.cursor = 'crosshair';
-                    /**
-                     * @event mapboxgl.ekmap.control.Select#startselect
-                     * @description Fired when start control.
-                     */
-                    me.fire('startselect', me);
-                    me.offEvent();
-                    me.listeners["click"] = me.onClick.bind(me);
-                    me._map.on('click', me.listeners["click"]);
-                } else {
-                    cursorDom[0].style.cursor = 'grab';
-                    /**
-                     * @event mapboxgl.ekmap.control.Select#unselect
-                     * @description Fired when cancel control.
-                     */
-                    me.offEvent();
-                    me.fire('unselect', me);
-                }
-            });
-        }
-
-        me._container.addEventListener("click", function(e) {
+        input.addEventListener("click", function(e) {
             me.active = !me.active
             if (me.active) {
                 cursorDom[0].style.cursor = 'crosshair';
+                /**
+                 * @event mapboxgl.ekmap.control.Select#startselect
+                 * @description Fired when start control.
+                 */
                 me.fire('startselect', me);
                 me.offEvent();
                 me.listeners["click"] = me.onClick.bind(me);
                 me._map.on('click', me.listeners["click"]);
             } else {
                 cursorDom[0].style.cursor = 'grab';
+                /**
+                 * @event mapboxgl.ekmap.control.Select#unselect
+                 * @description Fired when cancel control.
+                 */
                 me.offEvent();
                 me.fire('unselect', me);
             }
         });
+
+        if (!me.target)
+            me._container.appendChild(input);
+
         return me._container
     }
 
@@ -132,33 +121,64 @@ export class Select extends mapboxgl.Evented {
             [e.point.x - 5, e.point.y - 5],
             [e.point.x + 5, e.point.y + 5]
         ];
-        // me.featuresCheck = map.queryRenderedFeatures();
-        // me.featuresCheck.forEach(feature => {
-        //     if (feature.state.hover != undefined) {
-        //         map.removeFeatureState({
-        //             source: feature.source,
-        //             sourceLayer: feature.sourceLayer,
-        //             id: feature.id
-        //         })
-        //     }
-        // });
         var features = map.queryRenderedFeatures(bbox);
         /**
          * @event mapboxgl.ekmap.control.Select#selectfeatures
          * @description Fired when the feature is selected.
          */
         me.fire("selectfeatures", { features: features });
-        // if (me.setStyle) {
-        //     features.forEach(feature => {
-        //         map.setFeatureState({
-        //             source: feature.source,
-        //             sourceLayer: feature.sourceLayer,
-        //             id: feature.id
-        //         }, {
-        //             hover: true
-        //         });
-        //     })
-        // }
+
+        if (me.setStyle) {
+            features.forEach(feature => {
+                if (feature.geometry.type == 'Point') {
+                    map.addLayer({
+                        'id': 'selectedEK-' + guid12(),
+                        'type': 'circle',
+                        "source": {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'geometry': feature.geometry
+                            }
+                        },
+                        "metadata": {
+                            'name': '',
+                            'type': '',
+                        },
+                        'paint': {
+                            "circle-color": me.options.circleColor != undefined ? me.options.circleColor : "red",
+                            "circle-stroke-color": me.options.strokeColor != undefined ? me.options.strokeColor : '#00ffff',
+                            "circle-stroke-width": me.options.strokeWidth != undefined ? me.options.strokeWidth : 3,
+                        },
+                    });
+                }
+                if (feature.geometry.type == "LineString") {
+                    map.addLayer({
+                        "id": "selectedEK-" + guid12(),
+                        "source": {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'geometry': feature.geometry
+                            }
+                        },
+                        "type": "line",
+                        "metadata": {
+                            'name': '',
+                            'type': '',
+                        },
+                        'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                        },
+                        'paint': {
+                            'line-color': me.options.lineColor != undefined ? me.options.lineColor : 'blue',
+                            'line-width': me.options.lineWidth != undefined ? me.options.lineWidth : 2,
+                        }
+                    });
+                }
+            });
+        }
     }
 
     /**
@@ -171,6 +191,7 @@ export class Select extends mapboxgl.Evented {
         this.offEvent();
         this.fire('unselect', this);
         this.active = false;
+        this.removeFeature();
     }
 
     /**
@@ -178,14 +199,10 @@ export class Select extends mapboxgl.Evented {
      * @description Remove feature selected.
      */
     removeFeature() {
-        var featureAll = map.queryRenderedFeatures();
-        featureAll.forEach(feature => {
-            if (feature.state.hover != undefined) {
-                map.removeFeatureState({
-                    source: feature.source,
-                    sourceLayer: feature.sourceLayer,
-                    id: feature.id
-                })
+        var layers = this._map.getStyle().layers;
+        layers.forEach(layer => {
+            if (layer.id.indexOf('selectedEK-') != -1) {
+                this._map.removeLayer(layer.id)
             }
         });
     }
