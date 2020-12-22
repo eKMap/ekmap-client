@@ -113,17 +113,7 @@
         function actionDraw() {
             var me = this;
             if (draw) {
-                listId.forEach(id => {
-                    map.setFeatureState({
-                        source: '35',
-                        sourceLayer: '480',
-                        id: id
-                    }, {
-                        hover: false
-                    });
-                });
                 draw.deleteAll();
-                listId = []
             }
             draw.changeMode('draw_rectangle_drag');
             map.once('draw.create', updateAreaPolygon);

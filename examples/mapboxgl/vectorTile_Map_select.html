@@ -88,7 +88,7 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
+        var mapTS = new mapboxgl.Map({
             container: 'divMapId', // container id
             minZoom: 4,
             center: [103.93422987963572, 21.306082013420507],
@@ -98,13 +98,13 @@
         var vectorTileLayer = new mapboxgl.ekmap.VectorTiledMapLayer({
             url: urlVectorService,
             token: tokenKey
-        }).addTo(map);
-        map.on('load', function() {
+        }).addTo(mapTS);
+        mapTS.on('load', function() {
             var select = new mapboxgl.ekmap.control.Select({
                 target: 'activeControl',
                 setStyle: true
             })
-            map.addControl(select);
+            mapTS.addControl(select);
             select.on('startselect', function() {
                 console.log('Start select')
 
@@ -133,7 +133,7 @@
                 select.removeFeature();
             });
         })
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        mapTS.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>
 

@@ -121,7 +121,7 @@ export class Select extends mapboxgl.Evented {
             [e.point.x - 5, e.point.y - 5],
             [e.point.x + 5, e.point.y + 5]
         ];
-        var features = map.queryRenderedFeatures(bbox);
+        var features = me._map.queryRenderedFeatures(bbox);
         /**
          * @event mapboxgl.ekmap.control.Select#selectfeatures
          * @description Fired when the feature is selected.
@@ -131,7 +131,7 @@ export class Select extends mapboxgl.Evented {
         if (me.setStyle) {
             features.forEach(feature => {
                 if (feature.geometry.type == 'Point') {
-                    map.addLayer({
+                    me._map.addLayer({
                         'id': 'selectedEK-' + guid12(),
                         'type': 'circle',
                         "source": {
@@ -153,7 +153,7 @@ export class Select extends mapboxgl.Evented {
                     });
                 }
                 if (feature.geometry.type == "LineString") {
-                    map.addLayer({
+                    me._map.addLayer({
                         "id": "selectedEK-" + guid12(),
                         "source": {
                             'type': 'geojson',
