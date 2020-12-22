@@ -1,7 +1,77 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="refresh" content="0;url=./mapboxgl/examples.html">
+<html class="not-ie">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>eKMap Client</title>  
+    <meta name="description" content="A lightweight set of tools for using ArcGIS services with Leaflet.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- stylesheet -->
+	  <link rel="stylesheet" href="./css/style.css">
+		<style>
+			.row, .panel{
+				display:flex;
+			}
+			.card{
+				flex:1;
+			}
+			.panel{
+				width:50% !important; 
+			}
+			body{
+				background-image: url('./img/bg.jpg');
+				background-color:rgba(36, 132, 210, 0.35);
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 2;
+			}
+			body, html{
+				overflow:hidden;
+			}
+		</style>
 </head>
-<body></body>
+<body>
+  <div class="page-content plugins">
+    <div class="container">
+      <a class="site-nav" href="https://github.com/eKMap/ekmap-client">eKMap Client</a>
+      <nav id="site-nav-wrapper" class="site-nav-wrapper">
+        <a class="site-nav" href="http://ekgis.com.vn/">About Us</a>
+        <a class="site-nav" href="https://github.com/eKMap/ekmap-client">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map" tabindex="0">
+	
+	</div>
+	<div class="container">
+        <div class="row clearfix">
+            <p>
+                eKMap Client is a cloud GIS web client development platform, which supports the access to maps, services, and resources of eKMap Server site-nav-wrapper
+                 and provides users with complete and professional GIS capabilities, and excellent visualization capabilities.
+            </p>
+        </div>
+	  <div class="row clearfix">
+		<div class="panel">
+		  <div class="card">
+			<h3><a href="./mapboxgl/examples.html">for MapboxGL</a></h3>
+			<p>
+                GIS web client based on <a href="https://docs.mapbox.com/mapbox-gl-js/">MapboxGL v1.11.1</a>
+            </p>
+            GitHub: <a href="https://github.com/mapbox/mapbox-gl-js/releases/tag/v1.11.1">MapboxGL</a>
+		  </div>
+		</div>
+
+		<div class="panel">
+		  <div class="card">
+			<h3><a href="./openlayers/examples.html">for OpenLayers</a></h3>
+			<p>
+                GIS web client based on <a href="https://openlayers.org/">OpenLayers v6.4.3</a>
+			</p>
+            GitHub: <a href="https://github.com/openlayers/openlayers/releases">OpenLayers</a>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</div>
+</body>
 </html>
