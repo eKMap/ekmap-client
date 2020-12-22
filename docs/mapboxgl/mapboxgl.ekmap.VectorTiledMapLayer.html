@@ -311,7 +311,7 @@
     
         
         <div class="tag-source">
-            layer/VectorTiledMapLayer.js, line 33
+            layer/VectorTiledMapLayer.js, line 39
         </div>
         
     </div>
@@ -436,7 +436,7 @@ this
     
         
         <div class="tag-source">
-            layer/VectorTiledMapLayer.js, line 171
+            layer/VectorTiledMapLayer.js, line 241
         </div>
         
     </div>
@@ -711,14 +711,130 @@ this
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="queryByGeometry">
+        <h4 class="name" id="legend">
             
-            queryByGeometry<span class="signature">(polygon, callback)</span>
+            legend<span class="signature">(callback)</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/VectorTiledMapLayer.js, line 121
+            layer/VectorTiledMapLayer.js, line 312
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>legend of Tiled Map Layer.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">RequestCallback</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="queryByGeometry">
+            
+            queryByGeometry<span class="signature">(polygon, param, callback)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            layer/VectorTiledMapLayer.js, line 142
         </div>
         
     </div>
@@ -777,6 +893,198 @@ this
             <td class="description last">
                 
                 <p>The geometry to apply as the spatial filter. The structure of the geometry is the same as the structure of the JSON geometry objects returned by the ArcGIS REST API. In addition to the JSON structures, for envelopes and points, you can specify the geometry with a simpler comma-separated syntax.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>param</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Option style selected.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Default</th>
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>circleColor</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    'red'
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Circle color.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>strokeColor</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    '#00ffff'
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Circle stroke color.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>strokeWidth</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    3
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Circle stroke width.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>lineColor</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    'blue'
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Line color.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>lineWidth</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    2
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Line width.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+            </td>
         </tr>
 	
 	
@@ -860,7 +1168,7 @@ this
 
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Thu Dec 17 2020 15:32:29 GMT+0700 (Indochina Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Tue Dec 22 2020 09:22:35 GMT+0700 (Indochina Time)
         </footer>
     </div>
 </div>

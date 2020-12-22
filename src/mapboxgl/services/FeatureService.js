@@ -402,7 +402,7 @@ export class FeatureService extends ServiceBase {
 
     /**
      * @function mapboxgl.ekmap.FeatureService.prototype.on
-     * @description 
+     * @description On map.
      * @param {mapboxgl.Map} map The map is defined.
      * @returns {this}
      */

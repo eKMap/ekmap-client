@@ -188,7 +188,7 @@ export class FeatureLayer extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.FeatureLayer.prototype.on
-     * @description 
+     * @description On map
      * @param {mapboxgl.Map} map The map is defined.
      * @returns {this}
      */

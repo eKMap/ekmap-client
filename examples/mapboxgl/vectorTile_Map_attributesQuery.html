@@ -168,10 +168,8 @@
                 }
             });
             var z = document.getElementById('table-attributes');
-            console.log(z)
             if (z)
                 z.remove();
-            console.log(z)
             var div3 = document.createElement('div');
             div3.id = 'table-attributes'
             listFields.forEach(element => {
@@ -218,8 +216,6 @@
                         if (parseInt(x) > 0)
                             str += element.text + " =" + x;
                     }
-
-                    console.log(str)
                 }
             });
             param.where = str;
