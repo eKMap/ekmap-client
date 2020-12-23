@@ -768,7 +768,7 @@ var exampleConfig = {
                     {
                         name: "Draw Line Buffer",
                         name_en: "Draw Line Buffer",
-                        thumbnail: "control_drawLineBufferControl.png",
+                        thumbnail: "control_drawLineBufferControl.gif",
                         fileName: "control_drawLineBufferControl",
                         subject: "Draw Line Buffer.",
                         description: "Use control Select to get point information and use service to change that point information"
