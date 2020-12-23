@@ -31,5 +31,8 @@ from './BaseLayer';
 export { DrawCircle }
 from './DrawCircle'
 
+export { DrawLine }
+from './DrawLine'
+
 export { Geocoder }
 from './Geocoder/Geocoder';

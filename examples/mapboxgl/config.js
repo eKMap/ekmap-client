@@ -764,6 +764,14 @@ var exampleConfig = {
                         fileName: "control_drawCircleControl",
                         subject: "Draw Circle.",
                         description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Draw Line Buffer",
+                        name_en: "Draw Line Buffer",
+                        thumbnail: "control_drawLineBufferControl.png",
+                        fileName: "control_drawLineBufferControl",
+                        subject: "Draw Line Buffer.",
+                        description: "Use control Select to get point information and use service to change that point information"
                     }
                 ]
             }

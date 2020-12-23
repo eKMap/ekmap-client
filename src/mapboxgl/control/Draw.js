@@ -43,7 +43,7 @@ export class Draw extends mapboxgl.Evented {
         this.draw = new MapboxDraw({
             displayControlsDefault: this.displayControlsDefault,
             controls: this.controls,
-            modes: this.modes,
+            modes: this.modes
         });
         map.addControl(this.draw, 'top-left');
         return this._div;
@@ -67,6 +67,10 @@ export class Draw extends mapboxgl.Evented {
      */
     deleteAll() {
         this.draw.deleteAll();
+        if (this._map.getLayer('buffered')) {
+            this._map.removeLayer('buffered');
+            this._map.removeSource('buffered')
+        }
     }
 
     /**
@@ -75,7 +79,11 @@ export class Draw extends mapboxgl.Evented {
      * @param {String} mode The mode argument must be one of the mode names described above and enumerated in Draw.modes(Eg: 'draw_polygon','draw_line_string','draw_rectangle_drag','draw_point')
      */
     changeMode(mode) {
-        this.draw.changeMode(mode)
+        this.draw.changeMode(mode);
+        if (this._map.getLayer('buffered')) {
+            this._map.removeLayer('buffered');
+            this._map.removeSource('buffered')
+        }
     }
 }
 

@@ -8,6 +8,7 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag@1.0.1/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
     <script src="../../examples/js/common.js"></script>
     <title>Find By Geometry</title>
@@ -48,6 +49,19 @@
             cursor: pointer;
         }
         
+        .btn-blue {
+            background-color: blue;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
         .btn-orange {
             background-color: orange;
             border: none;
@@ -70,6 +84,7 @@
         <div id="selectedFeatures" class="leaflet-bar map-text">
             Click on the map to execute <a href='#'>Feature Infomation Control</a>
             <button onclick="actionDraw()" class="btn-green">Acticon Draw</button>
+            <button id="activeControl" class="btn-blue">Acticon LineBuffer</button>
             <button onclick="removeFeature()" class="btn-orange">Remove Feature Selected</button>
 
             <div id="calculated-area"></div>
@@ -97,6 +112,8 @@
             }).addTo(map)
             var layers = map.getStyle().layers;
             map.moveLayer(layers[layers.length - 1].id, layers[0].id)
+
+            //Draw
             draw = new mapboxgl.ekmap.control.Draw({
                 modes: {
                     ...MapboxDraw.modes,
@@ -106,6 +123,35 @@
             });
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             map.addControl(draw, 'top-left');
+
+            //Draw Line Buffer
+            var myLineBuffer = new mapboxgl.ekmap.control.DrawLine(draw, {
+                target: 'activeControl',
+                buffer: 500
+            });
+            myLineBuffer.setBuffer(500);
+
+            myLineBuffer.on("startDrawLine", function() {
+                console.log('Start draw line')
+            })
+
+            myLineBuffer.on("lineBufferDrawn", function(e) {
+                console.log(e)
+                featureService = new mapboxgl.ekmap.FeatureService({
+                    url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/FeatureServer',
+                    token: tokenKey
+                })
+                featureService.on(map).queryByGeometry(e.data.geometry, function(evt) {
+                    var features = evt;
+                    console.log(features)
+                });
+            })
+
+            myLineBuffer.on("unDrawLine", function(e) {
+                console.log("Stop draw line")
+            })
+
+            map.addControl(myLineBuffer, 'top-left');
         })
 
         function actionDraw() {

@@ -53,6 +53,10 @@ export class DrawCircle extends mapboxgl.Evented {
         input.addEventListener("click", function(e) {
             me.active = !me.active
             if (me.active) {
+                if (me._map.getLayer('buffered')) {
+                    me._map.removeLayer('buffered');
+                    me._map.removeSource('buffered')
+                }
                 cursorDom[0].style.cursor = 'help';
                 /**
                  * @event mapboxgl.ekmap.control.DrawCircle#startDrawCircle
@@ -63,6 +67,10 @@ export class DrawCircle extends mapboxgl.Evented {
                 me.listeners["click"] = me.onClick.bind(me);
                 me._map.on('click', me.listeners["click"]);
             } else {
+                if (me._map.getLayer('buffered')) {
+                    me._map.removeLayer('buffered');
+                    me._map.removeSource('buffered')
+                }
                 cursorDom[0].style.cursor = 'grab';
                 /**
                  * @event mapboxgl.ekmap.control.DrawCircle#unDrawCircle
@@ -122,7 +130,7 @@ export class DrawCircle extends mapboxgl.Evented {
          * @event mapboxgl.ekmap.control.DrawCircle#circleDrawn
          * @description Fired when circle drawn
          */
-        this.fire('circleDrawn', this.drawCircle);
+        this.fire('circleDrawn', { data: this.drawCircle._circle });
 
     }
 
@@ -147,6 +155,10 @@ export class DrawCircle extends mapboxgl.Evented {
      * @description deactivate control DrawCircle.
      */
     deactivate() {
+        if (this._map.getLayer('buffered')) {
+            this._map.removeLayer('buffered');
+            this._map.removeSource('buffered')
+        }
         if (this.drawCircle) {
             this.drawCircle.remove();
             this.drawCircle = ''
