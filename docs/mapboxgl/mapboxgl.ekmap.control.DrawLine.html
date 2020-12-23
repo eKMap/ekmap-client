@@ -69,7 +69,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="mapboxgl.ekmap.control.Button.html">Class: Button</h1>
+        <h1 class="page-title" data-filename="mapboxgl.ekmap.control.DrawLine.html">Class: DrawLine</h1>
         
 
 
@@ -77,11 +77,11 @@
 <section>
     
 <header>
-    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a><a href="mapboxgl.ekmap.control.html">.control</a>.</span>Button
+    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a><a href="mapboxgl.ekmap.control.html">.control</a>.</span>DrawLine
     
     </h2>
     
-        <div class="class-description"><p>Button.</p></div>
+        <div class="class-description"><p>DrawLine.</p></div>
     
 </header>  
 
@@ -93,14 +93,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="Button">
+        <h4 class="name" id="DrawLine">
             
-            new mapboxgl.ekmap.control.Button<span class="signature">(options)</span>
+            new mapboxgl.ekmap.control.DrawLine<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/Button.js, line 4
+            control/DrawLine.js, line 5
         </div>
         
     </div>
@@ -179,7 +179,123 @@
 	
         <tr>
             
-                <td class="name"><code>icon</code></td>
+                <td class="name"><code>editable</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Enable handles for changing center and radius.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fillColor</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    #fbb03b
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Fill color.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fillOpacity</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    0.25
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Fill opacity.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>strokeColor</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    #fbb03b
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Stroke color.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>target</code></td>
             
             
             <td class="type">
@@ -194,14 +310,12 @@
             
                 <td class="default">
                 
-                    fa-flickr
-                
                 </td>
             
             
             <td class="description last">
                 
-                <p>Icon of button.</p></td>
+                <p>Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default.</p></td>
         </tr>
 	
 	
@@ -242,11 +356,6 @@
 
     
     
-    <h5>Fires</h5>
-    <ul>
-        <li><a href="mapboxgl.ekmap.control.Button.html#event:click">mapboxgl.ekmap.control.Button#event:click</a></li>
-    </ul>
-    
 
     
 
@@ -261,7 +370,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config...., }) map.addControl(new mapboxgl.ekmap.control.Button({     icon: //Icon of button}),'bottom-right');</code></pre>
+    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config...., }) map.addControl(new mapboxgl.ekmap.control.DrawLine({         editable : true,         target: // the id attribute of target}),'bottom-right');</code></pre>
     
 
     
@@ -289,14 +398,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="event:click">
+        <h4 class="name" id="event:circleDrawn">
             
-            click
+            circleDrawn
         </h4>
     
         
         <div class="tag-source">
-            control/Button.js, line 46
+            control/DrawLine.js, line 151
         </div>
         
     </div>
@@ -307,7 +416,78 @@
     
     
     <div class="description">
-        <p>Fired when click button.</p>
+        <p>Fired when circle drawn</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="event:startDrawLine">
+            
+            startDrawLine
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/DrawLine.js, line 58
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Fired when start control.</p>
     </div>
     
 
@@ -373,7 +553,7 @@
     
         
         <div class="tag-source">
-            control/Button.js, line 30
+            control/DrawLine.js, line 40
         </div>
         
     </div>
@@ -518,7 +698,7 @@
     
         
         <div class="tag-source">
-            control/Button.js, line 56
+            control/DrawLine.js, line 81
         </div>
         
     </div>
@@ -647,6 +827,122 @@
     </tbody>
 </table>
 
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="setBufer">
+            
+            setBufer<span class="signature">(newBuffer)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/DrawLine.js, line 118
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Change buffer of line.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>newBuffer</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>buffer.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
     
     
     
