@@ -182,6 +182,21 @@ export class Reverse extends mapboxgl.Evented {
         this.fire('unReverse', this);
         this.active = false;
     }
+
+    /**
+     * @function mapboxgl.ekmap.control.Reverse.prototype.activate
+     * @description Activate control reverse.
+     */
+    activate() {
+        var cursorDom = $('.mapboxgl-canvas-container')
+        cursorDom[0].style.cursor = 'crosshair';
+        this.offEvent();
+
+        this.listeners["click"] = this.onClick.bind(this);
+        this._map.on('click', this.listeners["click"]);
+        this.fire('startReverse', this);
+        this.active = true;
+    }
 }
 
 mapboxgl.ekmap.control.Reverse = Reverse;

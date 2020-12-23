@@ -112,10 +112,7 @@
             console.log("Stop draw line")
         })
 
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.addControl(myLineBuffer, 'top-left');
-
-
 
         var x = document.getElementById('deactivateControl');
         x.addEventListener("click", function(e) {

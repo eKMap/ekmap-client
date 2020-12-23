@@ -51,34 +51,20 @@ export class DrawCircle extends mapboxgl.Evented {
         let me = this; //might use this later
         var cursorDom = $('.mapboxgl-canvas-container')
         input.addEventListener("click", function(e) {
-            me.active = !me.active
-            if (me.active) {
-                if (me._map.getLayer('buffered')) {
-                    me._map.removeLayer('buffered');
-                    me._map.removeSource('buffered')
-                }
-                cursorDom[0].style.cursor = 'help';
-                /**
-                 * @event mapboxgl.ekmap.control.DrawCircle#startDrawCircle
-                 * @description Fired when start control.
-                 */
-                me.fire('startDrawCircle', me);
-                me.offEvent();
-                me.listeners["click"] = me.onClick.bind(me);
-                me._map.on('click', me.listeners["click"]);
-            } else {
-                if (me._map.getLayer('buffered')) {
-                    me._map.removeLayer('buffered');
-                    me._map.removeSource('buffered')
-                }
-                cursorDom[0].style.cursor = 'grab';
-                /**
-                 * @event mapboxgl.ekmap.control.DrawCircle#unDrawCircle
-                 * @description Fired when cancel control.
-                 */
-                me.offEvent();
-                me.fire('unDrawCircle', me);
+            if (me._map.getLayer('buffered')) {
+                me._map.removeLayer('buffered');
+                me._map.removeSource('buffered')
             }
+            cursorDom[0].style.cursor = 'help';
+            /**
+             * @event mapboxgl.ekmap.control.DrawCircle#startDrawCircle
+             * @description Fired when start control.
+             */
+            me.fire('startDrawCircle', me);
+            me.offEvent();
+            me.listeners["click"] = me.onClick.bind(me);
+            me._map.once('click', me.listeners["click"]);
+
         })
         if (!this.target)
             this._div.appendChild(input)
@@ -131,7 +117,8 @@ export class DrawCircle extends mapboxgl.Evented {
          * @description Fired when circle drawn
          */
         this.fire('circleDrawn', { data: this.drawCircle._circle });
-
+        var cursorDom = $('.mapboxgl-canvas-container')
+        cursorDom[0].style.cursor = 'grab';
     }
 
     offEvent() {
@@ -163,13 +150,25 @@ export class DrawCircle extends mapboxgl.Evented {
             this.drawCircle.remove();
             this.drawCircle = ''
         }
-
         var cursorDom = $('.mapboxgl-canvas-container')
         cursorDom[0].style.cursor = 'grab';
         this.offEvent();
         // this._map.off('click', this.onClick);
         this.fire('unDrawCircle', this);
-        this.active = false;
+    }
+
+    /**
+     * @function mapboxgl.ekmap.control.DrawCircle.prototype.activate
+     * @description Activate control Select.
+     */
+    activate() {
+        var cursorDom = $('.mapboxgl-canvas-container')
+        cursorDom[0].style.cursor = 'help';
+        this.offEvent();
+        this.listeners["click"] = this.onClick.bind(this);
+        this._map.on('click', this.listeners["click"]);
+        this.fire('startDrawCircle', this);
+        this.active = true;
     }
 
     /**

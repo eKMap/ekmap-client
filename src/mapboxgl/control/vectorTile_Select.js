@@ -1,6 +1,5 @@
 import '../core/Base';
 import mapboxgl from 'mapbox-gl';
-import { Util } from '../core/Util';
 
 /**
  * @class mapboxgl.ekmap.control.Select
@@ -117,68 +116,75 @@ export class Select extends mapboxgl.Evented {
 
     onClick(e) {
         var me = this;
-        var bbox = [
-            [e.point.x - 5, e.point.y - 5],
-            [e.point.x + 5, e.point.y + 5]
-        ];
-        var features = me._map.queryRenderedFeatures(bbox);
-        /**
-         * @event mapboxgl.ekmap.control.Select#selectfeatures
-         * @description Fired when the feature is selected.
-         */
-        me.fire("selectfeatures", { features: features });
-
-        if (me.setStyle) {
-            features.forEach(feature => {
-                if (feature.geometry.type == 'Point') {
-                    me._map.addLayer({
-                        'id': 'selectedEK-' + guid12(),
-                        'type': 'circle',
-                        "source": {
-                            'type': 'geojson',
-                            'data': {
-                                'type': 'Feature',
-                                'geometry': feature.geometry
+        var mapService = new mapboxgl.ekmap.MapService({
+            url: me.options.url,
+            token: me.options.token
+        });
+        mapService.identify().on(me._map).at(e.lngLat).run(function(obj) {
+            /**
+             * @event mapboxgl.ekmap.control.Select#selectfeatures
+             * @description Fired when the feature is selected.
+             */
+            me.fire("selectfeatures", { features: obj });
+            var features = obj
+            if (me.setStyle) {
+                features.forEach(feature => {
+                    if (feature.geometryType == 'esriGeometryPoint') {
+                        me._map.addLayer({
+                            'id': 'selectedEK-' + guid12(),
+                            'type': 'circle',
+                            "source": {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'Point',
+                                        'coordinates': [feature.geometry.x, feature.geometry.y]
+                                    }
+                                }
+                            },
+                            "metadata": {
+                                'name': '',
+                                'type': '',
+                            },
+                            'paint': {
+                                "circle-color": me.options.circleColor != undefined ? me.options.circleColor : "red",
+                                "circle-stroke-color": me.options.strokeColor != undefined ? me.options.strokeColor : '#00ffff',
+                                "circle-stroke-width": me.options.strokeWidth != undefined ? me.options.strokeWidth : 3,
+                            },
+                        });
+                    }
+                    if (feature.geometryType == "esriGeometryPolyline") {
+                        me._map.addLayer({
+                            "id": "selectedEK-" + guid12(),
+                            "source": {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'LineString',
+                                        'coordinates': feature.geometry.paths[0]
+                                    }
+                                }
+                            },
+                            "type": "line",
+                            "metadata": {
+                                'name': '',
+                                'type': '',
+                            },
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': me.options.lineColor != undefined ? me.options.lineColor : 'blue',
+                                'line-width': me.options.lineWidth != undefined ? me.options.lineWidth : 2,
                             }
-                        },
-                        "metadata": {
-                            'name': '',
-                            'type': '',
-                        },
-                        'paint': {
-                            "circle-color": me.options.circleColor != undefined ? me.options.circleColor : "red",
-                            "circle-stroke-color": me.options.strokeColor != undefined ? me.options.strokeColor : '#00ffff',
-                            "circle-stroke-width": me.options.strokeWidth != undefined ? me.options.strokeWidth : 3,
-                        },
-                    });
-                }
-                if (feature.geometry.type == "LineString") {
-                    me._map.addLayer({
-                        "id": "selectedEK-" + guid12(),
-                        "source": {
-                            'type': 'geojson',
-                            'data': {
-                                'type': 'Feature',
-                                'geometry': feature.geometry
-                            }
-                        },
-                        "type": "line",
-                        "metadata": {
-                            'name': '',
-                            'type': '',
-                        },
-                        'layout': {
-                            'line-join': 'round',
-                            'line-cap': 'round'
-                        },
-                        'paint': {
-                            'line-color': me.options.lineColor != undefined ? me.options.lineColor : 'blue',
-                            'line-width': me.options.lineWidth != undefined ? me.options.lineWidth : 2,
-                        }
-                    });
-                }
-            });
-        }
+                        });
+                    }
+                });
+            }
+        })
     }
 
     /**
@@ -207,11 +213,19 @@ export class Select extends mapboxgl.Evented {
         });
     }
 
-    // activate() {
-    //     var cursorDom = $('.mapboxgl-canvas-container')
-    //     cursorDom[0].style.cursor = 'crosshair';
-    //     this._map.on('click', this.onClick);
-    // }
+    /**
+     * @function mapboxgl.ekmap.control.Select.prototype.activate
+     * @description Activate control Select.
+     */
+    activate() {
+        var cursorDom = $('.mapboxgl-canvas-container')
+        cursorDom[0].style.cursor = 'crosshair';
+        this.offEvent();
+        this.listeners["click"] = this.onClick.bind(this);
+        this._map.on('click', this.listeners["click"]);
+        this.fire('startselect', this);
+        this.active = true;
+    }
 }
 
 mapboxgl.ekmap.control.Select = Select;

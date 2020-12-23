@@ -7,21 +7,32 @@ import * as turf from '@turf/turf'
  * @category  Control
  * @classdesc DrawLine.
  *
+ * @param {Object} draw mapboxgl.ekmap.control.Draw.
  * @param {Object} options Construction parameters.
- * @param {Boolean} options.editable=false Enable handles for changing center and radius.
- * @param {String} options.fillColor=#fbb03b Fill color.
- * @param {Number} options.fillOpacity=0.25 Fill opacity.
- * @param {Number} options.strokeColor=#fbb03b Stroke color.
+ * @param {number} options.buffer distance to draw the buffer. 
+ * @param {string} options.units=meters unit. 
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * 
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
  *  })
- *  map.addControl(new mapboxgl.ekmap.control.DrawLine({
- *          editable : true,
- *          target: // the id attribute of target
- * }),'bottom-right');
+ * 
+ *   var draw = new mapboxgl.ekmap.control.Draw({
+ *            modes: {
+ *                ...MapboxDraw.modes,
+ *                'draw_rectangle_drag': mapboxGLDrawRectangleDrag,
+ *            },
+ *            displayControlsDefault: false,
+ *        });
+ *        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+ *        map.addControl(draw, 'top-left');
+ *        var myLineBuffer = new mapboxgl.ekmap.control.DrawLine(draw, {
+ *            target: //Id attribute,
+ *            buffer: 500
+ *        });
+ *        map.addControl(myLineBuffer, 'top-left');
+ *          
  */
 export class DrawLine extends mapboxgl.Evented {
 
@@ -29,9 +40,7 @@ export class DrawLine extends mapboxgl.Evented {
         super(draw, options);
         this.options = options ? options : {};
         this.target = this.options.target;
-        this.active = false;
         this.listeners = {};
-        this.displayControlsDefault = this.options.displayControlsDefault != undefined ? this.options.displayControlsDefault : true;
         this.units = this.options.units != undefined ? this.options.units : "meters";
         this.buffer = this.options.buffer;
         this.draw = draw;
@@ -135,6 +144,36 @@ export class DrawLine extends mapboxgl.Evented {
         }
     }
 
+    /**
+     * @function mapboxgl.ekmap.control.DrawLine.prototype.deactivate
+     * @description deactivate control DrawCircle.
+     */
+    deactivate() {
+        if (this._map.getLayer('buffered')) {
+            this._map.removeLayer('buffered');
+            this._map.removeSource('buffered')
+        }
+        if (this.draw)
+            this.draw.deleteAll();
+        this.offEvent();
+        // this._map.off('click', this.onClick);
+        this.fire('unDrawLine', this);
+    }
+
+    /**
+     * @function mapboxgl.ekmap.control.DrawLine.prototype.activate
+     * @description Activate control Select.
+     */
+    activate() {
+
+        this.draw.changeMode('draw_line_string');
+        var draw = this.draw;
+        this.offEvent();
+        this.listeners["draw"] = this.updateAreaPolygon.bind(this);
+        this._map.once('draw.create', this.listeners["draw"]);
+        this.fire('startDrawLine', this);
+    }
+
 
 
     /**
@@ -168,6 +207,7 @@ export class DrawLine extends mapboxgl.Evented {
                 }
             })
         }
+
     }
 }
 

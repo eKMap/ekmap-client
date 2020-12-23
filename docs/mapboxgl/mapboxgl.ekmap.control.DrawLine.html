@@ -95,7 +95,7 @@
     <div class="nameContainer">
         <h4 class="name" id="DrawLine">
             
-            new mapboxgl.ekmap.control.DrawLine<span class="signature">(options)</span>
+            new mapboxgl.ekmap.control.DrawLine<span class="signature">(draw, options)</span>
         </h4>
     
         
@@ -134,6 +134,29 @@
 	</thead>
 	
 	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>draw</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>mapboxgl.ekmap.control.Draw.</p></td>
+        </tr>
+	
 	
 	
         <tr>
@@ -179,13 +202,13 @@
 	
         <tr>
             
-                <td class="name"><code>editable</code></td>
+                <td class="name"><code>buffer</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Boolean</span>
+<span class="param-type">number</span>
 
 
             
@@ -194,27 +217,25 @@
             
                 <td class="default">
                 
-                    false
-                
                 </td>
             
             
             <td class="description last">
                 
-                <p>Enable handles for changing center and radius.</p></td>
+                <p>distance to draw the buffer.</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>fillColor</code></td>
+                <td class="name"><code>units</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
             
@@ -223,72 +244,14 @@
             
                 <td class="default">
                 
-                    #fbb03b
+                    meters
                 
                 </td>
             
             
             <td class="description last">
                 
-                <p>Fill color.</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>fillOpacity</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-            
-            
-                <td class="default">
-                
-                    0.25
-                
-                </td>
-            
-            
-            <td class="description last">
-                
-                <p>Fill opacity.</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>strokeColor</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-            
-            
-                <td class="default">
-                
-                    #fbb03b
-                
-                </td>
-            
-            
-            <td class="description last">
-                
-                <p>Stroke color.</p></td>
+                <p>unit.</p></td>
         </tr>
 	
 	
@@ -370,7 +333,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config...., }) map.addControl(new mapboxgl.ekmap.control.DrawLine({         editable : true,         target: // the id attribute of target}),'bottom-right');</code></pre>
+    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config...., })  var draw = new mapboxgl.ekmap.control.Draw({           modes: {               ...MapboxDraw.modes,               'draw_rectangle_drag': mapboxGLDrawRectangleDrag,           },           displayControlsDefault: false,       });       map.addControl(new mapboxgl.NavigationControl(), 'top-left');       map.addControl(draw, 'top-left');       var myLineBuffer = new mapboxgl.ekmap.control.DrawLine(draw, {           target: //Id attribute,           buffer: 500       });       map.addControl(myLineBuffer, 'top-left');         </code></pre>
     
 
     
@@ -405,7 +368,7 @@
     
         
         <div class="tag-source">
-            control/DrawLine.js, line 151
+            control/DrawLine.js, line 190
         </div>
         
     </div>
@@ -476,7 +439,7 @@
     
         
         <div class="tag-source">
-            control/DrawLine.js, line 58
+            control/DrawLine.js, line 67
         </div>
         
     </div>
@@ -546,6 +509,148 @@
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="activate">
+            
+            activate<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/DrawLine.js, line 163
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Activate control Select.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="deactivate">
+            
+            deactivate<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/DrawLine.js, line 147
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>deactivate control DrawCircle.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="onAdd">
             
             onAdd<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{HTMLElement}</span>
@@ -553,7 +658,7 @@
     
         
         <div class="tag-source">
-            control/DrawLine.js, line 40
+            control/DrawLine.js, line 49
         </div>
         
     </div>
@@ -698,7 +803,7 @@
     
         
         <div class="tag-source">
-            control/DrawLine.js, line 81
+            control/DrawLine.js, line 90
         </div>
         
     </div>
@@ -843,7 +948,7 @@
     
         
         <div class="tag-source">
-            control/DrawLine.js, line 118
+            control/DrawLine.js, line 127
         </div>
         
     </div>
@@ -962,7 +1067,7 @@
 
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Wed Dec 23 2020 11:34:59 GMT+0700 (Indochina Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Wed Dec 23 2020 15:16:58 GMT+0700 (Indochina Time)
         </footer>
     </div>
 </div>
