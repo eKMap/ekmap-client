@@ -1,6 +1,7 @@
-(function () {
+(function() {
     var r = new RegExp("(^|(.*?\\/))(include-web\.js)(\\?|$)"),
-        s = document.getElementsByTagName('script'), targetScript;
+        s = document.getElementsByTagName('script'),
+        targetScript;
     for (var i = 0; i < s.length; i++) {
         var src = s[i].getAttribute('src');
         if (src) {
@@ -129,7 +130,7 @@
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.6.3/jquery.contextMenu.min.css");
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.6.3/jquery.contextMenu.min.js");
         }
-        
+
         if (inArray(includes, 'lazyload')) {
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js");
         }
@@ -137,12 +138,16 @@
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/i18next/10.0.7/i18next.min.js");
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/jquery-i18next/1.2.1/jquery-i18next.min.js");
         }
-       
+
         if (inArray(includes, 'ionRangeSlider')) {
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/css/ion.rangeSlider.css");
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css");
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/css/ion.rangeSlider.skinHTML5.css");
             inputScript("https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/js/ion.rangeSlider.min.js");
+        }
+        if (inArray(includes, 'mapbox')) {
+            inputCSS("https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css");
+            inputScript("https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js");
         }
     }
 

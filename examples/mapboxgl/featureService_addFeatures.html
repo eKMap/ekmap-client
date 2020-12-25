@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Add Features</title>
@@ -12,11 +13,11 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #info-pane {
             position: absolute;
             top: 15px;
@@ -27,12 +28,13 @@
             text-align: right;
             max-width: 250px;
         }
-
+        
         #form {
             display: none;
         }
     </style>
 </head>
+
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
@@ -55,39 +57,44 @@
             center: [105.6685713, 20.9003181],
             style: {
                 "version": 8,
-                "sources": {
-                },
-                "layers": [
-                ]
+                "sources": {},
+                "layers": []
             },
             zoom: 7
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var featureLayer;
         var symbols
-        map.on('load', function () {
+        map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
-            
+
             featureLayer = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
-                token: tokenKey
+                //token: tokenKey
             }).addTo(map);
             symbols = document.querySelector('#symbols');
         })
 
-        map.on('click', function (e) {
+        map.on('click', function(e) {
             var params = {
                 "type": "Feature",
                 "geometry": {
                     "type": "Point",
                     "coordinates": [e.lngLat.lng, e.lngLat.lat]
                 },
-                "color":symbols.value
+                "color": symbols.value
             }
-            featureLayer.addFeature(params, function (serviceResult) {});
+            featureLayer.addFeature(params, function(error, response) {
+                if (error) {
+                    console.log('error adding feature ' + error.message);
+                } else {
+                    console.log('Successfully added feature ' + response.objectId);
+                }
+            });
         });
     </script>
 </body>
+
 </html>

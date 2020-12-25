@@ -67,7 +67,7 @@ export class Select extends mapboxgl.Evented {
                 me.listeners["click"] = me.onClick.bind(me);
                 me._map.on('click', me.listeners["click"]);
             } else {
-                cursorDom[0].style.cursor = 'grab';
+                cursorDom[0].style.cursor = '';
                 /**
                  * @event mapboxgl.ekmap.control.Select#unselect
                  * @description Fired when cancel control.
@@ -193,7 +193,7 @@ export class Select extends mapboxgl.Evented {
      */
     deactivate() {
         var cursorDom = $('.mapboxgl-canvas-container')
-        cursorDom[0].style.cursor = 'grab';
+        cursorDom[0].style.cursor = '';
         this.offEvent();
         this.fire('unselect', this);
         this.active = false;

@@ -15,7 +15,7 @@ import mapboxgl from 'mapbox-gl';
 export class FeatureLayer extends mapboxgl.Evented {
 
     constructor(options) {
-        super();
+        super(options);
         this.options = options ? options : {};
         if (options) {
             options = Util.setOptions(this, options);
@@ -50,7 +50,7 @@ export class FeatureLayer extends mapboxgl.Evented {
          * @description Fired when the feature layer load start.
          */
         me.fire('loadstart', me);
-        this.service.query(params, function(result) {
+        me.service.query(params, function(result) {
             if (result[0].geometry.type == "Point") {
                 map.addSource('point', {
                     "type": "geojson",
@@ -119,63 +119,60 @@ export class FeatureLayer extends mapboxgl.Evented {
                 //     "source": 'point'
                 // });
             }
-            if (result[0].geometry.type == "LineString") {
+            if (result[0].geometry.type == "Polygon") {
                 map.addSource('area', {
                     "type": "geojson",
-                    lineMetrics: true,
+                    // lineMetrics: true,
                     'data': {
                         'type': 'Feature',
                         'geometry': {
-                            'type': 'LineString',
+                            'type': 'Polygon',
                             'coordinates': result
                         }
                     }
                 });
 
                 map.addLayer({
-                    'id': 'area',
-                    'type': 'line',
-                    'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
+                    'id': 'maine',
+                    'type': 'fill',
+                    'source': 'area',
+                    'layout': {},
                     'paint': {
-                        'line-color': '#90c258',
-                        'line-width': 5,
-                        'line-gradient': [
-                            'interpolate', ['linear'],
-                            ['line-progress'],
-                            0,
-                            'blue',
-                            0.1,
-                            'royalblue',
-                            0.3,
-                            'cyan',
-                            0.5,
-                            'lime',
-                            0.7,
-                            'yellow',
-                            1,
-                            'red'
-                        ],
-                    },
-                    'source': 'area'
-                })
+                        'fill-color': '#088',
+                        'fill-opacity': 0.8
+                    }
+                });
 
                 // map.addLayer({
-                //     'id': 'area-selected',
+                //     'id': 'area',
                 //     'type': 'line',
                 //     'layout': {
                 //         'line-join': 'round',
                 //         'line-cap': 'round'
                 //     },
-                //     'paint': {
-                //         'line-color': 'white',
-                //         'line-width': 5
-                //     },
-                //     'filter': ['in', 'OBJECTID', ''],
-                //     "source": 'area'
+                //     // 'paint': {
+                //     //     'line-color': '#90c258',
+                //     //     'line-width': 5,
+                //     //     'line-gradient': [
+                //     //         'interpolate', ['linear'],
+                //     //         ['line-progress'],
+                //     //         0,
+                //     //         'blue',
+                //     //         0.1,
+                //     //         'royalblue',
+                //     //         0.3,
+                //     //         'cyan',
+                //     //         0.5,
+                //     //         'lime',
+                //     //         0.7,
+                //     //         'yellow',
+                //     //         1,
+                //     //         'red'
+                //     //     ],
+                //     // },
+                //     'source': 'area',
                 // })
+
             }
             /**
              * @event mapboxgl.ekmap.FeatureLayer#loadend
@@ -183,7 +180,7 @@ export class FeatureLayer extends mapboxgl.Evented {
              */
             me.fire('loadend', me);
         })
-        return this;
+        return me;
     }
 
     /**
@@ -323,18 +320,14 @@ export class FeatureLayer extends mapboxgl.Evented {
                 'type': 'FeatureCollection',
                 'features': result
             };
-            var filter = ["in", "OBJECTID"];
             if (me.map.getLayer('point')) {
                 me.map.getSource('point').setData(data);
-                map.setFilter('point-selected', filter);
             }
             if (me.map.getLayer('line')) {
-                map.setFilter('line-selected', filter);
                 me.map.getSource('line').setData(data);
             }
             if (me.map.getLayer('area')) {
                 me.map.getSource('area').setData(data);
-                map.setFilter('area-selected', filter);
             }
         });
     }

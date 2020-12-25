@@ -165,7 +165,6 @@ export class DrawLine extends mapboxgl.Evented {
      * @description Activate control Select.
      */
     activate() {
-
         this.draw.changeMode('draw_line_string');
         var draw = this.draw;
         this.offEvent();

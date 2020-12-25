@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Image Tile ZYX</title>
@@ -12,12 +13,13 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
     </style>
 </head>
+
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
@@ -28,19 +30,17 @@
             container: 'divMapId',
             style: {
                 "version": 8,
-                "sources": {
-                },
-                "layers": [
-                ]
+                "sources": {},
+                "layers": []
             },
-            center: [105.20886162772933, 16.518572979240204],
-            zoom: 5.193739308697748
+            center: [103.97584219304474, 21.277728387286984],
+            zoom: 13.905413433260719
         });
 
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
-        map.on('load', function () {
-            
+        map.on('load', function() {
+
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map);
@@ -48,9 +48,10 @@
 
             var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
                 url: urlMapService,
-                token: tokenKey
+                // token: tokenKey
             }).addTo(map);
         })
     </script>
 </body>
+
 </html>

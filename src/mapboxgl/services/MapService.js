@@ -130,8 +130,10 @@ export class MapService extends ServiceBase {
         param.f = 'geojson';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
+
             callback.call(context, error, response, response);
         }, this);
     }
@@ -143,6 +145,7 @@ export class MapService extends ServiceBase {
      * @param {RequestCallback} callback The callback of result data returned by the server side.
      */
     queryByGeometry(params, callback, context) {
+
         var param = {};
         param.f = 'geojson';
         if (params) {
@@ -165,11 +168,24 @@ export class MapService extends ServiceBase {
             if (params.type == 'LineString')
                 param.geometryType = 'esriGeometryPolyline'
         }
+        var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
+
+    /**
+     * @function mapboxgl.ekmap.MapService.prototype.on
+     * @description On map.
+     * @param {mapboxgl.Map} map The map is defined.
+     * @returns {this}
+     */
+    on(map) {
+        this.map = map
+        return this;
+    }
+
 }
 
 mapboxgl.ekmap.MapService = MapService;

@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag@1.0.1/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
     <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
+    <script src="../../examples/js/include-web.js"></script>
+    <script type="text/javascript" include="mapbox" src="../js/include-web.js"></script>
     <title>Update Feature Attributes</title>
     <style>
         .map {
@@ -166,7 +167,7 @@
         var data = [];
         var fields = [];
         var listFields = [];
-        var sourceLayer;
+        var layerId;
         map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
@@ -175,14 +176,16 @@
             map.moveLayer(layers[layers.length - 1].id, layers[0].id)
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             var select = new mapboxgl.ekmap.control.Select({
+                url: 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/MapServer',
+                // token: tokenKey,
                 target: 'activeControl',
                 setStyle: true
             })
             map.addControl(select);
             select.on('selectfeatures', function(e) {
                 var features = e.features;
-                sourceLayer = features[0].sourceLayer
-                var fields = features[0].properties;
+                layerId = features[0].layerId
+                var fields = features[0].attributes;
                 fields = Object.entries(fields);
 
                 fields.forEach(element => {
@@ -250,17 +253,21 @@
                 }
             });
             arrayText.forEach((key, i) => properties[key] = arrayValue[i]);
-            var url = 'https://viegisserver.ekgis.vn/gserver/rest/services/114/FeatureServer/' + sourceLayer;
+            var url = 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/' + layerId;
             var featureService = new mapboxgl.ekmap.FeatureService({
                 url: url,
-                token: tokenKey
+                //token: tokenKey
             });
             var geojson = {
                 "type": "Feature",
                 "properties": properties
             };
-            featureService.updateFeatures(geojson, function(obj) {
-                console.log(obj)
+            featureService.updateFeatures(geojson, function(error, response) {
+                if (error) {
+                    console.log('error updating feature ' + error.description);
+                } else {
+                    console.log('Successfully updated feature ' + response.objectId);
+                }
             })
         }
     </script>

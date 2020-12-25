@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
@@ -14,11 +14,11 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #selectedFeatures {
             position: absolute;
             top: 15px;
@@ -27,19 +27,19 @@
             background: white;
             padding: 1em;
         }
-
+        
         .leaflet-bar.map-text a {
             color: #79BD8F;
             display: inline;
         }
-
+        
         .line-heading {
             font-weight: normal;
             margin-top: 20px;
             margin-bottom: 10px;
             color: #323232;
         }
-
+        
         .ekmap-client-item-list__list-item {
             box-shadow: 0 1px 0 rgba(110, 110, 110, 0.3);
             padding: 3px 3px;
@@ -54,14 +54,14 @@
             display: flex;
             justify-content: space-between;
         }
-
+        
         .or-wrap {
             background-color: #e0e0e0;
             height: 1px;
             margin: 2em 0;
             overflow: visible;
         }
-
+        
         .or-text {
             background: #fff;
             line-height: 0;
@@ -69,13 +69,13 @@
             position: relative;
             bottom: 0.75em;
         }
-
+        
         .ekmap-client-item-list__list {
             list-style: none;
             margin: 0;
             padding: 0;
         }
-
+        
         .ekmap-client-button {
             align-items: center;
             background-color: #0079c1;
@@ -94,7 +94,7 @@
             width: 100%;
             transition: background-color 125ms ease-in-out, border 125ms ease-in-out;
         }
-
+        
         .ekmap-client-feature-form__label {
             display: flex;
             justify-content: space-between;
@@ -119,18 +119,14 @@
                     <li>Update associated attribute data</li>
                     <li>Click <i>Update Incident Info</i></li>
                 </ul>
-                <div id="addTemplatesDiv" style="background: #fff" class="ekmap-client-feature-templates ekmap-client-widget"
-                    aria-label="Feature Templates">
+                <div id="addTemplatesDiv" style="background: #fff" class="ekmap-client-feature-templates ekmap-client-widget" aria-label="Feature Templates">
                     <div class="ekmap-client-item-list ekmap-client-widget">
                         <div class="ekmap-client-item-list__scroller">
                             <section aria-labelledby="1750b7b080c-object-4-heading" class="ekmap-client-item-list__group">
-                                <h4 aria-level="1" id="1750b7b080c-object-4-heading"
-                                    class="ekmap-client-item-list__group-header"><span
-                                        class="ekmap-client-item-list__list-item-label">Marker Color</span></h4>
+                                <h4 aria-level="1" id="1750b7b080c-object-4-heading" class="ekmap-client-item-list__group-header"><span class="ekmap-client-item-list__list-item-label">Marker Color</span></h4>
                                 <ul class="ekmap-client-item-list__list">
                                     <li aria-level="2" class="ekmap-client-item-list__list-item" tabindex="0" id='red'>
-                                        <div class="ekmap-client-item-list__list-item-container"><span
-                                                class="ekmap-client-feature-templates__list-item-icon">
+                                        <div class="ekmap-client-item-list__list-item-container"><span class="ekmap-client-feature-templates__list-item-icon">
                                                 <div><svg xmlns="http://www.w3.org/2000/svg" width="34" height="34">
                                                         <defs></defs>
                                                         <g transform="matrix(1,0,0,1,17,17.33333396911621)">
@@ -144,8 +140,7 @@
                                         </div>
                                     </li>
                                     <li aria-level="2" class="ekmap-client-item-list__list-item" tabindex="0" id='blue'>
-                                        <div class="ekmap-client-item-list__list-item-container"><span
-                                                class="ekmap-client-feature-templates__list-item-icon">
+                                        <div class="ekmap-client-item-list__list-item-container"><span class="ekmap-client-feature-templates__list-item-icon">
                                                 <div><svg xmlns="http://www.w3.org/2000/svg" width="34" height="34">
                                                         <defs></defs>
                                                         <g transform="matrix(1,0,0,1,20,18)">
@@ -158,8 +153,7 @@
                                             </span><span class="ekmap-client-item-list__list-item-label">Blue</span></div>
                                     </li>
                                     <li aria-level="2" class="ekmap-client-item-list__list-item" tabindex="0" id='green'>
-                                        <div class="ekmap-client-item-list__list-item-container"><span
-                                                class="ekmap-client-feature-templates__list-item-icon">
+                                        <div class="ekmap-client-item-list__list-item-container"><span class="ekmap-client-feature-templates__list-item-icon">
                                                 <div><svg xmlns="http://www.w3.org/2000/svg" width="34" height="34">
                                                         <defs></defs>
                                                         <g transform="matrix(1,0,0,1,17,17.33333396911621)">
@@ -173,8 +167,7 @@
                                         </div>
                                     </li>
                                     <li aria-level="2" class="ekmap-client-item-list__list-item" tabindex="0" id='orange'>
-                                        <div class="ekmap-client-item-list__list-item-container"><span
-                                                class="ekmap-client-feature-templates__list-item-icon">
+                                        <div class="ekmap-client-item-list__list-item-container"><span class="ekmap-client-feature-templates__list-item-icon">
                                                 <div><svg xmlns="http://www.w3.org/2000/svg" width="34" height="34">
                                                         <defs></defs>
                                                         <g transform="matrix(1,0,0,1,17,17.33333396911621)">
@@ -223,15 +216,13 @@
             center: [105.6685713, 20.9003181],
             style: {
                 "version": 8,
-                "sources": {
-                },
-                "layers": [
-                ]
+                "sources": {},
+                "layers": []
             },
             zoom: 7
-        }); 
+        });
         map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-        
+
         symbols = document.querySelector('#symbols');
         var featureLayer;
         var color;
@@ -241,37 +232,37 @@
         var idFeatureSelected;
         var coorSelected;
         var filter;
-        map.on('load', function () {
+        map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
-            
+
             featureLayer = new mapboxgl.ekmap.FeatureLayer({
                 url: urlFeatureLayer,
-                token: tokenKey
+                // token: tokenKey
             }).addTo(map);
         });
 
-        window.onload = function () {
+        window.onload = function() {
             divAddFea = document.getElementById("addFeatureDiv");
             divAddTemp = document.getElementById("addTemplatesDiv");
             divUpdate = document.getElementById("featureUpdateDiv");
-            document.getElementById("red").addEventListener("click", function () {
+            document.getElementById("red").addEventListener("click", function() {
                 color = '#ff0000'
             });
 
-            document.getElementById("blue").addEventListener("click", function () {
+            document.getElementById("blue").addEventListener("click", function() {
                 color = '#0000ff'
             });
 
-            document.getElementById("green").addEventListener("click", function () {
+            document.getElementById("green").addEventListener("click", function() {
                 color = '#00ff00'
             });
 
-            document.getElementById("orange").addEventListener("click", function () {
+            document.getElementById("orange").addEventListener("click", function() {
                 color = '#ff7f00'
             });
-            document.getElementById("btnUpdate").addEventListener("click", function () {
+            document.getElementById("btnUpdate").addEventListener("click", function() {
                 var param = {
                     "updates": {
                         "type": "Feature",
@@ -286,7 +277,7 @@
                     }
                 };
                 widgets.loader.showLoader("data updating...");
-                featureLayer.applyEdits(param, function (e) {
+                featureLayer.applyEdits(param, function(e) {
                     featureLayer.refresh();
                     color = null;
                     widgets.loader.removeLoader();
@@ -294,15 +285,15 @@
                 });
             });
 
-            document.getElementById("btnDelete").addEventListener("click", function () {
-                var x= [];
-                x.push(''+idFeatureSelected)
+            document.getElementById("btnDelete").addEventListener("click", function() {
+                var x = [];
+                x.push('' + idFeatureSelected)
                 var param = {
                     "deletes": x
                 };
                 console.log(param.deletes)
                 widgets.loader.showLoader("data updating...");
-                featureLayer.applyEdits(param, function (e) {
+                featureLayer.applyEdits(param, function(e) {
                     widgets.loader.removeLoader();
                     featureLayer.refresh();
                     divAddFea.style.display = 'block';
@@ -312,7 +303,7 @@
             });
         }
 
-        map.on('click', function (obj) {
+        map.on('click', function(obj) {
             coorSelected = [obj.lngLat.lng, obj.lngLat.lat];
             var paramadd = {
                 "adds": {
@@ -323,10 +314,10 @@
                     },
                     "color": color,
                 }
-            }; 
+            };
             if (color) {
-                featureLayer.applyEdits(paramadd, function (e) {
-                    
+                featureLayer.applyEdits(paramadd, function(e) {
+
                     if (e) {
                         divAddFea.style.display = 'none';
                         divAddTemp.style.display = 'none';
@@ -345,19 +336,39 @@
                     layers: ['point']
                 });
                 if (features.length > 0) {
+                    if (map.getLayer('selectedFeature')) {
+                        map.removeLayer('selectedFeature');
+                        map.removeSource('selectedFeature');
+                    }
                     divAddFea.style.display = 'none';
                     divAddTemp.style.display = 'none';
                     divUpdate.style.display = 'block';
-                    filter = features.reduce(
-                        function (memo, feature) {
-                            memo.push(feature.properties.OBJECTID);
-                            return memo;
+                    // filter = features.reduce(
+                    //     function(memo, feature) {
+                    //         memo.push(feature.properties.OBJECTID);
+                    //         return memo;
+                    //     }, ['in', 'OBJECTID']
+                    // );
+                    idFeatureSelected = features[0].properties.maDoiTuong;
+                    // map.setFilter('point-selected', filter);
+                    map.addLayer({
+                        "id": "selectedFeature",
+                        "type": "circle",
+                        "paint": {
+                            "circle-color": "red",
+                            "circle-stroke-color": '#00ffff',
+                            "circle-stroke-width": 3,
+                            "circle-radius": 10
                         },
-                        ['in', 'OBJECTID']
-                    );
-                    idFeatureSelected = features[0].properties.OBJECTID;
-                    map.setFilter('point-selected', filter);
-                    document.getElementById("desName").value = features[0].properties.ten;
+                        "source": {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'geometry': features[0].geometry,
+                            }
+                        }
+                    });
+                    document.getElementById("desName").value = features[0].properties.tenDoiTuon;
                 }
             }
         });

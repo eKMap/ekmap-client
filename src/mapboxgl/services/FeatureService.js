@@ -3,6 +3,7 @@ import '../core/Base';
 import { ServiceBase } from './ServiceBase';
 import { Util } from '../core/Util';
 import { Parse } from '../core/Parse';
+import { feature } from '@turf/turf';
 
 /**
  * @class mapboxgl.ekmap.FeatureService
@@ -98,7 +99,8 @@ export class FeatureService extends ServiceBase {
         var dataPost = JSON.stringify(data)
         var service = new FeatureService(this.options);
         return service.post('addFeatures', dataPost, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.addResults) ? response.addResults.length > 1 ? response.addResults : response.addResults[0] : undefined;
+            callback.call(context, error || response.addResults[0].error, result);
         }, this);
     }
 
@@ -127,7 +129,8 @@ export class FeatureService extends ServiceBase {
         var dataPost = JSON.stringify(data)
         var service = new FeatureService(this.options);
         return service.post('updateFeatures', dataPost, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.updateResults) ? response.updateResults.length > 1 ? response.updateResults : response.updateResults[0] : undefined;
+            callback.call(context, error || response.updateResults[0].error, result);
         }, this);
     }
 
@@ -154,7 +157,8 @@ export class FeatureService extends ServiceBase {
     deleteFeatures(ids, callback, context) {
         var service = new FeatureService(this.options);
         return service.post('deleteFeatures', ids, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.deleteResults) ? response.deleteResults.length > 1 ? response.deleteResults : response.deleteResults[0] : undefined;
+            callback.call(context, error || response.deleteResults[0].error, result);
         }, this);
     }
 
@@ -221,6 +225,7 @@ export class FeatureService extends ServiceBase {
         param.outFields = '*';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        var me = this;
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
             callback.call(context, error, response, response);
@@ -234,16 +239,9 @@ export class FeatureService extends ServiceBase {
      * @param {RequestCallback} callback
      */
     queryByGeometry(params, callback, context) {
-        //Kiểm tra xem có selected chưa. Nếu có thì removeLayer
-        var layers = this.map.getStyle().layers;
-        layers.forEach(layer => {
-            if (layer.id.indexOf('queryEK-') != -1) {
-                this.map.removeLayer(layer.id)
-            }
-        });
         var param = {};
         var me = this;
-        param.f = 'geojson';
+        param.f = 'geojson'; //me.type != undefined ? me.type : 'json'; 
         param.outFields = '*';
         if (params) {
             var geom = params;
@@ -267,72 +265,6 @@ export class FeatureService extends ServiceBase {
         }
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
-            var features = error;
-            features.forEach(feature => {
-                if (feature.geometryType == "esriGeometryPolyline") {
-                    var list = feature.features;
-                    list.forEach(element => {
-                        me.map.addLayer({
-                            'id': "queryEK-" + guid12(),
-                            'type': 'line',
-                            'layout': {
-                                'line-join': 'round',
-                                'line-cap': 'round'
-                            },
-                            'paint': {
-                                'line-color': 'blue',
-                                'line-width': 2
-                            },
-                            "source": {
-                                'type': 'geojson',
-                                'data': {
-                                    'type': 'Feature',
-                                    'geometry': {
-                                        'type': 'LineString',
-                                        'coordinates': element.geometry.paths[0]
-                                    }
-                                }
-                            }
-                        });
-                    });
-                }
-
-                if (feature.geometryType == "esriGeometryPoint") {
-                    var list = feature.features;
-                    list.forEach(element => {
-                        me.map.addLayer({
-                            "id": "queryEK-" + guid12(),
-                            "type": "circle",
-                            "paint": {
-                                "circle-color": "red",
-                                "circle-stroke-color": '#00ffff',
-                                "circle-stroke-width": 3,
-                            },
-                            "source": {
-                                'type': 'geojson',
-                                'data': {
-                                    'type': 'Feature',
-                                    'geometry': {
-                                        'type': 'Point',
-                                        'coordinates': [element.geometry.x, element.geometry.y]
-                                    }
-                                }
-                            }
-                        });
-                    });
-                }
-
-                // if (feature.geometryType == "esriGeometryPolygon") {
-                //     var filter = feature.reduce(
-                //         function(memo, fea) {
-                //             memo.push(fea.properties.OBJECTID);
-                //             return memo;
-                //         }, ['in', 'OBJECTID']
-                //     );
-                //     map.setFilter('area-selected', filter);
-                // }
-            });
-
             callback.call(context, error, response, response);
         }, this);
     }
@@ -412,9 +344,19 @@ export class FeatureService extends ServiceBase {
     }
 
     /**
-     * @function mapboxgl.ekmap.FeatureService.prototype.removeFeature
-     * @description Remove feature selected.
+     * @function mapboxgl.ekmap.FeatureService.prototype.param
+     * @description param.
+     * @param {string} type type.
+     * @returns {this}
      */
+    f(type) {
+            this.type = type;
+            return this;
+        }
+        /**
+         * @function mapboxgl.ekmap.FeatureService.prototype.removeFeature
+         * @description Remove feature selected.
+         */
     removeFeature() {
         var layers = this.map.getStyle().layers;
         layers.forEach(layer => {

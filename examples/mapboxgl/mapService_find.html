@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
@@ -14,28 +14,28 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         .dataTable {
             overflow: auto;
             height: calc(100vh - 20px);
             background-color: #f2efe9;
         }
-
+        
         .filter-ctrl {
             position: inherit;
             top: 10px;
             margin-left: 42%;
             z-index: 1;
         }
-
+        
         td {
             padding: 4px;
         }
-
+        
         .filter-ctrl input[type='text'] {
             width: 100%;
             border: 0;
@@ -46,27 +46,27 @@
             border-radius: 3px;
             width: 250px;
         }
-
+        
         .rounded-rect {
             background: white;
             border-radius: 10px;
             box-shadow: 0 0 50px -25px black;
         }
-
+        
         .flex-center {
             position: absolute;
             display: flex;
             justify-content: center;
         }
-
+        
         .flex-center.left {
             left: 0px;
         }
-
+        
         .flex-center.right {
             right: 0px;
         }
-
+        
         .sidebar-content {
             position: absolute;
             margin-top: 10px;
@@ -76,7 +76,7 @@
             font-size: 32px;
             color: gray;
         }
-
+        
         .sidbear-toggle {
             position: absolute;
             width: 1.3em;
@@ -86,35 +86,35 @@
             justify-content: center;
             align-items: center;
         }
-
+        
         .sidbear-toggle.left {
             right: -1.5em;
         }
-
+        
         .sidbear-toggle.right {
             left: -1.5em;
         }
-
+        
         .sidbear-toggle:hover {
             color: #0aa1cf;
             cursor: pointer;
         }
-
+        
         .sidebar {
             transition: transform 1s;
             z-index: 1;
             width: 300px;
             height: 100%;
         }
-
         /*
 The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
 The toggleSidebar() function removes this class from the element in order to expand it.
 */
+        
         .left.collapsed {
             transform: translateX(-295px);
         }
-
+        
         .right.collapsed {
             transform: translateX(295px);
         }
@@ -140,28 +140,26 @@ The toggleSidebar() function removes this class from the element in order to exp
             container: 'divMapId',
             style: {
                 "version": 8,
-                "sources": {
-                },
-                "layers": [
-                ]
+                "sources": {},
+                "layers": []
             },
-            center: [105.84458007821308, 19.241020208575208],
-            zoom: 6
+            center: [103.97584219304474, 21.277728387286984],
+            zoom: 13.905413433260719
         });
         var tiledMap;
         map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-        map.on('load', function () {
+        map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
             tiledMap = new mapboxgl.ekmap.TiledMapLayer({
                 url: urlMapService,
-                token: tokenKey
+                // token: tokenKey
             }).addTo(map)
         });
         var resultsTable = document.getElementById("tbl");
         var filterInput = document.getElementById('filter-input');
-        filterInput.addEventListener("keydown", function (event) {
+        filterInput.addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
                 var text = event.target.value.trim();
@@ -177,11 +175,11 @@ The toggleSidebar() function removes this class from the element in order to exp
                 cell1.innerHTML = "<b>Layer name</b>";
                 cell2.innerHTML = "<b>Name</b>";
                 widgets.loader.showLoader("data finding...");
-                tiledMap.find(params, function (e) {
+                tiledMap.find(params, function(e) {
                     if (e) {
                         toggleSidebar('left');
                         widgets.loader.removeLoader();
-                        e.forEach(function (data, i) {
+                        e.forEach(function(data, i) {
                             var layerName = data.layerName;
                             var name = data.value;
                             var row = resultsTable.insertRow(i + 1);

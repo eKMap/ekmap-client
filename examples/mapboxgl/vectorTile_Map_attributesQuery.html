@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag@1.0.1/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
@@ -97,15 +97,15 @@
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
             <div id="terrainMenu">
-                Tìm kiếm theo thuộc tính trên <a href='#'>source-layer</a>
+                Tìm kiếm theo thuộc tính trên <a href='#'>layerId</a>
                 <select id="mySelect" class="cesium-button" onchange="changeMenu()">
-                    <option value="2949">2949</option>
-                    <option value="2950">2950</option>
-                    <option value="2951">2951</option>
-                    <option value="2952">2952</option>
-                    <option value="2954">2954</option>
-                    <option value="2955">2955</option>
-                    <option value="2956">2956</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
                 </select>
             </div>
             <div id="calculated-area">
@@ -128,7 +128,7 @@
 
         var draw;
         var listLayersServer = [];
-        var layerName = ['2949', '2950', '2951', '2952', '2954', '2955', '2956'];
+        var layerName = ['1', '2', '3', '4', '6', '7', '8'];
         var data = [];
         var fields = [];
         var listFields = [];
@@ -140,11 +140,12 @@
             map.moveLayer(layers[layers.length - 1].id, layers[0].id)
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             var service = new mapboxgl.ekmap.MapService({
-                'url': 'https://viegisserver.ekgis.vn/gserver/rest/services/114/MapServer',
-                'token': tokenKey
+                'url': 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/MapServer',
+                //'token': tokenKey
             })
             service.getLayers(function(obj) {
                 listLayersServer = obj.layers;
+                console.log(listLayersServer)
                 changeMenu();
             })
         })
@@ -221,10 +222,10 @@
             param.where = str;
 
             var x = document.getElementById("mySelect").value;
-            var url = 'https://viegisserver.ekgis.vn/gserver/rest/services/114/FeatureServer/' + x;
+            var url = 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/' + x;
             var featureService = new mapboxgl.ekmap.FeatureService({
                 url: url,
-                token: tokenKey
+                //token: tokenKey
             });
             featureService.query(param, function(obj) {
                 console.log(obj)

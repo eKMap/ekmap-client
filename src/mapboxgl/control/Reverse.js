@@ -9,6 +9,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.icon=fa-flickr Icon of button.
  * @param {string} options.provider=eKGIS
  * @param {string} options.tokenkey Will use this token to authenticate all calls to the service.
+ * @param {string} options.pointColor Color of marker.
  * @param {Boolean} options.setStyle=true If setStyle = false, the Reverseed feature will not set style and vice versa it will set style default.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
@@ -30,11 +31,13 @@ export class Reverse extends mapboxgl.Evented {
         this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.target = this.options.target;
         this.provider = this.options.provider != undefined ? this.options.provider : 'eKGIS';
+        this.pointColor = this.options.pointColor != undefined ? this.options.pointColor : '#3FB1CE';
         this.listeners = {};
         if (this.provider == 'eKGIS')
             this.url = 'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address';
         if (this.provider == 'OSM')
             this.url = 'https://nominatim.openstreetmap.org/reverse/';
+        this.marker = '';
     }
 
     /**
@@ -68,7 +71,7 @@ export class Reverse extends mapboxgl.Evented {
                     me.listeners["click"] = me.onClick.bind(me);
                     me._map.on('click', me.listeners["click"]);
                 } else {
-                    cursorDom[0].style.cursor = 'grab';
+                    cursorDom[0].style.cursor = '';
                     /**
                      * @event mapboxgl.ekmap.control.Reverse#unReverse
                      * @description Fired when cancel control.
@@ -89,7 +92,7 @@ export class Reverse extends mapboxgl.Evented {
                 me.listeners["click"] = me.onClick.bind(me);
                 me._map.on('click', me.listeners["click"]);
             } else {
-                cursorDom[0].style.cursor = 'grab';
+                cursorDom[0].style.cursor = '';
                 //me._map.off('click', me.onClick)
 
                 me.offEvent();
@@ -139,6 +142,11 @@ export class Reverse extends mapboxgl.Evented {
             url: me.url,
             tokenKey: me.options.tokenKey
         });
+        if (me.marker)
+            me.marker.remove()
+        me.marker = new mapboxgl.Marker({
+            color: me.pointColor
+        }).setLngLat([e.lngLat.lng, e.lngLat.lat]).addTo(me._map);
         if (me.provider == 'eKGIS') {
             var params = {
                 latlng: [e.lngLat.lat, e.lngLat.lng]
@@ -176,7 +184,7 @@ export class Reverse extends mapboxgl.Evented {
      */
     deactivate() {
         var cursorDom = $('.mapboxgl-canvas-container')
-        cursorDom[0].style.cursor = 'grab';
+        cursorDom[0].style.cursor = '';
         this.offEvent();
         // this._map.off('click', this.onClick);
         this.fire('unReverse', this);

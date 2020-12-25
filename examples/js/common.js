@@ -127,14 +127,13 @@ var urlOSMStandard = [
     "https://mt3.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png?apikey=1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm"
 ]
 
-var urlServicesHost = "https://viegisserver.ekgis.vn";
+var urlServicesHost = "http://s2.cloudgis.vn";
 //var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
-var urlFeatureLayer = urlServicesHost + '/gserver/rest/services/35/FeatureServer/478'
+var urlFeatureLayer = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/1'
 
 
 //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
-var urlMapLayer = urlServicesHost + '/gserver/rest/services/35/MapServer/478'
-var urlMapService = urlServicesHost + '/gserver/rest/services/35/MapServer'
+var urlMapLayer = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/MapServer/1'
+var urlMapService = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/MapServer'
     //var urlMapService = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
-
-var urlVectorService = urlServicesHost + '/gserver/rest/services/114/VectorTileServer';
+var urlVectorService = 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer';

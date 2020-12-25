@@ -107,6 +107,22 @@ var exampleConfig = {
                         subject: "Use deleteFeatures of mapboxgl.ekmap.FeatureLayer to delete points on the map.",
                         description: "Select feature to delete on the map to delete"
                     },
+                    {
+                        name: "Attributes Query",
+                        name_en: "Attributes Query",
+                        thumbnail: "vectorTile_Map_attributesQuery.png",
+                        fileName: "vectorTile_Map_attributesQuery",
+                        subject: "Attributes Query.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Update Feature Attributes",
+                        name_en: "Update Feature Attributes",
+                        thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
+                        fileName: "vectorTile_Map_updateFeatureAttributes",
+                        subject: "Update Feature Attributes.",
+                        description: "Use control Select to get point information and use service to change that point information"
+                    }
                 ]
             },
             vectortile: {
@@ -153,36 +169,12 @@ var exampleConfig = {
                     //     description: "Click button"
                     // },
                     {
-                        name: "Draw",
-                        name_en: "Draw",
-                        thumbnail: "vectorTile_Map_full.png",
-                        fileName: "vectorTile_Map_drawS",
-                        subject: "Draw.",
-                        description: "Click button action draw and the area"
-                    },
-                    {
                         name: "Geometry Query",
                         name_en: "Geometry Query",
                         thumbnail: "vectorTile_Map_geometryQuery.png",
                         fileName: "vectorTile_Map_geometryQuery",
                         subject: "Geometry Query.",
                         description: "Click button action draw and the area"
-                    },
-                    {
-                        name: "Attributes Query",
-                        name_en: "Attributes Query",
-                        thumbnail: "vectorTile_Map_attributesQuery.png",
-                        fileName: "vectorTile_Map_attributesQuery",
-                        subject: "Attributes Query.",
-                        description: "Click button action draw and the area"
-                    },
-                    {
-                        name: "Update Feature Attributes",
-                        name_en: "Update Feature Attributes",
-                        thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
-                        fileName: "vectorTile_Map_updateFeatureAttributes",
-                        subject: "Update Feature Attributes.",
-                        description: "Use control Select to get point information and use service to change that point information"
                     }
                 ]
             },
@@ -204,7 +196,30 @@ var exampleConfig = {
                         fileName: "control_featureInfomationControl",
                         subject: "Use control featureInfomation to retrieve the selected object.",
                         description: "Click on the map to retrieve the selected object."
-                    }
+                    }, {
+                        name: "Tree Layer",
+                        name_en: "Tree Layer",
+                        thumbnail: "control_treeLayerControl.png",
+                        fileName: "control_treeLayerControl",
+                        subject: "Tree Layer.",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Tree Layer (VectorTile)",
+                        name_en: "Tree Layer (VectorTile)",
+                        thumbnail: "control_treeLayer_vectorTiledControl.png",
+                        fileName: "control_treeLayer_vectorTiledControl",
+                        subject: "Tree Layer (VectorTile).",
+                        description: "Click button action draw and the area"
+                    },
+                    {
+                        name: "Base Layer",
+                        name_en: "Base Layer",
+                        thumbnail: "control_baseLayerControl.png",
+                        fileName: "control_baseLayerControl",
+                        subject: "Base Layer.",
+                        description: "Click button action draw and the area"
+                    },
                 ]
             }
         }
@@ -734,30 +749,6 @@ var exampleConfig = {
                         description: "Click button action draw and the area"
                     },
                     {
-                        name: "Tree Layer",
-                        name_en: "Tree Layer",
-                        thumbnail: "control_treeLayerControl.png",
-                        fileName: "control_treeLayerControl",
-                        subject: "Tree Layer.",
-                        description: "Click button action draw and the area"
-                    },
-                    {
-                        name: "Tree Layer (VectorTile)",
-                        name_en: "Tree Layer (VectorTile)",
-                        thumbnail: "control_treeLayer_vectorTiledControl.png",
-                        fileName: "control_treeLayer_vectorTiledControl",
-                        subject: "Tree Layer (VectorTile).",
-                        description: "Click button action draw and the area"
-                    },
-                    {
-                        name: "Base Layer",
-                        name_en: "Base Layer",
-                        thumbnail: "control_baseLayerControl.png",
-                        fileName: "control_baseLayerControl",
-                        subject: "Base Layer.",
-                        description: "Click button action draw and the area"
-                    },
-                    {
                         name: "Draw Circle",
                         name_en: "Draw Circle",
                         thumbnail: "control_drawCircleControl.gif",
@@ -772,7 +763,14 @@ var exampleConfig = {
                         fileName: "control_drawLineBufferControl",
                         subject: "Draw Line Buffer.",
                         description: "Use control Select to get point information and use service to change that point information"
-                    }
+                    }, {
+                        name: "Show Drawn Polygon Area",
+                        name_en: "Show Drawn Polygon Area",
+                        thumbnail: "vectorTile_Map_full.png",
+                        fileName: "vectorTile_Map_drawS",
+                        subject: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers.",
+                        description: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers."
+                    },
                 ]
             }
         }

@@ -35,7 +35,7 @@ export class Request {
                     if (response.layers) {
                         callback(response);
                     }
-                    if (response.objectIdFieldName) {
+                    if (response.objectIdFieldName && !response.features) {
                         callback(response)
                     }
                     if (response.osm_type) {
@@ -44,9 +44,7 @@ export class Request {
                     if (response.length > 0 && response[0].osm_type) {
                         callback(response)
                     }
-                } catch (e) {
-
-                }
+                } catch (e) {}
             } else {}
         };
 
@@ -120,12 +118,22 @@ export class Request {
             // self.dispatchEvent({ type: 'loadend' });
             if (this.status >= 200 && this.status < 400) {
                 var response;
+                var error;
                 // Decode response
                 try {
                     response = JSON.parse(this.response);
-                    callback(response)
+                } catch (e) {
+                    response = null;
+                    error = {
+                        message: 'An error occurred.'
+                    };
+                }
 
-                } catch (e) {}
+                if (!error && response.error) {
+                    error = response.error;
+                    response = null;
+                }
+                callback(error, response);
             } else {}
         };
 

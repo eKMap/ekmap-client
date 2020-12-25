@@ -118,7 +118,7 @@ export class DrawCircle extends mapboxgl.Evented {
          */
         this.fire('circleDrawn', { data: this.drawCircle._circle });
         var cursorDom = $('.mapboxgl-canvas-container')
-        cursorDom[0].style.cursor = 'grab';
+        cursorDom[0].style.cursor = '';
     }
 
     offEvent() {
@@ -151,7 +151,7 @@ export class DrawCircle extends mapboxgl.Evented {
             this.drawCircle = ''
         }
         var cursorDom = $('.mapboxgl-canvas-container')
-        cursorDom[0].style.cursor = 'grab';
+        cursorDom[0].style.cursor = '';
         this.offEvent();
         // this._map.off('click', this.onClick);
         this.fire('unDrawCircle', this);

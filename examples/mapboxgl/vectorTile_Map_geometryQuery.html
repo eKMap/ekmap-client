@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag@1.0.1/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
@@ -144,6 +144,7 @@
                 featureService.on(map).queryByGeometry(e.data.geometry, function(evt) {
                     var features = evt;
                     console.log(features)
+                    highlightFeature(features)
                 });
             })
 
@@ -176,6 +177,12 @@
         function updateAreaPolygon(e) {
             var answer = document.getElementById('calculated-area');
             if (e.features.length > 0) {
+                var layers = map.getStyle().layers;
+                layers.forEach(layer => {
+                    if (layer.id.indexOf('queryEK-') != -1) {
+                        map.removeLayer(layer.id)
+                    }
+                });
                 var polygon = e.features[0]
                 var polygon1 = turf.polygon(e.features[0].geometry.coordinates);
 
@@ -186,13 +193,113 @@
                 featureService.on(map).queryByGeometry(polygon1.geometry, function(evt) {
                     var features = evt;
                     console.log(features)
+                    highlightFeature(features)
                 });
             }
+
         }
 
         function removeFeature() {
             if (featureService)
                 featureService.removeFeature();
+        }
+
+        function highlightFeature(features) {
+            var dataFeature = []
+            features.forEach(feature => {
+                if (feature.geometryType == "esriGeometryPolyline") {
+                    var arr = feature.features;
+                    arr.forEach(element => {
+                        dataFeature.push({
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': element.geometry.paths[0]
+                            }
+                        }, )
+                    });
+                }
+                if (feature.geometryType == "esriGeometryPoint") {
+                    var arr = feature.features;
+                    arr.forEach(element => {
+                        dataFeature.push({
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [element.geometry.x, element.geometry.y]
+                            }
+                        }, )
+                    });
+                }
+                // if (feature.geometryType == "esriGeometryPolygon") {
+                //     var arr = feature.features;
+                //     arr.forEach(element => {
+                //         dataFeature.push({
+                //             'type': 'Feature',
+                //             'geometry': {
+                //                 'type': 'Polygon',
+                //                 'coordinates': 
+                //             }
+                //         }, )
+                //     });
+                // }
+
+            });
+            var source = map.getSource('fsvQuery_Geometry');
+            if (source)
+                source.setData({
+                    'type': 'FeatureCollection',
+                    'features': dataFeature
+                })
+            else {
+                map.addSource('fsvQuery_Geometry', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'FeatureCollection',
+                        'features': dataFeature
+                    }
+                });
+            }
+
+            map.addLayer({
+                'id': "queryEK-" + guid12(),
+                'type': 'line',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': 'blue',
+                    'line-width': 2
+                },
+                "source": 'fsvQuery_Geometry',
+                'filter': ['==', '$type', 'LineString']
+            });
+
+            map.addLayer({
+                "id": "queryEK-" + guid12(),
+                "type": "circle",
+                "paint": {
+                    "circle-color": "red",
+                    "circle-stroke-color": '#00ffff',
+                    "circle-stroke-width": 3,
+                    "circle-radius": 10
+                },
+                "source": 'fsvQuery_Geometry',
+                'filter': ['==', '$type', 'Point']
+            });
+
+            map.addLayer({
+                "id": "queryEK-" + guid12(),
+                'type': 'fill',
+                'layout': {},
+                'paint': {
+                    'fill-color': '#088',
+                    'fill-opacity': 0.8
+                },
+                "source": 'fsvQuery_Geometry',
+                'filter': ['==', '$type', 'Polygon']
+            });
         }
     </script>
 </body>

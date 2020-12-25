@@ -1,7 +1,5 @@
 import '../core/Base';
 import mapboxgl from 'mapbox-gl';
-import { Util } from '../core/Util';
-import { map } from 'leaflet';
 /**
  * @class mapboxgl.ekmap.control.TreeLayer
  * @category  Control
@@ -58,9 +56,11 @@ export class TreeLayer extends mapboxgl.Evented {
 
     constructor(options) {
         super(options);
+        this.options = options || {};
         this._baseLayersOption = options.baseLayers || null;
         this._overLayersOption = options.overLayers || null;
         this._vectorTiledOption = options.vectorTiledMapLayer || null;
+        this.listLayer = this._vectorTiledOption;
         if (this._vectorTiledOption !== null)
             this._vectorTiledOption = this._vectorTiledOption.objectLayer
         this._opacityControlOption = options.opacityControl || false;
@@ -78,8 +78,26 @@ export class TreeLayer extends mapboxgl.Evented {
         let me = this; //might use this later
         this.div = document.createElement("div");
         this.button = document.createElement("button");
-        this.button.className = 'mapboxgl-btn-treelayer'
-
+        this.button.className = 'mapboxgl-btn-treelayer';
+        this._map.on('zoom', function() {
+            if (me._panel) {
+                var zoom = me._map.getZoom();
+                var listId = me.listLayer.arr;
+                listId.forEach(id => {
+                    var checkDom = document.getElementById(id);
+                    var layer = me._map.getLayer(id);
+                    if (checkDom.value != 'change' || checkDom.checked == true) {
+                        if (zoom < layer.minzoom || zoom > layer.maxzoom) {
+                            checkDom.checked = false
+                            checkDom.disabled = true;
+                        } else {
+                            checkDom.checked = true
+                            checkDom.disabled = false;
+                        }
+                    }
+                });
+            }
+        })
         this.button.addEventListener("click", function(e) {
             event.preventDefault();
             event.stopPropagation();
@@ -87,6 +105,7 @@ export class TreeLayer extends mapboxgl.Evented {
                 me._container.removeChild(me._panel);
             }
             me.button.style.display = "none";
+            me.currentZoom = me._map.getZoom()
             me._panel = me.createLayerInputToggle();
             me._container.appendChild(me._panel);
         })
@@ -229,13 +248,21 @@ export class TreeLayer extends mapboxgl.Evented {
         checkBox.style.width = '0.8rem';
         var layer = this._map.getLayer(layerId);
         // this._map.getLayoutProperty(layerId, 'visibility')
-        if (layer.visibility == 'none')
+        if (this.currentZoom < layer.minzoom || this.currentZoom > layer.maxzoom) {
             checkBox.checked = false;
-        else
+            checkBox.disabled = true;
+        } else {
             checkBox.checked = true;
+
+        }
+        // if (layer.visibility == 'none')
+        //     checkBox.checked = false;
+        // else
+        //     checkBox.checked = true;
 
         checkBox.addEventListener('change', (event) => {
             const ckFlag = event.target.checked;
+            checkBox.value = 'change';
             if (ckFlag) {
                 this._map.setLayoutProperty(layerId, 'visibility', 'visible');
             } else {
