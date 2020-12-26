@@ -14,11 +14,11 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #selectedFeatures {
             position: absolute;
             left: 12px;
@@ -29,23 +29,23 @@
             max-height: 250px;
             max-width: 250px;
         }
-
+        
         .leaflet-bar.map-text a {
             color: #79BD8F;
             display: inline;
         }
-
+        
         .dataNote {
             padding: 10px;
             margin: 0px;
             list-style-type: none;
         }
-
+        
         .noteType {
             padding: 0px;
             list-style-type: none;
         }
-
+        
         .note {
             font-size: 20px;
             font-weight: 600;
@@ -66,8 +66,7 @@
                     <li>
                         <ul class="noteType">
                             <li>
-                                <img width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX/AAAZ4gk3AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX/AAAZ4gk3AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     Polluted
                                 </span>
@@ -75,8 +74,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUA/wA0XsCoAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUA/wA0XsCoAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     Medium
                                 </span>
@@ -84,8 +82,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUAmf8q++MEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUAmf8q++MEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     Good
                                 </span>
@@ -102,11 +99,9 @@
             center: [107.58856560217953, 16.3539350884014],
             style: {
                 "version": 8,
-                "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
-                "sources": {
-                },
-                "layers": [
-                ]
+                "glyphs": 'https://viegisserver.ekgis.vn/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf',
+                "sources": {},
+                "layers": []
             },
             zoom: 9.415324050150357,
         });
@@ -114,14 +109,14 @@
         var frameCount = 5;
         var currentImage = -5;
 
-        map.on('load', function () {
+        map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map);
             widgets.loader.showLoader("data loading...");
-            $.get("../data/water/dma.json", function (response) {
+            $.get("../data/water/dma.json", function(response) {
                 var features = response.features;
-                window.setInterval(function () {
+                window.setInterval(function() {
                     features.forEach(fea => {
                         currentImage = (currentImage + 1) % frameCount;
                         fea.properties.value = currentImage
@@ -144,8 +139,7 @@
                     'source': 'dma',
                     'paint': {
                         'fill-color': [
-                            'interpolate',
-                            ['linear'],
+                            'interpolate', ['linear'],
                             ['get', 'value'],
                             0,
                             '#FF0000',
@@ -164,18 +158,17 @@
                     'source': 'dma',
                     'layout': {
                         'text-field': [
-                            'format',
-                            ['get', 'name'],
-                            {
+                            'format', ['get', 'name'], {
                                 'font-scale': 0.7
                             }
                         ]
                     }
                 });
-            }).done(function () {
+            }).done(function() {
                 widgets.loader.removeLoader();
             })
         })
+
         function getRandomColor() {
             var letters = '0123456789ABCDEF';
             var color = '#';
