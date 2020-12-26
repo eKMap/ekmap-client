@@ -63,7 +63,7 @@ export class MapService extends ServiceBase {
             param.f = 'json';
             var service = new MapService(me.options);
             return service.request('find', param, function(error, response) {
-                callback.call(context, error, response, response);
+                callback.call(context, response.results);
             }, me);
         })
 
@@ -86,7 +86,8 @@ export class MapService extends ServiceBase {
         param.f = 'json';
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.features) ? response.features : undefined;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -100,7 +101,7 @@ export class MapService extends ServiceBase {
         params.f = 'json';
         var service = new MapService(this.options);
         return service.request('layers', params, function(error, response) {
-            callback.call(context, error, response, response);
+            callback.call(context, response);
         }, this);
     }
 
@@ -114,7 +115,7 @@ export class MapService extends ServiceBase {
         params.f = 'json';
         var service = new MapService(this.options);
         return service.request('legend', params, function(error, response) {
-            callback.call(context, error, response, response);
+            callback.call(context, response);
         }, this);
     }
 
@@ -133,8 +134,8 @@ export class MapService extends ServiceBase {
         var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
-
-            callback.call(context, error, response, response);
+            var result = (response && response.features) ? response.features : undefined;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -171,7 +172,8 @@ export class MapService extends ServiceBase {
         var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.features) ? response.features : undefined;
+            callback.call(context, error, result);
         }, this);
     }
 

@@ -84,7 +84,7 @@ export class FeatureInfomation extends mapboxgl.Evented {
                         url: layer.metadata.url,
                         token: layer.metadata.token
                     });
-                    mapService.identify().on(map).at(e.lngLat).run(function(obj) {
+                    mapService.identify().on(map).at(e.lngLat).run(function(error, obj) {
                         var features = [];
                         if (obj.length > 0 && me.setStyle) {
                             for (var i = 0; i < obj.length; i++) {

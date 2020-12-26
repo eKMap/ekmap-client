@@ -120,7 +120,7 @@ export class Select extends mapboxgl.Evented {
             url: me.options.url,
             token: me.options.token
         });
-        mapService.identify().on(me._map).at(e.lngLat).run(function(obj) {
+        mapService.identify().on(me._map).at(e.lngLat).run(function(error, obj) {
             /**
              * @event mapboxgl.ekmap.control.Select#selectfeatures
              * @description Fired when the feature is selected.
@@ -195,7 +195,7 @@ export class Select extends mapboxgl.Evented {
         var cursorDom = $('.mapboxgl-canvas-container')
         cursorDom[0].style.cursor = '';
         this.offEvent();
-        this.fire('unselect', this);
+        // this.fire('unselect', this);
         this.active = false;
         this.removeFeature();
     }
@@ -223,7 +223,7 @@ export class Select extends mapboxgl.Evented {
         this.offEvent();
         this.listeners["click"] = this.onClick.bind(this);
         this._map.on('click', this.listeners["click"]);
-        this.fire('startselect', this);
+        // this.fire('startselect', this);
         this.active = true;
     }
 }

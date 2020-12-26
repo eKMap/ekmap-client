@@ -70,16 +70,20 @@
             pane.innerHTML = 'Loading';
             this.tiledMap.identify()
                 .on(map)
-                .at(e.lngLat)
-                .run(function(obj) {
-                    console.log(obj)
-                    if (obj.length > 0) {
-                        pane.innerHTML = '';
-                        obj.forEach(element => {
-                            pane.innerHTML += element.layerName + ': ' + element.attributes.tenDoiTuon + '</br>'
-                        });
+                .at(e.lngLat.lat)
+                .run(function(error, obj) {
+                    if (error) {
+                        console.log(error)
                     } else {
-                        pane.innerHTML = 'No features identified.';
+                        console.log(obj)
+                        if (obj.length > 0) {
+                            pane.innerHTML = '';
+                            obj.forEach(element => {
+                                pane.innerHTML += element.layerName + ': ' + element.attributes.tenDoiTuon + '</br>'
+                            });
+                        } else {
+                            pane.innerHTML = 'No features identified.';
+                        }
                     }
                 })
         })

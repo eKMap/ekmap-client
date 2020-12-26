@@ -154,7 +154,7 @@ export class DrawCircle extends mapboxgl.Evented {
         cursorDom[0].style.cursor = '';
         this.offEvent();
         // this._map.off('click', this.onClick);
-        this.fire('unDrawCircle', this);
+        // this.fire('unDrawCircle', this);
     }
 
     /**
@@ -167,7 +167,7 @@ export class DrawCircle extends mapboxgl.Evented {
         this.offEvent();
         this.listeners["click"] = this.onClick.bind(this);
         this._map.on('click', this.listeners["click"]);
-        this.fire('startDrawCircle', this);
+        // this.fire('startDrawCircle', this);
         this.active = true;
     }
 

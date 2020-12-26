@@ -227,8 +227,12 @@
                 url: url,
                 //token: tokenKey
             });
-            featureService.query(param, function(obj) {
-                console.log(obj)
+            featureService.query(param, function(error, obj) {
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log(obj)
+                }
             })
         }
     </script>

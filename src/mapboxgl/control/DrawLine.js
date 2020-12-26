@@ -157,7 +157,7 @@ export class DrawLine extends mapboxgl.Evented {
             this.draw.deleteAll();
         this.offEvent();
         // this._map.off('click', this.onClick);
-        this.fire('unDrawLine', this);
+        // this.fire('unDrawLine', this);
     }
 
     /**
@@ -170,7 +170,7 @@ export class DrawLine extends mapboxgl.Evented {
         this.offEvent();
         this.listeners["draw"] = this.updateAreaPolygon.bind(this);
         this._map.once('draw.create', this.listeners["draw"]);
-        this.fire('startDrawLine', this);
+        // this.fire('startDrawLine', this);
     }
 
 

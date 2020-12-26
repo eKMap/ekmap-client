@@ -86,9 +86,10 @@ export class IdentifyFeatures extends ServiceBase {
      */
     run(callback, context) {
         var service = new IdentifyFeatures(this.options);
-        return service.request('identify', this.paramsIdentify, function (error, response) {
+        return service.request('identify', this.paramsIdentify, function(error, response) {
             // immediately invoke with an error
-            callback.call(context, error, response, response);
+
+            callback.call(context, error, response.results);
         }, this);
     }
 

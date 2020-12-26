@@ -66,10 +66,10 @@ export class Reverse extends mapboxgl.Evented {
                      * @event mapboxgl.ekmap.control.Reverse#startReverse
                      * @description Fired when start control.
                      */
-                    me.fire('startReverse', me);
                     me.offEvent();
                     me.listeners["click"] = me.onClick.bind(me);
                     me._map.on('click', me.listeners["click"]);
+                    me.fire('startReverse', me);
                 } else {
                     cursorDom[0].style.cursor = '';
                     /**
@@ -87,10 +87,10 @@ export class Reverse extends mapboxgl.Evented {
             me.active = !me.active
             if (me.active) {
                 cursorDom[0].style.cursor = 'crosshair';
-                me.fire('startReverse', me);
                 me.offEvent();
                 me.listeners["click"] = me.onClick.bind(me);
                 me._map.on('click', me.listeners["click"]);
+                me.fire('startReverse', me);
             } else {
                 cursorDom[0].style.cursor = '';
                 //me._map.off('click', me.onClick)
@@ -145,13 +145,13 @@ export class Reverse extends mapboxgl.Evented {
         if (me.marker)
             me.marker.remove()
         me.marker = new mapboxgl.Marker({
-            color: me.pointColor
+            color: me.pointColor,
         }).setLngLat([e.lngLat.lng, e.lngLat.lat]).addTo(me._map);
         if (me.provider == 'eKGIS') {
             var params = {
                 latlng: [e.lngLat.lat, e.lngLat.lng]
             }
-            service.request('json', params, function(response) {
+            service.request('json', params, function(error, response) {
                 /**
                  * @event mapboxgl.ekmap.control.Reverse#selectfeatures
                  * @description Fired when the feature is selected.
@@ -168,7 +168,7 @@ export class Reverse extends mapboxgl.Evented {
                 lon: e.lngLat.lng,
                 addressdetails: 1
             }
-            service.request('reverse', params, function(response) {
+            service.request('reverse', params, function(error, response) {
                 /**
                  * @event mapboxgl.ekmap.control.Reverse#selectfeatures
                  * @description Fired when the feature is selected.
@@ -187,7 +187,7 @@ export class Reverse extends mapboxgl.Evented {
         cursorDom[0].style.cursor = '';
         this.offEvent();
         // this._map.off('click', this.onClick);
-        this.fire('unReverse', this);
+        // this.fire('unReverse', this);
         this.active = false;
     }
 
@@ -199,10 +199,9 @@ export class Reverse extends mapboxgl.Evented {
         var cursorDom = $('.mapboxgl-canvas-container')
         cursorDom[0].style.cursor = 'crosshair';
         this.offEvent();
-
         this.listeners["click"] = this.onClick.bind(this);
         this._map.on('click', this.listeners["click"]);
-        this.fire('startReverse', this);
+        // this.fire('startReverse', this);
         this.active = true;
     }
 }

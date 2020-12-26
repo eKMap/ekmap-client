@@ -208,7 +208,8 @@ export class FeatureService extends ServiceBase {
         }
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.features) ? response.features : undefined;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -228,7 +229,12 @@ export class FeatureService extends ServiceBase {
         var me = this;
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = undefined;
+            if (response && response.features)
+                result = response.features;
+            if (response && response.results)
+                result = response.results;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -265,7 +271,12 @@ export class FeatureService extends ServiceBase {
         }
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = undefined;
+            if (response && response.features)
+                result = response.features;
+            if (response && response.results)
+                result = response.results;
+            callback.call(context, error, result);
         }, this);
     }
 

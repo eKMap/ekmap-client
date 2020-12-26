@@ -15,7 +15,7 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -33,21 +33,19 @@
             container: 'divMapId',
             style: {
                 "version": 8,
-                "sources": {
-                },
-                "layers": [
-                ]
+                "sources": {},
+                "layers": []
             },
-            center: [105.20886162772933, 16.518572979240204],
-            zoom: 5.193739308697748
+            center: [103.97584219304474, 21.277728387286984],
+            zoom: 13.905413433260719
         });
-        map.on('load', function () {
+        map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
             var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
                 url: urlMapService,
-                token: tokenKey
+                // token: tokenKey
             }).addTo(map);
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             var legend = new mapboxgl.ekmap.control.Legend({

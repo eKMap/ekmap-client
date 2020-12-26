@@ -115,63 +115,67 @@
                 var lngLatBounds = new mapboxgl.LngLatBounds(polygonBoundingBox)
                 new mapboxgl.ekmap.MapService({
                     url: urlMapLayer,
-                }).on(map).queryByBound(lngLatBounds, function(evt) {
+                }).on(map).queryByBound(lngLatBounds, function(error, evt) {
                     var features = evt;
-                    var source = map.getSource('msvQuery_Bound');
-                    if (source)
-                        source.setData({
-                            'type': 'FeatureCollection',
-                            'features': features
-                        })
-                    else {
-                        map.addSource('msvQuery_Bound', {
-                            'type': 'geojson',
-                            'data': {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        var source = map.getSource('msvQuery_Bound');
+                        if (source)
+                            source.setData({
                                 'type': 'FeatureCollection',
                                 'features': features
-                            }
+                            })
+                        else {
+                            map.addSource('msvQuery_Bound', {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'FeatureCollection',
+                                    'features': features
+                                }
+                            });
+                        }
+
+                        map.addLayer({
+                            'id': "queryEK-" + guid12(),
+                            'type': 'line',
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': 'blue',
+                                'line-width': 2
+                            },
+                            "source": 'msvQuery_Bound',
+                            'filter': ['==', '$type', 'LineString']
+                        });
+
+                        map.addLayer({
+                            "id": "queryEK-" + guid12(),
+                            "type": "circle",
+                            "paint": {
+                                "circle-color": "red",
+                                "circle-stroke-color": '#00ffff',
+                                "circle-stroke-width": 3,
+                                "circle-radius": 10
+                            },
+                            "source": 'msvQuery_Bound',
+                            'filter': ['==', '$type', 'Point']
+                        });
+
+                        map.addLayer({
+                            "id": "queryEK-" + guid12(),
+                            'type': 'fill',
+                            'layout': {},
+                            'paint': {
+                                'fill-color': '#088',
+                                'fill-opacity': 0.8
+                            },
+                            "source": 'msvQuery_Bound',
+                            'filter': ['==', '$type', 'Polygon']
                         });
                     }
-
-                    map.addLayer({
-                        'id': "queryEK-" + guid12(),
-                        'type': 'line',
-                        'layout': {
-                            'line-join': 'round',
-                            'line-cap': 'round'
-                        },
-                        'paint': {
-                            'line-color': 'blue',
-                            'line-width': 2
-                        },
-                        "source": 'msvQuery_Bound',
-                        'filter': ['==', '$type', 'LineString']
-                    });
-
-                    map.addLayer({
-                        "id": "queryEK-" + guid12(),
-                        "type": "circle",
-                        "paint": {
-                            "circle-color": "red",
-                            "circle-stroke-color": '#00ffff',
-                            "circle-stroke-width": 3,
-                            "circle-radius": 10
-                        },
-                        "source": 'msvQuery_Bound',
-                        'filter': ['==', '$type', 'Point']
-                    });
-
-                    map.addLayer({
-                        "id": "queryEK-" + guid12(),
-                        'type': 'fill',
-                        'layout': {},
-                        'paint': {
-                            'fill-color': '#088',
-                            'fill-opacity': 0.8
-                        },
-                        "source": 'msvQuery_Bound',
-                        'filter': ['==', '$type', 'Polygon']
-                    });
                 });
             }
         }

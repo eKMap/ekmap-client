@@ -23,28 +23,39 @@ export class Request {
             // self.dispatchEvent({ type: 'loadend' });
             if (this.status >= 200 && this.status < 400) {
                 var response;
+                var error;
                 // Decode response
                 try {
                     response = JSON.parse(this.response);
-                    if (response.features) {
-                        callback(response.features);
-                    }
-                    if (response.results) {
-                        callback(response.results);
-                    }
-                    if (response.layers) {
-                        callback(response);
-                    }
-                    if (response.objectIdFieldName && !response.features) {
-                        callback(response)
-                    }
-                    if (response.osm_type) {
-                        callback(response)
-                    }
-                    if (response.length > 0 && response[0].osm_type) {
-                        callback(response)
-                    }
-                } catch (e) {}
+                    // if (response.features) {
+                    //     callback(response.features);
+                    // }
+                    // if (response.results) {
+                    //     callback(response.results);
+                    // }
+                    // if (response.layers) {
+                    //     callback(response);
+                    // }
+                    // if (response.objectIdFieldName && !response.features) {
+                    //     callback(response)
+                    // }
+                    // if (response.osm_type) {
+                    //     callback(response)
+                    // }
+                    // if (response.length > 0 && response[0].osm_type) {
+                    //     callback(response)
+                    // }
+                } catch (e) {
+                    response = null;
+                    error = {
+                        message: 'An error occurred.'
+                    };
+                }
+                if (!error && response.error) {
+                    error = response.error;
+                    response = null;
+                }
+                callback(error, response);
             } else {}
         };
 

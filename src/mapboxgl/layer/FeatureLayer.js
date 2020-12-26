@@ -50,7 +50,7 @@ export class FeatureLayer extends mapboxgl.Evented {
          * @description Fired when the feature layer load start.
          */
         me.fire('loadstart', me);
-        me.service.query(params, function(result) {
+        me.service.query(params, function(error, result) {
             if (result[0].geometry.type == "Point") {
                 map.addSource('point', {
                     "type": "geojson",
