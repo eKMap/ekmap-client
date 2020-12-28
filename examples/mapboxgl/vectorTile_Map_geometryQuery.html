@@ -136,15 +136,18 @@
             })
 
             myLineBuffer.on("lineBufferDrawn", function(e) {
-                console.log(e)
                 featureService = new mapboxgl.ekmap.FeatureService({
                     url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/FeatureServer',
                     token: tokenKey
                 })
-                featureService.on(map).queryByGeometry(e.data.geometry, function(evt) {
-                    var features = evt;
-                    console.log(features)
-                    highlightFeature(features)
+                featureService.on(map).queryByGeometry(e.data.geometry, function(error, evt) {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        var features = evt;
+                        console.log(features)
+                        highlightFeature(features)
+                    }
                 });
             })
 

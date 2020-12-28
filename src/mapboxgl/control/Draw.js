@@ -85,6 +85,10 @@ export class Draw extends mapboxgl.Evented {
             this._map.removeSource('buffered')
         }
     }
+
+    trash() {
+        this.draw.trash();
+    }
 }
 
 mapboxgl.ekmap.control.Draw = Draw;

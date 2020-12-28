@@ -261,6 +261,12 @@ export class FeatureService extends ServiceBase {
             }
             if (params.type == 'Polygon') {
                 param.geometryType = 'esriGeometryPolygon';
+                var arr = geom.coordinates[0];
+                arr.forEach(element => {
+                    element[0] = Number(element[0].toFixed(6))
+                    element[1] = Number(element[1].toFixed(6))
+                });
+                console.log(geom.coordinates)
                 param.geometry = {
                     "rings": geom.coordinates,
                     "spatialReference": { "wkid": 4326 }

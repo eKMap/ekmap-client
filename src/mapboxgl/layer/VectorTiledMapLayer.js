@@ -247,24 +247,83 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
      * @param {Number} params.zoom The desired zoom level.
      * @param {Number} params.bearing The desired bearing in degrees. The bearing is the compass direction that is "up". For example, bearing: 90 orients the map so that east is up.
      * @param {Number} params.pitch The desired pitch in degrees. The pitch is the angle towards the horizon measured in degrees with a range between 0 and 60 degrees. <br>For example, pitch: 0 provides the appearance of looking straight down at the map, while pitch: 60 tilts the user's perspective towards the horizon. Increasing the pitch value is often used to display 3D objects.
-     * 
+     * @param {Boolean} params.highlight=true Display feature after flyTo.
      * @returns {Map} this.
      */
     flyTo(featureId, sourceLayer, params) {
+        params = params || {}
+        var highlight = params.highlight != undefined ? params.highlight : true;
         var featureService = new mapboxgl.ekmap.FeatureService({
             url: this.urlFeatureService + sourceLayer,
             token: this.options.token
         })
         var me = this;
-        featureService.query({ objectIds: featureId }, function(obj) {
-            var feature = obj[0]
-            if (feature.geometry.type == "Point")
-                params.center = feature.geometry.coordinates;
+        featureService.query({ objectIds: featureId }, function(error, obj) {
+            var feature = obj;
+            if (highlight) {
+                var source = me.map.getSource('highlight');
+                if (source)
+                    source.setData({
+                        'type': 'FeatureCollection',
+                        'features': feature
+                    })
+                else {
+                    me.map.addSource('highlight', {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'FeatureCollection',
+                            'features': feature
+                        }
+                    });
+                }
+
+                me.map.addLayer({
+                    'id': "highlightEK-" + guid12(),
+                    'type': 'line',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': 'blue',
+                        'line-width': 2
+                    },
+                    "source": 'highlight',
+                    'filter': ['==', '$type', 'LineString']
+                });
+
+                me.map.addLayer({
+                    "id": "highlightEK-" + guid12(),
+                    "type": "circle",
+                    "paint": {
+                        "circle-color": "red",
+                        "circle-stroke-color": '#00ffff',
+                        "circle-stroke-width": 3,
+                        "circle-radius": 10
+                    },
+                    "source": 'highlight',
+                    'filter': ['==', '$type', 'Point']
+                });
+
+                me.map.addLayer({
+                    "id": "highlightEK-" + guid12(),
+                    'type': 'fill',
+                    'layout': {},
+                    'paint': {
+                        'fill-color': '#088',
+                        'fill-opacity': 0.8
+                    },
+                    "source": 'highlight',
+                    'filter': ['==', '$type', 'Polygon']
+                });
+            }
+            if (feature[0].geometry.type == "Point")
+                params.center = feature[0].geometry.coordinates;
             else {
                 var param = {
                     type: 'Feature',
-                    properties: feature.properties,
-                    geometry: feature.geometry
+                    properties: feature[0].properties,
+                    geometry: feature[0].geometry
                 }
                 var centroid = turf.centroid(param);
                 params.center = centroid.geometry.coordinates;
@@ -274,39 +333,16 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
     }
 
     /**
-     * @function mapboxgl.ekmap.control.Select.prototype.onRemove
-     * @description Unregister a control on the map and give it a chance to detach event listeners and resources. This method is called by Map#removeControl internally.
-     * @param {Map} map the Map this control will be removed from.
-     * @returns {undefined}  there is no required return value for this method.
+     * @function mapboxgl.ekmap.control.VectorTiledMapLayer.prototype.removeHighlight
+     * @description Remove highlight when flyTo set highlight true
      */
-    setHighlight(featureId, sourceLayer) {
-        // var featureService = new mapboxgl.ekmap.FeatureService({
-        //     url: this.urlFeatureService + sourceLayer,
-        //     token: this.options.token
-        // })
-        // var me = this;
-        // featureService.query({ objectIds: featureId }, function(obj) {
-        //     this.map.setFeatureState({
-        //         source: feature.source,
-        //         sourceLayer: feature.sourceLayer,
-        //         id: featureId
-        //     }, {
-        //         hover: true
-        //     });
-        // })
-        // this.featuresCheck = this.map.queryRenderedFeatures();
-        // this.featuresCheck.forEach(feature => {
-        //     if (feature.state.hover != undefined) {
-        //         this.map.removeFeatureState({
-        //             source: feature.source,
-        //             sourceLayer: feature.sourceLayer,
-        //             id: feature.id
-        //         })
-        //     }
-        //     if (feature.id == featureId) {
-
-        //     }
-        // });
+    removeHighlight() {
+        var layers = this.map.getStyle().layers;
+        layers.forEach(layer => {
+            if (layer.id.indexOf('highlightEK-') != -1) {
+                this.map.removeLayer(layer.id)
+            }
+        });
     }
 
     /**
