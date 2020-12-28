@@ -266,7 +266,6 @@ export class FeatureService extends ServiceBase {
                     element[0] = Number(element[0].toFixed(6))
                     element[1] = Number(element[1].toFixed(6))
                 });
-                console.log(geom.coordinates)
                 param.geometry = {
                     "rings": geom.coordinates,
                     "spatialReference": { "wkid": 4326 }
