@@ -10,6 +10,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {Object} options.controls Hide or show individual controls. Each property's name is a control, and value is a boolean indicating whether the <br> control is on or off. Available control names are point, line_string, polygon, trash, combine_features and uncombine_features. By <br> default, all controls are on. To change that default, use displayControlsDefault..
  * @param {Boolean} displayControlsDefault=true The default value for controls. For example, if you would like all controls to be off by <br> default, and specify an allowed list with controls, use displayControlsDefault: false.
  * @param {Object} modes Over ride the default modes with your own.
+ * @extends {mapboxgl.Evented}
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
@@ -67,6 +68,7 @@ export class Draw extends mapboxgl.Evented {
      */
     deleteAll() {
         this.draw.deleteAll();
+        this.draw.delete();
         if (this._map.getLayer('buffered')) {
             this._map.removeLayer('buffered');
             this._map.removeSource('buffered')

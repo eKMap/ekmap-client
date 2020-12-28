@@ -85,11 +85,12 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            <!-- <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+            Select provider and active <a href='#'>Reverse Control</a>
+            <br>
+            <select id="mySelect" class="cesium-button" onchange="changeMenu()">
                 <option value="OSM">OSM</option>
                 <option value="EK">eKGIS</option>
-            </select>  -->
-            Click on the map to execute <a href='#'>Select Control</a>
+            </select>
             <button id="activeControl" class="btn-green">Active Select</button>
             <button id="deactivateControl" class="btn-red">Deactivate</button>
             <div id="calculated-area"></div>
@@ -115,7 +116,6 @@
             map.moveLayer(layers[layers.length - 1].id, layers[0].id)
             reverse = new mapboxgl.ekmap.control.Reverse({
                 target: 'activeControl',
-                showButton: false,
                 provider: 'OSM',
                 tokenKey: '83F55C73-7D2A-4C97-903C-7BA6559DC0A4'
             })
@@ -145,15 +145,15 @@
             map.addControl(new mapboxgl.NavigationControl(), "top-left");
         })
 
-        // function changeMenu() {
-        //     var x = document.getElementById("mySelect").value;
-        //     if (x == 'OSM') {
-        //         reverse.onRemove()
-        //     }
-        //     if (x == 'EK') {
-        //         reverse.onRemove()
-        //     }
-        // }
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            if (x == 'OSM') {
+                reverse.setProvider('OSM');
+            }
+            if (x == 'EK') {
+                reverse.setProvider('eKGIS');
+            }
+        }
     </script>
 </body>
 

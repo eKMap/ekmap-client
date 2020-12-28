@@ -82,9 +82,9 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Click on the map to execute <a href='#'>Feature Infomation Control</a>
-            <button onclick="actionDraw()" class="btn-green">Acticon Draw</button>
-            <button id="activeControl" class="btn-blue">Acticon LineBuffer</button>
+            Click button to execute <a href='#'>Draw polygon or Draw line buffer</a> and show features selected.<br>
+            <button onclick="actionDraw()" class="btn-green">Action Draw</button>
+            <button id="activeControl" class="btn-blue">Action LineBuffer</button>
             <button onclick="removeFeature()" class="btn-orange">Remove Feature Selected</button>
 
             <div id="calculated-area"></div>
@@ -129,7 +129,7 @@
                 target: 'activeControl',
                 buffer: 500
             });
-            myLineBuffer.setBuffer(500);
+            myLineBuffer.setBuffer(100);
 
             myLineBuffer.on("startDrawLine", function() {
                 console.log('Start draw line')

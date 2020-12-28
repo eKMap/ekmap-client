@@ -67,8 +67,9 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Click on the map to execute <a href='#'>Select Control</a>
-            <button id="activeControl" class="btn-green">Active Select</button>
+            Enter the radius and activate <a href='#'>Draw Line Control</a>
+            <br> Radiu: <input id='radius' value="50"> (m)
+            <button id="activeControl" class="btn-green">Active</button>
             <button id="deactivateControl" class="btn-red">Deactivate</button>
             <div id="calculated-area"></div>
         </div>
@@ -79,7 +80,7 @@
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [103.9, 22.2],
-            zoom: 10
+            zoom: 15
         });
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
@@ -95,10 +96,8 @@
         map.addControl(draw, 'top-left');
         var myLineBuffer = new mapboxgl.ekmap.control.DrawLine(draw, {
             target: 'activeControl',
-            buffer: 500
+            buffer: 50
         });
-
-        myLineBuffer.setBuffer(1000);
 
         myLineBuffer.on("startDrawLine", function() {
             console.log('Start draw line')
@@ -118,6 +117,11 @@
         x.addEventListener("click", function(e) {
             //deactivate control
             myLineBuffer.deactivate();
+        });
+
+        var y = document.getElementById('radius');
+        radius.addEventListener('change', (event) => {
+            myLineBuffer.setBuffer(y.value);
         });
     </script>
 </body>

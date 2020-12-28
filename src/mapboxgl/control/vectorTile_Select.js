@@ -14,10 +14,11 @@ import mapboxgl from 'mapbox-gl';
  * @param {Number} options.strokeWidth=3 Circle stroke width.
  * @param {String} options.lineColor='blue' Line color.
  * @param {Number} options.lineWidth=2 Line width.
+ * @param {String} options.mode=multi Default select multiple features se and vice versa set mode = 'single'.
  * @extends {mapboxgl.Evented}
- * @fires mapboxgl.ekmap.Select#selectfeatures
- * @fires mapboxgl.ekmap.Select#startselect
- * @fires mapboxgl.ekmap.Select#unselect
+ * @fires mapboxgl.ekmap.control.Select#selectfeatures
+ * @fires mapboxgl.ekmap.control.Select#startselect
+ * @fires mapboxgl.ekmap.control.Select#unselect
  * 
  * @example
  * (start code)
@@ -35,6 +36,7 @@ export class Select extends mapboxgl.Evented {
         this.active = false;
         this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.target = this.options.target;
+        this.mode = this.options.mode != undefined ? this.options.mode : 'multi';
         this.listeners = {};
     }
 
@@ -125,6 +127,8 @@ export class Select extends mapboxgl.Evented {
              * @event mapboxgl.ekmap.control.Select#selectfeatures
              * @description Fired when the feature is selected.
              */
+            if (me.mode == 'single')
+                me.removeFeature()
             me.fire("selectfeatures", { features: obj });
             var features = obj
             if (me.setStyle) {
@@ -225,6 +229,12 @@ export class Select extends mapboxgl.Evented {
         this._map.on('click', this.listeners["click"]);
         // this.fire('startselect', this);
         this.active = true;
+    }
+
+    changeMode(mode) {
+        this.mode = mode;
+        this.deactivate();
+        this.activate();
     }
 }
 

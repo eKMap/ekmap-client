@@ -10,10 +10,13 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.provider=eKGIS
  * @param {string} options.tokenkey Will use this token to authenticate all calls to the service.
  * @param {string} options.pointColor Color of marker.
+ * @param {string} options.scale=1 The scale to use for the default marker if options.element is not provided. The default scale corresponds to a height of 41px and a width of 27px.
  * @param {Boolean} options.setStyle=true If setStyle = false, the Reverseed feature will not set style and vice versa it will set style default.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
- * 
+ * @fires mapboxgl.ekmap.control.Reverse#selectfeatures
+ * @fires mapboxgl.ekmap.control.Reverse#startReverse
+ * @fires mapboxgl.ekmap.control.Reverse#unReverse
  * @example
  * (start code)
  *  map.addControl(new mapboxgl.ekmap.control.Reverse({  target: // the id attribute of target,
@@ -32,6 +35,7 @@ export class Reverse extends mapboxgl.Evented {
         this.target = this.options.target;
         this.provider = this.options.provider != undefined ? this.options.provider : 'eKGIS';
         this.pointColor = this.options.pointColor != undefined ? this.options.pointColor : '#3FB1CE';
+        this.scale = this.options.scale != undefined ? this.options.scale : 1;
         this.listeners = {};
         if (this.provider == 'eKGIS')
             this.url = 'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address';
@@ -145,7 +149,8 @@ export class Reverse extends mapboxgl.Evented {
         if (me.marker)
             me.marker.remove()
         me.marker = new mapboxgl.Marker({
-            color: me.pointColor,
+            scale: me.scale,
+            color: me.pointColor
         }).setLngLat([e.lngLat.lng, e.lngLat.lat]).addTo(me._map);
         if (me.provider == 'eKGIS') {
             var params = {
@@ -169,10 +174,6 @@ export class Reverse extends mapboxgl.Evented {
                 addressdetails: 1
             }
             service.request('reverse', params, function(error, response) {
-                /**
-                 * @event mapboxgl.ekmap.control.Reverse#selectfeatures
-                 * @description Fired when the feature is selected.
-                 */
                 me.fire("selectfeatures", { result: response });
             }, me);
         }
@@ -186,14 +187,16 @@ export class Reverse extends mapboxgl.Evented {
         var cursorDom = $('.mapboxgl-canvas-container')
         cursorDom[0].style.cursor = '';
         this.offEvent();
-        // this._map.off('click', this.onClick);
-        // this.fire('unReverse', this);
+        if (this.marker)
+            this.marker.remove()
+            // this._map.off('click', this.onClick);
+            // this.fire('unReverse', this);
         this.active = false;
     }
 
     /**
      * @function mapboxgl.ekmap.control.Reverse.prototype.activate
-     * @description Activate control reverse.
+     * @description Activate control Reverse.
      */
     activate() {
         var cursorDom = $('.mapboxgl-canvas-container')
@@ -203,6 +206,20 @@ export class Reverse extends mapboxgl.Evented {
         this._map.on('click', this.listeners["click"]);
         // this.fire('startReverse', this);
         this.active = true;
+    }
+
+    /**
+     * @function mapboxgl.ekmap.control.Reverse.prototype.setProvider
+     * @description Set provider for control.
+     */
+    setProvider(nameProvider) {
+        this.provider = nameProvider;
+        if (this.provider == 'eKGIS')
+            this.url = 'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address';
+        if (this.provider == 'OSM')
+            this.url = 'https://nominatim.openstreetmap.org/reverse/';
+        this.deactivate();
+        this.activate();
     }
 }
 

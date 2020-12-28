@@ -298,8 +298,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                     "paint": {
                         "circle-color": "red",
                         "circle-stroke-color": '#00ffff',
-                        "circle-stroke-width": 3,
-                        "circle-radius": 10
+                        "circle-stroke-width": 3
                     },
                     "source": 'highlight',
                     'filter': ['==', '$type', 'Point']

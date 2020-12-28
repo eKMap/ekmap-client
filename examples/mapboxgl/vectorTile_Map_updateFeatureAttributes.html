@@ -138,12 +138,12 @@
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
             <div id="terrainMenu">
-                Nhấp vào điểm để thay đổi thông tin điểm đó
+                Click on the point to change the point information
                 <button id="activeControl" class="btn-green">Active Select</button>
                 <button id="deactivateControl" class="btn-red">Deactivate</button>
                 <button id="removeFeature" class="btn-orange">Remove feature selected</button>
             </div>
-            <div id="calculated-area">
+            <div id="calculated-area" style="display: none;">
                 <button style="float: right;" onclick="onUpdate()" class="btn-blue">Cập nhật</button>
             </div>
         </div>
@@ -166,7 +166,6 @@
         var layerName = ['2949', '2950', '2951', '2952', '2954', '2955', '2956'];
         var data = [];
         var fields = [];
-        var listFields = [];
         var layerId;
         map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
@@ -183,7 +182,11 @@
             })
             map.addControl(select);
             select.on('selectfeatures', function(e) {
+                var listFields = [];
                 var features = e.features;
+                var btnUpdate = document.getElementById('calculated-area');
+                if (features.length > 0)
+                    btnUpdate.style.display = 'block';
                 layerId = features[0].layerId
                 var fields = features[0].attributes;
                 fields = Object.entries(fields);
@@ -235,6 +238,8 @@
                 if (z)
                     z.remove()
                 select.removeFeature();
+                var btnUpdate = document.getElementById('calculated-area');
+                btnUpdate.style.display = 'none';
             });
         })
 

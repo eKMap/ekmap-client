@@ -51,6 +51,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {Function} options.getItemValue A function that specifies how the selected result should be rendered in the search bar. This function should accept a single [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) object as input and return a string. HTML tags in the output string will not be rendered. Defaults to `(item) => item.place_name`.
  * @param {String} options.mode=mapbox.places A string specifying the geocoding [endpoint](https://docs.mapbox.com/api/search/#endpoints) to query. Options are `mapbox.places` and `mapbox.places-permanent`. The `mapbox.places-permanent` mode requires an enterprise license for permanent geocodes.
  * @param {Boolean} options.localGeocoderOnly=false If `true`, indicates that the `localGeocoder` results should be the only ones returned to the user. If `false`, indicates that the `localGeocoder` results should be combined with those from the Mapbox API with the `localGeocoder` results ranked higher.
+ * @extends {mapboxgl.Evented}
  * @example
  * var geocoder = new mapboxgl.ekmap.control.Geocoder({ accessToken: mapboxgl.accessToken });
  * map.addControl(geocoder);
@@ -371,10 +372,6 @@ export class Geocoder extends mapboxgl.Evented {
     }
     _onChange() {
         var selected = this._typeahead.selected;
-        /**
-         * @event mapboxgl.ekmap.control.Select#selectfeatures
-         * @description Fired when the feature is selected.
-         */
         if (selected && JSON.stringify(selected) !== this.lastSelected) {
             this._clearEl.style.display = 'none';
             if (this.options.flyTo) {

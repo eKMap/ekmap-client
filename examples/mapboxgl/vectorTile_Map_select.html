@@ -72,6 +72,24 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+        
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 2px 3px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
 
@@ -80,7 +98,12 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Click on the map to execute <a href='#'>Select Control</a>
+            Select mode and active <a href='#'>Select Control</a>
+            <br>
+            <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                <option value="multi">Multi</option>
+                <option value="single">Single</option>
+            </select>
             <button id="activeControl" class="btn-green">Active Select</button>
             <button id="deactivateControl" class="btn-red">Deactivate</button>
             <button id="removeFeature" class="btn-orange">Remove feature selected</button>
@@ -94,12 +117,13 @@
             zoom: 14.871024212757812
         });
         var hoveredStateId = null;
+        var select;
         var vectorTileLayer = new mapboxgl.ekmap.VectorTiledMapLayer({
             url: urlVectorService,
             token: tokenKey
         }).addTo(mapTS);
         mapTS.on('load', function() {
-            var select = new mapboxgl.ekmap.control.Select({
+            select = new mapboxgl.ekmap.control.Select({
                 url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/MapServer',
                 token: tokenKey,
                 target: 'activeControl',
@@ -135,6 +159,16 @@
             });
         })
         mapTS.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            if (x == 'multi') {
+                select.changeMode(x);
+            }
+            if (x == 'single') {
+                select.changeMode(x);
+            }
+        }
     </script>
 </body>
 

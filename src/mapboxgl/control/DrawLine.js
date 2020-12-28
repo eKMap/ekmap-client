@@ -12,26 +12,28 @@ import * as turf from '@turf/turf'
  * @param {number} options.buffer distance to draw the buffer. 
  * @param {string} options.units=meters unit. 
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
- * 
+ * @extends {mapboxgl.Evented}
+ * @fires mapboxgl.ekmap.control.DrawLine#lineBufferDrawn
+ * @fires mapboxgl.ekmap.control.DrawLine#startDrawLine
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
  *  })
  * 
- *   var draw = new mapboxgl.ekmap.control.Draw({
- *            modes: {
+ *  var draw = new mapboxgl.ekmap.control.Draw({
+ *      modes:{
  *                ...MapboxDraw.modes,
  *                'draw_rectangle_drag': mapboxGLDrawRectangleDrag,
  *            },
- *            displayControlsDefault: false,
- *        });
- *        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
- *        map.addControl(draw, 'top-left');
- *        var myLineBuffer = new mapboxgl.ekmap.control.DrawLine(draw, {
- *            target: //Id attribute,
- *            buffer: 500
- *        });
- *        map.addControl(myLineBuffer, 'top-left');
+ *      displayControlsDefault: false,
+ *  });
+ *  map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+ *  map.addControl(draw, 'top-left');
+ *  var myLineBuffer = new mapboxgl.ekmap.control.DrawLine(draw, {
+ *      target: //Id attribute,
+ *      buffer: 500
+ *  });
+ *  map.addControl(myLineBuffer, 'top-left');
  *          
  */
 export class DrawLine extends mapboxgl.Evented {
@@ -125,7 +127,7 @@ export class DrawLine extends mapboxgl.Evented {
     }
 
     /**
-     * @function mapboxgl.ekmap.control.DrawLine.prototype.setBufer
+     * @function mapboxgl.ekmap.control.DrawLine.prototype.setBuffer
      * @description Change buffer of line.
      * @param {number} newBuffer buffer.
      */
@@ -146,7 +148,7 @@ export class DrawLine extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.control.DrawLine.prototype.deactivate
-     * @description deactivate control DrawCircle.
+     * @description deactivate control DrawLine.
      */
     deactivate() {
         if (this._map.getLayer('buffered')) {
@@ -162,7 +164,7 @@ export class DrawLine extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.control.DrawLine.prototype.activate
-     * @description Activate control Select.
+     * @description Activate control DrawLine.
      */
     activate() {
         this.draw.changeMode('draw_line_string');
@@ -187,8 +189,8 @@ export class DrawLine extends mapboxgl.Evented {
             var line = e.features[0];
             var buffered = turf.buffer(line, this.buffer, { units: this.units });
             /**
-             * @event mapboxgl.ekmap.control.DrawLine#circleDrawn
-             * @description Fired when circle drawn
+             * @event mapboxgl.ekmap.control.DrawLine#lineBufferDrawn
+             * @description Fired when line drawn
              */
             this.fire('lineBufferDrawn', { data: buffered });
             this._map.addLayer({

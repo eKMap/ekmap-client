@@ -67,8 +67,9 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Click on the map to execute <a href='#'>Select Control</a>
-            <button id="activeControl" class="btn-green">Active Select</button>
+            Enter the radius and activate <a href='#'>Draw Circle Control</a>
+            <br> Radiu: <input id='radius' value="50"> (m)
+            <button id="activeControl" class="btn-green">Active</button>
             <button id="deactivateControl" class="btn-red">Deactivate</button>
             <div id="calculated-area"></div>
         </div>
@@ -79,7 +80,7 @@
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [103.9, 22.2],
-            zoom: 10
+            zoom: 15
         });
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
@@ -88,9 +89,7 @@
             editable: true,
             target: 'activeControl'
         });
-        myCircle.setRadius(5000);
-        // myCircle.setRadius(5000);
-
+        myCircle.setRadius(50);
 
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.addControl(myCircle, 'top-left');
@@ -111,6 +110,11 @@
         x.addEventListener("click", function(e) {
             //deactivate control
             myCircle.deactivate();
+        });
+
+        var y = document.getElementById('radius');
+        radius.addEventListener('change', (event) => {
+            myCircle.setRadius(y.value);
         });
     </script>
 </body>

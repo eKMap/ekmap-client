@@ -13,7 +13,9 @@ const MapboxCircle = require('mapbox-gl-circle');
  * @param {Number} options.fillOpacity=0.25 Fill opacity.
  * @param {Number} options.strokeColor=#fbb03b Stroke color.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
- * 
+ * @extends {mapboxgl.Evented}
+ * @fires mapboxgl.ekmap.control.DrawCircle#circleDrawn
+ * @fires mapboxgl.ekmap.control.DrawCircle#startDrawCircle
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
@@ -130,7 +132,7 @@ export class DrawCircle extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.control.DrawCircle.prototype.setRadius
-     * @description Change radius of circel.
+     * @description Change radius of circle.
      * @param {number} newRadius Meter radius.
      */
     setRadius(newRadius) {
@@ -159,7 +161,7 @@ export class DrawCircle extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.control.DrawCircle.prototype.activate
-     * @description Activate control Select.
+     * @description Activate control DrawCircle.
      */
     activate() {
         var cursorDom = $('.mapboxgl-canvas-container')

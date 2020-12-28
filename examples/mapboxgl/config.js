@@ -113,7 +113,7 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_attributesQuery.png",
                         fileName: "vectorTile_Map_attributesQuery",
                         subject: "Attributes Query.",
-                        description: "Click button action draw and the area"
+                        description: "Attributes Query."
                     },
                     {
                         name: "Update Feature Attributes",
@@ -174,7 +174,7 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_geometryQuery.png",
                         fileName: "vectorTile_Map_geometryQuery",
                         subject: "Geometry Query.",
-                        description: "Click button action draw and the area"
+                        description: "Create polygon or line buffer to display data on polygon"
                     }
                 ]
             },
@@ -202,7 +202,7 @@ var exampleConfig = {
                         thumbnail: "control_treeLayerControl.png",
                         fileName: "control_treeLayerControl",
                         subject: "Tree Layer.",
-                        description: "Click button action draw and the area"
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
                     },
                     {
                         name: "Tree Layer (VectorTile)",
@@ -210,15 +210,15 @@ var exampleConfig = {
                         thumbnail: "control_treeLayer_vectorTiledControl.png",
                         fileName: "control_treeLayer_vectorTiledControl",
                         subject: "Tree Layer (VectorTile).",
-                        description: "Click button action draw and the area"
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
                     },
                     {
                         name: "Base Layer",
                         name_en: "Base Layer",
                         thumbnail: "control_baseLayerControl.png",
                         fileName: "control_baseLayerControl",
-                        subject: "Base Layer.",
-                        description: "Click button action draw and the area"
+                        subject: "Base Layer Control.",
+                        description: "Use mapboxgl.ekmap.control.BaseLayer to display, turn on / off map layers under the map"
                     },
                 ]
             }
@@ -745,8 +745,8 @@ var exampleConfig = {
                         name_en: "Geocoder",
                         thumbnail: "vectorTile_Map_geocoder.gif",
                         fileName: "vectorTile_Map_geocoder",
-                        subject: "Geocoder.",
-                        description: "Click button action draw and the area"
+                        subject: "Use the geocoder control to search for places using the Mapbox Geocoding API.",
+                        description: "Use the geocoder control to search for places using the Mapbox Geocoding API."
                     },
                     {
                         name: "Draw Circle",
@@ -754,7 +754,7 @@ var exampleConfig = {
                         thumbnail: "control_drawCircleControl.gif",
                         fileName: "control_drawCircleControl",
                         subject: "Draw Circle.",
-                        description: "Click button action draw and the area"
+                        description: "Use control DrawCircle to draw circle"
                     },
                     {
                         name: "Draw Line Buffer",
@@ -762,11 +762,11 @@ var exampleConfig = {
                         thumbnail: "control_drawLineBufferControl.gif",
                         fileName: "control_drawLineBufferControl",
                         subject: "Draw Line Buffer.",
-                        description: "Use control Select to get point information and use service to change that point information"
+                        description: "Use control Draw and control DrawLine to draw line buffer"
                     }, {
                         name: "Show Drawn Polygon Area",
                         name_en: "Show Drawn Polygon Area",
-                        thumbnail: "vectorTile_Map_full.png",
+                        thumbnail: "vectorTile_Map_drawS.png",
                         fileName: "vectorTile_Map_drawS",
                         subject: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers.",
                         description: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers."
