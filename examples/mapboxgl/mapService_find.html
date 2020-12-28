@@ -8,6 +8,7 @@
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
+    <link href="../../dist/mapboxgl/ekmap-mapboxgl.css" rel="stylesheet">
     <title>Map Find</title>
     <style>
         .map {
@@ -75,6 +76,7 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 32px;
             color: gray;
+            overflow: auto;
         }
         
         .sidbear-toggle {
@@ -125,7 +127,7 @@ The toggleSidebar() function removes this class from the element in order to exp
     <div style="width: 100%;">
         <div id="divMapId" class="map">
             <div id="left" class="sidebar flex-center left collapsed">
-                <div id="divResults" class="sidebar-content rounded-rect flex-center">
+                <div id="divResults" class="sidebar-content rounded-rect flex-center scrollbar">
                     <table id="tbl" style="width: 100%;padding: 10px;font-size: 15px;">
                     </table>
                 </div>
