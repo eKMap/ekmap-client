@@ -175,6 +175,14 @@ var exampleConfig = {
                         fileName: "vectorTile_Map_geometryQuery",
                         subject: "Geometry Query.",
                         description: "Create polygon or line buffer to display data on polygon"
+                    },
+                    {
+                        name: "Filter Province",
+                        name_en: "Filter Province",
+                        thumbnail: "filterProvince.gif",
+                        fileName: "filterProvince",
+                        subject: "Filter Province.",
+                        description: "Create polygon or line buffer to display data on polygon"
                     }
                 ]
             },
@@ -763,7 +771,8 @@ var exampleConfig = {
                         fileName: "control_drawLineBufferControl",
                         subject: "Draw Line Buffer.",
                         description: "Use control Draw and control DrawLine to draw line buffer"
-                    }, {
+                    },
+                    {
                         name: "Show Drawn Polygon Area",
                         name_en: "Show Drawn Polygon Area",
                         thumbnail: "vectorTile_Map_drawS.png",

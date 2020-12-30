@@ -95,6 +95,18 @@ export class TreeLayer extends mapboxgl.Evented {
                             checkDom.disabled = false;
                         }
                     }
+                    if (checkDom.value == 'change' && checkDom.checked == false) {
+                        if (zoom < layer.minzoom || zoom > layer.maxzoom) {
+                            checkDom.checked = false;
+                            checkDom.disabled = false;
+                        } else {
+                            checkDom.checked = false;
+                            checkDom.disabled = false;
+                        }
+                    }
+                    if (checkDom.value == 'change' && checkDom.checked == true) {
+                        checkDom.value = ''
+                    }
                 });
             }
         })

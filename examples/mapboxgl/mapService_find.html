@@ -179,7 +179,11 @@ The toggleSidebar() function removes this class from the element in order to exp
                 widgets.loader.showLoader("data finding...");
                 tiledMap.find(params, function(e) {
                     if (e) {
-                        toggleSidebar('left');
+                        var elem = document.getElementById('left');
+                        var classes = elem.className.split(' ');
+                        var collapsed = classes.indexOf('collapsed') !== -1;
+                        if (collapsed)
+                            toggleSidebar('left');
                         widgets.loader.removeLoader();
                         e.forEach(function(data, i) {
                             var layerName = data.layerName;

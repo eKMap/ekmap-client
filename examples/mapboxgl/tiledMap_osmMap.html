@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
     <title>OpenStreetMap</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
     </style>
 </head>
+
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map"></div>
@@ -31,4 +34,5 @@
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>
+
 </html>

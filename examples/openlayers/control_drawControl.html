@@ -11,11 +11,11 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #selectedFeatures {
             position: absolute;
             top: 15px;
@@ -56,8 +56,7 @@
             name: 'Giao thông1',
             baseLayer: true,
             source: new ol.source.XYZ({
-                url:
-                    'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=get_your_own_D6rA4zTHduk6KOKTXzGB',
+                url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=get_your_own_D6rA4zTHduk6KOKTXzGB',
                 maxZoom: 20,
             }),
             visible: false
@@ -84,8 +83,10 @@
 
         var map = new ol.Map({
             target: 'divMapId',
-            layers: [raster1, raster, vector,],
-            controls: ol.control.defaults({ zoom: false }),
+            layers: [raster1, raster, vector, ],
+            controls: ol.control.defaults({
+                zoom: false
+            }),
             view: new ol.View({
                 center: [105.20886162772933, 16.518572979240204],
                 zoom: 5.193739308697748,
@@ -96,24 +97,24 @@
 
         zoomControl = new ol.control.Zoom();
         map.addControl(zoomControl);
-        var modify = new ol.interaction.Modify({ source: source });
+        var modify = new ol.interaction.Modify({
+            source: source
+        });
         map.addInteraction(modify);
-        map.on('click', function () {
-            console.log(map.getLayers().array_[1].getSource())
-            map.getLayers().array_[1].setVisible(false)
-            map.getLayers().array_[0].setVisible(true)
-        })
+
         function addInteractions() {
             draw = new ol.interaction.Draw({
                 source: source,
                 type: typeSelect.value,
             });
             map.addInteraction(draw);
-            snap = new ol.interaction.Snap({ source: source });
+            snap = new ol.interaction.Snap({
+                source: source
+            });
             map.addInteraction(snap);
         }
 
-        typeSelect.onchange = function () {
+        typeSelect.onchange = function() {
             map.removeInteraction(draw);
             map.removeInteraction(snap);
             addInteractions();

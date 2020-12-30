@@ -7,6 +7,8 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
+    <script type="text/javascript" src="../js/include-web.js"></script>
+
     <title>Identify</title>
     <style>
         .map {
@@ -57,6 +59,8 @@
 
         var tiledMap;
         map.on('load', function() {
+            var cursorDom = $('.mapboxgl-canvas-container')
+            cursorDom[0].style.cursor = 'crosshair';
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
@@ -70,7 +74,7 @@
             pane.innerHTML = 'Loading';
             this.tiledMap.identify()
                 .on(map)
-                .at(e.lngLat.lat)
+                .at(e.lngLat)
                 .run(function(error, obj) {
                     if (error) {
                         console.log(error)
