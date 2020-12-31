@@ -172,7 +172,10 @@
                     map.fitBounds(bbox, {
                         padding: 20
                     });
-                    map.setFilter('3495_0', ['==', ['get', 'maTinh'], x])
+                    map.setFilter('3495_0', ['==', ['get', 'maTinh'], x]);
+                    map.setFilter('3496_1', ['==', ['get', 'maTinh'], x])
+                    map.setFilter('3496_0', ['==', ['get', 'maTinh'], x])
+                    map.setFilter('3495_1', ['==', ['get', 'maTinh'], x])
                 }
             });
         }
