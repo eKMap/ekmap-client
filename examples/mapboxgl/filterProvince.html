@@ -88,7 +88,7 @@
     <div id="selectedFeatures" class="leaflet-bar map-text">
         <div id="terrainMenu">
             <select id="mySelect" class="cesium-button" onchange="changeMenu()">
-                
+                <option value="">Tất cả</option>
             </select></div>
     </div>
     <script>
@@ -124,19 +124,22 @@
             })
         });
 
-        map.on('click', function(e) {
-            var bbox = [
-                [e.point.x - 5, e.point.y - 5],
-                [e.point.x + 5, e.point.y + 5]
-            ];
-            var features = map.queryRenderedFeatures(bbox, {
-                layers: ['room-extrusion']
-            });
-        })
-
         function changeMenu() {
             var x = document.getElementById("mySelect").value;
             var arr = []
+            if (!x) {
+                map.setFilter('3495_0', null);
+                map.setFilter('3496_1', null);
+                map.setFilter('3496_0', null);
+                map.setFilter('3495_1', null);
+                map.setFilter('3496_label', null);
+                map.setFilter('3495_label', null);
+                map.flyTo({
+                    center: [106.72265727139802, 15.838703183379039],
+                    zoom: 5.168555242482918
+                })
+            }
+
             features.forEach(feature => {
                 if (feature.maTinh == x) {
                     var polygon = feature.vungbao.replace('POLYGON ', '');
@@ -172,10 +175,22 @@
                     map.fitBounds(bbox, {
                         padding: 20
                     });
+                    if (x == 1)
+                        x = '01'
+                    if (x == 6)
+                        x = '06'
+                    if (x == 4)
+                        x = '04'
+                    if (x == 2)
+                        x = '02'
+                    if (x == 8)
+                        x = '08'
                     map.setFilter('3495_0', ['==', ['get', 'maTinh'], x]);
-                    map.setFilter('3496_1', ['==', ['get', 'maTinh'], x])
-                    map.setFilter('3496_0', ['==', ['get', 'maTinh'], x])
-                    map.setFilter('3495_1', ['==', ['get', 'maTinh'], x])
+                    map.setFilter('3496_1', ['==', ['get', 'maTinh'], x]);
+                    map.setFilter('3496_0', ['==', ['get', 'maTinh'], x]);
+                    map.setFilter('3495_1', ['==', ['get', 'maTinh'], x]);
+                    map.setFilter('3496_label', ['==', ['get', 'maTinh'], x]);
+                    map.setFilter('3495_label', ['==', ['get', 'maTinh'], x]);
                 }
             });
         }
