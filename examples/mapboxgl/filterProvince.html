@@ -94,7 +94,7 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'map',
-            style: 'http://viegisserver.ekgis.vn/gserver/rest/services/121/VectorTileServer/resources/styles?apikey=1-zikhB5A2Dr7cddYntO0RAIqC4cUk62O6&usingEngine=true',
+            style: 'https://viegisserver.ekgis.vn/gserver/rest/services/121/VectorTileServer/resources/styles?apikey=1-zikhB5A2Dr7cddYntO0RAIqC4cUk62O6&usingEngine=true',
             center: [106.72265727139802, 15.838703183379039],
             zoom: 5.168555242482918
         });
@@ -119,7 +119,6 @@
                     option.innerHTML = feature.tenTinh;
                     select.add(option);
                 });
-                console.log(map.getStyle().layers)
             }).done(function() {
                 widgets.loader.removeLoader();
             })
