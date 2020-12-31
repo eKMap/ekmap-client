@@ -1,5 +1,5 @@
-$(document).ready(function () {
-    window.initI18N(function () {
+$(document).ready(function() {
+    window.initI18N(function() {
         initPage();
         bindEvents();
         sidebarScrollFix();
@@ -21,14 +21,14 @@ function initSideBar() {
     for (var key in config) {
         sideBar.append(createSideBarMenuItem(key, config[key], containExamples));
     }
-    $(sideBar).ready(function () {
+    $(sideBar).ready(function() {
         initSelect();
     });
 
 }
 
 function screenResize() {
-    window.onresize = function () {
+    window.onresize = function() {
         mapHeight();
     };
 }
@@ -67,7 +67,7 @@ function loadExampleHtml() {
     var html = $.ajax({
         url: mapUrl,
         async: false,
-        error: function (error) {
+        error: function(error) {
             alert(resources.editor.envTips);
             html = "";
         }
@@ -105,9 +105,9 @@ function loadPreview(content) {
     iframeDocument.write(content);
     iframeDocument.close();
     var doc = document;
-    iFrame.addEventListener('load', function () {
+    iFrame.addEventListener('load', function() {
         mapHeight();
-        setTimeout(function () {
+        setTimeout(function() {
             doc.title = iframeDocument.title;
         }, 100);
 
@@ -125,12 +125,12 @@ function createIFrame() {
     div.style.backgroundColor = '#1a94fb14';
     div.style.display = 'block';
     div.style.height = '80px';
-    div.style.margin =  "8px 8px 0px 8px";
+    div.style.margin = "8px 8px 0px 8px";
 
     var divLeft = document.createElement("div");
     divLeft.style.width = '90%';
     divLeft.style.float = 'left';
-    divLeft.style.padding= "15px 5px 5px 20px";
+    divLeft.style.padding = "15px 5px 5px 20px";
 
     // var divRight = document.createElement("div");
     // divRight.style.width = '10%';
@@ -206,7 +206,7 @@ function mapHeight() {
 }
 
 function bindEvents() {
-    $("#sidebar ul.third-menu a").click(function (evt) {
+    $("#sidebar ul.third-menu a").click(function(evt) {
         var target = $(evt.target).parent().parent();
         var nodeId = evt.target.id;
         if (evt.target.localName === "span") {
@@ -223,21 +223,21 @@ function bindEvents() {
     var codePane = $("#codePane");
     var previewPane = $("#previewPane");
     var expand = !!1;
-    $("#showCodeBtn").click(function () {
+    $("#showCodeBtn").click(function() {
         if (expand) {
-            $(this).text(resources.editor.expand);
+            $(this).text(' Expand');
             $(this).addClass("fa-arrows-alt");
             $(this).removeClass(" fa-compress");
-            codePane.show(10, function () {
+            codePane.show(10, function() {
                 previewPane.removeClass("col-md-12");
                 previewPane.addClass("col-md-7");
                 codePane.addClass("col-md-5");
             });
         } else {
-            $(this).text(resources.editor.source);
+            $(this).text(' Source');
             $(this).addClass(" fa-compress");
             $(this).removeClass("fa-arrows-alt");
-            codePane.hide(200, function () {
+            codePane.hide(200, function() {
                 codePane.removeClass("col-md-5");
                 previewPane.removeClass("col-md-7");
                 previewPane.addClass("col-md-12");
@@ -246,7 +246,7 @@ function bindEvents() {
         expand = !expand;
     });
 
-    window.addEventListener("hashchange", function () {
+    window.addEventListener("hashchange", function() {
         var hash = window.location.hash;
         if (hash.indexOf("#") !== -1) {
             var id = hash.split("#")[1];
