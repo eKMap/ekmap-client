@@ -100,12 +100,13 @@
         });
         var select;
         var features;
+        var layers;
         widgets.loader.showLoader("data loading...");
         map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
-            var layers = map.getStyle().layers;
+            layers = map.getStyle().layers;
             map.moveLayer(layers[layers.length - 1].id, layers[0].id);
 
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
@@ -128,12 +129,9 @@
             var x = document.getElementById("mySelect").value;
             var arr = []
             if (!x) {
-                map.setFilter('3495_0', null);
-                map.setFilter('3496_1', null);
-                map.setFilter('3496_0', null);
-                map.setFilter('3495_1', null);
-                map.setFilter('3496_label', null);
-                map.setFilter('3495_label', null);
+                layers.forEach(layer => {
+                    map.setFilter(layer.id, null)
+                });
                 map.flyTo({
                     center: [106.72265727139802, 15.838703183379039],
                     zoom: 5.168555242482918
@@ -185,12 +183,9 @@
                         x = '02'
                     if (x == 8)
                         x = '08'
-                    map.setFilter('3495_0', ['==', ['get', 'maTinh'], x]);
-                    map.setFilter('3496_1', ['==', ['get', 'maTinh'], x]);
-                    map.setFilter('3496_0', ['==', ['get', 'maTinh'], x]);
-                    map.setFilter('3495_1', ['==', ['get', 'maTinh'], x]);
-                    map.setFilter('3496_label', ['==', ['get', 'maTinh'], x]);
-                    map.setFilter('3495_label', ['==', ['get', 'maTinh'], x]);
+                    layers.forEach(layer => {
+                        map.setFilter(layer.id, ['==', ['get', 'maTinh'], x])
+                    });
                 }
             });
         }
