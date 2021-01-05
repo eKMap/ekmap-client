@@ -108,7 +108,8 @@ export class Select extends mapboxgl.Evented {
             var button = document.createElement("button");
             var icon = document.createElement("i");
             icon.className = this.icon;
-            button.className = "mapboxgl-ctrl-zoom-in"
+            button.className = "mapboxgl-ctrl-zoom-in";
+            button.title = 'Select control';
             button.appendChild(icon);
         } else {
             var button = document.getElementById(this.target);

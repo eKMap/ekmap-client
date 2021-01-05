@@ -69,14 +69,14 @@ var exampleConfig = {
                         subject: "Geolocate Control",
                         description: "A GeolocateControl control provides a button that uses the browser's geolocation API to locate the user on the map."
                     },
-                    {
-                        name: "BaseLayer Control",
-                        name_en: "BaseLayer Control",
-                        thumbnail: "control_baseLayerControl.png",
-                        fileName: "control_baseLayerControl",
-                        subject: "Geolocate Control",
-                        description: "A GeolocateControl control provides a button that uses the browser's geolocation API to locate the user on the map."
-                    }
+                    // {
+                    //     name: "BaseLayer Control",
+                    //     name_en: "BaseLayer Control",
+                    //     thumbnail: "control_baseLayerControl.png",
+                    //     fileName: "control_baseLayerControl",
+                    //     subject: "Geolocate Control",
+                    //     description: "A GeolocateControl control provides a button that uses the browser's geolocation API to locate the user on the map."
+                    // }
                 ]
             }
         }

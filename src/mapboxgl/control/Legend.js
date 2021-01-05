@@ -42,6 +42,7 @@ export class Legend extends mapboxgl.Evented {
 
         if (!this.target) {
             this.button = document.createElement("button");
+            this.button.title = 'Legend';
             let icon = document.createElement("i");
             icon.className = "fa fa-bars";
             this.button.className = "mapboxgl-ctrl-zoom-in"
@@ -101,6 +102,12 @@ export class Legend extends mapboxgl.Evented {
             var div = document.createElement("div");
             div.className = 'scrollbar';
             div.id = 'opacity-control';
+            var header = document.createElement("div");
+            header.style.textAlign = 'center';
+            header.style.fontWeight = '700';
+            header.style.borderBottom = '1px solid #dddcdb';
+            header.style.padding = '10px';
+            header.innerHTML = 'LEGEND'
             this.closeButton = document.createElement('a');
             this.closeButton.style.position = 'absolute';
             this.closeButton.style.top = '0';
@@ -110,6 +117,7 @@ export class Legend extends mapboxgl.Evented {
             this.imgClose.style.padding = '5px';
             this.imgClose.style.cursor = 'pointer';
             this.closeButton.appendChild(this.imgClose);
+            div.appendChild(header);
             div.appendChild(this.closeButton);
             this.closeButton.addEventListener("click", event => {
                 event.preventDefault();
@@ -118,8 +126,8 @@ export class Legend extends mapboxgl.Evented {
             })
         } else
             var div = divTarget;
-        div.style.maxHeight = "300px";
-        div.style.padding = "1rem";
+        div.style.maxHeight = "500px";
+        div.style.padding = "0px 1rem";
 
         var ul = document.createElement("ul");
         ul.style.padding = "10px";
@@ -130,27 +138,30 @@ export class Legend extends mapboxgl.Evented {
                 var listLenged = list.layers.slice();
                 for (var i = 0; i < listLenged.length; i++) {
                     var li = document.createElement("li");
-                    var strong = document.createElement("strong");
+                    li.className = 'row';
+                    li.style.paddingBottom = '10px';
+                    var strong = document.createElement("span");
+                    strong.className = 'col-sm-9';
                     strong.innerHTML = listLenged[i].layerName;
-                    li.appendChild(strong);
                     for (var j = 0; j < listLenged[i].legend.length; j++) {
                         var img = document.createElement("img");
-                        img.width = 13;
-                        img.height = 13;
+                        img.width = 20;
+                        img.height = 20;
+                        img.style.display = 'block';
+                        img.style.margin = '0 auto';
                         img.src = "data:image/png;base64," + listLenged[i].legend[j].imageData;
-                        var span = document.createElement("span");
-                        span.innerHTML = listLenged[i].legend[j].label;
-                        span.style.paddingLeft = '15px';
+                        // var span = document.createElement("span");
+                        // span.innerHTML = listLenged[i].legend[j].label;
+                        // span.style.paddingLeft = '15px';
                         var li1 = document.createElement("li");
                         li1.appendChild(img);
-                        li1.appendChild(span);
+                        // li1.appendChild(span);
                         var ul1 = document.createElement("ul");
-                        ul1.style.padding = "0";
-                        ul1.style.margin = "0";
+                        ul1.className = 'col-sm-3'
                         ul1.style.listStyleType = "none";
-                        ul1.style.marginLeft = "15px";
                         ul1.appendChild(li1);
                         li.appendChild(ul1);
+                        li.appendChild(strong);
                         ul.appendChild(li);
                         div.appendChild(ul);
                     }

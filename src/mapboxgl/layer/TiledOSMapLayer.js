@@ -9,7 +9,7 @@ import { TileLayer } from './TileLayer';
  * @param {Object} options - Control options.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @param {string} options.id Id of layer and source.
- * @param {string} options.name Name of layer.
+ * @param {string} options.name=OSMap Name of layer.
  * @param {string} options.visibility=visible Show or hide layer.
  * 
  * @extends {mapboxgl.ekmap.TileLayer}
@@ -46,7 +46,7 @@ export class TiledOSMapLayer extends TileLayer {
                 attribution: "<a href='https://www.openstreetmap.org/' target='_blank' style='color: blue'>© OpenStreetMap </a>" +
                     "contributors",
                 id: this.options.id,
-                name: this.options.name,
+                name: this.options.name != undefined ? this.options.name : 'OS Map',
                 visibility: this.options.visibility
             })
         } else {
@@ -55,7 +55,7 @@ export class TiledOSMapLayer extends TileLayer {
                 attribution: "<a href='https://www.openstreetmap.org/' target='_blank' style='color: blue'>© OpenStreetMap </a>" +
                     "contributors",
                 id: this.options.id,
-                name: this.options.name,
+                name: this.options.name != undefined ? this.options.name : 'OS Map',
                 visibility: this.options.visibility
             })
         }

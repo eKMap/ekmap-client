@@ -95,7 +95,8 @@ export class DrawCircle extends mapboxgl.Evented {
             var button = document.createElement("button");
             var icon = document.createElement("i");
             icon.className = "fa fa-circle-thin";
-            button.className = "mapboxgl-ctrl-zoom-in"
+            button.className = "mapboxgl-ctrl-zoom-in";
+            button.title = "Draw circle";
             button.appendChild(icon);
         } else {
             var button = document.getElementById(this.target);

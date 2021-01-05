@@ -78,6 +78,7 @@ export class TreeLayer extends mapboxgl.Evented {
         let me = this; //might use this later
         this.div = document.createElement("div");
         this.button = document.createElement("button");
+        this.button.title = 'Tree layer';
         this.button.className = 'mapboxgl-btn-treelayer';
         this._map.on('zoom', function() {
             if (me._panel) {

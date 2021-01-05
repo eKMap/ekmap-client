@@ -11,7 +11,7 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -25,15 +25,19 @@
     </div>
     <script>
         var map,
-        url = (window.isLocal ? window.server : "https://iserver.supermap.io") + "/iserver/services/map-world/rest/maps/World";
+            url = (window.isLocal ? window.server : "https://iserver.supermap.io") + "/iserver/services/map-world/rest/maps/World";
         map = new ol.Map({
-            controls: ol.control.defaults({ attribution: false, zoom: false }),
+            controls: ol.control.defaults({
+                attribution: false,
+                zoom: true
+            }),
             target: 'divMapId',
             layers: [
                 new ol.layer.Tile({
                     source: new ol.source.OSM(),
                     url: url
-                })],  
+                })
+            ],
             view: new ol.View({
                 center: [105.20886162772933, 16.518572979240204],
                 zoom: 5.193739308697748,
@@ -41,7 +45,9 @@
                 multiWorld: true
             })
         });
-        map.addControl(new ol.control.Attribution({ collapsed: false }));
+        map.addControl(new ol.control.Attribution({
+            collapsed: false
+        }));
     </script>
 </body>
 

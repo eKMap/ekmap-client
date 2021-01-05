@@ -38,7 +38,7 @@ export class Draw extends mapboxgl.Evented {
         this._map = map;
         let me = this; //might use this later
         this._div = document.createElement('div');
-        this._div.title = "Click Draw";
+        this._div.title = "Draw";
         this._div.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         this._div.style.fontSize = "14px";
         this.draw = new MapboxDraw({

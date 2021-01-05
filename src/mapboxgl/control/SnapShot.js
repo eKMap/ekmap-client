@@ -39,8 +39,13 @@ export class SnapShot extends mapboxgl.Evented {
         input.addEventListener("click", function(e) {
             var nameImg = 'map_' + me.guid12() + '.png';
             me._map.getCanvas().toBlob(function(blob) {
-                saveAs(blob, nameImg);
-            })
+                    saveAs(blob, nameImg);
+                })
+                /**
+                 * @event mapboxgl.ekmap.control.SnapShot#aftersnap
+                 * @description Fired when after snap.
+                 */
+            me.fire('aftersnap', me);
         })
         if (!this.target)
             this._div.appendChild(input)
@@ -69,7 +74,8 @@ export class SnapShot extends mapboxgl.Evented {
             var button = document.createElement("button");
             var icon = document.createElement("i");
             icon.className = "fa fa-camera";
-            button.className = "mapboxgl-ctrl-zoom-in"
+            button.className = "mapboxgl-ctrl-zoom-in";
+            button.title = 'Snap shot';
             button.appendChild(icon);
         } else {
             var button = document.getElementById(this.target);
