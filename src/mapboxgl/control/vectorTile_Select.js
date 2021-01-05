@@ -15,6 +15,8 @@ import mapboxgl from 'mapbox-gl';
  * @param {String} options.lineColor='blue' Line color.
  * @param {Number} options.lineWidth=2 Line width.
  * @param {String} options.mode=multi Default select multiple features se and vice versa set mode = 'single'.
+ * @param {String} options.tooltip=SelectControl Tooltip of button.
+ * 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.Select#selectfeatures
  * @fires mapboxgl.ekmap.control.Select#startselect
@@ -109,7 +111,7 @@ export class Select extends mapboxgl.Evented {
             var icon = document.createElement("i");
             icon.className = this.icon;
             button.className = "mapboxgl-ctrl-zoom-in";
-            button.title = 'Select control';
+            button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Select control';
             button.appendChild(icon);
         } else {
             var button = document.getElementById(this.target);

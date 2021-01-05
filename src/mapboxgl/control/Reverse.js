@@ -12,6 +12,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.pointColor Color of marker.
  * @param {string} options.scale=1 The scale to use for the default marker if options.element is not provided. The default scale corresponds to a height of 41px and a width of 27px.
  * @param {Boolean} options.setStyle=true If setStyle = false, the Reverseed feature will not set style and vice versa it will set style default.
+ * @param {String} options.tooltip=Reverse Tooltip of button.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.Reverse#selectfeatures
@@ -131,7 +132,7 @@ export class Reverse extends mapboxgl.Evented {
             var icon = document.createElement("i");
             icon.className = this.icon;
             button.className = "mapboxgl-ctrl-zoom-in";
-            button.title = 'Reverse';
+            button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Reverse';
             button.appendChild(icon);
         } else {
             var button = document.getElementById(this.target);

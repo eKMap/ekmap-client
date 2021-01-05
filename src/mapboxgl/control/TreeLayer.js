@@ -8,6 +8,8 @@ import mapboxgl from 'mapbox-gl';
  * @param {Array} options.baseLayers=null List of baselayer for which you want to display TreeLayer.
  * @param {Array} options.overLayers=null List of overlayer for which you want to display TreeLayer.
  * @param {Boolean} options.opacityControl=false Display opacity.
+ * @param {String} options.tooltip=Treelayer Tooltip of button.
+ * 
  *
  * @example
  *  var map = new mapboxgl.Map({
@@ -78,7 +80,7 @@ export class TreeLayer extends mapboxgl.Evented {
         let me = this; //might use this later
         this.div = document.createElement("div");
         this.button = document.createElement("button");
-        this.button.title = 'Tree layer';
+        this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Tree layer';
         this.button.className = 'mapboxgl-btn-treelayer';
         this._map.on('zoom', function() {
             if (me._panel) {

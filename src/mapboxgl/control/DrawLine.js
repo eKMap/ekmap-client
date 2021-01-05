@@ -11,6 +11,7 @@ import * as turf from '@turf/turf'
  * @param {Object} options Construction parameters.
  * @param {number} options.buffer distance to draw the buffer. 
  * @param {string} options.units=meters unit. 
+ * @param {String} options.tooltip=Drawlinebuffer Tooltip of button.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.DrawLine#lineBufferDrawn
@@ -57,7 +58,6 @@ export class DrawLine extends mapboxgl.Evented {
     onAdd(map) {
         this._map = map;
         this._div = document.createElement('div');
-        this._div.title = "Click DrawLine";
         this._div.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         this._div.style.fontSize = "14px";
         let input = this.createLayerInputToggle();
@@ -119,7 +119,7 @@ export class DrawLine extends mapboxgl.Evented {
             var icon = document.createElement("i");
             icon.className = "fa fa-circle-thin";
             button.className = "mapboxgl-ctrl-zoom-in";
-            button.title = "Draw line buffer";
+            button.title = this.options.tooltip != undefined ? this.options.tooltip : "Draw line buffer";
             button.appendChild(icon);
         } else {
             var button = document.getElementById(this.target);

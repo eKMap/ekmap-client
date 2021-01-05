@@ -4,7 +4,10 @@ import mapboxgl from 'mapbox-gl';
  * @class mapboxgl.ekmap.control.SnapShot
  * @category  Control
  * @classdesc SnapShot.
- *
+* @param {Object} options Construction parameters.
+ * @param {Array} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default.
+ * @param {String} options.tooltip=Snapshot Tooltip of button.
+
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
@@ -30,8 +33,6 @@ export class SnapShot extends mapboxgl.Evented {
         this._map = map;
         let me = this; //might use this later
         this._div = document.createElement('div');
-        this._div["aria-label"] = "Chụp màn hình";
-        this._div.title = "Chụp màn hình";
         this._div.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         //this._div.style.padding = "8px";
         this._div.style.fontSize = "14px"
@@ -75,7 +76,7 @@ export class SnapShot extends mapboxgl.Evented {
             var icon = document.createElement("i");
             icon.className = "fa fa-camera";
             button.className = "mapboxgl-ctrl-zoom-in";
-            button.title = 'Snap shot';
+            button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Snap shot';
             button.appendChild(icon);
         } else {
             var button = document.getElementById(this.target);

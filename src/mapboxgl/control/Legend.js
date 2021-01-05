@@ -8,6 +8,8 @@ import { Util } from '../core/Util';
  * @param {Object} options Construction parameters.
  * @param {Array<mapboxgl.Map>} options.layers List of layers for which you want to display legend.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
+ * @param {string} options.title=LEGEND Name of header.
+ * @param {string} options.tooltip=Legend Tooltip of button.
  *
  * @example
  *  var map = new mapboxgl.Map({
@@ -42,7 +44,7 @@ export class Legend extends mapboxgl.Evented {
 
         if (!this.target) {
             this.button = document.createElement("button");
-            this.button.title = 'Legend';
+            this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Legend';
             let icon = document.createElement("i");
             icon.className = "fa fa-bars";
             this.button.className = "mapboxgl-ctrl-zoom-in"
@@ -107,7 +109,7 @@ export class Legend extends mapboxgl.Evented {
             header.style.fontWeight = '700';
             header.style.borderBottom = '1px solid #dddcdb';
             header.style.padding = '10px';
-            header.innerHTML = 'LEGEND'
+            header.innerHTML = this.options.title != undefined ? this.options.title : 'LEGEND';
             this.closeButton = document.createElement('a');
             this.closeButton.style.position = 'absolute';
             this.closeButton.style.top = '0';
@@ -140,7 +142,7 @@ export class Legend extends mapboxgl.Evented {
                     var li = document.createElement("li");
                     li.className = 'row';
                     li.style.paddingBottom = '10px';
-                    var strong = document.createElement("span");
+                    var strong = document.createElement("strong");
                     strong.className = 'col-sm-9';
                     strong.innerHTML = listLenged[i].layerName;
                     for (var j = 0; j < listLenged[i].legend.length; j++) {
@@ -160,8 +162,8 @@ export class Legend extends mapboxgl.Evented {
                         ul1.className = 'col-sm-3'
                         ul1.style.listStyleType = "none";
                         ul1.appendChild(li1);
-                        li.appendChild(ul1);
                         li.appendChild(strong);
+                        li.appendChild(ul1);
                         ul.appendChild(li);
                         div.appendChild(ul);
                     }

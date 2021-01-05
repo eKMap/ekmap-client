@@ -12,6 +12,7 @@ const MapboxCircle = require('mapbox-gl-circle');
  * @param {String} options.fillColor=#fbb03b Fill color.
  * @param {Number} options.fillOpacity=0.25 Fill opacity.
  * @param {Number} options.strokeColor=#fbb03b Stroke color.
+ * @param {String} options.tooltip=Drawcircle Tooltip of button.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.DrawCircle#circleDrawn
@@ -96,7 +97,7 @@ export class DrawCircle extends mapboxgl.Evented {
             var icon = document.createElement("i");
             icon.className = "fa fa-circle-thin";
             button.className = "mapboxgl-ctrl-zoom-in";
-            button.title = "Draw circle";
+            button.title = this.options.tooltip != undefined ? this.options.tooltip : "Draw circle";
             button.appendChild(icon);
         } else {
             var button = document.getElementById(this.target);
