@@ -8,6 +8,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {Array} options.baseLayers=null List of baselayer for which you want to display TreeLayer.
  * @param {Array} options.overLayers=null List of overlayer for which you want to display TreeLayer.
  * @param {Boolean} options.opacityControl=false Display opacity.
+ * @param {string} options.title=TREELAYER Name of header.
  * @param {String} options.tooltip=Treelayer Tooltip of button.
  * 
  *
@@ -164,8 +165,15 @@ export class TreeLayer extends mapboxgl.Evented {
         div.id = 'opacity-control';
         div.style.maxHeight = "300px";
         div.style.maxWidth = "300px";
-        div.style.padding = "20px";
+        div.style.width = "220px";
+        div.style.padding = "0px 1rem";
         div.className = 'scrollbar';
+        var header = document.createElement("div");
+        header.style.textAlign = 'center';
+        header.style.fontWeight = '700';
+        header.style.borderBottom = '1px solid #dddcdb';
+        header.style.padding = '10px';
+        header.innerHTML = this.options.title != undefined ? this.options.title : 'TREELAYER';
         this.closeButton = document.createElement('a');
         this.closeButton.style.position = 'absolute';
         this.closeButton.style.top = '0';
@@ -175,6 +183,7 @@ export class TreeLayer extends mapboxgl.Evented {
         this.imgClose.style.padding = '5px';
         this.imgClose.style.cursor = 'pointer';
         this.closeButton.appendChild(this.imgClose);
+        div.appendChild(header);
         div.appendChild(this.closeButton);
         this.closeButton.addEventListener("click", event => {
             event.preventDefault();
@@ -191,8 +200,8 @@ export class TreeLayer extends mapboxgl.Evented {
         }
 
         if ((this._baseLayersOption !== null && this._overLayersOption !== null) || (this._baseLayersOption !== null && this._vectorTiledOption !== null) || this._vectorTiledOption !== null) {
-            const hr = document.createElement('hr');
-            div.appendChild(hr);
+            const br = document.createElement('br');
+            div.appendChild(br);
         }
 
         if (this._overLayersOption !== null) {
@@ -227,8 +236,8 @@ export class TreeLayer extends mapboxgl.Evented {
         const radioButton = document.createElement('input');
         radioButton.setAttribute('type', 'radio');
         radioButton.style.marginRight = '1rem';
-        radioButton.style.height = '0.8rem';
-        radioButton.style.width = '0.8rem';
+        radioButton.style.height = '1.5rem';
+        radioButton.style.width = '1.5rem';
         radioButton.id = layerId;
         if (layerId === Object.keys(this._baseLayersOption)[0]) {
             radioButton.checked = true;
@@ -249,7 +258,7 @@ export class TreeLayer extends mapboxgl.Evented {
             });
         });
 
-        const layerName = document.createElement('span');
+        const layerName = document.createElement('strong');
         layerName.appendChild(document.createTextNode(this._baseLayersOption[layerId]));
         div.appendChild(layerName);
     }
@@ -259,8 +268,8 @@ export class TreeLayer extends mapboxgl.Evented {
         checkBox.setAttribute('type', 'checkbox');
         checkBox.id = layerId;
         checkBox.style.marginRight = '1rem';
-        checkBox.style.height = '0.8rem';
-        checkBox.style.width = '0.8rem';
+        checkBox.style.height = '1.5rem';
+        checkBox.style.width = '1.5rem';
         var layer = this._map.getLayer(layerId);
         // this._map.getLayoutProperty(layerId, 'visibility')
         if (this.currentZoom < layer.minzoom || this.currentZoom > layer.maxzoom) {
@@ -285,7 +294,7 @@ export class TreeLayer extends mapboxgl.Evented {
             }
         });
 
-        const layerName = document.createElement('span');
+        const layerName = document.createElement('strong');
         if (this._vectorTiledOption !== null) {
             layerName.appendChild(document.createTextNode(this._vectorTiledOption[layerId]));
         }

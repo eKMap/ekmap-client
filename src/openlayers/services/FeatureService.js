@@ -1,7 +1,10 @@
-import ol from 'mapbox-gl';
+import '../core/Base';
 import { ServiceBase } from './ServiceBase';
 import { Util } from '../core/Util';
 import { Parse } from '../core/Parse';
+import { feature } from '@turf/turf';
+import { Point } from 'mapbox-gl';
+import Geometry from 'ol/geom/geometry';
 
 /**
  * @class ol.ekmap.FeatureService
@@ -72,67 +75,81 @@ export class FeatureService extends ServiceBase {
     /**
      * @function ol.ekmap.FeatureService.prototype.addFeature
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-     * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
+     * @param {Point} point Point geometry.
      * @param {Function} callback
      * @param {Object} context
      * @returns {this}
      */
-    addFeature(params, callback, context) {
-        this.addFeatures(params, callback, context);
+    addFeature(point, callback, context) {
+        this.addFeatures(point, callback, context);
     }
 
     /**
      * @private
      * @function ol.ekmap.FeatureService.prototype.addFeatures
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-     * @param {GeoJSONObject} params GeoJSON of feature add (To change point color, set 'color' for options GeoJSON, the default is light blue ('#3FB1CE')).
+     * @param {Point} point Point geometry.
      * @param {Function} callback
      * @param {Object} context
      * @returns {this}
      */
-    addFeatures(params, callback, context) {
-        var fea = Parse.geojsonToArcGIS(params);
+    addFeatures(point, callback, context) {
+        var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(point))
+        var geojson = {
+            'type': 'Feature',
+            'geometry': geometry
+        }
+        var fea = Parse.geojsonToArcGIS(geojson);
         var data = [];
         data.push(fea)
         var dataPost = JSON.stringify(data)
         var service = new FeatureService(this.options);
         return service.post('addFeatures', dataPost, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.addResults) ? response.addResults.length > 1 ? response.addResults : response.addResults[0] : undefined;
+            callback.call(context, error || response.addResults[0].error, result);
         }, this);
     }
 
     /**
      * @function ol.ekmap.FeatureService.prototype.updateFeature
-     * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
-     * @param {GeoJSONObject} params Infomation feature.
+     * @description Update the provided feature on the Feature Service This also updates the feature on the map. To update the point location on the map. Please use function {@link ol.ekmap.FeatureService.html#refresh|refresh()} then update.
+     * @param {Geometry} geom Infomation feature.
      * @param {Function} callback The callback of result data returned by the server side.
      * @param {Object} context
      * @returns {this}
      */
-    updateFeature(params, callback, context) {
-        this.updateFeatures(params, callback, context);
+    updateFeature(geom, callback, context) {
+        this.updateFeatures(geom, callback, context);
     }
 
     /**
      * @private
      * @function ol.ekmap.FeatureService.prototype.updateFeatures
      * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
-     * @param {GeoJSONObject} params - Infomation feature.
+     * @param {Geometry} geom - Infomation feature.
      */
-    updateFeatures(params, callback, context) {
-        var fea = Parse.geojsonToArcGIS(params);
+    updateFeatures(geom, callback, context) {
+        var properties = geom.getProperties();
+        var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(geom))
+        var geojson = {
+            'type': 'Feature',
+            'geometry': geometry,
+            'properties': properties
+        }
+        var fea = Parse.geojsonToArcGIS(geojson);
         var data = [];
         data.push(fea)
         var dataPost = JSON.stringify(data)
         var service = new FeatureService(this.options);
         return service.post('updateFeatures', dataPost, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.updateResults) ? response.updateResults.length > 1 ? response.updateResults : response.updateResults[0] : undefined;
+            callback.call(context, error || response.updateResults[0].error, result);
         }, this);
     }
 
     /**
      * @function ol.ekmap.FeatureService.prototype.deleteFeature
-     * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
+     * @description Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists. Please use function {@link ol.ekmap.FeatureService.html#refresh|refresh()} then delete.
      * @param {Interger} id Id of feature.
      * @param {Function} callback The callback of result data returned by the server side.
      * @param {Object} context
@@ -153,7 +170,8 @@ export class FeatureService extends ServiceBase {
     deleteFeatures(ids, callback, context) {
         var service = new FeatureService(this.options);
         return service.post('deleteFeatures', ids, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.deleteResults) ? response.deleteResults.length > 1 ? response.deleteResults : response.deleteResults[0] : undefined;
+            callback.call(context, error || response.deleteResults[0].error, result);
         }, this);
     }
 
@@ -165,9 +183,14 @@ export class FeatureService extends ServiceBase {
      */
     query(params, callback, context) {
         var param = {};
-        param.where = params.where;
+        if (params.where)
+            param.where = params.where;
         if (params.orderByFields)
-            param.orderByFields = params.orderByFields
+            param.orderByFields = params.orderByFields;
+        if (params.layerDefs) {
+            param.f = 'json';
+            param.layerDefs = params.layerDefs
+        }
         if (params.geometry) {
             var geom = params.geometry;
             if (params.geometry.type == 'Point') {
@@ -188,12 +211,18 @@ export class FeatureService extends ServiceBase {
             if (params.geometry.type == 'LineString')
                 param.geometryType = 'esriGeometryPolyline'
         }
-        param.outFields = '*';
-        param.f = 'geojson';
-        param.returnGeometry = true;
+        if (params.objectIds)
+            param.objectIds = params.objectIds
+
+        if (!params.layerDefs) {
+            param.outFields = '*';
+            param.returnGeometry = true;
+            param.f = 'geojson';
+        }
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.features) ? response.features : undefined;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -210,9 +239,15 @@ export class FeatureService extends ServiceBase {
         param.outFields = '*';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        var me = this;
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = undefined;
+            if (response && response.features)
+                result = response.features;
+            if (response && response.results)
+                result = response.results;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -224,31 +259,20 @@ export class FeatureService extends ServiceBase {
      */
     queryByGeometry(params, callback, context) {
         var param = {};
-        param.f = 'geojson';
+        var me = this;
+        param.f = 'geojson'; //me.type != undefined ? me.type : 'json'; 
         param.outFields = '*';
-        if (params) {
-            var geom = params;
-            if (params.type == 'Point') {
-                param.geometryType = 'esriGeometryPoint'
-                param.geometry = {
-                    "x": geom.coordinates[0],
-                    "y": geom.coordinates[1],
-                    "spatialReference": { "wkid": 4326 }
-                }
-            }
-            if (params.type == 'Polygon') {
-                param.geometryType = 'esriGeometryPolygon';
-                param.geometry = {
-                    "rings": geom.coordinates,
-                    "spatialReference": { "wkid": 4326 }
-                }
-            }
-            if (params.type == 'LineString')
-                param.geometryType = 'esriGeometryPolyline'
-        }
+        var data = Util._setGeometry(params);
+        param.geometryType = data.geometryType;
+        param.geometry = data.geometry;
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = undefined;
+            if (response && response.features)
+                result = response.features;
+            if (response && response.results)
+                result = response.results;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -264,14 +288,27 @@ export class FeatureService extends ServiceBase {
     applyEdits(params, callback, context) {
         var param = {}
         if (params.adds) {
-            var dataAdd = Parse.geojsonToArcGIS(params.adds);
+            var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(params.adds))
+            var geojson = {
+                'type': 'Feature',
+                'geometry': geometry
+            }
+            var fea = Parse.geojsonToArcGIS(geojson);
             var arr1 = [];
-            arr1.push(dataAdd);
+            arr1.push(fea);
             param.adds = JSON.stringify(arr1)
         } else
             param.adds = false;
         if (params.updates) {
-            var dataUpdate = Parse.geojsonToArcGIS(params.updates);
+            var properties = geometry.properties;
+            var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(params.updates))
+            var geojson = {
+                'type': 'Feature',
+                'geometry': geometry,
+                'properties': properties
+            }
+            var fea = Parse.geojsonToArcGIS(geojson);
+            var dataUpdate = Parse.geojsonToArcGIS(fea);
             var arr2 = [];
             arr2.push(dataUpdate);
             param.updates = JSON.stringify(arr2)
@@ -282,11 +319,70 @@ export class FeatureService extends ServiceBase {
         else
             param.deletes = false;
         var service = new FeatureService(this.options);
-        console.log(param)
         return service.post('applyEdits', param, function(error, response) {
             callback.call(context, error, response, response);
         }, this);
     }
-}
 
-ol.ekmap.FeatureService = FeatureService;
+    /**
+     * @function ol.ekmap.FeatureService.prototype.refresh
+     * @description Redraws all features from the feature layer that exist on the map.
+     */
+    refresh() {
+        var me = this;
+        var data = {};
+        var params = {
+            where: '1=1'
+        };
+
+        this.query(params, function(result) {
+            data = {
+                'type': 'FeatureCollection',
+                'features': result
+            };
+            if (me.map.getLayer('point')) {
+                me.map.getSource('point').setData(data);
+            }
+            if (me.map.getLayer('line')) {
+                me.map.getSource('line').setData(data);
+            }
+            if (me.map.getLayer('area')) {
+                me.map.getSource('area').setData(data);
+            }
+        });
+    }
+
+    /**
+     * @function ol.ekmap.FeatureService.prototype.on
+     * @description On map.
+     * @param {ol.Map} map The map is defined.
+     * @returns {this}
+     */
+    on(map) {
+        this.map = map
+        return this;
+    }
+
+    /**
+     * @function ol.ekmap.FeatureService.prototype.param
+     * @description param.
+     * @param {string} type type.
+     * @returns {this}
+     */
+    f(type) {
+            this.type = type;
+            return this;
+        }
+        /**
+         * @function ol.ekmap.FeatureService.prototype.removeFeature
+         * @description Remove feature selected.
+         */
+    removeFeature() {
+        var layers = this.map.getStyle().layers;
+        layers.forEach(layer => {
+            if (layer.id.indexOf('queryEK-') != -1) {
+                this.map.removeLayer(layer.id)
+            }
+        });
+    }
+}

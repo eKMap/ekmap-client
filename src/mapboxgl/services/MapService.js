@@ -149,26 +149,9 @@ export class MapService extends ServiceBase {
 
         var param = {};
         param.f = 'geojson';
-        if (params) {
-            var geom = params;
-            if (params.type == 'Point') {
-                param.geometryType = 'esriGeometryPoint'
-                param.geometry = {
-                    "x": geom.coordinates[0],
-                    "y": geom.coordinates[1],
-                    "spatialReference": { "wkid": 4326 }
-                }
-            }
-            if (params.type == 'Polygon') {
-                param.geometryType = 'esriGeometryPolygon';
-                param.geometry = {
-                    "rings": geom.coordinates,
-                    "spatialReference": { "wkid": 4326 }
-                }
-            }
-            if (params.type == 'LineString')
-                param.geometryType = 'esriGeometryPolyline'
-        }
+        var data = Util._setGeometry(params);
+        param.geometryType = data.geometryType;
+        param.geometry = data.geometry;
         var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {

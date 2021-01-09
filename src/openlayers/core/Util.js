@@ -62,7 +62,7 @@ export class Util {
 
         var args = slice.call(arguments, 2);
 
-        return function () {
+        return function() {
             return fn.apply(obj, args.length ? args.concat(slice.call(arguments)) : arguments);
         };
     }
@@ -77,7 +77,6 @@ export class Util {
                 var param = params[key];
                 var type = Object.prototype.toString.call(param);
                 var value;
-
                 if (data.length) {
                     data += '&';
                 }
@@ -89,7 +88,7 @@ export class Util {
                     value = param.valueOf();
                 } else {
                     var param = param + '';
-                    if (param.indexOf(':'))
+                    if (param.indexOf(':') && key != 'layerDefs')
                         param = param.replace(":", "%3A");
                     if (param.indexOf('/'))
                         param = param.replace("/", "%2F");
@@ -106,58 +105,29 @@ export class Util {
             geometry: null,
             geometryType: null
         };
-        if (geometry instanceof mapboxgl.LngLat) {
-            geometry = {
-                type: 'Point',
-                coordinates: [geometry.lng, geometry.lat]
-            };
-        }
 
-        if (geometry instanceof mapboxgl.LngLatBounds) {
-            // set geometry + geometryType
+        console.log(geometry)
+        if (Array.isArray(geometry)) {
             params.geometry = this.boundsToExtent(geometry);
             params.geometryType = 'esriGeometryEnvelope';
             return params;
+        } else {
+            geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(geometry))
         }
 
-        // confirm that our GeoJSON is a point, line or polygon
         if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
             params.geometry = Parse.geojsonToArcGIS(geometry);
             params.geometryType = this.geojsonTypeToArcGIS(geometry.type);
             return params;
         }
-
-        // convert L.Marker > L.LatLng
-        if (geometry.getLatLng) {
-            geometry = geometry.getLatLng();
-        }
-        // handle L.GeoJSON, pull out the first geometry
-        //if (geometry instanceof GeoJSON) {
-        //    // reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
-        //    geometry = geometry.getLayers()[0].feature.geometry;
-        //    params.geometry = geojsonToArcGIS(geometry);
-        //    params.geometryType = geojsonTypeToArcGIS(geometry.type);
-        //}
-
-        // Handle L.Polyline and L.Polygon
-        //if (geometry.toGeoJSON) {
-        //    geometry = geometry.toGeoJSON();
-        //}
-
-        // handle GeoJSON feature by pulling out the geometry
-        if (geometry.type === 'Feature') {
-            // get the geometry of the geojson feature
-            geometry = geometry.geometry;
-        }
-
     }
 
     static boundsToExtent(bounds) {
         return {
-            'xmin': bounds.getSouthWest().lng,
-            'ymin': bounds.getSouthWest().lat,
-            'xmax': bounds.getNorthEast().lng,
-            'ymax': bounds.getNorthEast().lat,
+            'xmin': bounds[0],
+            'ymin': bounds[1],
+            'xmax': bounds[2],
+            'ymax': bounds[3],
             'spatialReference': {
                 'wkid': 4326
             }
@@ -278,14 +248,14 @@ export class Util {
 
         var args = slice.call(arguments, 2);
 
-        return function () {
+        return function() {
             return fn.apply(obj, args.length ? args.concat(slice.call(arguments)) : arguments);
         };
     }
 
     static cancelAnimFrame(id) {
         var cancelFn = window.cancelAnimationFrame || this.getPrefixed('CancelAnimationFrame') ||
-            this.getPrefixed('CancelRequestAnimationFrame') || function (id) { window.clearTimeout(id); };
+            this.getPrefixed('CancelRequestAnimationFrame') || function(id) { window.clearTimeout(id); };
         if (id) {
             cancelFn.call(window, id);
         }
@@ -417,8 +387,10 @@ export class Util {
                 // }
             }
         });
-        canv.height = height; canv.style.height = canv.height + 'px';
-        canv.width = height; canv.style.width = canv.width + 'px';
+        canv.height = height;
+        canv.style.height = canv.height + 'px';
+        canv.width = height;
+        canv.style.width = canv.width + 'px';
         dom.appendChild(canv);
         return chart;
     }
@@ -429,6 +401,15 @@ export class Util {
             params.push(encodeURIComponent(uppercase ? i.toUpperCase() : i) + '=' + encodeURIComponent(obj[i]));
         }
         return ((!existingUrl || existingUrl.indexOf('?') === -1) ? '?' : '&') + params.join('&');
+    }
+
+    static getSourceId(map) {
+        var layers = map.getStyle().layers;
+        var idCheck = layers[0].id % 2;
+        if (!isNaN(idCheck)) {
+            var lay = map.getLayer(layers[0].id);
+            return lay.source;
+        }
     }
 }
 

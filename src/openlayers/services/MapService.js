@@ -1,4 +1,4 @@
-import ol from 'mapbox-gl';
+import '../core/Base';
 import { ServiceBase } from './ServiceBase';
 import { Util } from '../core/Util';
 
@@ -62,7 +62,7 @@ export class MapService extends ServiceBase {
             param.f = 'json';
             var service = new MapService(me.options);
             return service.request('find', param, function(error, response) {
-                callback.call(context, error, response, response);
+                callback.call(context, response.results);
             }, me);
         })
 
@@ -85,7 +85,8 @@ export class MapService extends ServiceBase {
         param.f = 'json';
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.features) ? response.features : undefined;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -96,10 +97,10 @@ export class MapService extends ServiceBase {
      */
     getLayers(callback, context) {
         var params = {};
-        params.f = 'pjson';
+        params.f = 'json';
         var service = new MapService(this.options);
         return service.request('layers', params, function(error, response) {
-            callback.call(context, error, response, response);
+            callback.call(context, response);
         }, this);
     }
 
@@ -113,7 +114,7 @@ export class MapService extends ServiceBase {
         params.f = 'json';
         var service = new MapService(this.options);
         return service.request('legend', params, function(error, response) {
-            callback.call(context, error, response, response);
+            callback.call(context, response);
         }, this);
     }
 
@@ -129,9 +130,11 @@ export class MapService extends ServiceBase {
         param.f = 'geojson';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.features) ? response.features : undefined;
+            callback.call(context, error, result);
         }, this);
     }
 
@@ -144,31 +147,26 @@ export class MapService extends ServiceBase {
     queryByGeometry(params, callback, context) {
         var param = {};
         param.f = 'geojson';
-        if (params) {
-            var geom = params;
-            if (params.type == 'Point') {
-                param.geometryType = 'esriGeometryPoint'
-                param.geometry = {
-                    "x": geom.coordinates[0],
-                    "y": geom.coordinates[1],
-                    "spatialReference": { "wkid": 4326 }
-                }
-            }
-            if (params.type == 'Polygon') {
-                param.geometryType = 'esriGeometryPolygon';
-                param.geometry = {
-                    "rings": geom.coordinates,
-                    "spatialReference": { "wkid": 4326 }
-                }
-            }
-            if (params.type == 'LineString')
-                param.geometryType = 'esriGeometryPolyline'
-        }
+        var data = Util._setGeometry(params);
+        param.geometryType = data.geometryType;
+        param.geometry = data.geometry;
+        var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = (response && response.features) ? response.features : undefined;
+            callback.call(context, error, result);
         }, this);
     }
-}
 
-ol.ekmap.MapService = MapService;
+    /**
+     * @function ol.ekmap.MapService.prototype.on
+     * @description On map.
+     * @param {ol.Map} map The map is defined.
+     * @returns {this}
+     */
+    on(map) {
+        this.map = map
+        return this;
+    }
+
+}

@@ -129,6 +129,8 @@ export class Legend extends mapboxgl.Evented {
         } else
             var div = divTarget;
         div.style.maxHeight = "500px";
+        div.style.maxWidth = "300px";
+        div.style.width = "220px";
         div.style.padding = "0px 1rem";
 
         var ul = document.createElement("ul");

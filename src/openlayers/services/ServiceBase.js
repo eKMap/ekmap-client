@@ -1,6 +1,7 @@
-import ol from 'mapbox-gl';
+import '../core/Base';
 import { Util } from '../core/Util';
 import { Request } from '../core/Request';
+import Observable from 'ol/Observable';
 
 /**
  * @class ol.ekmap.ServiceBase
@@ -9,8 +10,11 @@ import { Request } from '../core/Request';
  * @param {Object} options The optional parameters.
  * @param {string} options.url (Required) The URL to the MapService.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
+ * @param {string} options.tokenKey - Will use this token to authenticate all calls to the service.
+ * @extends {ol.Observable}
+ * 
  */
-export class ServiceBase extends ol.Evented {
+export class ServiceBase extends Observable {
 
     constructor(options) {
         super(options);
@@ -21,7 +25,7 @@ export class ServiceBase extends ol.Evented {
          * @description .
          * @property {Object} this this .
          */
-        this.fire('initialized', this);
+        this.dispatchEvent({ type: 'initialized', value: this });
     }
 
     request(path, params, callback, context) {
@@ -29,12 +33,22 @@ export class ServiceBase extends ol.Evented {
     }
 
     _request(path, params, callback, context) {
-        this.fire('requeststart', {
-            url: this.url + path,
-            params: params,
-        }, true);
+        this.dispatchEvent({
+            type: 'requeststart',
+            value: {
+                url: this.url + path,
+                params: params,
+            }
+        });
+
+        // this.fire('requeststart', {
+
+        // }, true);
         if (this.options.token) {
             params.token = this.options.token;
+        }
+        if (this.options.tokenKey) {
+            params.tokenKey = this.options.tokenKey;
         }
         if (this.options.requestParams) {
             Util.extend(params, this.options.requestParams);
@@ -52,10 +66,17 @@ export class ServiceBase extends ol.Evented {
     }
 
     _post(path, dataPost, callback, context) {
-        this.fire('poststart', {
-            url: this.url + path,
-            dataPost: dataPost,
-        }, true);
+        this.dispatchEvent({
+            type: 'poststart',
+            value: {
+                url: this.url + path,
+                dataPost: dataPost,
+            }
+        });
+        // this.fire('poststart', {
+        //     url: this.url + path,
+        //     dataPost: dataPost,
+        // }, true);
         if (this.options.requestParams) {
             Util.extend(dataPost, this.options.requestParams);
         }
@@ -115,5 +136,3 @@ export class ServiceBase extends ol.Evented {
         }, this);
     }
 }
-
-ol.ekmap.ServiceBase = ServiceBase;

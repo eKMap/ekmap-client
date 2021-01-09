@@ -1,4 +1,4 @@
-import ol from 'mapbox-gl';
+import '../core/Base';
 import { ServiceBase } from './ServiceBase';
 import { Util } from '../core/Util';
 
@@ -50,18 +50,18 @@ export class IdentifyFeatures extends ServiceBase {
      * @returns {this}
      */
     on(map) {
-        var bounds = new ol.LngLatBounds(map.getBounds()._sw, map.getBounds()._ne);
+        var bounds = map.getView().calculateExtent();
         var extent = {
-            'xmin': bounds.getSouthWest().lng,
-            'ymin': bounds.getSouthWest().lat,
-            'xmax': bounds.getNorthEast().lng,
-            'ymax': bounds.getNorthEast().lat,
+            'xmin': bounds[0],
+            'ymin': bounds[1],
+            'xmax': bounds[2],
+            'ymax': bounds[3],
             'spatialReference': {
                 'wkid': 4326
             }
         };
-        var size = map.getContainer()
-        this.paramsIdentify.imageDisplay = [size.clientWidth, size.clientHeight, 96];
+        var size = map.getSize();
+        this.paramsIdentify.imageDisplay = [size[0], size[1], 96];
         this.paramsIdentify.mapExtent = [extent.xmin, extent.ymin, extent.xmax, extent.ymax];
         return this;
     }
@@ -73,7 +73,7 @@ export class IdentifyFeatures extends ServiceBase {
      */
     at(geometry) {
         if (geometry.length === 2)
-            geometry = new ol.LngLat(geometry);
+            geometry = new ol.geom.Point(geometry);
         this._setGeometryParams(geometry);
         return this;
     }
@@ -87,7 +87,8 @@ export class IdentifyFeatures extends ServiceBase {
         var service = new IdentifyFeatures(this.options);
         return service.request('identify', this.paramsIdentify, function(error, response) {
             // immediately invoke with an error
-            callback.call(context, error, response, response);
+
+            callback.call(context, error, response.results);
         }, this);
     }
 
@@ -102,5 +103,3 @@ export class IdentifyFeatures extends ServiceBase {
         this.paramsIdentify.geometryType = converted.geometryType;
     }
 }
-
-ol.ekmap.IdentifyFeatures = IdentifyFeatures;

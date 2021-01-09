@@ -11,7 +11,7 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -26,11 +26,10 @@
     <script>
         var map = new ol.Map({
             target: 'divMapId',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })],  
-            controls: ol.control.defaults({zoom: false}),
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: false
+            }),
             view: new ol.View({
                 center: [105.20886162772933, 16.518572979240204],
                 zoom: 5.193739308697748,
@@ -38,6 +37,9 @@
                 multiWorld: true
             })
         });
+        new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
         zoomControl = new ol.control.Zoom();
         map.addControl(zoomControl);
 

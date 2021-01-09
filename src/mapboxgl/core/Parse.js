@@ -44,13 +44,15 @@ export class Parse {
             typeof arcgis.ymax === 'number'
         ) {
             geojson.type = 'Polygon';
-            geojson.coordinates = [[
-                [arcgis.xmax, arcgis.ymax],
-                [arcgis.xmin, arcgis.ymax],
-                [arcgis.xmin, arcgis.ymin],
-                [arcgis.xmax, arcgis.ymin],
-                [arcgis.xmax, arcgis.ymax]
-            ]];
+            geojson.coordinates = [
+                [
+                    [arcgis.xmax, arcgis.ymax],
+                    [arcgis.xmin, arcgis.ymax],
+                    [arcgis.xmin, arcgis.ymin],
+                    [arcgis.xmax, arcgis.ymin],
+                    [arcgis.xmax, arcgis.ymax]
+                ]
+            ];
         }
 
         if (arcgis.geometry || arcgis.attributes) {
@@ -107,7 +109,7 @@ export class Parse {
                 result.spatialReference = spatialReference;
                 break;
             case 'Polygon':
-                result.rings = orientRings(geojson.coordinates.slice(0));
+                result.rings = geojson.coordinates;
                 result.spatialReference = spatialReference;
                 break;
             case 'MultiPolygon':
@@ -118,7 +120,7 @@ export class Parse {
                 if (geojson.geometry && geojson.geometry.type != 'Polyline') {
                     result.geometry = this.geojsonToArcGIS(geojson.geometry, idAttribute);
                 }
-                if (geojson.properties) 
+                if (geojson.properties)
                     result.attributes = (geojson.properties) ? this.shallowClone(geojson.properties) : {};
                 //if (geojson.id)
                 //    result.attributes[idAttribute] = geojson.id;
