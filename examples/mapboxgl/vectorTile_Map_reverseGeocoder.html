@@ -116,7 +116,8 @@
             map.moveLayer(layers[layers.length - 1].id, layers[0].id)
             reverse = new mapboxgl.ekmap.control.Reverse({
                 target: 'activeControl',
-                provider: 'OSM',
+                //provider: 'OSM',
+                url: 'https://nominatim.openstreetmap.org/reverse/', //'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address
                 tokenKey: '83F55C73-7D2A-4C97-903C-7BA6559DC0A4'
             })
             map.addControl(reverse);

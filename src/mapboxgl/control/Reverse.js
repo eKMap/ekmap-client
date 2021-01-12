@@ -38,10 +38,14 @@ export class Reverse extends mapboxgl.Evented {
         this.pointColor = this.options.pointColor != undefined ? this.options.pointColor : '#3FB1CE';
         this.scale = this.options.scale != undefined ? this.options.scale : 1;
         this.listeners = {};
-        if (this.provider == 'eKGIS')
-            this.url = 'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address';
-        if (this.provider == 'OSM')
-            this.url = 'https://nominatim.openstreetmap.org/reverse/';
+        this.url = this.options.url;
+        if (!this.url) {
+            if (this.provider == 'eKGIS')
+                this.url = 'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address';
+            if (this.provider == 'OSM')
+                this.url = 'https://nominatim.openstreetmap.org/reverse/';
+        }
+
         this.marker = '';
     }
 
@@ -155,7 +159,7 @@ export class Reverse extends mapboxgl.Evented {
             scale: me.scale,
             color: me.pointColor
         }).setLngLat([e.lngLat.lng, e.lngLat.lat]).addTo(me._map);
-        if (me.provider == 'eKGIS') {
+        if (me.url == 'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address') {
             var params = {
                 latlng: [e.lngLat.lat, e.lngLat.lng]
             }
@@ -169,7 +173,7 @@ export class Reverse extends mapboxgl.Evented {
         }
 
 
-        if (me.provider == 'OSM') {
+        if (me.url == 'https://nominatim.openstreetmap.org/reverse/') {
             var params = {
                 format: 'json',
                 lat: e.lngLat.lat,
