@@ -103,6 +103,17 @@ export class FeatureLayer extends Observable {
                 // });
             }
             if (result[0].geometry.type == "LineString") {
+                var vectorSource = new ol.source.Vector({
+                    features: (new ol.format.GeoJSON()).readFeatures(features),
+                    wrapX: false
+                });
+                var resultLayer = new ol.layer.Vector({
+                    source: vectorSource
+                });
+                resultLayer.setProperties({
+                    'id': 'line'
+                })
+                map.addLayer(resultLayer);
                 // map.addSource('line', {
                 //     "type": "geojson",
                 //     "data": {
@@ -139,6 +150,17 @@ export class FeatureLayer extends Observable {
                 // });
             }
             if (result[0].geometry.type == "Polygon") {
+                var vectorSource = new ol.source.Vector({
+                    features: (new ol.format.GeoJSON()).readFeatures(features),
+                    wrapX: false
+                });
+                var resultLayer = new ol.layer.Vector({
+                    source: vectorSource
+                });
+                resultLayer.setProperties({
+                    'id': 'area'
+                })
+                map.addLayer(resultLayer);
                 // map.addSource('area', {
                 //     "type": "geojson",
                 //     // lineMetrics: true,
@@ -372,10 +394,14 @@ export class FeatureLayer extends Observable {
             layers.forEach(function(layer) {
                 if (layer.getProperties().id == 'point') {
                     var source = layer.getSource();
-                    var feature = new ol.Feature({
-                        geometry: params.adds
-                    })
-                    source.addFeature(feature)
+                    if (params.adds instanceof ol.Feature)
+                        source.addFeature(params.adds)
+                    else {
+                        var feature = new ol.Feature({
+                            geometry: params.adds
+                        })
+                        source.addFeature(feature)
+                    }
                 }
             });
         }

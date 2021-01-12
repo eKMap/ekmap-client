@@ -31,18 +31,13 @@
             }),
             view: new ol.View({
                 center: [105, 17],
-                zoom: 4,
+                zoom: 5,
                 projection: 'EPSG:4326',
-                multiWorld: true
             })
         });
-        var layer = new ol.layer.Tile({
-            source: new ol.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }),
-            projection: 'EPSG:4326'
-        });
-        map.addLayer(layer);
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
     </script>
 </body>
 

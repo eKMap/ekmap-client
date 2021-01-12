@@ -86,6 +86,7 @@ export class Reverse extends mapboxgl.Evented {
                     me.fire('unReverse', me);
                 }
             });
+            me._container.style.display = 'none';
         }
 
         me._container.addEventListener("click", function(e) {

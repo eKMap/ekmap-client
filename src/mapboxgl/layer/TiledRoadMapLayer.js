@@ -10,6 +10,7 @@ import { TileLayer } from './TileLayer';
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name=RoadMap Name of layer.
+ * @param {string} options.image=https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9 Thumbnail of layer.
  * @param {string} options.visibility=visible Show or hide layer.
  * 
  * @extends {mapboxgl.ekmap.TileLayer}
@@ -47,7 +48,7 @@ export class TiledRoadMapLayer extends TileLayer {
                 id: this.options.id,
                 name: this.options.name != undefined ? this.options.name : 'Road Map',
                 visibility: this.options.visibility,
-                image: 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
+                image: this.options.image != undefined ? this.options.image : 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
             })
         } else {
             this.TileLayer = new mapboxgl.ekmap.TileLayer({
@@ -55,7 +56,7 @@ export class TiledRoadMapLayer extends TileLayer {
                 id: this.options.id,
                 name: this.options.name != undefined ? this.options.name : 'Road Map',
                 visibility: this.options.visibility,
-                image: 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
+                image: this.options.image != undefined ? this.options.image : 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
             })
         }
     }

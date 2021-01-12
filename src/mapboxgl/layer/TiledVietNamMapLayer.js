@@ -10,6 +10,7 @@ import { TileLayer } from './TileLayer';
  * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name=VietNamMap Name of layer.
+ * @param {string} options.image=https://map.ekgis.vn/Common/images/vnmap.png Thumbnail of layer.
  * @param {string} options.visibility=visible Show or hide layer.
  * 
  * @extends {mapboxgl.ekmap.TileLayer}
@@ -49,7 +50,7 @@ export class TiledVietNamMapLayer extends TileLayer {
                 name: this.options.name != undefined ? this.options.name : 'VietNam Map',
                 id: this.options.id,
                 visibility: this.options.visibility,
-                image: 'https://map.ekgis.vn/Common/images/vnmap.png'
+                image: this.options.image != undefined ? this.options.image : 'https://map.ekgis.vn/Common/images/vnmap.png'
             })
         } else {
             this.TileLayer = new mapboxgl.ekmap.TileLayer({
@@ -59,7 +60,7 @@ export class TiledVietNamMapLayer extends TileLayer {
                 id: this.options.id,
                 name: this.options.name != undefined ? this.options.name : 'VietNam Map',
                 visibility: this.options.visibility,
-                image: 'https://map.ekgis.vn/Common/images/vnmap.png'
+                image: this.options.image != undefined ? this.options.image : 'https://map.ekgis.vn/Common/images/vnmap.png'
             })
         }
     }

@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
@@ -15,11 +13,11 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #selectedFeatures {
             position: absolute;
             left: 12px;
@@ -30,23 +28,23 @@
             max-height: 250px;
             max-width: 250px;
         }
-
+        
         .leaflet-bar.map-text a {
             color: #79BD8F;
             display: inline;
         }
-
+        
         .dataNote {
             padding: 10px;
             margin: 0px;
             list-style-type: none;
         }
-
+        
         .noteType {
             padding: 0px;
             list-style-type: none;
         }
-
+        
         .imgNote {
             border: 1px solid !important;
         }
@@ -67,8 +65,7 @@
                     <li>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX/AAAZ4gk3AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX/AAAZ4gk3AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     High
                                 </span>
@@ -76,8 +73,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAUDBAICAgICAgICAgIGBwwIBwcHBwMCCwkCBQMLBgUDBQUHDBALBwgOCQUFDBUMDhERExMTBwsWGBYSGBASExIBBQUFBwYHBQgIBRIMBQgUFBISEhISEhISEhIUFBIUEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEv/AABEIAWgB4AMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQII/8QAGxABAQEBAQADAAAAAAAAAAAAAEEBYRFTkvD/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQgG/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A6NAY8dWAAAAAAAAAAAAAAAAAAAAAAAAAAAAmVQUAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE+oKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACZVAAEygqZVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATYCgAAAAAAAAAAAAAAAJ7xQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMqgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACZVAATKCgAAAAAAAAAAAAAJsUAAAAAAAAAAAAAAAAAAAAAAATKoAAAAAAAAAAAAAAACZQNiiedBQAAAAAAAAAAAAAAAAAAAAT9wFAAAAE2KAAACedBQAAAAAAABNigAAAAAAAAAAAAJsUAAAAAAAAAAATKoAAAAoAIAAAAAAAAAAAAAAAAAAAAAAAmVQEymxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEyqAAAAAAAAAAAAAAAAAAAAnxgoAAAAAAAAAAAAAAAAnvFAAAAAAAAAEyqCZVAAAATYoJlUAAAAAAAAAAAAAATKCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACZVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMoKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJlUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEyqAAAAAAAAAAAAAAAAAAAAAAAAAAJlBQAAAAAAAAAAAAAAATKoAAAAAAAAAAACZVAAAAAAAAAAAAAAAAAAABPOgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmVQBNigAACbFAAAAAAAAAAAAAAAAAAAAAAATKoAAAACZVAAAAAAAAAAAAAAAAAAAAAAAAABNigAAAAAAAAAAAAAAAAAAAAAAAJsBQAAAAAAAAAAAAAAAAATYoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnnVAAAAAAAAAAE2AoAAAAAAAAAAAAAAAAAAAAMg0AAAAAAmxUygoAAAAAAAAAAJlBQAAAAAEyqAAAAAAAAAAAAmUFAAAAAAAAAAAATYoAJ51QAAAAAAAAAAAAAAAAAAAAATYCgAAAAAAAAnvAUAAAAAAAAAAAAAAAE2KAAAAAAAAAAAAAAAAAAACZVAAAAAAAAAAAAAAABMqgAAAAAAAAAAAAAAAACZVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABNgKAAAAAAmxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABPeKACZVAE86e8BQAAAAAAAAT3gKAAAAAAAAAAAAAAAAAAAAAAAAAAACZVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//2Q==">
+                                <img class="imgNote" width="13" height="13" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAUDBAICAgICAgICAgIGBwwIBwcHBwMCCwkCBQMLBgUDBQUHDBALBwgOCQUFDBUMDhERExMTBwsWGBYSGBASExIBBQUFBwYHBQgIBRIMBQgUFBISEhISEhISEhIUFBIUEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEv/AABEIAWgB4AMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQII/8QAGxABAQEBAQADAAAAAAAAAAAAAEEBYRFTkvD/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQgG/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A6NAY8dWAAAAAAAAAAAAAAAAAAAAAAAAAAAAmVQUAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE+oKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACZVAAEygqZVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATYCgAAAAAAAAAAAAAAAJ7xQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMqgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACZVAATKCgAAAAAAAAAAAAAJsUAAAAAAAAAAAAAAAAAAAAAAATKoAAAAAAAAAAAAAAACZQNiiedBQAAAAAAAAAAAAAAAAAAAAT9wFAAAAE2KAAACedBQAAAAAAABNigAAAAAAAAAAAAJsUAAAAAAAAAAATKoAAAAoAIAAAAAAAAAAAAAAAAAAAAAAAmVQEymxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEyqAAAAAAAAAAAAAAAAAAAAnxgoAAAAAAAAAAAAAAAAnvFAAAAAAAAAEyqCZVAAAATYoJlUAAAAAAAAAAAAAATKCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACZVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMoKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJlUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEyqAAAAAAAAAAAAAAAAAAAAAAAAAAJlBQAAAAAAAAAAAAAAATKoAAAAAAAAAAACZVAAAAAAAAAAAAAAAAAAABPOgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmVQBNigAACbFAAAAAAAAAAAAAAAAAAAAAAATKoAAAACZVAAAAAAAAAAAAAAAAAAAAAAAAABNigAAAAAAAAAAAAAAAAAAAAAAAJsBQAAAAAAAAAAAAAAAAATYoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnnVAAAAAAAAAAE2AoAAAAAAAAAAAAAAAAAAAAMg0AAAAAAmxUygoAAAAAAAAAAJlBQAAAAAEyqAAAAAAAAAAAAmUFAAAAAAAAAAAATYoAJ51QAAAAAAAAAAAAAAAAAAAAATYCgAAAAAAAAnvAUAAAAAAAAAAAAAAAE2KAAAAAAAAAAAAAAAAAAACZVAAAAAAAAAAAAAAABMqgAAAAAAAAAAAAAAAACZVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABNgKAAAAAAmxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABPeKACZVAE86e8BQAAAAAAAAT3gKAAAAAAAAAAAAAAAAAAAAAAAAAAACZVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//2Q==">
                                 <span style="padding-left: 15px;">
                                     Medium
                                 </span>
@@ -89,126 +85,131 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [105.60200498678955, 21.029573713872082],
-            style: {
-                version: 8,
-                glyphs: urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
-                sources: {
-                },
-                layers: [
-                ],
-            },
-            zoom: 8.796068848824532
+        var map = new ol.Map({
+            target: 'divMapId',
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [105.60200498678955, 21.029573713872082],
+                zoom: 8.796068848824532,
+                projection: 'EPSG:4326',
+            })
         });
         widgets.loader.showLoader("data loading...");
-        map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map);
-            map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
 
-            var bbox = [105.18513830324133, 20.448421821750017, 106.12865461448217, 21.521363590051706]
-            var cellSide = 5;
-            var options = { units: 'miles' };
+        var bbox = [105.18513830324133, 20.448421821750017, 106.12865461448217, 21.521363590051706]
+        var cellSide = 5;
+        var options = {
+            units: 'miles'
+        };
 
-            var hexgrid = turf.hexGrid(bbox, cellSide, options);
-            var listPoint = [];
-            var hex;
-            var fea = [];
-            $.get('../data/hanoi.json', function (response) {
-                var features = response.features;
-                features.forEach(fea => {
-                    listPoint.push(fea.geometry.coordinates)
-                });
-                var points = turf.points(listPoint);
-                for (var x = 0; x < Object.keys(hexgrid.features).length; x++) {
-                    var polygon = hexgrid.features[x].geometry.coordinates;
-                    var searchWithin = turf.polygon(polygon);
-                    var ptsWithin = turf.pointsWithinPolygon(points, searchWithin);
-                    if (ptsWithin.features.length > 0)
-                        fea.push({
-                            "type": "Feature",
-                            "properties": {
-                                "count": ptsWithin.features.length
-                            },
-                            "geometry": hexgrid.features[x].geometry
-                        })
-
+        var hexgrid = turf.hexGrid(bbox, cellSide, options);
+        var listPoint = [];
+        var hex;
+        var fea = [];
+        $.get('../data/hanoi.json', function(response) {
+            var features = response.features;
+            features.forEach(fea => {
+                listPoint.push(fea.geometry.coordinates)
+            });
+            var points = turf.points(listPoint);
+            for (var x = 0; x < Object.keys(hexgrid.features).length; x++) {
+                var polygon = hexgrid.features[x].geometry.coordinates;
+                var searchWithin = turf.polygon(polygon);
+                var ptsWithin = turf.pointsWithinPolygon(points, searchWithin);
+                if (ptsWithin.features.length > 0) {
+                    var feature = new ol.Feature(new ol.geom.Polygon(hexgrid.features[x].geometry.coordinates))
+                    feature.setProperties({
+                        "count": ptsWithin.features.length
+                    })
+                    fea.push(feature)
                 }
-            }).done(function () {
-                var dataDensity = {
-                    "type": "FeatureCollection",
-                    "features": fea
-                }
-                map.addLayer({
-                    'id': 'line',
-                    'type': 'line',
-                    'source': {
-                        'type': 'geojson',
-                        'data': dataDensity
-                    },
-                    'paint': {
-                        'line-color': 'orange',
-                        'line-width': [
-                            'interpolate',
-                            ['linear'],
-                            ['get', 'count'],
-                            0,
-                            0,
-                            1,
-                            20
-                        ],
-                        'line-opacity': 0.2
-                    }
-                })
+                // fea.push({
+                //     "type": "Feature",
+                //     "properties": {
+                //         "count": ptsWithin.features.length
+                //     },
+                //     "geometry": hexgrid.features[x].geometry
+                // })
 
-                map.addLayer({
-                    'id': 'hexagon',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': dataDensity
-                    },
-                    'paint': {
-                        'fill-color': [
-                            'interpolate',
-                            ['linear'],
-                            ['get', 'count'],
-                            0,
-                            'yellow',
-                            1000,
-                            'red'
-                        ],
-                        'fill-opacity': [
-                            'interpolate',
-                            ['linear'],
-                            ['get', 'count'],
-                            0,
-                            0,
-                            1,
-                            0.7
-                        ]
-                    }
-                })
-                map.addLayer({
-                    id: "cluster-count",
-                    type: "symbol",
-                    source: {
-                        'type': 'geojson',
-                        'data': dataDensity
-                    },
-                    filter: ["has", "count"],
-                    layout: {
-                        'text-field': '{count}',
-                        'text-size': 12,
-                    }
-                });
-                widgets.loader.removeLoader();
-            })
+            }
+        }).done(function() {
+            console.log(fea)
+            var source = new ol.source.Vector({
+                features: fea
+            });
+            var layer = new ol.layer.Vector({
+                // name: 'Cluster',
+                source: source,
+                // animationDuration: 700,
+                style: getStyle,
+                opacity: 0.7
+            });
+            map.addLayer(layer)
+            widgets.loader.removeLoader();
         })
 
+        function getStyle(features) {
+            var count = features.getProperties().count;
+            if (count >= 0 && count <= 1000) {
+                var fill = new ol.style.Fill({
+                    color: 'yellow'
+                });
+                var stroke = new ol.style.Stroke({
+                    color: 'orange',
+                    width: 2
+                });
+                var styles = [
+                    new ol.style.Style({
+                        fill: fill,
+                        stroke: stroke,
+                        text: new ol.style.Text({
+                            text: count.toString(),
+                            fill: new ol.style.Fill({
+                                color: '#000',
+                                scale: 15
+                            }),
+                            stroke: new ol.style.Stroke({
+                                color: '#000',
+                                width: 0.7
+                            })
+                        })
+                    })
+                ];
+                return styles;
+            } else {
+                var fill = new ol.style.Fill({
+                    color: 'red'
+                });
+                var stroke = new ol.style.Stroke({
+                    color: 'orange',
+                    width: 2
+                });
+                var styles = [
+                    new ol.style.Style({
+                        fill: fill,
+                        stroke: stroke,
+                        text: new ol.style.Text({
+                            text: count.toString(),
+                            fill: new ol.style.Fill({
+                                color: '#000',
+                                scale: 15
+                            }),
+                            stroke: new ol.style.Stroke({
+                                color: '#000',
+                                width: 0.7
+                            })
+                        })
+                    })
+                ];
+                return styles;
+            }
+        }
     </script>
 </body>
 

@@ -3,26 +3,16 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <title>Marker Cluster</title>
     <style type="text/css">
         .map {
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
             margin: 8px;
@@ -36,112 +26,89 @@
         </div>
     </div>
     <script type="text/javascript">
-        var map = new mapboxgl.Map({
-            container: "divMapId",
-            style: {
-                version: 8,
-                glyphs: urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
-                sources: {
-                },
-                layers: [
-                ],
-            },
-            center: [58.117655641467195, 12.140828304833803],
-            zoom: 1
-        });
-
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
-        map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-
-            //Data Source: https://earthquake.usgs.gov/earthquakes
-            $.get("../data/earthquake.json", function (response) {
-                var geojson = response;
-                map.addSource("earthquakes", {
-                    type: "geojson",
-                    data: geojson,
-                    cluster: true,
-                    clusterMaxZoom: 14,
-                    clusterRadius: 100
-                });
-
-                map.addLayer({
-                    id: "clusters",
-                    type: "circle",
-                    source: "earthquakes",
-                    filter: ["has", "point_count"],
-                    paint: {
-                        "circle-color": [
-                            "step",
-                            ["get", "point_count"],
-                            "#51bbd6",
-                            100,
-                            "#f1f075",
-                            750,
-                            "#f28cb1"
-                        ],
-                        "circle-radius": [
-                            "step",
-                            ["get", "point_count"],
-                            20,
-                            100,
-                            30,
-                            750,
-                            40
-                        ]
-                    }
-                });
-
-                map.addLayer({
-                    id: "cluster-count",
-                    type: "symbol",
-                    source: "earthquakes",
-                    filter: ["has", "point_count"],
-                    layout: {
-                        'text-field': '{point_count_abbreviated}',
-                        'text-size': 12
-                    }
-                });
-                map.addLayer({
-                    id: "unclustered-point",
-                    type: "circle",
-                    source: "earthquakes",
-                    filter: ["!", ["has", "point_count"]],
-                    paint: {
-                        "circle-color": "#11b4da",
-                        "circle-radius": 4,
-                        "circle-stroke-width": 1,
-                        "circle-stroke-color": "#fff"
-                    }
-                });
-
-                map.on('click', 'clusters', function (e) {
-                    var features = map.queryRenderedFeatures(e.point, {
-                        layers: ['clusters']
-                    });
-                    var clusterId = features[0].properties.cluster_id;
-                    map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function (
-                        err, zoom) {
-                        if (err)
-                            return;
-                        map.easeTo({
-                            center: features[0].geometry.coordinates,
-                            zoom: zoom
-                        });
-                    });
-                });
-
-                map.on('mouseenter', 'clusters', function () {
-                    map.getCanvas().style.cursor = 'pointer';
-                });
-                map.on('mouseleave', 'clusters', function () {
-                    map.getCanvas().style.cursor = '';
-                });
+        var map = new ol.Map({
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            target: 'divMapId',
+            view: new ol.View({
+                center: [58.117655641467195, 12.140828304833803],
+                zoom: 1,
+                projection: 'EPSG:4326',
             })
         });
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+
+        //Data Source: https://earthquake.usgs.gov/earthquakes
+        $.get("../data/earthquake.json", function(response) {
+            var geojson = response.features;
+            var features = []
+            geojson.forEach(element => {
+                features.push(new ol.Feature(new ol.geom.Point(element.geometry.coordinates)));
+            });
+
+            // var source = new ol.source.Vector({
+            //     features: features,
+            // });
+
+            var clusterSource = new ol.source.Cluster({
+                distance: parseInt(40, 10),
+                source: new ol.source.Vector(),
+            });
+
+            var styleCache = {};
+
+            var clusters = new ol.layer.Vector({
+                // name: 'Cluster',
+                source: clusterSource,
+                // animationDuration: 700,
+                style: getStyle
+            });
+            map.addLayer(clusters)
+
+            function addFeatures(features) {
+                clusterSource.getSource().clear();
+                clusterSource.getSource().addFeatures(features);
+            }
+
+            addFeatures(features);
+        })
+
+        function getStyle(feature) {
+            var styleCache = {};
+            var size = feature.get('features').length;
+            var style = styleCache[size];
+            if (!style) {
+                var color = size > 25 ? "192,0,0" : size > 8 ? "255,128,0" : "0,128,0";
+                var radius = Math.max(8, Math.min(size * 0.75, 20));
+                var dash = 2 * Math.PI * radius / 6;
+                dash = [0, dash, dash, dash, dash, dash, dash];
+                style = styleCache[size] = [new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: radius,
+                        stroke: new ol.style.Stroke({
+                            color: "rgba(" + color + ",0.5)",
+                            width: 15,
+                            lineDash: dash,
+                            lineCap: "butt"
+                        }),
+                        fill: new ol.style.Fill({
+                            color: "rgba(" + color + ",1)"
+                        })
+                    }),
+                    text: new ol.style.Text({
+                        text: size.toString(),
+                        fill: new ol.style.Fill({
+                            color: '#fff'
+                        })
+                    })
+                })];
+            }
+            return style;
+        }
     </script>
 </body>
 

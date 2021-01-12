@@ -46,7 +46,9 @@ export class Draw extends mapboxgl.Evented {
             controls: this.controls,
             modes: this.modes
         });
-        map.addControl(this.draw, 'top-left');
+        map.addControl(this.draw);
+        if (!this.displayControlsDefault)
+            this._div.style.display = 'none'
         return this._div;
     }
 

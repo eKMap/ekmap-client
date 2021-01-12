@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
     <title>Road map</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
     </style>
 </head>
+
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [105, 17],
-            zoom: 4
+        var map = new ol.Map({
+            target: 'divMapId',
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [105, 17],
+                zoom: 5,
+                projection: 'EPSG:4326',
+            })
         });
-        var maps = new mapboxgl.ekmap.TiledRoadMapLayer().addTo(map);
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var roadMap = new ol.ekmap.TiledRoadMapLayer().addTo(map);
     </script>
 </body>
+
 </html>

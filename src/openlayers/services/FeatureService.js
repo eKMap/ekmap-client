@@ -280,18 +280,25 @@ export class FeatureService extends ServiceBase {
      * @function ol.ekmap.FeatureService.prototype.applyEdits
      * @description This operation adds, updates, and deletes features to the associated feature layer.
      * @param {Object} params Options.
-     * @param {GeoJSONObject} params.adds GeoJSON of feature add.
-     * @param {GeoJSONObject} params.updates GeoJSON of feature update.
+     * @param {ol.Feature} params.adds A vector object for geographic features with a geometry and other attribute properties, similar to the features in vector file formats like GeoJSON..
+     * @param {ol.Feature} params.updates A vector object for geographic features with a geometry and other attribute properties, similar to the features in vector file formats like GeoJSON..
      * @param {Interger} params.deletes Id of feature delete.
      * @param {RequestCallback} callback
      */
     applyEdits(params, callback, context) {
         var param = {}
         if (params.adds) {
-            var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(params.adds))
-            var geojson = {
-                'type': 'Feature',
-                'geometry': geometry
+            var geojson;
+            if (params.adds instanceof ol.Feature) {
+                geojson = Util.featureToGeojson(params.adds)
+            }
+            if (params.adds instanceof ol.geom.Point || params.adds instanceof ol.geom.LineString || params.adds instanceof ol.geom.Polygon) {
+                var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(params.adds))
+                geojson = {
+                    'type': 'Feature',
+                    'geometry': geometry,
+                    'properties': params.adds.getProperties()
+                }
             }
             var fea = Parse.geojsonToArcGIS(geojson);
             var arr1 = [];
@@ -300,15 +307,19 @@ export class FeatureService extends ServiceBase {
         } else
             param.adds = false;
         if (params.updates) {
-            var properties = geometry.properties;
-            var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(params.updates))
-            var geojson = {
-                'type': 'Feature',
-                'geometry': geometry,
-                'properties': properties
+            var geojson
+            if (params.updates instanceof ol.Feature) {
+                geojson = Util.featureToGeojson(params.updates)
             }
-            var fea = Parse.geojsonToArcGIS(geojson);
-            var dataUpdate = Parse.geojsonToArcGIS(fea);
+            if (params.updates instanceof ol.geom.Point || params.updates instanceof ol.geom.LineString || params.updates instanceof ol.geom.Polygon) {
+                var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(params.updates))
+                geojson = {
+                    'type': 'Feature',
+                    'geometry': geometry,
+                    'properties': params.updates.getProperties()
+                }
+            }
+            var dataUpdate = Parse.geojsonToArcGIS(geojson);
             var arr2 = [];
             arr2.push(dataUpdate);
             param.updates = JSON.stringify(arr2)
@@ -334,21 +345,22 @@ export class FeatureService extends ServiceBase {
         var params = {
             where: '1=1'
         };
-
-        this.query(params, function(result) {
-            data = {
-                'type': 'FeatureCollection',
-                'features': result
+        this.service.query(params, function(error, result) {
+            var features = {
+                type: "FeatureCollection",
+                features: result
             };
-            if (me.map.getLayer('point')) {
-                me.map.getSource('point').setData(data);
-            }
-            if (me.map.getLayer('line')) {
-                me.map.getSource('line').setData(data);
-            }
-            if (me.map.getLayer('area')) {
-                me.map.getSource('area').setData(data);
-            }
+
+            var vectorSource = new ol.source.Vector({
+                features: (new ol.format.GeoJSON()).readFeatures(features),
+                wrapX: false
+            });
+            var layers = me.map.getLayers().array_;
+            layers.forEach(function(layer) {
+                if (layer.getProperties().id == 'point' || layer.getProperties().id == 'line' || layer.getProperties().id == 'area') {
+                    layer.setSource(vectorSource)
+                }
+            });
         });
     }
 

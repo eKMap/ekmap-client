@@ -134,6 +134,41 @@ export class Util {
         };
     }
 
+    static featureToGeojson(feature) {
+        var geometry = feature.getGeometry();
+        var properties = feature.getProperties();
+        console.log(geometry)
+        var geojson;
+        if (geometry instanceof ol.geom.Point) {
+            var point = new ol.geom.Point(geometry.flatCoordinates);
+            var geom = JSON.parse((new ol.format.GeoJSON()).writeGeometry(point))
+            geojson = {
+                'type': 'Feature',
+                'geometry': geom,
+                'properties': properties
+            }
+        }
+        if (geometry instanceof ol.geom.LineString) {
+            var point = new ol.geom.LineString(geometry.flatCoordinates);
+            var geom = JSON.parse((new ol.format.GeoJSON()).writeGeometry(point))
+            geojson = {
+                'type': 'Feature',
+                'geometry': geom,
+                'properties': properties
+            }
+        }
+        if (geometry instanceof ol.geom.Polygon) {
+            var point = new ol.geom.Point(geometry.flatCoordinates);
+            var geom = JSON.parse((new ol.format.GeoJSON()).writeGeometry(point))
+            geojson = {
+                'type': 'Feature',
+                'geometry': geom,
+                'properties': properties
+            }
+        }
+        return geojson;
+    }
+
     static geojsonTypeToArcGIS(geoJsonType) {
         var arcgisGeometryType;
         switch (geoJsonType) {

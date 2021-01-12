@@ -8,7 +8,9 @@ import { TiledOSMapLayer } from './layer/TiledOSMapLayer';
 import { TiledMapLayer } from './layer/TiledMapLayer';
 import { TiledAdminMapLayer } from './layer/TiledAdminMapLayer';
 import { FeatureLayer } from './layer/FeatureLayer';
-
+import { HeatMapLayer } from './layer/HeatMapLayer';
+import { BasemapArcgisLayer } from './layer/BasemapArcgisLayer';
+import { AnimatedCluster } from './layer/AnimatedCluster';
 
 import { Util } from './core/Util';
 import { Parse } from './core/Parse';
@@ -41,6 +43,9 @@ if (window && window.ol) {
     ol.ekmap.TiledAdminMapLayer = TiledAdminMapLayer;
     ol.ekmap.TiledMapLayer = TiledMapLayer;
     ol.ekmap.FeatureLayer = FeatureLayer;
+    ol.layer.HeatMapLayer = HeatMapLayer;
+    ol.layer.AnimatedCluster = AnimatedCluster;
+    ol.ekmap.BasemapArcgisLayer = BasemapArcgisLayer;
 
     // service
     ol.ekmap.MapService = MapService;

@@ -3,19 +3,44 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Geomertry Query Data</title>
+    <title>Bound Query Data</title>
     <style>
         .map {
             width: 100%;
-            height: calc(100vh - 20px);
+            height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -24,66 +49,116 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Action draw and query it.
+            <button onclick="actionDraw()" class="btn-green">Acticon Draw</button>
+
+            <div id="calculated-area"></div>
+        </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [105.6685713, 20.9003181],
-            style: {
-                "version": 8,
-                "sources": {
-                },
-                "layers": [
-                ]
-            },
-            zoom: 7
+        var draw, resultLayer
+        var source = new ol.source.Vector();
+        var vector = new ol.layer.Vector({
+            source: source,
+            style: new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255, 255, 255, 0.2)',
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#ffcc33',
+                    width: 2,
+                }),
+                image: new ol.style.Circle({
+                    radius: 7,
+                    fill: new ol.style.Fill({
+                        color: '#ffcc33',
+                    }),
+                }),
+            }),
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
 
-            var tiledMap = new mapboxgl.ekmap.FeatureLayer({
-                url: urlFeatureLayer,
-                token: tokenKey
-            }).addTo(map);
-
-            var geometry = {
-                'type': 'Polygon',
-                'coordinates': [[[104.49305685331223, 21.281957265184587], [106.2838283376874, 21.281957265184587], [106.2838283376874, 20.079412404984694], [104.49305685331223, 21.281957265184587]]],
-            }
-
-            map.addLayer({
-                'id': 'polygonLayer',
-                'type': 'fill',
-                'source': {
-                    'type': 'geojson',
-                    'data': {
-                        'type': 'Feature',
-                        'geometry': geometry
-                    }
-                },
-                'paint': {
-                    'fill-outline-color': 'blue',
-                    'fill-color': 'rgba(0, 0, 255, 0.1)'
-
-                }
-            });
-
-            tiledMap.on("loadend", function () {
-                tiledMap.queryByGeometry(geometry, function (serviceResult) {
-                    var filter = serviceResult.reduce(
-                        function (memo, feature) {
-                            memo.push(feature.properties.OBJECTID);
-                            return memo;
-                        },
-                        ['in', 'OBJECTID']
-                    );
-                    map.setFilter('point-selected', filter);
-                });
+        var map = new ol.Map({
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            target: 'divMapId',
+            view: new ol.View({
+                center: [103.96544848210965, 21.38199998283456],
+                zoom: 8,
+                projection: 'EPSG:4326',
+                multiWorld: true
             })
-        })
+        });
+
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
+        var featureLayer = new ol.ekmap.FeatureLayer({
+            url: urlFeatureLayer
+        }).addTo(map);
+
+        map.addLayer(vector)
+
+        function actionDraw() {
+            addInteractions()
+        }
+
+        function addInteractions() {
+            draw = new ol.interaction.Draw({
+                source: source,
+                type: 'Polygon',
+            });
+            map.addInteraction(draw);
+
+            draw.on('drawend', function(evt) {
+                var feature = evt.feature;
+                var geometry = feature.getGeometry();
+                new ol.ekmap.FeatureService({
+                    url: urlFeatureLayer,
+                }).on(map).queryByGeometry(geometry, function(error, evt) {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        var features = evt;
+                        var data = {
+                            type: "FeatureCollection",
+                            features: features
+                        }
+                        var vectorSource = new ol.source.Vector({
+                            features: new ol.format.GeoJSON().readFeatures(data),
+                            wrapX: false
+                        });
+                        if (!resultLayer) {
+                            resultLayer = new ol.layer.Vector({
+                                source: vectorSource,
+                                style: new ol.style.Style({
+                                    image: new ol.style.Circle({
+                                        radius: 7,
+                                        fill: new ol.style.Fill({
+                                            color: 'red'
+                                        }),
+                                        stroke: new ol.style.Stroke({
+                                            color: '#00ffff',
+                                            width: 3
+                                        })
+                                    })
+                                })
+                            });
+                            map.addLayer(resultLayer);
+                        } else {
+                            resultLayer.setSource(vectorSource)
+                        }
+
+                    }
+                })
+            })
+            draw.on('drawstart', function(evt) {
+
+            })
+        }
     </script>
 </body>
 

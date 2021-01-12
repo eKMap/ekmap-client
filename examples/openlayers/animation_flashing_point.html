@@ -3,17 +3,16 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <title>Animation Flashing Point</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -25,112 +24,76 @@
         <div id="divMapId" class="map"></div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [105.20886162772933, 16.518572979240204],
-            zoom: 5.193739308697748
+        var map = new ol.Map({
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            target: 'divMapId',
+            view: new ol.View({
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 5.193739308697748,
+                projection: 'EPSG:4326',
+            })
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
-        }).addTo(map)
-        var size = 200;
+        }).addTo(map);
 
-        // implementation of CustomLayerInterface to draw a pulsing dot icon on the map
-        // see https://docs.mapbox.com/mapbox-gl-js/api/#customlayerinterface for more info
-        var pulsingDot = {
-            width: size,
-            height: size,
-            data: new Uint8Array(size * size * 4),
+        function addRandomFeature() {
+            var xmax = 128.18237309177036,
+                xmin = 99.4860840068072,
+                ymax = 24.798099762745814,
+                ymin = 8.45215489377107;
+            var feature = new ol.Feature(new ol.geom.Point([Math.floor(Math.random() * (xmax - xmin + 1) + xmin), Math.floor(Math.random() * (ymax - ymin + 1) + ymin)]));
+            source.addFeature(feature);
+        }
 
-            // get rendering context for the map canvas when layer is added to the map
-            onAdd: function () {
-                var canvas = document.createElement('canvas');
-                canvas.width = this.width;
-                canvas.height = this.height;
-                this.context = canvas.getContext('2d');
-            },
+        function flash(feature) {
+            var start = new Date().getTime();
+            var listenerKey;
 
-            // called once before every frame where the icon will be used
-            render: function () {
-                var duration = 1000;
-                var t = (performance.now() % duration) / duration;
-
-                var radius = (size / 2) * 0.3;
-                var outerRadius = (size / 2) * 0.7 * t + radius;
-                var context = this.context;
-
-                // draw outer circle
-                context.clearRect(0, 0, this.width, this.height);
-                context.beginPath();
-                context.arc(
-                    this.width / 2,
-                    this.height / 2,
-                    outerRadius,
-                    0,
-                    Math.PI * 2
-                );
-                context.fillStyle = 'rgba(255, 200, 200,' + (1 - t) + ')';
-                context.fill();
-
-                // draw inner circle
-                context.beginPath();
-                context.arc(
-                    this.width / 2,
-                    this.height / 2,
-                    radius,
-                    0,
-                    Math.PI * 2
-                );
-                context.fillStyle = 'rgba(255, 100, 100, 1)';
-                context.strokeStyle = 'white';
-                context.lineWidth = 2 + 4 * (1 - t);
-                context.fill();
-                context.stroke();
-
-                // update this image's data with data from the canvas
-                this.data = context.getImageData(
-                    0,
-                    0,
-                    this.width,
-                    this.height
-                ).data;
-
-                // continuously repaint the map, resulting in the smooth animation of the dot
-                map.triggerRepaint();
-
-                // return `true` to let the map know that the image was updated
-                return true;
+            function animate(event) {
+                var duration = 3000;
+                var vectorContext = new ol.render.getVectorContext(event);
+                var frameState = event.frameState;
+                var flashGeom = feature.getGeometry().clone();
+                var elapsed = frameState.time - start;
+                var elapsedRatio = elapsed / duration;
+                var radius = ol.easing.easeOut(elapsedRatio) * 25 + 5;
+                var opacity = ol.easing.easeOut(1 - elapsedRatio);
+                var style = new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: radius,
+                        stroke: new ol.style.Stroke({
+                            color: 'rgba(255, 0, 0, ' + opacity + ')',
+                            width: 0.25 + opacity
+                        })
+                    })
+                });
+                vectorContext.setStyle(style);
+                vectorContext.drawGeometry(flashGeom);
+                if (elapsed > duration) {
+                    ol.Observable.unByKey(listenerKey);
+                    return;
+                }
+                map.render();
             }
-        };
 
-        map.on('load', function () {
-            map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
+            listenerKey = vector.on('postrender', animate);
+        }
 
-            map.addSource('points', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'FeatureCollection',
-                    'features': [
-                        {
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': [105.6473801, 20.5023806]
-                            }
-                        }
-                    ]
-                }
-            });
-            map.addLayer({
-                'id': 'points',
-                'type': 'symbol',
-                'source': 'points',
-                'layout': {
-                    'icon-image': 'pulsing-dot'
-                }
-            });
+        var source = new ol.source.Vector({
+            wrapX: false
         });
+        source.on('addfeature', function(e) {
+            flash(e.feature);
+        });
+        var vector = new ol.layer.Vector({
+            source: source
+        });
+        map.addLayer(vector);
+        window.setInterval(addRandomFeature, 1000);
     </script>
 </body>
 

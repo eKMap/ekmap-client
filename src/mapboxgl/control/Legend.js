@@ -78,6 +78,8 @@ export class Legend extends mapboxgl.Evented {
         });
         if (this.button)
             this._div.appendChild(this.button);
+        if (this.target)
+            this._div.style.display = 'none';
         return this._div;
     }
 

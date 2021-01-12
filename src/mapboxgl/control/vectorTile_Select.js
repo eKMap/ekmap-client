@@ -83,7 +83,8 @@ export class Select extends mapboxgl.Evented {
 
         if (!me.target)
             me._container.appendChild(input);
-
+        else
+            me._container.style.display = 'none';
         return me._container
     }
 

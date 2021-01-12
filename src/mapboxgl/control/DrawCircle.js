@@ -70,8 +70,9 @@ export class DrawCircle extends mapboxgl.Evented {
 
         })
         if (!this.target)
-            this._div.appendChild(input)
-
+            this._div.appendChild(input);
+        else
+            this._div.style.display = 'none';
         return this._div;
     }
 

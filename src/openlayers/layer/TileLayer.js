@@ -1,5 +1,4 @@
-import TileImage from 'ol/source/TileImage';
-
+import { Util } from '../core/Util';
 /**
  * @class ol.ekmap.TileLayer
  * @classdesc The TileLayer class.
@@ -17,25 +16,43 @@ export class TileLayer {
     constructor(options) {
         this.options = options ? options : {};
         if (options) {
+            options = Util.setOptions(this, options);
+            // set the urls
+            if (options.url) {
+                options = Util.getUrlParams(options);
+                this.tileUrl = (options.proxy ? options.proxy + '?' : '') + options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
+            }
             if (options.urls)
                 this.tileUrls = options.urls
+            if (this.options.token) {
+                this.tileUrl += ('?token=' + this.options.token);
+            }
         }
     }
 
     /**
      * @function ol.ekmap.TileLayer.prototype.addTo
      * @description Adds the layer to the given map or layer group.
-     * @param {mapboxgl.Map} map - Adds the layer to the given map or layer group.
+     * @param {ol.Map} map - Adds the layer to the given map or layer group.
      * @returns this
      */
     addTo(map) {
-        map.addLayer(new ol.layer.Tile({
-            source: new ol.source.XYZ({
-                urls: this.tileUrls
-            }),
-            baseLayer: true,
-            title: this.options.name
-        }));
+        if (this.tileUrls)
+            map.addLayer(new ol.layer.Tile({
+                source: new ol.source.XYZ({
+                    urls: this.tileUrls
+                }),
+                baseLayer: true,
+                title: this.options.name
+            }));
+        if (this.tileUrl)
+            map.addLayer(new ol.layer.Tile({
+                source: new ol.source.XYZ({
+                    url: this.tileUrl
+                }),
+                baseLayer: true,
+                title: this.options.name
+            }));
         return this;
     }
 }
