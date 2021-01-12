@@ -270,6 +270,14 @@ var exampleConfig = {
                         description: "Use mapboxgl.ekmap.TiledOSMapLayer to display OSM Standard layer on the map"
                     },
                     {
+                        name: "Add Tile Layer",
+                        name_en: "Add Tile Layer",
+                        thumbnail: "tiledMap_adminmap.png",
+                        fileName: "tiledMap_add",
+                        subject: "Add Tile Map",
+                        description: "Use mapboxgl.ekmap.TileMap to display map layer on the map"
+                    },
+                    {
                         name: "Showing an ArcGIS basemap",
                         name_en: "Showing an ArcGIS basemap",
                         thumbnail: "basemapLayer.png",

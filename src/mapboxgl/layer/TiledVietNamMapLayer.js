@@ -36,33 +36,17 @@ export class TiledVietNamMapLayer extends TileLayer {
             "https://mt2.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
             "https://mt3.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png"
         ];
-        this.urlsToken = [];
-        if (options)
-            this.urls.forEach(url => {
-                url += "?apikey=" + options.token;
-                this.urlsToken.push(url);
-            })
-        if (this.urlsToken.length > 0) {
-            this.TileLayer = new mapboxgl.ekmap.TileLayer({
-                urls: this.urlsToken,
-                attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-                    "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>",
-                name: this.options.name != undefined ? this.options.name : 'VietNam Map',
-                id: this.options.id,
-                visibility: this.options.visibility,
-                image: this.options.image != undefined ? this.options.image : 'https://map.ekgis.vn/Common/images/vnmap.png'
-            })
-        } else {
-            this.TileLayer = new mapboxgl.ekmap.TileLayer({
-                urls: this.urls,
-                attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
-                    "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>",
-                id: this.options.id,
-                name: this.options.name != undefined ? this.options.name : 'VietNam Map',
-                visibility: this.options.visibility,
-                image: this.options.image != undefined ? this.options.image : 'https://map.ekgis.vn/Common/images/vnmap.png'
-            })
-        }
+
+        this.TileLayer = new mapboxgl.ekmap.TileLayer({
+            urls: this.urls,
+            attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Map </a>" +
+                "by <a href='http://ekgis.com.vn/' target='_blank' style='color: blue'>eKGIS</a>",
+            id: this.options.id,
+            token: this.options.token,
+            name: this.options.name != undefined ? this.options.name : 'VietNam Map',
+            visibility: this.options.visibility,
+            image: this.options.image != undefined ? this.options.image : 'https://map.ekgis.vn/Common/images/vnmap.png'
+        })
     }
 
     /**

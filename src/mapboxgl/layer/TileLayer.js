@@ -20,18 +20,29 @@ export class TileLayer extends mapboxgl.Evented {
     constructor(options) {
         super();
         this.options = options ? options : {};
+
         if (options) {
             options = Util.setOptions(this, options);
             // set the urls
             if (options.url) {
                 options = Util.getUrlParams(options);
                 this.tileUrl = (options.proxy ? options.proxy + '?' : '') + options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
+                if (options.token) {
+                    this.tileUrl += ('?token=' + options.token);
+                }
                 this.service = new mapboxgl.ekmap.MapService(options);
             }
-            if (options.urls)
-                this.tileUrls = options.urls
-            if (this.options.token) {
-                this.tileUrl += ('?token=' + this.options.token);
+            if (options.urls) {
+                this.tileUrls = [];
+                var urls = options.urls
+                if (!options.token)
+                    this.tileUrls = urls
+                else {
+                    urls.forEach(url => {
+                        url += "?apikey=" + options.token;
+                        this.tileUrls.push(url);
+                    })
+                }
             }
         }
     }
@@ -48,7 +59,6 @@ export class TileLayer extends mapboxgl.Evented {
             var id = this.options.id;
         else
             var id = nameID;
-
         if (this.tileUrl) {
             map.addSource(id, {
                 "attribution": this.options.attribution ? this.options.attribution : '',

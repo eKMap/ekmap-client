@@ -17,6 +17,54 @@
         body {
             overflow: hidden;
         }
+        
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 280px;
+        }
+        
+        .ol-popup:after,
+        .ol-popup:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        
+        .ol-popup:after {
+            border-top-color: white;
+            border-width: 10px;
+            left: 48px;
+            margin-left: -10px;
+        }
+        
+        .ol-popup:before {
+            border-top-color: #cccccc;
+            border-width: 11px;
+            left: 48px;
+            margin-left: -11px;
+        }
+        
+        .ol-popup-closer {
+            text-decoration: none;
+            position: absolute;
+            top: 2px;
+            right: 8px;
+        }
+        
+        .ol-popup-closer:after {
+            content: "✖";
+        }
     </style>
 </head>
 
@@ -25,15 +73,40 @@
 
     <div style="width: 100%;">
         <div id="divMapId" class="map"></div>
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content"></div>
+        </div>
     </div>
 
     <script>
+        //Elements that make up the popup.
+        var container = document.getElementById('popup');
+        var content = document.getElementById('popup-content');
+        var closer = document.getElementById('popup-closer');
+
+        //Create an overlay to anchor the popup to the map.
+        var overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250,
+            },
+        });
+
+        closer.onclick = function() {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+        };
+
         var map = new ol.Map({
             target: 'divMapId',
             layers: [],
             controls: ol.control.defaults({
                 zoom: true
             }),
+            overlays: [overlay],
             view: new ol.View({
                 center: [105.73695676666705, 20.967868701058933],
                 zoom: 9.4,
@@ -1068,10 +1141,11 @@
             }]
         };
         var div = document.createElement('div');
-        chart = echarts.init(div, '', {
+        chart = echarts.init(content, '', {
             width: 450,
             height: 350
         });
+        console.log(chart)
 
         chart.setOption(option);
         query();
@@ -1102,7 +1176,14 @@
                     //         'id': features[i].id
                     //     }
                 arrPoint.forEach(point => {
-                    feaPoint.push(new ol.Feature(new ol.geom.Point(point.geometry.coordinates)))
+                    var feature = new ol.Feature(new ol.geom.Point(point.geometry.coordinates));
+                    feature.setProperties({
+                        'color': point.properties.color,
+                        'aqiText': point.properties.aqiText,
+                        'id': point.properties.id,
+                        'name': point.properties.name
+                    })
+                    feaPoint.push(feature)
                 });
 
                 for (var i = 0; i < arr.length; i++) {
@@ -1117,9 +1198,7 @@
                     features: feaPolygon
                 });
                 var layerPoly = new ol.layer.Vector({
-                    // name: 'Cluster',
                     source: sourcePoly,
-                    // animationDuration: 700,
                     style: getStyle,
                     opacity: 0.7
                 });
@@ -1128,57 +1207,11 @@
                     features: feaPoint
                 });
                 var layerPoint = new ol.layer.Vector({
-                    // name: 'Cluster',
                     source: sourcePoint,
-                    // animationDuration: 700,
                     style: getStyle,
                     opacity: 1
                 });
                 map.addLayer(layerPoint)
-
-                // map.addLayer({
-                //     'id': 'polygon',
-                //     'type': 'fill',
-                //     'source': {
-                //         'type': 'geojson',
-                //         'data': voronoiPolygons
-                //     },
-                //     'paint': {
-                //         'fill-color': 'orange',
-                //         'fill-opacity': 0.7,
-                //         'fill-outline-color': 'black'
-                //     }
-                // })
-
-                // map.addLayer({
-                //     'id': 'points',
-                //     'type': 'circle',
-                //     'source': {
-                //         'type': 'geojson',
-                //         'data': response
-                //     },
-                //     'paint': {
-                //         'circle-radius': 10,
-                //         'circle-color': '#B42222'
-                //     }
-                // });
-
-                // map.addLayer({
-                //     'id': 'points-selected',
-                //     'type': 'circle',
-                //     'source': {
-                //         'type': 'geojson',
-                //         'data': response
-                //     },
-                //     'paint': {
-                //         'circle-radius': 10,
-                //         'circle-color': '#B42222',
-                //         "circle-stroke-color": 'yellow',
-                //         "circle-stroke-width": 3,
-                //     },
-                //     'filter': ['in', 'id', '']
-                // });
-                // map.moveLayer('polygon', 'points')
             })
         }
 
@@ -1202,18 +1235,10 @@
             map.forEachFeatureAtPixel(e.pixel, function(feature) {
                 if (feature) {
                     feaPoint.forEach(point => {
-                        if (idSelected && point.ol_uid == idSelected)
-                            point.setStyle(new ol.style.Style({
-                                image: new ol.style.Circle({
-                                    fill: new ol.style.Fill({
-                                        color: '#B42222'
-                                    }),
-                                    radius: 10
-                                }),
-                                fill: fill,
-                                stroke: stroke,
-                            }))
+                        if (point.getStyle())
+                            point.setStyle(undefined)
                         if (point.ol_uid == feature.values_.id) {
+                            overlay.setPosition(point.getGeometry().flatCoordinates);
                             idSelected = feature.values_.id;
                             point.setStyle(new ol.style.Style({
                                 image: new ol.style.Circle({
@@ -1229,28 +1254,10 @@
                                 fill: fill,
                                 stroke: stroke,
                             }))
-                        }
-
-                    });
-                }
-            })
-
-            var filter = featureQuery.reduce(
-                function(memo, feature) {
-                    features.forEach(fea => {
-                        if (fea.properties.id == feature.properties.id) {
-                            if (popup)
-                                popup.remove();
-                            popup = new mapboxgl.Popup({
-                                    maxWidth: 500
-                                })
-                                .setLngLat(fea.geometry.coordinates)
-                                .setDOMContent(div)
-                                .addTo(map)
-                            var color = fea.properties.color;
-                            var legend = fea.properties.aqiText;
-                            var id = fea.properties.id;
-                            var name = fea.properties.name;
+                            var color = point.getProperties().color;
+                            var legend = point.getProperties().aqiText;
+                            var id = point.getProperties().id;
+                            var name = point.getProperties().name;
                             chart.setOption({
                                 color: [
                                     color
@@ -1265,16 +1272,10 @@
                                     data: dataMap[id]
                                 }]
                             });
-
                         }
-
                     });
-                    memo.push(feature.properties.id);
-                    return memo;
-                }, ['in', 'id']
-            );
-            map.setFilter('points-selected', filter)
-
+                }
+            })
         })
     </script>
 </body>

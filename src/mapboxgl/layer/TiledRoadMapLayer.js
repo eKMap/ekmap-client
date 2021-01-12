@@ -36,29 +36,14 @@ export class TiledRoadMapLayer extends TileLayer {
             "https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
             "https://g4.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png"
         ];
-        this.urlsToken = [];
-        if (options)
-            this.urls.forEach(url => {
-                url += "?apikey=" + options.token;
-                this.urlsToken.push(url);
-            })
-        if (this.urlsToken.length > 0) {
-            this.TileLayer = new mapboxgl.ekmap.TileLayer({
-                urls: this.urlsToken,
-                id: this.options.id,
-                name: this.options.name != undefined ? this.options.name : 'Road Map',
-                visibility: this.options.visibility,
-                image: this.options.image != undefined ? this.options.image : 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
-            })
-        } else {
-            this.TileLayer = new mapboxgl.ekmap.TileLayer({
-                urls: this.urls,
-                id: this.options.id,
-                name: this.options.name != undefined ? this.options.name : 'Road Map',
-                visibility: this.options.visibility,
-                image: this.options.image != undefined ? this.options.image : 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
-            })
-        }
+        this.TileLayer = new mapboxgl.ekmap.TileLayer({
+            urls: this.urls,
+            id: this.options.id,
+            token: this.options.token,
+            name: this.options.name != undefined ? this.options.name : 'Road Map',
+            visibility: this.options.visibility,
+            image: this.options.image != undefined ? this.options.image : 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
+        })
     }
 
     /**
