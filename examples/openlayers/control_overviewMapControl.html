@@ -11,7 +11,7 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -33,13 +33,21 @@
                 multiWorld: true
             })
         });
+        var urls = [
+            "https://mt0.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+            "https://mt1.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+            "https://mt2.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+            "https://mt3.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png"
+        ]
+        var tileUrls = [];
+        urls.forEach(url => {
+            url += "?apikey=" + tokenVN;
+            tileUrls.push(url);
+        })
 
-        var source = new ol.source.OSM();
-
-        var layer = new ol.layer.Tile({
-            source: source
-        });
-        map.addLayer(layer);
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
 
         map.addControl(new ol.control.OverviewMap({
             view: new ol.View({
@@ -51,7 +59,9 @@
             collapsed: false,
             layers: [
                 new ol.layer.Tile({
-                    source: source
+                    source: new ol.source.XYZ({
+                        urls: tileUrls,
+                    })
                 })
             ]
         }));

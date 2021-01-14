@@ -29,31 +29,15 @@ export class TiledOSMapLayer {
             "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
             "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
         ]
-        this.urlsToken = [];
-        if (options)
-            this.urls.forEach(url => {
-                url += "?apikey=" + options.token;
-                this.urlsToken.push(url);
-            })
-        if (this.urlsToken.length > 0) {
-            this.TileLayer = new ol.ekmap.TileLayer({
-                urls: this.urlsToken,
-                attribution: "<a href='https://www.openstreetmap.org/' target='_blank' style='color: blue'>© OpenStreetMap </a>" +
-                    "contributors",
-                id: this.options.id,
-                name: this.options.name != undefined ? this.options.name : 'OS Map',
-                visibility: this.options.visibility
-            })
-        } else {
-            this.TileLayer = new ol.ekmap.TileLayer({
-                urls: this.urls,
-                attribution: "<a href='https://www.openstreetmap.org/' target='_blank' style='color: blue'>© OpenStreetMap </a>" +
-                    "contributors",
-                id: this.options.id,
-                name: this.options.name != undefined ? this.options.name : 'OS Map',
-                visibility: this.options.visibility
-            })
-        }
+        this.TileLayer = new ol.ekmap.TileLayer({
+            urls: this.urls,
+            attribution: "<a href='https://www.openstreetmap.org/' target='_blank' style='color: blue'>© OpenStreetMap </a>" +
+                "contributors",
+            id: this.options.id,
+            token: this.options.token,
+            name: this.options.name != undefined ? this.options.name : 'OS Map',
+            visibility: this.options.visibility
+        })
     }
 
     /**

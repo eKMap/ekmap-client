@@ -20,6 +20,7 @@ import { Util } from '../core/Util';
 export class HeatMapLayer extends VectorLayer {
 
     constructor(name, options) {
+        super();
         var _options = options ? options : {};
 
         this.layer = new ol.layer.Heatmap({

@@ -31,19 +31,26 @@
     <script>
         var map = new ol.Map({
             target: 'divMapId',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.XYZ({
-                        url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=Kk8suucvjJbRc2jm1JBA#1.0/0.00000/0.00000',
-                        maxZoom: 20,
-                    })
-                })
-            ],
+            // layers: [
+            //     new ol.layer.Tile({
+            //         source: new ol.source.XYZ({
+            //             url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=Kk8suucvjJbRc2jm1JBA#1.0/0.00000/0.00000',
+            //             maxZoom: 20,
+            //         })
+            //     })
+            // ],
             view: new ol.View({
-                center: [-9101767, 2822912],
-                zoom: 14
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 5.193739308697748,
+                projection: 'EPSG:4326',
+                multiWorld: true
             })
         });
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
         map.addControl(new ol.control.FullScreen({
             className: 'ol-fullscreen-top-left'
         }));

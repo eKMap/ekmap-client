@@ -9,12 +9,12 @@ import mapboxgl from 'mapbox-gl';
  * 
  * @extends {mapboxgl.Overlay}
  */
-export default class Overlay extends mapboxgl.Evented{
-    
-    constructor(opts){
+export default class Overlay extends mapboxgl.Evented {
+
+    constructor(opts) {
         super(opts);
         this.opts = opts ? opts : {};
-        if(this.opts && this.opts.map){
+        if (this.opts && this.opts.map) {
             this.map = this.opts.map;
         }
     }
@@ -22,7 +22,7 @@ export default class Overlay extends mapboxgl.Evented{
     /**
      * to be overwrite in subClass
      */
-    _init(){
+    _init() {
 
     }
 
@@ -46,7 +46,8 @@ export default class Overlay extends mapboxgl.Evented{
         if (this.map != undefined && this.map.project instanceof Function) {
             let lnglat = this.map.project(new mapboxgl.LngLat(
                 lng, lat));
-            let x = Math.round(lnglat.x), y = Math.round(lnglat.y);
+            let x = Math.round(lnglat.x),
+                y = Math.round(lnglat.y);
             return [x, y];
         }
         return [lng, lat];

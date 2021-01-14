@@ -208,7 +208,7 @@ export class FeatureService extends ServiceBase {
         }
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
-            var result = (response && response.features) ? response.features : undefined;
+            var result = (response && response.layers) ? response.layers : undefined;
             callback.call(context, error, result);
         }, this);
     }

@@ -110,7 +110,9 @@ export class DomOverlay extends Overlay {
     }
 }
 
-const lineHeight = 60, dotRadius = 4, chartHeight = 80;
+const lineHeight = 60,
+    dotRadius = 4,
+    chartHeight = 80;
 /**
  * domOverlay register&render above default canvas..
  * keep in absolute geolocation..
@@ -124,12 +126,15 @@ function _redraw() {
             let domOpt = doms[i];
             if (typeof domOpt == undefined) continue;
             // let sanity = Util.checkSanity(this.lastDoms[i], domOpt);
-            let x = domOpt['lon'], y = domOpt['lat'],
+            let x = domOpt['lon'],
+                y = domOpt['lat'],
                 pix = this.lnglat2pix(x, y);
             if (pix == null) continue;
-            let iconName = domOpt['icon'], resources = domOpt['resources'],
+            let iconName = domOpt['icon'],
+                resources = domOpt['resources'],
                 domStyle = domOpt['style'] ? domOpt['style'] + ' animated' : 'bounceInRight animated',
-                chartData = domOpt['data'], chartType = domOpt['type'];
+                chartData = domOpt['data'],
+                chartType = domOpt['type'];
             // data sanity should be checked, domOpts not changed then just update position!
             let dom = this.doms[i * 3] || document.createElement("div"),
                 line = this.doms[i * 3 + 1] || document.createElement("div"),
@@ -148,7 +153,7 @@ function _redraw() {
             } else if (chartData != undefined && chartType != undefined) {
                 if (Util.isChanged(this.lastData[i], chartData)) {
                     // setChart would contaminate input Data.
-                    Util.setChart(dom, dataClone, chartType, chartHeight * 2,me.backgroundColor);
+                    Util.setChart(dom, dataClone, chartType, chartHeight * 2, me.backgroundColor);
                     this.lastData[i] = chartData;
                 }
             } else {
@@ -199,8 +204,8 @@ function preStyleEles(line, dot, dom, pix, chartType) {
     dom.style.textAlign = "center";
     dom.style.padding = '3px';
     // if has chartType, display chart above vertical line.
-    dom.style.left = pix[0] - 166/2 + "px";
-    dom.style.top = pix[1] - 86/2 + "px";
+    dom.style.left = pix[0] - 166 / 2 + "px";
+    dom.style.top = pix[1] - 86 / 2 + "px";
 }
 
 function styleChartContainer(dom) {

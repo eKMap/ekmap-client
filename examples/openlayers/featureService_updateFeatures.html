@@ -55,6 +55,7 @@
             })
         });
         var idUpdate;
+
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map)
@@ -71,16 +72,28 @@
                     sub = true
                     document.getElementById("selectedFeatures").innerHTML = "Click on the feature to update.<br>Then select the point you need to move to.";
                     idUpdate = feature.id_;
+                    feature.setStyle(new ol.style.Style({
+                        image: new ol.style.Circle({
+                            fill: new ol.style.Fill({
+                                color: '#B42222'
+                            }),
+                            stroke: new ol.style.Stroke({
+                                color: 'yellow',
+                                width: 3
+                            }),
+                            radius: 7
+                        })
+                    }))
                 }
             })
             if (!sub) {
                 if (idUpdate) {
-                    var point = new ol.geom.Point(e.coordinate);
-                    point.setProperties({
+                    var feature = new ol.Feature(new ol.geom.Point(e.coordinate));
+                    feature.setProperties({
                         'maDoiTuong': idUpdate
                     })
                     widgets.loader.showLoader("data updating...");
-                    featureLayer.updateFeature(point, function(error, response) {
+                    featureLayer.updateFeature(feature, function(error, response) {
                         if (error) {
                             console.log('error updating feature ' + error.description);
                         } else {

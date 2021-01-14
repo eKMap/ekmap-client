@@ -2,38 +2,85 @@
 
 <head>
     <meta charset='utf-8' />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Data Rain</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         .field {
             color: #333333 !important;
             font-size: 0.8rem;
             text-decoration: none;
             padding-right: 10px;
         }
-
+        
         .value {
             color: #333333 !important;
             font-size: 0.8rem;
             font-weight: 600;
             text-decoration: none;
         }
-        .form-group{
+        
+        .form-group {
             display: flex;
             margin-left: 20px;
+        }
+        
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            max-width: 1000px;
+        }
+        
+        .ol-popup:after,
+        .ol-popup:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        
+        .ol-popup:after {
+            border-top-color: white;
+            border-width: 10px;
+            left: 48px;
+            margin-left: -10px;
+        }
+        
+        .ol-popup:before {
+            border-top-color: #cccccc;
+            border-width: 11px;
+            left: 48px;
+            margin-left: -11px;
+        }
+        
+        .ol-popup-closer {
+            text-decoration: none;
+            position: absolute;
+            top: 2px;
+            right: 8px;
+        }
+        
+        .ol-popup-closer:after {
+            content: "✖";
         }
     </style>
 </head>
@@ -42,80 +89,113 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content"></div>
+        </div>
     </div>
     <script type="text/javascript">
         var data;
         var chart, div, popup = '';
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {
-                },
-                "layers": []
+        //Elements that make up the popup.
+        var container = document.getElementById('popup');
+        var contentPopup = document.getElementById('popup-content');
+        var closer = document.getElementById('popup-closer');
+
+        //Create an overlay to anchor the popup to the map.
+        var overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250,
             },
-            center: [106.5090846096723, 16.787962287423255],
-            zoom: 5.1128594812072485
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map);
-            
-            map.loadImage('./img/icon-rain.png', function (error, image) {
-                if (error) throw error;
-                map.addImage('positionRaint', image);
-            });
-            //Source: KTTV
-            $.get("../data/weather/rain.json ", function (response) {
-                map.addLayer({
-                    "id": "rain",
-                    "type": "symbol",
-                    "layout": {
-                        "icon-image": "positionRaint",
-                        "icon-size": 0.05
-                    },
-                    "source": {
-                        "type": "geojson",
-                        "data": response
-                    }
-                });
+
+        closer.onclick = function() {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+        };
+
+        var map = new ol.Map({
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            target: 'divMapId',
+            overlays: [overlay],
+            view: new ol.View({
+                center: [106.5090846096723, 16.787962287423255],
+                zoom: 5.1128594812072485,
+                projection: 'EPSG:4326',
             })
-        })
-        map.on('click', 'rain', function (e) {
-            var bbox = [
-                [e.point.x - 5, e.point.y - 5],
-                [e.point.x + 5, e.point.y + 5]
-            ];
-            var features = map.queryRenderedFeatures(bbox, {
-                layers: ['rain']
+        });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
+        //Source: KTTV
+        $.get("../data/weather/rain.json ", function(response) {
+            var features = response.features;
+            var listFeatures = []
+            features.forEach(feature => {
+                var polygon = new ol.Feature(new ol.geom.Point(feature.geometry.coordinates));
+                polygon.setProperties(feature.properties);
+                listFeatures.push(polygon);
             });
-            var img = '<img  style="max-width: 541px;" src="' + features[0].properties.chartUrl + '">';
-            var content = '';
-            content += '<div style="max-width:1000px">';
-            content += '   <div class="form-group">';
-            content += '      <div class="width:70%">';
-            content += '           <a href="javascript:;" class="field">Station name : </a>'
-            content += '      </div>'
-            content += '      <div class="width:30%">'
-            content += '           <a href="javascript:;" class="value">' + features[0].properties.label + '</a>'
-            content += '      </div>'
-            content += '   </div>'
-            content += '   <div class="form-group" style="margin-bottom:20px">';
-            content += '      <div class="width:70%">';
-            content += '          <a href="javascript:;" class="field">Province : </a>'
-            content += '      </div>'
-            content += '      <div class="width:30%">'
-            content += '          <a href="javascript:;" class="value">' + features[0].properties.provine + '</a>'
-            content += '      </div>'
-            content += '   </div>'
-            content += img
-            content += '</div>'
-            new mapboxgl.Popup({ maxWidth: 1000})
-                .setLngLat(e.lngLat)
-                .setHTML(content)
-                .addTo(map);
+
+            var source = new ol.source.Vector({
+                features: listFeatures
+            });
+
+            var fill = new ol.style.Fill({
+                color: '#770404'
+            });
+            var stroke = new ol.style.Stroke({
+                color: 'black',
+                width: 1
+            });
+
+            var layer = new ol.layer.Vector({
+                source: source,
+                style: new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: './img/icon-rain.png',
+                        anchor: [1, 1],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'fraction',
+                        scale: 0.05
+                    }),
+                }),
+            });
+            map.addLayer(layer)
+        })
+
+        map.on('click', function(e) {
+            map.forEachFeatureAtPixel(e.pixel, function(features) {
+                var img = '<img  style="max-width: 541px;" src="' + features.getProperties().chartUrl + '">';
+                var content = '';
+                content += '<div style="max-width:1000px">';
+                content += '   <div class="form-group">';
+                content += '      <div class="width:70%">';
+                content += '           <a href="javascript:;" class="field">Station name : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '           <a href="javascript:;" class="value">' + features.getProperties().label + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group" style="margin-bottom:20px">';
+                content += '      <div class="width:70%">';
+                content += '          <a href="javascript:;" class="field">Province : </a>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <a href="javascript:;" class="value">' + features.getProperties().provine + '</a>'
+                content += '      </div>'
+                content += '   </div>'
+                content += img
+                content += '</div>'
+                contentPopup.innerHTML = content;
+                overlay.setPosition(e.coordinate);
+            })
         })
     </script>
 </body>

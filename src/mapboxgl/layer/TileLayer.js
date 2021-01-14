@@ -30,7 +30,6 @@ export class TileLayer extends mapboxgl.Evented {
                 if (options.token) {
                     this.tileUrl += ('?token=' + options.token);
                 }
-                this.service = new mapboxgl.ekmap.MapService(options);
             }
             if (options.urls) {
                 this.tileUrls = [];

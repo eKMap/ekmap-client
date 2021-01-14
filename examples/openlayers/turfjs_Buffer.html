@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
-    <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Turfjs Buffer (Covid)</title>
     <style>
@@ -14,17 +13,17 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         .nameCountry {
             color: #333333 !important;
             font-size: 1.2rem;
             text-decoration: none;
         }
-
+        
         .field {
             color: #333333 !important;
             font-weight: 600;
@@ -32,11 +31,59 @@
             text-decoration: none;
             padding-right: 10px;
         }
-
+        
         .value {
             color: #333333 !important;
             font-size: 1rem;
             text-decoration: none;
+        }
+        
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 150px;
+        }
+        
+        .ol-popup:after,
+        .ol-popup:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        
+        .ol-popup:after {
+            border-top-color: white;
+            border-width: 10px;
+            left: 48px;
+            margin-left: -10px;
+        }
+        
+        .ol-popup:before {
+            border-top-color: #cccccc;
+            border-width: 11px;
+            left: 48px;
+            margin-left: -11px;
+        }
+        
+        .ol-popup-closer {
+            text-decoration: none;
+            position: absolute;
+            top: 2px;
+            right: 8px;
+        }
+        
+        .ol-popup-closer:after {
+            content: "✖";
         }
     </style>
 </head>
@@ -46,41 +93,69 @@
 
     <div style="width: 100%;">
         <div id="divMapId" class="map"></div>
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content"></div>
+        </div>
     </div>
     <script>
         var attribution = "© Map" +
             " by <a href='https://carto.com/' target='_blank' style='color:blue'> Carto</a>"
 
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [105, 17],
-            zoom: 5
+        //Elements that make up the popup.
+        var container = document.getElementById('popup');
+        var contentPopup = document.getElementById('popup-content');
+        var closer = document.getElementById('popup-closer');
+
+        //Create an overlay to anchor the popup to the map.
+        var overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250,
+            },
+        });
+
+        closer.onclick = function() {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+        };
+
+        var map = new ol.Map({
+            target: 'divMapId',
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            overlays: [overlay],
+            view: new ol.View({
+                center: [105, 17],
+                zoom: 6,
+                projection: 'EPSG:4326',
+            })
         });
         //Url by: https://carto.com/help/building-maps/basemap-list/
-        var maps = new mapboxgl.ekmap.TiledMapLayer({
+        var maps = new ol.ekmap.TileLayer({
             urls: [
                 "https://a.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
                 "https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
                 "https://c.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png"
             ]
-        }).addTo(map)
-
-        map.addControl(new mapboxgl.AttributionControl({
-            customAttribution: attribution,
-            compact: false
-        }));
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        }).addTo(map);
         var features = [];
         var hoveredStateId = null;
 
-        $.get("../data/Buffer_Covid.json", function (response) {
+        $.get("../data/Buffer_Covid.json", function(response) {
             var provinces = response.provinces
             provinces.forEach(province => {
                 var point = turf.point([province.Long, province.Lat]);
                 var confirmed = province.Confirmed;
                 var radius;
                 radius = getRadius(confirmed, 1, 394, 10, 60);
-                var buffered = turf.buffer(point, radius, { units: 'kilometers' });
+                var buffered = turf.buffer(point, radius, {
+                    units: 'kilometers'
+                });
                 buffered.properties.id = province.Province_Id;
                 buffered.properties.name = province.Province_Name;
                 buffered.properties.confirmed = province.Confirmed;
@@ -88,39 +163,57 @@
                 buffered.properties.recovered = province.Recovered;
                 features.push(buffered)
             });
-        }).done(function () {
-            map.addLayer({
-                'id': 'state-fills',
-                'type': 'fill',
-                'source': {
-                    'type': 'geojson',
-                    'data': {
-                        'type': 'FeatureCollection',
-                        'features': features
-                    }
-                },
-                'paint': {
-                    'fill-color': '#770404',
-                    'fill-opacity': 0.7
-                }
-            })
+        }).done(function() {
+            var listFeatures = []
+            features.forEach(feature => {
+                var polygon = new ol.Feature(new ol.geom.Polygon(feature.geometry.coordinates));
+                polygon.setProperties(feature.properties);
+                listFeatures.push(polygon);
+            });
+            console.log(listFeatures)
+
+            var source = new ol.source.Vector({
+                features: listFeatures
+            });
+            var fill = new ol.style.Fill({
+                color: '#770404'
+            });
+            var stroke = new ol.style.Stroke({
+                color: 'black',
+                width: 1
+            });
+
+            var layer = new ol.layer.Vector({
+                source: source,
+                style: new ol.style.Style({
+                    fill: fill,
+                    // stroke: stroke,
+                }),
+                opacity: 0.7
+            });
+            map.addLayer(layer)
         })
-        var popup;
-        map.on('mousemove', 'state-fills', function (e) {
-            if (e.features.length > 0) {
-                var fea = e.features[0];
-                if (!hoveredStateId) {
+        var selected;
+        map.on('pointermove', function(e) {
+            if (selected !== null) {
+                overlay.setPosition(undefined);
+                closer.blur();
+                selected = null;
+            }
+
+            map.forEachFeatureAtPixel(e.pixel, function(f) {
+                if (!selected) {
                     var content = '';
                     content += '<div style="width:150px">';
                     content += '   <div class="form-group row" style="text-align: center">';
-                    content += '       <a href="javascript:;" class="nameCountry">' + fea.properties.name + '</a>'
+                    content += '       <a href="javascript:;" class="nameCountry">' + f.getProperties().name + '</a>'
                     content += '   </div>'
                     content += '   <div class="form-group row" style="display: flex;">';
                     content += '      <div class="width:70%">';
                     content += '           <a href="javascript:;" class="field">Confirmed : </a>'
                     content += '      </div>'
                     content += '      <div class="width:30%">'
-                    content += '           <a href="javascript:;" class="value">' + fea.properties.confirmed + '</a>'
+                    content += '           <a href="javascript:;" class="value">' + f.getProperties().confirmed + '</a>'
                     content += '      </div>'
                     content += '   </div>'
                     content += '   <div class="form-group row" style="display: flex;">';
@@ -128,7 +221,7 @@
                     content += '          <a href="javascript:;" class="field">Deaths : </a>'
                     content += '      </div>'
                     content += '      <div class="width:30%">'
-                    content += '          <a href="javascript:;" class="value">' + fea.properties.deaths + '</a>'
+                    content += '          <a href="javascript:;" class="value">' + f.getProperties().deaths + '</a>'
                     content += '      </div>'
                     content += '   </div>'
                     content += '   <div class="form-group row" style="display: flex;">';
@@ -136,22 +229,18 @@
                     content += '          <a href="javascript:;" class="field">Recovered : </a>'
                     content += '      </div>'
                     content += '      <div class="width:30%">'
-                    content += '          <a href="javascript:;" class="value">' + fea.properties.recovered + '</a>'
+                    content += '          <a href="javascript:;" class="value">' + f.getProperties().recovered + '</a>'
                     content += '      </div>'
                     content += '   </div>'
                     content += '</div>'
-                    popup = new mapboxgl.Popup({})
-                        .setLngLat(e.lngLat)
-                        .setHTML(content)
-                        .addTo(map);
+                    contentPopup.innerHTML = content;
+                    overlay.setPosition(e.coordinate);
                 }
-                hoveredStateId = e.features[0].properties.id;
-            }
-        });
+                selected = f.getProperties().name;
+                return true;
+            });
 
-        map.on('mouseleave', 'state-fills', function () {
-            popup.remove();
-            hoveredStateId = null;
+
         });
     </script>
 </body>

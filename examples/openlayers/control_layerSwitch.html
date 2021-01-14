@@ -11,7 +11,7 @@
             width: 100%;
             height: calc(100vh - 25px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -25,19 +25,39 @@
     </div>
     <input id="swipe" type="range" style="width: 100%;">
     <script>
+        var urls = [
+            "https://mt0.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+            "https://mt1.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+            "https://mt2.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+            "https://mt3.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png"
+        ]
+        var tileUrls = [];
+        urls.forEach(url => {
+            url += "?apikey=" + tokenVN;
+            tileUrls.push(url);
+        })
+
         var world = new ol.layer.Tile({
-            source: new ol.source.OSM(),
+            source: new ol.source.XYZ({
+                urls: tileUrls,
+            }),
             opacity: 0.5
         });
 
         var worldNight = new ol.layer.Tile({
-            source: new ol.source.OSM(),
+            source: new ol.source.XYZ({
+                urls: tileUrls,
+            }),
         });
 
         var map = new ol.Map({
             layers: [world, worldNight],
             target: 'map',
-            controls: ol.control.defaults({ attributionOptions: { collapsed: false } }),
+            controls: ol.control.defaults({
+                attributionOptions: {
+                    collapsed: false
+                }
+            }),
             view: new ol.View({
                 center: [105.20886162772933, 16.518572979240204],
                 zoom: 5.193739308697748,
@@ -47,7 +67,7 @@
         });
 
         var swipe = document.getElementById('swipe');
-        worldNight.on('prerender', function (event) {
+        worldNight.on('prerender', function(event) {
             var ctx = event.context;
             var width = ctx.canvas.width * (swipe.value / 100);
 
@@ -56,12 +76,12 @@
             ctx.rect(width, 0, ctx.canvas.width - width, ctx.canvas.height);
             ctx.clip();
         });
-        worldNight.on('postrender', function (event) {
+        worldNight.on('postrender', function(event) {
             var ctx = event.context;
             ctx.restore();
         });
 
-        swipe.addEventListener('input', function () {
+        swipe.addEventListener('input', function() {
             map.render();
         }, false);
     </script>

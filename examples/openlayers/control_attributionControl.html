@@ -32,12 +32,7 @@
                 zoom: true
             }),
             target: 'divMapId',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM(),
-                    url: url
-                })
-            ],
+            layers: [],
             view: new ol.View({
                 center: [105.20886162772933, 16.518572979240204],
                 zoom: 5.193739308697748,
@@ -45,6 +40,11 @@
                 multiWorld: true
             })
         });
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
         map.addControl(new ol.control.Attribution({
             collapsed: false
         }));

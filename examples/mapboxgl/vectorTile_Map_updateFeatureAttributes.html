@@ -166,6 +166,7 @@
         var layerName = ['2949', '2950', '2951', '2952', '2954', '2955', '2956'];
         var data = [];
         var fields = [];
+        var listFields = [];
         var layerId;
         map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
@@ -182,7 +183,7 @@
             })
             map.addControl(select);
             select.on('selectfeatures', function(e) {
-                var listFields = [];
+                listFields = [];
                 var features = e.features;
                 var btnUpdate = document.getElementById('calculated-area');
                 if (features.length > 0)
@@ -251,7 +252,7 @@
                 var x = document.getElementById(element.text).value;
                 if (x != null && x != '') {
                     if (element.text == "maDoiTuong")
-                        arrayText.push('OBJECTID')
+                        arrayText.push('maDoiTuong')
                     else
                         arrayText.push(element.text)
                     arrayValue.push(x);

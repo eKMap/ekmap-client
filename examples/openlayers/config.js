@@ -186,6 +186,50 @@ var exampleConfig = {
                     }
                 ]
             },
+            control: {
+                name: "Control",
+                name_en: "Control",
+                content: [{
+                        name: "Legend Control",
+                        name_en: "Legend Control",
+                        thumbnail: "control_legendControl.png",
+                        fileName: "control_legendControl",
+                        subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
+                        description: "Click on the button below control: navigationControl to display Legend"
+                    },
+                    {
+                        name: "Feature Infomation Control",
+                        name_en: "Feature Infomation ",
+                        thumbnail: "control_featureInfomationControl.png",
+                        fileName: "control_featureInfomationControl",
+                        subject: "Use control featureInfomation to retrieve the selected object.",
+                        description: "Click on the map to retrieve the selected object."
+                    }, {
+                        name: "Tree Layer",
+                        name_en: "Tree Layer",
+                        thumbnail: "control_treeLayerControl.png",
+                        fileName: "control_treeLayerControl",
+                        subject: "Tree Layer.",
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                    },
+                    {
+                        name: "Tree Layer (VectorTile)",
+                        name_en: "Tree Layer (VectorTile)",
+                        thumbnail: "control_treeLayer_vectorTiledControl.png",
+                        fileName: "control_treeLayer_vectorTiledControl",
+                        subject: "Tree Layer (VectorTile).",
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                    },
+                    {
+                        name: "Base Layer",
+                        name_en: "Base Layer",
+                        thumbnail: "control_baseLayerControl.png",
+                        fileName: "control_baseLayerControl",
+                        subject: "Base Layer Control.",
+                        description: "Use mapboxgl.ekmap.control.BaseLayer to display, turn on / off map layers under the map"
+                    },
+                ]
+            }
         }
     },
     viz: {
@@ -382,7 +426,7 @@ var exampleConfig = {
                 content: [{
                     name: "Data rain",
                     name_en: "Data rain",
-                    thumbnail: "data_rain.png",
+                    thumbnail: "data_rain.gif",
                     fileName: "data_rain",
                     subject: "Use chart online to display flood warning data, rainfall information in Central - Vietnam.",
                     description: "Click point on the map to show flood warning data, rainfall information in Central - Vietnam by chart online."
@@ -574,6 +618,36 @@ var exampleConfig = {
             }
         }
     },
+    OGC: {
+        name: "OGC",
+        name_en: "OGC",
+        content: {
+            WMS: {
+                name: "WMS",
+                name_en: "WMS",
+                content: [{
+                    name: "WMS layer",
+                    name_en: "WMS layer",
+                    thumbnail: "wms_layer.png",
+                    fileName: "wms_layer",
+                    subject: "wms_layer",
+                    description: "wms_layer"
+                }]
+            },
+            WMTS: {
+                name: "WMTS",
+                name_en: "WMTS",
+                content: [{
+                    name: "WMTS layer",
+                    name_en: "WMTS layer",
+                    thumbnail: "wmts_layer.png",
+                    fileName: "wmts_layer",
+                    subject: "wmts_layer",
+                    description: "wmts_layer"
+                }]
+            }
+        }
+    },
     control: {
         name: "Control",
         name_en: "Control",
@@ -644,7 +718,7 @@ var exampleConfig = {
                 content: [{
                         name: "Draw Control",
                         name_en: "Draw Control",
-                        thumbnail: "control_drawControl.png",
+                        thumbnail: "control_drawControl.gif",
                         fileName: "control_drawControl",
                         subject: "Geolocate Control",
                         description: "A GeolocateControl control provides a button that uses the browser's geolocation API to locate the user on the map."

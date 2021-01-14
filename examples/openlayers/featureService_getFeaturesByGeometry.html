@@ -63,11 +63,11 @@
             source: source,
             style: new ol.style.Style({
                 fill: new ol.style.Fill({
-                    color: 'rgba(255, 255, 255, 0.2)',
+                    color: '#fbb03b',
                 }),
                 stroke: new ol.style.Stroke({
-                    color: '#ffcc33',
-                    width: 2,
+                    color: '#fbb03b',
+                    width: 5,
                 }),
                 image: new ol.style.Circle({
                     radius: 7,
@@ -76,6 +76,7 @@
                     }),
                 }),
             }),
+            opacity: 0.25
         });
 
         var map = new ol.Map({

@@ -269,60 +269,66 @@ export class FeatureLayer extends Observable {
     /**
      * @function ol.ekmap.FeatureLayer.prototype.addFeature
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-     * @param {Point} point Point geometry.
+     * @param {ol.Feature} feature ol.Feature
      * @param {Function} callback
      * @param {Object} context
      * @returns {this}
      */
-    addFeature(point, callback, context) {
+    addFeature(feature, callback, context) {
         var layers = map.getLayers().array_;
         layers.forEach(function(layer) {
             if (layer.getProperties().id == 'point') {
                 var source = layer.getSource();
-                var feature = new ol.Feature({
-                    geometry: point
-                })
+                feature.setStyle(new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: './img/icon-rain.png',
+                        anchor: [1, 1],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'fraction',
+                        scale: 0.05
+                    }),
+                }))
                 source.addFeature(feature)
             }
         });
-        this.addFeatures(point, callback, context);
+        this.addFeatures(feature, callback, context);
     }
 
     /**
      * @private
      * @function ol.ekmap.FeatureLayer.prototype.addFeatures
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-     * @param {Point} point Point geometry.
+     * @param {ol.Feature} feature ol.Feature
      * @param {Function} callback
      * @param {Object} context
      * @returns {this}
      */
-    addFeatures(point, callback, context) {
-        return this.service.addFeatures(point, callback, context);
+    addFeatures(feature, callback, context) {
+        return this.service.addFeatures(feature, callback, context);
     }
 
     /**
      * @function ol.ekmap.FeatureLayer.prototype.updateFeature
      * @description Update the provided feature on the Feature Layer. This also updates the feature on the map. To update the point location on the map. Please use function {@link ol.ekmap.FeatureLayer.html#refresh|refresh()} then update.
-     * @param {Geometry} geom Infomation feature by geoJSON.
+     * @param {ol.Feature} feature ol.Feature
      * @param {Function} callback The callback of result data returned by the server side.
      * @param {Object} context
      * @returns {this}
      */
-    updateFeature(geom, callback, context) {
-        this.updateFeatures(geom, callback, context);
+    updateFeature(feature, callback, context) {
+        this.updateFeatures(feature, callback, context);
     }
 
     /**
      * @private
      * @function ol.ekmap.FeatureLayer.prototype.updateFeatures
      * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
-     * @param {Geometry} geom Infomation feature by geoJSON.
+     * @param {ol.Feature} feature ol.Feature
      * @param {Function} callback The callback of result data returned by the server side.
      * @param {Object} context
      */
-    updateFeatures(geom, callback, context) {
-        return this.service.updateFeatures(geom, callback, context);
+    updateFeatures(feature, callback, context) {
+        return this.service.updateFeatures(feature, callback, context);
     }
 
     /**

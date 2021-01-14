@@ -11,6 +11,11 @@ import { FeatureLayer } from './layer/FeatureLayer';
 import { HeatMapLayer } from './layer/HeatMapLayer';
 import { BasemapArcgisLayer } from './layer/BasemapArcgisLayer';
 import { AnimatedCluster } from './layer/AnimatedCluster';
+import { WMS } from './layer/WMS';
+import { WMTS } from './layer/WMTS';
+import { VectorTiledMapLayer } from './layer/VectorTiledMapLayer';
+import { DomOverlay } from './layer/DomOverlay';
+import { Overlay } from './layer/Overlay';
 
 import { Util } from './core/Util';
 import { Parse } from './core/Parse';
@@ -43,9 +48,14 @@ if (window && window.ol) {
     ol.ekmap.TiledAdminMapLayer = TiledAdminMapLayer;
     ol.ekmap.TiledMapLayer = TiledMapLayer;
     ol.ekmap.FeatureLayer = FeatureLayer;
+    ol.ekmap.WMS = WMS;
+    ol.ekmap.WMTS = WMTS;
     ol.layer.HeatMapLayer = HeatMapLayer;
     ol.layer.AnimatedCluster = AnimatedCluster;
+    ol.ekmap.VectorTiledMapLayer = VectorTiledMapLayer;
     ol.ekmap.BasemapArcgisLayer = BasemapArcgisLayer;
+    ol.ekmap.DomOverlay = DomOverlay;
+    ol.ekmap.Overlay = Overlay;
 
     // service
     ol.ekmap.MapService = MapService;

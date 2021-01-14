@@ -47,8 +47,8 @@
         }).addTo(map);
 
         map.on('click', function(e) {
-            var point = new ol.geom.Point(e.coordinate)
-            featureLayer.addFeature(point, function(error, response) {
+            var feature = new ol.Feature(new ol.geom.Point(e.coordinate))
+            featureLayer.addFeature(feature, function(error, response) {
                 if (error) {
                     console.log('error adding feature ' + error.message);
                 } else {

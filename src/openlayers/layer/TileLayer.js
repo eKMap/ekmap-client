@@ -21,11 +21,21 @@ export class TileLayer {
             if (options.url) {
                 options = Util.getUrlParams(options);
                 this.tileUrl = (options.proxy ? options.proxy + '?' : '') + options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
+                if (options.token) {
+                    this.tileUrl += ('?token=' + options.token);
+                }
             }
-            if (options.urls)
-                this.tileUrls = options.urls
-            if (this.options.token) {
-                this.tileUrl += ('?token=' + this.options.token);
+            if (options.urls) {
+                this.tileUrls = [];
+                var urls = options.urls
+                if (!options.token)
+                    this.tileUrls = urls
+                else {
+                    urls.forEach(url => {
+                        url += "?apikey=" + options.token;
+                        this.tileUrls.push(url);
+                    })
+                }
             }
         }
     }
@@ -40,7 +50,8 @@ export class TileLayer {
         if (this.tileUrls)
             map.addLayer(new ol.layer.Tile({
                 source: new ol.source.XYZ({
-                    urls: this.tileUrls
+                    urls: this.tileUrls,
+                    attributions: this.options.attribution
                 }),
                 baseLayer: true,
                 title: this.options.name
@@ -48,7 +59,8 @@ export class TileLayer {
         if (this.tileUrl)
             map.addLayer(new ol.layer.Tile({
                 source: new ol.source.XYZ({
-                    url: this.tileUrl
+                    url: this.tileUrl,
+                    attributions: this.options.attribution
                 }),
                 baseLayer: true,
                 title: this.options.name

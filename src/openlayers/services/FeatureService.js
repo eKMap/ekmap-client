@@ -75,7 +75,7 @@ export class FeatureService extends ServiceBase {
     /**
      * @function ol.ekmap.FeatureService.prototype.addFeature
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-     * @param {Point} point Point geometry.
+     * @param {ol.Feature} feature ol.Feature
      * @param {Function} callback
      * @param {Object} context
      * @returns {this}
@@ -88,16 +88,17 @@ export class FeatureService extends ServiceBase {
      * @private
      * @function ol.ekmap.FeatureService.prototype.addFeatures
      * @description Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
-     * @param {Point} point Point geometry.
+     * @param {ol.Feature} feature ol.Feature
      * @param {Function} callback
      * @param {Object} context
      * @returns {this}
      */
-    addFeatures(point, callback, context) {
-        var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(point))
+    addFeatures(feature, callback, context) {
+        var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(feature.getGeometry()));
         var geojson = {
             'type': 'Feature',
-            'geometry': geometry
+            'geometry': geometry,
+            'properties': feature.getProperties()
         }
         var fea = Parse.geojsonToArcGIS(geojson);
         var data = [];
@@ -113,24 +114,24 @@ export class FeatureService extends ServiceBase {
     /**
      * @function ol.ekmap.FeatureService.prototype.updateFeature
      * @description Update the provided feature on the Feature Service This also updates the feature on the map. To update the point location on the map. Please use function {@link ol.ekmap.FeatureService.html#refresh|refresh()} then update.
-     * @param {Geometry} geom Infomation feature.
+     * @param {ol.Feature} feature ol.Feature
      * @param {Function} callback The callback of result data returned by the server side.
      * @param {Object} context
      * @returns {this}
      */
-    updateFeature(geom, callback, context) {
-        this.updateFeatures(geom, callback, context);
+    updateFeature(feature, callback, context) {
+        this.updateFeatures(feature, callback, context);
     }
 
     /**
      * @private
      * @function ol.ekmap.FeatureService.prototype.updateFeatures
      * @description Update the provided feature on the Feature Layer. This also updates the feature on the map.
-     * @param {Geometry} geom - Infomation feature.
+     * @param {ol.Feature} feature ol.Feature
      */
-    updateFeatures(geom, callback, context) {
-        var properties = geom.getProperties();
-        var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(geom))
+    updateFeatures(feature, callback, context) {
+        var properties = feature.getProperties();
+        var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(feature.getGeometry()))
         var geojson = {
             'type': 'Feature',
             'geometry': geometry,
@@ -288,17 +289,15 @@ export class FeatureService extends ServiceBase {
     applyEdits(params, callback, context) {
         var param = {}
         if (params.adds) {
+            var feature = params.adds;
             var geojson;
-            if (params.adds instanceof ol.Feature) {
-                geojson = Util.featureToGeojson(params.adds)
-            }
-            if (params.adds instanceof ol.geom.Point || params.adds instanceof ol.geom.LineString || params.adds instanceof ol.geom.Polygon) {
-                var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(params.adds))
-                geojson = {
-                    'type': 'Feature',
-                    'geometry': geometry,
-                    'properties': params.adds.getProperties()
-                }
+            if (feature instanceof ol.Feature)
+                feature = feature.getGeometry();
+            var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(feature))
+            geojson = {
+                'type': 'Feature',
+                'geometry': geometry,
+                'properties': params.adds.getProperties()
             }
             var fea = Parse.geojsonToArcGIS(geojson);
             var arr1 = [];
@@ -307,17 +306,16 @@ export class FeatureService extends ServiceBase {
         } else
             param.adds = false;
         if (params.updates) {
-            var geojson
-            if (params.updates instanceof ol.Feature) {
-                geojson = Util.featureToGeojson(params.updates)
+            var geojson;
+            var feature = params.updates;
+            if (feature instanceof ol.Feature) {
+                feature = feature.getGeometry();
             }
-            if (params.updates instanceof ol.geom.Point || params.updates instanceof ol.geom.LineString || params.updates instanceof ol.geom.Polygon) {
-                var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(params.updates))
-                geojson = {
-                    'type': 'Feature',
-                    'geometry': geometry,
-                    'properties': params.updates.getProperties()
-                }
+            var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(feature))
+            geojson = {
+                'type': 'Feature',
+                'geometry': geometry,
+                'properties': params.updates.getProperties()
             }
             var dataUpdate = Parse.geojsonToArcGIS(geojson);
             var arr2 = [];

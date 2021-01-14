@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Vector Tile Overlay</title>
     <style>
@@ -13,7 +13,7 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -26,56 +26,44 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId', // container id
-            style: {
-                "version": 8,
-                "sources": {
-                    "vector-tiles": {
-                        "type": "vector",
-                        "tiles": [urlVectorService + "/tile/{z}/{y}/{x}.pdf?apikey=" + tokenKey]
-                    },
-                },
-                "glyphs": urlVectorService + "/resources/fonts/{fontstack}/{range}.pbf",
-                "layers": []
-            },
-            minZoom: 4,
-            center: [105, 17],
-            zoom: 4
-        });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.on('load', function () {
-            new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-            map.addLayer({
-                "id": "province_vn",
-                "source": "vector-tiles",
-                "type": "circle",
-                "source-layer": "478",
-                "layout": {},
-                "paint": {
-                    "circle-color": "#db1e2a",
-                    "circle-stroke-color": "#801119",
-                    "circle-stroke-width": 1
-                }
-            });
-            map.addLayer({
-                "layout": {
-                    "text-field": "{NAME}",
-                    "text-size": 14
-                },
-                "id": "province_vn_label",
-                "paint": {
-                    "text-halo-color": "#ffffff",
-                    "text-halo-width": 1,
-                    "text-color": "#0000ff"
-                },
-                "source-layer": "478",
-                "source": "vector-tiles",
-                "type": "symbol"
+        var map = new ol.Map({
+            target: 'divMapId',
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [11579858.869040623, 2415212.099922052],
+                zoom: 9,
+                // projection: 'EPSG:4326'
             })
-        })
+        });
+
+        // var map = new mapboxgl.Map({
+        //     container: 'divMapId', // container id
+        //     style: {
+        //         "version": 8,
+        //         "sources": {
+        //             "vector-tiles": {
+        //                 "type": "vector",
+        //                 "tiles": [urlVectorService + "/tile/{z}/{y}/{x}.pdf?apikey=" + tokenKey]
+        //             },
+        //         },
+        //         "glyphs": urlVectorService + "/resources/fonts/{fontstack}/{range}.pbf",
+        //         "layers": []
+        //     },
+        //     minZoom: 4,
+        //     center: [105, 17],
+        //     zoom: 4
+        // });
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+
+        var vectorTile = new ol.ekmap.VectorTiledMapLayer({
+            url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer',
+            token: tokenKey
+        }).addTo(map)
     </script>
 </body>
 
