@@ -116,6 +116,14 @@ function getRadius(data, minData, maxData, minRadius, maxRadius) {
     return (data - minData) / (maxData - minData) * (maxRadius - minRadius) + minRadius
 }
 
+function ekmap_inherits(child, parent) {
+    console.log(child)
+    console.log(Object.create(parent.prototype))
+    child.prototype = Object.create(parent.prototype);
+    child.prototype.constructor = child;
+    console.log(child)
+};
+
 //var tokenKey = "";
 var tokenKey = "1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x";
 var tokenVN = "1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm";

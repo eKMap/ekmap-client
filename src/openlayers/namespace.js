@@ -1,5 +1,5 @@
 import { ScaleLine } from './control';
-import { BaseLayer } from './control';
+import ol_control_BaseLayer from "./control/BaseLayer"
 
 import { TiledVietNamMapLayer } from './layer'
 import { TileLayer } from './layer/TileLayer';
@@ -30,7 +30,7 @@ if (window && window.ol) {
     ol.ekmap.control = window.ol.ekmap.control || {};
     // control
     ol.ekmap.control.ScaleLine = ScaleLine;
-    ol.ekmap.control.BaseLayer = BaseLayer;
+    ol.ekmap.control.BaseLayer = ol_control_BaseLayer;
 
 
     // core

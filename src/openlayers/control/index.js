@@ -1,3 +1,7 @@
-export { ScaleLine } from './ScaleLine';
+export { ScaleLine }
+from './ScaleLine';
 
-export { BaseLayer } from './BaseLayer';
+import ol_control_BaseLayer from "./BaseLayer"
+
+// export { ol_control_BaseLayer }
+// from './BaseLayer';
