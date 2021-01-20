@@ -541,22 +541,22 @@ var exampleConfig = {
                         subject: "Hue - Hoi An - Da Nang tours.",
                         description: "Display map of Hue - Hoi An - Da Nang tours."
                     },
-                    // {
-                    //     name: "Timeline Coronavirus (Heatmap)",
-                    //     name_en: "Timeline Coronavirus (Heatmap)",
-                    //     thumbnail: "timeline_heatMapCov.gif",
-                    //     fileName: "timeline_heatMapCov",
-                    //     subject: "Displays the timeline map showing the increase in COVID19 cases around the world.",
-                    //     description: "Displays the timeline map showing the increase in COVID19 cases around the world."
-                    // },
-                    // {
-                    //     name: "COVID-19: Government Response Stringency",
-                    //     name_en: "COVID-19: Government Response Stringency",
-                    //     thumbnail: "timeline_fillCov.gif",
-                    //     fileName: "timeline_fillCov",
-                    //     subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
-                    //     description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
-                    // },
+                    {
+                        name: "Timeline Coronavirus (Heatmap)",
+                        name_en: "Timeline Coronavirus (Heatmap)",
+                        thumbnail: "timeline_heatMapCov.gif",
+                        fileName: "timeline_heatMapCov",
+                        subject: "Displays the timeline map showing the increase in COVID19 cases around the world.",
+                        description: "Displays the timeline map showing the increase in COVID19 cases around the world."
+                    },
+                    {
+                        name: "COVID-19: Government Response Stringency",
+                        name_en: "COVID-19: Government Response Stringency",
+                        thumbnail: "timeline_fillCov.gif",
+                        fileName: "timeline_fillCov",
+                        subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
+                        description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
+                    },
                     // {
                     //     name: "Timeline Coronavirus (Buffer)",
                     //     name_en: "Timeline Coronavirus (Buffer)",

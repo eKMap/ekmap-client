@@ -4,18 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="../../examples/js/common.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <title>Timeline Coranavirus (Heatmap)</title>
@@ -24,11 +17,11 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #range-slider {
             position: absolute;
             left: 0.5rem;
@@ -45,7 +38,7 @@
             background-color: rgba(70, 70, 70, 0.8);
             z-index: 3;
         }
-
+        
         #spread {
             display: flex;
             align-items: center;
@@ -58,7 +51,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
+        
         input[type=range] {
             flex: 1;
             margin: 0 0.5rem;
@@ -66,7 +59,7 @@
             -webkit-appearance: none;
             cursor: ew-resize;
         }
-
+        
         #range-slider label {
             display: flex;
             align-items: baseline;
@@ -76,7 +69,7 @@
             text-transform: uppercase;
             min-width: 4.5rem;
         }
-
+        
         .spread-label {
             background: #66cc66;
             border: none;
@@ -98,106 +91,96 @@
         </div>
     </div>
     <script type="text/javascript">
-        var map = new mapboxgl.Map({
-            container: "divMapId",
-            center: [11.164340403295512, 2.079745662755286],
-            zoom: 2.116295796373197,
-
+        var map = new ol.Map({
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            target: 'divMapId',
+            view: new ol.View({
+                center: [11.164340403295512, 2.079745662755286],
+                zoom: 2.116295796373197,
+                projection: 'EPSG:4326',
+            })
         });
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
         var value = 0;
         var count = -1;
         var data = [];
         var dataNew = []
         var features = [];
+        var date;
+        var heatMapLayer;
 
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map);
 
         for (var i = 0; i < 144; i++) {
             widgets.loader.showLoader("data loading...");
             var string = "../data/coranavirus/2020_" + i + ".json"
-            $.get(string, function (response) {
+            $.get(string, function(response) {
                 var listdata = response.features;
                 features = [];
+                date = response.date;
                 for (var i = 0; i < listdata.length; i++) {
-                    features.push({
-                        "type": "Feature",
-                        "properties": {
-                            "date": response.date
-                        },
-                        "geometry": {
-                            "type": "Point",
-                            "coordinates": [
-                                listdata[i].properties.geoid[1],
-                                listdata[i].properties.geoid[0]
-                            ]
-                        },
-                    })
+                    var feature = new ol.Feature(new ol.geom.Point([listdata[i].properties.geoid[1], listdata[i].properties.geoid[0]]))
+                    features.push(feature)
                 }
-            }).done(function () {
-                data.push(features)
+            }).done(function() {
+                data.push({
+                    'features': features,
+                    'date': date
+                });
                 count++
                 if (count == 133) {
                     for (var d = new Date(2020, 0, 11); d <= new Date(2020, 5, 2); d.setDate(d.getDate() + 1)) {
                         var day = moment(d).format('YYYY-MM-DD');
                         data.forEach(arr => {
-                            if (arr[0].properties.date == day)
+                            if (arr.date == day)
                                 dataNew.push(arr)
                         });
                     }
                     widgets.loader.removeLoader();
-                    var geojson = {
-                        "type": "FeatureCollection",
-                        "features": data[0]
-                    }
-                    heatMapLayer = new mapboxgl.ekmap.HeatMapLayer("heatmap", {
-                        "map": map,
-                        "id": "heatmap",
-                        "radius": 10,
-                    });
-                    heatMapLayer.addFeatures(geojson);
+                    heatMapLayer = new ol.layer.HeatMapLayer(
+                        "heatMap", {
+                            "source": new ol.source.Vector({
+                                features: dataNew[0].features
+                            }),
+                            "radius": 5,
+                            "blur": 5,
+                        }
+                    );
                     map.addLayer(heatMapLayer);
-                    interval = setInterval(function () {
-                        var x = getValue()
+                    interval = setInterval(function() {
+                        var x = getValue();
                         if (x == 133)
                             clearInterval(interval);
                         else {
                             document.getElementById('slider').value = x;
-                            document.getElementById('date').textContent = dataNew[value][0].properties.date
-                            var geojson = {
-                                "type": "FeatureCollection",
-                                "features": dataNew[value]
-                            }
-                            map.getSource('heatmap').setData(geojson)
+                            document.getElementById('date').textContent = dataNew[value].date;
+                            heatMapLayer.getSource().clear();
+                            heatMapLayer.getSource().addFeatures(dataNew[value].features);
                         }
                     }, 300);
                 }
             })
         }
-
         var btn = document.getElementById('button-play');
-        document.getElementById("button-play").onclick = function () {
+        document.getElementById("button-play").onclick = function() {
             if (btn.value === 'PAUSE') {
                 btn.value = 'PLAY'
                 clearInterval(interval);
-            }
-            else {
+            } else {
                 btn.value = 'PAUSE'
-                interval = setInterval(function () {
+                interval = setInterval(function() {
                     var x = getValue()
                     if (x == 133)
                         clearInterval(interval);
                     else {
                         document.getElementById('slider').value = x
 
-                        document.getElementById('date').textContent = dataNew[value][0].properties.date
-                        var geojson = {
-                            "type": "FeatureCollection",
-                            "features": dataNew[value]
-                        }
-                        map.getSource('heatmap').setData(geojson)
+                        document.getElementById('date').textContent = dataNew[value].date
+                        heatMapLayer.getSource().clear();
+                        heatMapLayer.getSource().addFeatures(dataNew[value].features);
                     }
                 }, 300);
             }
@@ -210,12 +193,9 @@
 
         function changeTime() {
             value = document.getElementById('slider').value;
-            document.getElementById('date').textContent = dataNew[value][0].properties.date
-            var geojson = {
-                "type": "FeatureCollection",
-                "features": dataNew[value]
-            }
-            map.getSource('heatmap').setData(geojson)
+            document.getElementById('date').textContent = dataNew[value].date
+            heatMapLayer.getSource().clear();
+            heatMapLayer.getSource().addFeatures(dataNew[value].features);
         }
     </script>
 </body>
