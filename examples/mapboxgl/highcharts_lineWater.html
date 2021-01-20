@@ -18,12 +18,12 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
             margin: 8px;
         }
-
+        
         #stat {
             position: absolute;
             top: 65%;
@@ -33,7 +33,7 @@
             background: #FFF;
             z-index: 1000;
         }
-
+        
         #container {
             height: 100%;
             width: 100%;
@@ -57,28 +57,27 @@
             container: 'divMapId',
             style: {
                 "version": 8,
-                "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
-                "sources": {
-                },
+                "glyphs": 'https://viegisserver.ekgis.vn/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf',
+                "sources": {},
                 "layers": []
             },
             center: [107.60731810104676, 16.147953874376654],
             zoom: 8.869560614354818
         });
-        map.on('load', function () {
+        map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
         })
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon.png', function (error, image) {
+        map.loadImage('./img/marker-icon.png', function(error, image) {
             if (error) throw error;
             map.addImage('positionPoint', image);
         });
         query();
 
         function query() {
-            $.get("../data/waterdata.json", function (response) {
+            $.get("../data/waterdata.json", function(response) {
                 map.addSource('drone', {
                     'type': 'geojson',
                     'data': response
@@ -121,33 +120,34 @@
                     'source': 'drone',
                     'layout': {
                         'text-field': [
-                            'format',
-                            ['get', 'ten'],
-                            { 'font-scale': 0.7, "text-color": '#fff' }
+                            'format', ['get', 'ten'], {
+                                'font-scale': 0.7,
+                                "text-color": '#fff'
+                            }
                         ]
                     }
                 });
             })
-            $.get("../data/water/p.json", function (response) {
+            $.get("../data/water/p.json", function(response) {
                 response.forEach(feature => {
                     dataP.push(feature.value)
                     datatime.push(feature.datatime)
                 });
-            }).done(function () {
+            }).done(function() {
                 count++;
                 startHightChart();
             })
-            $.get("../data/water/q.json", function (response) {
+            $.get("../data/water/q.json", function(response) {
                 response.forEach(feature => {
                     dataQ.push(feature.value)
                 });
-            }).done(function () {
+            }).done(function() {
                 count++;
                 startHightChart();
             })
         }
 
-        map.on('click', 'water-fills', function (e) {
+        map.on('click', 'water-fills', function(e) {
             var bbox = [
                 [e.point.x - 5, e.point.y - 5],
                 [e.point.x + 5, e.point.y + 5]
@@ -158,11 +158,10 @@
             var arr = [];
             arr.push(features[0])
             var filter = arr.reduce(
-                function (memo, feature) {
+                function(memo, feature) {
                     memo.push(feature.properties.madoituong);
                     return memo;
-                },
-                ['in', 'madoituong']
+                }, ['in', 'madoituong']
             );
             map.setFilter('water-highlighted', filter)
             if (arr.length > 0) {
@@ -193,7 +192,7 @@
                             text: 'Value'
                         },
                         labels: {
-                            formatter: function () {
+                            formatter: function() {
                                 return this.value + '';
                             }
                         }
