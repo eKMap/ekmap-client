@@ -1,5 +1,13 @@
 import { ScaleLine } from './control';
-import ol_control_BaseLayer from "./control/BaseLayer"
+import BaseLayerControl from "./control/BaseLayer";
+import Legend from "./control/Legend";
+import FeatureInfomation from "./control/FeatureInfomation";
+import SnapShot from "./control/SnapShot";
+import Reverse from "./control/Reverse";
+import Geocoder from "./control/Geocoder";
+import TreeLayer from "./control/TreeLayer";
+
+import RotateNorthControl from "./control/Test"
 
 import { TiledVietNamMapLayer } from './layer'
 import { TileLayer } from './layer/TileLayer';
@@ -30,9 +38,14 @@ if (window && window.ol) {
     ol.ekmap.control = window.ol.ekmap.control || {};
     // control
     ol.ekmap.control.ScaleLine = ScaleLine;
-    ol.ekmap.control.BaseLayer = ol_control_BaseLayer;
-
-
+    ol.ekmap.control.BaseLayer = BaseLayerControl;
+    ol.ekmap.control.Legend = Legend;
+    ol.ekmap.control.RotateNorthControl = RotateNorthControl;
+    ol.ekmap.control.FeatureInfomation = FeatureInfomation;
+    ol.ekmap.control.SnapShot = SnapShot;
+    ol.ekmap.control.Reverse = Reverse;
+    ol.ekmap.control.Geocoder = Geocoder;
+    ol.ekmap.control.TreeLayer = TreeLayer;
     // core
     ol.ekmap.Util = Util;
     ol.ekmap.Parse = Parse;

@@ -32,8 +32,8 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [11579858.869040623, 2415212.099922052],
-                zoom: 9,
+                center: [11588851.409902023, 2416085.760624543],
+                zoom: 15,
                 // projection: 'EPSG:4326'
             })
         });
@@ -41,15 +41,15 @@
         //mapbox://styles/mapbox/streets-v11
 
         // var layer = new ol.layer.MapboxVector({
-        //     styleUrl: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer/resources/styles?token=1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x',
+        //     styleUrl: 'https://viegisserver.ekgis.vn/gserver/rest/services/121/VectorTileServer/resources/styles?apikey=1-zikhB5A2Dr7cddYntO0RAIqC4cUk62O6&usingEngine=true',
         //     accessToken: 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg'
         // })
 
         // map.addLayer(layer)
 
-        // var vnMap = new ol.ekmap.TiledVietNamMapLayer({
-        //     token: tokenVN
-        // }).addTo(map)
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
 
         var vectorTile = new ol.ekmap.VectorTiledMapLayer({
                 url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer',

@@ -9,6 +9,7 @@ import Observable from 'ol/Observable';
  * @param {Object} options Construction parameters.
  * @param {string} options.url 
  * @param {string} options.token Will use this token to authenticate all calls to the service.
+ * @param {ol.style.Style} options.style Style of features.
  * @extends {ol.Observable}
  */
 export class VectorTiledMapLayer extends Observable {
@@ -28,12 +29,33 @@ export class VectorTiledMapLayer extends Observable {
             this.tileUrl += ('?token=' + this.options.token);
             this.styleUrl += ('?token=' + this.options.token);
         }
+        var styleDefault = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'gray',
+                width: 1,
+            }),
+            fill: new ol.style.Fill({
+                color: 'rgba(20,20,20,0.9)',
+            }),
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: '#B42222'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: 'yellow',
+                    width: 3
+                }),
+                radius: 7
+            })
+        })
+        this.style = this.options.style != undefined ? this.options.style : styleDefault
         this.map = '';
         this.arr = [];
         this.name = [];
         this.objectLayer = {};
         this.layerPointLine = [];
         this.featuresCheck = '';
+        this.layer = null;
         this.urlFeatureService = options.url.replace("VectorTileServer", "FeatureServer")
         this.urlMapService = options.url.replace("VectorTileServer", "MapServer")
     }
@@ -47,60 +69,46 @@ export class VectorTiledMapLayer extends Observable {
     addTo(map) {
         this.map = map;
         var me = this;
-
-        map.addLayer(new ol.layer.VectorTile({
+        this.layer = new ol.layer.VectorTile({
             declutter: true,
             source: new ol.source.VectorTile({
                 // projection: "EPSG:4326",
                 maxZoom: 15,
                 format: new ol.format.MVT(),
+                tileType: 'ScaleXY',
                 url: me.tileUrl,
+                // tileGrid: new ol.tilegrid.TileGrid({
+                //     extent: [-180, -90, 180, 90],
+                //     tileSize: 512,
+                // })
             }),
             // style: createMapboxStreetsV6Style(ol.style.Style, ol.style.Fill, ol.style.Stroke, ol.style.Icon, ol.style.Text),
-            style: new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: 'gray',
-                    width: 1,
-                }),
-                fill: new ol.style.Fill({
-                    color: 'rgba(20,20,20,0.9)',
-                }),
-                image: new ol.style.Circle({
-                    fill: new ol.style.Fill({
-                        color: '#B42222'
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: 'yellow',
-                        width: 3
-                    }),
-                    radius: 7
-                })
-            })
-        }))
+            style: this.style,
+            type: 'VectorTileLayer',
+            url: this.urlMapService,
+            token: this.options.token
+        })
+        map.addLayer(this.layer);
 
+        var mapService = new ol.ekmap.MapService({
+            url: this.urlMapService,
+            token: this.options.token
+        })
 
-
-        //Style point,line,polygon
-        // var layers = map.getStyle().layers;
-        // layers.forEach(layer => {
-        //     var idCheck = layer.id % 2;
-        //     if (!isNaN(idCheck)) {
-        //         listLayer.push(layer)
-        //         me.arr.push(layer.id)
-        //         me.name.push(layer.metadata.name)
-        //     }
-        // });
-        // listLayer.forEach(layer => {
-        //     if (layer.type == 'line') {
-        //         me.layerPointLine.push(layer.id);
-        //     }
-
-        //     if (layer.type == 'circle') {
-        //         me.layerPointLine.push(layer.id);
-        //     }
-        // });
-
-        // me.arr.forEach((key, i) => me.objectLayer[key] = me.name[i]);
+        var listLayer = []
+        mapService.getLayers(function(layers) {
+            layers.forEach(layer => {
+                if (layer.subLayers && layer.subLayers.length > 0) {
+                    var subLayers = layer.subLayers
+                    subLayers.forEach(sub => {
+                        listLayer.push(sub)
+                    });
+                }
+            });
+            listLayer.forEach((key, i) => {
+                me.objectLayer[key.id] = listLayer[i].name
+            });
+        });
         return this;
 
     }

@@ -117,11 +117,8 @@ function getRadius(data, minData, maxData, minRadius, maxRadius) {
 }
 
 function ekmap_inherits(child, parent) {
-    console.log(child)
-    console.log(Object.create(parent.prototype))
     child.prototype = Object.create(parent.prototype);
     child.prototype.constructor = child;
-    console.log(child)
 };
 
 //var tokenKey = "";

@@ -217,7 +217,7 @@ export class FeatureLayer extends Observable {
             }
             /**
              * @event ol.ekmap.FeatureLayer#loadend
-             * @description Fired when the feature layer load end. 
+             * @description Fired when the feature layer load end.
              */
             me.dispatchEvent({ type: 'loadend', value: me });
         })
@@ -239,7 +239,7 @@ export class FeatureLayer extends Observable {
      * @function ol.ekmap.FeatureLayer.prototype.query
      * @description Query data.
      * @param {Object} params - Adds the layer to the given map or layer group.
-     * @param {RequestCallback} callback 
+     * @param {RequestCallback} callback
      *
      */
     query(params, callback, context) {

@@ -5,13 +5,14 @@
     <meta charset="utf-8" />
     <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
+    <link href="../../dist/mapboxgl/gclient.min.css" rel="stylesheet">
     <title>BaseLayer Control</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -31,19 +32,21 @@
                     name: 'Hành chính',
                     baseLayer: true,
                     source: new ol.source.OSM(),
-                    visible: true
+                    visible: false
                 }),
                 new ol.layer.Tile({
                     name: 'Giao thông',
                     baseLayer: true,
                     source: new ol.source.XYZ({
-                        url:
-                            'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=get_your_own_D6rA4zTHduk6KOKTXzGB',
+                        url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=get_your_own_D6rA4zTHduk6KOKTXzGB',
                         maxZoom: 20,
                     }),
                     visible: false
-                })],
-            controls: ol.control.defaults({ zoom: true }),
+                })
+            ],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
             view: new ol.View({
                 center: [105.20886162772933, 16.518572979240204],
                 zoom: 5.193739308697748,
@@ -51,6 +54,9 @@
                 multiWorld: true
             })
         });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
         zoomControl = new ol.ekmap.control.BaseLayer();
         map.addControl(zoomControl);
     </script>

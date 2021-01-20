@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Realtime Water</title>
     <style>
@@ -14,11 +13,11 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #selectedFeatures {
             position: absolute;
             left: 12px;
@@ -29,23 +28,23 @@
             max-height: 250px;
             max-width: 250px;
         }
-
+        
         .leaflet-bar.map-text a {
             color: #79BD8F;
             display: inline;
         }
-
+        
         .dataNote {
             padding: 10px;
             margin: 0px;
             list-style-type: none;
         }
-
+        
         .noteType {
             padding: 0px;
             list-style-type: none;
         }
-
+        
         .note {
             font-size: 20px;
             font-weight: 600;
@@ -66,8 +65,7 @@
                     <li>
                         <ul class="noteType">
                             <li>
-                                <img width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX/AAAZ4gk3AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX/AAAZ4gk3AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     Polluted
                                 </span>
@@ -75,8 +73,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUA/wA0XsCoAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUA/wA0XsCoAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     Medium
                                 </span>
@@ -84,8 +81,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUAmf8q++MEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUAmf8q++MEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     Good
                                 </span>
@@ -97,92 +93,183 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [107.58856560217953, 16.3539350884014],
-            style: {
-                "version": 8,
-                "glyphs": urlServicesHost + "/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
-                "sources": {
-                },
-                "layers": [
-                ]
-            },
-            zoom: 9.415324050150357,
+        var map = new ol.Map({
+            target: 'divMapId',
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [107.4602422284319, 16.260551864399332],
+                zoom: 11,
+                projection: 'EPSG:4326',
+            })
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
         var frameCount = 5;
         var currentImage = -5;
 
-        map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map);
-            widgets.loader.showLoader("data loading...");
-            $.get("../data/water/dma.json", function (response) {
-                var features = response.features;
-                window.setInterval(function () {
-                    features.forEach(fea => {
-                        currentImage = (currentImage + 1) % frameCount;
-                        fea.properties.value = currentImage
-                    });
-                    map.getSource('dma').setData(response)
-                }, 3000)
-
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        widgets.loader.showLoader("data loading...");
+        $.get("../data/water/dma.json", function(response) {
+            var listData = response.features;
+            var features = [];
+            var layer;
+            listData.forEach(fea => {
+                var feature = new ol.Feature(new ol.geom.Polygon(fea.geometry.coordinates));
+                feature.setProperties(fea.properties);
+                features.push(feature);
+            });
+            window.setInterval(function() {
                 features.forEach(fea => {
                     currentImage = (currentImage + 1) % frameCount;
-                    fea.properties.value = currentImage
+                    // var properties = fea.getProperties();
+                    // properties.value = currentImage;
+                    fea.set('value', currentImage);
                 });
-                map.addSource('dma', {
-                    'type': 'geojson',
-                    'data': response
-                });
+                var layers = map.getLayers().array_;
+                layer.setSource(new ol.source.Vector({
+                    features: features
+                }))
+                layer.setStyle(getStyle);
+            }, 3000)
 
-                map.addLayer({
-                    'id': 'water',
-                    'type': 'fill',
-                    'source': 'dma',
-                    'paint': {
-                        'fill-color': [
-                            'interpolate',
-                            ['linear'],
-                            ['get', 'value'],
-                            0,
-                            '#FF0000',
-                            1,
-                            '#00FF00',
-                            4,
-                            '#0099FF'
-                        ],
-                        'fill-outline-color': '#000',
-                        'fill-opacity': 0.7
-                    }
-                });
-                map.addLayer({
-                    'id': 'water-labels',
-                    'type': 'symbol',
-                    'source': 'dma',
-                    'layout': {
-                        'text-field': [
-                            'format',
-                            ['get', 'name'],
-                            {
-                                'font-scale': 0.7
-                            }
-                        ]
-                    }
-                });
-            }).done(function () {
-                widgets.loader.removeLoader();
+            features.forEach(fea => {
+                currentImage = (currentImage + 1) % frameCount;
+                fea.set('value', currentImage);
+            });
+
+            layer = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: features
+                }),
+                style: getStyle,
+                opacity: 0.7
             })
+            layer.setProperties({
+                'id': 'dma'
+            })
+            map.addLayer(layer)
+                // map.addSource('dma', {
+                //     'type': 'geojson',
+                //     'data': response
+                // });
+
+            // map.addLayer({
+            //     'id': 'water',
+            //     'type': 'fill',
+            //     'source': 'dma',
+            //     'paint': {
+            //         'fill-color': [
+            //             'interpolate', ['linear'],
+            //             ['get', 'value'],
+            //             0,
+            //             '#FF0000',
+            //             1,
+            //             '#00FF00',
+            //             4,
+            //             '#0099FF'
+            //         ],
+            //         'fill-outline-color': '#000',
+            //         'fill-opacity': 0.7
+            //     }
+            // });
+            // map.addLayer({
+            //     'id': 'water-labels',
+            //     'type': 'symbol',
+            //     'source': 'dma',
+            //     'layout': {
+            //         'text-field': [
+            //             'format', ['get', 'name'], {
+            //                 'font-scale': 0.7
+            //             }
+            //         ]
+            //     }
+            // });
+        }).done(function() {
+            widgets.loader.removeLoader();
         })
-        function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
+
+        function getStyle(feature) {
+            if (feature.getProperties().value <= 0) {
+                var styles = [
+                    new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: '#FF0000'
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: '#000',
+                            width: 1
+                        }),
+                        text: new ol.style.Text({
+                            text: feature.getProperties().name,
+                            fill: new ol.style.Fill({
+                                color: '#000',
+                                scale: 15
+                            }),
+                            stroke: new ol.style.Stroke({
+                                color: '#000',
+                                width: 0.7
+                            })
+                        })
+                    })
+                ]
+                return styles;
             }
-            return color;
+
+            if (feature.getProperties().value >= 1 && feature.getProperties().value < 4) {
+                var styles = [
+                    new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: '#00FF00'
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: '#000',
+                            width: 1
+                        }),
+                        text: new ol.style.Text({
+                            text: feature.getProperties().name,
+                            fill: new ol.style.Fill({
+                                color: '#000',
+                                scale: 15
+                            }),
+                            stroke: new ol.style.Stroke({
+                                color: '#000',
+                                width: 0.7
+                            })
+                        })
+                    })
+                ]
+                return styles;
+            }
+
+            if (feature.getProperties().value >= 4) {
+                var styles = [
+                    new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: '#0099FF'
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: '#000',
+                            width: 1
+                        }),
+                        text: new ol.style.Text({
+                            text: feature.getProperties().name,
+                            fill: new ol.style.Fill({
+                                color: '#000',
+                                scale: 15
+                            }),
+                            stroke: new ol.style.Stroke({
+                                color: '#000',
+                                width: 0.7
+                            })
+                        })
+                    })
+                ]
+                return styles;
+            }
         }
     </script>
 </body>

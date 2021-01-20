@@ -59,6 +59,9 @@
         tiledMap = new ol.ekmap.TiledMapLayer({
             url: urlMapService,
         }).addTo(map);
+
+        map.getViewport().style.cursor = 'crosshair';
+
         var pane = document.getElementById('selectedFeatures');
         map.on('click', function(e) {
             pane.innerHTML = 'Loading';

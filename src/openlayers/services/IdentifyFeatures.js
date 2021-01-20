@@ -51,13 +51,16 @@ export class IdentifyFeatures extends ServiceBase {
      */
     on(map) {
         var bounds = map.getView().calculateExtent();
+        var wkid = 4326;
+        if (map.getView().getProjection().code_ == 'EPSG:3857')
+            wkid = 3857;
         var extent = {
             'xmin': bounds[0],
             'ymin': bounds[1],
             'xmax': bounds[2],
             'ymax': bounds[3],
             'spatialReference': {
-                'wkid': 4326
+                'wkid': wkid
             }
         };
         var size = map.getSize();

@@ -62,7 +62,8 @@ export class MapService extends ServiceBase {
             param.f = 'json';
             var service = new MapService(me.options);
             return service.request('find', param, function(error, response) {
-                callback.call(context, response.results);
+                var result = (response && response.results) ? response.results : undefined;
+                callback.call(context, error, result);
             }, me);
         })
 
@@ -100,7 +101,8 @@ export class MapService extends ServiceBase {
         params.f = 'json';
         var service = new MapService(this.options);
         return service.request('layers', params, function(error, response) {
-            callback.call(context, response);
+            var result = (response && response.layers) ? response.layers : undefined;
+            callback.call(context, result);
         }, this);
     }
 

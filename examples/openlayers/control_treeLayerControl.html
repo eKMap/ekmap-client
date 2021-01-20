@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="../../dist/mapboxgl/gclient.min.css" rel="stylesheet">
+    <title>Tree Layer Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        .treeLayer {
+            top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new ol.Map({
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            target: 'divMapId',
+            view: new ol.View({
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 5.193739308697748,
+                projection: 'EPSG:4326'
+            })
+        });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN,
+            id: 'vnMap',
+            visible: true
+        }).addTo(map);
+        var adminMap = new ol.ekmap.TiledAdminMapLayer({
+            id: 'adminMap',
+            visible: false
+        }).addTo(map);
+        var roadMap = new ol.ekmap.TiledRoadMapLayer({
+            id: 'roadMap',
+            visible: false
+        }).addTo(map);
+
+        let Opacity = new ol.ekmap.control.TreeLayer({
+            className: 'treeLayer'
+        });
+        map.addControl(Opacity, 'top-left');
+    </script>
+</body>
+
+</html>

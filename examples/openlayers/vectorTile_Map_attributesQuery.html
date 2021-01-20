@@ -125,10 +125,10 @@
             })
         });
 
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService,
-            token: tokenKey
-        }).addTo(map);
+        // var maps = new ol.ekmap.VectorTiledMapLayer({
+        //     url: urlVectorService,
+        //     token: tokenKey
+        // }).addTo(map);
 
         var draw;
         var listLayersServer = [];
@@ -136,22 +136,17 @@
         var data = [];
         var fields = [];
         var listFields = [];
-        map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-            var layers = map.getStyle().layers;
-            map.moveLayer(layers[layers.length - 1].id, layers[0].id)
-            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-            var service = new mapboxgl.ekmap.MapService({
-                'url': 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/MapServer',
-                //'token': tokenKey
-            })
-            service.getLayers(function(obj) {
-                listLayersServer = obj.layers;
-                console.log(listLayersServer)
-                changeMenu();
-            })
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+        var service = new ol.ekmap.MapService({
+            'url': 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/MapServer',
+            //'token': tokenKey
+        })
+        service.getLayers(function(obj) {
+            listLayersServer = obj.layers;
+            console.log(listLayersServer)
+            changeMenu();
         })
 
         function changeMenu() {
@@ -227,7 +222,7 @@
 
             var x = document.getElementById("mySelect").value;
             var url = 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/' + x;
-            var featureService = new mapboxgl.ekmap.FeatureService({
+            var featureService = new ol.ekmap.FeatureService({
                 url: url,
                 //token: tokenKey
             });

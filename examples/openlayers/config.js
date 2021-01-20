@@ -24,7 +24,7 @@ var exampleConfig = {
                     {
                         name: "Bounds query",
                         name_en: "Bounds query",
-                        thumbnail: "mapService_queryByBound.png",
+                        thumbnail: "featureService_queryByBound.png",
                         fileName: "mapService_queryByBound",
                         subject: "Use queryByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
                         description: "Create bound, displaying data on the bound area."
@@ -32,7 +32,7 @@ var exampleConfig = {
                     {
                         name: "Geometry query",
                         name_en: "Geometry query",
-                        thumbnail: "mapService_queryByGeometry.png",
+                        thumbnail: "featureService_queryByGeometry.png",
                         fileName: "mapService_queryByGeometry",
                         subject: "Use queryByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
                         description: "Create polygon, display data on polygon"
@@ -136,30 +136,30 @@ var exampleConfig = {
                         subject: "Add vector tile.",
                         description: ""
                     },
-                    {
-                        name: "Mapbox Vector Tile Overlay",
-                        name_en: "Mapbox Vector Tile Overlay",
-                        thumbnail: "vectorTile_Map_full.png",
-                        fileName: "vectorTile_Map_overlay",
-                        subject: "Add vector tile overlay to the map.",
-                        description: ""
-                    },
-                    {
-                        name: "Mapbox Vector Tile Hover",
-                        name_en: "Mapbox Vector Tile Hover",
-                        thumbnail: "vectorTile_Map_hover.gif",
-                        fileName: "vectorTile_Map_hover",
-                        subject: "Using events and feature states to create a per feature hover effect.",
-                        description: "Using events and feature states to create a per feature hover effect."
-                    },
-                    {
-                        name: "Mapbox Vector Tile Select",
-                        name_en: "Mapbox Vector Tile Select",
-                        thumbnail: "vectorTile_Map_select.gif",
-                        fileName: "vectorTile_Map_select",
-                        subject: "Vector tile select on the map.",
-                        description: "Click on the map to query features using queryRenderedFeatures."
-                    },
+                    // {
+                    //     name: "Mapbox Vector Tile Overlay",
+                    //     name_en: "Mapbox Vector Tile Overlay",
+                    //     thumbnail: "vectorTile_Map_full.png",
+                    //     fileName: "vectorTile_Map_overlay",
+                    //     subject: "Add vector tile overlay to the map.",
+                    //     description: ""
+                    // },
+                    // {
+                    //     name: "Mapbox Vector Tile Hover",
+                    //     name_en: "Mapbox Vector Tile Hover",
+                    //     thumbnail: "vectorTile_Map_hover.gif",
+                    //     fileName: "vectorTile_Map_hover",
+                    //     subject: "Using events and feature states to create a per feature hover effect.",
+                    //     description: "Using events and feature states to create a per feature hover effect."
+                    // },
+                    // {
+                    //     name: "Mapbox Vector Tile Select",
+                    //     name_en: "Mapbox Vector Tile Select",
+                    //     thumbnail: "vectorTile_Map_select.gif",
+                    //     fileName: "vectorTile_Map_select",
+                    //     subject: "Vector tile select on the map.",
+                    //     description: "Click on the map to query features using queryRenderedFeatures."
+                    // },
                     // {
                     //     name: "Resize Map",
                     //     name_en: "Resize Map",
@@ -168,22 +168,22 @@ var exampleConfig = {
                     //     subject: "Resize Map.",
                     //     description: "Click button"
                     // },
-                    {
-                        name: "Geometry Query",
-                        name_en: "Geometry Query",
-                        thumbnail: "vectorTile_Map_geometryQuery.png",
-                        fileName: "vectorTile_Map_geometryQuery",
-                        subject: "Geometry Query.",
-                        description: "Create polygon or line buffer to display data on polygon"
-                    },
-                    {
-                        name: "Filter Province",
-                        name_en: "Filter Province",
-                        thumbnail: "filterProvince.gif",
-                        fileName: "filterProvince",
-                        subject: "Filter Province.",
-                        description: "Create polygon or line buffer to display data on polygon"
-                    }
+                    // {
+                    //     name: "Geometry Query",
+                    //     name_en: "Geometry Query",
+                    //     thumbnail: "vectorTile_Map_geometryQuery.png",
+                    //     fileName: "vectorTile_Map_geometryQuery",
+                    //     subject: "Geometry Query.",
+                    //     description: "Create polygon or line buffer to display data on polygon"
+                    // },
+                    // {
+                    //     name: "Filter Province",
+                    //     name_en: "Filter Province",
+                    //     thumbnail: "filterProvince.gif",
+                    //     fileName: "filterProvince",
+                    //     subject: "Filter Province.",
+                    //     description: "Create polygon or line buffer to display data on polygon"
+                    // }
                 ]
             },
             control: {
@@ -204,7 +204,8 @@ var exampleConfig = {
                         fileName: "control_featureInfomationControl",
                         subject: "Use control featureInfomation to retrieve the selected object.",
                         description: "Click on the map to retrieve the selected object."
-                    }, {
+                    },
+                    {
                         name: "Tree Layer",
                         name_en: "Tree Layer",
                         thumbnail: "control_treeLayerControl.png",
@@ -212,14 +213,14 @@ var exampleConfig = {
                         subject: "Tree Layer.",
                         description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
                     },
-                    {
-                        name: "Tree Layer (VectorTile)",
-                        name_en: "Tree Layer (VectorTile)",
-                        thumbnail: "control_treeLayer_vectorTiledControl.png",
-                        fileName: "control_treeLayer_vectorTiledControl",
-                        subject: "Tree Layer (VectorTile).",
-                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
-                    },
+                    // {
+                    //     name: "Tree Layer (VectorTile)",
+                    //     name_en: "Tree Layer (VectorTile)",
+                    //     thumbnail: "control_treeLayer_vectorTiledControl.png",
+                    //     fileName: "control_treeLayer_vectorTiledControl",
+                    //     subject: "Tree Layer (VectorTile).",
+                    //     description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                    // },
                     {
                         name: "Base Layer",
                         name_en: "Base Layer",
@@ -336,14 +337,14 @@ var exampleConfig = {
                         subject: "Add an animated icon to the map that was generated at runtime with a Canvas.",
                         description: "Add an animated icon to the map that was generated at runtime with a Canvas."
                     },
-                    {
-                        name: "Point",
-                        name_en: "Point",
-                        thumbnail: "animation_point.gif",
-                        fileName: "animation_point",
-                        subject: "Animate the position of a point by updating a GeoJSON source on each frame.",
-                        description: "Animate the position of a point by updating a GeoJSON source on each frame."
-                    }
+                    // {
+                    //     name: "Point",
+                    //     name_en: "Point",
+                    //     thumbnail: "animation_point.gif",
+                    //     fileName: "animation_point",
+                    //     subject: "Animate the position of a point by updating a GeoJSON source on each frame.",
+                    //     description: "Animate the position of a point by updating a GeoJSON source on each frame."
+                    // }
                 ]
             },
             ECharts: {
@@ -432,29 +433,29 @@ var exampleConfig = {
                     description: "Click point on the map to show flood warning data, rainfall information in Central - Vietnam by chart online."
                 }]
             },
-            threejs: {
-                name: "threejs",
-                name_en: "threejs",
-                content: [{
-                        name: "Buildings",
-                        name_en: "Buildings",
-                        version: "",
-                        thumbnail: "threejsLayer_buildings.png",
-                        fileName: "threejsLayer_buildings",
-                        subject: "Use ThreeLayer to display buildings.",
-                        description: "Use mapboxgl.ekmap.ThreeLayer to display buildings."
-                    },
-                    {
-                        name: "Airplane(gltf)",
-                        name_en: "Airplane(gltf)",
-                        version: "",
-                        thumbnail: "threejsLayer_airplane.gif",
-                        fileName: "threejsLayer_airplane",
-                        subject: "Use ThreeLayer to display airplane.",
-                        description: "Use mapboxgl.ekmap.ThreeLayer to display airplane."
-                    }
-                ]
-            },
+            // threejs: {
+            //     name: "threejs",
+            //     name_en: "threejs",
+            //     content: [{
+            //             name: "Buildings",
+            //             name_en: "Buildings",
+            //             version: "",
+            //             thumbnail: "threejsLayer_buildings.png",
+            //             fileName: "threejsLayer_buildings",
+            //             subject: "Use ThreeLayer to display buildings.",
+            //             description: "Use mapboxgl.ekmap.ThreeLayer to display buildings."
+            //         },
+            //         {
+            //             name: "Airplane(gltf)",
+            //             name_en: "Airplane(gltf)",
+            //             version: "",
+            //             thumbnail: "threejsLayer_airplane.gif",
+            //             fileName: "threejsLayer_airplane",
+            //             subject: "Use ThreeLayer to display airplane.",
+            //             description: "Use mapboxgl.ekmap.ThreeLayer to display airplane."
+            //         }
+            //     ]
+            // },
             LayerChart: {
                 name: "Layer Chart",
                 name_en: "Layer Chart",
@@ -467,19 +468,19 @@ var exampleConfig = {
                     description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively."
                 }]
             },
-            '3DLayer': {
-                name: "3D Layer",
-                name_en: "3D Layer",
-                content: [{
-                    name: "3D buildings",
-                    name_en: "3D buildings",
-                    version: "",
-                    thumbnail: "data_3D.gif",
-                    fileName: "data_3D",
-                    subject: "3D data display shows the altitude of some Hanoi planning areas.",
-                    description: "3D data display shows the altitude of some Hanoi planning areas."
-                }]
-            },
+            // '3DLayer': {
+            //     name: "3D Layer",
+            //     name_en: "3D Layer",
+            //     content: [{
+            //         name: "3D buildings",
+            //         name_en: "3D buildings",
+            //         version: "",
+            //         thumbnail: "data_3D.gif",
+            //         fileName: "data_3D",
+            //         subject: "3D data display shows the altitude of some Hanoi planning areas.",
+            //         description: "3D data display shows the altitude of some Hanoi planning areas."
+            //     }]
+            // },
             Realtime: {
                 name: "Realtime",
                 name_en: "Realtime",
@@ -509,18 +510,18 @@ var exampleConfig = {
                     }
                 ]
             },
-            Video: {
-                name: "Video",
-                name_en: "Video",
-                content: [{
-                    name: "Video Storm",
-                    name_en: "Video Storm",
-                    thumbnail: "video_storm.gif",
-                    fileName: "video_storm",
-                    subject: "Description of storm path in the form of video on the map.",
-                    description: "Video path of Typhoon Saudel entering the South China Sea, forecast jerks to level 14."
-                }]
-            },
+            // Video: {
+            //     name: "Video",
+            //     name_en: "Video",
+            //     content: [{
+            //         name: "Video Storm",
+            //         name_en: "Video Storm",
+            //         thumbnail: "video_storm.gif",
+            //         fileName: "video_storm",
+            //         subject: "Description of storm path in the form of video on the map.",
+            //         description: "Video path of Typhoon Saudel entering the South China Sea, forecast jerks to level 14."
+            //     }]
+            // },
             StoryMap: {
                 name: "Story Map",
                 name_en: "Story Map",
@@ -540,22 +541,22 @@ var exampleConfig = {
                         subject: "Hue - Hoi An - Da Nang tours.",
                         description: "Display map of Hue - Hoi An - Da Nang tours."
                     },
-                    {
-                        name: "Timeline Coronavirus (Heatmap)",
-                        name_en: "Timeline Coronavirus (Heatmap)",
-                        thumbnail: "timeline_heatMapCov.gif",
-                        fileName: "timeline_heatMapCov",
-                        subject: "Displays the timeline map showing the increase in COVID19 cases around the world.",
-                        description: "Displays the timeline map showing the increase in COVID19 cases around the world."
-                    },
-                    {
-                        name: "COVID-19: Government Response Stringency",
-                        name_en: "COVID-19: Government Response Stringency",
-                        thumbnail: "timeline_fillCov.gif",
-                        fileName: "timeline_fillCov",
-                        subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
-                        description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
-                    },
+                    // {
+                    //     name: "Timeline Coronavirus (Heatmap)",
+                    //     name_en: "Timeline Coronavirus (Heatmap)",
+                    //     thumbnail: "timeline_heatMapCov.gif",
+                    //     fileName: "timeline_heatMapCov",
+                    //     subject: "Displays the timeline map showing the increase in COVID19 cases around the world.",
+                    //     description: "Displays the timeline map showing the increase in COVID19 cases around the world."
+                    // },
+                    // {
+                    //     name: "COVID-19: Government Response Stringency",
+                    //     name_en: "COVID-19: Government Response Stringency",
+                    //     thumbnail: "timeline_fillCov.gif",
+                    //     fileName: "timeline_fillCov",
+                    //     subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
+                    //     description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
+                    // },
                     // {
                     //     name: "Timeline Coronavirus (Buffer)",
                     //     name_en: "Timeline Coronavirus (Buffer)",
@@ -656,13 +657,6 @@ var exampleConfig = {
                 name: "Basic Control",
                 name_en: "Basic Control",
                 content: [{
-                        name: "Web Feature Service",
-                        name_en: "Web Feature Service",
-                        thumbnail: "ogc_wfs.png",
-                        fileName: "ogc_wfs",
-                        subject: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
-                        description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data)."
-                    }, {
                         name: "Zoom Control",
                         name_en: "Zoom Control",
                         thumbnail: "control_zoomControl.png",
@@ -724,22 +718,6 @@ var exampleConfig = {
                         description: "A GeolocateControl control provides a button that uses the browser's geolocation API to locate the user on the map."
                     },
                     {
-                        name: "Swipe between maps",
-                        name_en: "Swipe between maps",
-                        thumbnail: "control_swipeBetweenMap.png",
-                        fileName: "control_swipeBetweenMap",
-                        subject: "Swipe Control.",
-                        description: "Is a control that adds split screen to compare two map layers. Layers can be added to the left or right of the map."
-                    },
-                    {
-                        name: "Side By Side",
-                        name_en: "Side By Side",
-                        thumbnail: "control_sideBySide.png",
-                        fileName: "control_sideBySide",
-                        subject: "Side By Side.",
-                        description: "Side By Side"
-                    },
-                    {
                         name: "Snapshot maps",
                         name_en: "Snapshot maps",
                         thumbnail: "control_snapShotControl.png",
@@ -763,22 +741,22 @@ var exampleConfig = {
                         subject: "Use the geocoder control to search for places using the Mapbox Geocoding API.",
                         description: "Use the geocoder control to search for places using the Mapbox Geocoding API."
                     },
-                    {
-                        name: "Draw Circle",
-                        name_en: "Draw Circle",
-                        thumbnail: "control_drawCircleControl.gif",
-                        fileName: "control_drawCircleControl",
-                        subject: "Draw Circle.",
-                        description: "Use control DrawCircle to draw circle"
-                    },
-                    {
-                        name: "Draw Line Buffer",
-                        name_en: "Draw Line Buffer",
-                        thumbnail: "control_drawLineBufferControl.gif",
-                        fileName: "control_drawLineBufferControl",
-                        subject: "Draw Line Buffer.",
-                        description: "Use control Draw and control DrawLine to draw line buffer"
-                    },
+                    // {
+                    //     name: "Draw Circle",
+                    //     name_en: "Draw Circle",
+                    //     thumbnail: "control_drawCircleControl.gif",
+                    //     fileName: "control_drawCircleControl",
+                    //     subject: "Draw Circle.",
+                    //     description: "Use control DrawCircle to draw circle"
+                    // },
+                    // {
+                    //     name: "Draw Line Buffer",
+                    //     name_en: "Draw Line Buffer",
+                    //     thumbnail: "control_drawLineBufferControl.gif",
+                    //     fileName: "control_drawLineBufferControl",
+                    //     subject: "Draw Line Buffer.",
+                    //     description: "Use control Draw and control DrawLine to draw line buffer"
+                    // },
                     {
                         name: "Show Drawn Polygon Area",
                         name_en: "Show Drawn Polygon Area",

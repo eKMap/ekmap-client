@@ -7,24 +7,22 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>Hight chart pie</title>
+    <title>Highcharts Pie</title>
 </head>
 <style>
     .map {
         width: 100%;
         height: calc(100vh - 20px);
     }
-
+    
     body {
         overflow: hidden;
         margin: 8px;
     }
-
+    
     #container {
         position: absolute;
         top: 60%;
@@ -36,35 +34,30 @@
 </style>
 
 <body>
-    <div id='divMapId' class="map"></div>
-    <div id='stat'>
+    <div id='divMapId' class='map'></div>
+    <div id='start'>
         <div id='container'></div>
     </div>
+    <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
     <script type="text/javascript">
-        var chart, div, popup = '';
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {
-                },
-                "layers": []
-            },
-            center: [106.5090846096723, 16.787962287423255],
-            zoom: 5.1128594812072485
+        var featureLayers, dataSource;
+        var map = new ol.Map({
+            target: 'divMapId',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 6,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
         });
-        map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-        })
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon.png', function (error, image) {
-            if (error) throw error;
-            map.addImage('positionPoint', image);
-        });
-
-        // categoryDataMap
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
         var categoryDataMap = {
             "Hà Nội": [{
                 y: 335,
@@ -160,75 +153,89 @@
         };
         query();
 
-        function query() {
-            $.get("../data/echarts_pie.json", function (response) {
-                var fs = response;
-                map.addLayer({
-                    "id": "points",
-                    "type": "symbol",
-                    "layout": {
-                        "icon-image": "positionPoint",
-                        "icon-size": 0.8,
-                        "icon-offset": [0, -15]
-                    },
-                    "source": {
-                        "type": "geojson",
-                        "data": fs
-                    }
-                });
-            });
+        function iconStyleFunc() {
+            var zIndex = 1;
+            var iconStyle = [new ol.style.Style({
+                image: new ol.style.Icon(({
+                    anchor: [0.5, 0.5],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    scale: 0.1,
+                    src: './img/marker-icon-red.png',
+                    zIndex: zIndex
+                })),
+                zIndex: zIndex
+            })];
+            return iconStyle;
         }
 
-        map.on('click', 'points', function (e) {
-            var city = e.features[0].properties.NAME;
-            var options = {
-                chart: {
-                    renderTo: 'container',
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie'
-                },
-                title: {
-                    text: city
-                },
-                subtitle: {
-                    text: 'Commodity sales'
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                accessibility: {
-                    point: {
-                        valueSuffix: '%'
-                    }
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        function query() {
+            $.get("../data/echarts_pie.json", function(response) {
+                dataSource = new ol.source.Vector({
+                    features: new ol.format.GeoJSON().readFeatures(response),
+                });
+                featureLayers = new ol.layer.Vector({
+                    source: dataSource,
+                    style: iconStyleFunc()
+                });
+                map.addLayer(featureLayers)
+            })
+            map.on('click', function(e) {
+                var feature = map.forEachFeatureAtPixel(e.pixel, function(feature) {
+                    return feature;
+                });
+                if (feature) {
+                    var city = feature.getProperties().NAME;
+                    var options = {
+                        chart: {
+                            renderTo: 'container',
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
                         },
-                        showInLegend: true
-                    }
-                },
-                series: [{
-                    type: 'pie',
-                    name: 'comodity class',
-                    colorByPoint: true,
-                    data: categoryDataMap[city]
-                }, {
-                    type: 'pie',
-                    size: '100%',
-                    innerSize: '70%',
-                    name: 'commodity',
-                    data: dataMap[city]
-                }]
-            };
-            var chart = new Highcharts.Chart(options);
-        });
+                        title: {
+                            text: city
+                        },
+                        subtitle: {
+                            text: 'Commodity sales'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                },
+                                showInLegend: true
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: 'comodity class',
+                            colorByPoint: true,
+                            data: categoryDataMap[city]
+                        }, {
+                            type: 'pie',
+                            size: '100%',
+                            innerSize: '70%',
+                            name: 'commodity',
+                            data: dataMap[city]
+                        }]
+                    };
+                    var chart = new Highcharts.Chart(options);
+                }
+            });
+        }
     </script>
 </body>
 

@@ -6,7 +6,7 @@
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name=OSMap Name of layer.
- * @param {string} options.visibility=visible Show or hide layer.
+ * @param {string} options.visible=true Show or hide layer.
  * 
  * @extends {ol.ekmap.TileLayer}
  * @example
@@ -36,7 +36,7 @@ export class TiledOSMapLayer {
             id: this.options.id,
             token: this.options.token,
             name: this.options.name != undefined ? this.options.name : 'OS Map',
-            visibility: this.options.visibility
+            visible: this.options.visible != undefined ? this.options.visible : true
         })
     }
 

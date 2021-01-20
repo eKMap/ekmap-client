@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
-    <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Realtime Satellite Image</title>
     <style>
@@ -14,11 +13,11 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #menu-bar {
             position: absolute;
             top: 0;
@@ -32,16 +31,16 @@
             -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
             box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
         }
-
+        
         #menu-bar div {
             display: inline-block;
             margin: 10px 4px;
         }
-
+        
         #menu-bar div * {
             vertical-align: middle;
         }
-
+        
         input[type=button],
         input[type=number],
         select {
@@ -108,19 +107,29 @@
         <div id="divMapId" class="map"></div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [118.65064808099055, 18.7111502239418],
-            zoom: 3.732292015558651
+        var map = new ol.Map({
+            target: 'divMapId',
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [118.65064808099055, 18.7111502239418],
+                zoom: 5,
+                projection: 'EPSG:4326',
+            })
         });
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map);
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
         var frameCount = 22;
         var currentImage = 0;
         var url;
         var interval;
+        var layer;
+
         function getPath() {
             return (
                 //Data: https://nchmf.gov.vn/  
@@ -133,75 +142,99 @@
         var selectTime = document.getElementById("select-time");
         var btn = document.getElementById("button-play");
 
-        map.on('load', function () {
-            map.addSource('radar', {
-                type: 'image',
+        layer = new ol.layer.Image({
+            source: new ol.source.ImageStatic({
                 url: getPath(),
-                coordinates: [
-                    [94.9918863632, 39.998476501],
-                    [139.923662363, 39.998476501],
-                    [139.923662363, -4.93329949898],
-                    [94.9918863632, -4.93329949898],
-                ]
-            });
-            map.addLayer({
-                id: 'radar-layer',
-                'type': 'raster',
-                'source': 'radar',
-                'paint': {
-                    'raster-fade-duration': 0
-                }
-            });
+                imageExtent: [94.9918863632, -4.93329949898, 139.923662363, 39.998476501],
+            })
+        })
+        layer.setProperties({
+            'id': 'radar'
+        })
+        map.addLayer(layer)
 
-            interval = setInterval(function () {
-                currentImage = (currentImage + 1) % frameCount;
-                url = getPath();
-                selectTime.value = currentImage
-                map.getSource('radar').updateImage({ url: url });
-            }, 500);
-        });
+        // map.addSource('radar', {
+        //     type: 'image',
+        //     url: getPath(),
+        //     coordinates: [
+        //         [94.9918863632, 39.998476501],
+        //         [139.923662363, 39.998476501],
+        //         [139.923662363, -4.93329949898],
+        //         [94.9918863632, -4.93329949898],
+        //     ]
+        // });
+        // map.addLayer({
+        //     id: 'radar-layer',
+        //     'type': 'raster',
+        //     'source': 'radar',
+        //     'paint': {
+        //         'raster-fade-duration': 0
+        //     }
+        // });
+
+        interval = setInterval(function() {
+            currentImage = (currentImage + 1) % frameCount;
+            url = getPath();
+            selectTime.value = currentImage;
+            var layers = map.getLayers().array_;
+            layer.setSource(new ol.source.ImageStatic({
+                url: url,
+                imageExtent: [94.9918863632, -4.93329949898, 139.923662363, 39.998476501],
+            }))
+        }, 500);
 
         function changeTime() {
             currentImage = parseInt(document.getElementById('select-time').value);
             url = getPath();
-            map.getSource('radar').updateImage({ url: url });
+
+            layer.setSource(new ol.source.ImageStatic({
+                url: url,
+                imageExtent: [94.9918863632, -4.93329949898, 139.923662363, 39.998476501],
+            }))
         }
-        document.getElementById("button-play").onclick = function () {
+        document.getElementById("button-play").onclick = function() {
             if (btn.value === 'Stop') {
                 btn.value = 'Play'
                 clearInterval(interval);
-            }
-            else {
+            } else {
                 btn.value = 'Stop'
-                interval = setInterval(function () {
+                interval = setInterval(function() {
                     currentImage = (currentImage + 1) % frameCount;
-                    console.log(currentImage)
                     url = getPath();
                     selectTime.value = currentImage
-                    map.getSource('radar').updateImage({ url: url });
+                    layer.setSource(new ol.source.ImageStatic({
+                        url: url,
+                        imageExtent: [94.9918863632, -4.93329949898, 139.923662363, 39.998476501],
+                    }))
                 }, 500);
             }
         }
 
-        document.getElementById("button-prev").onclick = function () {
+        document.getElementById("button-prev").onclick = function() {
             if (currentImage == 0)
                 currentImage = 22;
             currentImage = (currentImage - 1) % frameCount;
             url = getPath();
             selectTime.value = currentImage
-            map.getSource('radar').updateImage({ url: url });
+            layer.setSource(new ol.source.ImageStatic({
+                url: url,
+                imageExtent: [94.9918863632, -4.93329949898, 139.923662363, 39.998476501],
+            }))
         }
 
-        document.getElementById("button-next").onclick = function () {
-            currentImage = (currentImage + 1) % frameCount;
-            url = getPath();
-            selectTime.value = currentImage
-            map.getSource('radar').updateImage({ url: url });
-        }
-        // document.getElementById("recentPhoto").onclick = function () {
-        //     var link = document.getElementById("recentPhoto");
-        //     link.setAttribute("href", url);
-        // }
+        document.getElementById("button-next").onclick = function() {
+                currentImage = (currentImage + 1) % frameCount;
+                url = getPath();
+                selectTime.value = currentImage
+                layer.setSource(new ol.source.ImageStatic({
+                    url: url,
+                    imageExtent: [94.9918863632, -4.93329949898, 139.923662363, 39.998476501],
+                }))
+            }
+            // document.getElementById("recentPhoto").onclick = function () {
+            //     var link = document.getElementById("recentPhoto");
+            //     link.setAttribute("href", url);
+            // }
     </script>
 </body>
 

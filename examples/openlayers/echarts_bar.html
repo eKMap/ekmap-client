@@ -1,11 +1,9 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <meta charset='utf-8' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Bar Chart</title>
     <style>
@@ -13,9 +11,57 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
+        }
+        
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 280px;
+        }
+        
+        .ol-popup:after,
+        .ol-popup:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        
+        .ol-popup:after {
+            border-top-color: white;
+            border-width: 10px;
+            left: 48px;
+            margin-left: -10px;
+        }
+        
+        .ol-popup:before {
+            border-top-color: #cccccc;
+            border-width: 11px;
+            left: 48px;
+            margin-left: -11px;
+        }
+        
+        .ol-popup-closer {
+            text-decoration: none;
+            position: absolute;
+            top: 2px;
+            right: 8px;
+        }
+        
+        .ol-popup-closer:after {
+            content: "✖";
         }
     </style>
 </head>
@@ -24,26 +70,45 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content"></div>
+        </div>
     </div>
     <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
     <script type="text/javascript">
-        var data;
+        var data, pointFeature, addPointsSource, featureLayers, dataSource;
         var chart, div, popup = '';
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [106.1471579608559, 20.416161703696787],
-            zoom: 8.383742725041827
+        var container = document.getElementById('popup');
+        var content = document.getElementById('popup-content');
+        var closer = document.getElementById('popup-closer');
+        var overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250,
+            },
         });
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon-red.png', function (error, image) {
-            if (error) throw error;
-            map.addImage('positionPoint', image);
+        closer.onclick = function() {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+        };
+        var map = new ol.Map({
+            target: 'divMapId',
+            overlays: [overlay],
+            view: new ol.View({
+                center: [106.1471579608559, 20.416161703696787],
+                zoom: 8.383742725041827,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
         });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
 
-        option = {
+        var option = {
             legend: {
                 data: [resources.text_rainfall, resources.text_runoff],
                 align: 'left'
@@ -67,7 +132,7 @@
                 },
                 tooltip: { // same as option.tooltip
                     show: true,
-                    formatter: function (param) {
+                    formatter: function(param) {
                         return '<div>' + param.title + '</div>'; // user-defined DOM structure
                     },
                     backgroundColor: '#222',
@@ -91,18 +156,18 @@
             series: [{
                 name: 'bar',
                 type: 'bar',
-                animationDelay: function (idx) {
+                animationDelay: function(idx) {
                     return idx * 10;
                 }
             }, {
                 name: 'bar2',
                 type: 'bar',
-                animationDelay: function (idx) {
+                animationDelay: function(idx) {
                     return idx * 10 + 100;
                 }
             }],
             animationEasing: 'elasticOut',
-            animationDelayUpdate: function (idx) {
+            animationDelayUpdate: function(idx) {
                 return idx * 5;
             }
         };
@@ -115,30 +180,37 @@
         chart.setOption(option);
         query();
 
+        function iconStyleFunc() {
+            var zIndex = 1;
+            var iconStyle = [new ol.style.Style({
+                image: new ol.style.Icon(({
+                    anchor: [0.5, 0.5],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    scale: 0.1,
+                    src: './img/marker-icon-red.png',
+                    zIndex: zIndex
+                })),
+                zIndex: zIndex
+            })];
+            return iconStyle;
+        }
+
         function query() {
-            $.get("../data/echarts_lineBar.json", function (response) {
-                map.addLayer({
-                    "id": "points",
-                    "type": "symbol",
-                    "layout": {
-                        "icon-image": "positionPoint",
-                        "icon-size": 0.1,
-                        "icon-offset": [0, -15]
-                    },
-                    "source": {
-                        "type": "geojson",
-                        "data": response
-                    }
+            $.get("../data/echarts_lineMarker.json", function(response) {
+                dataSource = new ol.source.Vector({
+                    features: new ol.format.GeoJSON().readFeatures(response),
                 });
+                featureLayers = new ol.layer.Vector({
+                    source: dataSource,
+                    style: iconStyleFunc()
+                });
+                map.addLayer(featureLayers)
             })
-
-
-            map.on('click', 'points', function (e) {
-                popup = new mapboxgl.Popup({ maxWidth: 'none' });
-                popup.setLngLat(e.lngLat.toArray())
-                    .setDOMContent(div) // sets a popup on this marker
-                    .addTo(map);
-
+            map.on('click', function(e) {
+                var feature = map.forEachFeatureAtPixel(e.pixel, function(feature) {
+                    return feature;
+                });
                 var data1 = [];
                 var data2 = [];
                 for (var i = 0; i < 7; i++) {
@@ -146,27 +218,28 @@
                     data1.push(data);
                     data2.push(data * (Math.random() + 1.5));
                 }
-
-                chart.setOption({
-                    title: {
-                        text: e.features[0].properties.NAME,
-                        subtext: resources.text_fictitiouData
-                    },
-                    series: [
-                        {
+                if (feature) {
+                    var city = feature.getProperties().NAME
+                    var coordinate = e.coordinate;
+                    chart.setOption({
+                        title: {
+                            text: city,
+                            subtext: resources.text_fictitiouData
+                        },
+                        series: [{
                             name: 'rainfall',
                             data: data1
-                        },
-                        {
+                        }, {
                             name: 'runoff',
                             data: data2
-                        }
-                    ]
-                });
+                        }]
+                    });
 
+                    content.append(div);
+                    overlay.setPosition(coordinate);
+                }
             });
         }
-
     </script>
 </body>
 

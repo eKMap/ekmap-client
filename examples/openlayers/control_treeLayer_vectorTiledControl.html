@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Tree Layer Vector Tile Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new ol.Map({
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            target: 'divMapId',
+            view: new ol.View({
+                center: [11579858.869040623, 2415212.099922052],
+                zoom: 9,
+            })
+        });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN,
+            id: 'vnMap'
+        }).addTo(map);
+        var maps = new ol.ekmap.VectorTiledMapLayer({
+            url: urlVectorService,
+            token: tokenKey
+        }).addTo(map);
+        // TreeLayerControl
+        let Opacity = new ol.ekmap.control.TreeLayer({
+            vectorTiledMapLayer: maps,
+            opacityControl: true
+        });
+        var legend = new ol.ekmap.control.Legend({
+            layers: [maps]
+        });
+        map.addControl(legend, "top-left");
+        map.addControl(Opacity, 'top-left');
+    </script>
+</body>
+
+</html>

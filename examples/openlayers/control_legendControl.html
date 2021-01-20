@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Legend Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh);
+            padding: 10px;
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        .cssButton {
+            top: 53px;
+            left: 7px;
+            background-color: unset;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new ol.Map({
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            target: 'divMapId',
+            view: new ol.View({
+                center: [103.97584219304474, 21.277728387286984],
+                zoom: 13.905413433260719,
+                projection: 'EPSG:4326',
+            })
+        });
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+        var tiledMap = new ol.ekmap.TiledMapLayer({
+            url: urlMapService,
+            // token: tokenKey
+        }).addTo(map);
+        var legend = new ol.ekmap.control.Legend({
+            layers: [tiledMap],
+            className: 'cssButton'
+        });
+        map.addControl(legend);
+    </script>
+</body>
+
+</html>

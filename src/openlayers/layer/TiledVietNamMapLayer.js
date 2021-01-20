@@ -7,6 +7,10 @@ import TileImage from 'ol/source/TileImage';
  * @param {Object} options  Construction parameters.
  * @param {string} options.token  Will use this token to authenticate all calls to the service.
  * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
+ * @param {string} options.id Id of layer and source.
+ * @param {string} options.name=VietNamMap Name of layer.
+ * @param {string} options.image=https://map.ekgis.vn/Common/images/vnmap.png Thumbnail of layer.
+ * @param {string} options.visible=true Show or hide layer.
  * @extends {ol.ekmap.TileLayer}
  * @example
  * var map = new ol.Map({
@@ -36,7 +40,7 @@ export class TiledVietNamMapLayer {
             id: this.options.id,
             token: this.options.token,
             name: this.options.name != undefined ? this.options.name : 'VietNam Map',
-            visibility: this.options.visibility,
+            visible: this.options.visible != undefined ? this.options.visible : true,
             image: 'https://map.ekgis.vn/Common/images/vnmap.png'
         })
     }

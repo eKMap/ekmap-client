@@ -54,9 +54,13 @@ export class TiledMapLayer {
     addTo(map) {
         map.addLayer(new ol.layer.Tile({
             source: new ol.source.XYZ({
-                url: this.tileUrl
+                url: this.tileUrl,
+                crossOrigin: "Anonymous"
             }),
-            title: this.options.name
+            title: this.options.name,
+            type: 'TileLayer',
+            url: this.options.url,
+            token: this.options.token
         }));
         return this;
     }

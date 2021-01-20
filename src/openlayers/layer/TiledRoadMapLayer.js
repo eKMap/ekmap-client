@@ -6,7 +6,7 @@
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name=RoadMap Name of layer.
- * @param {string} options.visibility=visible Show or hide layer.
+ * @param {string} options.visible=true Show or hide layer.
  * 
  * @extends {ol.ekmap.TileLayer}
  * @example
@@ -34,7 +34,7 @@ export class TiledRoadMapLayer {
             urls: this.urls,
             id: this.options.id,
             name: this.options.name != undefined ? this.options.name : 'Road Map',
-            visibility: this.options.visibility,
+            visible: this.options.visible != undefined ? this.options.visible : true,
             token: this.options.token,
             image: 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
         })

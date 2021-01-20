@@ -30,48 +30,46 @@
             center: [105, 17],
             zoom: 4
         });
-        map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TileLayer({
-                id: 'vnMap',
-                urls: [
-                    "https://mt0.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
-                    "https://mt1.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
-                    "https://mt2.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
-                    "https://mt3.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png"
-                ],
-                image: 'https://map.ekgis.vn/Common/images/vnmap.png',
-                name: 'VietNam Map',
-                visibility: 'none',
-                token: tokenVN
-            }).addTo(map);
-            var adminMap = new mapboxgl.ekmap.TileLayer({
-                id: 'adminMap',
-                urls: [
-                    "https://g1.cloudgis.vn/gservices/rest/maps/adminmap/tile/{z}/{x}/{y}.png",
-                    "https://g2.cloudgis.vn/gservices/rest/maps/adminmap/tile/{z}/{x}/{y}.png",
-                    "https://g3.cloudgis.vn/gservices/rest/maps/adminmap/tile/{z}/{x}/{y}.png",
-                    "https://g4.cloudgis.vn/gservices/rest/maps/adminmap/tile/{z}/{x}/{y}.png"
-                ],
-                image: 'https://g3.cloudgis.vn/gservices/rest/maps/adminmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9',
-                name: 'Admin Map',
-                token: ''
-            }).addTo(map);
-            var roadMap = new mapboxgl.ekmap.TileLayer({
-                id: 'roadMap',
-                urls: [
-                    "https://g1.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
-                    "https://g2.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
-                    "https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
-                    "https://g4.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png"
-                ],
-                image: 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9',
-                name: 'Road Map',
-                visibility: 'none',
-                token: ''
-            }).addTo(map);
-            // NavigationControl
-            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        })
+        var vnMap = new mapboxgl.ekmap.TileLayer({
+            id: 'vnMap',
+            urls: [
+                "https://mt0.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+                "https://mt1.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+                "https://mt2.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png",
+                "https://mt3.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png"
+            ],
+            image: 'https://map.ekgis.vn/Common/images/vnmap.png',
+            name: 'VietNam Map',
+            visibility: 'none',
+            token: tokenVN
+        }).addTo(map);
+        var adminMap = new mapboxgl.ekmap.TileLayer({
+            id: 'adminMap',
+            urls: [
+                "https://g1.cloudgis.vn/gservices/rest/maps/adminmap/tile/{z}/{x}/{y}.png",
+                "https://g2.cloudgis.vn/gservices/rest/maps/adminmap/tile/{z}/{x}/{y}.png",
+                "https://g3.cloudgis.vn/gservices/rest/maps/adminmap/tile/{z}/{x}/{y}.png",
+                "https://g4.cloudgis.vn/gservices/rest/maps/adminmap/tile/{z}/{x}/{y}.png"
+            ],
+            image: 'https://g3.cloudgis.vn/gservices/rest/maps/adminmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9',
+            name: 'Admin Map',
+            token: ''
+        }).addTo(map);
+        var roadMap = new mapboxgl.ekmap.TileLayer({
+            id: 'roadMap',
+            urls: [
+                "https://g1.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
+                "https://g2.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
+                "https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
+                "https://g4.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png"
+            ],
+            image: 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9',
+            name: 'Road Map',
+            visibility: 'none',
+            token: ''
+        }).addTo(map);
+        // NavigationControl
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     </script>
 </body>
 

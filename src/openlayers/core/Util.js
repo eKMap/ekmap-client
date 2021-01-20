@@ -106,7 +106,6 @@ export class Util {
             geometryType: null
         };
 
-        console.log(geometry)
         if (Array.isArray(geometry)) {
             params.geometry = this.boundsToExtent(geometry);
             params.geometryType = 'esriGeometryEnvelope';
@@ -137,7 +136,6 @@ export class Util {
     static featureToGeojson(feature) {
         var geometry = feature.getGeometry();
         var properties = feature.getProperties();
-        console.log(geometry)
         var geojson;
         if (geometry instanceof ol.geom.Point) {
             var point = new ol.geom.Point(geometry.flatCoordinates);

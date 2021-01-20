@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 
 <head>
     <meta charset='utf-8' />
@@ -7,148 +7,165 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <title>High chart line</title>
-    <style>
-        .map {
-            width: 100%;
-            height: calc(100vh - 20px);
-        }
-
-        body {
-            overflow: hidden;
-            margin: 8px;
-        }
-
-        #container {
-            position: absolute;
-            top: 60%;
-            bottom: 0;
-            width: 100%;
-            height: 40%;
-            z-index: 1000;
-        }
-    </style>
+    <title>Bar chart bar</title>
 </head>
+<style>
+    .map {
+        width: 100%;
+        height: calc(100vh - 20px);
+    }
+    
+    body {
+        overflow: hidden;
+        margin: 8px;
+    }
+    
+    #container {
+        position: absolute;
+        top: 60%;
+        bottom: 0;
+        width: 100%;
+        height: 40%;
+        z-index: 1000;
+    }
+</style>
 
 <body>
     <div id='divMapId' class='map'></div>
-    <div id='stat'>
+    <div id='start'>
         <div id='container'></div>
     </div>
+    <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
     <script type="text/javascript">
-        var data;
-        var chart, div, popup = '';
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {
-                },
-                "layers": []
-            },
-            center: [106.1471579608559, 20.416161703696787],
-            zoom: 8.383742725041827
+        var featureLayers, dataSource;
+        var map = new ol.Map({
+            target: 'divMapId',
+            view: new ol.View({
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 6,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
         });
-        map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-        })
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon-red.png', function (error, image) {
-            if (error) throw error;
-            map.addImage('positionPoint', image);
-        });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+
         query();
 
-        function query() {
-            $.get("../data/echarts_lineMarker.json", function (response) {
-                map.addLayer({
-                    "id": "points",
-                    "type": "symbol",
-                    "layout": {
-                        "icon-image": "positionPoint",
-                        "icon-size": 0.1,
-                        "icon-offset": [0, -15]
-                    },
-                    "source": {
-                        "type": "geojson",
-                        "data": response
-                    }
-                });
-            })
+        function iconStyleFunc() {
+            var zIndex = 1;
+            var iconStyle = [new ol.style.Style({
+                image: new ol.style.Icon(({
+                    anchor: [0.5, 0.5],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    scale: 0.1,
+                    src: './img/marker-icon-red.png',
+                    zIndex: zIndex
+                })),
+                zIndex: zIndex
+            })];
+            return iconStyle;
         }
-        map.on('click', 'points', function (e) {
-            console.log(e)
-            var options = {
-                chart: {
-                    renderTo: 'container',
-                    type: 'spline'
-                },
-                title: {
-                    text: e.features[0].properties.NAME
-                },
-                subtitle: {
-                    text: 'Future temperature'
-                },
-                xAxis: {
-                    categories: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
-                },
-                yAxis: {
-                    title: {
-                        text: 'Temperature'
-                    },
-                    labels: {
-                        formatter: function () {
-                            return this.value + '°';
-                        }
-                    }
-                },
-                tooltip: {
-                    crosshairs: true,
-                    shared: true
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            radius: 4,
-                            lineColor: '#666666',
-                            lineWidth: 2
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Max temp',
-                    marker: {
-                        symbol: 'square'
-                    },
-                    data: [10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), {
-                        y: 20 + Math.ceil(Math.random() * 10),
-                        marker: {
-                            symbol: 'url(https://www.highcharts.com/samples/graphics/sun.png)'
-                        }
-                    }, 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10)]
 
-                }, {
-                    name: 'Min temp',
-                    marker: {
-                        symbol: 'diamond'
-                    },
-                    data: [8 - Math.ceil(Math.random() * 10), {
-                        y: -Math.ceil(Math.random() * 10),
-                        marker: {
-                            symbol: 'url(https://www.highcharts.com/samples/graphics/snow.png)'
-                        }
-                    }, 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10)]
-                }]
-            };
-            var chart = new Highcharts.Chart(options);
-        });
+        function query() {
+            $.get("../data/echarts_pie.json", function(response) {
+                dataSource = new ol.source.Vector({
+                    features: new ol.format.GeoJSON().readFeatures(response),
+                });
+                featureLayers = new ol.layer.Vector({
+                    source: dataSource,
+                    style: iconStyleFunc()
+                });
+                map.addLayer(featureLayers)
+            })
+
+            var data1 = [];
+            var data2 = [];
+            var start = document.getElementById('start');
+
+            for (var i = 0; i < 7; i++) {
+                var data = Math.random().toFixed(2);
+                data1.push(data * Math.random() + 8);
+                data2.push(data * (Math.random() + 5));
+            }
+
+            map.on('click', function(e) {
+                var feature = map.forEachFeatureAtPixel(e.pixel, function(feature) {
+                    return feature;
+                });
+                if (feature) {
+                    var city = feature.getProperties().NAME;
+                    var options = {
+                        chart: {
+                            renderTo: 'container',
+                            type: 'spline'
+                        },
+                        title: {
+                            text: city
+                        },
+                        subtitle: {
+                            text: 'Future temperature'
+                        },
+                        xAxis: {
+                            categories: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Temperature'
+                            },
+                            labels: {
+                                formatter: function() {
+                                    return this.value + '°';
+                                }
+                            }
+                        },
+                        tooltip: {
+                            crosshairs: true,
+                            shared: true
+                        },
+                        plotOptions: {
+                            spline: {
+                                marker: {
+                                    radius: 4,
+                                    lineColor: '#666666',
+                                    lineWidth: 2
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Max temp',
+                            marker: {
+                                symbol: 'square'
+                            },
+                            data: [10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), {
+                                y: 20 + Math.ceil(Math.random() * 10),
+                                marker: {
+                                    symbol: 'url(https://www.highcharts.com/samples/graphics/sun.png)'
+                                }
+                            }, 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10), 10 + Math.ceil(Math.random() * 10)]
+
+                        }, {
+                            name: 'Min temp',
+                            marker: {
+                                symbol: 'diamond'
+                            },
+                            data: [8 - Math.ceil(Math.random() * 10), {
+                                y: -Math.ceil(Math.random() * 10),
+                                marker: {
+                                    symbol: 'url(https://www.highcharts.com/samples/graphics/snow.png)'
+                                }
+                            }, 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10), 8 - Math.ceil(Math.random() * 10)]
+                        }]
+                    };
+                    var chart = new Highcharts.Chart(options);
+                }
+            });
+        }
     </script>
 </body>
 

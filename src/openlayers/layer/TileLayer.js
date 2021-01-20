@@ -8,7 +8,7 @@ import { Util } from '../core/Util';
  * @param {string} options.token Will use this token to authenticate all calls to the service.
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name Name of layer.
- * @param {string} options.visibility=visible show or hide layer.
+ * @param {string} options.visible=true show or hide layer.
  * 
  */
 export class TileLayer {
@@ -51,18 +51,22 @@ export class TileLayer {
             map.addLayer(new ol.layer.Tile({
                 source: new ol.source.XYZ({
                     urls: this.tileUrls,
-                    attributions: this.options.attribution
+                    attributions: this.options.attribution,
+                    crossOrigin: "Anonymous"
                 }),
                 baseLayer: true,
-                title: this.options.name
+                visible: this.options.visible != undefined ? this.options.visible : true,
+                title: this.options.name,
             }));
         if (this.tileUrl)
             map.addLayer(new ol.layer.Tile({
                 source: new ol.source.XYZ({
                     url: this.tileUrl,
-                    attributions: this.options.attribution
+                    attributions: this.options.attribution,
+                    crossOrigin: "Anonymous"
                 }),
                 baseLayer: true,
+                visible: this.options.visible != undefined ? this.options.visible : true,
                 title: this.options.name
             }));
         return this;

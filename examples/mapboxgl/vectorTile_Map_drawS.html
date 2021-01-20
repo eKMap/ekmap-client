@@ -90,7 +90,7 @@
                 }
             });
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-            map.addControl(draw, 'top-left');
+            map.addControl(draw);
             map.on('draw.create', updateAreaPolygon);
         })
 

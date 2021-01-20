@@ -242,6 +242,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
      * @function mapboxgl.ekmap.VectorTiledMapLayer.prototype.flyTo
      * @description Changes any combination of center, zoom, highlight, bearing, and pitch, animating the transition along a curve that evokes flight
      * @param {String} featureId Id of feature you want to flyTo.
+     * @param {String} sourceLayer Id of source contains feature.
      * @param {Object} params the Map this control will be removed from.
      * @param {LngLatLike} params.center The desired center.
      * @param {Number} params.zoom The desired zoom level.

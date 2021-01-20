@@ -114,6 +114,10 @@
             });
             map.addInteraction(draw);
 
+            draw.on('drawstart', function(e) {
+                map.getLayers().getArray()[1].getSource().clear();
+            });
+
             draw.on('drawend', function(evt) {
                 var feature = evt.feature;
                 var geometry = feature.getGeometry();
