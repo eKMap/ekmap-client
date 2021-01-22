@@ -147,7 +147,6 @@ export class MapService extends ServiceBase {
      * @param {RequestCallback} callback The callback of result data returned by the server side.
      */
     queryByGeometry(params, callback, context) {
-
         var param = {};
         param.f = 'geojson';
         var data = Util._setGeometry(params);
@@ -156,6 +155,8 @@ export class MapService extends ServiceBase {
         var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
+            console.log(error)
+            console.log(response)
             var result = (response && response.features) ? response.features : undefined;
             callback.call(context, error, result);
         }, this);

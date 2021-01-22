@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css' type='text/css' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js'></script>
+    <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag@1.0.1/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src="../../examples/js/common.js"></script>
+
+    <title>Bound Query</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Action draw and query it.
+            <button onclick="actionDraw()" class="btn-green">Acticon Draw</button>
+
+            <div id="calculated-area"></div>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [103.85587283904749, 21.420743576013905],
+            style: {
+                "version": 8,
+                "sources": {},
+                "layers": []
+            },
+            zoom: 9.538890805463664
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
+
+            var featureLayer = new mapboxgl.ekmap.FeatureLayer({
+                url: urlMapLayer,
+                // token: tokenKey
+            }).addTo(map);
+
+            draw = new mapboxgl.ekmap.control.Draw({
+                displayControlsDefault: false,
+            });
+            map.addControl(draw, 'top-left');
+        })
+
+        function actionDraw() {
+            if (draw) {
+                draw.deleteAll();
+            }
+            draw.changeMode('draw_rectangle_drag');
+            map.once('draw.create', updateAreaPolygon.bind(this));
+        }
+
+        function updateAreaPolygon(e) {
+            var me = this;
+            if (e.features.length > 0) {
+                var layers = map.getStyle().layers;
+                layers.forEach(layer => {
+                    if (layer.id.indexOf('queryEK-') != -1) {
+                        map.removeLayer(layer.id)
+                    }
+                });
+                var polygon = e.features[0];
+                var polygonBoundingBox = turf.bbox(polygon);
+                var lngLatBounds = new mapboxgl.LngLatBounds(polygonBoundingBox)
+                new mapboxgl.ekmap.MapService({
+                    url: urlMapLayer,
+                }).on(map).queryByBound(lngLatBounds, function(error, evt) {
+                    var features = evt;
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        var source = map.getSource('msvQuery_Bound');
+                        if (source)
+                            source.setData({
+                                'type': 'FeatureCollection',
+                                'features': features
+                            })
+                        else {
+                            map.addSource('msvQuery_Bound', {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'FeatureCollection',
+                                    'features': features
+                                }
+                            });
+                        }
+
+                        map.addLayer({
+                            'id': "queryEK-" + guid12(),
+                            'type': 'line',
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': 'blue',
+                                'line-width': 2
+                            },
+                            "source": 'msvQuery_Bound',
+                            'filter': ['==', '$type', 'LineString']
+                        });
+
+                        map.addLayer({
+                            "id": "queryEK-" + guid12(),
+                            "type": "circle",
+                            "paint": {
+                                "circle-color": "red",
+                                "circle-stroke-color": '#00ffff',
+                                "circle-stroke-width": 3,
+                                "circle-radius": 10
+                            },
+                            "source": 'msvQuery_Bound',
+                            'filter': ['==', '$type', 'Point']
+                        });
+
+                        map.addLayer({
+                            "id": "queryEK-" + guid12(),
+                            'type': 'fill',
+                            'layout': {},
+                            'paint': {
+                                'fill-color': '#088',
+                                'fill-opacity': 0.8
+                            },
+                            "source": 'msvQuery_Bound',
+                            'filter': ['==', '$type', 'Polygon']
+                        });
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

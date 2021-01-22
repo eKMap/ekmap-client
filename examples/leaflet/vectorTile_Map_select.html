@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+    <script src="../../examples/js/common.js"></script>
+    <script src="../../examples/js/include-web.js"></script>
+    <title>Vector Tile Layer</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        .btn-red {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        .btn-orange {
+            background-color: orange;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 2px 3px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Select mode and active <a href='#'>Select Control</a>
+            <br>
+            <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                <option value="multi">Multi</option>
+                <option value="single">Single</option>
+            </select>
+            <button id="activeControl" class="btn-green">Active Select</button>
+            <button id="deactivateControl" class="btn-red">Deactivate</button>
+            <button id="removeFeature" class="btn-orange">Remove feature selected</button>
+        </div>
+    </div>
+    <script>
+        var mapTS = new mapboxgl.Map({
+            container: 'divMapId', // container id
+            minZoom: 4,
+            center: [103.93422987963572, 21.306082013420507],
+            zoom: 14.871024212757812
+        });
+        var hoveredStateId = null;
+        var select;
+        var vectorTileLayer = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService,
+            token: tokenKey
+        }).addTo(mapTS);
+        mapTS.on('load', function() {
+            select = new mapboxgl.ekmap.control.Select({
+                url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/MapServer',
+                token: tokenKey,
+                target: 'activeControl',
+                setStyle: true
+            })
+            mapTS.addControl(select);
+            select.on('startselect', function() {
+                console.log('Start select')
+
+            })
+            select.on('selectfeatures', function(e) {
+                console.log(e)
+                    // vectorTileLayer.flyTo(103, 2951, {
+                    //         zoom: 9
+                    //     })
+                    // var code = e.properties.CODE;
+                    // map.setFilter('areaSelect', ["==", ['get', 'CODE'], code])
+            })
+            select.on('unselect', function() {
+                console.log('Stop select')
+            })
+
+            var x = document.getElementById('deactivateControl');
+            x.addEventListener("click", function(e) {
+                //deactivate control
+                select.deactivate();
+            });
+
+            var y = document.getElementById('removeFeature');
+            y.addEventListener("click", function(e) {
+                //deactivate control
+                select.removeFeature();
+            });
+        })
+        mapTS.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            if (x == 'multi') {
+                select.changeMode(x);
+            }
+            if (x == 'single') {
+                select.changeMode(x);
+            }
+        }
+    </script>
+</body>
+
+</html>

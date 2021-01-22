@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <script type="text/javascript" src="../js/include-web.js"></script>
+
+    <title>Identify</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Click on the map to execute <a href='#'>Identify</a>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {},
+                "layers": []
+            },
+            center: [103.97584219304474, 21.277728387286984],
+            zoom: 13.905413433260719
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+        var tiledMap;
+        map.on('load', function() {
+            var cursorDom = $('.mapboxgl-canvas-container')
+            cursorDom[0].style.cursor = 'crosshair';
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            this.tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                url: urlMapService,
+                // token: tokenKey
+            }).addTo(map);
+        })
+        var pane = document.getElementById('selectedFeatures');
+        map.on('click', function(e) {
+            pane.innerHTML = 'Loading';
+            this.tiledMap.identify()
+                .on(map)
+                .at(e.lngLat)
+                .run(function(error, obj) {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        console.log(obj)
+                        if (obj.length > 0) {
+                            pane.innerHTML = '';
+                            obj.forEach(element => {
+                                pane.innerHTML += element.layerName + ': ' + element.attributes.tenDoiTuon + '</br>'
+                            });
+                        } else {
+                            pane.innerHTML = 'No features identified.';
+                        }
+                    }
+                })
+        })
+    </script>
+</body>
+
+</html>

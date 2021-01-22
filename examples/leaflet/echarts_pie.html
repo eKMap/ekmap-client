@@ -1,0 +1,241 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Pie Chart</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
+    <script type="text/javascript">
+        var data;
+        var chart, div, popup = '';
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [106.5090846096723, 16.787962287423255],
+            zoom: 5.1128594812072485
+        });
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.loadImage('./img/marker-icon-red.png', function(error, image) {
+            if (error) throw error;
+            map.addImage('positionPoint', image);
+        });
+
+        var categoryDataMap = {
+            "Hà Nội": [{
+                value: 335,
+                name: 'class A'
+            }, {
+                value: 679,
+                name: 'class B'
+            }, {
+                value: 1299,
+                name: 'class C'
+            }],
+            "Đà Nẵng": [{
+                value: 117,
+                name: 'class A'
+            }, {
+                value: 1267,
+                name: 'class B'
+            }, {
+                value: 1048,
+                name: 'class C'
+            }],
+            "Thành phố Hồ Chí Minh": [{
+                value: 475,
+                name: 'class A'
+            }, {
+                value: 1450,
+                name: 'class B'
+            }, {
+                value: 875,
+                name: 'class C'
+            }]
+        };
+        var dataMap = {
+            "Hà Nội": [{
+                value: 335,
+                name: 'commodity A'
+            }, {
+                value: 310,
+                name: 'commodity B'
+            }, {
+                value: 234,
+                name: 'commodity C'
+            }, {
+                value: 135,
+                name: 'commodity D'
+            }, {
+                value: 1048,
+                name: 'commodity E'
+            }, {
+                value: 251,
+                name: 'commodity F'
+            }],
+            "Đà Nẵng": [{
+                value: 117,
+                name: 'commodity A'
+            }, {
+                value: 284,
+                name: 'commodity B'
+            }, {
+                value: 768,
+                name: 'commodity C'
+            }, {
+                value: 215,
+                name: 'commodity D'
+            }, {
+                value: 901,
+                name: 'commodity E'
+            }, {
+                value: 148,
+                name: 'commodity F'
+            }],
+            "Thành phố Hồ Chí Minh": [{
+                value: 475,
+                name: 'commodity A'
+            }, {
+                value: 29,
+                name: 'commodity B'
+            }, {
+                value: 430,
+                name: 'commodity C'
+            }, {
+                value: 981,
+                name: 'commodity D'
+            }, {
+                value: 732,
+                name: 'commodity E'
+            }, {
+                value: 143,
+                name: 'commodity F'
+            }]
+        };
+
+        var option = {
+            title: {
+                text: resources.text_beijingCommoditySales,
+                subtext: resources.text_fictitiouData,
+                textStyle: {
+                    color: '#fff',
+                    fontSize: 16
+                }
+            },
+            backgroundColor: '#404a59',
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                y: 'bottom',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: 12
+                },
+                data: ['commodity A', 'commodity B', 'commodity C', 'commodity D', 'commodity E', 'commodity F']
+            },
+            series: [{
+                name: 'comodity class',
+                type: 'pie',
+                selectedMode: 'single',
+                radius: [0, '30%'],
+
+                label: {
+                    normal: {
+                        position: 'inner'
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: categoryDataMap['Hà Nội']
+            }, {
+                name: 'commodity',
+                type: 'pie',
+                radius: ['40%', '55%'],
+                data: dataMap['Hà Nội']
+            }]
+        };
+
+        div = document.createElement('div');
+
+        chart = echarts.init(div, '', {
+            width: 650,
+            height: 400
+        });
+        chart.setOption(option);
+        query();
+
+
+        function query() {
+            $.get("../data/echarts_pie.json", function(response) {
+                var fs = response;
+                map.addLayer({
+                    "id": "points",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "positionPoint",
+                        "icon-size": 0.1,
+                        "icon-offset": [0, -15]
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": fs
+                    }
+                });
+
+                map.on('click', 'points', function(e) {
+                    popup = new mapboxgl.Popup({
+                        maxWidth: 'none'
+                    });
+                    popup.setLngLat(e.lngLat.toArray())
+                        .setDOMContent(div) // sets a popup on this marker
+                        .addTo(map);
+
+                    var city = e.features[0].properties.NAME;
+                    chart.setOption({
+                        title: {
+                            text: city + ' commodity sales'
+                        },
+                        series: [{
+                            name: 'commodity class',
+                            data: categoryDataMap[city]
+                        }, {
+                            name: 'commodity',
+                            data: dataMap[city]
+                        }]
+                    });
+                });
+            })
+        }
+    </script>
+</body>
+
+</html>

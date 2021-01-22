@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link href="../../dist/mapboxgl/ekmap-mapboxgl.css" rel="stylesheet">
+    <script src="../../examples/js/common.js"></script>
+    <title>Tree Layer Vector Tile Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [103.93422987963572, 21.306082013420507],
+            zoom: 14.871024212757812
+        });
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService,
+            token: tokenKey
+        }).addTo(map);
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN,
+                id: 'vnMap'
+            }).addTo(map);
+
+            var layers = map.getStyle().layers;
+            map.moveLayer('vnMap', layers[0].id);
+
+            // NavigationControl
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+            // TreeLayerControl
+            let Opacity = new mapboxgl.ekmap.control.TreeLayer({
+                vectorTiledMapLayer: maps,
+                opacityControl: true
+            });
+            var legend = new mapboxgl.ekmap.control.Legend({
+                layers: [maps]
+            });
+            map.addControl(legend, "top-left");
+            map.addControl(Opacity, 'top-left');
+        })
+    </script>
+</body>
+
+</html>

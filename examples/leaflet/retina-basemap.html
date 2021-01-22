@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Retina Basemap</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var layer;
+        var map = L.map('divMapId', {
+            center: {
+                lon: 105.20886162772933,
+                lat: 16.518572979240204
+            },
+            zoom: 5.193739308697748,
+            zoomControl: true,
+            attributionControl: true,
+        });
+
+        // use the detect retina option to load retina tiles for this layer.
+        new L.ekmap.BasemapArcgisLayer('DarkGray', {
+            detectRetina: true
+        }).addTo(map);
+
+        // include the labels at normal resolution
+        new L.ekmap.BasemapArcgisLayer('DarkGrayLabels').addTo(map);
+    </script>
+</body>
+
+</html>

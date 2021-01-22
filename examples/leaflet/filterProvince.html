@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <script src="https://unpkg.com/@turf/turf@5.1.6/turf.min.js"></script>
+    <title>Filter Province</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 2px 3px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            left: 30px;
+            top: -8px;
+            z-index: 1000;
+            padding: 1em;
+            max-height: 250px;
+            max-width: 250px;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .nameCountry {
+            color: #333333 !important;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .field {
+            color: #333333 !important;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            padding-right: 10px;
+        }
+        
+        .value {
+            color: #333333 !important;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        
+        .popup {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="selectedFeatures" class="leaflet-bar map-text">
+        <div id="terrainMenu">
+            <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                <option value="">Tất cả</option>
+            </select></div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'https://viegisserver.ekgis.vn/gserver/rest/services/121/VectorTileServer/resources/styles?apikey=1-zikhB5A2Dr7cddYntO0RAIqC4cUk62O6&usingEngine=true',
+            center: [106.72265727139802, 15.838703183379039],
+            zoom: 5.168555242482918
+        });
+        var select;
+        var features;
+        var layers;
+        widgets.loader.showLoader("data loading...");
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            layers = map.getStyle().layers;
+            map.moveLayer(layers[layers.length - 1].id, layers[0].id);
+
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+            //Data
+            select = document.getElementById('mySelect')
+            $.get("../data/data.json", function(response) {
+                features = response;
+                features.forEach(feature => {
+                    var option = document.createElement("option");
+                    option.value = feature.maTinh;
+                    option.innerHTML = feature.tenTinh;
+                    select.add(option);
+                });
+            }).done(function() {
+                widgets.loader.removeLoader();
+            })
+        });
+
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            var arr = []
+            if (!x) {
+                layers.forEach(layer => {
+                    map.setFilter(layer.id, null)
+                });
+                map.flyTo({
+                    center: [106.72265727139802, 15.838703183379039],
+                    zoom: 5.168555242482918
+                })
+            }
+
+            features.forEach(feature => {
+                if (feature.maTinh == x) {
+                    var polygon = feature.vungbao.replace('POLYGON ', '');
+                    polygon = polygon.replaceAll('(', '');
+                    polygon = polygon.replaceAll(')', '');
+                    polygon = polygon.replaceAll(' ', ',');
+                    polygon = polygon.replaceAll(',,', ' ');
+                    var ar = polygon.split(' '); // split string on comma space
+                    ar.forEach(element => {
+                        arr.push(element)
+                    });
+                    var coord = []
+                    arr.forEach(element => {
+                        var x = element;
+                        element = [];
+                        var y = [];
+                        var z = x.split(',')
+                        z.forEach(z1 => {
+                            y.push(parseFloat(z1))
+                        });
+                        coord.push(y)
+                    });
+
+                    var coorPolygon = [];
+                    coorPolygon.push(coord)
+                    var polygon = turf.polygon(coorPolygon)
+
+                    var polygonBoundingBox = turf.bbox(polygon);
+                    var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
+                    var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
+
+                    var bbox = [southWest, northEast]
+                    map.fitBounds(bbox, {
+                        padding: 20
+                    });
+                    if (x == 1)
+                        x = '01'
+                    if (x == 6)
+                        x = '06'
+                    if (x == 4)
+                        x = '04'
+                    if (x == 2)
+                        x = '02'
+                    if (x == 8)
+                        x = '08'
+                    layers.forEach(layer => {
+                        map.setFilter(layer.id, ['==', ['get', 'maTinh'], x])
+                    });
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" include="leaflet.miniMap" src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Overview Map Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = L.map('divMapId', {
+            center: {
+                lon: 103.79882812500001,
+                lat: 16.762467717941604
+            },
+            zoom: 4,
+        });
+
+        var osm = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            minZoom: 5,
+            maxZoom: 18,
+            noWrap: true
+        });
+        map.addLayer(osm);
+        var osm2 = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            minZoom: 0,
+            maxZoom: 13,
+            noWrap: true
+        });
+
+        L.control.minimap(osm2, {
+            mapOptions: {
+                logoControl: false
+            },
+            toggleDisplay: true
+        }).addTo(map);
+    </script>
+</body>
+
+</html>

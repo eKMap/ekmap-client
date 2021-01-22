@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Attribution Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var attribution = "<a href='https://www.openstreetmap.org/' target='_blank' style='color: blue'>© OpenStreetMap </a>" + "contributors"
+        var map = L.map('divMapId', {
+            center: {
+                lon: 103.79882812500001,
+                lat: 16.762467717941604
+            },
+
+            zoom: 4,
+            zoomControl: true,
+            attributionControl: false,
+        });
+
+        L.control.attribution({
+            position: 'bottomright',
+        }).addAttribution(attribution).addTo(map);
+
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
+    <script src="../../examples/js/common.js"></script>
+    <script src="../../examples/js/include-web.js"></script>
+    <title>Reverse Geocoder</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        .btn-red {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 2px 3px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Select provider and active <a href='#'>Reverse Control</a>
+            <br>
+            <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                <option value="OSM">OSM</option>
+                <option value="EK">eKGIS</option>
+            </select>
+            <button id="activeControl" class="btn-green">Active Select</button>
+            <button id="deactivateControl" class="btn-red">Deactivate</button>
+            <div id="calculated-area"></div>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId', // container id
+            minZoom: 4,
+            center: [103.95153329327843, 21.194802200558613],
+            zoom: 9.229193798995448
+        });
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService,
+            token: tokenKey
+        }).addTo(map);
+        var reverse
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            var layers = map.getStyle().layers;
+            map.moveLayer(layers[layers.length - 1].id, layers[0].id)
+            reverse = new mapboxgl.ekmap.control.Reverse({
+                target: 'activeControl',
+                //provider: 'OSM',
+                url: 'https://nominatim.openstreetmap.org/reverse/', //'https://g1.cloudgis.vn/gservices/rest/geoname/gsv_data/address
+                tokenKey: '83F55C73-7D2A-4C97-903C-7BA6559DC0A4'
+            })
+            map.addControl(reverse);
+            var answer = document.getElementById('calculated-area');
+
+            reverse.on('startReverse', function() {
+                console.log('Start reverse');
+            })
+
+            reverse.on('selectfeatures', function(evt) {
+                answer.innerHTML = '<p><strong>' + evt.result.display_name + '</strong></p>' +
+                    '<p><strong>Kinh độ: ' + evt.result.lon + '</strong></p>' +
+                    '<p><strong>Vĩ độ: ' + evt.result.lat + '</strong></p>'
+            })
+
+            reverse.on('unReverse', function() {
+                console.log('Stop reverse');
+            })
+
+            var x = document.getElementById('deactivateControl');
+            x.addEventListener("click", function(e) {
+                //deactivate control
+                reverse.deactivate();
+            });
+
+            map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        })
+
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            if (x == 'OSM') {
+                reverse.setProvider('OSM');
+            }
+            if (x == 'EK') {
+                reverse.setProvider('eKGIS');
+            }
+        }
+    </script>
+</body>
+
+</html>

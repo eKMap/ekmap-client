@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Basemap with labels</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map"></div>
+    </div>
+    <script>
+        var map = L.map('divMapId', {
+            center: {
+                lon: 105,
+                lat: 17
+            },
+            zoom: 4,
+            zoomControl: true,
+            attributionControl: true,
+        });
+
+        new L.ekmap.BasemapArcgisLayer('Imagery').addTo(map);
+        new L.ekmap.BasemapArcgisLayer('ImageryLabels').addTo(map);
+    </script>
+</body>
+
+</html>

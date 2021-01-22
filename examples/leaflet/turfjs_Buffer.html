@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Turfjs Buffer (Covid)</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .nameCountry {
+            color: #333333 !important;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .field {
+            color: #333333 !important;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            padding-right: 10px;
+        }
+
+        .value {
+            color: #333333 !important;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/@turf/turf@5.1.6/turf.min.js"></script>
+
+    <div style="width: 100%;">
+        <div id="divMapId" class="map"></div>
+    </div>
+    <script>
+        var attribution = "© Map" +
+            " by <a href='https://carto.com/' target='_blank' style='color:blue'> Carto</a>"
+
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105, 17],
+            zoom: 5
+        });
+        //Url by: https://carto.com/help/building-maps/basemap-list/
+        var maps = new mapboxgl.ekmap.TiledMapLayer({
+            urls: [
+                "https://a.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
+                "https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
+                "https://c.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png"
+            ]
+        }).addTo(map)
+
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: attribution,
+            compact: false
+        }));
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var features = [];
+        var hoveredStateId = null;
+
+        $.get("../data/Buffer_Covid.json", function (response) {
+            var provinces = response.provinces
+            provinces.forEach(province => {
+                var point = turf.point([province.Long, province.Lat]);
+                var confirmed = province.Confirmed;
+                var radius;
+                radius = getRadius(confirmed, 1, 394, 10, 60);
+                var buffered = turf.buffer(point, radius, { units: 'kilometers' });
+                buffered.properties.id = province.Province_Id;
+                buffered.properties.name = province.Province_Name;
+                buffered.properties.confirmed = province.Confirmed;
+                buffered.properties.deaths = province.Deaths;
+                buffered.properties.recovered = province.Recovered;
+                features.push(buffered)
+            });
+        }).done(function () {
+            map.addLayer({
+                'id': 'state-fills',
+                'type': 'fill',
+                'source': {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'FeatureCollection',
+                        'features': features
+                    }
+                },
+                'paint': {
+                    'fill-color': '#770404',
+                    'fill-opacity': 0.7
+                }
+            })
+        })
+        var popup;
+        map.on('mousemove', 'state-fills', function (e) {
+            if (e.features.length > 0) {
+                var fea = e.features[0];
+                if (!hoveredStateId) {
+                    var content = '';
+                    content += '<div style="width:150px">';
+                    content += '   <div class="form-group row" style="text-align: center">';
+                    content += '       <a href="javascript:;" class="nameCountry">' + fea.properties.name + '</a>'
+                    content += '   </div>'
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '      <div class="width:70%">';
+                    content += '           <a href="javascript:;" class="field">Confirmed : </a>'
+                    content += '      </div>'
+                    content += '      <div class="width:30%">'
+                    content += '           <a href="javascript:;" class="value">' + fea.properties.confirmed + '</a>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '      <div class="width:70%">';
+                    content += '          <a href="javascript:;" class="field">Deaths : </a>'
+                    content += '      </div>'
+                    content += '      <div class="width:30%">'
+                    content += '          <a href="javascript:;" class="value">' + fea.properties.deaths + '</a>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '   <div class="form-group row" style="display: flex;">';
+                    content += '      <div class="width:70%">';
+                    content += '          <a href="javascript:;" class="field">Recovered : </a>'
+                    content += '      </div>'
+                    content += '      <div class="width:30%">'
+                    content += '          <a href="javascript:;" class="value">' + fea.properties.recovered + '</a>'
+                    content += '      </div>'
+                    content += '   </div>'
+                    content += '</div>'
+                    popup = new mapboxgl.Popup({})
+                        .setLngLat(e.lngLat)
+                        .setHTML(content)
+                        .addTo(map);
+                }
+                hoveredStateId = e.features[0].properties.id;
+            }
+        });
+
+        map.on('mouseleave', 'state-fills', function () {
+            popup.remove();
+            hoveredStateId = null;
+        });
+    </script>
+</body>
+
+</html>

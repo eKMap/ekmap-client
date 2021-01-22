@@ -3,13 +3,11 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <!-- <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script> -->
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Layer Chart</title>
     <style>
@@ -17,11 +15,11 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #selectedFeatures {
             position: absolute;
             top: 15px;
@@ -30,19 +28,19 @@
             background: white;
             padding: 1em;
         }
-
+        
         .leaflet-bar.map-text a {
             color: #79BD8F;
             display: inline;
         }
-
+        
         .line-heading {
             font-weight: normal;
             margin-top: 10px;
             margin-bottom: 10px;
             color: #323232;
         }
-
+        
         .ekmap-client-item-list__list-item {
             box-shadow: 0 1px 0 rgba(110, 110, 110, 0.3);
             padding: 3px 3px;
@@ -57,14 +55,14 @@
             display: flex;
             justify-content: space-between;
         }
-
+        
         .or-wrap {
             background-color: #e0e0e0;
             height: 1px;
             margin: 2em 0;
             overflow: visible;
         }
-
+        
         .or-text {
             background: #fff;
             line-height: 0;
@@ -72,13 +70,13 @@
             position: relative;
             bottom: 0.75em;
         }
-
+        
         .ekmap-client-item-list__list {
             list-style: none;
             margin: 0;
             padding: 0;
         }
-
+        
         .ekmap-client-button {
             align-items: center;
             background-color: #0079c1;
@@ -97,7 +95,7 @@
             width: 100%;
             transition: background-color 125ms ease-in-out, border 125ms ease-in-out;
         }
-
+        
         .ekmap-client-feature-form__label {
             display: flex;
             justify-content: space-between;
@@ -122,8 +120,7 @@
                     <option value="doughnut">donut</option>
                     <option value="bar">bar</option>
                 </select>
-                <br />
-                Colors scheme:
+                <br /> Colors scheme:
                 <select id="color" onchange="doAnimate()" style="margin-bottom: 5px;">
                     <option value="classic">Classic</option>
                     <option value="dark">Dark</option>
@@ -138,47 +135,35 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [106.813834123584, 15.77458200059695],
-            style: {
-                "version": 8,
-                "sources": {
-                },
-                "layers": [
-                ]
-            },
-            zoom: 5.479005488986576,
-            pitch: 45,
-            bearing: 0,
-            light: {
-                'anchor': 'viewport',
-                'color': 'white',
-                'intensity': 0.7
-            }
+        var map = new ol.Map({
+            target: 'divMapId',
+            view: new ol.View({
+                center: [106.813834123584, 15.77458200059695],
+                zoom: 5.479005488986576,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
         var domLayer;
         var listColor;
         var doms = [];
         var features;
 
-        map.on('load', function () {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-            $.get("../data/water_quality.json", function (response) {
-                features = response.features;
-            }).done(function () {
-                createDomLayer('pie', ['#008000', '#ffa500', '#ff0000', '#0000ff']);
-            })
-        });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+        $.get("../data/water_quality.json", function(response) {
+            features = response.features;
+        }).done(function() {
+            createDomLayer('pie', ['#008000', '#ffa500', '#ff0000', '#0000ff']);
+        })
 
         function createDomLayer(typeGraph, colors) {
             var me = this;
             if (domLayer)
                 domLayer.clearDoms();
-            domLayer = new mapboxgl.ekmap.DomOverlay({
+            domLayer = new ol.ekmap.DomOverlay({
                 type: typeGraph,
                 map: map,
                 features: features,

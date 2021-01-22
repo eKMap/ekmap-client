@@ -9,9 +9,7 @@ import ekmap_element from '../core/Element';
  * @extends {ol.control.Control}
  * @param {options} options Scale line options.
  * @param {string} options.className CSS Class name.
- * @param {number} options.minWidth=64 Minimum width in pixels at the OGC default dpi. The width will be adjusted to match the dpi used.
  * @param {(HTMLElement|string) } options.target Specify a target if you want the control to be rendered outside of the map's viewport.
- * @param {(ol.control.BaseLayerUnits|string)} options.units='metric' Units.
  * @example
  * var control = new ol.ekmap.control.BaseLayer();
  *      map.addControl(control)

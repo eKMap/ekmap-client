@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../examples/js/common.js"></script>
+    <script type="text/javascript" include="leaflet.heat" src="../../dist/leaflet/include-leaflet.js"></script>
+    <title>Heat Map Layer</title>
+    <style type="text/css">
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+            margin: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var map = L.map('divMapId', {
+            center: {
+                lon: 106.20498485851135,
+                lat: 20.262531684980956
+            },
+            zoom: 10.070731400697946,
+            zoomControl: true,
+        });
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
+
+        //Data Source: https://namdinh.gov.vn/sothongtintruyenthong/1223/28318/44734/101964/Danh-sach-tram-BTS/Danh-sach-tram-BTS-kiem-dinh-nam-2018--Viettel-.aspx 
+        $.get("../data/heatmapBTS.json", function(response) {
+            var features = [];
+            var listdata = response[0];
+
+            for (var i = 2; i < listdata.length; i++) {
+                features.push([listdata[i].__EMPTY_3, listdata[i].__EMPTY_2, Math.random() * 80])
+            }
+            heatMapLayer = L.heatLayer(features, {
+                radius: 10,
+                minOpacity: 0.5
+            }).addTo(map);
+        });
+    </script>
+</body>
+
+</html>

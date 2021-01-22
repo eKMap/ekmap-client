@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Update feature</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Click the point on the map to edit.
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [105.6685713, 20.9003181],
+            style: {
+                "version": 8,
+                "sources": {},
+                "layers": []
+            },
+            zoom: 7
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        var featureLayer;
+        var idUpdate;
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+
+            featureLayer = new mapboxgl.ekmap.FeatureLayer({
+                url: urlFeatureLayer,
+                // token: tokenKey
+            }).addTo(map);
+        })
+        map.on('click', function(e) {
+            var bbox = [
+                [e.point.x - 5, e.point.y - 5],
+                [e.point.x + 5, e.point.y + 5]
+            ];
+            var features = map.queryRenderedFeatures(bbox, {
+                layers: ['point']
+            });
+            var filter = features.reduce(
+                function(memo, feature) {
+                    memo.push(feature.properties.OBJECTID);
+                    return memo;
+                }, ['in', 'OBJECTID']
+            );
+            if (features.length > 0) {
+                document.getElementById("selectedFeatures").innerHTML = "Click on the feature to update.<br>Then select the point you need to move to.";
+                console.log(features[0])
+                idUpdate = features[0].id;
+            } else {
+                if (idUpdate) {
+                    var geojson = {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [e.lngLat.lng, e.lngLat.lat]
+                        },
+                        "properties": {
+                            'OBJECTID': idUpdate
+                        }
+                    };
+                    widgets.loader.showLoader("data updating...");
+                    featureLayer.updateFeature(geojson, function(error, response) {
+                        if (error) {
+                            console.log('error updating feature ' + error.description);
+                        } else {
+                            console.log('Successfully updated feature ' + response.objectId);
+                        }
+                        document.getElementById("selectedFeatures").innerHTML = "Click on the point on the map to update the location.";
+                        featureLayer.refresh();
+                        idUpdate = null;
+                        widgets.loader.removeLoader();
+                    });
+                } else
+                    map.setFilter('point-selected', filter);
+            }
+        });
+    </script>
+</body>
+
+</html>

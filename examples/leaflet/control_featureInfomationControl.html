@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Feature Infomation Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            Click on the map to execute <a href='#'>Feature Infomation Control</a>
+            <button id="activeControl" class="btn-green">Click</button>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {},
+                "layers": []
+            },
+            center: [103.97584219304474, 21.277728387286984],
+            zoom: 13.905413433260719
+        });
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+
+            var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                url: urlMapService,
+                //token: tokenKey
+            }).addTo(map);
+
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+            var legend = new mapboxgl.ekmap.control.Legend({
+                layers: [tiledMap]
+            });
+
+            map.addControl(legend, "bottom-left");
+            var featureInfo = new mapboxgl.ekmap.control.FeatureInfomation({
+                showButton: false,
+                target: 'activeControl'
+            });
+
+            map.addControl(featureInfo, 'top-left');
+            featureInfo.on("selectfeatures", function(obj) {
+                console.log(obj)
+            })
+        })
+    </script>
+</body>
+
+</html>

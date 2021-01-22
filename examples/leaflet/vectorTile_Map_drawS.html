@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag@1.0.1/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CartoDB/mapboxgl-draw-rectangle-drag/build/mapboxgl-draw-rectangle-drag.browser.js"></script>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Show Drawn Polygon Area</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 1em;
+            height: 75px;
+            width: 150px;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .btn-green {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            <p>Draw a polygon using the draw tools.</p>
+            <div id="calculated-area"></div>
+        </div>
+    </div>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css" type="text/css" />
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [103.93422987963572, 21.306082013420507],
+            zoom: 14.871024212757812
+        });
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService,
+            token: tokenKey
+        }).addTo(map);
+
+        var draw;
+
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            var layers = map.getStyle().layers;
+            map.moveLayer(layers[layers.length - 1].id, layers[0].id)
+            draw = new mapboxgl.ekmap.control.Draw({
+                displayControlsDefault: false,
+                controls: {
+                    polygon: true,
+                    trash: true
+                }
+            });
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+            map.addControl(draw);
+            map.on('draw.create', updateAreaPolygon);
+        })
+
+        function updateAreaPolygon(e) {
+            var answer = document.getElementById('calculated-area');
+            if (e.features.length > 0) {
+                var polygon = turf.polygon(e.features[0].geometry.coordinates);
+                var area = turf.area(polygon);
+                console.log(area)
+                if (area > 10000)
+                    answer.innerHTML =
+                    '<p><strong>' +
+                    Math.round((area / 1000000) * 100) / 100 + ' ' + 'km<sup>2</sup>' +
+                    '</strong></p>'
+                else
+                    answer.innerHTML =
+                    '<p><strong>' +
+                    Math.round(area * 100) / 100 + ' ' + 'm2<sup>2</sup>' +
+                    '</strong></p>'
+            } else {
+                answer.innerHTML = '';
+                if (e.type !== 'draw.delete')
+                    alert('Use the draw tools to draw a polygon!');
+            }
+        }
+    </script>
+</body>
+
+</html>

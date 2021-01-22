@@ -49,7 +49,7 @@ export class DomOverlay extends Overlay {
         if (opts && opts.map) {
             Overlay.setMap(opts.map);
             // bind render doms to each move..performance to be promoted.
-            opts.map.on("move", this.redraw);
+            opts.map.on("pointerdrag", this.redraw);
         }
         this.doms = []; // store dom elements.
         this.lastData = [];
@@ -62,7 +62,7 @@ export class DomOverlay extends Overlay {
             domContainer = document.createElement("div");
         domContainer.style.position = "absolute";
         domContainer.className = "overlay-dom";
-        domContainer.style.width = olCanvas.width;
+        domContainer.style.width = '1177px';
         domContainer.style.height = '0';
         canvasContainer.parentElement.appendChild(domContainer);
         return domContainer;
@@ -139,7 +139,6 @@ const lineHeight = 60,
  */
 function _redraw() {
     let doms = this.domOpts;
-    console.log(this.domOpts)
     var me = this;
     if (doms && Array.isArray(doms)) {
         // append each of domPopups to domContainer.

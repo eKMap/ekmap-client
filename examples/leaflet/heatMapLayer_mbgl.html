@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../examples/js/common.js"></script>
+    <script type="text/javascript" include="leaflet.heat" src="../../dist/leaflet/include-leaflet.js"></script>
+    <title>Heat Map Layer</title>
+    <style type="text/css">
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+            margin: 8px;
+        }
+        
+        #toolbar {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            width: 300px;
+            text-align: center;
+            z-index: 99999;
+            border-radius: 4px;
+        }
+        
+        .panel {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid transparent;
+        }
+        
+        .panel-primary .panel-heading {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+        
+        .panel-heading {
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+        
+        .panel-title {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 16px;
+            color: inherit;
+        }
+        
+        .input-group-addon {
+            padding: 10px 12px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1;
+            color: #555;
+            text-align: center;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+        
+        .panel-body {
+            padding: 15px;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toolbar" class="panel panel-primary">
+        <div class="panel-heading">
+            <h5 class="panel-title text-center">Heat Map Layer</h5>
+        </div>
+        <div class="panel-body content">
+            <div class="panel">
+                <div class="input-group">
+                    <span class="input-group-addon">Counts</span>
+                    <input type="text" class="form-control" id="heatNums" value="5000" />
+                </div>
+            </div>
+            <div class="panel">
+                <div class="input-group">
+                    <span class="input-group-addon">Radius</span>
+                    <input class="form-control" style="width: 50px;" value="20" id="heatradius" />
+                    <select class="form-control" style="width: auto;" id="radiusUnit">
+                        <option value="px">px</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-default" onclick="createHeatPoints()">Start drawing</button>&nbsp; &nbsp;
+            <button type="button" class="btn btn-default" onclick="clearHeatPoints()">Clear</button>
+        </div>
+    </div>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var heatmapLayer;
+        var map = L.map('divMapId', {
+            center: {
+                lon: 103.9,
+                lat: 22.2
+            },
+            zoom: 4,
+            zoomControl: true,
+        });
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
+
+        function createHeatPoints() {
+            clearHeatPoints();
+            var num = parseInt(document.getElementById("heatNums").value);
+            var radius = parseInt(document.getElementById("heatradius").value);
+            var unit = document.getElementById("radiusUnit").value;
+            var features = [];
+            for (var i = 0; i < num; i++) {
+                features[i] = [
+                    Math.random() * 160 - 80,
+                    Math.random() * 360 - 180,
+                    Math.random() * 9
+                ]
+            }
+
+            heatmapLayer = L.heatLayer(features, {
+                radius: radius,
+                minOpacity: 0.5
+            }).addTo(map);
+
+        }
+
+        function clearHeatPoints() {
+            if (heatmapLayer)
+                map.removeLayer(heatmapLayer)
+        }
+    </script>
+</body>
+
+</html>

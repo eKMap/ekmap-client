@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Realtime Water</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            left: 12px;
+            bottom: 15px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+            max-height: 250px;
+            max-width: 250px;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .dataNote {
+            padding: 10px;
+            margin: 0px;
+            list-style-type: none;
+        }
+        
+        .noteType {
+            padding: 0px;
+            list-style-type: none;
+        }
+        
+        .note {
+            font-size: 20px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="selectedFeatures" class="leaflet-bar map-text">
+            <div>
+                <div style="text-align: center;">
+                    <span class="note">Note</span>
+                </div>
+                <ul class="dataNote">
+                    <li>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX/AAAZ4gk3AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <span style="padding-left: 15px;">
+                                    Polluted
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUA/wA0XsCoAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <span style="padding-left: 15px;">
+                                    Medium
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="noteType">
+                            <li>
+                                <img width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUAmf8q++MEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <span style="padding-left: 15px;">
+                                    Good
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [107.58856560217953, 16.3539350884014],
+            style: {
+                "version": 8,
+                "glyphs": 'https://viegisserver.ekgis.vn/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf',
+                "sources": {},
+                "layers": []
+            },
+            zoom: 9.415324050150357,
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        var frameCount = 5;
+        var currentImage = -5;
+
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
+            widgets.loader.showLoader("data loading...");
+            $.get("../data/water/dma.json", function(response) {
+                var features = response.features;
+                window.setInterval(function() {
+                    features.forEach(fea => {
+                        currentImage = (currentImage + 1) % frameCount;
+                        fea.properties.value = currentImage
+                    });
+                    map.getSource('dma').setData(response)
+                }, 3000)
+
+                features.forEach(fea => {
+                    currentImage = (currentImage + 1) % frameCount;
+                    fea.properties.value = currentImage
+                });
+                map.addSource('dma', {
+                    'type': 'geojson',
+                    'data': response
+                });
+
+                map.addLayer({
+                    'id': 'water',
+                    'type': 'fill',
+                    'source': 'dma',
+                    'paint': {
+                        'fill-color': [
+                            'interpolate', ['linear'],
+                            ['get', 'value'],
+                            0,
+                            '#FF0000',
+                            1,
+                            '#00FF00',
+                            4,
+                            '#0099FF'
+                        ],
+                        'fill-outline-color': '#000',
+                        'fill-opacity': 0.7
+                    }
+                });
+                map.addLayer({
+                    'id': 'water-labels',
+                    'type': 'symbol',
+                    'source': 'dma',
+                    'layout': {
+                        'text-field': [
+                            'format', ['get', 'name'], {
+                                'font-scale': 0.7
+                            }
+                        ]
+                    }
+                });
+            }).done(function() {
+                widgets.loader.removeLoader();
+            })
+        })
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+
+</html>

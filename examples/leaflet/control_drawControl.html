@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" include="leaflet.draw" src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Draw Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = L.map('divMapId', {
+            center: {
+                lon: 103.79882812500001,
+                lat: 16.762467717941604
+            },
+            zoom: 4,
+            zoomControl: true,
+            attributionControl: false,
+        });
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
+        var editableLayers = new L.FeatureGroup();
+        map.addLayer(editableLayers);
+        var options = {
+            position: 'topleft',
+            draw: {
+                polyline: {},
+                polygon: {},
+                circle: {},
+                rectangle: {},
+                marker: {},
+                remove: {}
+            },
+            edit: {
+                featureGroup: editableLayers,
+                remove: true
+            }
+        };
+
+        var drawControl = new L.Control.Draw(options);
+        map.addControl(drawControl);
+        handleMapEvent(drawControl._container, map);
+        map.on(L.Draw.Event.CREATED, function(e) {
+            var type = e.layerType,
+                layer = e.layer;
+            if (type === 'marker') {
+                layer.bindPopup('A popup!');
+            }
+            editableLayers.addLayer(layer);
+        });
+
+        function handleMapEvent(div, map) {
+            if (!div || !map) {
+                return;
+            }
+            div.addEventListener('mouseover', function() {
+                map.scrollWheelZoom.disable();
+                map.doubleClickZoom.disable();
+            });
+            div.addEventListener('mouseout', function() {
+                map.scrollWheelZoom.enable();
+                map.doubleClickZoom.enable();
+            });
+        }
+    </script>
+</body>
+
+</html>

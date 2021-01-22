@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Resize map</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        .button {
+            color: #fff;
+            background-color: #555;
+            padding: 1em;
+            margin: 1em;
+            position: absolute;
+            right: 1em;
+            top: 1em;
+            border-radius: 0.5em;
+            border-bottom: 2px #222 solid;
+            cursor: pointer;
+        }
+        
+        #resizeMap {
+            top: 5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id='resizeDiv' class='button'>Resize container</div>
+        <div id='resizeMap' class='button'>Fix map</div>
+
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            center: [103.9, 22.2],
+            zoom: 4
+        });
+        var biggerSmaller;
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService + "/resources/styles",
+            token: tokenKey
+        }).addTo(map);
+
+        map.on('load', function() {
+            map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map)
+            var layers = map.getStyle().layers;
+            map.moveLayer(layers[layers.length - 1].id, layers[0].id);
+            var mapCanvas = document.getElementsByClassName('mapboxgl-canvas')[0];
+            var mapDiv = document.getElementById('divMapId');
+            var breakButton = document.getElementById('resizeDiv');
+            var fixButton = document.getElementById('resizeMap');
+
+            breakButton.onclick = function() {
+                if (biggerSmaller !== 'smaller') {
+                    mapDiv.style.width = '50%';
+                    mapCanvas.style.width = '100%';
+                    biggerSmaller = 'smaller';
+                } else {
+                    mapDiv.style.width = '150%';
+                    mapCanvas.style.width = '100%';
+                    biggerSmaller = 'bigger';
+                }
+            }
+
+            fixButton.onclick = function() {
+                map.resize();
+            }
+        })
+    </script>
+</body>
+
+</html>

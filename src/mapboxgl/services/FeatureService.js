@@ -284,6 +284,8 @@ export class FeatureService extends ServiceBase {
                 result = response.features;
             if (response && response.results)
                 result = response.results;
+            if (response && response.layers)
+                result = response.layers;
             callback.call(context, error, result);
         }, this);
     }

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Base Layer Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 9px 3px 0px 10px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        #selectedFeatures {
+            position: absolute;
+            left: 30px;
+            top: -8px;
+            z-index: 1000;
+            padding: 1em;
+            max-height: 250px;
+            max-width: 250px;
+        }
+        
+        .leaflet-bar.map-text a {
+            color: #79BD8F;
+            display: inline;
+        }
+        
+        .leaflet-bar {
+            box-shadow: unset;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div style="width: 100%;">
+            <div id="divMapId" class="map"></div>
+            <div id="selectedFeatures" class="leaflet-bar map-text">
+                <div id="terrainMenu">
+                    <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                        <option value="Streets">Streets</option>
+                        <option value="Topographic">Topographic</option>
+                        <option value="Oceans">Oceans</option>
+                        <option value="OceansLabels">OceansLabels</option>
+                        <option value="NationalGeographic">NationalGeographic</option>
+                        <option value="DarkGray">DarkGray</option>
+                        <option value="DarkGrayLabels">DarkGrayLabels</option>
+                        <option value="Gray">Gray</option>
+                        <option value="GrayLabels">GrayLabels</option>
+                        <option value="Imagery">Imagery</option>
+                        <option value="ImageryLabels">ImageryLabels</option>
+                        <option value="ImageryTransportation">ImageryTransportation</option>
+                        <option value="ShadedRelief">ShadedRelief</option>
+                        <option value="ShadedReliefLabels">ShadedReliefLabels</option>
+                        <option value="Terrain">Terrain</option>
+                        <option value="TerrainLabels">TerrainLabels</option>
+                        <option value="USATopo">USATopo</option>
+                        <option value="ImageryClarity">ImageryClarity</option>
+                        <option value="Physical">Physical</option>
+                        <option value="ImageryFirefly">ImageryFirefly</option>
+                    </select></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var layer;
+        var map = L.map('divMapId', {
+            center: {
+                lon: 105.20886162772933,
+                lat: 16.518572979240204
+            },
+            zoom: 5.193739308697748,
+            zoomControl: true,
+            attributionControl: true,
+        });
+
+        layer = new L.ekmap.BasemapArcgisLayer('Streets').addTo(map);
+
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            map.removeLayer(layer);
+            if (x == 'Streets')
+                layer = new L.ekmap.BasemapArcgisLayer('Streets').addTo(map);
+            if (x == 'Topographic')
+                layer = new L.ekmap.BasemapArcgisLayer('Topographic').addTo(map);
+            if (x == 'Oceans')
+                layer = new L.ekmap.BasemapArcgisLayer('Oceans').addTo(map);
+            if (x == 'OceansLabels')
+                layer = new L.ekmap.BasemapArcgisLayer('OceansLabels').addTo(map);
+            if (x == 'NationalGeographic')
+                layer = new L.ekmap.BasemapArcgisLayer('NationalGeographic').addTo(map);
+            if (x == 'DarkGray')
+                layer = new L.ekmap.BasemapArcgisLayer('DarkGray').addTo(map);
+            if (x == 'DarkGrayLabels')
+                layer = new L.ekmap.BasemapArcgisLayer('DarkGrayLabels').addTo(map);
+            if (x == 'Gray')
+                layer = new L.ekmap.BasemapArcgisLayer('Gray').addTo(map);
+            if (x == 'GrayLabels')
+                layer = new L.ekmap.BasemapArcgisLayer('GrayLabels').addTo(map);
+            if (x == 'Imagery')
+                layer = new L.ekmap.BasemapArcgisLayer('Imagery').addTo(map);
+            if (x == 'ImageryLabels')
+                layer = new L.ekmap.BasemapArcgisLayer('ImageryLabels').addTo(map);
+            if (x == 'ShadedRelief')
+                layer = new L.ekmap.BasemapArcgisLayer('ShadedRelief').addTo(map);
+            if (x == 'ImageryTransportation')
+                layer = new L.ekmap.BasemapArcgisLayer('ImageryTransportation').addTo(map);
+            if (x == 'ShadedReliefLabels')
+                layer = new L.ekmap.BasemapArcgisLayer('ShadedReliefLabels').addTo(map);
+            if (x == 'Terrain')
+                layer = new L.ekmap.BasemapArcgisLayer('Terrain').addTo(map);
+            if (x == 'TerrainLabels')
+                layer = new L.ekmap.BasemapArcgisLayer('TerrainLabels').addTo(map);
+            if (x == 'USATopo')
+                layer = new L.ekmap.BasemapArcgisLayer('USATopo').addTo(map);
+            if (x == 'ImageryClarity')
+                layer = new L.ekmap.BasemapArcgisLayer('ImageryClarity').addTo(map);
+            if (x == 'Physical')
+                layer = new L.ekmap.BasemapArcgisLayer('Physical').addTo(map);
+            if (x == 'ImageryFirefly')
+                layer = new L.ekmap.BasemapArcgisLayer('ImageryFirefly').addTo(map);
+        }
+    </script>
+</body>
+
+</html>
