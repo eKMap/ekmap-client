@@ -6,6 +6,9 @@ import SnapShot from "./control/SnapShot";
 import Reverse from "./control/Reverse";
 import Geocoder from "./control/Geocoder";
 import TreeLayer from "./control/TreeLayer";
+import Location from "./control/Location";
+import Target from "./control/Target";
+import CanvasBase from "./control/CanvasBase";
 
 import { TiledVietNamMapLayer } from './layer'
 import { TileLayer } from './layer/TileLayer';
@@ -43,6 +46,12 @@ if (window && window.ol) {
     ol.ekmap.control.Reverse = Reverse;
     ol.ekmap.control.Geocoder = Geocoder;
     ol.ekmap.control.TreeLayer = TreeLayer;
+    ol.ekmap.control.Location = Location;
+    ol.ekmap.control.Target = Target;
+    ol.ekmap.control.CanvasBase = CanvasBase;
+
+
+
     // core
     ol.ekmap.Util = Util;
     ol.ekmap.Parse = Parse;

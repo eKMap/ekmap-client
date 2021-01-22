@@ -45,10 +45,11 @@ export class Legend extends mapboxgl.Evented {
         if (!this.target) {
             this.button = document.createElement("button");
             this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Legend';
-            let icon = document.createElement("i");
-            icon.className = "fa fa-bars";
+            this.button.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAi0lEQVRYR+2UsQ3AIAwE7TXSpckAoLB/HckSIzAIIlEoULKAjwIW+Of+/SrwU1hf5jGQUjpaa5sHkVpryTmXV2sQCCFcqnp6GBCRYmb7z0CM8XYS7zJm1j8/COAG8AjwEnrm/9WaZwcWAbyE+BniQ4QbwCPAS7h2YBHAS4ifIT5EuAE8AryEawcoAg9DsHgh3sYkGwAAAABJRU5ErkJggg==")';
+            this.button.style.backgroundPosition = 'center';
+            this.button.style.backgroundRepeat = 'no-repeat';
+            this.button.style.backgroundSize = '70%';
             this.button.className = "mapboxgl-ctrl-zoom-in"
-            this.button.appendChild(icon);
             this.button.addEventListener("click", function(e) {
                 event.preventDefault();
                 event.stopPropagation();

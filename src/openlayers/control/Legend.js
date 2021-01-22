@@ -34,10 +34,11 @@ var Legend = /*@__PURE__*/ (function(Control) {
         if (!this.target) {
             this.button = document.createElement("button");
             this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Legend';
-            let icon = document.createElement("i");
-            icon.className = "fa fa-bars";
+            this.button.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAdklEQVRYR+2WwQ2AMAwD7TX48WED9v8zRTcxog9UMUAcCXeBc5zqFML8aOajTwBJB4CtqJFBcjystwFJF4CzMMD+DaAi+MSQnMOvDdgD2Ffg/YSV+19ZfTyQBmJCSXYR2QPEhBYVxIR9GogJY8IOZ3luwn+q+Ab2OFQhhZ5ZtgAAAABJRU5ErkJggg==")';
+            this.button.style.backgroundPosition = 'center';
+            this.button.style.backgroundRepeat = 'no-repeat';
+            this.button.style.backgroundSize = '70%';
             this.button.className = "ol-ctrl-zoom-in"
-            this.button.appendChild(icon);
             this.button.addEventListener("click", function(e) {
                 event.preventDefault();
                 event.stopPropagation();

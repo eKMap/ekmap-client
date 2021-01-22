@@ -741,21 +741,21 @@ var exampleConfig = {
                         subject: "Use the geocoder control to search for places using the Mapbox Geocoding API.",
                         description: "Use the geocoder control to search for places using the Mapbox Geocoding API."
                     },
+                    {
+                        name: "Map Animation To Location",
+                        name_en: "Map Animation To Location",
+                        thumbnail: "control_locationControl.png",
+                        fileName: "control_locationControl",
+                        subject: "Animation, FlyTo, MyLocation.",
+                        description: "Animation, FlyTo, My Location"
+                    },
                     // {
-                    //     name: "Draw Circle",
-                    //     name_en: "Draw Circle",
-                    //     thumbnail: "control_drawCircleControl.gif",
-                    //     fileName: "control_drawCircleControl",
-                    //     subject: "Draw Circle.",
-                    //     description: "Use control DrawCircle to draw circle"
-                    // },
-                    // {
-                    //     name: "Draw Line Buffer",
-                    //     name_en: "Draw Line Buffer",
-                    //     thumbnail: "control_drawLineBufferControl.gif",
-                    //     fileName: "control_drawLineBufferControl",
-                    //     subject: "Draw Line Buffer.",
-                    //     description: "Use control Draw and control DrawLine to draw line buffer"
+                    //     name: "Target Control",
+                    //     name_en: "Target Control",
+                    //     thumbnail: "control_targetControl.png",
+                    //     fileName: "control_targetControl",
+                    //     subject: "Target Control.",
+                    //     description: "Target Control"
                     // },
                     {
                         name: "Show Drawn Polygon Area",
