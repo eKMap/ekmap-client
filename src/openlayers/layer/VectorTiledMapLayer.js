@@ -86,7 +86,8 @@ export class VectorTiledMapLayer extends Observable {
             style: this.style,
             type: 'VectorTileLayer',
             url: this.urlMapService,
-            token: this.options.token
+            token: this.options.token,
+            vectorTile: true
         })
         map.addLayer(this.layer);
 

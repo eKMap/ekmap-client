@@ -29,19 +29,21 @@ export class FeatureService extends ServiceBase {
         }
     }
 
-    nearby(lngLat, callback, context) {
+    nearby(latLng, callback, context) {
         var params = {};
-        params.geometry = [lngLat.lng, lngLat.lat];
+        params.geometry = [latLng.lng, latLng.lat];
         params.geometryType = 'esriGeometryPoint';
         params.spatialRel = 'esriSpatialRelIntersects';
         params.units = 'esriSRUnit_Kilometer';
         params.distance = 5;
         params.inSr = 4326;
-        params.returnIdsOnly = true;
+        params.outFields = '*';
+        // params.returnIdsOnly = true;
         params.f = 'json';
         var service = new FeatureService(this.options);
         return service.request('query', params, function(error, response) {
-            callback.call(context, error, response, response);
+            var result = response ? response : undefined;
+            callback.call(context, error, result);
         }, this);
     }
 

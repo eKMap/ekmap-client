@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <link href="../../dist/mapboxgl/gclient.min.css" rel="stylesheet">
+    <title>Magnify Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #options {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id='options'>
+            <ul>
+                <li>
+                    <label id="lblRadius">Bán kính (100):</label>
+                    <input id="radius" type="range" min="10" max="200" value="100" onchange="onchangeRadius(this.value)">
+                </li>
+                <li>
+                    <label id="lblZoom">Mức zoom thu phóng (1):</label>
+                    <input id="zoom" type="range" min="1" max="4" value="1" onchange="onchangeZoom(this.value)">
+                </li>
+            </ul>
+            <br />
+        </div>
+    </div>
+    <script>
+        var map = new ol.Map({
+            target: 'divMapId',
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 5.193739308697748,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
+        });
+
+        var vnMap1 = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
+        var vnMap2 = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        })
+
+        var maginfy = new ol.ekmap.overlay.Magnify({
+            layers: [
+                vnMap2.TileLayer.layer
+            ],
+            radius: 100,
+            zoomOffset: 1,
+            projection: 'EPSG:4326'
+        });
+        map.addOverlay(maginfy);
+
+        function onchangeZoom(value) {
+            $('#lblZoom').html('Mức zoom thu phóng (' + value + '):')
+            maginfy.set("zoomOffset", value);
+        }
+
+        function onchangeRadius(value) {
+            $('#lblRadius').html('Bán kính (' + value + '):')
+            maginfy.setRadius(Number(value))
+        }
+    </script>
+</body>
+
+</html>

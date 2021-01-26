@@ -37,11 +37,6 @@
             zoomControl: true,
         });
 
-
-        L.control.attribution({
-            position: 'bottomright',
-        }).addAttribution(attribution).addTo(map);
-
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         var tileLayer = new L.ekmap.TiledMapLayer({

@@ -24,6 +24,17 @@ export class TileLayer {
                 if (options.token) {
                     this.tileUrl += ('?token=' + options.token);
                 }
+                this.layer = new ol.layer.Tile({
+                    source: new ol.source.XYZ({
+                        url: this.tileUrl,
+                        attributions: this.options.attribution,
+                        crossOrigin: "Anonymous"
+                    }),
+                    baseLayer: true,
+                    visible: this.options.visible != undefined ? this.options.visible : true,
+                    title: this.options.name
+                })
+
             }
             if (options.urls) {
                 this.tileUrls = [];
@@ -36,6 +47,16 @@ export class TileLayer {
                         this.tileUrls.push(url);
                     })
                 }
+                this.layer = new ol.layer.Tile({
+                    source: new ol.source.XYZ({
+                        urls: this.tileUrls,
+                        attributions: this.options.attribution,
+                        crossOrigin: "Anonymous"
+                    }),
+                    baseLayer: true,
+                    visible: this.options.visible != undefined ? this.options.visible : true,
+                    title: this.options.name,
+                });
             }
         }
     }
@@ -48,27 +69,11 @@ export class TileLayer {
      */
     addTo(map) {
         if (this.tileUrls)
-            map.addLayer(new ol.layer.Tile({
-                source: new ol.source.XYZ({
-                    urls: this.tileUrls,
-                    attributions: this.options.attribution,
-                    crossOrigin: "Anonymous"
-                }),
-                baseLayer: true,
-                visible: this.options.visible != undefined ? this.options.visible : true,
-                title: this.options.name,
-            }));
+            map.addLayer(this.layer);
+
         if (this.tileUrl)
-            map.addLayer(new ol.layer.Tile({
-                source: new ol.source.XYZ({
-                    url: this.tileUrl,
-                    attributions: this.options.attribution,
-                    crossOrigin: "Anonymous"
-                }),
-                baseLayer: true,
-                visible: this.options.visible != undefined ? this.options.visible : true,
-                title: this.options.name
-            }));
-        return this;
+            map.addLayer(this.layer);
+
+        return this.layer;
     }
 }

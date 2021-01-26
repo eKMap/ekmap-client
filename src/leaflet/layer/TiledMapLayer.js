@@ -23,6 +23,12 @@ export class TiledMapLayer extends TileLayer {
             if (options.url) {
                 options = Util.getUrlParams(options);
                 this.tileUrl = (options.proxy ? options.proxy + '?' : '') + options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
+                this.options.metadata = {
+                    url: this.options.url,
+                    token: this.options.token,
+                    type: 'tileLayer'
+                }
+
                 this.service = new L.ekmap.MapService(options);
             }
             if (options.urls)
@@ -30,6 +36,7 @@ export class TiledMapLayer extends TileLayer {
             if (this.options.token) {
                 this.tileUrl += ('?token=' + this.options.token);
             }
+
             this.tileLayer = new L.tileLayer(this.tileUrl, this.options);
         }
     }

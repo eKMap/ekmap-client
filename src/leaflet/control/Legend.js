@@ -1,29 +1,29 @@
 import '../core/Base';
-import mapboxgl from 'mapbox-gl';
+import L from 'leaflet';
 import { Util } from '../core/Util';
 /**
- * @class mapboxgl.ekmap.control.Legend
+ * @class L.ekmap.control.Legend
  * @category  Control
  * @classdesc Legend.
  * @param {Object} options Construction parameters.
- * @param {Array<mapboxgl.Map>} options.layers List of layers for which you want to display legend.
+ * @param {Array<L.Map>} options.layers List of layers for which you want to display legend.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @param {string} options.title=LEGEND Name of header.
  * @param {string} options.tooltip=Legend Tooltip of button.
  *
  * @example
- *  var map = new mapboxgl.Map({
+ *  var map = new L.Map({
  *      //config....
  *  });
- *  var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+ *  var tiledMap = new L.ekmap.TiledMapLayer({
  *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
  *  }).addTo(map);
- *  var legend = new mapboxgl.ekmap.control.Legend({
+ *  var legend = new L.ekmap.control.Legend({
  *      layers: [tiledMap]
  *  });
  *  map.addControl(legend,"top-left");
  */
-export class Legend extends mapboxgl.Evented {
+export class Legend extends L.Control {
 
     constructor(options) {
         super(options);
@@ -33,7 +33,7 @@ export class Legend extends mapboxgl.Evented {
     }
 
     /**
-     * @function mapboxgl.ekmap.control.Legend.prototype.onAdd
+     * @function L.ekmap.control.Legend.prototype.onAdd
      * @description Register a control on the map and give it a chance to register event listeners and resources. This method is called by Map#addControl internally.
      * @param {Map} map the Map this control will be added to.
      * @returns {HTMLElement}  The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.
@@ -41,14 +41,14 @@ export class Legend extends mapboxgl.Evented {
     onAdd(map) {
         this._map = map;
         let me = this; //might use this later
-
         if (!this.target) {
-            this.button = document.createElement("button");
+            this.button = document.createElement("a");
+            this.button.attributes.role = 'button';
             this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Legend';
-            let icon = document.createElement("i");
-            icon.className = "fa fa-bars";
-            this.button.className = "mapboxgl-ctrl-zoom-in"
-            this.button.appendChild(icon);
+            this.button.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAd0lEQVRYR+2UsQ2AMBADL2vQpckG7N8zRTYJIggJGOAvxUdKbcu+d0F+RdZnKQMN2IIS6cD1PwkcwB5ooP4NjCDxR2bW/2ZAN6BXoEMYjMAtt9QOZAI6hPoZ6kOkG9Ar0CHMHcgEdAj1M9SHSDegV6BDmDugJHACFLYeISqYdm0AAAAASUVORK5CYII=")';
+            this.button.style.backgroundPosition = 'center';
+            this.button.style.backgroundRepeat = 'no-repeat';
+            this.button.style.backgroundSize = '60%';
             this.button.addEventListener("click", function(e) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -69,7 +69,8 @@ export class Legend extends mapboxgl.Evented {
         me._div.style.overflowX = "hidden";
         me._div.style.fontSize = "14px";
         me._div.style.background = "#fff";
-        this._div.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        var className = 'leaflet-bar ';
+        this._div.className = className + (this.options.className !== undefined ? this.options.className : '');;
         //this._div.style.padding = "8px";
         $(document).click((event) => {
             if (!$(event.target).closest('#container').length) {
@@ -84,7 +85,7 @@ export class Legend extends mapboxgl.Evented {
     }
 
     /**
-     * @function mapboxgl.ekmap.control.Legend.prototype.onRemove
+     * @function L.ekmap.control.Legend.prototype.onRemove
      * @description Unregister a control on the map and give it a chance to detach event listeners and resources. This method is called by Map#removeControl internally.
      * @param {Map} map the Map this control will be removed from.
      * @returns {undefined}  there is no required return value for this method.
@@ -116,6 +117,7 @@ export class Legend extends mapboxgl.Evented {
             this.closeButton.style.position = 'absolute';
             this.closeButton.style.top = '0';
             this.closeButton.style.right = '0';
+            this.closeButton.style.borderBottom = 'none';
             this.imgClose = document.createElement('img');
             this.imgClose.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC");
             this.imgClose.style.padding = '5px';
@@ -190,4 +192,4 @@ export class Legend extends mapboxgl.Evented {
     }
 }
 
-mapboxgl.ekmap.control.Legend = Legend;
+L.ekmap.control.Legend = Legend;

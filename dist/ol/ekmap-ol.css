@@ -70,16 +70,43 @@
 }
 
 
-/* .ekmap-bl-layer-open .ekmap-bl-layer-bt {
-    top: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
+/* Map perspectivce */
+
+.ol-perspective-map {
     position: absolute;
-    pointer-events: none;
-    border-width: 10px;
-    margin-top: -.7em;
-    margin-left: -10px;
-    border-right-color: #333;
-} */
+    left: 50%;
+    top: 50%;
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+}
+
+.ol-perspective-map .ol-layer {
+    z-index: -1!important;
+    /* bug using Chrome ? */
+}
+
+.ol-perspective-map .ol-layers {
+    transform: translateY(0) perspective(200px) rotateX(0deg) scaleY(1);
+}
+
+.ol-perspective-map .ol-overlaycontainer-stopevent {
+    width: 50%!important;
+    height: 50%!important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* Overlay magnify  */
+
+.ol-overlay-container .ol-magnify {
+    background: rgba(0, 0, 0, 0.5);
+    border: 3px solid #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 0;
+}

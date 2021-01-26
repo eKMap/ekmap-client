@@ -1,0 +1,172 @@
+import ekmap_inherits from './ext/inherits';
+import Pointer from 'ol/interaction/Pointer'
+
+/** Cắt lớp bản đồ bằng một vòng tròn với bán kính trên bản đồ. 
+ * @constructor
+ * @extends {Pointer}
+ * @param {gclient_interaction_Clip.options} options 
+ *  @param {number} options.radius Bán kính. Mặc định 100
+ *	@param {ol.layer|Array<ol.layer>} options.layers Lớp bản đồ cần clip
+ */
+var Clip = function(options) {
+
+    this.layers_ = [];
+
+    Pointer.call(this, {
+        handleDownEvent: this.setPosition,
+        handleMoveEvent: this.setPosition
+    });
+
+    this.precomposeBind_ = this.precompose_.bind(this);
+    this.postcomposeBind_ = this.postcompose_.bind(this);
+
+    // Default options
+    options = options || {};
+
+    this.pos = false;
+    this.radius = (options.radius || 100);
+    if (options.layers) this.addLayer(options.layers);
+};
+ekmap_inherits(Clip, Pointer);
+
+/** Set the map > start postcompose
+ *	@private
+ */
+Clip.prototype.setMap = function(map) {
+    var i;
+
+    if (this.getMap()) {
+        for (i = 0; i < this.layers_.length; i++) {
+            this.layers_[i].un(['precompose', 'prerender'], this.precomposeBind_);
+            this.layers_[i].un(['postcompose', 'postrender'], this.postcomposeBind_);
+        }
+        this.getMap().renderSync();
+    }
+
+    Pointer.prototype.setMap.call(this, map);
+
+    if (map) {
+        for (i = 0; i < this.layers_.length; i++) {
+            this.layers_[i].on(['precompose', 'prerender'], this.precomposeBind_);
+            this.layers_[i].on(['postcompose', 'postrender'], this.postcomposeBind_);
+        }
+        map.renderSync();
+    }
+}
+
+/** Thiết lập bán kính clip
+ *	@param {integer} radius Bán kính
+ */
+Clip.prototype.setRadius = function(radius) {
+    this.radius = radius;
+    if (this.getMap()) this.getMap().renderSync();
+}
+
+/** Thêm lớp bản đồ clip
+ *	@param {ol.layer|Array<ol.layer>} layer Lớp bản đồ
+ */
+Clip.prototype.addLayer = function(layers) {
+    if (!(layers instanceof Array)) layers = [layers];
+    for (var i = 0; i < layers.length; i++) {
+        if (this.getMap()) {
+            layers[i].on(['precompose', 'prerender'], this.precomposeBind_);
+            layers[i].on(['postcompose', 'postrender'], this.postcomposeBind_);
+            this.getMap().renderSync();
+        }
+        this.layers_.push(layers[i]);
+    }
+};
+
+/** Xóa lớp bản đồ cần clip
+ *	@param {ol.layer|Array<ol.layer>} layer Lớp bản đồ
+ */
+Clip.prototype.removeLayer = function(layers) {
+    if (!(layers instanceof Array)) layers = [layers];
+    for (var i = 0; i < layers.length; i++) {
+        var k;
+        for (k = 0; k < this.layers_.length; k++) {
+            if (this.layers_[k] === layers[i]) {
+                break;
+            }
+        }
+        if (k != this.layers_.length && this.getMap()) {
+            this.layers_[k].un(['precompose', 'prerender'], this.precomposeBind_);
+            this.layers_[k].un(['postcompose', 'postrender'], this.postcomposeBind_);
+            this.layers_.splice(k, 1);
+            this.getMap().renderSync();
+        }
+    }
+};
+
+/** Set position of the clip
+ *	@param {ol.Pixel|ol.MapBrowserEvent}
+ * @private
+ */
+Clip.prototype.setPosition = function(e) {
+    if (e.pixel) this.pos = e.pixel;
+    else {
+        if (e && e instanceof Array) this.pos = e;
+        else e = [-10000000, -10000000];
+    }
+    if (this.getMap()) this.getMap().renderSync();
+};
+
+/**
+ * @private
+ */
+Clip.prototype.precompose_ = function(e) {
+    var ctx = e.context;
+    var ratio = e.frameState.pixelRatio;
+
+    ctx.save();
+    ctx.beginPath();
+    var pt = [this.pos[0], this.pos[1]];
+    var radius = this.radius;
+    var tr = e.inversePixelTransform;
+    if (tr) {
+        pt = [
+            (pt[0] * tr[0] - pt[1] * tr[1] + tr[4]),
+            (-pt[0] * tr[2] + pt[1] * tr[3] + tr[5])
+        ];
+    } else {
+        pt[0] *= ratio;
+        pt[1] *= ratio;
+        radius *= ratio;
+    }
+    ctx.arc(pt[0], pt[1], radius, 0, 2 * Math.PI);
+    ctx.clip();
+};
+
+
+/**
+ * @private
+ */
+Clip.prototype.postcompose_ = function(e) {
+    e.context.restore();
+};
+
+/**
+ * Activate or deactivate
+ * @param {boolean} active
+ * @observable
+ * @api
+ */
+Clip.prototype.setActive = function(b) {
+    if (b === this.getActive()) return;
+    Pointer.prototype.setActive.call(this, b);
+    var i;
+    if (b) {
+        for (i = 0; i < this.layers_.length; i++) {
+            this.layers_[i].on(['precompose', 'prerender'], this.precomposeBind_);
+            this.layers_[i].on(['postcompose', 'postrender'], this.postcomposeBind_);
+        }
+    } else {
+        for (i = 0; i < this.layers_.length; i++) {
+            this.layers_[i].un(['precompose', 'prerender'], this.precomposeBind_);
+            this.layers_[i].un(['postcompose', 'postrender'], this.postcomposeBind_);
+        }
+    }
+    if (this.getMap()) this.getMap().renderSync();
+};
+
+export default Clip

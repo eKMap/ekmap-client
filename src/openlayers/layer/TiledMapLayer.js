@@ -39,9 +39,19 @@ export class TiledMapLayer {
                 this.tileUrl += ('?token=' + this.options.token);
 
             }
-            //return new ol.ekmap.MapService(this.tileUrl);
-            // init layer by calling TileLayers initialize method
-            //TileLayer.prototype.initialize.call(this, this.tileUrl, options);
+            this.layer = new ol.layer.Tile({
+                    source: new ol.source.XYZ({
+                        url: this.tileUrl,
+                        crossOrigin: "Anonymous"
+                    }),
+                    title: this.options.name,
+                    type: 'TileLayer',
+                    url: this.options.url,
+                    token: this.options.token
+                })
+                //return new ol.ekmap.MapService(this.tileUrl);
+                // init layer by calling TileLayers initialize method
+                //TileLayer.prototype.initialize.call(this, this.tileUrl, options);
         }
     }
 
@@ -52,16 +62,7 @@ export class TiledMapLayer {
      * @returns this
      */
     addTo(map) {
-        map.addLayer(new ol.layer.Tile({
-            source: new ol.source.XYZ({
-                url: this.tileUrl,
-                crossOrigin: "Anonymous"
-            }),
-            title: this.options.name,
-            type: 'TileLayer',
-            url: this.options.url,
-            token: this.options.token
-        }));
+        map.addLayer(this.layer);
         return this;
     }
 
@@ -92,5 +93,15 @@ export class TiledMapLayer {
      */
     legend(callback, context) {
         return this.service.legend(callback, context);
+    }
+
+    /**
+     * @function ol.ekmap.TiledMapLayer.prototype.getExtent
+     * @description extend of layer.
+     * @param {RequestCallback} callback
+     *
+     */
+    getExtent(callback, context) {
+        return this.service.getExtent(callback, context);
     }
 }

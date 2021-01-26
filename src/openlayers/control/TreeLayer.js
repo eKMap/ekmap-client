@@ -92,6 +92,9 @@ var TreeLayer = /*@__PURE__*/ (function(Control) {
         });
         this.baseLayer = options.baseLayer;
         this.overLayer = options.overLayer;
+        this.vectorTileLayer = options.vectorTiledMapLayer || false;
+        if (this.vectorTileLayer)
+            this.vectorTileLayer = options.vectorTileLayer.objectLayer
     }
 
     if (Control) TreeLayer.__proto__ = Control;
@@ -104,9 +107,11 @@ var TreeLayer = /*@__PURE__*/ (function(Control) {
     TreeLayer.prototype.setActive_ = function setActive_() {
         var self = this;
         this.panel_.innerHTML = "";
+        console.log(this.active)
         if (this.active) {
             let drawBase = this.drawBaseLayer_();
             this.drawOverLayer_(drawBase);
+            this.drawVectorTileLayer_(drawBase);
             ekmap_element.removeClass(this.panel_, 'ol-hidden');
         } else {
             ekmap_element.addClass(this.panel_, 'ol-hidden');
@@ -238,11 +243,11 @@ var TreeLayer = /*@__PURE__*/ (function(Control) {
         var self = this;
         var overlayers = [];
         var layers = map.getLayers().array_;
+        console.log(layers)
         layers.forEach(layer => {
-            if (layer.get('overlayer'))
+            if (layer.get('overlay'))
                 overlayers.push(layer)
         });
-
         var len = overlayers.length;
         if (len > 0) {
             var divOverLayer = ekmap_element.create('div', {
@@ -540,6 +545,109 @@ var TreeLayer = /*@__PURE__*/ (function(Control) {
     /** 
      * @private
      */
+    TreeLayer.prototype.drawVectorTileLayer_ = function(drawBase) {
+        if (this.vectorTileLayer == false) return null;
+        var map = this.getMap();
+        var self = this;
+        var layers = this.vectorTileLayer;
+        var divVectorTileLayer = ekmap_element.create('div', {
+            unselectable: 'on',
+            className: 'containerlayerswitcher containerbaselayerswitcher',
+            style: {
+                userSelect: 'none'
+            },
+            parent: this.panel_
+        })
+
+        var divVectorTileTitle = ekmap_element.create('div', {
+            unselectable: 'on',
+            className: 'ol-panel-heading',
+            style: {
+                userSelect: 'none'
+            },
+            parent: divVectorTileLayer
+        })
+
+        if (!drawBase) {
+            var span = gclient_element.create('span', {
+                className: 'btnCloseTreeLayer',
+                parent: divVectorTileTitle
+            });
+            var btnClose = gclient_element.create('a', {
+                parent: element,
+                html: '<img style="padding:0px 10px 10px 10px; cursor:pointer;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC">',
+                parent: span
+            });
+            span.addEventListener('touchstart', this.handleCloseClick_.bind(this));
+            span.addEventListener('click', this.handleCloseClick_.bind(this));
+        }
+
+        var divTitle = ekmap_element.create('div', {
+            parent: divVectorTileTitle
+        })
+        var title = ekmap_element.create('h5', {
+            className: 'ol-header-tile ol-header-tile-baselayer',
+            parent: divTitle,
+            html: 'Lớp bản đồ'
+        });
+
+        var divContentVectorTileLayer = ekmap_element.create('div', {
+            className: 'contentbaselayerswitcher',
+            parent: divVectorTileLayer
+        });
+
+        Object.keys(layers).forEach((layer) => {
+            const layerId = layer;
+            const br = document.createElement('br');
+            this._checkBoxControlAdd(layerId, divContentVectorTileLayer);
+            divContentVectorTileLayer.appendChild(br);
+            if (this.show_opacity) {
+                this._rangeControlAdd(layerId, divContentVectorTileLayer);
+                divContentVectorTileLayer.appendChild(br);
+            }
+        });
+    }
+
+
+    TreeLayer.prototype._checkBoxControlAdd = function _checkBoxControlAdd(layerId, div) {
+            const checkBox = document.createElement('input');
+            checkBox.setAttribute('type', 'checkbox');
+            checkBox.id = layerId;
+            checkBox.style.marginRight = '1rem';
+            checkBox.style.height = '1.5rem';
+            checkBox.style.width = '1.5rem';
+            // var layer = this._map.getLayer(layerId);
+            // if (this.currentZoom < layer.minzoom || this.currentZoom > layer.maxzoom) {
+            //     checkBox.checked = false;
+            //     checkBox.disabled = true;
+            // } else {
+            //     checkBox.checked = true;
+
+            // }
+
+            // checkBox.addEventListener('change', (event) => {
+            //     const ckFlag = event.target.checked;
+            //     checkBox.value = 'change';
+            //     if (ckFlag) {
+            //         this._map.setLayoutProperty(layerId, 'visibility', 'visible');
+            //     } else {
+            //         this._map.setLayoutProperty(layerId, 'visibility', 'none');
+            //     }
+            // });
+
+            const layerName = document.createElement('strong');
+            if (this.vectorTileLayer !== null) {
+                layerName.appendChild(document.createTextNode(this.vectorTileLayer[layerId]));
+            }
+
+            var divInput = document.createElement('div');
+            divInput.appendChild(checkBox)
+            divInput.appendChild(layerName)
+            div.appendChild(divInput);
+        }
+        /** 
+         * @private
+         */
     TreeLayer.prototype.handleOutSideClick_ = function handleOutSideClick_(event) {
         if (!this.divTreeLayer) return;
         var self = this;

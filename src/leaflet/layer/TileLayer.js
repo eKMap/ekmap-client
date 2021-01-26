@@ -27,7 +27,7 @@ export class TileLayer {
                 if (options.token) {
                     this.tileUrl += ('?token=' + options.token);
                 }
-                this.tileLayer = new L.tileLayer(this.tileUrl, )
+                this.tileLayer = new L.tileLayer(this.tileUrl, this.options)
             }
         }
     }

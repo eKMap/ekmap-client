@@ -74,11 +74,12 @@ export class SnapShot extends mapboxgl.Evented {
     createLayerInputToggle() {
         if (!this.target) {
             var button = document.createElement("button");
-            var icon = document.createElement("i");
-            icon.className = "fa fa-camera";
             button.className = "mapboxgl-ctrl-zoom-in";
             button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Snap shot';
-            button.appendChild(icon);
+            button.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB0ElEQVRYR9WXz0tVQRTHv+e9PyMTg8g2xXtzLrkVFKFt0L5okQvduLBlRhDkUpTAjbrVRft+0D5mDq8iSFwoqP+E9PjGlXdDRN7MvS8ZGribO+fHZ2bOOXNGkHlIZv9IBlDVNQAPAdyOQP8k+cHMllIWlwRQFMUyybcpBisZkgtmthHTSQJQ1X0Ad2LGLs0fhxDGYzpRgG63O9NqtT7FDF01T/KRmb0fpnsO4JxbEZFnAMaaOGqgc0Ryx8xWZOD8ZQMjI6uQfCWqeghgYmRrzQyclABspvtvtJoCnAI4APCL5G8RmQRwF8DNuli1AUg+NbPtqxw1qRe1APr9/q1er3c0yBwFUH5nAMzMvlf/RcSn7kQyAMnCzEJRFA8AvCE5c8nJDwCvQwh7nU5not1ul8EdHUkAIvLCe7+qqo8B7A4tLCJT3vuvzrknIrIVI0gB+FtSVbXc5nsRgM/e+9lSRlVPANwYKp+Qhh9DCHPOufsi8i22onK+Oi5V/QJgeiQAkutmtpi6pQOA52a2qarvAMz/3wAA8h4BgOxBiNxpeB5DWQtRFcVZS3EFkfUyupDP+a7jlEpYRyZ/S5a9KR00Efna8jrndR2y0ZfRdTi9aPMPMbQjBJe+zaUAAAAASUVORK5CYII=")';
+            button.style.backgroundPosition = 'center';
+            button.style.backgroundRepeat = 'no-repeat';
+            button.style.backgroundSize = '70%';
         } else {
             var button = document.getElementById(this.target);
         }

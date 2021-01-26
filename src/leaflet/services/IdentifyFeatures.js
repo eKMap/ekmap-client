@@ -51,7 +51,7 @@ export class IdentifyFeatures extends ServiceBase {
      * @returns {this}
      */
     on(map) {
-        var bounds = new L.LngLatBounds(map.getBounds()._sw, map.getBounds()._ne);
+        var bounds = new L.LatLngBounds(map.getBounds()._southWest, map.getBounds()._northEast);
         var extent = {
             'xmin': bounds.getSouthWest().lng,
             'ymin': bounds.getSouthWest().lat,

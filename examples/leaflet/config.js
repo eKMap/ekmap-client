@@ -6,232 +6,233 @@ var identification = {
 };
 
 var exampleConfig = {
-    // ekmapServer: {
-    //     name: "eKMap Server",
-    //     name_en: "eKMap Server",
-    //     content: {
-    //         map: {
-    //             name: "Map service",
-    //             name_en: "Map service",
-    //             content: [{
-    //                     name: "Map Find Service",
-    //                     name_en: "Map Find Service",
-    //                     thumbnail: "mapService_find.png",
-    //                     fileName: "mapService_find",
-    //                     subject: "Use the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.",
-    //                     description: "Enter the name of the province, highway or PPC to see a list of information by search name."
-    //                 },
-    //                 {
-    //                     name: "Bounds query",
-    //                     name_en: "Bounds query",
-    //                     thumbnail: "mapService_queryByBound.png",
-    //                     fileName: "mapService_queryByBound",
-    //                     subject: "Use queryByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-    //                     description: "Create bound, displaying data on the bound area."
-    //                 },
-    //                 {
-    //                     name: "Geometry query",
-    //                     name_en: "Geometry query",
-    //                     thumbnail: "mapService_queryByGeometry.png",
-    //                     fileName: "mapService_queryByGeometry",
-    //                     subject: "Use queryByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-    //                     description: "Create polygon, display data on polygon"
-    //                 },
-    //                 {
-    //                     name: "Identify",
-    //                     name_en: "Identify",
-    //                     thumbnail: "mapService_identify.png",
-    //                     fileName: "mapService_identify",
-    //                     subject: "Use identify of mapboxgle.ekmap.TiledMapLayer resource to discover features at a geographic location",
-    //                     description: "Click on the map to see what provincial or national highways are at that location"
-    //                 },
-    //                 {
-    //                     name: "Image Tile ZYX",
-    //                     name_en: "Image Tile ZYX",
-    //                     thumbnail: "mapService_ImageTileZYX.png",
-    //                     fileName: "mapService_ImageTileZYX",
-    //                     subject: "Use mapboxgl.ekmap.TiledMapLayer to add image tile ZYX to your map.",
-    //                     description: "Upload data as images"
-    //                 },
-    //             ]
-    //         },
-    //         data: {
-    //             name: "Data service",
-    //             name_en: "Data service",
-    //             content: [{
-    //                     name: "Bounds query",
-    //                     name_en: "Bounds query",
-    //                     thumbnail: "featureService_queryByBound.png",
-    //                     fileName: "featureService_getFeaturesByBound",
-    //                     subject: "Use getFeaturesByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-    //                     description: "Create bound, displaying data on the bound area."
+    ekmapServer: {
+        name: "eKMap Server",
+        name_en: "eKMap Server",
+        content: {
+            map: {
+                name: "Map service",
+                name_en: "Map service",
+                content: [{
+                        name: "Map Find Service",
+                        name_en: "Map Find Service",
+                        thumbnail: "mapService_find.png",
+                        fileName: "mapService_find",
+                        subject: "Use the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.",
+                        description: "Enter the name of the province, highway or PPC to see a list of information by search name."
+                    },
+                    {
+                        name: "Bounds query",
+                        name_en: "Bounds query",
+                        thumbnail: "mapService_queryByBound.png",
+                        fileName: "mapService_queryByBound",
+                        subject: "Use queryByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
+                        description: "Create bound, displaying data on the bound area."
+                    },
+                    {
+                        name: "Geometry query",
+                        name_en: "Geometry query",
+                        thumbnail: "mapService_queryByGeometry.png",
+                        fileName: "mapService_queryByGeometry",
+                        subject: "Use queryByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
+                        description: "Create polygon, display data on polygon"
+                    },
+                    {
+                        name: "Identify",
+                        name_en: "Identify",
+                        thumbnail: "mapService_identify.png",
+                        fileName: "mapService_identify",
+                        subject: "Use identify of mapboxgle.ekmap.TiledMapLayer resource to discover features at a geographic location",
+                        description: "Click on the map to see what provincial or national highways are at that location"
+                    },
+                    {
+                        name: "Image Tile ZYX",
+                        name_en: "Image Tile ZYX",
+                        thumbnail: "mapService_ImageTileZYX.png",
+                        fileName: "mapService_ImageTileZYX",
+                        subject: "Use mapboxgl.ekmap.TiledMapLayer to add image tile ZYX to your map.",
+                        description: "Upload data as images"
+                    },
+                ]
+            },
+            data: {
+                name: "Data service",
+                name_en: "Data service",
+                content: [{
+                        name: "Bounds query",
+                        name_en: "Bounds query",
+                        thumbnail: "featureService_queryByBound.png",
+                        fileName: "featureService_getFeaturesByBound",
+                        subject: "Use getFeaturesByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
+                        description: "Create bound, displaying data on the bound area."
 
-    //                 },
-    //                 {
-    //                     name: "Geometry query",
-    //                     name_en: "Geometry query",
-    //                     thumbnail: "featureService_queryByGeometry.png",
-    //                     fileName: "featureService_getFeaturesByGeometry",
-    //                     subject: "Use getFeaturesByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-    //                     description: "Create polygon, display data on polygon"
-    //                 },
-    //                 {
-    //                     name: "Apply Edits",
-    //                     name_en: "Apply Edits",
-    //                     thumbnail: "featureService_applyEditsFeatures.png",
-    //                     fileName: "featureService_applyEditsFeatures",
-    //                     subject: "Use applyEditsFeatures of mapboxgl.ekmap.FeatureLayer to add, edit, or delete operations.",
-    //                     description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete)."
-    //                 },
-    //                 {
-    //                     name: "Add Features",
-    //                     name_en: "Add Features",
-    //                     thumbnail: "featureService_addFeatures.png",
-    //                     fileName: "featureService_addFeatures",
-    //                     subject: "Use addFeatures of mapboxgl.ekmap.FeatureLayer to add points to the map.",
-    //                     description: "Click on the map to add points (marker color selectable)."
-    //                 },
-    //                 {
-    //                     name: "Update Features",
-    //                     name_en: "Update Features",
-    //                     thumbnail: "featureService_updateFeatures.png",
-    //                     fileName: "featureService_updateFeatures",
-    //                     subject: "Use updateFeatures of mapboxgl.ekmap.FeatureLayer to update location points on the map.",
-    //                     description: "Update location. Select the feature to change, then choose the desired position."
-    //                 },
-    //                 {
-    //                     name: "Delete Features",
-    //                     name_en: "Delete Features",
-    //                     thumbnail: "featureService_deleteFeatures.png",
-    //                     fileName: "featureService_deleteFeatures",
-    //                     subject: "Use deleteFeatures of mapboxgl.ekmap.FeatureLayer to delete points on the map.",
-    //                     description: "Select feature to delete on the map to delete"
-    //                 },
-    //                 {
-    //                     name: "Attributes Query",
-    //                     name_en: "Attributes Query",
-    //                     thumbnail: "vectorTile_Map_attributesQuery.png",
-    //                     fileName: "vectorTile_Map_attributesQuery",
-    //                     subject: "Attributes Query.",
-    //                     description: "Attributes Query."
-    //                 },
-    //                 {
-    //                     name: "Update Feature Attributes",
-    //                     name_en: "Update Feature Attributes",
-    //                     thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
-    //                     fileName: "vectorTile_Map_updateFeatureAttributes",
-    //                     subject: "Update Feature Attributes.",
-    //                     description: "Use control Select to get point information and use service to change that point information"
-    //                 }
-    //             ]
-    //         },
-    //         vectortile: {
-    //             name: "Vector Tile Services",
-    //             name_en: "Vector Tile Services",
-    //             content: [{
-    //                     name: "Mapbox Vector Tile",
-    //                     name_en: "Mapbox Vector Tile",
-    //                     thumbnail: "vectorTile_Map.png",
-    //                     fileName: "vectorTile_Map",
-    //                     subject: "Add vector tile.",
-    //                     description: ""
-    //                 },
-    //                 {
-    //                     name: "Mapbox Vector Tile Overlay",
-    //                     name_en: "Mapbox Vector Tile Overlay",
-    //                     thumbnail: "vectorTile_Map_full.png",
-    //                     fileName: "vectorTile_Map_overlay",
-    //                     subject: "Add vector tile overlay to the map.",
-    //                     description: ""
-    //                 },
-    //                 {
-    //                     name: "Mapbox Vector Tile Hover",
-    //                     name_en: "Mapbox Vector Tile Hover",
-    //                     thumbnail: "vectorTile_Map_hover.gif",
-    //                     fileName: "vectorTile_Map_hover",
-    //                     subject: "Using events and feature states to create a per feature hover effect.",
-    //                     description: "Using events and feature states to create a per feature hover effect."
-    //                 },
-    //                 {
-    //                     name: "Mapbox Vector Tile Select",
-    //                     name_en: "Mapbox Vector Tile Select",
-    //                     thumbnail: "vectorTile_Map_select.gif",
-    //                     fileName: "vectorTile_Map_select",
-    //                     subject: "Vector tile select on the map.",
-    //                     description: "Click on the map to query features using queryRenderedFeatures."
-    //                 },
-    //                 // {
-    //                 //     name: "Resize Map",
-    //                 //     name_en: "Resize Map",
-    //                 //     thumbnail: "resizeMap.gif",
-    //                 //     fileName: "resizeMap",
-    //                 //     subject: "Resize Map.",
-    //                 //     description: "Click button"
-    //                 // },
-    //                 {
-    //                     name: "Geometry Query",
-    //                     name_en: "Geometry Query",
-    //                     thumbnail: "vectorTile_Map_geometryQuery.png",
-    //                     fileName: "vectorTile_Map_geometryQuery",
-    //                     subject: "Geometry Query.",
-    //                     description: "Create polygon or line buffer to display data on polygon"
-    //                 },
-    //                 {
-    //                     name: "Filter Province",
-    //                     name_en: "Filter Province",
-    //                     thumbnail: "filterProvince.gif",
-    //                     fileName: "filterProvince",
-    //                     subject: "Filter Province.",
-    //                     description: "Create polygon or line buffer to display data on polygon"
-    //                 }
-    //             ]
-    //         },
-    //         control: {
-    //             name: "Control",
-    //             name_en: "Control",
-    //             content: [{
-    //                     name: "Legend Control",
-    //                     name_en: "Legend Control",
-    //                     thumbnail: "control_legendControl.png",
-    //                     fileName: "control_legendControl",
-    //                     subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
-    //                     description: "Click on the button below control: navigationControl to display Legend"
-    //                 },
-    //                 {
-    //                     name: "Feature Infomation Control",
-    //                     name_en: "Feature Infomation ",
-    //                     thumbnail: "control_featureInfomationControl.png",
-    //                     fileName: "control_featureInfomationControl",
-    //                     subject: "Use control featureInfomation to retrieve the selected object.",
-    //                     description: "Click on the map to retrieve the selected object."
-    //                 }, {
-    //                     name: "Tree Layer",
-    //                     name_en: "Tree Layer",
-    //                     thumbnail: "control_treeLayerControl.png",
-    //                     fileName: "control_treeLayerControl",
-    //                     subject: "Tree Layer.",
-    //                     description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
-    //                 },
-    //                 {
-    //                     name: "Tree Layer (VectorTile)",
-    //                     name_en: "Tree Layer (VectorTile)",
-    //                     thumbnail: "control_treeLayer_vectorTiledControl.png",
-    //                     fileName: "control_treeLayer_vectorTiledControl",
-    //                     subject: "Tree Layer (VectorTile).",
-    //                     description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
-    //                 },
-    //                 {
-    //                     name: "Base Layer",
-    //                     name_en: "Base Layer",
-    //                     thumbnail: "control_baseLayerControl.png",
-    //                     fileName: "control_baseLayerControl",
-    //                     subject: "Base Layer Control.",
-    //                     description: "Use mapboxgl.ekmap.control.BaseLayer to display, turn on / off map layers under the map"
-    //                 },
-    //             ]
-    //         }
-    //     }
-    // },
+                    },
+                    {
+                        name: "Geometry query",
+                        name_en: "Geometry query",
+                        thumbnail: "featureService_queryByGeometry.png",
+                        fileName: "featureService_getFeaturesByGeometry",
+                        subject: "Use getFeaturesByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
+                        description: "Create polygon, display data on polygon"
+                    },
+                    {
+                        name: "Apply Edits",
+                        name_en: "Apply Edits",
+                        thumbnail: "featureService_applyEditsFeatures.png",
+                        fileName: "featureService_applyEditsFeatures",
+                        subject: "Use applyEditsFeatures of mapboxgl.ekmap.FeatureLayer to add, edit, or delete operations.",
+                        description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete)."
+                    },
+                    {
+                        name: "Add Features",
+                        name_en: "Add Features",
+                        thumbnail: "featureService_addFeatures.png",
+                        fileName: "featureService_addFeatures",
+                        subject: "Use addFeatures of mapboxgl.ekmap.FeatureLayer to add points to the map.",
+                        description: "Click on the map to add points (marker color selectable)."
+                    },
+                    {
+                        name: "Update Features",
+                        name_en: "Update Features",
+                        thumbnail: "featureService_updateFeatures.png",
+                        fileName: "featureService_updateFeatures",
+                        subject: "Use updateFeatures of mapboxgl.ekmap.FeatureLayer to update location points on the map.",
+                        description: "Update location. Select the feature to change, then choose the desired position."
+                    },
+                    {
+                        name: "Delete Features",
+                        name_en: "Delete Features",
+                        thumbnail: "featureService_deleteFeatures.png",
+                        fileName: "featureService_deleteFeatures",
+                        subject: "Use deleteFeatures of mapboxgl.ekmap.FeatureLayer to delete points on the map.",
+                        description: "Select feature to delete on the map to delete"
+                    },
+                    {
+                        name: "Attributes Query",
+                        name_en: "Attributes Query",
+                        thumbnail: "vectorTile_Map_attributesQuery.png",
+                        fileName: "vectorTile_Map_attributesQuery",
+                        subject: "Attributes Query.",
+                        description: "Attributes Query."
+                    },
+                    {
+                        name: "Update Feature Attributes",
+                        name_en: "Update Feature Attributes",
+                        thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
+                        fileName: "vectorTile_Map_updateFeatureAttributes",
+                        subject: "Update Feature Attributes.",
+                        description: "Use control Select to get point information and use service to change that point information"
+                    }
+                ]
+            },
+            // vectortile: {
+            //     name: "Vector Tile Services",
+            //     name_en: "Vector Tile Services",
+            //     content: [{
+            //             name: "Mapbox Vector Tile",
+            //             name_en: "Mapbox Vector Tile",
+            //             thumbnail: "vectorTile_Map.png",
+            //             fileName: "vectorTile_Map",
+            //             subject: "Add vector tile.",
+            //             description: ""
+            //         },
+            //         {
+            //             name: "Mapbox Vector Tile Overlay",
+            //             name_en: "Mapbox Vector Tile Overlay",
+            //             thumbnail: "vectorTile_Map_full.png",
+            //             fileName: "vectorTile_Map_overlay",
+            //             subject: "Add vector tile overlay to the map.",
+            //             description: ""
+            //         },
+            //         {
+            //             name: "Mapbox Vector Tile Hover",
+            //             name_en: "Mapbox Vector Tile Hover",
+            //             thumbnail: "vectorTile_Map_hover.gif",
+            //             fileName: "vectorTile_Map_hover",
+            //             subject: "Using events and feature states to create a per feature hover effect.",
+            //             description: "Using events and feature states to create a per feature hover effect."
+            //         },
+            //         {
+            //             name: "Mapbox Vector Tile Select",
+            //             name_en: "Mapbox Vector Tile Select",
+            //             thumbnail: "vectorTile_Map_select.gif",
+            //             fileName: "vectorTile_Map_select",
+            //             subject: "Vector tile select on the map.",
+            //             description: "Click on the map to query features using queryRenderedFeatures."
+            //         },
+            //         // {
+            //         //     name: "Resize Map",
+            //         //     name_en: "Resize Map",
+            //         //     thumbnail: "resizeMap.gif",
+            //         //     fileName: "resizeMap",
+            //         //     subject: "Resize Map.",
+            //         //     description: "Click button"
+            //         // },
+            //         {
+            //             name: "Geometry Query",
+            //             name_en: "Geometry Query",
+            //             thumbnail: "vectorTile_Map_geometryQuery.png",
+            //             fileName: "vectorTile_Map_geometryQuery",
+            //             subject: "Geometry Query.",
+            //             description: "Create polygon or line buffer to display data on polygon"
+            //         },
+            //         {
+            //             name: "Filter Province",
+            //             name_en: "Filter Province",
+            //             thumbnail: "filterProvince.gif",
+            //             fileName: "filterProvince",
+            //             subject: "Filter Province.",
+            //             description: "Create polygon or line buffer to display data on polygon"
+            //         }
+            //     ]
+            // },
+            control: {
+                name: "Control",
+                name_en: "Control",
+                content: [{
+                        name: "Legend Control",
+                        name_en: "Legend Control",
+                        thumbnail: "control_legendControl.png",
+                        fileName: "control_legendControl",
+                        subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
+                        description: "Click on the button below control: navigationControl to display Legend"
+                    },
+                    {
+                        name: "Feature Infomation Control",
+                        name_en: "Feature Infomation ",
+                        thumbnail: "control_featureInfomationControl.png",
+                        fileName: "control_featureInfomationControl",
+                        subject: "Use control featureInfomation to retrieve the selected object.",
+                        description: "Click on the map to retrieve the selected object."
+                    },
+                    // {
+                    //     name: "Tree Layer",
+                    //     name_en: "Tree Layer",
+                    //     thumbnail: "control_treeLayerControl.png",
+                    //     fileName: "control_treeLayerControl",
+                    //     subject: "Tree Layer.",
+                    //     description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                    // },
+                    // {
+                    //     name: "Tree Layer (VectorTile)",
+                    //     name_en: "Tree Layer (VectorTile)",
+                    //     thumbnail: "control_treeLayer_vectorTiledControl.png",
+                    //     fileName: "control_treeLayer_vectorTiledControl",
+                    //     subject: "Tree Layer (VectorTile).",
+                    //     description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                    // },
+                    {
+                        name: "Base Layer",
+                        name_en: "Base Layer",
+                        thumbnail: "control_baseLayerControl.png",
+                        fileName: "control_baseLayerControl",
+                        subject: "Base Layer Control.",
+                        description: "Use L.ekmap.control.BaseLayer to display, turn on / off map layers under the map"
+                    },
+                ]
+            }
+        }
+    },
     viz: {
         name: "Visualization",
         name_en: "Visualization",

@@ -468,6 +468,30 @@ var exampleConfig = {
                     description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively."
                 }]
             },
+            OverLay: {
+                name: "OverLay",
+                name_en: "OverLay",
+                content: [{
+                    name: "Magnify Layer",
+                    name_en: "Magnify Layer",
+                    thumbnail: "control_magnifyControl.png",
+                    fileName: "overlay_magnify",
+                    subject: "Scale the map layer to scale with a circle on the map.",
+                    description: "Scale the map layer to scale with a circle on the map"
+                }]
+            },
+            Interactions: {
+                name: "Interactions",
+                name_en: "Interactions",
+                content: [{
+                    name: "Layer Spy",
+                    name_en: "Layer Spy",
+                    thumbnail: "control_clipControl.png",
+                    fileName: "interation_clip",
+                    subject: "Cut the layer with a circle on the map.",
+                    description: "Cut the layer with a circle on the map."
+                }, ]
+            },
             // '3DLayer': {
             //     name: "3D Layer",
             //     name_en: "3D Layer",
@@ -510,18 +534,18 @@ var exampleConfig = {
                     }
                 ]
             },
-            // Video: {
-            //     name: "Video",
-            //     name_en: "Video",
-            //     content: [{
-            //         name: "Video Storm",
-            //         name_en: "Video Storm",
-            //         thumbnail: "video_storm.gif",
-            //         fileName: "video_storm",
-            //         subject: "Description of storm path in the form of video on the map.",
-            //         description: "Video path of Typhoon Saudel entering the South China Sea, forecast jerks to level 14."
-            //     }]
-            // },
+            PerspectiveMap: {
+                name: "Perspective Map",
+                name_en: "Perspective Map",
+                content: [{
+                    name: "Perspective Map",
+                    name_en: "Perspective Map",
+                    thumbnail: "map_perspective.png",
+                    fileName: "map_perspective",
+                    subject: "ol.ekmap.PerspectiveMap displays a map with a perspective effect by pitching the map.",
+                    description: "ol.ekmap.PerspectiveMap displays a map with a perspective effect by pitching the map."
+                }]
+            },
             StoryMap: {
                 name: "Story Map",
                 name_en: "Story Map",

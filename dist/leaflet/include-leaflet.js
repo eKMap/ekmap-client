@@ -64,6 +64,9 @@
             inputCSS('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
             inputScript('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js');
         }
+        if (inArray(excludes, 'gclient')) {
+            inputCSS('https://gserver.cloudgis.vn/developers/dist/gclient.min.css');
+        }
         if (inArray(includes, 'leaflet.heat')) {
             inputScript("https://cdn.bootcss.com/leaflet.heat/0.2.0/leaflet-heat.js");
         }

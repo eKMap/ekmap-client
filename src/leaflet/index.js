@@ -2,6 +2,10 @@ import {
     TiledMapLayer,
     TiledOSMapLayer,
     BasemapArcgisLayer,
+    FeatureLayer,
+    TiledVietNamMapLayer,
+    TiledRoadMapLayer,
+    TiledAdminMapLayer
 } from './layer';
 import {
     MapService,
@@ -14,10 +18,20 @@ import {
     Request
 } from './core';
 
+import {
+    Legend,
+    FeatureInfomation,
+    BaseLayer
+} from './control';
+
 export {
     TiledMapLayer,
     TiledOSMapLayer,
     BasemapArcgisLayer,
+    FeatureLayer,
+    TiledVietNamMapLayer,
+    TiledRoadMapLayer,
+    TiledAdminMapLayer
 };
 export {
     MapService,
@@ -27,6 +41,11 @@ export {
 };
 export {
     Request
+};
+export {
+    Legend,
+    FeatureInfomation,
+    BaseLayer
 };
 // export * from './control';
 // export * from './core';

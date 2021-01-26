@@ -1,19 +1,19 @@
 import '../core/Base';
-import mapboxgl from 'mapbox-gl';
+import L from 'leaflet';
 import { Util } from '../core/Util';
 import gclient_element from '../core/Element';
 
 /**
- * @class mapboxgl.ekmap.control.BaseLayer
+ * @class L.ekmap.control.BaseLayer
  * @category  Control
  * @classdesc BaseLayer.
  * @param {Object} options Construction parameters.
  * @param {Boolean} options.className CSS
  * @example
- *  var map = new mapboxgl.Map({
+ *  var map = new L.Map({
  *      //config....
  *  });
- *  var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+ *  var tiledMap = new L.ekmap.TiledMapLayer({
  *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
  *  }).addTo(map);
  * // BaseLayer
@@ -27,14 +27,14 @@ import gclient_element from '../core/Element';
  *        t_pale: "GSI Pale",
  *        t_ort: "GSI Ort"
  *    };
- *  var BaseLayer = new mapboxgl.ekmap.control.BaseLayer({
+ *  var BaseLayer = new L.ekmap.control.BaseLayer({
  *        baseLayers: mapBaseLayer,
  *        overLayers: mapOverLayer,
  *        opacityControl: true
  *   });
  *  map.addControl(BaseLayer,"top-left");
  */
-export class BaseLayer extends mapboxgl.Evented {
+export class BaseLayer extends L.Control {
 
     constructor(options) {
         super(options);
@@ -45,7 +45,7 @@ export class BaseLayer extends mapboxgl.Evented {
     }
 
     /**
-     * @function mapboxgl.ekmap.control.BaseLayer.prototype.onAdd
+     * @function L.ekmap.control.BaseLayer.prototype.onAdd
      * @description Register a control on the map and give it a chance to register event listeners and resources. This method is called by Map#addControl internally.
      * @param {Map} map the Map this control will be added to.
      * @returns {HTMLElement}  The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.
@@ -57,7 +57,7 @@ export class BaseLayer extends mapboxgl.Evented {
         this._container.setAttribute("id", "container");
 
         this._container.style.background = "transparent";
-        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.className = 'L-ctrl L-ctrl-group';
 
         if (this._map) {
             this.drawBaseLayer();
@@ -66,7 +66,7 @@ export class BaseLayer extends mapboxgl.Evented {
     }
 
     /**
-     * @function mapboxgl.ekmap.control.BaseLayer.prototype.onRemove
+     * @function L.ekmap.control.BaseLayer.prototype.onRemove
      * @description Unregister a control on the map and give it a chance to detach event listeners and resources. This method is called by Map#removeControl internally.
      * @param {Map} map the Map this control will be removed from.
      * @returns {undefined}  there is no required return value for this method.
@@ -106,25 +106,28 @@ export class BaseLayer extends mapboxgl.Evented {
         });
         var baseLayers = [];
         var baseActive;
-        var layers = this._map.getStyle().layers,
-            len = layers.length;
-
-        for (var i = len - 1; i >= 0; i--) {
-            var layer = layers[i];
-            if (layer.metadata && layer.metadata.type && layer.metadata.type == "baselayer") {
+        var maxZIndex = 0;
+        this._map.eachLayer(function(layer) {
+            if (layer.options && layer.options.metadata && layer.options.metadata.type == "baselayer") {
                 baseLayers.push(layer);
-                if (layer.layout.visibility == "visible") {
+                if (layer.options.zIndex > maxZIndex) {
+                    maxZIndex = layer.options.zIndex;
                     baseActive = layer;
                 }
+
+
+                // if (layer.layout.visibility == "visible") {
+                //     baseActive = layer;
+                // }
             }
-        }
+        })
 
         var zIndex = baseLayers.length;
 
         this.first = gclient_element.create('div', {
             className: 'gclient-bl-bg gclient-bl-layer-first',
             parent: this._container,
-            title: baseActive ? (baseActive.metadata.name) : 'Không nền',
+            title: baseActive ? (baseActive.options.metadata.name) : 'Không nền',
             style: {
                 "z-index": zIndex + 1,
                 "background": "#fff url('" + this.getImageTile_(baseActive) + "') no-repeat",
@@ -135,9 +138,9 @@ export class BaseLayer extends mapboxgl.Evented {
             gclient_element.create('div', {
                 className: 'gclient-bl-bg-text',
                 parent: this.first,
-                uid: baseActive ? baseActive.ol_uid : "",
-                html: baseActive ? this.formatString(baseActive.metadata.name) : 'Không có nền',
-                title: baseActive ? (baseActive.metadata.name) : 'Không có nền'
+                uid: baseActive ? baseActive._leaflet_id : "",
+                html: baseActive ? this.formatString(baseActive.options.metadata.name) : 'Không có nền',
+                title: baseActive ? (baseActive.options.metadata.name) : 'Không có nền'
             })
         }
         this.first.addEventListener('touchstart', this.handleCollapseClick_.bind(this));
@@ -145,13 +148,13 @@ export class BaseLayer extends mapboxgl.Evented {
         baseLayers.forEach((layer, index) => {
             this.baseLayer[index] = layer;
             var cssactive = "";
-            if (this._map.getLayoutProperty(layer.id, 'visibility') != 'none')
+            if (layer.options.zIndex == maxZIndex)
                 cssactive = "active";
             var element = gclient_element.create('div', {
                 className: 'gclient-bl-bg gclient-bl-layer ' + cssactive + ' gclient-bl-layer-' + index,
                 parent: this._container,
-                uid: layer.id,
-                title: layer.metadata.name,
+                uid: layer._leaflet_id,
+                title: layer.options.metadata.name,
                 style: {
                     "z-index": zIndex,
                     "background": "#fff url('" + this.getImageTile_(layer) + "') no-repeat",
@@ -162,9 +165,9 @@ export class BaseLayer extends mapboxgl.Evented {
                 gclient_element.create('div', {
                     className: 'gclient-bl-bg-text',
                     parent: element,
-                    uid: layer.ol_uid,
-                    html: this.formatString(layer.metadata.name),
-                    title: layer.metadata.name
+                    uid: layer._leaflet_id,
+                    html: this.formatString(layer.options.metadata.name),
+                    title: layer.options.metadata.name
                 })
             }
             element.addEventListener('touchstart', this.setActiveLayer_.bind(this), false);
@@ -230,8 +233,8 @@ export class BaseLayer extends mapboxgl.Evented {
     getImageTile_(layer) {
         var anhdaidien = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAADhmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOjY0NTQ5ODZkLTBmMmEtZTk0ZC05Mjc3LWYwODE5MzdmMWFiZSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5N0MzQzAyMDhBQjYxMUU2OUEzRUFDQTNCQjI1MTVERiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5N0MzQzAxRjhBQjYxMUU2OUEzRUFDQTNCQjI1MTVERiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNS41IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOmI1ZWJmZDcyLWJkYzktYTA0Ny1iYmM5LWNmOTQ2YTE0NzJjMCIgc3RSZWY6ZG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjRiMGQ1ZWY5LTg2ZDgtMTFlNi1hM2FjLWMzODdkMmFhNjkxYiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PtNVieYAAATBSURBVHhe7ZqHTuQwEIa99N577533fxBA9N577+XuvpENwYAgYIfsyZ+0ymbWTuw/4zKTzfz5hwo8k6OPAU0QxCIIYhEEsQiCWARBLIIgFkEQiyCIRRDEIghi4SWWOTs7U09PT/rMDzk5OaqiokKfucO5IIuLi+r6+loa7BMELy4uVr29vdriBqeCPD4+qqmpKTU8PKzy8/O11Q/39/dqenpajY6OqtzcXG39Oc4fYyaTkY9vfN3Hi197mJbe4Oseiawyd3d3amlpSVx8Y2NDW9OJd0F4knNzczLJNjc3q4uLC5l404p3QY6OjmTS6+rqUlVVVbIqXF5eqoeHB10iXSQyZKKY/UkSE+938C5IbW2tiMAw2d/flyMbKpdLpUsS8ZChoSHZl5ycnIhADJ+0koggeENHR4fq7+9XjY2N2ppOEp9D0k4QxCIIYpFqQVidkt7ZploQdrisTGtra9rin8QFoXMrKyv67GNmZmZUXl6eGhgYkITTV+q4IFFBtre31fn5uSSQlpeXtfUteAY72b6+PlVQUCD7GGIgAkTfJCYIu9S9vT3V09OjBgcH1dXV1btB3vz8vCSaKGPAU0g6IaSp42vrn4ggx8fHamtrS3V3d0vaj8h3ZGRE0gKzs7O6lBIPIBOGR9iwuTOiMISyVhAaz7zBTjWaFKZDzA+tra1yzhxBZxHjo84i5NjYmFzHVxLbqyAMC+aKlpYWVV1dra0v8NTLyspEMOYIhonv5PRneLk7TxjXZ3JsaGhQ9fX1+pe3sM84PT0Vb2Gu+G28CEKWjOi2s7NTsmQfcXBwoA4PDyXoYzVJA179871hEqWurk48o6ioSFt+H6eCmEx4nOQPq853MPdwnX13/uZuYmJCnjwddd1YA3MUKxJDbnx8XFvd4FwQVovNzU1vy6KB1Yglm1XKJc4FyXZ+d9FPIUEQiyCIRWKCEOmye007sQVZWFiQvIaBKJbl7zMQhKUy7cQWhHeybLdvbm6ez8lfAB5A3oNw34YlsrS0VH6nHAKRLALKYzfXAaJk41UIbrzL2ClLHfOOmGvt7u7Ksv8TYgvCKl1ZWfmc0mOTxJ6Ap8/fHRCKhkbzHEAQd3t7K402ddfX16UcUTEf6gPRL+XZy5Aj2dnZkftiN3scPJVrYcdGGXaveOxPEtOxBaExTU1NIgKeQiP40DleUba3t0t8glC8+TdQxuQ5KGeiYIJAvIdAkN+JfPmQQOI+JiVgEkMkiYyd8jwA84qUchxpV9Tb4vCtSRU3JRXIXMJTp2HYCgsLdQkl3z9qlBEG6IQBO4JHbcA513/PzlDiSF1zv7a2tlf3iENsQXBRPuQuiFlwdTrBd5JB/PeDMc9Tq6mp0bVegjBT3xD9znVKSkrEmxgePH2GA2KwRafjeCJ2M6TKy8ul8wjD/TjiYYgTnfy/SmxByFsY9XFd4xUMARpEB3BtUoF0zGDyHdH6dDD6b0V+QyDqclxdXZXUgAkUo3aEoD4dx45IzCt4LLlbzr8zwWZVLIPXMEeZ4TE5OSnRLsK4IqsEwfuYMPEYJlk8FM90SdZFu3gGYiBKdEi6IoT/Fu4G339CEMQiCGIRBLEIglgEQSyCIBZBEIsgiEUQxCII8gql/gKvssAfZKH1AAAAAABJRU5ErkJggg==';
         if (!layer) return anhdaidien;
-        if (layer.metadata.image != null)
-            anhdaidien = layer.metadata.image;
+        if (layer.options.metadata.image != null)
+            anhdaidien = layer.options.metadata.image;
         // else {
         //     try {
         //         var source = layer.getSource();
@@ -288,28 +291,29 @@ export class BaseLayer extends mapboxgl.Evented {
             }
         });
         var arr = [];
-        var layers = this._map.getStyle().layers,
-            len = layers.length;
-        for (var i = len - 1; i >= 0; i--) {
-            var layer = layers[i];
-            if (layer.metadata && layer.metadata.type && layer.metadata.type == 'baselayer') {
+        this._map.eachLayer(function(layer) {
+            if (layer.options.metadata && layer.options.metadata.type && layer.options.metadata.type == 'baselayer') {
                 arr.push(layer);
             }
-        }
+        })
         var baselayer = arr;
         for (var i = 0; i < baselayer.length; i++) {
             if (layerActive != baselayer[i]) {
-                this._map.setLayoutProperty(baselayer[i].id, 'visibility', 'none');
-                // baselayer[i].setVisible(false);
+                // this._map.setLayoutProperty(baselayer[i].id, 'visibility', 'none');
+                this._map.removeLayer(baselayer[i])
+                    // baselayer[i].setVisible(false);
             }
         }
-        if (layerActive) this._map.setLayoutProperty(layerActive.id, 'visibility', 'visible'); //layerActive.setVisible(true);
+        if (layerActive)
+        // this._map.setLayoutProperty(layerActive.id, 'visibility', 'visible'); 
+            this._map.addLayer(layerActive)
+
         if (!this.isMediumScreen_() && this.first) {
             var text = 'Không có nền';
             var title = 'Không có nền';
             if (layerActive) {
-                text = this.formatString(layerActive.metadata.name);
-                title = layerActive.metadata.name;
+                text = this.formatString(layerActive.options.metadata.name);
+                title = layerActive.options.metadata.name;
             }
             this.first.querySelectorAll('.gclient-bl-bg-text').forEach(element => {
                 element.setAttribute('title', title);
@@ -321,4 +325,4 @@ export class BaseLayer extends mapboxgl.Evented {
 
 }
 
-mapboxgl.ekmap.control.BaseLayer = BaseLayer;
+L.ekmap.control.BaseLayer = BaseLayer;

@@ -9,6 +9,8 @@ import TreeLayer from "./control/TreeLayer";
 import Location from "./control/Location";
 import Target from "./control/Target";
 import CanvasBase from "./control/CanvasBase";
+import Magnify from "./control/Magnify";
+import Clip from "./control/Clip";
 
 import { TiledVietNamMapLayer } from './layer'
 import { TileLayer } from './layer/TileLayer';
@@ -24,7 +26,9 @@ import { WMS } from './layer/WMS';
 import { WMTS } from './layer/WMTS';
 import { VectorTiledMapLayer } from './layer/VectorTiledMapLayer';
 import { DomOverlay } from './layer/DomOverlay';
-import { Overlay } from './layer/Overlay';
+import Overlay from './layer/Overlay';
+
+import PerspectiveMap from './map/PerspectiveMap';
 
 import { Util } from './core/Util';
 import { Parse } from './core/Parse';
@@ -37,6 +41,9 @@ if (window && window.ol) {
     let ol = window.ol;
     ol.ekmap = window.ol.ekmap || {};
     ol.ekmap.control = window.ol.ekmap.control || {};
+    ol.ekmap.overlay = window.ol.ekmap.overlay || {};
+    ol.ekmap.interaction = window.ol.ekmap.interaction || {};
+
     // control
     ol.ekmap.control.ScaleLine = ScaleLine;
     ol.ekmap.control.BaseLayer = BaseLayerControl;
@@ -49,7 +56,8 @@ if (window && window.ol) {
     ol.ekmap.control.Location = Location;
     ol.ekmap.control.Target = Target;
     ol.ekmap.control.CanvasBase = CanvasBase;
-
+    ol.ekmap.overlay.Magnify = Magnify;
+    ol.ekmap.interaction.Clip = Clip;
 
 
     // core
@@ -75,6 +83,7 @@ if (window && window.ol) {
     ol.ekmap.BasemapArcgisLayer = BasemapArcgisLayer;
     ol.ekmap.DomOverlay = DomOverlay;
     ol.ekmap.Overlay = Overlay;
+    ol.ekmap.PerspectiveMap = PerspectiveMap
 
     // service
     ol.ekmap.MapService = MapService;

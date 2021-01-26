@@ -3,12 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <script type="text/javascript" src="../js/include-web.js"></script>
-
     <title>Identify</title>
     <style>
         .map {
@@ -45,36 +41,32 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {},
-                "layers": []
+        var map = L.map('divMapId', {
+            center: {
+                lon: 103.97584219304474,
+                lat: 21.277728387286984
             },
-            center: [103.97584219304474, 21.277728387286984],
-            zoom: 13.905413433260719
+            zoom: 13.905413433260719,
+            zoomControl: true,
+            attributionControl: false,
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+        $('.leaflet-container').css('cursor', 'crosshair');
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         var tiledMap;
-        map.on('load', function() {
-            var cursorDom = $('.mapboxgl-canvas-container')
-            cursorDom[0].style.cursor = 'crosshair';
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-            this.tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapService,
-                // token: tokenKey
-            }).addTo(map);
-        })
+
+
+        tiledMap = new L.ekmap.TiledMapLayer({
+            url: urlMapService,
+            // token: tokenKey
+        }).addTo(map);
         var pane = document.getElementById('selectedFeatures');
         map.on('click', function(e) {
             pane.innerHTML = 'Loading';
-            this.tiledMap.identify()
+            tiledMap.identify()
                 .on(map)
-                .at(e.lngLat)
+                .at(e.latlng)
                 .run(function(error, obj) {
                     if (error) {
                         console.log(error)

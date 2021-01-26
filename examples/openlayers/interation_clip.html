@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <link href="../../dist/mapboxgl/gclient.min.css" rel="stylesheet">
+    <title>Clip Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #options {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div id="options">
+            <ul>
+                <li>
+                    Bán kính: <input id="radius" type="range" min="30" max="200" value="100" onchange="clip.setRadius(Number(this.value))">
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var map = new ol.Map({
+            target: 'divMapId',
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [105.20886162772933, 16.518572979240204],
+                zoom: 5.193739308697748,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
+        });
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+
+        var roadmap = new ol.ekmap.TiledRoadMapLayer().addTo(map);
+
+        // var roadMap = new ol.layer.Tile({
+        //     source: new ol.source.XYZ({
+        //         urls: [
+        //             "https://g1.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
+        //             "https://g2.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
+        //             "https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png",
+        //             "https://g4.cloudgis.vn/gservices/rest/maps/roadmap/tile/{z}/{x}/{y}.png"
+        //         ],
+        //         crossOrigin: "Anonymous"
+        //     }),
+        //     baseLayer: true,
+        //     visible: true,
+        //     title: 'Road Map',
+        // })
+        // map.addLayer(roadMap)
+
+        var clip = new ol.ekmap.interaction.Clip({
+            radius: Number($("#radius").val()),
+            layers: roadmap
+        });
+        map.addInteraction(clip);
+    </script>
+</body>
+
+</html>

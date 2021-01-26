@@ -3,13 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
-    <link href="../../dist/mapboxgl/gclient.min.css" rel="stylesheet">
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script src="../../examples/js/common.js"></script>
+    <link href="../../dist/mapboxgl/gclient.min.css" rel="stylesheet">
     <title>Base Layer Control</title>
     <style>
         .map {
@@ -27,44 +23,32 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
-        <button id='test'></button>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [105.20886162772933, 16.518572979240204],
-            zoom: 5.193739308697748
+        var map = L.map('divMapId', {
+            center: {
+                lon: 105.20886162772933,
+                lat: 16.518572979240204
+            },
+            zoom: 5.193739308697748,
+            zoomControl: true,
+            attributionControl: false,
         });
-
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService,
-            token: tokenKey
+        var vnMap = new L.ekmap.TiledVietNamMapLayer({
+            token: tokenVN,
+            zIndex: 1
         }).addTo(map);
-        map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN,
-                id: 'vnMap',
-                visibility: 'none'
-            }).addTo(map);
-            var adminMap = new mapboxgl.ekmap.TiledAdminMapLayer({
-                id: 'adminMap',
-                name: 'Admin Map',
-            }).addTo(map);
-            var roadMap = new mapboxgl.ekmap.TiledRoadMapLayer({
-                id: 'roadMap',
-                name: 'Road Map',
-                visibility: 'none'
-            }).addTo(map);
-
-            var layers = map.getStyle().layers;
-            map.moveLayer('vnMap', layers[0].id);
-            map.moveLayer("adminMap", layers[0].id);
-            map.moveLayer("roadMap", layers[0].id);
-            var BaseLayer = new mapboxgl.ekmap.control.BaseLayer();
-            map.addControl(BaseLayer, 'bottom-left');
-            // NavigationControl
-            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        })
+        var adminMap = new L.ekmap.TiledAdminMapLayer({
+            name: 'Admin Map',
+            zIndex: 2
+        }).addTo(map);
+        var roadMap = new L.ekmap.TiledRoadMapLayer({
+            name: 'Road Map',
+            zIndex: 3
+        }).addTo(map);
+        var BaseLayer = new L.ekmap.control.BaseLayer({
+            position: 'bottomleft'
+        }).addTo(map);
     </script>
 </body>
 

@@ -1,3 +1,4 @@
+import ekmap_inherits from './ext/inherits';
 import Control from 'ol/control/Control'
 import { unByKey as ol_Observable_unByKey } from 'ol/Observable'
 import ekmap_getMapCanvas from './ext/getMapCanvas'
@@ -11,132 +12,126 @@ import ekmap_getMapCanvas from './ext/getMapCanvas'
  * @param {Object=} options extend the ol.control options. 
  *  @param {ol.style.Style} options.style style used to draw the title.
  */
+var CanvasBase = function(options) {
+    if (!options) options = {};
 
-var CanvasBase = /*@__PURE__*/ (function(Control) {
+    // Define a style to draw on the canvas
+    this.setStyle(options.style);
 
-    function CanvasBase(opt_options) {
-        var me = this;
-        if (!opt_options) opt_options = {};
-        console.log(me);
-        // Define a style to draw on the canvas
-        me.setStyle(opt_options.style);
+    Control.call(this, options);
+}
+ekmap_inherits(CanvasBase, Control);
 
-        Control.call(this, opt_options);
+/**
+ * Remove the control from its current map and attach it to the new map.
+ * Subclasses may set up event handlers to get notified about changes to
+ * the map here.
+ * @param {o.Map} map Map.
+ * @api stable
+ */
+CanvasBase.prototype.setMap = function(map) {
+    this.getCanvas(map);
+
+    var oldmap = this.getMap();
+    if (this._listener) {
+        ol_Observable_unByKey(this._listener);
+        this._listener = null;
     }
 
-    if (Control) CanvasBase.__proto__ = Control;
-    CanvasBase.prototype = Object.create(Control && Control.prototype);
-    CanvasBase.prototype.constructor = CanvasBase;
+    Control.prototype.setMap.call(this, map);
+    if (oldmap) oldmap.renderSync();
 
-    CanvasBase.prototype.handleClick_ = function handleClick_(e) {
-
+    if (map) {
+        this._listener = map.on('postcompose', this._draw.bind(this));
+        // Get a canvas layer on top of the map
     }
+};
 
-    CanvasBase.prototype.setMap = function setMap(map) {
-        this.getCanvas(map);
+/** Get canvas overlay
+ */
+CanvasBase.prototype.getCanvas = function(map) {
+    return ekmap_getMapCanvas(map);
+};
 
-        var oldmap = this.getMap();
-        if (this._listener) {
-            ol_Observable_unByKey(this._listener);
-            this._listener = null;
-        }
+/** Get map Canvas
+ * @private
+ */
+CanvasBase.prototype.getContext = function(e) {
+    var ctx = e.context;
+    if (!ctx && this.getMap()) {
+        var c = this.getMap().getViewport().getElementsByClassName('ol-fixedoverlay')[0];
+        ctx = c ? c.getContext('2d') : null;
+    }
+    return ctx;
+};
 
-        Control.prototype.setMap.call(this, map);
-        if (oldmap) oldmap.renderSync();
+/** Set Style
+ * @api
+ */
+CanvasBase.prototype.setStyle = function(style) {
+    this._style = style || new ol.style.Style({});
+};
 
-        if (map) {
-            this._listener = map.on('postcompose', this._draw.bind(this));
-            // Get a canvas layer on top of the map
-        }
-    };
+/** Get style
+ * @api
+ */
+CanvasBase.prototype.getStyle = function() {
+    return this._style;
+};
 
-    /** Get canvas overlay
-     */
-    CanvasBase.prototype.getCanvas = function getCanvas(map) {
-        return ekmap_getMapCanvas(map);
-    };
+/** Get stroke
+ * @api
+ */
+CanvasBase.prototype.getStroke = function() {
+    var t = this._style.getStroke();
+    if (!t) this._style.setStroke(new ol.style.Stroke({ color: '#000', width: 1.25 }));
+    return this._style.getStroke();
+};
 
-    /** Get map Canvas
-     * @private
-     */
-    CanvasBase.prototype.getContext = function getContext(e) {
-        var ctx = e.context;
-        if (!ctx && this.getMap()) {
-            var c = this.getMap().getViewport().getElementsByClassName('ol-fixedoverlay')[0];
-            ctx = c ? c.getContext('2d') : null;
-        }
-        return ctx;
-    };
+/** Get fill
+ * @api
+ */
+CanvasBase.prototype.getFill = function() {
+    var t = this._style.getFill();
+    if (!t) this._style.setFill(new ol.style.Fill({ color: '#fff' }));
+    return this._style.getFill();
+};
 
-    /** Set Style
-     * @api
-     */
-    CanvasBase.prototype.setStyle = function setStyle(style) {
-        this._style = style || new ol.style.Style({});
-    };
+/** Get stroke
+ * @api
+ */
+CanvasBase.prototype.getTextStroke = function() {
+    var t = this._style.getText();
+    if (!t) t = new ol.style.Text({});
+    if (!t.getStroke()) t.setStroke(new ol.style.Stroke({ color: '#fff', width: 3 }));
+    return t.getStroke();
+};
 
-    /** Get style
-     * @api
-     */
-    CanvasBase.prototype.getStyle = function getStyle() {
-        return this._style;
-    };
+/** Get text fill
+ * @api
+ */
+CanvasBase.prototype.getTextFill = function() {
+    var t = this._style.getText();
+    if (!t) t = new ol.style.Text({});
+    if (!t.getFill()) t.setFill(new ol.style.Fill({ color: '#fff', width: 3 }));
+    return t.getFill();
+};
 
-    /** Get stroke
-     * @api
-     */
-    CanvasBase.prototype.getStroke = function getStroke() {
-        var t = this._style.getStroke();
-        if (!t) this._style.setStroke(new ol.style.Stroke({ color: '#000', width: 1.25 }));
-        return this._style.getStroke();
-    };
+/** Get text font
+ * @api
+ */
+CanvasBase.prototype.getTextFont = function() {
+    var t = this._style.getText();
+    if (!t) t = new ol.style.Text({});
+    if (!t.getFont()) t.setFont('12px sans-serif');
+    return t.getFont();
+};
 
-    /** Get fill
-     * @api
-     */
-    CanvasBase.prototype.getFill = function getFill() {
-        var t = this._style.getFill();
-        if (!t) this._style.setFill(new ol.style.Fill({ color: '#fff' }));
-        return this._style.getFill();
-    };
+/** Draw the control on canvas
+ * @private
+ */
+CanvasBase.prototype._draw = function( /* e */ ) {
+    console.warn('[CanvasBase] draw function not implemented.');
+};
 
-    /** Get stroke
-     * @api
-     */
-    CanvasBase.prototype.getTextStroke = function getTextStroke() {
-        var t = this._style.getText();
-        if (!t) t = new ol.style.Text({});
-        if (!t.getStroke()) t.setStroke(new ol.style.Stroke({ color: '#fff', width: 3 }));
-        return t.getStroke();
-    };
-
-    /** Get text fill
-     * @api
-     */
-    CanvasBase.prototype.getTextFill = function getTextFill() {
-        var t = this._style.getText();
-        if (!t) t = new ol.style.Text({});
-        if (!t.getFill()) t.setFill(new ol.style.Fill({ color: '#fff', width: 3 }));
-        return t.getFill();
-    };
-
-    /** Get text font
-     * @api
-     */
-    CanvasBase.prototype.getTextFont = function getTextFont() {
-        var t = this._style.getText();
-        if (!t) t = new ol.style.Text({});
-        if (!t.getFont()) t.setFont('12px sans-serif');
-        return t.getFont();
-    };
-
-    /** Draw the control on canvas
-     * @private
-     */
-    CanvasBase.prototype._draw = function _draw( /* e */ ) {
-        console.warn('[CanvasBase] draw function not implemented.');
-    };
-    return CanvasBase;
-}(Control));
-
-export default CanvasBase;
+export default CanvasBase

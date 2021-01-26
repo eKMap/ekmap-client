@@ -3,11 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Feature Infomation Control</title>
     <style>
@@ -46,6 +42,50 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+        
+        .btn-red {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        .btn-orange {
+            background-color: orange;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        .cesium-button {
+            display: inline-block;
+            position: relative;
+            background: #303336;
+            border: 1px solid #444;
+            color: #edffff;
+            fill: #edffff;
+            border-radius: 4px;
+            padding: 5px 12px;
+            margin: 2px 3px;
+            cursor: pointer;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
 
@@ -54,47 +94,78 @@
         <div id="divMapId" class="map">
         </div>
         <div id="selectedFeatures" class="leaflet-bar map-text">
-            Click on the map to execute <a href='#'>Feature Infomation Control</a>
-            <button id="activeControl" class="btn-green">Click</button>
+            Select mode and active <a href='#'>Select Control</a>
+            <br>
+            <select id="mySelect" class="cesium-button" onchange="changeMenu()">
+                <option value="multi">Multi</option>
+                <option value="single">Single</option>
+            </select>
+            <button id="activeControl" class="btn-green">Active Select</button>
+            <button id="deactivateControl" class="btn-red">Deactivate</button>
+            <button id="removeFeature" class="btn-orange">Remove feature selected</button>
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {},
-                "layers": []
+        var map = L.map('divMapId', {
+            center: {
+                lon: 103.97584219304474,
+                lat: 21.277728387286984
             },
-            center: [103.97584219304474, 21.277728387286984],
-            zoom: 13.905413433260719
+            zoom: 13.905413433260719,
+            zoomControl: true,
+            attributionControl: false,
         });
-        map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
 
-            var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapService,
-                //token: tokenKey
-            }).addTo(map);
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
-            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-            var legend = new mapboxgl.ekmap.control.Legend({
-                layers: [tiledMap]
-            });
+        var tiledMap = new L.ekmap.TiledMapLayer({
+            url: urlMapService,
+            //token: tokenKey
+        }).addTo(map);
 
-            map.addControl(legend, "bottom-left");
-            var featureInfo = new mapboxgl.ekmap.control.FeatureInfomation({
-                showButton: false,
-                target: 'activeControl'
-            });
 
-            map.addControl(featureInfo, 'top-left');
-            featureInfo.on("selectfeatures", function(obj) {
-                console.log(obj)
-            })
+        var legend = new L.ekmap.control.Legend({
+            layers: [tiledMap],
+            position: 'topleft'
+        }).addTo(map);
+
+        var featureInfo = new L.ekmap.control.FeatureInfomation({
+            target: 'activeControl',
+        }).addTo(map);
+
+        featureInfo.on("click", function(obj) {
+            console.log('Start FeatureInfo')
         })
+
+        featureInfo.on("unclick", function(obj) {
+            console.log('Stop FeatureInfo')
+        })
+
+        featureInfo.on("selectfeatures", function(obj) {
+            console.log(obj)
+        })
+
+        var x = document.getElementById('deactivateControl');
+        x.addEventListener("click", function(e) {
+            //deactivate control
+            featureInfo.deactivate();
+        });
+
+        var y = document.getElementById('removeFeature');
+        y.addEventListener("click", function(e) {
+            //deactivate control
+            featureInfo.removeFeature();
+        });
+
+        function changeMenu() {
+            var x = document.getElementById("mySelect").value;
+            if (x == 'multi') {
+                featureInfo.changeMode(x);
+            }
+            if (x == 'single') {
+                featureInfo.changeMode(x);
+            }
+        }
     </script>
 </body>
 

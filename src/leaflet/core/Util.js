@@ -105,14 +105,14 @@ export class Util {
             geometry: null,
             geometryType: null
         };
-        if (geometry instanceof mapboxgl.LngLat) {
+        if (geometry instanceof L.LatLng) {
             geometry = {
                 type: 'Point',
                 coordinates: [geometry.lng, geometry.lat]
             };
         }
 
-        if (geometry instanceof mapboxgl.LngLatBounds) {
+        if (geometry instanceof L.LatLngBounds) {
             // set geometry + geometryType
             params.geometry = this.boundsToExtent(geometry);
             params.geometryType = 'esriGeometryEnvelope';

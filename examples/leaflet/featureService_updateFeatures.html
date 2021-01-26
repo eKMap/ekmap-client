@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Update feature</title>
@@ -44,74 +42,63 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [105.6685713, 20.9003181],
-            style: {
-                "version": 8,
-                "sources": {},
-                "layers": []
+        var map = L.map('divMapId', {
+            center: {
+                lon: 105.6685713,
+                lat: 20.9003181
             },
-            zoom: 7
+            zoom: 7,
+            zoomControl: true,
+            attributionControl: false,
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var featureLayer;
         var idUpdate;
-        map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
+        var featureSelected;
+        var geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#00ffff",
+            weight: 3,
+            opacity: 1,
+            fillOpacity: 0.8
+        }
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
-            featureLayer = new mapboxgl.ekmap.FeatureLayer({
-                url: urlFeatureLayer,
-                // token: tokenKey
-            }).addTo(map);
-        })
+        featureLayer = new L.ekmap.FeatureLayer({
+            url: urlFeatureLayer,
+            // token: tokenKey
+        }).addTo(map);
+
         map.on('click', function(e) {
-            var bbox = [
-                [e.point.x - 5, e.point.y - 5],
-                [e.point.x + 5, e.point.y + 5]
-            ];
-            var features = map.queryRenderedFeatures(bbox, {
-                layers: ['point']
-            });
-            var filter = features.reduce(
-                function(memo, feature) {
-                    memo.push(feature.properties.OBJECTID);
-                    return memo;
-                }, ['in', 'OBJECTID']
-            );
-            if (features.length > 0) {
-                document.getElementById("selectedFeatures").innerHTML = "Click on the feature to update.<br>Then select the point you need to move to.";
-                console.log(features[0])
-                idUpdate = features[0].id;
-            } else {
-                if (idUpdate) {
-                    var geojson = {
-                        "type": "Feature",
-                        "geometry": {
-                            "type": "Point",
-                            "coordinates": [e.lngLat.lng, e.lngLat.lat]
-                        },
-                        "properties": {
-                            'OBJECTID': idUpdate
+            featureLayer.nearby(e.latlng, function(error, result) {
+                if (error)
+                    console.log(error);
+                else {
+                    if (result.features.length > 0) {
+                        document.getElementById("selectedFeatures").innerHTML = "Click on the feature to update.<br>Then select the point you need to move to.";
+                        idUpdate = result.features[0].attributes.maDoiTuong
+                    } else {
+                        if (idUpdate) {
+                            var geojson = L.marker(e.latlng).toGeoJSON();
+                            geojson.properties = {
+                                'maDoiTuong': idUpdate
+                            }
+                            widgets.loader.showLoader("data updating...");
+                            featureLayer.updateFeature(geojson, function(error, response) {
+                                if (error) {
+                                    console.log('error updating feature ' + error.description);
+                                } else {
+                                    console.log('Successfully updated feature ' + response.objectId);
+                                }
+                                document.getElementById("selectedFeatures").innerHTML = "Click on the point on the map to update the location.";
+                                featureLayer.refresh();
+                                idUpdate = null;
+                                widgets.loader.removeLoader();
+                            });
                         }
-                    };
-                    widgets.loader.showLoader("data updating...");
-                    featureLayer.updateFeature(geojson, function(error, response) {
-                        if (error) {
-                            console.log('error updating feature ' + error.description);
-                        } else {
-                            console.log('Successfully updated feature ' + response.objectId);
-                        }
-                        document.getElementById("selectedFeatures").innerHTML = "Click on the point on the map to update the location.";
-                        featureLayer.refresh();
-                        idUpdate = null;
-                        widgets.loader.removeLoader();
-                    });
-                } else
-                    map.setFilter('point-selected', filter);
-            }
+                    }
+                }
+            })
         });
     </script>
 </body>

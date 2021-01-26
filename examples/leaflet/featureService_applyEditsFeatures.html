@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Apply Edits</title>
@@ -211,17 +209,15 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [105.6685713, 20.9003181],
-            style: {
-                "version": 8,
-                "sources": {},
-                "layers": []
+        var map = L.map('divMapId', {
+            center: {
+                lon: 105.6685713,
+                lat: 20.9003181
             },
-            zoom: 7
+            zoom: 7,
+            zoomControl: true,
+            attributionControl: false,
         });
-        map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
         symbols = document.querySelector('#symbols');
         var featureLayer;
@@ -230,18 +226,14 @@
         var divAddFea;
         var divUpdate;
         var idFeatureSelected;
-        var coorSelected;
         var filter;
-        map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
+        var featureSelected;
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
-            featureLayer = new mapboxgl.ekmap.FeatureLayer({
-                url: urlFeatureLayer,
-                // token: tokenKey
-            }).addTo(map);
-        });
+        featureLayer = new L.ekmap.FeatureLayer({
+            url: urlFeatureLayer,
+            // token: tokenKey
+        }).addTo(map);
 
         window.onload = function() {
             divAddFea = document.getElementById("addFeatureDiv");
@@ -263,25 +255,28 @@
                 color = '#ff7f00'
             });
             document.getElementById("btnUpdate").addEventListener("click", function() {
+                featureSelected.properties = {
+                    'maDoiTuong': idFeatureSelected,
+                    'tenDoiTuon': document.getElementById("desName").value
+                }
                 var param = {
-                    "updates": {
-                        "type": "Feature",
-                        "geometry": {
-                            "type": "Point",
-                            "coordinates": coorSelected
-                        },
-                        "properties": {
-                            'OBJECTID': idFeatureSelected,
-                            'ten': document.getElementById("desName").value
-                        }
-                    }
+                    "updates": featureSelected
                 };
                 widgets.loader.showLoader("data updating...");
-                featureLayer.applyEdits(param, function(e) {
-                    featureLayer.refresh();
-                    color = null;
-                    widgets.loader.removeLoader();
-                    map.setFilter('point-selected', filter);
+                featureLayer.applyEdits(param, function(error, response) {
+                    if (error) {
+                        console.log(error)
+                    }
+                    if (response) {
+                        console.log('Updated Successfully')
+                        divAddFea.style.display = 'block';
+                        divAddTemp.style.display = 'block';
+                        divUpdate.style.display = 'none';
+                        featureLayer.refresh();
+                        color = null;
+                        widgets.loader.removeLoader();
+                    }
+
                 });
             });
 
@@ -291,85 +286,56 @@
                 var param = {
                     "deletes": x
                 };
-                console.log(param.deletes)
                 widgets.loader.showLoader("data updating...");
-                featureLayer.applyEdits(param, function(e) {
-                    widgets.loader.removeLoader();
-                    featureLayer.refresh();
-                    divAddFea.style.display = 'block';
-                    divAddTemp.style.display = 'block';
-                    divUpdate.style.display = 'none';
+                featureLayer.applyEdits(param, function(error, response) {
+                    if (error)
+                        console.log(error)
+                    else {
+                        console.log('Delected Successfully')
+                        widgets.loader.removeLoader();
+                        featureLayer.refresh();
+                        divAddFea.style.display = 'block';
+                        divAddTemp.style.display = 'block';
+                        divUpdate.style.display = 'none';
+                    }
                 });
             });
         }
 
         map.on('click', function(obj) {
-            coorSelected = [obj.lngLat.lng, obj.lngLat.lat];
-            var paramadd = {
-                "adds": {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": coorSelected
-                    },
-                    "color": color,
-                }
+            featureSelected = new L.marker(obj.latlng).toGeoJSON();
+            var paramAdd = {
+                "adds": featureSelected
             };
             if (color) {
-                featureLayer.applyEdits(paramadd, function(e) {
-
-                    if (e) {
+                featureLayer.applyEdits(paramAdd, function(error, response) {
+                    if (error)
+                        console.log(error)
+                    else {
+                        console.log('Added Successfully')
+                        featureLayer.refresh();
                         divAddFea.style.display = 'none';
                         divAddTemp.style.display = 'none';
                         divUpdate.style.display = 'block';
                         color = null;
-                        if (e.addResults.length > 0)
-                            idFeatureSelected = e.addResults[0].objectId
+                        if (response.addResults.length > 0)
+                            idFeatureSelected = response.addResults[0].objectId
                     }
                 })
             } else {
-                var bbox = [
-                    [obj.point.x - 5, obj.point.y - 5],
-                    [obj.point.x + 5, obj.point.y + 5]
-                ];
-                var features = map.queryRenderedFeatures(bbox, {
-                    layers: ['point']
-                });
-                if (features.length > 0) {
-                    if (map.getLayer('selectedFeature')) {
-                        map.removeLayer('selectedFeature');
-                        map.removeSource('selectedFeature');
-                    }
-                    divAddFea.style.display = 'none';
-                    divAddTemp.style.display = 'none';
-                    divUpdate.style.display = 'block';
-                    // filter = features.reduce(
-                    //     function(memo, feature) {
-                    //         memo.push(feature.properties.OBJECTID);
-                    //         return memo;
-                    //     }, ['in', 'OBJECTID']
-                    // );
-                    idFeatureSelected = features[0].properties.maDoiTuong;
-                    // map.setFilter('point-selected', filter);
-                    map.addLayer({
-                        "id": "selectedFeature",
-                        "type": "circle",
-                        "paint": {
-                            "circle-color": "red",
-                            "circle-stroke-color": '#00ffff',
-                            "circle-stroke-width": 3,
-                            "circle-radius": 10
-                        },
-                        "source": {
-                            'type': 'geojson',
-                            'data': {
-                                'type': 'Feature',
-                                'geometry': features[0].geometry,
-                            }
+                featureLayer.nearby(obj.latlng, function(error, result) {
+                    if (error)
+                        console.log(error);
+                    else {
+                        if (result.features.length > 0) {
+                            divAddFea.style.display = 'none';
+                            divAddTemp.style.display = 'none';
+                            divUpdate.style.display = 'block';
+                            idFeatureSelected = result.features[0].attributes.maDoiTuong;
+                            document.getElementById("desName").value = result.features[0].attributes.tenDoiTuon;
                         }
-                    });
-                    document.getElementById("desName").value = features[0].properties.tenDoiTuon;
-                }
+                    }
+                })
             }
         });
     </script>
