@@ -278,6 +278,7 @@
             color: #646c9a;
             font-family: Poppins;
         }
+        /*  */
     </style>
 </head>
 
@@ -333,6 +334,9 @@
         });
 
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
+        $('left').mouseup(function() {
+            map.dragging.disable();
+        });
         L.DomEvent.disableScrollPropagation(document.getElementById('left'));
         var points, iconImage;
         var data = [];
@@ -393,7 +397,7 @@
                     });
                     map.openPopup(L.popup()
                         .setLatLng(L.latLng(lat, lng))
-                        .setContent('<p>Hello world!<br />This is a nice popup.</p>')
+                        .setContent('<h4>' + f.properties.name + '</h4>')
                     )
                 }
                 var div3 = document.createElement('div');

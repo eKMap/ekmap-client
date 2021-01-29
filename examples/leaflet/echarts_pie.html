@@ -2,10 +2,8 @@
 
 <head>
     <meta charset='utf-8' />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script include="echarts" src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Pie Chart</title>
     <style>
@@ -16,6 +14,11 @@
         
         body {
             overflow: hidden;
+        }
+        
+        .leaflet-popup-content-wrapper {
+            width: 690px;
+            height: 430px;
         }
     </style>
 </head>
@@ -28,20 +31,17 @@
     <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
     <script type="text/javascript">
         var data;
-        var chart, div, popup = '';
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            center: [106.5090846096723, 16.787962287423255],
-            zoom: 5.1128594812072485
+        var chart, div;
+        var map = new L.map('divMapId', {
+            center: {
+                lon: 106.5090846096723,
+                lat: 16.787962287423255
+            },
+            zoom: 5.1128594812072485,
+            zoomControl: true,
+            attributionControl: false,
         });
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map)
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon-red.png', function(error, image) {
-            if (error) throw error;
-            map.addImage('positionPoint', image);
-        });
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         var categoryDataMap = {
             "Hà Nội": [{
@@ -196,30 +196,21 @@
 
         function query() {
             $.get("../data/echarts_pie.json", function(response) {
-                var fs = response;
-                map.addLayer({
-                    "id": "points",
-                    "type": "symbol",
-                    "layout": {
-                        "icon-image": "positionPoint",
-                        "icon-size": 0.1,
-                        "icon-offset": [0, -15]
+                var features = response.features;
+                L.geoJSON(features, {
+                    pointToLayer: function(feature, latlng) {
+                        iconImage = L.icon({
+                            iconSize: [43, 50],
+                            iconAnchor: [13, 27],
+                            popupAnchor: [1, -24],
+                            iconUrl: './img/marker-icon-red.png'
+                        })
+                        return L.marker(latlng, {
+                            icon: iconImage
+                        });
                     },
-                    "source": {
-                        "type": "geojson",
-                        "data": fs
-                    }
-                });
-
-                map.on('click', 'points', function(e) {
-                    popup = new mapboxgl.Popup({
-                        maxWidth: 'none'
-                    });
-                    popup.setLngLat(e.lngLat.toArray())
-                        .setDOMContent(div) // sets a popup on this marker
-                        .addTo(map);
-
-                    var city = e.features[0].properties.NAME;
+                }).bindPopup(function(layer) {
+                    city = layer.feature.properties.NAME;
                     chart.setOption({
                         title: {
                             text: city + ' commodity sales'
@@ -232,8 +223,11 @@
                             data: dataMap[city]
                         }]
                     });
-                });
-            })
+                    return chart.getDom();
+                }).addTo(map);
+
+
+            });
         }
     </script>
 </body>

@@ -408,6 +408,10 @@
                         animate: true,
                         duration: 2,
                     });
+                    L.popup()
+                        .setLatLng([lat, lng])
+                        .setContent('<h4>' + e.properties.name + '</h4>')
+                        .openOn(map);
                 }
                 var div3 = document.createElement('div');
                 div3.className = "form-group-last row";
