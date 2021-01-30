@@ -33,7 +33,7 @@
             line-height: 1;
             border-radius: 0.2rem;
             background-color: rgba(70, 70, 70, 0.8);
-            z-index: 99999;
+            z-index: 9999999999999;
         }
         
         #spread {
@@ -104,7 +104,7 @@
         var data = [];
         var dataNew = []
         var features = [];
-        var data1 = [];
+        var dataHeat = [];
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
         for (var i = 0; i < 144; i++) {
             widgets.loader.showLoader("data loading...");
@@ -147,20 +147,31 @@
                     }
                     for (var i = 0; i < geojson.features.length; i++) {
                         var lonLng = L.point(geojson.features[i].geometry.coordinates);
-                        data1.push([lonLng.y, lonLng.x, Math.random() * 9]);
-                        heatMapLayer = L.heatLayer(data1, {
-                            radius: 25,
-                            minOpacity: 0.5
-                        }).addTo(map);
+                        dataHeat.push([lonLng.y, lonLng.x, Math.random() * 9]);
                     }
+                    heatMapLayer = L.heatLayer(dataHeat, {
+                        radius: 15,
+                        minOpacity: 0.5,
+                    }).addTo(map);
+
 
                     interval = setInterval(function() {
                         var x = getValue()
-                            // if (x == 133)
-                            //     clearInterval(interval);
-                            // else {
-                        document.getElementById('slider').value = x;
-                        document.getElementById('date').textContent = dataNew[value][0].properties.date
+                        if (x == 133)
+                            clearInterval(interval);
+                        else {
+                            document.getElementById('slider').value = x;
+                            document.getElementById('date').textContent = dataNew[value][0].properties.date
+                            var geojson = {
+                                "type": "FeatureCollection",
+                                "features": data[value]
+                            }
+                            for (var i = 0; i < geojson.features.length; i++) {
+                                var lonLng = L.point(geojson.features[i].geometry.coordinates);
+                                dataHeat.push([lonLng.y, lonLng.x, Math.random() * 9]);
+                            }
+                            heatMapLayer.setLatLngs(dataHeat)
+                        }
 
                     }, 300);
                 }
@@ -176,16 +187,21 @@
                 btn.value = 'PAUSE'
                 interval = setInterval(function() {
                     var x = getValue()
-                    if (x == 20)
+                    if (x == 133)
                         clearInterval(interval);
                     else {
                         document.getElementById('slider').value = x
-
                         document.getElementById('date').textContent = dataNew[value][0].properties.date
+                        heatMapLayer.redraw();
                         var geojson = {
                             "type": "FeatureCollection",
-                            "features": dataNew[value]
+                            "features": data[value]
                         }
+                        for (var i = 0; i < geojson.features.length; i++) {
+                            var lonLng = L.point(geojson.features[i].geometry.coordinates);
+                            dataHeat.push([lonLng.y, lonLng.x, Math.random() * 9]);
+                        }
+                        heatMapLayer.setLatLngs(dataHeat)
                     }
                 }, 300);
             }
@@ -201,8 +217,15 @@
             document.getElementById('date').textContent = dataNew[value][0].properties.date
             var geojson = {
                 "type": "FeatureCollection",
-                "features": dataNew[value]
+                "features": data[value]
             }
+            dataHeat = [];
+            for (var i = 0; i < geojson.features.length; i++) {
+                var lonLng = L.point(geojson.features[i].geometry.coordinates);
+                dataHeat.push([lonLng.y, lonLng.x, Math.random() * 9]);
+            }
+            heatMapLayer.redraw();
+            heatMapLayer.setLatLngs(dataHeat)
         }
     </script>
 </body>

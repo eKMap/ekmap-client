@@ -307,42 +307,6 @@ var exampleConfig = {
                     },
                 ]
             },
-            StoryMap: {
-                name: "Story Map",
-                name_en: "Story Map",
-                content: [{
-                        name: "Vinhomes real estate",
-                        name_en: "Vinhomes real estate",
-                        thumbnail: "storyMap_vinhomes.gif",
-                        fileName: "storyMap_vinhomes",
-                        subject: "Display map of real estate project list Vinhomes.",
-                        description: "Display map of real estate project list Vinhomes."
-                    },
-                    {
-                        name: "Tour Hue - Hoi An - Da Nang",
-                        name_en: "Tour Hue - Hoi An - Da Nang",
-                        thumbnail: "mapTour.png",
-                        fileName: "mapTour",
-                        subject: "Hue - Hoi An - Da Nang tours.",
-                        description: "Display map of Hue - Hoi An - Da Nang tours."
-                    },
-                    {
-                        name: "Timeline Coronavirus (Heatmap)",
-                        name_en: "Timeline Coronavirus (Heatmap)",
-                        thumbnail: "timeline_heatMapCov.gif",
-                        fileName: "timeline_heatMapCov",
-                        subject: "Displays the timeline map showing the increase in COVID19 cases around the world.",
-                        description: "Displays the timeline map showing the increase in COVID19 cases around the world."
-                    }, {
-                        name: "Spiritual Tourism Map Tour",
-                        name_en: "Spiritual Tourism Map Tour",
-                        thumbnail: "storyMap_spiritualTourism.png",
-                        fileName: "storyMap_spiritualTourism",
-                        subject: "10 attractive spiritual tourist attractions in Hanoi capital.",
-                        description: "10 attractive spiritual tourist attractions in Hanoi capital."
-                    },
-                ]
-            },
             ECharts: {
                 name: "ECharts",
                 name_en: "ECharts",
@@ -380,6 +344,89 @@ var exampleConfig = {
                     }
                 ]
             },
+            HightChart: {
+                name: "Hight Chart",
+                name_en: "Hight Chart",
+                content: [{
+                        name: "Bar Highcharts",
+                        name_en: "Bar Highcharts",
+                        thumbnail: "highcharts_bar.gif",
+                        fileName: "highcharts_bar",
+                        subject: "Use highcharts to display bar.",
+                        description: "Click point on map to display Bar Highcharts (data random)."
+                    },
+                    {
+                        name: "Line Highcharts",
+                        name_en: "Line Highcharts",
+                        thumbnail: "highcharts_line.gif",
+                        fileName: "highcharts_line",
+                        subject: "Use highcharts to display line.",
+                        description: "Click point on map to display future temperature Line Highcharts (data random)."
+                    },
+                    {
+                        name: "Pie Highcharts",
+                        name_en: "Pie Highcharts",
+                        thumbnail: "highcharts_pie.gif",
+                        fileName: "highcharts_pie",
+                        subject: "Use highcharts to display pie.",
+                        description: "Click point on map to display commodity percent by Pie Highcharts (data random)."
+                    },
+                    {
+                        name: "Water HightChart",
+                        name_en: "Water HightChart",
+                        thumbnail: "highcharts_lineWater.png",
+                        fileName: "highcharts_lineWater",
+                        subject: "Detailed display of SCADA measuring point chart data.",
+                        description: "Detailed display of SCADA measuring point chart data. Click an area on the map to view data in that area."
+                    }
+                ]
+            },
+            StoryMap: {
+                name: "Story Map",
+                name_en: "Story Map",
+                content: [{
+                        name: "Vinhomes real estate",
+                        name_en: "Vinhomes real estate",
+                        thumbnail: "storyMap_vinhomes.gif",
+                        fileName: "storyMap_vinhomes",
+                        subject: "Display map of real estate project list Vinhomes.",
+                        description: "Display map of real estate project list Vinhomes."
+                    },
+                    {
+                        name: "Tour Hue - Hoi An - Da Nang",
+                        name_en: "Tour Hue - Hoi An - Da Nang",
+                        thumbnail: "mapTour.png",
+                        fileName: "mapTour",
+                        subject: "Hue - Hoi An - Da Nang tours.",
+                        description: "Display map of Hue - Hoi An - Da Nang tours."
+                    },
+                    {
+                        name: "Timeline Coronavirus (Heatmap)",
+                        name_en: "Timeline Coronavirus (Heatmap)",
+                        thumbnail: "timeline_heatMapCov.gif",
+                        fileName: "timeline_heatMapCov",
+                        subject: "Displays the timeline map showing the increase in COVID19 cases around the world.",
+                        description: "Displays the timeline map showing the increase in COVID19 cases around the world."
+                    },
+                    {
+                        name: "COVID-19: Government Response Stringency",
+                        name_en: "COVID-19: Government Response Stringency",
+                        thumbnail: "timeline_fillCov.gif",
+                        fileName: "timeline_fillCov",
+                        subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
+                        description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
+                    },
+                    {
+                        name: "Spiritual Tourism Map Tour",
+                        name_en: "Spiritual Tourism Map Tour",
+                        thumbnail: "storyMap_spiritualTourism.png",
+                        fileName: "storyMap_spiritualTourism",
+                        subject: "10 attractive spiritual tourist attractions in Hanoi capital.",
+                        description: "10 attractive spiritual tourist attractions in Hanoi capital."
+                    },
+                ]
+            },
+
 
         }
     },

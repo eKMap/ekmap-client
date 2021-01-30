@@ -18,12 +18,12 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
             margin: 8px;
         }
-
+        
         #container {
             position: absolute;
             top: 60%;
@@ -47,27 +47,26 @@
             container: 'divMapId',
             style: {
                 "version": 8,
-                "sources": {
-                },
+                "sources": {},
                 "layers": []
             },
             center: [106.1471579608559, 20.416161703696787],
             zoom: 8.383742725041827
         });
-        map.on('load', function () {
+        map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
         })
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.loadImage('./img/marker-icon-red.png', function (error, image) {
+        map.loadImage('./img/marker-icon-red.png', function(error, image) {
             if (error) throw error;
             map.addImage('positionPoint', image);
         });
         query();
 
         function query() {
-            $.get("../data/echarts_lineMarker.json", function (response) {
+            $.get("../data/echarts_lineMarker.json", function(response) {
                 map.addLayer({
                     "id": "points",
                     "type": "symbol",
@@ -83,7 +82,7 @@
                 });
             })
         }
-        map.on('click', 'points', function (e) {
+        map.on('click', 'points', function(e) {
             console.log(e)
             var options = {
                 chart: {
@@ -104,7 +103,7 @@
                         text: 'Temperature'
                     },
                     labels: {
-                        formatter: function () {
+                        formatter: function() {
                             return this.value + '°';
                         }
                     }
