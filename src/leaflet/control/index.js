@@ -10,6 +10,9 @@ from './FeatureInfomation';
 export { Legend }
 from './Legend';
 
+export { TreeLayerGroup }
+from './TreeLayerGroup';
+
 // export { Button }
 // from './Button';
 

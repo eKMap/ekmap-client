@@ -25,6 +25,9 @@ from './Reverse';
 export { TreeLayer }
 from './TreeLayer';
 
+export { TreeLayerGroup }
+from './TreeLayerGroup';
+
 export { BaseLayer }
 from './BaseLayer';
 

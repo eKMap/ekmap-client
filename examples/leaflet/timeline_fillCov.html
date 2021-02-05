@@ -4,18 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="../../examples/js/common.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <title>Timeline Coranavirus (Area)</title>
@@ -24,11 +17,11 @@
             width: 100%;
             height: calc(100vh - 10px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #range-slider {
             position: absolute;
             left: 0.5rem;
@@ -43,9 +36,9 @@
             line-height: 1;
             border-radius: 0.2rem;
             background-color: rgba(70, 70, 70, 0.8);
-            z-index: 3;
+            z-index: 999999999;
         }
-
+        
         #spread {
             display: flex;
             align-items: center;
@@ -58,7 +51,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
+        
         input[type=range] {
             flex: 1;
             margin: 0 0.5rem;
@@ -66,7 +59,7 @@
             -webkit-appearance: none;
             cursor: ew-resize;
         }
-
+        
         #range-slider label {
             display: flex;
             align-items: baseline;
@@ -76,7 +69,7 @@
             text-transform: uppercase;
             min-width: 4.5rem;
         }
-
+        
         .spread-label {
             background: #66cc66;
             border: none;
@@ -84,7 +77,7 @@
             padding: 5px;
             border-radius: 5px;
         }
-
+        
         .cesium-button {
             display: inline-block;
             position: relative;
@@ -102,7 +95,7 @@
             -ms-user-select: none;
             user-select: none;
         }
-
+        
         #selectedFeatures {
             position: absolute;
             left: 30px;
@@ -112,7 +105,7 @@
             max-height: 250px;
             max-width: 250px;
         }
-
+        
         #note {
             position: absolute;
             left: 10px;
@@ -125,39 +118,39 @@
             opacity: 0.9;
             border: 1px solid #000;
         }
-
+        
         .leaflet-bar.map-text a {
             color: #79BD8F;
             display: inline;
         }
-
+        
         .dataNote {
             padding: 10px;
             margin: 0px;
             list-style-type: none;
         }
-
+        
         .noteType {
             padding: 0px;
             list-style-type: none;
         }
-
+        
         .note {
             font-size: 20px;
             font-weight: 600;
         }
-
+        
         .imgNote {
             border: 1px solid !important;
         }
-
+        
         .header {
             font-family: Playfair Display, Georgia, Times New Roman, serif;
             font-weight: 400;
             color: #555;
             margin: 0;
         }
-
+        
         .title {
             font-size: 12.8px;
             line-height: 1.2;
@@ -197,8 +190,7 @@
                     <li>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAHgAgMAAAAAulYGAAAADFBMVEX///8AAADc2c/u7u4TiNHWAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA8klEQVR4nO3NMREAIAwEsDrAB8o51OEAJjT80MRAaodUv3hVxOwYjxtwxGKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWLxjyuiY7xD+sUPl1d9uWzK18sAAAAASUVORK5CYII=">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAHgAgMAAAAAulYGAAAADFBMVEX///8AAADc2c/u7u4TiNHWAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA8klEQVR4nO3NMREAIAwEsDrAB8o51OEAJjT80MRAaodUv3hVxOwYjxtwxGKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWLxjyuiY7xD+sUPl1d9uWzK18sAAAAASUVORK5CYII=">
                                 <span style="padding-left: 15px;">
                                     No data
                                 </span>
@@ -206,8 +198,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX//9l1yZ41AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEX//9l1yZ41AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     0 - 10
                                 </span>
@@ -215,8 +206,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEXt+LFmQ5aGAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEXt+LFmQ5aGAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     10 - 20
                                 </span>
@@ -224,8 +214,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEXH6bRwKoIvAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEXH6bRwKoIvAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     20 - 30
                                 </span>
@@ -233,8 +222,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEV/zbvaMNGwAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEV/zbvaMNGwAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     30 - 40
                                 </span>
@@ -242,8 +230,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEVBtsT4tNW6AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEVBtsT4tNW6AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     40 - 50
                                 </span>
@@ -251,8 +238,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUdkcBAunQSAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUdkcBAunQSAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     50 - 60
                                 </span>
@@ -260,8 +246,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUiXqhghvRUAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUiXqhghvRUAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     60 - 70
                                 </span>
@@ -269,8 +254,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUlNJTVtB17AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUlNJTVtB17AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     70 - 80
                                 </span>
@@ -278,8 +262,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUXKXZDM8PNAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUXKXZDM8PNAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     80 - 90
                                 </span>
@@ -287,8 +270,7 @@
                         </ul>
                         <ul class="noteType">
                             <li>
-                                <img class="imgNote" width="13" height="13"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUIHVgztdm4AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
+                                <img class="imgNote" width="13" height="13" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADIAQMAAAAwS4omAAAAA1BMVEUIHVgztdm4AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAG0lEQVRIie3BMQEAAADCoPVPbQwfoAAAAIC3AQ+gAAEq5xQCAAAAAElFTkSuQmCC">
                                 <span style="padding-left: 15px;">
                                     90 - 100
                                 </span>
@@ -303,109 +285,106 @@
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
     <script type="text/javascript">
-        var map = new mapboxgl.Map({
-            container: "divMapId",
-            center: [11.164340403295512, 2.079745662755286],
+        var map = new L.map('divMapId', {
+            center: {
+                lon: 11.164340403295512,
+                lat: 2.079745662755286
+            },
             zoom: 2.116295796373197,
-            pitch: 40
+            zoomControl: true,
+            attributionControl: false
         });
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
         var data;
         var dataWorld;
         var features;
         var listData = [];
         var x = 0;
+        var dataP = [];
+        var dataM = [];
+        var value = 0;
+        var geoJson;
+        var a = [];
+        var b = [];
+        var c = [];
 
-        // var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-        //     token: tokenVN
-        // }).addTo(map);
-        widgets.loader.showLoader("data loading...");
-        $.get('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json', function (response) {
+        function getColor(d) {
+            return d > 90 ? '#081d58' :
+                d > 80 ? '#172976' :
+                d > 70 ? '#253494' :
+                d > 60 ? '#225ea8' :
+                d > 50 ? '#1d91c0' :
+                d > 40 ? '#41b6c4' :
+                d > 30 ? '#7fcdbb' :
+                d > 20 ? '#c7e9b4' :
+                d > 10 ? '#edf8b1' : '#eee';
+        }
+        // widgets.loader.showLoader("data loading...");
+        $.get('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json', function(response) {
             data = JSON.parse(response);
             features = data.features;
-        }).done(function () {
-            map.addLayer({
-                'id': 'fill-world',
-                'type': 'fill',
-                'source': {
-                    'type': 'geojson',
-                    'data': data
-                },
-                'paint': {
-                    'fill-color': [
-                        'interpolate',
-                        ['linear'],
-                        ['get', 'total'],
-                        -0.5,
-                        '#eee',
-                        0,
-                        '#ffffd9',
-                        10,
-                        '#edf8b1',
-                        20,
-                        '#c7e9b4',
-                        30,
-                        '#7fcdbb',
-                        40,
-                        '#41b6c4',
-                        50,
-                        '#1d91c0',
-                        60,
-                        '#225ea8',
-                        70,
-                        '#253494',
-                        80,
-                        '#172976',
-                        90,
-                        '#081d58',
-                    ],
-                    'fill-opacity': 1
+            value = document.getElementById('slider').value;
+            geoJson = L.geoJSON(features, {
+                style: function(feature) {
+                    return {
+                        fillColor: getColor(),
+                        weight: 2,
+                        opacity: 1,
+                        color: 'white',
+                        dashArray: '3',
+                        fillOpacity: 0.7
+                    };
                 }
-            });
-            map.addLayer({
-                'id': 'line-world',
-                'type': 'line',
-                'source': {
-                    'type': 'geojson',
-                    'data': data
-                },
-                'paint': {
-                    'line-color': '#000',
-                    'line-opacity': 1,
-                    'line-width': 1.2
-                }
-            })
+            }).addTo(map);
         })
-        d3.json('../data/covid-data.json', function (response) {
+
+        d3.json('../data/covid-data.json', function(response) {
             listData = response;
-            widgets.loader.removeLoader();
-            interval = setInterval(function () {
+            for (var i = 0; i < listData.length; i++) {
+                a.push(listData[i].features);
+            }
+            for (var i = 0; i < a.length; i++) {
+
+                b.push(a[i])
+
+            }
+            // for (var j = 0; j < 61; j++) {
+            //     c.push(b[j])
+            // }
+            console.log(c);
+            interval = setInterval(function() {
                 if (x == 281)
                     clearInterval(interval);
                 else {
                     document.getElementById('slider').value = x;
                     document.getElementById('date').textContent = listData[x].day
-                    map.getSource('fill-world').setData(listData[x])
+                    geoJson.setStyle(styleMap)
                 }
                 x++
             }, 100);
         })
 
         var btn = document.getElementById('button-play');
-        document.getElementById("button-play").onclick = function () {
+        document.getElementById("button-play").onclick = function() {
             if (btn.value === 'PAUSE') {
                 btn.value = 'PLAY'
                 clearInterval(interval);
-            }
-            else {
+            } else {
                 btn.value = 'PAUSE'
-                interval = setInterval(function () {
+                interval = setInterval(function() {
                     if (x == 281)
                         clearInterval(interval);
                     else {
                         document.getElementById('slider').value = x
                         document.getElementById('date').textContent = listData[x].day
-                        map.getSource('fill-world').setData(listData[x])
+                        geoJson.setStyle({
+                            fillColor: getColor(total),
+                            weight: 2,
+                            opacity: 1,
+                            color: 'white',
+                            dashArray: '3',
+                            fillOpacity: 0.7
+                        })
                     }
                     x++
                 }, 100);
@@ -415,25 +394,152 @@
         function changeTime() {
             x = document.getElementById('slider').value;
             document.getElementById('date').textContent = listData[x].day
-            map.getSource('fill-world').setData(listData[x])
+
+            geoJson.setStyle(styleMap)
+                // geoJson.setStyle({
+                //     fillColor: getColor(value++),
+                //     weight: 2,
+                //     opacity: 1,
+                //     color: 'white',
+                //     dashArray: '3',
+                //     fillOpacity: 0.7
+                // })
         }
 
         function changeMenu() {
             var x = document.getElementById("mySelect").value;
             if (x == 'World')
-                map.flyTo({ center: [26.26889708400836, 13.35542806135831], zoom: 1.9648836083050443, pitch: 40 });
+                map.flyTo([13.35542806135831, 26.26889708400836], 1.9648836083050443, {
+                    animate: true,
+                });
+
             if (x == 'AS')
-                map.flyTo({ center: [103.37949825935812, 21.06758213068909], zoom: 3.4438890972916183, pitch: 0 });
+                map.flyTo([21.06758213068909, 103.37949825935812], 3.4438890972916183, {
+                    animate: true
+                });
             if (x == 'EU')
-                map.flyTo({ center: [18.201384439647654, 57.43846548626533], zoom: 3.292476909223464, pitch: 0 });
+                map.flyTo([57.43846548626533, 18.201384439647654], 3.292476909223464, {
+                    animate: true
+                });
             if (x == 'AF')
-                map.flyTo({ center: [17.2035545674752941, -3.037878711065133], zoom: 2.989652533087158, pitch: 0 });
+                map.flyTo([17.2035545674752941, -3.037878711065133], 2.989652533087158, {
+                    animate: true
+                });
             if (x == 'OC')
-                map.flyTo({ center: [133.62456109544325, -25.84856247035627], zoom: 3.577743089512293, pitch: 0 });
+                map.flyTo([133.62456109544325, -25.84856247035627], 3.577743089512293, {
+                    animate: true
+                });
             if (x == 'NA')
-                map.flyTo({ center: [-54.908644457205014, 49.54265122613677], zoom: 2.5354159688827, pitch: 0 });
+                map.flyTo([49.54265122613677, -54.908644457205014], 2.5354159688827, {
+                    animate: true
+                });
             if (x == 'SA')
-                map.flyTo({ center: [-67.46539756062202, -29.248620438531653], zoom: 2.8206821491715277, pitch: 0 });
+                map.flyTo([-29.248620438531653, -67.46539756062202], 2.8206821491715277, {
+                    animate: true
+                });
+        }
+
+        function styleMap(features) {
+            if (features.getProperties().total >= -0.5 && features.getProperties().total < 0) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#eee',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 0 && features.getProperties().total < 10) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#ffffd9',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 10 && features.getProperties().total < 20) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#edf8b1',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 20 && features.getProperties().total < 30) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#c7e9b4',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 30 && features.getProperties().total < 40) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#7fcdbb',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 40 && features.getProperties().total < 50) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#41b6c4',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 50 && features.getProperties().total < 60) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#1d91c0',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 60 && features.getProperties().total < 70) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#225ea8',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 70 && features.getProperties().total < 80) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#253494',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
+            if (features.getProperties().total >= 80 && features.getProperties().total < 90) {
+                var styles = {
+                    weight: 2,
+                    opacity: 1,
+                    color: '#253494',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+                return styles;
+            }
         }
     </script>
 </body>

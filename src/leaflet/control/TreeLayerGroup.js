@@ -1,15 +1,16 @@
 import '../core/Base';
 import L from 'leaflet';
 import { Util } from '../core/Util';
+import Tree from '@widgetjs/tree';
 /**
- * @class L.ekmap.control.Legend
+ * @class L.ekmap.control.TreeLayerGroup
  * @category  Control
- * @classdesc Legend.
+ * @classdesc TreeLayerGroup.
  * @param {Object} options Construction parameters.
- * @param {Array<L.Map>} options.layers List of layers for which you want to display legend.
+ * @param {Array<L.Map>} options.layers List of layers for which you want to display TreeLayerGroup.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
- * @param {string} options.title=LEGEND Name of header.
- * @param {string} options.tooltip=Legend Tooltip of button.
+ * @param {string} options.title=TreeLayerGroup Name of header.
+ * @param {string} options.tooltip=TreeLayerGroup Tooltip of button.
  *
  * @example
  *  var map = new L.Map({
@@ -18,22 +19,22 @@ import { Util } from '../core/Util';
  *  var tiledMap = new L.ekmap.TiledMapLayer({
  *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
  *  }).addTo(map);
- *  var legend = new L.ekmap.control.Legend({
+ *  var TreeLayerGroup = new L.ekmap.control.TreeLayerGroup({
  *      layers: [tiledMap]
  *  });
- *  map.addControl(legend,"top-left");
+ *  map.addControl(TreeLayerGroup,"top-left");
  */
-export class Legend extends L.Control {
+export class TreeLayerGroup extends L.Control {
 
     constructor(options) {
         super(options);
         this.options = options ? options : {};
-        this.layers = Util.isArray(this.options.layers) ? this.options.layers : [this.options.layers];
+        this.layer = this.options.layer;
         this.target = this.options.target;
     }
 
     /**
-     * @function L.ekmap.control.Legend.prototype.onAdd
+     * @function L.ekmap.control.TreeLayerGroup.prototype.onAdd
      * @description Register a control on the map and give it a chance to register event listeners and resources. This method is called by Map#addControl internally.
      * @param {Map} map the Map this control will be added to.
      * @returns {HTMLElement}  The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.
@@ -44,13 +45,15 @@ export class Legend extends L.Control {
         if (!this.target) {
             this.button = document.createElement("a");
             this.button.attributes.role = 'button';
-            this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Legend';
+            this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'TreeLayerGroup';
             this.button.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAd0lEQVRYR+2UsQ2AMBADL2vQpckG7N8zRTYJIggJGOAvxUdKbcu+d0F+RdZnKQMN2IIS6cD1PwkcwB5ooP4NjCDxR2bW/2ZAN6BXoEMYjMAtt9QOZAI6hPoZ6kOkG9Ar0CHMHcgEdAj1M9SHSDegV6BDmDugJHACFLYeISqYdm0AAAAASUVORK5CYII=")';
             this.button.style.backgroundPosition = 'center';
             this.button.style.backgroundRepeat = 'no-repeat';
             this.button.style.backgroundSize = '60%';
             this.button.addEventListener("click", function(e) {
-                console.log(e);
+                var nodeChild = [];
+                var tree = [];
+                var nodeParent = -1;
                 event.preventDefault();
                 event.stopPropagation();
                 if (me._panel) {
@@ -59,6 +62,104 @@ export class Legend extends L.Control {
                 me.button.style.display = "none";
                 me._panel = me.createLayerInputToggle();
                 me._div.appendChild(me._panel);
+
+                var service = new L.ekmap.MapService({
+                    url: me.layer.options.url
+                });
+                service.getLayers(function(e) {
+                    var layers = e.layers;
+                    for (var i = 0; i < layers.length; i++) {
+                        getChildren(layers[i], i)
+                    }
+                    var myTree = new Tree('#content', {
+                        data: tree,
+                        loaded: function() {
+                            this.values = nodeChild;
+                        },
+                        onChange: function() {
+                            console.log(me.layer)
+                            var param;
+                            var size = [];
+                            size.push(map.getSize().x)
+                            size.push(map.getSize().y)
+                            if (this.values.toString() == '') {
+                                param = {
+                                    bbox: me.layer.extend,
+                                    layers: 'hide:0',
+                                    format: 'png32',
+                                    dpi: 96,
+                                    transparent: true,
+                                    f: 'image',
+                                    bboxSR: me.layer.projection,
+                                    size: size
+                                }
+                            } else {
+                                param = {
+                                    bbox: me.layer.extend,
+                                    layers: 'show:' + this.values.toString(),
+                                    format: 'png32',
+                                    dpi: 96,
+                                    transparent: true,
+                                    f: 'image',
+                                    bboxSR: '4326',
+                                    size: size
+                                }
+                            }
+                            me.url = me.layer.options.url;
+                            me.url += 'export?' + Util.serialize(param);
+                            console.log(me.url);
+                            me.layer.layer.setUrl(me.url);
+                        }
+                    })
+                });
+
+                function getChildren(arr, i) {
+                    if (arr.type == 'Group Layer' && !arr.parentLayer && arr.subLayers.length > 0) {
+                        nodeParent++;
+                        nodeChild.push(i)
+                        tree.push({
+                            "id": arr.id,
+                            "text": arr.name,
+                            "children": []
+                        })
+                        var subLayers = arr.subLayers
+                        subLayers.forEach(layer => {
+                            nodeChild.push(layer.id)
+                            tree[nodeParent].children.push({
+                                "id": layer.id,
+                                "text": layer.name,
+                                "children": []
+                            })
+                        });
+                    }
+                    if (arr.type == 'Group Layer' && arr.parentLayer && arr.subLayers.length > 0) {
+                        nodeChild.forEach(element => {
+                            if (arr.id == element) {
+                                var subLayers = arr.subLayers
+                                var childrens = tree[nodeParent].children;
+                                subLayers.forEach(layer => {
+                                    nodeChild.push(layer.id)
+                                    for (var i = 0; i < childrens.length; i++) {
+                                        if (childrens[i].id == element) {
+                                            tree[nodeParent].children[i].children.push({
+                                                "id": layer.id,
+                                                "text": layer.name,
+                                                "children": []
+                                            })
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    if (arr.type == 'Feature Layer' && !arr.parentLayer && arr.subLayers.length == 0) {
+                        nodeParent++;
+                        tree.push({
+                            "id": arr.id,
+                            "text": arr.name,
+                        })
+                    }
+                }
             })
         } else {
             var panel = document.getElementById(this.target);
@@ -86,7 +187,7 @@ export class Legend extends L.Control {
     }
 
     /**
-     * @function L.ekmap.control.Legend.prototype.onRemove
+     * @function L.ekmap.control.TreeLayerGroup.prototype.onRemove
      * @description Unregister a control on the map and give it a chance to detach event listeners and resources. This method is called by Map#removeControl internally.
      * @param {Map} map the Map this control will be removed from.
      * @returns {undefined}  there is no required return value for this method.
@@ -113,7 +214,7 @@ export class Legend extends L.Control {
             header.style.fontWeight = '700';
             header.style.borderBottom = '1px solid #dddcdb';
             header.style.padding = '10px';
-            header.innerHTML = this.options.title != undefined ? this.options.title : 'LEGEND';
+            header.innerHTML = this.options.title != undefined ? this.options.title : 'TreeLayerGroup';
             this.closeButton = document.createElement('a');
             this.closeButton.style.position = 'absolute';
             this.closeButton.style.top = '0';
@@ -133,50 +234,13 @@ export class Legend extends L.Control {
             })
         } else
             var div = divTarget;
-        div.style.maxHeight = "500px";
+        div.style.maxHeight = "350px";
         div.style.maxWidth = "300px";
-        div.style.width = "220px";
         div.style.padding = "0px 1rem";
-
-        var ul = document.createElement("ul");
-        ul.style.padding = "10px";
-        ul.style.margin = "0";
-        ul.style.listStyleType = "none"
-        this.layers.forEach(layer => {
-            layer.legend(function(list) {
-                var listLenged = list.layers.slice();
-                for (var i = 0; i < listLenged.length; i++) {
-                    var li = document.createElement("li");
-                    li.className = 'row';
-                    li.style.paddingBottom = '10px';
-                    var strong = document.createElement("strong");
-                    strong.className = 'col-sm-9';
-                    strong.innerHTML = listLenged[i].layerName;
-                    for (var j = 0; j < listLenged[i].legend.length; j++) {
-                        var img = document.createElement("img");
-                        img.width = 20;
-                        img.height = 20;
-                        img.style.display = 'block';
-                        img.style.margin = '0 auto';
-                        img.src = "data:image/png;base64," + listLenged[i].legend[j].imageData;
-                        // var span = document.createElement("span");
-                        // span.innerHTML = listLenged[i].legend[j].label;
-                        // span.style.paddingLeft = '15px';
-                        var li1 = document.createElement("li");
-                        li1.appendChild(img);
-                        // li1.appendChild(span);
-                        var ul1 = document.createElement("ul");
-                        ul1.className = 'col-sm-3'
-                        ul1.style.listStyleType = "none";
-                        ul1.appendChild(li1);
-                        li.appendChild(strong);
-                        li.appendChild(ul1);
-                        ul.appendChild(li);
-                        div.appendChild(ul);
-                    }
-                }
-            })
-        })
+        var div1 = document.createElement("div");
+        div1.id = "content"
+        div1.style.padding = "15px 20px 0px 0px";
+        div.appendChild(div1);
         return div;
     }
 
@@ -193,4 +257,4 @@ export class Legend extends L.Control {
     }
 }
 
-L.ekmap.control.Legend = Legend;
+L.ekmap.control.TreeLayerGroup = TreeLayerGroup;
