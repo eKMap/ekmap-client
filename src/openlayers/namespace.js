@@ -12,6 +12,8 @@ import CanvasBase from "./control/CanvasBase";
 import Magnify from "./control/Magnify";
 import Clip from "./control/Clip";
 
+
+
 import { TiledVietNamMapLayer } from './layer'
 import { TileLayer } from './layer/TileLayer';
 import { TiledRoadMapLayer } from './layer/TiledRoadMapLayer';
@@ -27,7 +29,6 @@ import { WMTS } from './layer/WMTS';
 import { VectorTiledMapLayer } from './layer/VectorTiledMapLayer';
 import { DomOverlay } from './layer/DomOverlay';
 import Overlay from './layer/Overlay';
-
 import PerspectiveMap from './map/PerspectiveMap';
 
 import { Util } from './core/Util';
@@ -83,7 +84,8 @@ if (window && window.ol) {
     ol.ekmap.BasemapArcgisLayer = BasemapArcgisLayer;
     ol.ekmap.DomOverlay = DomOverlay;
     ol.ekmap.Overlay = Overlay;
-    ol.ekmap.PerspectiveMap = PerspectiveMap
+    ol.ekmap.PerspectiveMap = PerspectiveMap;
+
 
     // service
     ol.ekmap.MapService = MapService;

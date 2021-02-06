@@ -221,6 +221,14 @@ var exampleConfig = {
                         description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
                     },
                     {
+                        name: "Tree Layer (VectorTile)",
+                        name_en: "Tree Layer (VectorTile)",
+                        thumbnail: "control_treeLayer_vectorTiledControl.png",
+                        fileName: "control_treeLayerServiceControl",
+                        subject: "Tree Layer (VectorTile).",
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                    },
+                    {
                         name: "Base Layer",
                         name_en: "Base Layer",
                         thumbnail: "control_baseLayerControl.png",

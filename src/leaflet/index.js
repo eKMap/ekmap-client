@@ -5,7 +5,7 @@ import {
     FeatureLayer,
     TiledVietNamMapLayer,
     TiledRoadMapLayer,
-    TiledAdminMapLayer
+    TiledAdminMapLayer,
 } from './layer';
 import {
     MapService,
@@ -31,7 +31,7 @@ export {
     FeatureLayer,
     TiledVietNamMapLayer,
     TiledRoadMapLayer,
-    TiledAdminMapLayer
+    TiledAdminMapLayer,
 };
 export {
     MapService,
