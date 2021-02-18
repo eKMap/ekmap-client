@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <script src="../../examples/js/common.js"></script>
     <title>Story Map Vinhomes</title>
@@ -14,28 +12,28 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         .dataTable {
             overflow: auto;
             height: calc(100vh - 20px);
             background-color: #f2efe9;
         }
-
+        
         .filter-ctrl {
             position: inherit;
             top: 10px;
             margin-left: 42%;
             z-index: 1;
         }
-
+        
         td {
             padding: 4px;
         }
-
+        
         .filter-ctrl input[type='text'] {
             width: 100%;
             border: 0;
@@ -46,27 +44,28 @@
             border-radius: 3px;
             width: 250px;
         }
-
+        
         .rounded-rect {
             background: white;
             border-radius: 10px;
             box-shadow: 0 0 50px -25px black;
         }
-
+        
         .flex-center {
             position: absolute;
             display: flex;
             justify-content: center;
         }
-
+        
         .flex-center.left {
             left: 10px;
+            top: 7px;
         }
-
+        
         .flex-center.right {
             right: 0px;
         }
-
+        
         .sidebar-content {
             position: absolute;
             margin-top: 10px;
@@ -76,7 +75,7 @@
             font-size: 32px;
             color: gray;
         }
-
+        
         .sidbear-toggle {
             position: absolute;
             width: 1.3em;
@@ -86,37 +85,37 @@
             justify-content: center;
             align-items: center;
         }
-
+        
         .sidbear-toggle.left {
             right: -1.5em;
         }
-
+        
         .sidbear-toggle.right {
             left: -1.5em;
         }
-
+        
         .sidbear-toggle:hover {
             color: #0aa1cf;
             cursor: pointer;
         }
-
+        
         .sidebar {
             transition: transform 1s;
-            z-index: 1;
+            z-index: 9999;
             width: 500px;
             height: 100%;
         }
-
+        
         .left.collapsed {
             transform: translateX(-295px);
             left: -205px;
             ;
         }
-
+        
         .right.collapsed {
             transform: translateX(295px);
         }
-
+        
         .kt-portlet {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -133,7 +132,7 @@
             margin-bottom: 10px;
             border-radius: 4px;
         }
-
+        
         .kt-portlet .kt-portlet__body {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -146,11 +145,11 @@
             border-radius: 4px;
             margin-bottom: -15px;
         }
-
+        
         .kt-portlet .kt-portlet__body.kt-portlet__body--fit {
             padding: 0;
         }
-
+        
         .textTitle {
             text-align: center;
             font-size: 20px;
@@ -159,18 +158,18 @@
             margin-bottom: 0px;
             margin-top: 40px;
         }
-
+        
         .kt-widget19__text-appInfo {
             font-size: 13px;
             font-weight: 300;
             font-family: Poppins;
         }
-
+        
         .btn-cont {
             width: 83%;
             color: #fff !important;
         }
-
+        
         .btn {
             display: inline-block;
             font-weight: 400;
@@ -192,7 +191,7 @@
             transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
             transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
         }
-
+        
         .btn-lg {
             padding: 1.15rem 1.65rem;
             font-size: 1.25rem;
@@ -200,18 +199,18 @@
             border-radius: .3rem;
             text-decoration: unset;
         }
-
+        
         .kt-widget19__wrapper {
             background-color: #fff;
             border-radius: 4px;
             padding: 1rem;
         }
-
+        
         .item-container {
             border: 1px solid #ebedf2;
             padding: 10px 15px;
         }
-
+        
         .item-image {
             max-width: 8.5rem;
             margin-right: .5rem;
@@ -222,177 +221,187 @@
             height: 8.5rem;
             width: 8.5rem;
         }
-
+        
         .item-name a {
             font-size: 1.1rem;
             font-weight: 400;
             color: #595d6e;
             text-decoration: unset;
         }
-
+        
         .form-group {
             display: flex;
         }
-
+        
         .col {
             width: 100%;
         }
-
+        
         .img_select {
             padding-right: 10px;
         }
-
+        
         .item-image-container {
             width: 40%;
         }
-
+        
         .kt-widget19 {
             height: calc(100vh - 40px);
         }
-
+        
         .scrollbar {
             overflow-y: auto;
         }
-
+        
         #style-3::-webkit-scrollbar-track {
             box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
             background-color: #F5F5F5;
         }
-
+        
         #style-3::-webkit-scrollbar {
             width: 6px;
             background-color: #F5F5F5;
         }
-
+        
         #style-3::-webkit-scrollbar-thumb {
             background-color: #9b9dad;
         }
-
+        
         .col-form-label {
             font-size: 1.1rem;
             font-weight: 500;
             color: #595d6e;
         }
-
+        
         .font-des {
             font-size: 13px;
             font-weight: 300;
             color: #646c9a;
             font-family: Poppins;
         }
+        /*  */
     </style>
 </head>
 
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
-            <div id="left" class="sidebar flex-center left collapsed">
-                <div class="sidebar-content rounded-rect flex-center">
-                    <div class="kt-portlet kt-widget19 scrollbar" id="style-3"
-                        style="margin-bottom: 0px;background-color: #f2f3f8;">
-                        <div class="kt-portlet__body kt-padding-0">
-                            <div class="kt-widget19__wrapper">
-                                <div class="kt-widget19__pic kt-portlet-fit--top kt-portlet-fit--sides branding-image">
-                                    <img alt="" style="width: 100%; height: 100%;display: block;"
-                                        src="https://media.vinhomes.vn/storage/vinhomes-2017/vector-smart-object.svg">
-                                </div>
-                                <div class="kt-widget19__content">
-                                    <div class="kt-widget19__info">
-                                        <p class="textTitle"> Bất động sản Vinhomes </p>
-                                    </div>
-                                </div><br>
-                                <line-clamp row="6" _nghost-lti-c12="">
-                                    <div _ngcontent-lti-c12="" class="box"
-                                        style="-webkit-line-clamp: initial; height: auto; visibility: visible;">
-                                        <div class="kt-widget19__text-appInfo">
-                                            <p>Địa chỉ: Tòa nhà văn phòng Symphony, Đường Chu Huy Mân, Khu đô thị sinh
-                                                thái Vinhomes Riverside, Phường Phúc Lợi, Quận Long Biên, Thành phố Hà
-                                                Nội, Việt Nam.</p>
-                                        </div>
-                                        <a _ngcontent-lti-c12="" class="btn-toggle" href="javascript:void(0)"><i
-                                                _ngcontent-lti-c12="" class="flaticon2-up"></i></a>
-                                    </div>
-                                </line-clamp>
-                                <div class="btn-contact">
-                                    <a class="btn btn-lg btn-label-brand btn-cont" href="https://vinhomes.vn"
-                                        target="_blank" style="background-color: rgb(204, 144, 54);"> Website </a></div>
+
+        </div>
+        <div id="left" class="sidebar flex-center left collapsed">
+            <div class="sidebar-content rounded-rect flex-center">
+                <div class="kt-portlet kt-widget19 scrollbar" id="style-3" style="margin-bottom: 0px;background-color: #f2f3f8;">
+                    <div class="kt-portlet__body kt-padding-0">
+                        <div class="kt-widget19__wrapper">
+                            <div class="kt-widget19__pic kt-portlet-fit--top kt-portlet-fit--sides branding-image">
+                                <img alt="" style="width: 100%; height: 100%;display: block;" src="https://media.vinhomes.vn/storage/vinhomes-2017/vector-smart-object.svg">
                             </div>
-                        </div>
-                        <div class="kt-portlet__body kt-padding-0 " id="listData">
-                            <!-- <div class="kt-portlet item-container" style="cursor:pointer;">
-                                <div class="form-group form-group-last row">
-                                    <div class="col item-name">
-                                        <img class="img_select" height="20"
-                                            src="http://gis.mapdrive.io/gserver/rest/services/icon/svg/map/pin29/25/00ffffff/ff0000">
-                                        <a class="col-form-label" href="javascript:;">
-                                            Vinhomes Symphony </a>
-                                    </div>
-                                    <div class="item-image-container"><img alt="" class="item-image"
-                                            src="https://media.vinhomes.vn/storage/vinhomes-2019/bds-ban/vinhomes-symphony/600-450-symphony.jpg">
-                                    </div>
+                            <div class="kt-widget19__content">
+                                <div class="kt-widget19__info">
+                                    <p class="textTitle"> Bất động sản Vinhomes </p>
                                 </div>
-                            </div> -->
+                            </div><br>
+                            <line-clamp row="6" _nghost-lti-c12="">
+                                <div _ngcontent-lti-c12="" class="box" style="-webkit-line-clamp: initial; height: auto; visibility: visible;">
+                                    <div class="kt-widget19__text-appInfo">
+                                        <p>Địa chỉ: Tòa nhà văn phòng Symphony, Đường Chu Huy Mân, Khu đô thị sinh thái Vinhomes Riverside, Phường Phúc Lợi, Quận Long Biên, Thành phố Hà Nội, Việt Nam.</p>
+                                    </div>
+                                    <a _ngcontent-lti-c12="" class="btn-toggle" href="javascript:void(0)"><i
+                                                _ngcontent-lti-c12="" class="flaticon2-up"></i></a>
+                                </div>
+                            </line-clamp>
+                            <div class="btn-contact">
+                                <a class="btn btn-lg btn-label-brand btn-cont" href="https://vinhomes.vn" target="_blank" style="background-color: rgb(204, 144, 54);"> Website </a></div>
                         </div>
                     </div>
-                    <div class="sidbear-toggle rounded-rect left" onclick="toggleSidebar('left')">
-                        &rarr;
+                    <div class="kt-portlet__body kt-padding-0 " id="listData">
                     </div>
+                </div>
+                <div class="sidbear-toggle rounded-rect left" onclick="toggleSidebar('left')">
+                    &rarr;
                 </div>
             </div>
         </div>
     </div>
     <hr />
     <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            style: 'mapbox://styles/mapbox/satellite-streets-v11',
-            center: [105.79930031798517, 21.02292215577198],
+        var map = new L.map('divMapId', {
+            center: {
+                lon: 105.79930031798517,
+                lat: 21.02292215577198
+            },
             zoom: 11.819951961785312,
-            pitch: 60,
-            bearing: 36
+            zoomControl: true,
+            attributionControl: false,
         });
 
-        map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
-
-        var popup;
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
+        $('left').mouseup(function() {
+            map.dragging.disable();
+        });
+        L.DomEvent.disableScrollPropagation(document.getElementById('left'));
+        var points, iconImage;
+        var data = [];
         toggleSidebar('left');
-
         widgets.loader.showLoader("data loading...");
         var divData = document.getElementById('listData');
-        $.get("../../examples/data/data_Vinhome.json", function (response) {
+        $.get("../../examples/data/data_Vinhome.json", function(response) {
             var listData = response.result;
-            listData.forEach(feature => {
-                new mapboxgl.Marker({
-                    'color': 'red'
-                }).setLngLat([feature.mapView.lon, feature.mapView.lat]).addTo(map);
+            listData.forEach(e => {
+                data.push({
+                    type: "Feature",
+                    geometry: {
+                        type: "Point",
+                        coordinates: [e.mapView.lon, e.mapView.lat]
+                    },
+                    properties: {
+                        name: e.name,
+                        sorter: e.sorter,
+                        address: e.address,
+                        appId: e.appId,
+                        description: e.description,
+                        image: e.image,
+                        maLienKet: e.maLienKet,
+                        bearing: e.mapView.bearing,
+                        pitch: e.mapView.pitch,
+                        zoom: e.mapView.zoom
+                    }
+                })
+            })
+
+            L.geoJSON(data, {
+                pointToLayer: function(feature, latlng) {
+                    iconImage = L.icon({
+                        iconSize: [43, 50],
+                        iconAnchor: [13, 27],
+                        popupAnchor: [1, -24],
+                        iconUrl: './img/marker-icon-red.png'
+                    })
+                    return L.marker(latlng, {
+                        icon: iconImage
+                    });
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.bindPopup('<h4>' + feature.properties.name + '</h4>');
+                }
+            }).addTo(map);
+            data.forEach(f => {
                 var div = document.createElement('div');
                 var div2 = document.createElement('div');
                 div2.className = "kt-portlet item-container";
                 div2.style.cursor = "pointer";
-                div2.onclick = function () {
-                    map.flyTo({
-                        center: [feature.mapView.lon, feature.mapView.lat],
-                        zoom: feature.mapView.zoom,
-                        bearing: feature.mapView.bearing,
-                        pitch: feature.mapView.pitch,
-                        speed: 1
-                    })
-                    if (popup)
-                        popup.remove();
-                    popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500, closeButton: false })
-                        .setLngLat([feature.mapView.lon, feature.mapView.lat])
-                        .setHTML("<h3>" + feature.name + "</h3>")
-                        .addTo(map)
+                div2.onclick = function() {
+                    var coord = f.geometry.coordinates;
+                    var lat = coord[1];
+                    var lng = coord[0];
+                    map.flyTo([lat, lng], f.properties.zoom, {
+                        animate: true,
+                    });
+                    map.openPopup(L.popup()
+                        .setLatLng(L.latLng(lat, lng))
+                        .setContent('<h4>' + f.properties.name + '</h4>')
+                    )
                 }
-                div2.onmouseover = function () {
-                    if (popup)
-                        popup.remove();
-                    popup = new mapboxgl.Popup({ offset: 30, maxWidth: 500, closeButton: false })
-                        .setLngLat([feature.mapView.lon, feature.mapView.lat])
-                        .setHTML("<h3>" + feature.name + "</h3>")
-                        .addTo(map)
-                };
                 var div3 = document.createElement('div');
                 div3.className = "form-group form-group-last row";
                 div.className = 'col item-name';
@@ -402,27 +411,27 @@
                 image.height = 20;
                 var a = document.createElement('a');
                 a.className = 'col-form-label';
-                a.innerHTML = feature.name;
+                a.innerHTML = f.properties.name;
                 a.href = "javascript:;";
                 var div4 = document.createElement('div');
                 div4.className = 'font-des';
-                var frag = document.createRange().createContextualFragment(feature.description);
+                var frag = document.createRange().createContextualFragment(f.properties.description);
                 div4.appendChild(frag);
                 div.appendChild(image);
-                div.appendChild(a)
-                div.appendChild(div4)
+                div.appendChild(a);
+                div.appendChild(div4);
                 var div1 = document.createElement('div');
                 div1.className = "item-image-container";
                 var image1 = document.createElement('img');
-                image1.src = feature.image;
+                image1.src = f.properties.image;
                 image1.className = 'item-image';
                 div1.appendChild(image1);
                 div3.appendChild(div);
                 div3.appendChild(div1);
                 div2.appendChild(div3);
                 divData.appendChild(div2);
-            });
-        }).done(function () {
+            })
+        }).done(function() {
             widgets.loader.removeLoader();
         })
 
@@ -431,28 +440,13 @@
             var classes = elem.className.split(' ');
             var collapsed = classes.indexOf('collapsed') !== -1;
             var padding = {};
-
             if (collapsed) {
-                // Remove the 'collapsed' class from the class list of the element, this sets it back to the expanded state.
                 classes.splice(classes.indexOf('collapsed'), 1);
-
-                padding[id] = 400; // In px, matches the width of the sidebars set in .sidebar CSS class
-                map.easeTo({
-                    padding: padding,
-                    duration: 1000 // In ms, CSS transition duration property for the sidebar matches this value
-                });
+                padding[id] = 400;
             } else {
                 padding[id] = 0;
-                // Add the 'collapsed' class to the class list of the element
                 classes.push('collapsed');
-
-                map.easeTo({
-                    padding: padding,
-                    duration: 1000
-                });
             }
-
-            // Update the class list on the element
             elem.className = classes.join(' ');
         }
     </script>

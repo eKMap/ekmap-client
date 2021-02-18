@@ -6,6 +6,7 @@ import {
     TiledVietNamMapLayer,
     TiledRoadMapLayer,
     TiledAdminMapLayer,
+    ImageMapLayer
 } from './layer';
 import {
     MapService,
@@ -21,7 +22,8 @@ import {
 import {
     Legend,
     FeatureInfomation,
-    BaseLayer
+    BaseLayer,
+    TreeLayerGroup
 } from './control';
 
 export {
@@ -32,6 +34,7 @@ export {
     TiledVietNamMapLayer,
     TiledRoadMapLayer,
     TiledAdminMapLayer,
+    ImageMapLayer
 };
 export {
     MapService,
@@ -45,7 +48,8 @@ export {
 export {
     Legend,
     FeatureInfomation,
-    BaseLayer
+    BaseLayer,
+    TreeLayerGroup
 };
 // export * from './control';
 // export * from './core';

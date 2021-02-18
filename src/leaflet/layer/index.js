@@ -14,3 +14,5 @@ export { TiledRoadMapLayer }
 from './TiledRoadMapLayer';
 export { TiledVietNamMapLayer }
 from './TiledVietNamMapLayer';
+export { ImageMapLayer }
+from './ImageMapLayer';

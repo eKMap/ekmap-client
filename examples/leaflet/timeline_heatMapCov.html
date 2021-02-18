@@ -3,20 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="../../examples/js/common.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="leaflet.heat" src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <title>Timeline Coranavirus (Heatmap)</title>
     <style type="text/css">
@@ -24,11 +14,11 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         #range-slider {
             position: absolute;
             left: 0.5rem;
@@ -43,9 +33,9 @@
             line-height: 1;
             border-radius: 0.2rem;
             background-color: rgba(70, 70, 70, 0.8);
-            z-index: 3;
+            z-index: 9999999999999;
         }
-
+        
         #spread {
             display: flex;
             align-items: center;
@@ -58,7 +48,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
+        
         input[type=range] {
             flex: 1;
             margin: 0 0.5rem;
@@ -66,7 +56,7 @@
             -webkit-appearance: none;
             cursor: ew-resize;
         }
-
+        
         #range-slider label {
             display: flex;
             align-items: baseline;
@@ -76,7 +66,7 @@
             text-transform: uppercase;
             min-width: 4.5rem;
         }
-
+        
         .spread-label {
             background: #66cc66;
             border: none;
@@ -98,33 +88,35 @@
         </div>
     </div>
     <script type="text/javascript">
-        var map = new mapboxgl.Map({
-            container: "divMapId",
-            center: [11.164340403295512, 2.079745662755286],
+        var map = new L.map('divMapId', {
+            center: {
+                lon: 11.164340403295512,
+                lat: 2.079745662755286
+            },
             zoom: 2.116295796373197,
+            zoomControl: true,
+            attributionControl: false,
 
         });
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var heatmapLayer;
         var value = 0;
         var count = -1;
         var data = [];
         var dataNew = []
         var features = [];
-
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map);
-
+        var dataHeat = [];
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
         for (var i = 0; i < 144; i++) {
             widgets.loader.showLoader("data loading...");
             var string = "../data/coranavirus/2020_" + i + ".json"
-            $.get(string, function (response) {
+            $.get(string, function(response) {
                 var listdata = response.features;
                 features = [];
                 for (var i = 0; i < listdata.length; i++) {
                     features.push({
                         "type": "Feature",
                         "properties": {
+                            "value": Math.random() * 9,
                             "date": response.date
                         },
                         "geometry": {
@@ -136,7 +128,7 @@
                         },
                     })
                 }
-            }).done(function () {
+            }).done(function() {
                 data.push(features)
                 count++
                 if (count == 133) {
@@ -148,18 +140,22 @@
                         });
                     }
                     widgets.loader.removeLoader();
+
                     var geojson = {
                         "type": "FeatureCollection",
                         "features": data[0]
                     }
-                    heatMapLayer = new mapboxgl.ekmap.HeatMapLayer("heatmap", {
-                        "map": map,
-                        "id": "heatmap",
-                        "radius": 10,
-                    });
-                    heatMapLayer.addFeatures(geojson);
-                    map.addLayer(heatMapLayer);
-                    interval = setInterval(function () {
+                    for (var i = 0; i < geojson.features.length; i++) {
+                        var lonLng = L.point(geojson.features[i].geometry.coordinates);
+                        dataHeat.push([lonLng.y, lonLng.x, Math.random() * 9]);
+                    }
+                    heatMapLayer = L.heatLayer(dataHeat, {
+                        radius: 15,
+                        minOpacity: 0.5,
+                    }).addTo(map);
+
+
+                    interval = setInterval(function() {
                         var x = getValue()
                         if (x == 133)
                             clearInterval(interval);
@@ -168,36 +164,44 @@
                             document.getElementById('date').textContent = dataNew[value][0].properties.date
                             var geojson = {
                                 "type": "FeatureCollection",
-                                "features": dataNew[value]
+                                "features": data[value]
                             }
-                            map.getSource('heatmap').setData(geojson)
+                            for (var i = 0; i < geojson.features.length; i++) {
+                                var lonLng = L.point(geojson.features[i].geometry.coordinates);
+                                dataHeat.push([lonLng.y, lonLng.x, Math.random() * 9]);
+                            }
+                            heatMapLayer.setLatLngs(dataHeat)
                         }
+
                     }, 300);
                 }
             })
         }
 
         var btn = document.getElementById('button-play');
-        document.getElementById("button-play").onclick = function () {
+        document.getElementById("button-play").onclick = function() {
             if (btn.value === 'PAUSE') {
                 btn.value = 'PLAY'
                 clearInterval(interval);
-            }
-            else {
+            } else {
                 btn.value = 'PAUSE'
-                interval = setInterval(function () {
+                interval = setInterval(function() {
                     var x = getValue()
                     if (x == 133)
                         clearInterval(interval);
                     else {
                         document.getElementById('slider').value = x
-
                         document.getElementById('date').textContent = dataNew[value][0].properties.date
+                        heatMapLayer.redraw();
                         var geojson = {
                             "type": "FeatureCollection",
-                            "features": dataNew[value]
+                            "features": data[value]
                         }
-                        map.getSource('heatmap').setData(geojson)
+                        for (var i = 0; i < geojson.features.length; i++) {
+                            var lonLng = L.point(geojson.features[i].geometry.coordinates);
+                            dataHeat.push([lonLng.y, lonLng.x, Math.random() * 9]);
+                        }
+                        heatMapLayer.setLatLngs(dataHeat)
                     }
                 }, 300);
             }
@@ -213,9 +217,15 @@
             document.getElementById('date').textContent = dataNew[value][0].properties.date
             var geojson = {
                 "type": "FeatureCollection",
-                "features": dataNew[value]
+                "features": data[value]
             }
-            map.getSource('heatmap').setData(geojson)
+            dataHeat = [];
+            for (var i = 0; i < geojson.features.length; i++) {
+                var lonLng = L.point(geojson.features[i].geometry.coordinates);
+                dataHeat.push([lonLng.y, lonLng.x, Math.random() * 9]);
+            }
+            heatMapLayer.redraw();
+            heatMapLayer.setLatLngs(dataHeat)
         }
     </script>
 </body>

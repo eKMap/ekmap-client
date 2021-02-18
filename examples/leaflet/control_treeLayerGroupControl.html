@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Tree Layer Group Control</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <button id='test'></button>
+    </div>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = L.map('divMapId', {
+            center: {
+                lon: 103.97584219304474,
+                lat: 21.277728387286984
+            },
+            zoom: 13.905413433260719,
+            zoomControl: true,
+            attributionControl: false,
+        });
+        var imgLayer = new L.ekmap.ImageMapLayer({
+            url: "https://gis.giadinhwater.vn/server/rest/services/WGS84/MangLuoi1223/MapServer/",
+        }).addTo(map);
+
+        var trelayer = new L.ekmap.control.TreeLayerGroup({
+            layer: imgLayer,
+            position: 'topleft',
+        }).addTo(map);
+    </script>
+</body>
+
+</html>

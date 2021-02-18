@@ -6,6 +6,7 @@ import SnapShot from "./control/SnapShot";
 import Reverse from "./control/Reverse";
 import Geocoder from "./control/Geocoder";
 import TreeLayer from "./control/TreeLayer";
+import TreeLayerGroup from "./control/TreeLayerGroup"
 import Location from "./control/Location";
 import Target from "./control/Target";
 import CanvasBase from "./control/CanvasBase";
@@ -28,6 +29,7 @@ import { WMS } from './layer/WMS';
 import { WMTS } from './layer/WMTS';
 import { VectorTiledMapLayer } from './layer/VectorTiledMapLayer';
 import { DomOverlay } from './layer/DomOverlay';
+import { ImageMapLayer } from './layer/ImageMapLayer';
 import Overlay from './layer/Overlay';
 import PerspectiveMap from './map/PerspectiveMap';
 
@@ -54,12 +56,13 @@ if (window && window.ol) {
     ol.ekmap.control.Reverse = Reverse;
     ol.ekmap.control.Geocoder = Geocoder;
     ol.ekmap.control.TreeLayer = TreeLayer;
+    ol.ekmap.control.TreeLayerGroup = TreeLayerGroup;
     ol.ekmap.control.Location = Location;
     ol.ekmap.control.Target = Target;
     ol.ekmap.control.CanvasBase = CanvasBase;
     ol.ekmap.overlay.Magnify = Magnify;
     ol.ekmap.interaction.Clip = Clip;
-
+    ``
 
     // core
     ol.ekmap.Util = Util;
@@ -84,8 +87,8 @@ if (window && window.ol) {
     ol.ekmap.BasemapArcgisLayer = BasemapArcgisLayer;
     ol.ekmap.DomOverlay = DomOverlay;
     ol.ekmap.Overlay = Overlay;
-    ol.ekmap.PerspectiveMap = PerspectiveMap;
-
+    ol.ekmap.PerspectiveMap = PerspectiveMap
+    ol.ekmap.ImageMapLayer = ImageMapLayer
 
     // service
     ol.ekmap.MapService = MapService;

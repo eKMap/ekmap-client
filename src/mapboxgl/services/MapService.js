@@ -92,6 +92,21 @@ export class MapService extends ServiceBase {
     }
 
     /**
+     * @function ol.ekmap.MapService.prototype.getExtent
+     * @description  Get Extent of layer.
+     * @param {RequestCallback} callback The callback of result data returned by the server side.
+     */
+    getExtent(callback, context) {
+        var params = {};
+        params.f = 'json';
+        var service = new MapService(this.options);
+        return service.request('', params, function(error, response) {
+            var result = (response && response.initialExtent) ? response.initialExtent : undefined;
+            callback.call(context, result);
+        }, this);
+    }
+
+    /**
      * @function mapboxgl.ekmap.MapService.prototype.getLayers
      * @description  Get list layer on map. 
      * @param {RequestCallback} callback The callback of result data returned by the server side.

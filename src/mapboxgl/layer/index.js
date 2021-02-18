@@ -1,40 +1,44 @@
-export { HeatMapLayer } from './HeatMapLayer';
+export { HeatMapLayer }
+from './HeatMapLayer';
 
-export { TiledMapLayer } from './TiledMapLayer';
+export { TiledMapLayer }
+from './TiledMapLayer';
 
-export { VectorTiledMapLayer } from './VectorTiledMapLayer';
+export { VectorTiledMapLayer }
+from './VectorTiledMapLayer';
 
-export { TiledRoadMapLayer } from './TiledRoadMapLayer';
+export { TiledRoadMapLayer }
+from './TiledRoadMapLayer';
 
-export { TiledAdminMapLayer } from './TiledAdminMapLayer';
+export { TiledAdminMapLayer }
+from './TiledAdminMapLayer';
 
-export { TiledVietNamMapLayer } from './TiledVietNamMapLayer';
+export { TiledVietNamMapLayer }
+from './TiledVietNamMapLayer';
 
-export { TiledOSMapLayer } from './TiledOSMapLayer';
+export { TiledOSMapLayer }
+from './TiledOSMapLayer';
 
-export { FeatureLayer } from './FeatureLayer';
+export { FeatureLayer }
+from './FeatureLayer';
 
-export { ThreeLayer } from './ThreeLayer';
+export { ThreeLayer }
+from './ThreeLayer';
 
-export { DomOverlay } from './DomOverlay';
+export { DomOverlay }
+from './DomOverlay';
 
-export { WMS } from './WMS';
+export { WMS }
+from './WMS';
 
-export { WFS } from './WFS';
+export { WFS }
+from './WFS';
 
-export { BasemapArcgisLayer } from './BasemapArcgisLayer';
+export { BasemapArcgisLayer }
+from './BasemapArcgisLayer';
 
-export { TileLayer } from './TileLayer';
+export { TileLayer }
+from './TileLayer';
 
-
-
-
-
-
-
-
-
-
-
-
-
+export { ImageMapLayer }
+from './ImageMapLayer';
