@@ -67,6 +67,27 @@ export class ImageMapLayer {
             });
             map.addLayer(me.layer);
             map.getView().fit(extend);
+            map.on('moveend', function() {
+                var bbox = map.getView().calculateExtent();
+                var param = {
+                    bbox: bbox,
+                    layers: 'show',
+                    format: 'png32',
+                    dpi: 96,
+                    transparent: true,
+                    f: 'image',
+                    bboxSR: me.projection,
+                    size: map.getSize()
+                };
+                var url = me.options.url;
+                url += 'export?' + Util.serialize(param);
+                me.layer.setSource(new ol.source.ImageStatic({
+                    url: url,
+                    projection: me.proj,
+                    imageExtent: bbox
+                }));
+                map.getView().fit(bbox);
+            })
         })
         return me;
     }

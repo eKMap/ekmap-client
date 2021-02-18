@@ -132,7 +132,6 @@ export class ImageMapLayer {
         //     })
         // })
         map.on('moveend', function() {
-            console.log('vao')
             var url = me.options.url;
             var bounds = map.getBounds();
             var bbox = [bounds.getSouthWest().lng, bounds.getSouthWest().lat, bounds.getNorthEast().lng, bounds.getNorthEast().lat]
