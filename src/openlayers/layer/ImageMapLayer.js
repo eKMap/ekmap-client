@@ -29,6 +29,7 @@ export class ImageMapLayer {
 
             this.service = new ol.ekmap.MapService(this.options);
             this.layer = null;
+            this.listDataOpen = null;
         }
     }
 

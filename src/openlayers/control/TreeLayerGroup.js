@@ -67,9 +67,10 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                         },
                         onChange: function() {
                             var param;
+                            var bbox = map.getView().calculateExtent();
                             if (this.values.toString() == '') {
                                 param = {
-                                    bbox: me.layer.extend,
+                                    bbox: bbox,
                                     layers: 'hide:0',
                                     format: 'png32',
                                     dpi: 96,
@@ -80,9 +81,8 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                 }
                             } else {
                                 param = {
-                                    bbox: me.layer.extend,
+                                    bbox: bbox,
                                     layers: 'show:' + this.values.toString(),
-
                                     format: 'png32',
                                     dpi: 96,
                                     transparent: true,
@@ -92,12 +92,13 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                 }
                             }
                             me.url = me.layer.options.url;
+                            me.layer.listDataOpen = this.values.toString();
                             me.url += 'export?' + Util.serialize(param);
                             me.layer.layer.setSource(
                                 new ol.source.ImageStatic({
                                     url: me.url,
                                     projection: me.layer.proj,
-                                    imageExtent: me.layer.extend
+                                    imageExtent: bbox
                                 })
                             )
                         }
