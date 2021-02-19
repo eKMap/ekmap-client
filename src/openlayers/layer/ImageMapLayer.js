@@ -29,6 +29,7 @@ export class ImageMapLayer {
 
             this.service = new ol.ekmap.MapService(this.options);
             this.layer = null;
+            this.listIndex = null;
         }
     }
 
@@ -68,10 +69,13 @@ export class ImageMapLayer {
             map.addLayer(me.layer);
             map.getView().fit(extend);
             map.on('moveend', function() {
+                var index = me.listIndex;
+                var arr = [];
+                arr.push(index);
                 var bbox = map.getView().calculateExtent();
                 var param = {
                     bbox: bbox,
-                    layers: 'show',
+                    layers: 'show:' + arr.toString(),
                     format: 'png32',
                     dpi: 96,
                     transparent: true,
