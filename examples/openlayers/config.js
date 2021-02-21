@@ -220,14 +220,14 @@ var exampleConfig = {
                         subject: "Tree Layer Group.",
                         description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
                     },
-                    {
-                        name: "Tree Layer Service",
-                        name_en: "Tree Layer Service",
-                        thumbnail: "control_treeLayerServiceControl.png",
-                        fileName: "control_treeLayerServiceControl",
-                        subject: "Tree Layer Service.",
-                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
-                    },
+                    // {
+                    //     name: "Tree Layer Service",
+                    //     name_en: "Tree Layer Service",
+                    //     thumbnail: "control_treeLayerServiceControl.png",
+                    //     fileName: "control_treeLayerServiceControl",
+                    //     subject: "Tree Layer Service.",
+                    //     description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                    // },
                     // {
                     //     name: "Tree Layer (VectorTile)",
                     //     name_en: "Tree Layer (VectorTile)",

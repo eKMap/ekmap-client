@@ -1,4 +1,5 @@
 import { Util } from '../core/Util';
+import { intersects } from 'ol/extent';
 /**
  * @class ol.ekmap.ImageMapLayer
  * @classdesc The ImageMapLayer class.
@@ -69,9 +70,8 @@ export class ImageMapLayer {
             map.addLayer(me.layer);
             map.getView().fit(extend);
             map.on('moveend', function() {
-                var index = me.listIndex;
                 var arr = [];
-                arr.push(index);
+                arr.push(me.listIndex);
                 var bbox = map.getView().calculateExtent();
                 var param = {
                     bbox: bbox,
@@ -84,7 +84,8 @@ export class ImageMapLayer {
                     size: map.getSize()
                 };
                 var url = me.options.url;
-                url += 'export?' + Util.serialize(param);
+                if (intersects(bbox, extend) == true)
+                    url += 'export?' + Util.serialize(param);
                 me.layer.setSource(new ol.source.ImageStatic({
                     url: url,
                     projection: me.proj,
