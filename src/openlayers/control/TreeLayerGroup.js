@@ -80,6 +80,8 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                     size: map.getSize()
                                 }
                             } else {
+                                me.layer.listIndex = this.values;
+                                console.log(me.layer.listIndex)
                                 param = {
                                     bbox: bbox,
                                     layers: 'show:' + this.values.toString(),
