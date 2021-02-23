@@ -51,7 +51,10 @@ export class TreeLayerGroup extends L.Control {
             this.button.style.backgroundRepeat = 'no-repeat';
             this.button.style.backgroundSize = '60%';
             this.button.addEventListener("click", function(e) {
+
                 var nodeChild = [];
+                var nodeParentArr = [];
+
                 var tree = [];
                 var nodeParent = -1;
                 event.preventDefault();
@@ -109,7 +112,8 @@ export class TreeLayerGroup extends L.Control {
                         },
                         loaded: function() {
                             if (me.layer.listIndex == null) {
-                                this.values = nodeChild;
+                                console.log(nodeParentArr)
+                                this.values = nodeParentArr;
                             } else {
                                 this.values = me.layer.listIndex
                             }
@@ -120,7 +124,8 @@ export class TreeLayerGroup extends L.Control {
                 function getChildren(arr, i) {
                     if (arr.type == 'Group Layer' && !arr.parentLayer && arr.subLayers.length > 0) {
                         nodeParent++;
-                        nodeChild.push(i)
+                        nodeChild.push(i);
+                        nodeParentArr.push(i);
                         tree.push({
                             "id": arr.id,
                             "text": arr.name,
@@ -158,6 +163,7 @@ export class TreeLayerGroup extends L.Control {
                     }
                     if (arr.type == 'Feature Layer' && !arr.parentLayer && arr.subLayers.length == 0) {
                         nodeParent++;
+                        nodeParentArr.push(i);
                         tree.push({
                             "id": arr.id,
                             "text": arr.name,

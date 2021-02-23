@@ -20,6 +20,11 @@
         body {
             overflow: hidden;
         }
+        
+        .tesst {
+            top: 54px;
+            left: 7px;
+        }
     </style>
 </head>
 
@@ -40,20 +45,19 @@
             center: [105.27979773383765, 17.155985832275704],
             zoom: 4.823549468384888
         });
-        map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN,
-                id: 'vnMap'
-            }).addTo(map);
-            var vnMap = new mapboxgl.ekmap.ImageMapLayer({
-                url: 'https://gis.giadinhwater.vn/server/rest/services/WGS84/MangLuoi1223/MapServer/',
-                id: 'image'
-            }).addTo(map);
-            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-            // map.addControl(new mapboxgl.ekmap.control.TreeLayerGroup({
-            //     url: 'https://gis.giadinhwater.vn/server/rest/services/WGS84/MangLuoi1223/MapServer/'
-            // }), 'top-left');
-        })
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN,
+            id: 'vnMap'
+        }).addTo(map);
+        var imgLayer = new mapboxgl.ekmap.ImageMapLayer({
+            url: "https://gis.giadinhwater.vn/server/rest/services/WGS84/MangLuoi1223/MapServer/",
+        }).addTo(map);
+
+        var treelayer = new mapboxgl.ekmap.control.TreeLayerGroup({
+            layer: imgLayer,
+            // className: 'tesst'
+        });
+        map.addControl(treelayer);
     </script>
 </body>
 

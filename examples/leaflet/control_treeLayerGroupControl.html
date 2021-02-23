@@ -31,15 +31,18 @@
     <script>
         var map = L.map('divMapId', {
             center: {
-                lon: 103.97584219304474,
-                lat: 21.277728387286984
+                lon: 105.27979773383765,
+                lat: 17.155985832275704
             },
-            zoom: 13.905413433260719,
+            zoom: 4.823549468384888,
             zoomControl: true,
             attributionControl: false,
         });
+        var vnMap = new L.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
         var imgLayer = new L.ekmap.ImageMapLayer({
-            url: "https://gis.giadinhwater.vn/server/rest/services/WGS84/MangLuoi1223/MapServer/",
+            url: "https://s2.cloudgis.vn/arcgis/rest/services/GIS/V6_DC_CTDT_TPTHAIBINH_Export/MapServer/",
         }).addTo(map);
 
         var trelayer = new L.ekmap.control.TreeLayerGroup({
