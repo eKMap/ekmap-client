@@ -417,14 +417,15 @@ var exampleConfig = {
                         subject: "Displays the timeline map showing the increase in COVID19 cases around the world.",
                         description: "Displays the timeline map showing the increase in COVID19 cases around the world."
                     },
-                    {
-                        name: "COVID-19: Government Response Stringency",
-                        name_en: "COVID-19: Government Response Stringency",
-                        thumbnail: "timeline_fillCov.gif",
-                        fileName: "timeline_fillCov",
-                        subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
-                        description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
-                    },
+                    // {
+                    //     name: "COVID-19: Government Response Stringency",
+                    //     name_en: "COVID-19: Government Response Stringency",
+                    //     thumbnail: "timeline_fillCov.gif",
+                    //     fileName: "timeline_fillCov",
+                    //     subject: "Displays the timeline map showing a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest)",
+                    //     description: "This is a composite measure based on nine response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest). If policies vary at the subnational level, the index is shown as the response level of the strictest sub-region."
+                    // }
+                    // ,
                     {
                         name: "Spiritual Tourism Map Tour",
                         name_en: "Spiritual Tourism Map Tour",

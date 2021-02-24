@@ -73,18 +73,15 @@ export class TreeLayerGroup extends L.Control {
                     }
                     var myTree = new Tree('#content', {
                         data: tree,
-                        loaded: function() {
-                            this.values = nodeChild;
-                        },
                         onChange: function() {
-                            console.log(me.layer)
                             var param;
+                            var bbox = [map.getBounds()._southWest.lng, map.getBounds()._southWest.lat, map.getBounds()._northEast.lng, map.getBounds()._northEast.lat];
                             var size = [];
                             size.push(map.getSize().x)
                             size.push(map.getSize().y)
                             if (this.values.toString() == '') {
                                 param = {
-                                    bbox: me.layer.extend,
+                                    bbox: bbox,
                                     layers: 'hide:0',
                                     format: 'png32',
                                     dpi: 96,
@@ -94,8 +91,9 @@ export class TreeLayerGroup extends L.Control {
                                     size: size
                                 }
                             } else {
+                                me.layer.listIndex = this.values;
                                 param = {
-                                    bbox: me.layer.extend,
+                                    bbox: bbox,
                                     layers: 'show:' + this.values.toString(),
                                     format: 'png32',
                                     dpi: 96,
@@ -107,8 +105,14 @@ export class TreeLayerGroup extends L.Control {
                             }
                             me.url = me.layer.options.url;
                             me.url += 'export?' + Util.serialize(param);
-                            console.log(me.url);
                             me.layer.layer.setUrl(me.url);
+                        },
+                        loaded: function() {
+                            if (me.layer.listIndex == null) {
+                                this.values = nodeChild;
+                            } else {
+                                this.values = me.layer.listIndex
+                            }
                         }
                     })
                 });

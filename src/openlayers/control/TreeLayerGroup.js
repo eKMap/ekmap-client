@@ -62,9 +62,6 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                     }
                     var myTree = new Tree('#content', {
                         data: tree,
-                        loaded: function() {
-                            this.values = nodeChild;
-                        },
                         onChange: function() {
                             var param;
                             var bbox = map.getView().calculateExtent();
@@ -81,7 +78,6 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                 }
                             } else {
                                 me.layer.listIndex = this.values;
-                                console.log(me.layer.listIndex)
                                 param = {
                                     bbox: bbox,
                                     layers: 'show:' + this.values.toString(),
@@ -103,6 +99,13 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                     imageExtent: bbox
                                 })
                             )
+                        },
+                        loaded: function() {
+                            if (me.layer.listIndex == null) {
+                                this.values = nodeChild;
+                            } else {
+                                this.values = me.layer.listIndex;
+                            }
                         }
                     })
                 });
