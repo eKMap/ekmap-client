@@ -1,10 +1,11 @@
+
 /*# sourceMappingURL=style.css.map */
 
 /*custom css ekmap*/
 
 /*---Header---*/
 /*----Logo title----*/
- .navbar-brand .project-title#title {
+.navbar-brand .project-title#title {
   color: #2D356B!important;
 }
 .navbar-header #suffix-title {
@@ -436,4 +437,43 @@ li.navbar-menu.active>a::after {
 }
 .sidebar-mini .navigationDiv a.sidebar-toggle .glyphicon-menu-hamburger {
   color: #fff!important;
+}
+
+
+
+
+/*----Editor----*/
+
+.content-wrapper,.right-side,.main-footer {
+  margin-left: 265px!important;
+}
+.skin-blue .treeview-menu > li.active > a {
+  color: #0DB39E!important;
+}
+.main-sidebar .thirdMenuTitle {
+  color: #2D356B!important;
+}
+.main-sidebar .thirdMenuTitle:hover {
+  color: #0DB39E!important;
+}
+
+.skin-blue .treeview-menu.active .menuTitle.active {
+  color: #0DB39E!important;
+}
+.main-sidebar .menuTitle.active .thirdMenuTitle {
+color:#0DB39E!important;
+}
+
+@media (min-width: 768px) {
+  .sidebar-mini.sidebar-collapse .content-wrapper {
+    margin-left: 65px !important;
+  }
+}
+
+
+.content-wrapper.content .pane > div(:first-child) {
+  margin: 0!important;
+}
+.content .pane {
+    padding: 5px 5px 0 5px!important;
 }
