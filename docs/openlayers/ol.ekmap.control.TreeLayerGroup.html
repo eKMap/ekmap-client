@@ -70,7 +70,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="ol.ekmap.control.BaseLayerControl.html">Class: BaseLayerControl</h1>
+        <h1 class="page-title" data-filename="ol.ekmap.control.TreeLayerGroup.html">Class: TreeLayerGroup</h1>
         
 
 
@@ -78,11 +78,11 @@
 <section>
     
 <header>
-    <h2></span>BaseLayerControl
+    <h2></span>TreeLayerGroup
     
     </h2>
     
-        <div class="class-description"><p>A control displaying rough y-axis distances, calculated for the center of the viewport. For conformal projections <br>(e.g. EPSG:3857, the default view projection in OpenLayers), the scale is valid for all directions. No scale line will be <br>shown when the y-axis distance of a pixel at the viewport center cannot be calculated in the view projection. By <br> default the scale line will show in the bottom left portion of the map, but this can be changed by using the css <br> selector .ol-scale-line. When specifying bar as true, a scalebar will be rendered instead of a BaseLayer..</p></div>
+        <div class="class-description"><p>TreeLayerGroup.</p></div>
     
 </header>  
 
@@ -94,14 +94,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="BaseLayerControl">
+        <h4 class="name" id="TreeLayerGroup">
             
-            new ol.ekmap.control.BaseLayerControl<span class="signature">(options)</span>
+            new ol.ekmap.control.TreeLayerGroup<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/BaseLayer.js, line 5
+            control/TreeLayerGroup.js, line 5
         </div>
         
     </div>
@@ -145,7 +145,7 @@
             <td class="type">
             
                 
-<span class="param-type">options</span>
+<span class="param-type">Object</span>
 
 
             
@@ -155,7 +155,7 @@
             
             <td class="description last">
                 
-                <p>Scale line options.</p>
+                <p>Construction parameters.</p>
                 
 
 <table class="params">
@@ -168,12 +168,126 @@
 		<th>Type</th>
 		
 		
+		<th>Default</th>
+		
 		
 		<th class="last">Description</th>
 	</tr>
 	</thead>
 	
 	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>layers</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;ol.Map></span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>List of layers for which you want to display TreeLayerGroup.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    TreeLayerGroup
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Name of header.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>tooltip</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    TreeLayerGroup
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Tooltip of button.</p></td>
+        </tr>
+	
 	
 	
         <tr>
@@ -191,36 +305,14 @@
             </td>
             
             
-            
-            <td class="description last">
+                <td class="default">
                 
-                <p>CSS Class name.</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>target</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">HTMLElement</span>
-|
-
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
+                </td>
             
             
             <td class="description last">
                 
-                <p>Specify a target if you want the control to be rendered outside of the map's viewport.</p></td>
+                <p>Style css of button.</p></td>
         </tr>
 	
 	
@@ -275,7 +367,7 @@
         
 
     
-    <pre class="prettyprint"><code>var control = new ol.ekmap.control.BaseLayer();     map.addControl(control)</code></pre>
+    <pre class="prettyprint"><code>var map = new ol.Map({     //config.... }); var tiledMap = new ol.ekmap.TiledMapLayer({      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer' }).addTo(map); var TreeLayerGroup = new ol.ekmap.control.TreeLayerGroup({     layers: [tiledMap] }); map.addControl(TreeLayerGroup,"top-left");</code></pre>
     
 
     
@@ -284,17 +376,6 @@
     
     </div>
     
-    
-        <h3 class="subsection-title">Extends</h3>
-        <ul>
-            
-            
-            
-            
-            <li>ol.control.Control</li>
-            
-            
-        </ul>
     
 
     

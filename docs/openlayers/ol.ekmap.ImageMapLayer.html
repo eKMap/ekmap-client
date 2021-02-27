@@ -70,7 +70,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="Target.html">Class: Target</h1>
+        <h1 class="page-title" data-filename="ol.ekmap.ImageMapLayer.html">Class: ImageMapLayer</h1>
         
 
 
@@ -78,9 +78,11 @@
 <section>
     
 <header>
-    <h2></span>Target
+    <h2></span>ImageMapLayer
     
     </h2>
+    
+        <div class="class-description"><p>The ImageMapLayer class.</p></div>
     
 </header>  
 
@@ -92,14 +94,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="Target">
+        <h4 class="name" id="ImageMapLayer">
             
-            new Target<span class="signature">(options)</span>
+            new ol.ekmap.ImageMapLayer<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/Target.js, line 11
+            layer/ImageMapLayer.js, line 3
         </div>
         
     </div>
@@ -108,10 +110,6 @@
 </dt>
 <dd>
     
-    
-    <div class="description">
-        <p>Control vẽ vị trí tâm bản đồ</p>
-    </div>
     
 
     
@@ -157,7 +155,7 @@
             
             <td class="description last">
                 
-                
+                <p>Construction parameters.</p>
                 
 
 <table class="params">
@@ -170,6 +168,8 @@
 		<th>Type</th>
 		
 		
+		<th>Default</th>
+		
 		
 		<th class="last">Description</th>
 	</tr>
@@ -180,26 +180,83 @@
 	
         <tr>
             
-                <td class="name"><code>style</code></td>
+                <td class="name"><code>url</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">ol.style.Style</span>
-|
-
-<span class="param-type">Array.&lt;ol.style.Style></span>
+<span class="param-type">string</span>
 
 
             
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
+                <p>Required: URL of the <a href="https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm">Map Service</a> with a tile cache.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>token</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
                 </td>
+            
+            
+            <td class="description last">
+                
+                <p>Will use this token to authenticate all calls to the service.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>projection</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    4326
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Will use this token to authenticate all calls to the service.</p></td>
         </tr>
 	
 	
@@ -256,6 +313,17 @@
     </div>
     
     
+        <h3 class="subsection-title">Extends</h3>
+        <ul>
+            
+            
+            
+            
+            <li>ol.Evented</li>
+            
+            
+        </ul>
+    
 
     
     
@@ -276,14 +344,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="getVisible">
+        <h4 class="name" id="addTo">
             
-            getVisible<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            addTo<span class="signature">(map)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/Target.js, line 42
+            layer/ImageMapLayer.js, line 38
         </div>
         
     </div>
@@ -294,7 +362,7 @@
     
     
     <div class="description">
-        <p>Lấy thông tin hiển thị hiện thời</p>
+        <p>Adds the layer to the given map or layer group.</p>
     </div>
     
 
@@ -302,6 +370,51 @@
     
     
     
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">ol.Map</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Adds the layer to the given map or layer group.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
     
     
     
@@ -343,101 +456,10 @@
     
 
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        boolean
-                        
-                    
-            </td>
-            <td class="description last">b</td>
-        </tr>
-    
-    </tbody>
-</table>
 
-    
-    
-    
-</dd>
+this
 
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="setVisible">
-            
-            setVisible<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            control/Target.js, line 34
-        </div>
-        
-    </div>
 
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Thiết lập hiển thị</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
     
     
     
