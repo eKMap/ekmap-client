@@ -90,7 +90,7 @@ export class TreeLayerGroup extends L.Control {
                                     dpi: 96,
                                     transparent: true,
                                     f: 'image',
-                                    bboxSR: me.layer.projection,
+                                    bboxSR: '4326',
                                     size: size
                                 }
                             } else {
@@ -112,7 +112,6 @@ export class TreeLayerGroup extends L.Control {
                         },
                         loaded: function() {
                             if (me.layer.listIndex == null) {
-                                console.log(nodeParentArr)
                                 this.values = nodeParentArr;
                             } else {
                                 this.values = me.layer.listIndex

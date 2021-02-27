@@ -1,4 +1,6 @@
 import { Util } from '../core/Util';
+import * as turf from '@turf/turf'
+import proj4 from 'proj4';
 /**
  * @class mapboxgl.ekmap.ImageMapLayer
  * @classdesc The ImageMapLayer class.
@@ -23,6 +25,7 @@ export class ImageMapLayer {
                 this.url = this.options.url;
             this.service = new mapboxgl.ekmap.MapService(this.options);
             this.layer = null;
+            this.listIndex = null;
         }
     }
 
@@ -34,110 +37,26 @@ export class ImageMapLayer {
      */
     addTo(map) {
         var me = this;
-        var nameID = 'image-layer' + guid12();
-        if (this.options.id)
-            var id = this.options.id;
-        else
-            var id = nameID;
-        var bounds = map.getBounds();
-        var bbox = [bounds.getSouthWest().lng, bounds.getSouthWest().lat, bounds.getNorthEast().lng, bounds.getNorthEast().lat]
-        var arrSize = [];
-        arrSize.push(map.getCanvas().width);
-        arrSize.push(map.getCanvas().height);
-        var param = {
-            bbox: bbox,
-            layers: 'show',
-            format: 'png32',
-            dpi: 96,
-            transparent: true,
-            f: 'image',
-            bboxSR: '4326',
-            size: arrSize
-        };
-        me.url += 'export?' + Util.serialize(param);
-        if (me.options.token) {
-            me.url += ('&token=' + me.options.token);
-        }
-        map.addSource(id, {
-            type: 'image',
-            url: me.url,
-            coordinates: [
-                [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
-                [bounds.getNorthEast().lng, bounds.getNorthEast().lat],
-                [bounds.getNorthEast().lng, bounds.getSouthWest().lat],
-                [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
-            ]
-        });
-        map.addLayer({
-            'id': id,
-            'type': 'raster',
-            'source': id,
-            'paint': {
-                'raster-fade-duration': 0
-            }
-        });
-
-        // map.on('move', function() {
-        //     var url = me.options.url;
-        //     var bounds = map.getBounds();
-        //     var bbox = [bounds.getSouthWest().lng, bounds.getSouthWest().lat, bounds.getNorthEast().lng, bounds.getNorthEast().lat]
-        //     var param = {
-        //         bbox: bbox,
-        //         layers: 'show',
-        //         format: 'png32',
-        //         dpi: 96,
-        //         transparent: true,
-        //         f: 'image',
-        //         bboxSR: '4326',
-        //         size: arrSize
-        //     };
-        //     url += 'export?' + Util.serialize(param);
-        //     map.getSource(id).updateImage({
-        //         url: url,
-        //         coordinates: [
-        //             [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
-        //             [bounds.getNorthEast().lng, bounds.getNorthEast().lat],
-        //             [bounds.getNorthEast().lng, bounds.getSouthWest().lat],
-        //             [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
-        //         ]
-        //     })
-        // })
-
-        // map.on('resize', function() {
-        //     var url = me.options.url;
-        //     var bounds = map.getBounds();
-        //     var bbox = [bounds.getSouthWest().lng, bounds.getSouthWest().lat, bounds.getNorthEast().lng, bounds.getNorthEast().lat]
-        //     var arrSi = [];
-        //     arrSi.push(map.getCanvas().width);
-        //     arrSi.push(map.getCanvas().height);
-        //     var param = {
-        //         bbox: bbox,
-        //         layers: 'show',
-        //         format: 'png32',
-        //         dpi: 96,
-        //         transparent: true,
-        //         f: 'image',
-        //         bboxSR: '4326',
-        //         size: arrSi
-        //     };
-        //     url += 'export?' + Util.serialize(param);
-        //     map.getSource(id).updateImage({
-        //         url: url,
-        //         coordinates: [
-        //             [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
-        //             [bounds.getNorthEast().lng, bounds.getNorthEast().lat],
-        //             [bounds.getNorthEast().lng, bounds.getSouthWest().lat],
-        //             [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
-        //         ]
-        //     })
-        // })
-        map.on('moveend', function() {
-            var url = me.options.url;
+        this.service.getExtent(function(extend) {
+            var id = 'image-layer';
             var bounds = map.getBounds();
             var bbox = [bounds.getSouthWest().lng, bounds.getSouthWest().lat, bounds.getNorthEast().lng, bounds.getNorthEast().lat]
-            var arrSi = [];
-            arrSi.push(map.getCanvas().width);
-            arrSi.push(map.getCanvas().height);
+            var bbox1 = [extend.xmin, extend.ymin, extend.xmax, extend.ymax]
+            var poly = turf.bboxPolygon(bbox1);
+            var coordinates1 = [];
+            coordinates1 = poly.geometry.coordinates[0];
+            var polygon1 = turf.polygon([
+                [
+                    proj4("EPSG:3857", "EPSG:4326", coordinates1[0]),
+                    proj4("EPSG:3857", "EPSG:4326", coordinates1[1]),
+                    proj4("EPSG:3857", "EPSG:4326", coordinates1[2]),
+                    proj4("EPSG:3857", "EPSG:4326", coordinates1[3]),
+                    proj4("EPSG:3857", "EPSG:4326", coordinates1[4]),
+                ]
+            ])
+            var arrSize = [];
+            arrSize.push(map.getCanvas().width);
+            arrSize.push(map.getCanvas().height);
             var param = {
                 bbox: bbox,
                 layers: 'show',
@@ -146,17 +65,74 @@ export class ImageMapLayer {
                 transparent: true,
                 f: 'image',
                 bboxSR: '4326',
-                size: arrSi
+                size: arrSize
             };
-            url += 'export?' + Util.serialize(param);
-            map.getSource(id).updateImage({
-                url: url,
+            me.url += 'export?' + Util.serialize(param);
+            if (me.options.token) {
+                me.url += ('&token=' + me.options.token);
+            }
+            map.addSource(id, {
+                type: 'image',
+                url: me.url,
                 coordinates: [
                     [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
                     [bounds.getNorthEast().lng, bounds.getNorthEast().lat],
                     [bounds.getNorthEast().lng, bounds.getSouthWest().lat],
                     [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
                 ]
+            });
+            map.addLayer({
+                'id': id,
+                'type': 'raster',
+                'source': id,
+                'paint': {
+                    'raster-fade-duration': 0
+                }
+            });
+            map.on('moveend', function() {
+                var arr = [];
+                arr.push(me.listIndex);
+                var url = me.options.url;
+                var bounds = map.getBounds();
+                var bbox1 = [bounds.getSouthWest().lng, bounds.getSouthWest().lat, bounds.getNorthEast().lng, bounds.getNorthEast().lat]
+                var arrSi = [];
+                arrSi.push(map.getCanvas().width);
+                arrSi.push(map.getCanvas().height);
+                var param = {
+                    bbox: bbox1,
+                    layers: 'show:' + arr.toString(),
+                    format: 'png32',
+                    dpi: 96,
+                    transparent: true,
+                    f: 'image',
+                    bboxSR: '4326',
+                    size: arrSi
+                };
+                var poly1 = turf.bboxPolygon(bbox1);
+                var coordinates2 = [];
+                coordinates2 = poly1.geometry.coordinates[0];
+                var polygon2 = turf.polygon([
+                    [
+                        coordinates2[0],
+                        coordinates2[1],
+                        coordinates2[2],
+                        coordinates2[3],
+                        coordinates2[4],
+                    ]
+                ])
+                if (turf.intersect(polygon1, polygon2) != null) {
+                    url += 'export?' + Util.serialize(param);
+                    map.getSource(id).updateImage({
+                        url: url,
+                        coordinates: [
+                            [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
+                            [bounds.getNorthEast().lng, bounds.getNorthEast().lat],
+                            [bounds.getNorthEast().lng, bounds.getSouthWest().lat],
+                            [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
+                        ]
+                    })
+                }
+
             })
         })
         return me;
