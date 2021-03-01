@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="not-ie">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>eKMap Client</title>  
+    <title>eKMap Client</title>
     <meta name="description" content="A lightweight set of tools for using ArcGIS services with Leaflet.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <!-- stylesheet -->
@@ -14,10 +14,22 @@
 				flex:1;
 			}
 			.panel{
-				width:33.33% !important; 
+				width:33.33% !important;
 			}
+      @media only screen and (max-width: 767px) {
+     .panel {
+         width: 100% !important;
+       }
+       .row {
+         display: block!important;
+       }
+       .btn_sdk {
+         padding: 10px 0px!important;
+         margin-left: 0px!important;
+       }
+     }
 			body{
-				background-image: url('./img/bg.jpg');
+				background-image: url('./img/bg_SDK.jpg');
 				background-color:rgba(36, 132, 210, 0.35);
 				position: fixed;
 				top: 0;
@@ -34,53 +46,65 @@
 <body>
   <div class="page-content plugins">
     <div class="container">
-      <a class="site-nav" href="https://github.com/eKMap/ekmap-client">eKMap Client</a>
+      <div class="header-fixed">
+        <div class="menu">
+          <a href="https://github.com/eKMap/ekmap-client"  class="site-nav-menu site-nav"><img alt="eKGIS.,JSC" src="./img/logo-ekmap-90.png" height="50px"></a>
+      <!---<a class="site-nav" href="https://github.com/eKMap/ekmap-client">eKMap Client</a>
+
       <nav id="site-nav-wrapper" class="site-nav-wrapper">
         <a class="site-nav" href="http://ekgis.com.vn/">About Us</a>
         <a class="site-nav" href="https://github.com/eKMap/ekmap-client">View on GitHub</a>
+      </nav>---->
+      <nav id="site-nav-wrapper" class="site-nav-wrapper site-nav-wrapper menu-btn" style="list-style:none;">
+        <a class="site-nav site-nav-menu btn_sdk" href="http://ekgis.com.vn/">About Us</a>
+        <a class="site-nav site-nav-menu btn_sdk" href="https://github.com/eKMap/ekmap-client">View on GitHub</a>
       </nav>
     </div>
-    <div id="background-map" class="background-map" tabindex="0">
-	
+    </div>
+    </div>
+  <!---  <div id="background-map" class="background-map" tabindex="0"> --->
+
 	</div>
-	<div class="container">
-        <div class="row clearfix">
-            <p>
+	<div class="container container-content">
+    <div class="content-card">
+        <div class="row clearfix text-content-ekmap">
+            <p class="text-ekmap">
                 eKMap Client is a cloud GIS web client development platform, which supports the access to maps, services, and resources of eKMap Server site-nav-wrapper
                  and provides users with complete and professional GIS capabilities, and excellent visualization capabilities.
             </p>
         </div>
-	  <div class="row clearfix">
+	  <div class="row clearfix content-box-ekmap">
 		<div class="panel">
 		  <div class="card">
-			<h3><a href="./mapboxgl/examples.html">for MapboxGL</a></h3>
-			<p>
-                GIS web client based on <a href="https://docs.mapbox.com/mapbox-gl-js/">MapboxGL v1.13.0</a>
+			<h3 class="ekmap-pl ekmap-pr"><a href="./mapboxgl/examples.html" class="ekmap-link">for MapboxGL</a></h3>
+			<p class="ekmap-pl ekmap-pr">
+                GIS web client based on <a href="https://docs.mapbox.com/mapbox-gl-js/" class="ekmap-link">MapboxGL v1.13.0</a>
             </p>
-            GitHub: <a href="https://github.com/mapbox/mapbox-gl-js/releases/tag/v1.13.0">MapboxGL</a>
+        <p class="ekmap-pl ekmap-pr">    GitHub: <a href="https://github.com/mapbox/mapbox-gl-js/releases/tag/v1.13.0" class="ekmap-link">MapboxGL</a> </p>
 		  </div>
 		</div>
 
 		<div class="panel">
 		  <div class="card">
-			<h3><a href="./openlayers/examples.html">for OpenLayers</a></h3>
-			<p>
-                GIS web client based on <a href="https://openlayers.org/">OpenLayers v6.5.0</a>
+			<h3 class="ekmap-pl ekmap-pr"><a href="./openlayers/examples.html" class="ekmap-link">for OpenLayers</a></h3>
+			<p class="ekmap-pl ekmap-pr">
+                GIS web client based on <a href="https://openlayers.org/" class="ekmap-link">OpenLayers v6.5.0</a>
 			</p>
-            GitHub: <a href="https://github.com/openlayers/openlayers/releases/tag/v6.5.0">OpenLayers</a>
+        <p class="ekmap-pl ekmap-pr">    GitHub: <a href="https://github.com/openlayers/openlayers/releases/tag/v6.5.0" class="ekmap-link">OpenLayers</a> </p>
 		  </div>
 		</div>
-          
+
 		<div class="panel">
 		  <div class="card">
-			<h3><a href="./leaflet/examples.html">for Leaflet</a></h3>
-			<p>
-                GIS web client based on <a href="https://leafletjs.com/">Leaflet</a>
+			<h3 class="ekmap-pl ekmap-pr"><a href="./leaflet/examples.html" class="ekmap-link">for Leaflet</a></h3>
+			<p class="ekmap-pl ekmap-pr">
+                GIS web client based on <a href="https://leafletjs.com/" class="ekmap-link">Leaflet</a>
 			</p>
-            GitHub: <a href="https://github.com/Leaflet/Leaflet/releases">Leaflet</a>
+        <p class="ekmap-pl ekmap-pr">    GitHub: <a href="https://github.com/Leaflet/Leaflet/releases" class="ekmap-link">Leaflet</a> </p>
 		  </div>
 		</div>
 	  </div>
+    </div>
 	</div>
 </div>
 </body>
