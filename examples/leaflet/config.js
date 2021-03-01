@@ -198,14 +198,14 @@ var exampleConfig = {
                         description: "Click on the button below control: navigationControl to display Legend"
                     },
 
-                    // {
-                    //     name: "Tree Layer Group Control",
-                    //     name_en: "Tree Layer Group Control",
-                    //     thumbnail: "control_treeLayerGroupControl.png",
-                    //     fileName: "control_treeLayerGroupControl",
-                    //     subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
-                    //     description: "Click on the button below control: navigationControl to display Legend"
-                    // },
+                    {
+                        name: "Tree Layer Group Control",
+                        name_en: "Tree Layer Group Control",
+                        thumbnail: "control_treeLayerGroupControl.png",
+                        fileName: "control_treeLayerGroupControl",
+                        subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
+                        description: "Click on the button below control: navigationControl to display Legend"
+                    },
                     {
                         name: "Feature Infomation Control",
                         name_en: "Feature Infomation ",
