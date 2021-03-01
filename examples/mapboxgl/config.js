@@ -236,7 +236,7 @@ var exampleConfig = {
                         subject: "Base Layer Control.",
                         description: "Use mapboxgl.ekmap.control.BaseLayer to display, turn on / off map layers under the map"
                     },
-                    //  {
+                    // {
                     //     name: "Tree Layer Group",
                     //     name_en: "Tree Layer Group",
                     //     thumbnail: "control_treeLayerGroupControl.png",

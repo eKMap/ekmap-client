@@ -212,7 +212,8 @@ var exampleConfig = {
                         fileName: "control_treeLayerControl",
                         subject: "Tree Layer.",
                         description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
-                    }, {
+                    },
+                    {
                         name: "Tree Layer Group",
                         name_en: "Tree Layer Group",
                         thumbnail: "control_treeLayerGroupControl.png",

@@ -37,11 +37,6 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {},
-                "layers": []
-            },
             center: [105.27979773383765, 17.155985832275704],
             zoom: 4.823549468384888
         });
@@ -50,14 +45,14 @@
             id: 'vnMap'
         }).addTo(map);
         var imgLayer = new mapboxgl.ekmap.ImageMapLayer({
-            url: "https://gis.giadinhwater.vn/server/rest/services/WGS84/MangLuoi1223/MapServer/",
+            url: "https://s2.cloudgis.vn/arcgis/rest/services/GIS/V6_DC_CTDT_TPTHAIBINH_Export/MapServer/",
         }).addTo(map);
-
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var treelayer = new mapboxgl.ekmap.control.TreeLayerGroup({
             layer: imgLayer,
-            // className: 'tesst'
+            className: 'tesst'
         });
-        map.addControl(treelayer);
+        map.addControl(treelayer, 'top-left');
     </script>
 </body>
 

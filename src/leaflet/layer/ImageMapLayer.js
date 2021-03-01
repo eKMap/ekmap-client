@@ -1,8 +1,9 @@
 import { Util } from '../core/Util';
-import L, { map, point } from 'leaflet';
-import { Layer, LatLngBounds } from 'leaflet';
+import L from 'leaflet';
+import { Layer } from 'leaflet';
+import proj4 from 'proj4';
 /**
- * @class ol.ekmap.ImageMapLayert
+ * @class L.ekmap.ImageMapLayert
  * @classdesc The ImageMapLayer class.
  * @category  Layer
  * @param {Object} options Construction parameters.
@@ -22,11 +23,6 @@ export class ImageMapLayer extends Layer {
             this.options = Util.getUrlParams(options);
             if (this.options.url)
                 this.url = this.options.url;
-            this.projection = this.options.projection != undefined ? this.options.projection : 4326;
-            if (this.projection == 4326)
-                this.proj = 'EPSG:4326'
-            else
-                this.proj = 'EPSG:3857'
             this.service = new L.ekmap.MapService(this.options);
             this.layer = null;
             this.listIndex = null;
@@ -34,7 +30,7 @@ export class ImageMapLayer extends Layer {
     }
 
     /**
-     * @function ol.ekmap.ImageMapLayer.prototype.addTo
+     * @function L.ekmap.ImageMapLayer.prototype.addTo
      * @description Adds the layer to the given map or layer group.
      * @param {ol.Map} map - Adds the layer to the given map or layer group.
      * @returns this
@@ -42,27 +38,24 @@ export class ImageMapLayer extends Layer {
     addTo(map) {
         var me = this;
         this.service.getExtent(function(extend) {
-            if (me.projection == 4326) {
-                var pointMin = L.Projection.SphericalMercator.unproject(L.point(extend.xmin, extend.ymin));
-                var pointMax = L.Projection.SphericalMercator.unproject(L.point(extend.xmax, extend.ymax));
-                extend = [pointMin.lng, pointMin.lat, pointMax.lng, pointMax.lat];
-                var bound = [
-                    [pointMin.lat, pointMin.lng],
-                    [pointMax.lat, pointMax.lng]
-                ];
-            }
-            me.extend = extend;
+            var pointMin = proj4("EPSG:3857", "EPSG:4326", [extend.xmin, extend.ymin]);
+            var pointMax = proj4("EPSG:3857", "EPSG:4326", [extend.xmax, extend.ymax]);
+            var extend = [pointMin[0], pointMin[1], pointMax[0], pointMax[1]];
+            var bound = [
+                [pointMin[1], pointMin[0]],
+                [pointMax[1], pointMax[0]]
+            ];
             var size = [];
-            size.push(map.getSize().x)
-            size.push(map.getSize().y)
+            size.push(map.getSize().x);
+            size.push(map.getSize().y);
             var param = {
                 bbox: extend,
                 layers: 'show',
                 format: 'png32',
                 dpi: 96,
                 transparent: true,
+                bboxSR: '4326',
                 f: 'image',
-                bboxSR: me.projection,
                 size: size,
             };
             me.url += 'export?' + Util.serialize(param);
@@ -74,12 +67,11 @@ export class ImageMapLayer extends Layer {
             map.on('moveend', function() {
                 var arr = [];
                 arr.push(me.listIndex);
-                var bounds = map.getBounds();
                 var newBounds = [
-                    [bounds._southWest.lat, bounds._southWest.lng],
-                    [bounds._northEast.lat, bounds._northEast.lng]
+                    [map.getBounds()._southWest.lat, map.getBounds()._southWest.lng],
+                    [map.getBounds()._northEast.lat, map.getBounds()._northEast.lng]
                 ];
-                var bbox = [bounds._southWest.lng, bounds._southWest.lat, bounds._northEast.lng, bounds._northEast.lat];
+                var bbox = [map.getBounds()._southWest.lng, map.getBounds()._southWest.lat, map.getBounds()._northEast.lng, map.getBounds()._northEast.lat];
                 var arrSize = [];
                 arrSize.push(map.getSize().x);
                 arrSize.push(map.getSize().y);
@@ -89,8 +81,8 @@ export class ImageMapLayer extends Layer {
                     format: 'png32',
                     dpi: 96,
                     transparent: true,
+                    bboxSR: '4326',
                     f: 'image',
-                    bboxSR: me.projection,
                     size: arrSize
                 };
                 if (L.latLngBounds(newBounds).intersects(bound) == true) {
@@ -106,4 +98,3 @@ export class ImageMapLayer extends Layer {
 }
 
 L.ekmap.ImageMapLayer = ImageMapLayer;
-L.ekmap.LatLngBounds = LatLngBounds;
