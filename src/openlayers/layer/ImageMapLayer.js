@@ -34,6 +34,7 @@ export class ImageMapLayer {
         }
     }
 
+
     /**
      * @function ol.ekmap.ImageMapLayer.prototype.addTo
      * @description Adds the layer to the given map or layer group.
@@ -43,8 +44,12 @@ export class ImageMapLayer {
     addTo(map) {
         var me = this;
         this.service.getExtent(function(extend) {
-            if (me.projection == 4326)
+            if (me.projection == 4326) {
                 extend = ol.proj.transformExtent([extend.xmin, extend.ymin, extend.xmax, extend.ymax], 'EPSG:3857', 'EPSG:4326');
+            } else {
+                extend = [extend.xmin, extend.ymin, extend.xmax, extend.ymax]
+            }
+
             me.extend = extend
             var param = {
                 bbox: extend,
@@ -53,13 +58,14 @@ export class ImageMapLayer {
                 dpi: 96,
                 transparent: true,
                 f: 'image',
-                bboxSR: me.projection,
+                bboxSR: 102100,
                 size: map.getSize()
             };
             me.url += 'export?' + Util.serialize(param);
             if (me.options.token) {
                 me.url += ('&token=' + me.options.token);
             }
+            console.log(extend)
             me.layer = new ol.layer.Image({
                 source: new ol.source.ImageStatic({
                     url: me.url,
@@ -69,6 +75,7 @@ export class ImageMapLayer {
             });
             map.addLayer(me.layer);
             map.getView().fit(extend);
+            console.log(extend)
             map.on('moveend', function() {
                 var arr = [];
                 arr.push(me.listIndex);
@@ -80,18 +87,19 @@ export class ImageMapLayer {
                     dpi: 96,
                     transparent: true,
                     f: 'image',
-                    bboxSR: me.projection,
+                    bboxSR: 102100,
                     size: map.getSize()
                 };
-                var url = me.options.url;
-                if (intersects(bbox, extend) == true)
+                if (intersects(bbox, extend) == true) {
+                    var url = me.options.url;
                     url += 'export?' + Util.serialize(param);
-                me.layer.setSource(new ol.source.ImageStatic({
-                    url: url,
-                    projection: me.proj,
-                    imageExtent: bbox
-                }));
-                map.getView().fit(bbox);
+                    me.layer.setSource(new ol.source.ImageStatic({
+                        url: url,
+                        projection: me.proj,
+                        imageExtent: bbox
+                    }));
+                    // map.getView().fit(bbox);
+                }
             })
         })
         return me;

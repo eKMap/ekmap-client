@@ -40,6 +40,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
             this.button.style.backgroundSize = '70%';
             this.button.className = "ol-ctrl-zoom-in"
             this.button.addEventListener("click", function(e) {
+                var nodeparentArr = [];
                 var nodeChild = [];
                 var tree = [];
                 var nodeParent = -1;
@@ -62,6 +63,13 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                     }
                     var myTree = new Tree('#content', {
                         data: tree,
+                        loaded: function() {
+                            if (me.layer.listIndex == null) {
+                                this.values = nodeparentArr;
+                            } else {
+                                this.values = me.layer.listIndex;
+                            }
+                        },
                         onChange: function() {
                             var param;
                             var bbox = map.getView().calculateExtent();
@@ -77,6 +85,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                     size: map.getSize()
                                 }
                             } else {
+                                console.log(me.layer)
                                 me.layer.listIndex = this.values;
                                 param = {
                                     bbox: bbox,
@@ -100,13 +109,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                 })
                             )
                         },
-                        loaded: function() {
-                            if (me.layer.listIndex == null) {
-                                this.values = nodeChild;
-                            } else {
-                                this.values = me.layer.listIndex;
-                            }
-                        }
+
                     })
                 });
 
@@ -114,6 +117,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                     if (arr.type == 'Group Layer' && !arr.parentLayer && arr.subLayers.length > 0) {
                         nodeParent++;
                         nodeChild.push(i)
+                        nodeparentArr.push(i)
                         tree.push({
                             "id": arr.id,
                             "text": arr.name,
@@ -150,6 +154,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                         });
                     }
                     if (arr.type == 'Feature Layer' && !arr.parentLayer && arr.subLayers.length == 0) {
+                        nodeparentArr.push(i)
                         nodeParent++;
                         tree.push({
                             "id": arr.id,
