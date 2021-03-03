@@ -22,12 +22,6 @@ export class ImageMapLayer {
             this.options = Util.getUrlParams(options);
             if (this.options.url)
                 this.url = this.options.url;
-            this.projection = this.options.projection != undefined ? this.options.projection : 4326;
-            if (this.projection == 4326)
-                this.proj = 'EPSG:4326'
-            else
-                this.proj = 'EPSG:3857'
-
             this.service = new ol.ekmap.MapService(this.options);
             this.layer = null;
             this.listIndex = null;
@@ -44,13 +38,7 @@ export class ImageMapLayer {
     addTo(map) {
         var me = this;
         this.service.getExtent(function(extend) {
-            if (me.projection == 4326) {
-                extend = ol.proj.transformExtent([extend.xmin, extend.ymin, extend.xmax, extend.ymax], 'EPSG:3857', 'EPSG:4326');
-            } else {
-                extend = [extend.xmin, extend.ymin, extend.xmax, extend.ymax]
-            }
-
-            me.extend = extend
+            extend = [extend.xmin, extend.ymin, extend.xmax, extend.ymax];
             var param = {
                 bbox: extend,
                 layers: 'show',
@@ -58,7 +46,6 @@ export class ImageMapLayer {
                 dpi: 96,
                 transparent: true,
                 f: 'image',
-                bboxSR: 102100,
                 size: map.getSize()
             };
             me.url += 'export?' + Util.serialize(param);
@@ -69,7 +56,6 @@ export class ImageMapLayer {
             me.layer = new ol.layer.Image({
                 source: new ol.source.ImageStatic({
                     url: me.url,
-                    projection: me.proj,
                     imageExtent: extend
                 })
             });
@@ -87,7 +73,6 @@ export class ImageMapLayer {
                     dpi: 96,
                     transparent: true,
                     f: 'image',
-                    bboxSR: 102100,
                     size: map.getSize()
                 };
                 if (intersects(bbox, extend) == true) {
@@ -95,7 +80,6 @@ export class ImageMapLayer {
                     url += 'export?' + Util.serialize(param);
                     me.layer.setSource(new ol.source.ImageStatic({
                         url: url,
-                        projection: me.proj,
                         imageExtent: bbox
                     }));
                     // map.getView().fit(bbox);

@@ -81,11 +81,10 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                     dpi: 96,
                                     transparent: true,
                                     f: 'image',
-                                    bboxSR: me.layer.projection,
+                                    // bboxSR: me.layer.projection,
                                     size: map.getSize()
                                 }
                             } else {
-                                console.log(me.layer)
                                 me.layer.listIndex = this.values;
                                 param = {
                                     bbox: bbox,
@@ -94,7 +93,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                     dpi: 96,
                                     transparent: true,
                                     f: 'image',
-                                    bboxSR: me.layer.projection,
+                                    // bboxSR: me.layer.projection,
                                     size: map.getSize()
                                 }
                             }

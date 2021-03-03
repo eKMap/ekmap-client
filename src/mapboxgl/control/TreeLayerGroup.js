@@ -1,4 +1,5 @@
 import '../core/Base';
+import { Util } from '../core/Util';
 import mapboxgl from 'mapbox-gl';
 import Tree from '@widgetjs/tree';
 /**
@@ -17,13 +18,10 @@ export class TreeLayerGroup extends mapboxgl.Evented {
 
     constructor(options) {
         super(options);
-        this.options = options || {};
-        this._url = this.options.url;
-        if (this.options) {
-            this._url = this.options.url || {};
-        }
+        this.options = options ? options : {};
+        this.layer = this.options.layer;
+        this.target = this.options.target;
         this.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-
     }
 
     /**
@@ -35,36 +33,141 @@ export class TreeLayerGroup extends mapboxgl.Evented {
     onAdd(map) {
         this._map = map;
         let me = this;
-        this.div = document.createElement("div");
-        this.button = document.createElement("button");
-        this.button.className = 'mapboxgl-btn-treelayer';
-        this.button.addEventListener("click", function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (me._panel) {
-                me._container.removeChild(me._panel);
-            }
-            me.button.style.display = "none";
-            me._panel = me.createLayerInputToggle();
-            me._container.appendChild(me._panel);
-            var service = new mapboxgl.ekmap.MapService({
-                url: me.options.url
-            });
-            var treeData = [];
-            service.getLayers(function(e) {
-                var layerData = e.layers;
-                layerData.forEach(f => {
-                    treeData.push({
-                        id: f.id,
-                        text: f.name,
-                        children: [],
-                    });
+        if (!this.target) {
+            this.div = document.createElement("div");
+            this.button = document.createElement("button");
+            this.button.className = 'mapboxgl-btn-treelayer';
+            this.button.addEventListener("click", function(e) {
+                var nodeChild = [];
+                var nodeParentArr = [];
+                var tree = [];
+                var nodeParent = -1;
+                event.preventDefault();
+                event.stopPropagation();
+                if (me._panel) {
+                    me._container.removeChild(me._panel);
+                }
+                me.button.style.display = "none";
+                me._panel = me.createLayerInputToggle();
+                me._container.appendChild(me._panel);
+                var service = new mapboxgl.ekmap.MapService({
+                    url: me.layer.options.url
                 });
-                var myTree = new Tree('#content', {
-                    data: treeData,
-                })
-            });
-        })
+                service.getLayers(function(e) {
+                    var layers = e.layers;
+                    for (var i = 0; i < layers.length; i++) {
+                        getChildren(layers[i], i)
+                    }
+                    var myTree = new Tree('#content', {
+                        data: tree,
+                        onChange: function() {
+                            var param;
+                            var bounds = map.getBounds();
+                            var bbox = [bounds.getSouthWest().lng, bounds.getSouthWest().lat, bounds.getNorthEast().lng, bounds.getNorthEast().lat]
+                            var size = [];
+                            size.push(map.getCanvas().width);
+                            size.push(map.getCanvas().height);
+                            if (this.values.toString() == '') {
+                                param = {
+                                    bbox: bbox,
+                                    layers: 'hide:0',
+                                    format: 'png32',
+                                    dpi: 96,
+                                    transparent: true,
+                                    f: 'image',
+                                    bboxSR: '4326',
+                                    size: size
+                                }
+                            } else {
+                                me.layer.listIndex = this.values;
+                                param = {
+                                    bbox: bbox,
+                                    layers: 'show:' + this.values.toString(),
+                                    format: 'png32',
+                                    dpi: 96,
+                                    transparent: true,
+                                    f: 'image',
+                                    bboxSR: '4326',
+                                    size: size
+                                }
+                            }
+                            me.url = me.layer.options.url;
+                            me.url += 'export?' + Util.serialize(param);
+                            map.getSource('image-layer').updateImage({
+                                url: me.url,
+                                coordinates: [
+                                    [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
+                                    [bounds.getNorthEast().lng, bounds.getNorthEast().lat],
+                                    [bounds.getNorthEast().lng, bounds.getSouthWest().lat],
+                                    [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
+                                ]
+                            })
+                        },
+                        loaded: function() {
+                            if (me.layer.listIndex == null) {
+                                this.values = nodeParentArr;
+                            } else {
+                                this.values = me.layer.listIndex
+                            }
+                        }
+                    })
+                });
+
+                function getChildren(arr, i) {
+                    if (arr.type == 'Group Layer' && !arr.parentLayer && arr.subLayers.length > 0) {
+                        nodeParent++;
+                        nodeChild.push(i);
+                        nodeParentArr.push(i);
+                        tree.push({
+                            "id": arr.id,
+                            "text": arr.name,
+                            "children": []
+                        })
+                        var subLayers = arr.subLayers
+                        subLayers.forEach(layer => {
+                            nodeChild.push(layer.id)
+                            tree[nodeParent].children.push({
+                                "id": layer.id,
+                                "text": layer.name,
+                                "children": []
+                            })
+                        });
+                    }
+                    if (arr.type == 'Group Layer' && arr.parentLayer && arr.subLayers.length > 0) {
+                        nodeChild.forEach(element => {
+                            if (arr.id == element) {
+                                var subLayers = arr.subLayers
+                                var childrens = tree[nodeParent].children;
+                                subLayers.forEach(layer => {
+                                    nodeChild.push(layer.id)
+                                    for (var i = 0; i < childrens.length; i++) {
+                                        if (childrens[i].id == element) {
+                                            tree[nodeParent].children[i].children.push({
+                                                "id": layer.id,
+                                                "text": layer.name,
+                                                "children": []
+                                            })
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    if (arr.type == 'Feature Layer' && !arr.parentLayer && arr.subLayers.length == 0) {
+                        nodeParent++;
+                        nodeParentArr.push(i);
+                        tree.push({
+                            "id": arr.id,
+                            "text": arr.name,
+                        })
+                    }
+                }
+            })
+        } else {
+            var panel = document.getElementById(this.target);
+            this.createLayerInputToggle(panel)
+        }
+
         this._container = document.createElement('div');
         this._container.setAttribute("id", "container");
         me._container.style.overflow = "auto";
@@ -77,7 +180,10 @@ export class TreeLayerGroup extends mapboxgl.Evented {
                 me.close();
             }
         });
-        this._container.appendChild(this.button);
+        if (this.button)
+            this._container.appendChild(this.button);
+        if (this.target)
+            this._container.style.display = "none";
         return this._container;
     }
 
@@ -98,43 +204,44 @@ export class TreeLayerGroup extends mapboxgl.Evented {
      * @private
      * @description Create layer input
      */
-    createLayerInputToggle() {
-
+    createLayerInputToggle(divTarget) {
         var me = this;
-        var div = document.createElement("div");
-        div.id = 'content-control';
-        div.style.maxHeight = "500px";
-        div.style.maxWidth = "300px";
-        div.style.width = "300px";
-        div.style.height = "300px";
-        div.style.padding = "0px 1rem";
-        div.className = 'scrollbar';
-        var header = document.createElement("div");
-        header.style.textAlign = "center";
-        header.style.fontWeight = "700";
-        header.style.borderBottom = "1px solid #dddcdb";
-        header.style.padding = "10px";
-        header.innerHTML = this.options.title != undefined ? this.options.title : "Trees Layer Group";
-        this.closeButton = document.createElement('a');
-        this.closeButton.style.position = 'absolute';
-        this.closeButton.style.top = '0';
-        this.closeButton.style.right = '5px';
-        this.imgClose = document.createElement('img');
-        this.imgClose.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC");
-        this.imgClose.style.padding = '5px';
-        this.imgClose.style.cursor = 'pointer';
-        this.closeButton.appendChild(this.imgClose);
-        div.appendChild(this.closeButton);
-        div.appendChild(header);
-        this.closeButton.addEventListener("click", event => {
-            event.preventDefault();
-            event.stopPropagation();
-            me.close();
-        })
-        var div1 = document.createElement('div');
-        div1.id = "content";
-        div.appendChild(div1);
-        return div;
+        if (!divTarget) {
+            var div = document.createElement("div");
+            div.id = 'content-control';
+            div.style.maxHeight = "500px";
+            div.style.maxWidth = "300px";
+            div.style.width = "300px";
+            div.style.height = "300px";
+            div.style.padding = "0px 1rem";
+            div.className = 'scrollbar';
+            var header = document.createElement("div");
+            header.style.textAlign = "center";
+            header.style.fontWeight = "700";
+            header.style.borderBottom = "1px solid #dddcdb";
+            header.style.padding = "10px";
+            header.innerHTML = this.options.title != undefined ? this.options.title : "Trees Layer Group";
+            this.closeButton = document.createElement('a');
+            this.closeButton.style.position = 'absolute';
+            this.closeButton.style.top = '0';
+            this.closeButton.style.right = '5px';
+            this.imgClose = document.createElement('img');
+            this.imgClose.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC");
+            this.imgClose.style.padding = '5px';
+            this.imgClose.style.cursor = 'pointer';
+            this.closeButton.appendChild(this.imgClose);
+            div.appendChild(this.closeButton);
+            div.appendChild(header);
+            this.closeButton.addEventListener("click", event => {
+                event.preventDefault();
+                event.stopPropagation();
+                me.close();
+            })
+            var div1 = document.createElement('div');
+            div1.id = "content";
+            div.appendChild(div1);
+            return div;
+        }
     }
 
     /**

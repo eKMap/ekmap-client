@@ -7,7 +7,7 @@
         "example": "examples"
     },
     "scripts": {
-        "start-watch": "watch \"npm run release-mapboxgl\" src",
+        "start-watch": "watch \"npm run release-ol-es6\" src",
         "dev": "node ./build/server.js",
         "lint": "eslint src",
         "release": "npm run release-mapboxgl && npm run release-ol && npm run release-leaflet",
@@ -114,7 +114,7 @@
         "mapv": "2.0.43",
         "ol": "6.1.1",
         "pbf": "3.2.1",
-        "proj4": "2.6.0",
+        "proj4": "^2.6.0",
         "promise-polyfill": "8.1.3",
         "suggestions": "^1.7.1",
         "three": "0.92.0",
