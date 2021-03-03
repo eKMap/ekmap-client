@@ -1,0 +1,34 @@
+{
+    "opts": {
+        "recurse": true,
+        "template": "../template",
+        "configPath": "../leaflet",
+        "destination": "./docs/leaflet"
+    },
+    "disqus": "",
+    "tags": {
+        "allowUnknownTags": true,
+        "linkdoc-leaflet": "https://leafletjs.com/reference-1.7.1.html"
+    },
+    "i18n": {
+        "defaultLang": "en",
+        "possibleLang": ["en"],
+        "dbFilePath": "./build/jsdocs/leaflet"
+    },
+    "source": {
+        "includePattern": ".+\\.js?$",
+        "excludePattern": "",
+        "include": [
+            "src/leaflet"
+        ],
+        "exclude": []
+    },
+    "plugins": ["plugins/markdown"],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": false
+        }
+    }
+}

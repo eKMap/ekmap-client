@@ -7,7 +7,7 @@
         "example": "examples"
     },
     "scripts": {
-        "start-watch": "watch \"npm run release-ol-es6\" src",
+        "start-watch": "watch \"npm run release-leaflet-es6\" src",
         "dev": "node ./build/server.js",
         "lint": "eslint src",
         "release": "npm run release-mapboxgl && npm run release-ol && npm run release-leaflet",

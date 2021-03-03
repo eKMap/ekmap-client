@@ -1,7 +1,7 @@
 import { Util } from '../core/Util';
 import L from 'leaflet';
 import { Layer } from 'leaflet';
-import proj4 from 'proj4';
+
 /**
  * @class L.ekmap.ImageMapLayert
  * @classdesc The ImageMapLayer class.
@@ -38,8 +38,13 @@ export class ImageMapLayer extends Layer {
     addTo(map) {
         var me = this;
         this.service.getExtent(function(extend) {
-            var pointMin = proj4("EPSG:3857", "EPSG:4326", [extend.xmin, extend.ymin]);
-            var pointMax = proj4("EPSG:3857", "EPSG:4326", [extend.xmax, extend.ymax]);
+            var meters2degress = function(x, y) {
+                var lon = x * 180 / 20037508.34;
+                var lat = Math.atan(Math.exp(y * Math.PI / 20037508.34)) * 360 / Math.PI - 90;
+                return [lon, lat]
+            }
+            var pointMin = meters2degress(extend.xmin, extend.ymin);
+            var pointMax = meters2degress(extend.xmax, extend.ymax);
             var extend = [pointMin[0], pointMin[1], pointMax[0], pointMax[1]];
             var bound = [
                 [pointMin[1], pointMin[0]],

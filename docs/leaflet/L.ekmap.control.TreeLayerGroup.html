@@ -70,7 +70,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="L.ekmap.control.BaseLayer.html">Class: BaseLayer</h1>
+        <h1 class="page-title" data-filename="L.ekmap.control.TreeLayerGroup.html">Class: TreeLayerGroup</h1>
         
 
 
@@ -78,11 +78,11 @@
 <section>
     
 <header>
-    <h2><span class="ancestors"><a href="L.html">L</a><a href="L.ekmap.html">.ekmap</a><a href="L.ekmap.control.html">.control</a>.</span>BaseLayer
+    <h2><span class="ancestors"><a href="L.html">L</a><a href="L.ekmap.html">.ekmap</a><a href="L.ekmap.control.html">.control</a>.</span>TreeLayerGroup
     
     </h2>
     
-        <div class="class-description"><p>BaseLayer.</p></div>
+        <div class="class-description"><p>TreeLayerGroup.</p></div>
     
 </header>  
 
@@ -94,14 +94,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="BaseLayer">
+        <h4 class="name" id="TreeLayerGroup">
             
-            new L.ekmap.control.BaseLayer<span class="signature">(options)</span>
+            new L.ekmap.control.TreeLayerGroup<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/BaseLayer.js, line 6
+            control/TreeLayerGroup.js, line 5
         </div>
         
     </div>
@@ -168,6 +168,8 @@
 		<th>Type</th>
 		
 		
+		<th>Default</th>
+		
 		
 		<th class="last">Description</th>
 	</tr>
@@ -178,23 +180,112 @@
 	
         <tr>
             
-                <td class="name"><code>className</code></td>
+                <td class="name"><code>layers</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Boolean</span>
+<span class="param-type">Array.&lt;L.Map></span>
 
 
             
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
-                <p>CSS</p></td>
+                <p>List of layers for which you want to display TreeLayerGroup.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    TreeLayerGroup
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Name of header.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>tooltip</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    TreeLayerGroup
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Tooltip of button.</p></td>
         </tr>
 	
 	
@@ -249,7 +340,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new L.Map({     //config.... }); var tiledMap = new L.ekmap.TiledMapLayer({      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer' }).addTo(map);// BaseLayer  const mapBaseLayer = {       m_mono: "MIERUNE Mono",      m_color: "MIERUNE Color" };  // OverLayer  const mapOverLayer = {       o_std: "OpenStreetMap",       t_pale: "GSI Pale",       t_ort: "GSI Ort"   }; var BaseLayer = new L.ekmap.control.BaseLayer({       baseLayers: mapBaseLayer,       overLayers: mapOverLayer,       opacityControl: true  }); map.addControl(BaseLayer,"top-left");</code></pre>
+    <pre class="prettyprint"><code>var map = new L.Map({     //config.... }); var tiledMap = new L.ekmap.TiledMapLayer({      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer' }).addTo(map); var TreeLayerGroup = new L.ekmap.control.TreeLayerGroup({     layers: [tiledMap] }); map.addControl(TreeLayerGroup,"top-left");</code></pre>
     
 
     
@@ -286,7 +377,7 @@
     
         
         <div class="tag-source">
-            control/BaseLayer.js, line 47
+            control/TreeLayerGroup.js, line 36
         </div>
         
     </div>
@@ -431,7 +522,7 @@
     
         
         <div class="tag-source">
-            control/BaseLayer.js, line 68
+            control/TreeLayerGroup.js, line 204
         </div>
         
     </div>

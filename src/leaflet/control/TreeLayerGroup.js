@@ -79,6 +79,10 @@ export class TreeLayerGroup extends L.Control {
                         onChange: function() {
                             var param;
                             var bbox = [map.getBounds()._southWest.lng, map.getBounds()._southWest.lat, map.getBounds()._northEast.lng, map.getBounds()._northEast.lat];
+                            var bound = [
+                                [map.getBounds()._southWest.lat, map.getBounds()._southWest.lng],
+                                [map.getBounds()._northEast.lat, map.getBounds()._northEast.lng]
+                            ];
                             var size = [];
                             size.push(map.getSize().x)
                             size.push(map.getSize().y)
@@ -109,6 +113,8 @@ export class TreeLayerGroup extends L.Control {
                             me.url = me.layer.options.url;
                             me.url += 'export?' + Util.serialize(param);
                             me.layer.layer.setUrl(me.url);
+                            me.layer.layer.setBounds(bound)
+                            console.log(me.layer)
                         },
                         loaded: function() {
                             if (me.layer.listIndex == null) {
