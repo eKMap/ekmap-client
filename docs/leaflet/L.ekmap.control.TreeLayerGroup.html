@@ -70,7 +70,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="L.ekmap.TiledRoadMapLayer.html">Class: TiledRoadMapLayer</h1>
+        <h1 class="page-title" data-filename="L.ekmap.control.TreeLayerGroup.html">Class: TreeLayerGroup</h1>
         
 
 
@@ -78,11 +78,11 @@
 <section>
     
 <header>
-    <h2><span class="ancestors"><a href="L.html">L</a><a href="L.ekmap.html">.ekmap</a>.</span>TiledRoadMapLayer
+    <h2><span class="ancestors"><a href="L.html">L</a><a href="L.ekmap.html">.ekmap</a><a href="L.ekmap.control.html">.control</a>.</span>TreeLayerGroup
     
     </h2>
     
-        <div class="class-description"><p>Provide map layer with Traffic Tile pattern XYZ built by eKGIS.</p></div>
+        <div class="class-description"><p>TreeLayerGroup.</p></div>
     
 </header>  
 
@@ -94,14 +94,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="TiledRoadMapLayer">
+        <h4 class="name" id="TreeLayerGroup">
             
-            new L.ekmap.TiledRoadMapLayer<span class="signature">(options)</span>
+            new L.ekmap.control.TreeLayerGroup<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/TiledRoadMapLayer.js, line 5
+            control/TreeLayerGroup.js, line 5
         </div>
         
     </div>
@@ -155,7 +155,7 @@
             
             <td class="description last">
                 
-                <p>Control options.</p>
+                <p>Construction parameters.</p>
                 
 
 <table class="params">
@@ -180,13 +180,13 @@
 	
         <tr>
             
-                <td class="name"><code>token</code></td>
+                <td class="name"><code>layers</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Array.&lt;L.Map></span>
 
 
             
@@ -200,14 +200,14 @@
             
             <td class="description last">
                 
-                <p>Will use this token to authenticate all calls to the service.</p></td>
+                <p>List of layers for which you want to display TreeLayerGroup.</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>target</code></td>
             
             
             <td class="type">
@@ -222,21 +222,19 @@
             
                 <td class="default">
                 
-                    RoadMap
-                
                 </td>
             
             
             <td class="description last">
                 
-                <p>Name of layer.</p></td>
+                <p>Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default.</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>image</code></td>
+                <td class="name"><code>title</code></td>
             
             
             <td class="type">
@@ -251,21 +249,21 @@
             
                 <td class="default">
                 
-                    <a href="https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9">https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9</a>
+                    TreeLayerGroup
                 
                 </td>
             
             
             <td class="description last">
                 
-                <p>Thumbnail of layer.</p></td>
+                <p>Name of header.</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>zIndex</code></td>
+                <td class="name"><code>tooltip</code></td>
             
             
             <td class="type">
@@ -280,12 +278,14 @@
             
                 <td class="default">
                 
+                    TreeLayerGroup
+                
                 </td>
             
             
             <td class="description last">
                 
-                <p>The explicit zIndex of the tile layer.</p></td>
+                <p>Tooltip of button.</p></td>
         </tr>
 	
 	
@@ -340,7 +340,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new L.Map({    container: 'map1',    center: [103.9, 22.2],    zoom: 6});var roadMap = new L.ekmap.TiledRoadMapLayer({     zIndex: //1,2,3,4})  .addTo(map);</code></pre>
+    <pre class="prettyprint"><code>var map = new L.Map({     //config.... }); var tiledMap = new L.ekmap.TiledMapLayer({      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer' }).addTo(map); var TreeLayerGroup = new L.ekmap.control.TreeLayerGroup({     layers: [tiledMap] }); map.addControl(TreeLayerGroup,"top-left");</code></pre>
     
 
     
@@ -349,17 +349,6 @@
     
     </div>
     
-    
-        <h3 class="subsection-title">Extends</h3>
-        <ul>
-            
-            
-            
-            
-            <li>L.TileLayer</li>
-            
-            
-        </ul>
     
 
     
@@ -381,14 +370,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="addTo">
+        <h4 class="name" id="onAdd">
             
-            addTo<span class="signature">(map)</span>
+            onAdd<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{HTMLElement}</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/TiledRoadMapLayer.js, line 42
+            control/TreeLayerGroup.js, line 36
         </div>
         
     </div>
@@ -399,7 +388,7 @@
     
     
     <div class="description">
-        <p>Adds the layer to the given map or layer group.</p>
+        <p>Register a control on the map and give it a chance to register event listeners and resources. This method is called by Map#addControl internally.</p>
     </div>
     
 
@@ -436,7 +425,7 @@
             <td class="type">
             
                 
-<span class="param-type">L.Map</span>
+<span class="param-type">Map</span>
 
 
             
@@ -446,7 +435,7 @@
             
             <td class="description last">
                 
-                <p>Adds the layer to the given map or layer group.</p></td>
+                <p>the Map this control will be added to.</p></td>
         </tr>
 	
 	
@@ -493,9 +482,174 @@
     
 
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        HTMLElement
+                        
+                    
+            </td>
+            <td class="description last">The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.</td>
+        </tr>
+    
+    </tbody>
+</table>
 
-this
+    
+    
+    
+</dd>
 
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="onRemove">
+            
+            onRemove<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{undefined}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/TreeLayerGroup.js, line 204
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Unregister a control on the map and give it a chance to detach event listeners and resources. This method is called by Map#removeControl internally.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Map</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the Map this control will be removed from.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        undefined
+                        
+                    
+            </td>
+            <td class="description last">there is no required return value for this method.</td>
+        </tr>
+    
+    </tbody>
+</table>
 
     
     

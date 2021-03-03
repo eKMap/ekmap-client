@@ -52,6 +52,7 @@ export class ImageMapLayer {
             if (me.options.token) {
                 me.url += ('&token=' + me.options.token);
             }
+            console.log(extend)
             me.layer = new ol.layer.Image({
                 source: new ol.source.ImageStatic({
                     url: me.url,
@@ -60,6 +61,7 @@ export class ImageMapLayer {
             });
             map.addLayer(me.layer);
             map.getView().fit(extend);
+            console.log(extend)
             map.on('moveend', function() {
                 var arr = [];
                 arr.push(me.listIndex);
@@ -80,7 +82,7 @@ export class ImageMapLayer {
                         url: url,
                         imageExtent: bbox
                     }));
-                    map.getView().fit(bbox);
+                    // map.getView().fit(bbox);
                 }
             })
         })
