@@ -16,3 +16,7 @@ export { TiledVietNamMapLayer }
 from './TiledVietNamMapLayer';
 export { ImageMapLayer }
 from './ImageMapLayer';
+export { WMS }
+from './WMS';
+export { WFS }
+from './WFS';

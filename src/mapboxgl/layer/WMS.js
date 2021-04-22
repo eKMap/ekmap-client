@@ -81,16 +81,14 @@ export class WMS extends mapboxgl.Evented {
             'tiles': [baseUrl],
             'tileSize': 256
         });
-        map.addLayer(
-            {
-                'id': 'wms',
-                'type': 'raster',
-                'source': 'wms',
-                'paint': {}
-            }
-        );
+        map.addLayer({
+            'id': 'wms',
+            'type': 'raster',
+            'source': 'wms',
+            'paint': {}
+        });
         if (this.wmsParams.onClick)
-            this._map.on('click',function (e) {
+            this._map.on('click', function(e) {
                 me.getFeatureInfo(e)
             });
         return this;
@@ -120,11 +118,11 @@ export class WMS extends mapboxgl.Evented {
         var showResults = Util.bind(this.showGetFeatureInfo, this);
         $.ajax({
             url: url,
-            success: function (data, status, xhr) {
+            success: function(data, status, xhr) {
                 var err = typeof data === 'string' ? null : data;
                 showResults(err, evt.lngLat, data, callback);
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 showResults(error);
             }
         });

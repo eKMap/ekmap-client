@@ -3,20 +3,69 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
-    <script src="../../examples/js/common.js"></script>
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
     <title>Web Map Service</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
+        }
+        
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
+            padding: 0px 0px 10px 10px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 180px;
+            height: 100px;
+        }
+        
+        .ol-popup:after,
+        .ol-popup:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        
+        .ol-popup:after {
+            border-top-color: white;
+            border-width: 10px;
+            left: 48px;
+            margin-left: -10px;
+        }
+        
+        .ol-popup:before {
+            border-top-color: #cccccc;
+            border-width: 11px;
+            left: 48px;
+            margin-left: -11px;
+        }
+        
+        .ol-popup-closer {
+            text-decoration: none;
+            position: absolute;
+            top: 5px;
+            right: 8px;
+        }
+        
+        .ol-popup-closer:after {
+            content: "✖";
+            color: #A9A9A9;
         }
     </style>
 </head>
@@ -25,20 +74,57 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
+        <div id="popup" class="ol-popup">
+            <div id="popup-content"></div>
+        </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            zoom: 3.9996619013972636,
-            center: [-96.52559859275812, 39.21792880745451]
+        var container = document.getElementById("popup");
+        var content = document.getElementById("popup-content");
+        var closer = document.getElementById("popup-closer");
+
+        var overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250
+            }
         });
-        var wms;
-        wms = new mapboxgl.ekmap.WMS('https://demo.geo-solutions.it/geoserver/topp/wms', {
-            layers: 'topp:states',
-            transparent: true
+        var map = new ol.Map({
+            target: 'divMapId',
+            overlays: [overlay],
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [105, 17],
+                zoom: 6,
+                projection: 'EPSG:4326',
+            })
+        });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+
+        var wms = new ol.ekmap.WMS({
+            url: 'https://localhost:44347/ekmapserver/rest/services/40/WMS?apikey=1-1jFEpM75yKzPOFA5Z4H4FDWpNWqTkt0B',
+            params: {
+                'LAYERS': 'dev4gis:Dia_phan_Tinh'
+            }
         }).addTo(map);
-        
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+        map.on('click', function(evt) {
+            var object = [];
+            var result = wms.getFeatureInfoUrl(evt.coordinate);
+            if (result) {
+                result.then(data => {
+                    object.push(data);
+                    content.innerHTML = '<p>Fid : ' + object[0].features[0].id + '</p><p>Code : ' + object[0].features[0].properties.Code + '</p><p> Name : ' + object[0].features[0].properties.Name + '</p>';
+                    overlay.setPosition(evt.coordinate);
+                });
+            }
+        })
     </script>
 </body>
 

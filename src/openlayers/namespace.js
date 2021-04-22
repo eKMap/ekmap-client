@@ -26,6 +26,7 @@ import { HeatMapLayer } from './layer/HeatMapLayer';
 import { BasemapArcgisLayer } from './layer/BasemapArcgisLayer';
 import { AnimatedCluster } from './layer/AnimatedCluster';
 import { WMS } from './layer/WMS';
+import { WFS } from './layer/WFS';
 import { WMTS } from './layer/WMTS';
 import { VectorTiledMapLayer } from './layer/VectorTiledMapLayer';
 import { DomOverlay } from './layer/DomOverlay';
@@ -62,7 +63,7 @@ if (window && window.ol) {
     ol.ekmap.control.CanvasBase = CanvasBase;
     ol.ekmap.overlay.Magnify = Magnify;
     ol.ekmap.interaction.Clip = Clip;
-    ``
+
 
     // core
     ol.ekmap.Util = Util;
@@ -81,6 +82,7 @@ if (window && window.ol) {
     ol.ekmap.FeatureLayer = FeatureLayer;
     ol.ekmap.WMS = WMS;
     ol.ekmap.WMTS = WMTS;
+    ol.ekmap.WFS = WFS;
     ol.layer.HeatMapLayer = HeatMapLayer;
     ol.layer.AnimatedCluster = AnimatedCluster;
     ol.ekmap.VectorTiledMapLayer = VectorTiledMapLayer;

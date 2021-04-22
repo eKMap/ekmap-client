@@ -667,24 +667,37 @@ var exampleConfig = {
                 name: "WMS",
                 name_en: "WMS",
                 content: [{
-                    name: "WMS layer",
-                    name_en: "WMS layer",
+                    name: "WMS OGC",
+                    name_en: "WMS OGC",
                     thumbnail: "wms_layer.png",
-                    fileName: "wms_layer",
-                    subject: "wms_layer",
-                    description: "wms_layer"
+                    fileName: "ogc_wms",
+                    subject: "ogc_wms",
+                    description: "ogc_wms"
                 }]
             },
+
             WMTS: {
-                name: "WMTS",
-                name_en: "WMTS",
+                name: "WMTS OGC",
+                name_en: "WMTS OGC",
                 content: [{
-                    name: "WMTS layer",
-                    name_en: "WMTS layer",
+                    name: "WMTS OGC",
+                    name_en: "WMTS OGC",
                     thumbnail: "wmts_layer.png",
-                    fileName: "wmts_layer",
-                    subject: "wmts_layer",
-                    description: "wmts_layer"
+                    fileName: "ogc_wmts",
+                    subject: "ogc_wmts",
+                    description: "ogc_wmts"
+                }]
+            },
+            WFS: {
+                name: "WFS OGC",
+                name_en: "WFS OGC",
+                content: [{
+                    name: "WFS OGC",
+                    name_en: "WFS OGC",
+                    thumbnail: "wmts_layer.png",
+                    fileName: "ogc_wfs",
+                    subject: "ogc_wfs",
+                    description: "ogc_wfs"
                 }]
             }
         }

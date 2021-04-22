@@ -6,7 +6,9 @@ import {
     TiledVietNamMapLayer,
     TiledRoadMapLayer,
     TiledAdminMapLayer,
-    ImageMapLayer
+    ImageMapLayer,
+    WMS,
+    WFS,
 } from './layer';
 import {
     MapService,
@@ -34,7 +36,9 @@ export {
     TiledVietNamMapLayer,
     TiledRoadMapLayer,
     TiledAdminMapLayer,
-    ImageMapLayer
+    ImageMapLayer,
+    WMS,
+    WFS,
 };
 export {
     MapService,

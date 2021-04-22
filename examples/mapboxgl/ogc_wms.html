@@ -14,7 +14,7 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -29,16 +29,17 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            zoom: 3.9996619013972636,
-            center: [-96.52559859275812, 39.21792880745451]
+            center: [106.5090846096723, 16.787962287423255],
+            zoom: 5.1128594812072485
         });
-        var wms;
-        wms = new mapboxgl.ekmap.WMS('https://demo.geo-solutions.it/geoserver/topp/wms', {
-            layers: 'topp:states',
+        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        var wms = new mapboxgl.ekmap.WMS('https://localhost:44347/ekmapserver/rest/services/40/WMS?apikey=1-1jFEpM75yKzPOFA5Z4H4FDWpNWqTkt0B', {
+            layers: 'dev4gis:Dia_phan_Tinh',
             transparent: true
         }).addTo(map);
-        
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+    </script>
     </script>
 </body>
 

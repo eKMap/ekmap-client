@@ -1,8 +1,8 @@
 import { Util } from '../core/Util';
-import mapboxgl from 'mapbox-gl';
+import L from 'leaflet';
 
 /**
- * @class mapboxgl.ekmap.WFS
+ * @class L.ekmap.WFS
  * @classdesc Instantiates a WFS tile layer object given a base URL of the WFS service and a WFS parameters/options object..
  * @category Layer
  * @param {string} baseUrl  a base URL of the WFS service.
@@ -14,21 +14,21 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.format='image/jpeg' WFS image format (use 'image/png' for layers with transparency).
  * @param {boolean} options.outputFormat='application/json' 
  * @param {string} options.version='1.0.0' Version of the WFS service to use.
- * @extends {mapboxgl.Evented}
+ * @extends {L.Evented}
  * @example
- * var map = new mapboxgl.Map({
+ * var map = new L.Map({
  *     container: 'divMapId',
  *     zoom: 3.9996619013972636,
  *     center: [-96.52559859275812, 39.21792880745451]
  * });
- * var wfs = new mapboxgl.ekmap.WFS('https://demo.geo-solutions.it/geoserver/topp/ows', {
+ * var wfs = new L.ekmap.WFS('https://demo.geo-solutions.it/geoserver/topp/ows', {
  *     typeName: 'topp:states'
  * })
  * wfs.getFeature(function(e){
  *     //JSON data
  * })
  */
-export class WFS extends mapboxgl.Evented {
+export class WFS extends L.Evented {
 
     constructor(url, options) {
         super();
@@ -37,14 +37,12 @@ export class WFS extends mapboxgl.Evented {
             service: 'WFS',
             request: 'GetFeature',
             typeName: '',
-            maxFeatures: '50',
-            format: 'image/jpeg',
+            maxFeatures: '200',
             outputFormat: 'application/json',
             version: '1.0.0',
-            apikey: ''
+            apikey: '',
         }
         var WFSParams = Util.extend({}, this.defaultWFSParams);
-        // all keys that are not TileLayer options go to WFS params
         for (var i in options) {
             WFSParams[i] = options[i];
         }
@@ -52,46 +50,44 @@ export class WFS extends mapboxgl.Evented {
     }
 
     /**
-     * @function mapboxgl.ekmap.WFS.prototype.addTo
+     * @function L.ekmap.WFS.prototype.addTo
      * @description Adds the layer to the given map or layer group.
-     * @param {mapboxgl.Map} map - Adds the layer to the given map or layer group.
+     * @param {L.Map} map - Adds the layer to the given map or layer group.
      * @returns this
      */
     addTo(map) {
         this._map = map;
-        var me = this;
-        var baseUrl = this._url + '?' + Util.serialize(this.WFSParams);
-        $.get(baseUrl, function(res) {
-            map.addLayer({
-                'id': 'park-boundary',
-                'type': 'fill',
-                'source': {
-                    'type': 'geojson',
-                    'data': res,
-                },
-                'paint': {
-                    'fill-color': '#888888',
-                    'fill-opacity': 0.4
-                }
-            });
-            /**
-             * @event mapboxgl.ekmap.WFS#load
-             * @description Fired when the layer of WFS loaded.
-             */
-            me.fire('load');
-        })
+        var URL = this._url + Util.getParamString(this.WFSParams);
+        var WFSLayer = null;
+        $.ajax({
+            url: URL,
+            dataType: 'json',
+            jsonpCallback: 'getJson',
+            success: function(data) {
+                WFSLayer = new L.geoJson(data, {
+                    style: function(feature) {
+                        return {
+                            stroke: false,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0,
+                            opacity: 0.5
+                        };
+                    }
+                }).addTo(map);
+            }
+        });
         return this;
     }
 
     /**
-     * @function mapboxgl.ekmap.WFS.prototype.getFeature
+     * @function L.ekmap.WFS.prototype.getFeature
      * @description Adds the layer to the given map or layer group.
      * @returns geojson
      */
     getFeature(callback) {
-        var baseUrl = this._url + '?' + Util.serialize(this.WFSParams);
+        var URL = this._url + '?' + Util.serialize(this.WFSParams);
         var result;
-        $.get(baseUrl, function(res) {
+        $.get(URL, function(res) {
             result = res;
         }).done(function() {
             return callback(result);
@@ -99,4 +95,4 @@ export class WFS extends mapboxgl.Evented {
     }
 }
 
-mapboxgl.ekmap.WFS = WFS;
+L.ekmap.WFS = WFS;

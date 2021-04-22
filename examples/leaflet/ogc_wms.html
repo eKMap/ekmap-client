@@ -3,18 +3,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
-    <title>Web Map Service</title>
+    <title>OGC Web Map Service</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -27,18 +24,33 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            zoom: 3.9996619013972636,
-            center: [-96.52559859275812, 39.21792880745451]
+        var map = new L.map('divMapId', {
+            center: {
+                lon: 103.79882812500001,
+                lat: 16.762467717941604
+            },
+            zoom: 6,
         });
-        var wms;
-        wms = new mapboxgl.ekmap.WMS('https://demo.geo-solutions.it/geoserver/topp/wms', {
-            layers: 'topp:states',
-            transparent: true
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
+        var wms = new L.ekmap.WMS('https://localhost:44347/ekmapserver/rest/services/40/WMS?apikey=1-1jFEpM75yKzPOFA5Z4H4FDWpNWqTkt0B', {
+            layers: 'dev4gis:Dia_phan_Tinh',
         }).addTo(map);
-        
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+        map.on('click', function(e) {
+            var object = [];
+            var result = wms.getFeatureInfoUrl(e.latlng);
+            if (result) {
+                result.then(data => {
+                    object.push(data);
+                    if (data.features.length > 0) {
+                        map.openPopup(L.popup()
+                            .setLatLng(e.latlng)
+                            .setContent('<p>Fid : ' + object[0].features[0].id + '</p><p>Code : ' + object[0].features[0].properties.Code + '</p><p> Name : ' + object[0].features[0].properties.Name + '</p>')
+                        )
+                    }
+                })
+            }
+        })
     </script>
 </body>
 

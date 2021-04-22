@@ -36,6 +36,7 @@ export class WMS extends Observable {
             source: new ol.source.TileWMS({
                 url: this.url,
                 params: this.params,
+                serverType: 'geoserver',
                 crossOrigin: "Anonymous"
             })
         });
@@ -47,56 +48,82 @@ export class WMS extends Observable {
      * @function ol.ekmap.WMS.prototype.getLayers
      * @description Tree layers.
      */
-    getLayers() {
-        var me = this;
-        me.files = []
-        me.file = [{
-            "data": {
-                "name": "",
-                "id": ""
-            },
-            "children": []
-        }];
-        fetch(this.url + '?request=GetCapabilities&service=WMS')
-            .then(function(response) {
-                return response.text();
-            })
-            .then(function(text) {
-                var parser = new ol.format.WMSCapabilities();
-                var result = parser.read(text);
-                var layers = result.Capability.Layer;
-                me.file[0].data.name = layers.Title;
-                var arr = layers.Layer;
-                for (var i = 0; i < arr.length; i++) {
-                    me.getChildren(arr[i], i)
-                }
-            });
-        return me.file;
-    }
+    // getLayers() {
+    //     var me = this;
+    //     me.files = []
+    //     me.file = [{
+    //         "data": {
+    //             "name": "",
+    //             "id": ""
+    //         },
+    //         "children": []
+    //     }];
+    //     fetch(this.url + '?request=GetCapabilities&service=WMS')
+    //         .then(function(response) {
+    //             return response.text();
+    //         })
+    //         .then(function(text) {
+    //             var parser = new ol.format.WMSCapabilities();
+    //             var result = parser.read(text);
+    //             var layers = result.Capability.Layer;
+    //             me.file[0].data.name = layers.Title;
+    //             var arr = layers.Layer;
+    //             for (var i = 0; i < arr.length; i++) {
+    //                 me.getChildren(arr[i], i)
+    //             }
+    //         });
+    //     return me.file;
+    // }
 
-    getChildren(arr, i) {
-        if (this.nodeChild == -1)
-            this.file[0].children.push({
-                "data": {
-                    "name": arr.Title,
-                    "id": arr.Name
-                },
-                "children": []
-            })
-        else
-            this.file[0].children[this.nodeChild].children.push({
-                "data": {
-                    "name": arr.Title,
-                    "id": arr.Name
-                },
-                "children": []
-            })
-        if (arr.Layer) {
-            this.nodeChild = i;
-            for (var z = 0; z < arr.Layer.length; z++)
-                this.getChildren(arr.Layer[z], z)
-        } else {
-            this.nodeChild = -1;
+    // getChildren(arr, i) {
+    //     if (this.nodeChild == -1)
+    //         this.file[0].children.push({
+    //             "data": {
+    //                 "name": arr.Title,
+    //                 "id": arr.Name
+    //             },
+    //             "children": []
+    //         })
+    //     else
+    //         this.file[0].children[this.nodeChild].children.push({
+    //             "data": {
+    //                 "name": arr.Title,
+    //                 "id": arr.Name
+    //             },
+    //             "children": []
+    //         })
+    //     if (arr.Layer) {
+    //         this.nodeChild = i;
+    //         for (var z = 0; z < arr.Layer.length; z++)
+    //             this.getChildren(arr.Layer[z], z)
+    //     } else {
+    //         this.nodeChild = -1;
+    //     }
+    // }
+
+    /**
+     * @function ol.ekmap.WMS.prototype.getFeatureInfoUrl
+     * @description Adds the layer to the given map or layer group.
+     * @param {ol.Map} map - Adds the layer to the given map or layer group.
+     * @returns this
+     */
+    getFeatureInfoUrl(coordinate) {
+        var me = this;
+        me.result = [];
+        var viewResolution = /** @type {number} */ map.getView().getResolution();
+        var wms_source = map.getLayers().item(1).getSource();
+        var url = wms_source.getFeatureInfoUrl(
+            coordinate,
+            viewResolution,
+            "EPSG:4326", {
+                INFO_FORMAT: "application/json",
+                REQUEST: "GetFeatureInfo",
+                'FEATURE_COUNT': '20'
+            }
+        );
+        if (url) {
+            return fetch(url).then(resp => resp.json())
         }
+        return "";
     }
 }
