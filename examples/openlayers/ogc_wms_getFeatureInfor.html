@@ -25,10 +25,10 @@
             padding: 0px 0px 10px 10px;
             border-radius: 10px;
             border: 1px solid #cccccc;
-            bottom: 12px;
+            bottom: 15px;
             left: -50px;
-            min-width: 180px;
-            height: 100px;
+            min-width: 250px;
+            height: 170px;
         }
         
         .ol-popup:after,
@@ -108,20 +108,29 @@
         }).addTo(map)
 
         var wms = new ol.ekmap.WMS({
-            url: 'https://localhost:44347/ekmapserver/rest/services/40/WMS?apikey=1-1jFEpM75yKzPOFA5Z4H4FDWpNWqTkt0B',
+            url: 'https://localhost:44347/ekmapserver/rest/services/21/WMS',
             params: {
-                'LAYERS': 'dev4gis:Dia_phan_Tinh'
+                'apikey': tokenOGC,
+                'LAYERS': '875',
+                'VERSION': '1.1.1',
+                'BBOX': map.getView().calculateExtent(map.getSize())
+                    // 'BUFFER': 0,
             }
         }).addTo(map);
-
         map.on('click', function(evt) {
             var object = [];
             var result = wms.getFeatureInfoUrl(evt.coordinate);
+            console.log(result);
             if (result) {
                 result.then(data => {
-                    object.push(data);
-                    content.innerHTML = '<p>Fid : ' + object[0].features[0].id + '</p><p>Code : ' + object[0].features[0].properties.Code + '</p><p> Name : ' + object[0].features[0].properties.Name + '</p>';
-                    overlay.setPosition(evt.coordinate);
+                    console.log(data);
+                    // if (data.features.length > 0) {
+                    //     object.push(data.features[0]);
+                    //     content.innerHTML = '<p>Mã : ' + object[0].properties.Ma + '</p><p>Tỉnh : ' + object[0].properties.Tinh + '</p><p>Tên : ' + object[0].properties.Ten + '</p><p> Địa chỉ : ' + object[0].properties.diaChi + '</p>';
+                    //     overlay.setPosition(evt.coordinate);
+                    // } else {
+
+                    // }
                 });
             }
         })

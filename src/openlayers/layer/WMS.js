@@ -19,9 +19,8 @@ export class WMS extends Observable {
         this.options = options ? options : {};
         if (options) {
             options = Util.setOptions(this, options);
-            this.url = Util.cleanUrl(this.options.url);
+            this.url = this.options.url;
             this.params = this.options.params
-            this.nodeChild = -1;
         }
     }
 
@@ -37,7 +36,7 @@ export class WMS extends Observable {
                 url: this.url,
                 params: this.params,
                 serverType: 'geoserver',
-                crossOrigin: "Anonymous"
+                transition: 0
             })
         });
         map.addLayer(layer);
@@ -48,58 +47,19 @@ export class WMS extends Observable {
      * @function ol.ekmap.WMS.prototype.getLayers
      * @description Tree layers.
      */
-    // getLayers() {
-    //     var me = this;
-    //     me.files = []
-    //     me.file = [{
-    //         "data": {
-    //             "name": "",
-    //             "id": ""
-    //         },
-    //         "children": []
-    //     }];
-    //     fetch(this.url + '?request=GetCapabilities&service=WMS')
-    //         .then(function(response) {
-    //             return response.text();
-    //         })
-    //         .then(function(text) {
-    //             var parser = new ol.format.WMSCapabilities();
-    //             var result = parser.read(text);
-    //             var layers = result.Capability.Layer;
-    //             me.file[0].data.name = layers.Title;
-    //             var arr = layers.Layer;
-    //             for (var i = 0; i < arr.length; i++) {
-    //                 me.getChildren(arr[i], i)
-    //             }
-    //         });
-    //     return me.file;
-    // }
+    getLayers() {
+        var me = this;
+        var parser = new ol.format.WMSCapabilities();
+        fetch(this.url + '?apikey=' + this.params.apikey + '&request=GetCapabilities&service=WMS')
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(text) {
+                var result = parser.read(text);
+            });
+        return this;
+    }
 
-    // getChildren(arr, i) {
-    //     if (this.nodeChild == -1)
-    //         this.file[0].children.push({
-    //             "data": {
-    //                 "name": arr.Title,
-    //                 "id": arr.Name
-    //             },
-    //             "children": []
-    //         })
-    //     else
-    //         this.file[0].children[this.nodeChild].children.push({
-    //             "data": {
-    //                 "name": arr.Title,
-    //                 "id": arr.Name
-    //             },
-    //             "children": []
-    //         })
-    //     if (arr.Layer) {
-    //         this.nodeChild = i;
-    //         for (var z = 0; z < arr.Layer.length; z++)
-    //             this.getChildren(arr.Layer[z], z)
-    //     } else {
-    //         this.nodeChild = -1;
-    //     }
-    // }
 
     /**
      * @function ol.ekmap.WMS.prototype.getFeatureInfoUrl
@@ -118,7 +78,7 @@ export class WMS extends Observable {
             "EPSG:4326", {
                 INFO_FORMAT: "application/json",
                 REQUEST: "GetFeatureInfo",
-                'FEATURE_COUNT': '20'
+                'FEATURE_COUNT': '80'
             }
         );
         if (url) {

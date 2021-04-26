@@ -124,6 +124,7 @@ function ekmap_inherits(child, parent) {
 //var tokenKey = "";
 var tokenKey = "1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x";
 var tokenVN = "1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm";
+var tokenOGC = "1-oh5dhZCF12zVtrB9GI8NWQd0buuXf0Iq";
 
 var urlOSMStandard = [
     "https://mt0.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png?apikey=1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm",
