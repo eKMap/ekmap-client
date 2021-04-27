@@ -33,20 +33,11 @@ export class WFS extends Observable {
 
 
     addTo(map) {
-        var paramDefault = {
-            'service': 'WFS',
-            'version': '1.1.1',
-            'request': 'GetFeature',
-            'outputFormat': 'application/json',
-            'srsname': 'EPSG:3857',
-            'bbox': bound,
-            'EPSG': '3857'
-        };
         var bound = map.getView().calculateExtent(map.getSize());
         var layer = new ol.layer.Vector({
             source: new ol.source.Vector({
                 format: new ol.format.GeoJSON(),
-                url: this.url + 'service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + ',EPSG:3857' + '&typename=' + this.params.typename + '&apikey=' + this.params.apikey,
+                url: this.url + 'service=WFS&version=1.1.1&request=GetFeature&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + ',EPSG:3857' + '&typename=' + this.params.typename + '&apikey=' + this.params.apikey,
                 strategy: ol.loadingstrategy.bbox
             }),
         });
