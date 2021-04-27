@@ -33,9 +33,8 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [105, 17],
+                center: [11688546.53, 1920825.04],
                 zoom: 6,
-                projection: 'EPSG:4326',
             })
         });
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
@@ -43,10 +42,10 @@
         }).addTo(map)
 
         var wfs = new ol.ekmap.WFS({
-            url: 'https://localhost:44347/ekmapserver/rest/services/39/WFS?',
+            url: 'https://localhost:44347/ekmapserver/rest/services/25/WFS',
             params: {
-                'typename': 'dev4gis:Sanbay',
-                'apikey': '1-agFaBZOXeZ83QKAWjH5ZNiMR5RRVmrp8'
+                'apikey': tokenOGC,
+                'typename': '883',
             }
         }).addTo(map);
     </script>

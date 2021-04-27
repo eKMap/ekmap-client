@@ -27,7 +27,7 @@
             border: 1px solid #cccccc;
             bottom: 15px;
             left: -50px;
-            min-width: 250px;
+            min-width: 270px;
             height: 170px;
         }
         
@@ -98,9 +98,8 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [105, 17],
+                center: [11688546.53, 1920825.04],
                 zoom: 6,
-                projection: 'EPSG:4326',
             })
         });
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
@@ -108,29 +107,26 @@
         }).addTo(map)
 
         var wms = new ol.ekmap.WMS({
-            url: 'https://localhost:44347/ekmapserver/rest/services/21/WMS',
+            url: 'https://localhost:44347/ekmapserver/rest/services/25/WMS',
             params: {
                 'apikey': tokenOGC,
-                'LAYERS': '875',
-                'VERSION': '1.1.1',
-                'BBOX': map.getView().calculateExtent(map.getSize())
-                    // 'BUFFER': 0,
+                'layers': '883',
+                'version': '1.1.1',
+                'buffer': '8',
             }
         }).addTo(map);
+        wms.getLayers();
         map.on('click', function(evt) {
-            var object = [];
             var result = wms.getFeatureInfoUrl(evt.coordinate);
-            console.log(result);
             if (result) {
                 result.then(data => {
                     console.log(data);
-                    // if (data.features.length > 0) {
-                    //     object.push(data.features[0]);
-                    //     content.innerHTML = '<p>Mã : ' + object[0].properties.Ma + '</p><p>Tỉnh : ' + object[0].properties.Tinh + '</p><p>Tên : ' + object[0].properties.Ten + '</p><p> Địa chỉ : ' + object[0].properties.diaChi + '</p>';
-                    //     overlay.setPosition(evt.coordinate);
-                    // } else {
+                    if (data.features.length > 0) {
+                        content.innerHTML = '<p>Tên tỉnh : ' + data.features[0].properties.diaDanh + '</p><p>Mã tỉnh : ' + data.features[0].properties.maTinh + '</p><p>MLK : ' + data.features[0].properties.maLienKet + '</p><p> Tổng RB : ' + data.features[0].properties.tongrb + '</p>';
+                        overlay.setPosition(evt.coordinate);
+                    } else {
 
-                    // }
+                    }
                 });
             }
         })

@@ -45,19 +45,18 @@ export class WMS extends Observable {
 
     /**
      * @function ol.ekmap.WMS.prototype.getLayers
-     * @description Tree layers.
+     * @description Get layer name of map service.
      */
     getLayers() {
-        var me = this;
         var parser = new ol.format.WMSCapabilities();
-        fetch(this.url + '?apikey=' + this.params.apikey + '&request=GetCapabilities&service=WMS')
+        fetch(this.url + '?apikey=' + this.params.apikey + '&request=GetCapabilities&VERSION=1.1.1&service=WMS')
             .then(function(response) {
                 return response.text();
             })
             .then(function(text) {
-                var result = parser.read(text);
+                var result = parser.read(text, null, 2);
+                return result;
             });
-        return this;
     }
 
 
@@ -75,10 +74,10 @@ export class WMS extends Observable {
         var url = wms_source.getFeatureInfoUrl(
             coordinate,
             viewResolution,
-            "EPSG:4326", {
-                INFO_FORMAT: "application/json",
-                REQUEST: "GetFeatureInfo",
-                'FEATURE_COUNT': '80'
+            'EPSG:3857', {
+                'INFO_FORMAT': "application/json",
+                'REQUEST': "GetFeatureInfo",
+                'FEATURE_COUNT': '80',
             }
         );
         if (url) {
