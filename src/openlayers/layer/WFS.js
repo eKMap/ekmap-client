@@ -19,7 +19,7 @@ export class WFS extends Observable {
         this.options = options ? options : {};
         if (options) {
             options = Util.setOptions(this, options);
-            this.url = Util.cleanUrl(this.options.url);
+            this.url = this.options.url;
             this.params = this.options.params;
         }
     }
@@ -31,17 +31,12 @@ export class WFS extends Observable {
      * @returns this
      */
 
-
-    addTo(map) {
+    getFeatures() {
         var bound = map.getView().calculateExtent(map.getSize());
-        var layer = new ol.layer.Vector({
-            source: new ol.source.Vector({
-                format: new ol.format.GeoJSON(),
-                url: this.url + 'service=WFS&version=1.1.1&request=GetFeature&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + ',EPSG:3857' + '&typename=' + this.params.typename + '&apikey=' + this.params.apikey,
-                strategy: ol.loadingstrategy.bbox
-            }),
-        });
-        map.addLayer(layer);
-        return this;
+        var baseUrl = this.url + '?service=WFS&version=1.1.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&apikey=' + this.params.apikey;
+        if (baseUrl) {
+            return fetch(baseUrl)
+                .then(res => res.json());
+        }
     }
 }

@@ -698,18 +698,18 @@ var exampleConfig = {
             //         description: "ogc_wmts"
             //     }]
             // },
-            // WFS: {
-            //     name: "WFS OGC",
-            //     name_en: "WFS OGC",
-            //     content: [{
-            //         name: "WFS OGC",
-            //         name_en: "WFS OGC",
-            //         thumbnail: "wmts_layer.png",
-            //         fileName: "ogc_wfs",
-            //         subject: "ogc_wfs",
-            //         description: "ogc_wfs"
-            //     }]
-            // }
+            WFS: {
+                name: "WFS OGC",
+                name_en: "WFS OGC",
+                content: [{
+                    name: "WFS OGC",
+                    name_en: "WFS OGC",
+                    thumbnail: "wmts_layer.png",
+                    fileName: "ogc_wfs",
+                    subject: "ogc_wfs",
+                    description: "ogc_wfs"
+                }]
+            }
         }
     },
     control: {

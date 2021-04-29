@@ -34,6 +34,7 @@
             }),
             view: new ol.View({
                 center: [11688546.53, 1920825.04],
+                // center: [107, 15],
                 zoom: 6,
             })
         });
@@ -42,12 +43,17 @@
         }).addTo(map)
 
         var wfs = new ol.ekmap.WFS({
-            url: 'https://localhost:44347/ekmapserver/rest/services/25/WFS',
+            url: 'https://localhost:44347/ekmapserver/rest/services/17/WFS',
             params: {
                 'apikey': tokenOGC,
-                'typename': '883',
+                'typename': '781',
             }
-        }).addTo(map);
+        });
+        var result = wfs.getFeatures();
+        result.then(data => {
+            console.log('vao')
+            console.log(data);
+        })
     </script>
 </body>
 

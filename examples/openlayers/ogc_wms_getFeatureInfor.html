@@ -28,7 +28,7 @@
             bottom: 15px;
             left: -50px;
             min-width: 270px;
-            height: 170px;
+            height: 250px;
         }
         
         .ol-popup:after,
@@ -112,7 +112,7 @@
                 'apikey': tokenOGC,
                 'LAYERS': '883',
                 'VERSION': '1.1.1',
-                'BUFFER': '8',
+                // 'BUFFER': '8',
             }
         }).addTo(map);
         wms.getLayers();
@@ -120,9 +120,9 @@
             var result = wms.getFeatureInfoUrl(evt.coordinate);
             if (result) {
                 result.then(data => {
-                    console.log(data);
+                    var attrs = data.features[0].properties;
                     if (data.features.length > 0) {
-                        content.innerHTML = '<p>Tên tỉnh : ' + data.features[0].properties.diaDanh + '</p><p>Mã tỉnh : ' + data.features[0].properties.maTinh + '</p><p>MLK : ' + data.features[0].properties.maLienKet + '</p><p> Tổng RB : ' + data.features[0].properties.tongrb + '</p>';
+                        content.innerHTML = '<p>Địa danh : ' + attrs.diaDanh + '</p><p>maDonViHanhChinh : ' + attrs.maDonViHanhChinh + '</p><p>rbduongbo : ' + attrs.rbduongbo + '</p><p>tongrb : ' + attrs.tongrb + '</p><p>tongsl : ' + attrs.tongsl + '</p><p>tongvuot : ' + attrs.tongvuot + '</p><p> trangThai: ' + attrs.trangThai + '</p>';
                         overlay.setPosition(evt.coordinate);
                     } else {
 

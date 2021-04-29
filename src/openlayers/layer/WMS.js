@@ -49,7 +49,7 @@ export class WMS extends Observable {
      */
     getLayers() {
         var parser = new ol.format.WMSCapabilities();
-        fetch(this.url + '?apikey=' + this.params.apikey + '&request=GetCapabilities&VERSION=1.1.1&service=WMS')
+        fetch(this.url + '?apikey=' + this.params.apikey + '&request=GetCapabilities&service=WMS')
             .then(function(response) {
                 return response.text();
             })
