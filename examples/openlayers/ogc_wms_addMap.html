@@ -36,9 +36,8 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [105, 17],
+                center: [11688546.53, 1920825.04],
                 zoom: 6,
-                projection: 'EPSG:4326',
             })
         });
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
@@ -46,12 +45,11 @@
         }).addTo(map)
 
         var wms = new ol.ekmap.WMS({
-            url: 'https://localhost:44347/ekmapserver/rest/services/17/WMS',
+            url: 'https://server.ekgis.vn/ekmapserver/rest/services/32/WMS',
             params: {
                 'apikey': tokenOGC,
-                'LAYERS': '781',
+                'LAYERS': '364',
                 'VERSION': '1.1.1',
-                'BUFFER': 150
             }
         }).addTo(map);
     </script>

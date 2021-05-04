@@ -666,22 +666,21 @@ var exampleConfig = {
             WMS: {
                 name: "WMS",
                 name_en: "WMS",
-                content: [
-                    //     {
-                    //     name: "WMS OGC Base",
-                    //     name_en: "WMS OGC Base",
-                    //     thumbnail: "wms_layer.png",
-                    //     fileName: "ogc_wms_addMap",
-                    //     subject: "WMS OGC add to map",
-                    //     description: "WMS OGC add to map"
-                    // },
+                content: [{
+                        name: "WMS OGC Base",
+                        name_en: "WMS OGC Base",
+                        thumbnail: "wms_layer.png",
+                        fileName: "ogc_wms_addMap",
+                        subject: "WMS OGC add to map",
+                        description: "WMS OGC add to map"
+                    },
                     {
                         name: "WMS OGC Services",
                         name_en: "WMS OGC Services",
                         thumbnail: "wms_layer.png",
                         fileName: "ogc_wms_getFeatureInfor",
-                        subject: "WMS OGC calls the service getFeatureInfoUrl click on point show the data",
-                        description: "WMS OGC calls the service getFeatureInfoUrl click on point show the data"
+                        subject: "WMS OGC calls the service getFeatureInfoUrl click to polygon show the data",
+                        description: "WMS OGC calls the service getFeatureInfoUrl click to polygon show the data"
                     }
                 ]
             },
@@ -706,8 +705,8 @@ var exampleConfig = {
                     name_en: "WFS OGC",
                     thumbnail: "wmts_layer.png",
                     fileName: "ogc_wfs",
-                    subject: "ogc_wfs",
-                    description: "ogc_wfs"
+                    subject: "WFS OGC calls the service getFeature click to point show the data",
+                    description: "WFS OGC calls the service getFeature click to point show the data"
                 }]
             }
         }
