@@ -92,7 +92,7 @@
         .sidebar {
             transition: transform 1s;
             z-index: 1;
-            width: 480px;
+            width: 350px;
             height: 100%;
         }
         
@@ -178,7 +178,7 @@
                 center: [11688546.53, 1920825.04],
                 zoom: 6,
             }),
-            overlays: [overlay],
+            overlays: [overlay]
         });
 
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
@@ -199,7 +199,6 @@
                 }
             );
             if (feature) {
-                console.log(feature)
                 content.innerHTML = '<h4>' + feature.values_.tenDoiTuong + '</h4>';
                 var coordinates = this.getCoordinateFromPixel(evt.pixel);
                 overlay.setPosition(coordinates);

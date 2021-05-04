@@ -32,21 +32,6 @@ export class WFS extends Observable {
      */
 
     addTo(map) {
-        function iconStyleFunc() {
-            var zIndex = 1;
-            var iconStyle = [new ol.style.Style({
-                image: new ol.style.Icon(({
-                    anchor: [0.5, 0.5],
-                    anchorXUnits: 'fraction',
-                    anchorYUnits: 'pixels',
-                    scale: 0.07,
-                    src: '/examples/openlayers/img/marker-icon-red.png',
-                    zIndex: zIndex
-                })),
-                zIndex: zIndex
-            })];
-            return iconStyle;
-        }
         var bound = map.getView().calculateExtent(map.getSize());
         var vectorSource = new ol.source.Vector({
             format: new ol.format.GeoJSON(),
@@ -55,7 +40,14 @@ export class WFS extends Observable {
         });
         var vector = new ol.layer.Vector({
             source: vectorSource,
-            style: iconStyleFunc()
+            style: new ol.style.Style({
+                image: new ol.style.Circle({
+                    fill: new ol.style.Fill({
+                        color: 'red'
+                    }),
+                    radius: 10
+                }),
+            })
         });
 
         map.addLayer(vector);
