@@ -31,6 +31,39 @@ export class WFS extends Observable {
      * @returns this
      */
 
+    addTo(map) {
+        function iconStyleFunc() {
+            var zIndex = 1;
+            var iconStyle = [new ol.style.Style({
+                image: new ol.style.Icon(({
+                    anchor: [0.5, 0.5],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    scale: 0.07,
+                    src: '/examples/openlayers/img/marker-icon-red.png',
+                    zIndex: zIndex
+                })),
+                zIndex: zIndex
+            })];
+            return iconStyle;
+        }
+        var bound = map.getView().calculateExtent(map.getSize());
+        var vectorSource = new ol.source.Vector({
+            format: new ol.format.GeoJSON(),
+            url: this.url + '?service=WFS&version=1.1.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&apikey=' + this.params.apikey,
+            strategy: ol.loadingstrategy.bbox
+        });
+        var vector = new ol.layer.Vector({
+            source: vectorSource,
+            style: iconStyleFunc()
+        });
+
+        map.addLayer(vector);
+        return this;
+    }
+
+
+
     getFeatures() {
         var bound = map.getView().calculateExtent(map.getSize());
         var baseUrl = this.url + '?service=WFS&version=1.1.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&apikey=' + this.params.apikey;

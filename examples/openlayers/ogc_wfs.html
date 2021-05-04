@@ -35,17 +35,6 @@
             padding: 4px;
         }
         
-        .filter-ctrl input[type='text'] {
-            width: 100%;
-            border: 0;
-            background-color: #fff;
-            margin: 0;
-            padding: 10px;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-            border-radius: 3px;
-            width: 250px;
-        }
-        
         .rounded-rect {
             background: white;
             border-radius: 10px;
@@ -103,7 +92,7 @@
         .sidebar {
             transition: transform 1s;
             z-index: 1;
-            width: 300px;
+            width: 480px;
             height: 100%;
         }
         
@@ -113,6 +102,43 @@
         
         .right.collapsed {
             transform: translateX(295px);
+        }
+        
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 200px;
+        }
+        
+        .ol-popup:after,
+        .ol-popup:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        
+        .ol-popup:after {
+            border-top-color: white;
+            border-width: 10px;
+            left: 48px;
+            margin-left: -10px;
+        }
+        
+        .ol-popup:before {
+            border-top-color: #cccccc;
+            border-width: 11px;
+            left: 48px;
+            margin-left: -11px;
         }
     </style>
 </head>
@@ -127,8 +153,21 @@
                 </div>
             </div>
         </div>
+        <div id="popup" class="ol-popup">
+            <div id="popup-content"></div>
+        </div>
     </div>
     <script>
+        var container = document.getElementById('popup');
+        var content = document.getElementById('popup-content');
+        var overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250,
+            },
+        });
+        var popup;
         var map = new ol.Map({
             target: 'divMapId',
             layers: [],
@@ -138,17 +177,32 @@
             view: new ol.View({
                 center: [11688546.53, 1920825.04],
                 zoom: 6,
-            })
+            }),
+            overlays: [overlay],
         });
+
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
-        }).addTo(map)
+        }).addTo(map);
 
         var wfs = new ol.ekmap.WFS({
-            url: 'https://localhost:44347/ekmapserver/rest/services/17/WFS',
+            url: 'https://server.ekgis.vn/ekmapserver/rest/services/33/WFS',
             params: {
                 'apikey': tokenOGC,
-                'typename': '781',
+                'typename': '369',
+            }
+        }).addTo(map);
+        map.on('click', function(evt) {
+            var feature = map.forEachFeatureAtPixel(evt.pixel,
+                function(feature) {
+                    return feature;
+                }
+            );
+            if (feature) {
+                console.log(feature)
+                content.innerHTML = '<h4>' + feature.values_.tenDoiTuong + '</h4>';
+                var coordinates = this.getCoordinateFromPixel(evt.pixel);
+                overlay.setPosition(coordinates);
             }
         });
         var result = wfs.getFeatures();
@@ -162,22 +216,17 @@
             var topRow = resultsTable.insertRow(0);
             var cell1 = topRow.insertCell(0);
             var cell2 = topRow.insertCell(1);
-            var cell3 = topRow.insertCell(2);
             cell1.innerHTML = "<b>Mã</b>";
             cell2.innerHTML = "<b>Tên</b>";
-            cell3.innerHTML = "<b>Tỉnh</b>";
             toggleSidebar('left');
             arr[0].forEach(function(e, i) {
-                var id = e.properties.Ma;
-                var name = e.properties.Ten;
-                var provine = e.properties.Tinh;
+                var id = e.properties.maLienKet;
+                var name = e.properties.tenDoiTuong;
                 var row = resultsTable.insertRow(i + 1);
                 cell1 = row.insertCell(0);
                 cell2 = row.insertCell(1);
-                cell3 = row.insertCell(2);
                 cell1.innerHTML = id;
                 cell2.innerHTML = name;
-                cell2.innerHTML = provine;
             })
         })
 

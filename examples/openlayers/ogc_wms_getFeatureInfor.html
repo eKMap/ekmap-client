@@ -107,12 +107,11 @@
         }).addTo(map)
 
         var wms = new ol.ekmap.WMS({
-            url: 'https://localhost:44347/ekmapserver/rest/services/25/WMS',
+            url: 'https://server.ekgis.vn/ekmapserver/rest/services/32/WMS',
             params: {
                 'apikey': tokenOGC,
-                'LAYERS': '883',
+                'LAYERS': '364',
                 'VERSION': '1.1.1',
-                // 'BUFFER': '8',
             }
         }).addTo(map);
         wms.getLayers();
