@@ -18,6 +18,92 @@
             overflow: hidden;
         }
         
+        .dataTable {
+            overflow: auto;
+            height: calc(100vh - 20px);
+            background-color: #f2efe9;
+        }
+        
+        .filter-ctrl {
+            position: inherit;
+            top: 10px;
+            margin-left: 42%;
+            z-index: 1;
+        }
+        
+        td {
+            padding: 4px;
+        }
+        
+        .rounded-rect {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 50px -25px black;
+        }
+        
+        .flex-center {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .flex-center.left {
+            left: 0px;
+        }
+        
+        .flex-center.right {
+            right: 0px;
+        }
+        
+        .sidebar-content {
+            position: absolute;
+            margin-top: 10px;
+            width: 95%;
+            height: 98%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 32px;
+            color: gray;
+            overflow: auto;
+        }
+        
+        .sidbear-toggle {
+            position: absolute;
+            width: 1.3em;
+            height: 1.3em;
+            overflow: visible;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .sidbear-toggle.left {
+            right: -1.5em;
+        }
+        
+        .sidbear-toggle.right {
+            left: -1.5em;
+        }
+        
+        .sidbear-toggle:hover {
+            color: #0aa1cf;
+            cursor: pointer;
+        }
+        
+        .sidebar {
+            transition: transform 1s;
+            z-index: 1;
+            width: 350px;
+            height: 100%;
+        }
+        
+        .left.collapsed {
+            transform: translateX(-295px);
+        }
+        
+        .right.collapsed {
+            transform: translateX(295px);
+        }
+        
         .ol-popup {
             position: absolute;
             background-color: white;
@@ -73,6 +159,12 @@
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
+            <div id="left" class="sidebar flex-center left collapsed">
+                <div id="divResults" class="sidebar-content rounded-rect flex-center">
+                    <table id="tbl" style="width: 100%;padding: 10px;font-size: 15px;">
+                    </table>
+                </div>
+            </div>
         </div>
         <div id="popup" class="ol-popup">
             <div id="popup-content"></div>
@@ -115,6 +207,32 @@
             }
         }).addTo(map);
         wms.getLayers();
+        var urlLegend = "https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer" + "/legend?apikey=" + tokenOGC;
+        var resultsTable = document.getElementById("tbl");
+        var arr = [];
+        fetch(urlLegend)
+            .then(response => response.json())
+            .then(data => {
+                arr.push(data.layers[0].legend);
+
+                document.getElementById("divResults").style = " margin-left: 10px !important;";
+                document.getElementById('tbl').style.color = 'black';
+                resultsTable.innerHTML = "";
+                var topRow = resultsTable.insertRow(0);
+                var cell1 = topRow.insertCell(0);
+                var cell2 = topRow.insertCell(1);
+                cell1.innerHTML = "<b>Màu</b>";
+                cell2.innerHTML = "<b>Chú giải</b>";
+                toggleSidebar('left');
+                arr[0].forEach(function(e, i) {
+                    var name = e.label;
+                    var row = resultsTable.insertRow(i + 1);
+                    cell1 = row.insertCell(0);
+                    cell2 = row.insertCell(1);
+                    cell1.innerHTML = "<img src = 'data:image/png;base64," + e.imageData + "' > </img>";
+                    cell2.innerHTML = name;
+                })
+            })
         map.on('click', function(evt) {
             var result = wms.getFeatureInfoUrl(evt.coordinate);
             if (result) {
@@ -129,6 +247,23 @@
                 });
             }
         })
+
+        function toggleSidebar(id) {
+            var elem = document.getElementById(id);
+            var classes = elem.className.split(' ');
+            var collapsed = classes.indexOf('collapsed') !== -1;
+
+            var padding = {};
+
+            if (collapsed) {
+                classes.splice(classes.indexOf('collapsed'), 1);
+                padding[id] = 300;
+            } else {
+                padding[id] = 0;
+                classes.push('collapsed');
+            }
+            elem.className = classes.join(' ');
+        }
     </script>
 </body>
 
