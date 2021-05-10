@@ -15,7 +15,7 @@ import {
     ServiceBase,
     FeatureService,
     IdentifyFeatures
-} from './services';
+} from './layer/services';
 
 import {
     Request

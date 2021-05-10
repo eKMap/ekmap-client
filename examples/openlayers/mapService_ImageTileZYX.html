@@ -41,6 +41,7 @@
         var tiledMap = new ol.ekmap.TiledMapLayer({
             url: urlMapService,
         }).addTo(map);
+        map.removeLayer(vnMap);
     </script>
 </body>
 

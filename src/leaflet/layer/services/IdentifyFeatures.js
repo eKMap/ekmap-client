@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import '../core/Base';
+import '../../core/Base';
 import { ServiceBase } from './ServiceBase';
-import { Util } from '../core/Util';
+import { Util } from '../../core/Util';
 
 /**
  * @class L.ekmap.IdentifyFeatures

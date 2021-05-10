@@ -22,9 +22,9 @@ export class TiledMapLayer {
                 this.tileUrl = (options.proxy ? options.proxy + '?' : '') + options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
                 //if (options.url.indexOf('{s}') !== -1 && options.subdomains && options.url)
                 //    options.url = options.url.replace('{s}', options.subdomains[0]);
-
                 this.service = new ol.ekmap.MapService(options);
             }
+            this.identifies = this.service.identify();
             if (options.urls)
                 this.tileUrls = options.urls
                 // Remove subdomain in url
@@ -40,18 +40,22 @@ export class TiledMapLayer {
 
             }
             this.layer = new ol.layer.Tile({
-                    source: new ol.source.XYZ({
-                        url: this.tileUrl,
-                        crossOrigin: "Anonymous"
-                    }),
-                    title: this.options.name,
-                    type: 'TileLayer',
-                    url: this.options.url,
-                    token: this.options.token
-                })
-                //return new ol.ekmap.MapService(this.tileUrl);
-                // init layer by calling TileLayers initialize method
-                //TileLayer.prototype.initialize.call(this, this.tileUrl, options);
+                source: new ol.source.XYZ({
+                    url: this.tileUrl,
+                    crossOrigin: "Anonymous"
+                }),
+                title: this.options.name,
+                type: 'TileLayer',
+                url: this.options.url,
+                token: this.options.token
+            })
+        } else {
+            this.layer = new ol.layer.Tile({
+                source: new ol.source.XYZ({
+                    crossOrigin: "Anonymous"
+                }),
+                type: 'TileLayer'
+            })
         }
     }
 
@@ -63,7 +67,24 @@ export class TiledMapLayer {
      */
     addTo(map) {
         map.addLayer(this.layer);
-        return this;
+        return this.layer;
+    }
+
+    /**
+     * @function ol.ekmap.TiledMapLayer.prototype.setUrls
+     * @description setUrls the layer to the given map or layer group.
+     * @param {ol.Map} map - setUrls the layer to the given map or layer group.
+     * @returns this
+     */
+    setUrls(url, token) {
+        if (typeof(url) == 'string') {
+            this.options = Util.getUrlParams(this.options);
+            this.tileUrl = (this.options.proxy ? this.options.proxy + '?' : '') + url + '/tile/{z}/{y}/{x}' + '?token=' + token;
+            this.layer.getSource().setUrl(this.tileUrl);
+        } else {
+            this.tileUrls = url;
+            this.layer.getSource().setUrls(this.tileUrls)
+        }
     }
 
     /**
@@ -72,7 +93,7 @@ export class TiledMapLayer {
      * @returns this
      */
     identify() {
-        return this.service.identify();
+        return this.identifies;
     }
 
     /**
@@ -104,4 +125,5 @@ export class TiledMapLayer {
     getExtent(callback, context) {
         return this.service.getExtent(callback, context);
     }
+
 }

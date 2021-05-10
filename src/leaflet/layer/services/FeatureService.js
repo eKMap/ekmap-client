@@ -1,8 +1,8 @@
 import L from 'leaflet';
-import '../core/Base';
+import '../../core/Base';
 import { ServiceBase } from './ServiceBase';
-import { Util } from '../core/Util';
-import { Parse } from '../core/Parse';
+import { Util } from '../../core/Util';
+import { Parse } from '../../core/Parse';
 import { feature } from '@turf/turf';
 
 /**

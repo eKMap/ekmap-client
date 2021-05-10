@@ -221,7 +221,7 @@ export class FeatureLayer extends Observable {
              */
             me.dispatchEvent({ type: 'loadend', value: me });
         })
-        return me;
+        return resultLayer;
     }
 
     /**

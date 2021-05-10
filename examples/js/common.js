@@ -141,5 +141,7 @@ var urlFeatureLayer = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/Fea
 //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
 var urlMapLayer = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/MapServer/1'
 var urlMapService = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/MapServer'
+var urlChange = 'https://server.ekgis.vn/ekmapserver/rest/services/41/MapServer'
+var urlMapServiceIdentify = 'https://server.ekgis.vn/ekmapserver/rest/services/43/MapServer'
     //var urlMapService = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
 var urlVectorService = 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer';

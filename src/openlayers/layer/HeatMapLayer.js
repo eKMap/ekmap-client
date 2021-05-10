@@ -43,5 +43,6 @@ export class HeatMapLayer extends VectorLayer {
      */
     addTo(map) {
         map.addLayer(this.layer)
+        return this.layer
     }
 }

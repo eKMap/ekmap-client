@@ -43,10 +43,10 @@
     <script>
         var map = L.map('divMapId', {
             center: {
-                lon: 103.97584219304474,
-                lat: 21.277728387286984
+                lon: 105,
+                lat: 17
             },
-            zoom: 13.905413433260719,
+            zoom: 6,
             zoomControl: true,
             attributionControl: false,
         });
@@ -58,8 +58,8 @@
 
 
         tiledMap = new L.ekmap.TiledMapLayer({
-            url: urlMapService,
-            // token: tokenKey
+            url: urlMapServiceIdentify,
+            token: tokenOGC
         }).addTo(map);
         var pane = document.getElementById('selectedFeatures');
         map.on('click', function(e) {
@@ -71,11 +71,11 @@
                     if (error) {
                         console.log(error)
                     } else {
-                        console.log(obj)
                         if (obj.length > 0) {
                             pane.innerHTML = '';
                             obj.forEach(element => {
-                                pane.innerHTML += element.layerName + ': ' + element.attributes.tenDoiTuon + '</br>'
+                                console.log(element)
+                                pane.innerHTML += element.attributes.nhanBanDo + '</br>'
                             });
                         } else {
                             pane.innerHTML = 'No features identified.';
