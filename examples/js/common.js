@@ -137,11 +137,11 @@ var urlServicesHost = "http://s2.cloudgis.vn";
 //var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
 var urlFeatureLayer = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/1'
 
-
-//var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
+var TestUrls = 'https://server.ekgis.vn/ekmapserver/rest/services/87/MapServer'
+    //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
 var urlMapLayer = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/MapServer/1'
 var urlMapService = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/MapServer'
-var urlChange = 'https://server.ekgis.vn/ekmapserver/rest/services/41/MapServer'
+var urlChange = 'https://server.ekgis.vn/ekmapserver/rest/services/42/MapServer'
 var urlMapServiceIdentify = 'https://server.ekgis.vn/ekmapserver/rest/services/43/MapServer'
     //var urlMapService = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
-var urlVectorService = 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer';
+var urlVectorService = 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer'
