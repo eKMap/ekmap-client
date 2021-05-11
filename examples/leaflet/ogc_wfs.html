@@ -3,18 +3,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
-    <title>Web Feature Service</title>
+    <title>OGC Web Feature Service</title>
     <style>
         .map {
             width: 100%;
             height: calc(100vh - 20px);
         }
-
+        
         body {
             overflow: hidden;
         }
@@ -27,26 +24,22 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId',
-            zoom: 3.9996619013972636,
-            center: [-96.52559859275812, 39.21792880745451]
+        var map = new L.Map('divMapId', {
+            center: {
+                lon: 103.79882812500001,
+                lat: 16.762467717941604
+            },
+            zoom: 6,
         });
-        var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map)
-        widgets.loader.showLoader("data loading...");
-        var wfs;
-        wfs = new mapboxgl.ekmap.WFS('https://demo.geo-solutions.it/geoserver/topp/ows', {
-            typeName: 'topp:states'
+        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
+        var wfs = new L.ekmap.WFS('https://localhost:44347/ekmapserver/rest/services/39/WFS', {
+            typeName: 'dev4gis:Sanbay',
+            apikey: '1-agFaBZOXeZ83QKAWjH5ZNiMR5RRVmrp8'
         }).addTo(map);
-        wfs.getFeature(function(e){
+        wfs.getFeature(function(e) {
             console.log(e)
+                // e file Json
         })
-        wfs.on('load', function () {
-            widgets.loader.removeLoader();
-        })
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>
 

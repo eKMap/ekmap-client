@@ -1,6 +1,5 @@
 import { Util } from '../core/Util';
 import * as turf from '@turf/turf'
-import proj4 from 'proj4';
 /**
  * @class mapboxgl.ekmap.ImageMapLayer
  * @classdesc The ImageMapLayer class.
@@ -44,14 +43,19 @@ export class ImageMapLayer {
             var bbox1 = [extend.xmin, extend.ymin, extend.xmax, extend.ymax]
             var poly = turf.bboxPolygon(bbox1);
             var coordinates1 = [];
+            var meters2degress = function(x, y) {
+                var lon = x * 180 / 20037508.34;
+                var lat = Math.atan(Math.exp(y * Math.PI / 20037508.34)) * 360 / Math.PI - 90;
+                return [lon, lat]
+            }
             coordinates1 = poly.geometry.coordinates[0];
             var polygon1 = turf.polygon([
                 [
-                    proj4("EPSG:3857", "EPSG:4326", coordinates1[0]),
-                    proj4("EPSG:3857", "EPSG:4326", coordinates1[1]),
-                    proj4("EPSG:3857", "EPSG:4326", coordinates1[2]),
-                    proj4("EPSG:3857", "EPSG:4326", coordinates1[3]),
-                    proj4("EPSG:3857", "EPSG:4326", coordinates1[4]),
+                    meters2degress(coordinates1[0][0], coordinates1[0][1]),
+                    meters2degress(coordinates1[1][0], coordinates1[1][1]),
+                    meters2degress(coordinates1[2][0], coordinates1[2][1]),
+                    meters2degress(coordinates1[3][0], coordinates1[3][1]),
+                    meters2degress(coordinates1[4][0], coordinates1[4][1])
                 ]
             ])
             var arrSize = [];

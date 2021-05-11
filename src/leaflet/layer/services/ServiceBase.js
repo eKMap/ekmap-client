@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import '../core/Base';
-import { Util } from '../core/Util';
-import { Request } from '../core/Request';
+import '../../core/Base';
+import { Util } from '../../core/Util';
+import { Request } from '../../core/Request';
 
 /**
  * @class L.ekmap.ServiceBase

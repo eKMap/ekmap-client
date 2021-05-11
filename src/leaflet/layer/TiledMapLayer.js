@@ -48,8 +48,7 @@ export class TiledMapLayer extends TileLayer {
      * @returns this
      */
     addTo(map) {
-        this.tileLayer.addTo(map);
-        return this;
+        return this.tileLayer.addTo(map);;
     }
 
     /**
@@ -59,6 +58,22 @@ export class TiledMapLayer extends TileLayer {
      */
     identify() {
         return this.service.identify();
+    }
+
+    /**
+     * @function L.ekmap.TiledMapLayer.prototype.setUrl
+     * @description Updates the layer's URL template and redraws it (unless noRedraw is set to true). If the URL does not change, the layer will not be redrawn unless the noRedraw parameter is set to false.
+     * @returns this
+     */
+    setUrl(url, token) {
+        this.options = Util.getUrlParams(this.options);
+        this.tileUrl = (this.options.proxy ? this.options.proxy + '?' : '') + url + '/tile/{z}/{y}/{x}' + '?token=' + token;
+        this.options.metadata = {
+            url: url,
+            token: token,
+            type: 'tileLayer'
+        }
+        return this.tileLayer.setUrl(this.tileUrl);
     }
 
     /**

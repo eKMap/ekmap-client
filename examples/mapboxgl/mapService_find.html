@@ -145,8 +145,8 @@ The toggleSidebar() function removes this class from the element in order to exp
                 "sources": {},
                 "layers": []
             },
-            center: [103.97584219304474, 21.277728387286984],
-            zoom: 13.905413433260719
+            center: [105, 17],
+            zoom: 5
         });
         var tiledMap;
         map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -155,9 +155,11 @@ The toggleSidebar() function removes this class from the element in order to exp
                 token: tokenVN
             }).addTo(map)
             tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapService,
-                // token: tokenKey
-            }).addTo(map)
+                url: urlMapServiceIdentify,
+                token: tokenOGC
+            });
+            tiledMap.addTo(map);
+            // tiledMap.setUrls(urlChange, tokenOGC);
         });
         var resultsTable = document.getElementById("tbl");
         var filterInput = document.getElementById('filter-input');

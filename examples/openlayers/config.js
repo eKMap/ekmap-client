@@ -667,24 +667,46 @@ var exampleConfig = {
                 name: "WMS",
                 name_en: "WMS",
                 content: [{
-                    name: "WMS layer",
-                    name_en: "WMS layer",
-                    thumbnail: "wms_layer.png",
-                    fileName: "wms_layer",
-                    subject: "wms_layer",
-                    description: "wms_layer"
-                }]
+                        name: "WMS OGC Base",
+                        name_en: "WMS OGC Base",
+                        thumbnail: "wms_layer.png",
+                        fileName: "ogc_wms_addMap",
+                        subject: "WMS OGC add to map",
+                        description: "WMS OGC add to map"
+                    },
+                    {
+                        name: "WMS OGC Services",
+                        name_en: "WMS OGC Services",
+                        thumbnail: "wms_layer.png",
+                        fileName: "ogc_wms_getFeatureInfor",
+                        subject: "WMS OGC calls the service getFeatureInfoUrl click to polygon show the data",
+                        description: "WMS OGC calls the service getFeatureInfoUrl click to polygon show the data"
+                    }
+                ]
             },
-            WMTS: {
-                name: "WMTS",
-                name_en: "WMTS",
+
+            // WMTS: {
+            //     name: "WMTS OGC",
+            //     name_en: "WMTS OGC",
+            //     content: [{
+            //         name: "WMTS OGC",
+            //         name_en: "WMTS OGC",
+            //         thumbnail: "wmts_layer.png",
+            //         fileName: "ogc_wmts",
+            //         subject: "ogc_wmts",
+            //         description: "ogc_wmts"
+            //     }]
+            // },
+            WFS: {
+                name: "WFS OGC",
+                name_en: "WFS OGC",
                 content: [{
-                    name: "WMTS layer",
-                    name_en: "WMTS layer",
+                    name: "WFS OGC",
+                    name_en: "WFS OGC",
                     thumbnail: "wmts_layer.png",
-                    fileName: "wmts_layer",
-                    subject: "wmts_layer",
-                    description: "wmts_layer"
+                    fileName: "ogc_wfs",
+                    subject: "WFS OGC calls the service getFeature click to point show the data",
+                    description: "WFS OGC calls the service getFeature click to point show the data"
                 }]
             }
         }

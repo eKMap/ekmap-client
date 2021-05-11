@@ -41,6 +41,7 @@ export class WFS extends mapboxgl.Evented {
             format: 'image/jpeg',
             outputFormat: 'application/json',
             version: '1.0.0',
+            apikey: ''
         }
         var WFSParams = Util.extend({}, this.defaultWFSParams);
         // all keys that are not TileLayer options go to WFS params
@@ -60,41 +61,39 @@ export class WFS extends mapboxgl.Evented {
         this._map = map;
         var me = this;
         var baseUrl = this._url + '?' + Util.serialize(this.WFSParams);
-        $.get(baseUrl, function (res) {
-            map.addLayer(
-                {
-                    'id': 'park-boundary',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': res,
-                    },
-                    'paint': {
-                        'fill-color': '#888888',
-                        'fill-opacity': 0.4
-                    }
+        $.get(baseUrl, function(res) {
+            map.addLayer({
+                'id': 'park-boundary',
+                'type': 'fill',
+                'source': {
+                    'type': 'geojson',
+                    'data': res,
+                },
+                'paint': {
+                    'fill-color': '#888888',
+                    'fill-opacity': 0.4
                 }
-            );
+            });
             /**
-            * @event mapboxgl.ekmap.WFS#load
-            * @description Fired when the layer of WFS loaded.
-            */
+             * @event mapboxgl.ekmap.WFS#load
+             * @description Fired when the layer of WFS loaded.
+             */
             me.fire('load');
         })
         return this;
     }
 
     /**
-    * @function mapboxgl.ekmap.WFS.prototype.getFeature
-    * @description Adds the layer to the given map or layer group.
-    * @returns geojson
-    */
+     * @function mapboxgl.ekmap.WFS.prototype.getFeature
+     * @description Adds the layer to the given map or layer group.
+     * @returns geojson
+     */
     getFeature(callback) {
         var baseUrl = this._url + '?' + Util.serialize(this.WFSParams);
         var result;
-        $.get(baseUrl, function (res) {
+        $.get(baseUrl, function(res) {
             result = res;
-        }).done(function(){
+        }).done(function() {
             return callback(result);
         })
     }

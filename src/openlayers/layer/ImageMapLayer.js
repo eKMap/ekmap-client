@@ -80,10 +80,10 @@ export class ImageMapLayer {
                         url: url,
                         imageExtent: bbox
                     }));
-                    map.getView().fit(bbox);
+                    // map.getView().fit(bbox);
                 }
             })
         })
-        return me;
+        return me.layer;
     }
 }

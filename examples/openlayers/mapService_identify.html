@@ -41,12 +41,11 @@
         </div>
     </div>
     <script>
-        var tiledMap;
         var map = new ol.Map({
             target: 'divMapId',
             view: new ol.View({
-                center: [103.97584219304474, 21.277728387286984],
-                zoom: 13.905413433260719,
+                center: [105, 17],
+                zoom: 6,
                 projection: 'EPSG:4326',
                 multiWorld: true
             })
@@ -56,13 +55,13 @@
             token: tokenVN
         }).addTo(map);
 
-        tiledMap = new ol.ekmap.TiledMapLayer({
-            url: urlMapService,
-        }).addTo(map);
-
-        map.getViewport().style.cursor = 'crosshair';
-
+        var tiledMap = new ol.ekmap.TiledMapLayer({
+            url: urlMapServiceIdentify,
+            token: tokenOGC
+        });
+        tiledMap.addTo(map);
         var pane = document.getElementById('selectedFeatures');
+        map.getViewport().style.cursor = 'crosshair';
         map.on('click', function(e) {
             pane.innerHTML = 'Loading';
             tiledMap.identify()
@@ -70,12 +69,12 @@
                 .at(e.coordinate)
                 .run(function(error, obj) {
                     if (error) {
-                        console.log(error)
+                        console.log(error);
                     } else {
                         if (obj.length > 0) {
                             pane.innerHTML = '';
                             obj.forEach(element => {
-                                pane.innerHTML += element.layerName + ': ' + element.attributes.tenDoiTuon + '</br>'
+                                pane.innerHTML += element.value + '</br>'
                             });
                         } else {
                             pane.innerHTML = 'No features identified.';

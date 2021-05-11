@@ -1,4 +1,4 @@
-# eKMap Client for MapboxGL API
+# eKMap Client for OpenLayers API
 eKMap Client for OpenLayers
 
 
@@ -6,5 +6,5 @@ eKMap Client for OpenLayers
 
 ## API
 
-*   OpenLayers API:<a href="https://openlayers.org/en/latest/apidoc/" target="_blank">https://openlayers.org/en/latest/apidoc/</a>
-*   ECharts API:<a href="https://echarts.apache.org/en/api.html#echarts" target="_blank">https://echarts.apache.org/en/api.html#echarts</a>
+*   OpenLayers API: <a href="https://openlayers.org/en/latest/apidoc/" target="_blank">https://openlayers.org/en/latest/apidoc/</a>
+*   ECharts API: <a href="https://echarts.apache.org/en/api.html#echarts" target="_blank">https://echarts.apache.org/en/api.html#echarts</a>

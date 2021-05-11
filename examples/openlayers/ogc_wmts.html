@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Web Map Tile Service</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new ol.Map({
+            target: 'divMapId',
+            layers: [],
+            controls: ol.control.defaults({
+                zoom: true
+            }),
+            view: new ol.View({
+                center: [-11158582, 4813697],
+                zoom: 6,
+            })
+        });
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
+        var wmts = new ol.ekmap.WMTS({
+            url: 'https://localhost:44347/ekmapserver/rest/services/1/WMTS',
+            params: {
+                'apikey': '1-W9RHlosEszJbYrePN4ZyTylzJgNaylKD',
+                'layer': 'dev4gis:VungDiaLy'
+            }
+        }).addTo(map);
+    </script>
+</body>
+
+</html>

@@ -108,7 +108,8 @@ export class TileLayer extends mapboxgl.Evented {
                 }
             })
         }
-        return this;
+        var layer = map.getLayer(id);
+        return layer;
     }
 }
 

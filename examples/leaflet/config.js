@@ -440,6 +440,36 @@ var exampleConfig = {
 
         }
     },
+    OGC: {
+        name: "OGC",
+        name_en: "OGC",
+        content: {
+            WMS: {
+                name: "WMS",
+                name_en: "WMS",
+                content: [{
+                    name: "Web Map Service",
+                    name_en: "Web Map Service",
+                    thumbnail: "ogc_wms.png",
+                    fileName: "ogc_wms",
+                    subject: "Use the Web Map Services service to display US states data.",
+                    description: "Click on the map to get info."
+                }]
+            },
+            WFS: {
+                name: "WFS",
+                name_en: "WFS",
+                content: [{
+                    name: "Web Feature Service",
+                    name_en: "Web Feature Service",
+                    thumbnail: "ogc_wfs.png",
+                    fileName: "ogc_wfs",
+                    subject: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
+                    description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data)."
+                }]
+            }
+        }
+    },
 
 
     //         cluster: {

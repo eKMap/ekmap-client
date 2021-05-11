@@ -6,14 +6,16 @@ import {
     TiledVietNamMapLayer,
     TiledRoadMapLayer,
     TiledAdminMapLayer,
-    ImageMapLayer
+    ImageMapLayer,
+    WMS,
+    WFS,
 } from './layer';
 import {
     MapService,
     ServiceBase,
     FeatureService,
     IdentifyFeatures
-} from './services';
+} from './layer/services';
 
 import {
     Request
@@ -34,7 +36,9 @@ export {
     TiledVietNamMapLayer,
     TiledRoadMapLayer,
     TiledAdminMapLayer,
-    ImageMapLayer
+    ImageMapLayer,
+    WMS,
+    WFS,
 };
 export {
     MapService,

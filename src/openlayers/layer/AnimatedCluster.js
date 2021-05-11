@@ -27,23 +27,17 @@ export class AnimatedCluster extends VectorLayer {
         this.on('postcompose', this.postanimate.bind(this));
     };
 
-
-    /** 
-     * @private save cluster features before change
-     */
     saveCluster() {
-            this.oldcluster.clear();
-            if (!this.get('animationDuration')) return;
-            var features = this.getSource().getFeatures();
-            if (features.length && features[0].get('features')) {
-                this.oldcluster.addFeatures(this.clusters);
-                this.clusters = features.slice(0);
-                this.sourceChanged = true;
-            }
+        this.oldcluster.clear();
+        if (!this.get('animationDuration')) return;
+        var features = this.getSource().getFeatures();
+        if (features.length && features[0].get('features')) {
+            this.oldcluster.addFeatures(this.clusters);
+            this.clusters = features.slice(0);
+            this.sourceChanged = true;
         }
-        /** 
-         * @private Get the cluster that contains a feature
-         */
+    }
+
     getClusterForFeature(f, cluster) {
         for (var j = 0, c; c = cluster[j]; j++) {
             var features = cluster[j].get('features');
@@ -58,18 +52,14 @@ export class AnimatedCluster extends VectorLayer {
         return false;
     }
 
-    /** 
-     * @private 
-     */
+
     stopAnimation() {
         this.animation.start = false;
         this.animation.cA = [];
         this.animation.cB = [];
     }
 
-    /** 
-     * @private animate the cluster
-     */
+
     animate(e) {
         var duration = this.get('animationDuration');
         if (!duration) return;
@@ -190,9 +180,6 @@ export class AnimatedCluster extends VectorLayer {
         return;
     }
 
-    /** 
-     * @private remove clipping after the layer is drawn
-     */
     postanimate(e) {
         if (this.clip_) {
             e.context.restore();

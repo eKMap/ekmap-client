@@ -98,6 +98,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                                 }
                             }
                             me.url = me.layer.options.url;
+                            me.layer.listDataOpen = this.values.toString();
                             me.url += 'export?' + Util.serialize(param);
                             me.layer.layer.setSource(
                                 new ol.source.ImageStatic({

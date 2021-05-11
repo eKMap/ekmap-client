@@ -3,7 +3,7 @@ import "../core/Base";
 import { Parse } from "../core/Parse";
 
 /**
- * @class mapboxgl.ekmap.Util
+ * @class L.ekmap.Util
  * @category BaseType Util
  * @classdesc The tool class.
  */

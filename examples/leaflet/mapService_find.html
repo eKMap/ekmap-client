@@ -138,10 +138,10 @@ The toggleSidebar() function removes this class from the element in order to exp
     <script>
         var map = L.map('divMapId', {
             center: {
-                lon: 103.97584219304474,
-                lat: 21.277728387286984
+                lon: 107,
+                lat: 15
             },
-            zoom: 13.905413433260719,
+            zoom: 5.5,
             zoomControl: true,
             attributionControl: true,
         });
@@ -149,9 +149,11 @@ The toggleSidebar() function removes this class from the element in order to exp
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         tiledMap = new L.ekmap.TiledMapLayer({
-            url: urlMapService,
-            // token: tokenKey
-        }).addTo(map);
+            url: urlMapServiceIdentify,
+            token: tokenOGC
+        });
+        tiledMap.addTo(map);
+        // tiledMap.setUrl(urlChange, tokenOGC);
         var resultsTable = document.getElementById("tbl");
         var filterInput = document.getElementById('filter-input');
         filterInput.addEventListener("keydown", function(event) {

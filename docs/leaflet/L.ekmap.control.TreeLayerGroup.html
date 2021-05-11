@@ -21,6 +21,7 @@
     <link type="text/css" rel="stylesheet" href="./../../examples/css/common.css">
     <link type="text/css" rel="stylesheet" href="./../../examples/css/header.css">
     <link type="text/css" rel="stylesheet" href="./../../examples/css/examples.css">
+    <link type="text/css" rel="stylesheet" href="./../../examples/css/style.customize.css">
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -69,7 +70,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="mapboxgl.ekmap.control.Draw.html">Class: Draw</h1>
+        <h1 class="page-title" data-filename="L.ekmap.control.TreeLayerGroup.html">Class: TreeLayerGroup</h1>
         
 
 
@@ -77,11 +78,11 @@
 <section>
     
 <header>
-    <h2></span>Draw
+    <h2><span class="ancestors"><a href="L.html">L</a><a href="L.ekmap.html">.ekmap</a><a href="L.ekmap.control.html">.control</a>.</span>TreeLayerGroup
     
     </h2>
     
-        <div class="class-description"><p>Draw.</p></div>
+        <div class="class-description"><p>TreeLayerGroup.</p></div>
     
 </header>  
 
@@ -93,14 +94,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="Draw">
+        <h4 class="name" id="TreeLayerGroup">
             
-            new mapboxgl.ekmap.control.Draw<span class="signature">(options, displayControlsDefault, modes)</span>
+            new L.ekmap.control.TreeLayerGroup<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/Draw.js, line 4
+            control/TreeLayerGroup.js, line 5
         </div>
         
     </div>
@@ -128,8 +129,6 @@
 		<th>Type</th>
 		
 		
-		<th>Default</th>
-		
 		
 		<th class="last">Description</th>
 	</tr>
@@ -153,10 +152,6 @@
             </td>
             
             
-                <td class="default">
-                
-                </td>
-            
             
             <td class="description last">
                 
@@ -173,6 +168,8 @@
 		<th>Type</th>
 		
 		
+		<th>Default</th>
+		
 		
 		<th class="last">Description</th>
 	</tr>
@@ -183,85 +180,118 @@
 	
         <tr>
             
-                <td class="name"><code>controls</code></td>
+                <td class="name"><code>layers</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Array.&lt;L.Map></span>
 
 
             
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
-                <p>Hide or show individual controls. Each property's name is a control, and value is a boolean indicating whether the <br> control is on or off. Available control names are point, line_string, polygon, trash, combine_features and uncombine_features. By <br> default, all controls are on. To change that default, use displayControlsDefault..</p></td>
+                <p>List of layers for which you want to display TreeLayerGroup.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    TreeLayerGroup
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Name of header.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>tooltip</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    TreeLayerGroup
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Tooltip of button.</p></td>
         </tr>
 	
 	
 	</tbody>
 </table>
             </td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>displayControlsDefault</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-            
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-            
-            <td class="description last">
-                
-                <p>The default value for controls. For example, if you would like all controls to be off by <br> default, and specify an allowed list with controls, use displayControlsDefault: false.</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>modes</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-                <td class="default">
-                
-                </td>
-            
-            
-            <td class="description last">
-                
-                <p>Over ride the default modes with your own.</p></td>
         </tr>
 	
 	
@@ -310,7 +340,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config...., })var  draw  =  new  mapboxgl.ekmap.control.Draw ( drawOptions ) ;</code></pre>
+    <pre class="prettyprint"><code>var map = new L.Map({     //config.... }); var tiledMap = new L.ekmap.TiledMapLayer({      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer' }).addTo(map); var TreeLayerGroup = new L.ekmap.control.TreeLayerGroup({     layers: [tiledMap] }); map.addControl(TreeLayerGroup,"top-left");</code></pre>
     
 
     
@@ -319,17 +349,6 @@
     
     </div>
     
-    
-        <h3 class="subsection-title">Extends</h3>
-        <ul>
-            
-            
-            
-            
-            <li><a href="https://www.mapbox.com/mapbox-gl-js/api/#Evented">mapboxgl.Evented</a></li>
-            
-            
-        </ul>
     
 
     
@@ -351,193 +370,6 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="changeMode">
-            
-            changeMode<span class="signature">(mode)</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            control/Draw.js, line 80
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Changes Draw to another mode. Returns the draw instance for chaining.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>mode</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>The mode argument must be one of the mode names described above and enumerated in Draw.modes(Eg: 'draw_polygon','draw_line_string','draw_rectangle_drag','draw_point')</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="deleteAll">
-            
-            deleteAll<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            control/Draw.js, line 67
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Removes all features. Returns the draw instance for chaining.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id="onAdd">
             
             onAdd<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{HTMLElement}</span>
@@ -545,7 +377,7 @@
     
         
         <div class="tag-source">
-            control/Draw.js, line 31
+            control/TreeLayerGroup.js, line 36
         </div>
         
     </div>
@@ -690,7 +522,7 @@
     
         
         <div class="tag-source">
-            control/Draw.js, line 55
+            control/TreeLayerGroup.js, line 204
         </div>
         
     </div>
@@ -838,7 +670,7 @@
 
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Tue Jan 26 2021 14:00:38 GMT+0700 (Indochina Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Wed Mar 03 2021 15:23:00 GMT+0700 (Indochina Time)
         </footer>
     </div>
 </div>
