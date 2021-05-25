@@ -125,6 +125,8 @@ function ekmap_inherits(child, parent) {
 var tokenKey = "1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x";
 var tokenVN = "1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm";
 var tokenOGC = "1-zaGe5eE5aNsCVWB5qo1RsXitJTkJ3iXu";
+var tokenVectorTile = "1-oh5dhZCF12zVtrB9GI8NWQd0buuXf0Iq";
+var tokenForSDK = "1-xR0cZaCFcuj5XpxgYVKUCGeCpGO2auVl"
 
 var urlOSMStandard = [
     "https://mt0.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png?apikey=1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm",
@@ -132,16 +134,9 @@ var urlOSMStandard = [
     "https://mt2.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png?apikey=1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm",
     "https://mt3.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png?apikey=1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm"
 ]
-
-var urlServicesHost = "http://s2.cloudgis.vn";
-//var urlFeatureLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/FeatureServer/0'
-var urlFeatureLayer = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/1'
-
 var TestUrls = 'https://server.ekgis.vn/ekmapserver/rest/services/87/MapServer'
-    //var urlMapLayer = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer/0'
-var urlMapLayer = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/MapServer/1'
-var urlMapService = urlServicesHost + '/arcgis/rest/services/SonLa/CNSonLa/MapServer'
-var urlChange = 'https://server.ekgis.vn/ekmapserver/rest/services/42/MapServer'
-var urlMapServiceIdentify = 'https://server.ekgis.vn/ekmapserver/rest/services/43/MapServer'
-    //var urlMapService = 'http://s2.cloudgis.vn/arcgis/rest/services/GIS/DuongSat/MapServer'
-var urlVectorService = 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer'
+var ImageTileZYX = 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer' // bản đồ hành chính Việt Nam
+var urlMapService = 'https://server.ekgis.vn/ekmapserver/rest/services/147/MapServer' //Bản đồ về khu bản tồn tại Việt Nam
+var urlVectSer_overlay = 'https://server.ekgis.vn/ekmapserver/rest/services/100/VectorTileServer' //Bản đồ camera Tam Dương - Vĩnh Phúc
+var urlVectorService = 'https://server.ekgis.vn/ekmapserver/rest/services/145/VectorTileServer' //Bản đồ hành chính Việt Nam
+var urLVectorServiceTest = 'https://server.ekgis.vn/ekmapserver/rest/services/147/VectorTileServer' // bản đồ khu bảo tồn Test Vector tile

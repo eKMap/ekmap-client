@@ -46,6 +46,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
             // init layer by calling TileLayers initialize method
             //TileLayer.prototype.initialize.call(this, this.tileUrl, options);
         }
+        this.map = null;
     }
 
     /**
@@ -55,6 +56,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
      * @returns this
      */
     addTo(map) {
+        this.map = map;
         var nameID = 'raster-tiles' + guid12();
         if (this.options.id)
             this.id = this.options.id;
@@ -110,7 +112,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
         } else {
 
         }
-        return window.map.getLayer(this.id);
+        return this.map.getLayer(this.id);
     }
 
     /**
@@ -119,13 +121,13 @@ export class TiledMapLayer extends mapboxgl.Evented {
      * @returns this
      */
     setUrls(url, token) {
-        var source = window.map.getSource(this.id);
+        var source = this.map.getSource(this.id);
         if (typeof(url) == 'string') {
             this.options = Util.getUrlParams(this.options);
             this.tileUrl = (this.options.proxy ? this.options.proxy + '?' : '') + url + '/tile/{z}/{y}/{x}' + '?token=' + token;
             //  (this.options.requestParams && Object.keys(this.options.requestParams).length > 0 ? Util.getParamString(this.options.requestParams) : '');
-            window.map.removeLayer(this.id);
-            window.map.removeSource(this.id);
+            this.map.removeLayer(this.id);
+            this.map.removeSource(this.id);
             map.addSource(this.id, {
                 "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",

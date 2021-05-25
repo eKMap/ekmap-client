@@ -17,6 +17,30 @@
         body {
             overflow: hidden;
         }
+        
+        #legend {
+            position: absolute;
+            z-index: 1;
+            bottom: 0px;
+            background: white;
+            opacity: 0.8;
+        }
+        
+        .titleLegend {
+            color: #134aae;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        ul {
+            padding: unset;
+            margin: unset;
+        }
+        
+        li {
+            padding: 5px 10px;
+            list-style: none;
+        }
     </style>
 </head>
 
@@ -33,24 +57,38 @@
                 "sources": {},
                 "layers": []
             },
-            center: [103.97584219304474, 21.277728387286984],
-            zoom: 13.905413433260719
+            center: [105, 17],
+            zoom: 5
         });
 
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
         map.on('load', function() {
 
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map);
+                var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                    token: tokenVN
+                }).addTo(map);
 
-
-            var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapService,
-                // token: tokenKey
-            }).addTo(map);
-        })
+                var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                    url: ImageTileZYX,
+                    token: tokenForSDK
+                }).addTo(map);
+            })
+            // var urlLegend = ImageTileZYX + "/legend?apikey=" + tokenForSDK;
+            // fetch(urlLegend)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         var htmlLegend = "";
+            //         var layers = data.layers;
+            //         layers.forEach(function(element) {
+            //             htmlLegend += "</ul>";
+            //             var legend = element.legend;
+            //             legend.forEach(function(item) {
+            //                 htmlLegend += "<li><img src='data:image/png;base64," + item.imageData + "'></img><span class='titleLegend'>" + item.label + "</span></li>";
+            //             });
+            //         })
+            //         document.getElementById('legend').innerHTML = htmlLegend;
+            //     });
     </script>
 </body>
 

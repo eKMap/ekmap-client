@@ -19,7 +19,7 @@ var exampleConfig = {
                         thumbnail: "mapService_find.png",
                         fileName: "mapService_find",
                         subject: "Use the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.",
-                        description: "Enter the name of the province, highway or PPC to see a list of information by search name."
+                        description: "Enter the name of habitat/species management area, province name, nature reserve, protected landscape area, special forest, ramsar site, national park of VietNam to see a list of information by search name."
                     },
                     {
                         name: "Bounds query",
@@ -43,7 +43,7 @@ var exampleConfig = {
                         thumbnail: "mapService_identify.png",
                         fileName: "mapService_identify",
                         subject: "Use identify of mapboxgle.ekmap.TiledMapLayer resource to discover features at a geographic location",
-                        description: "Click on the map to see what provincial or national highways are at that location"
+                        description: "Click on points on the map to display detailed information of Vietnam's national protected areas"
                     },
                     {
                         name: "Image Tile ZYX",
@@ -51,7 +51,7 @@ var exampleConfig = {
                         thumbnail: "mapService_ImageTileZYX.png",
                         fileName: "mapService_ImageTileZYX",
                         subject: "Use mapboxgl.ekmap.TiledMapLayer to add image tile ZYX to your map.",
-                        description: "Upload data as images"
+                        description: "Upload data as images (Administrative map of Vietnam)"
                     },
                 ]
             },
