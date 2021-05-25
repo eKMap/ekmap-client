@@ -49,6 +49,7 @@ export class ServiceBase extends mapboxgl.Evented {
             return;
         } else {
             var url = this.url + path;
+            url = Util.cleanUrlNew(url)
             return Request.send(url + '?' + Util.serialize(params), "", {}, callback);
         }
     }

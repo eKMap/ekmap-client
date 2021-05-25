@@ -9,6 +9,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.url Required: URL of the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Map Service} with a tile cache.
  * @param {string} options.token Will use this token to authenticate all calls to the service.
  * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
+ * @param {Array} options.bounds=[-180,-85.051129,180,85.051129] An array containing the longitude and latitude of the southwest and northeast corners of the source's bounding box in the following <br> order: [sw.lng, sw.lat, ne.lng, ne.lat]. When this property is included in a source, no tiles outside of the given bounds are requested<br> by Mapbox GL.
  * @param {string} options.id Id of layer and source.
  * @extends {mapboxgl.Evented}
  */
@@ -47,6 +48,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
             //TileLayer.prototype.initialize.call(this, this.tileUrl, options);
         }
         this.map = null;
+        this.layer = null;
     }
 
     /**
@@ -56,24 +58,26 @@ export class TiledMapLayer extends mapboxgl.Evented {
      * @returns this
      */
     addTo(map) {
+        var me = this;
         this.map = map;
-        var nameID = 'raster-tiles' + guid12();
-        if (this.options.id)
-            this.id = this.options.id;
-        else
-            this.id = nameID;
-        if (this.options) {
-            if (this.tileUrl) {
-                map.addSource(this.id, {
-                    "attribution": this.options.attribution ? this.options.attribution : '',
+        if (me.options.id)
+            me.id = me.options.id;
+        else {
+            me.id = 'raster-tiles' + guid12();
+        }
+        if (this.options.bounds) {
+            if (me.tileUrl) {
+                map.addSource(me.id, {
+                    "attribution": me.options.attribution ? me.options.attribution : '',
                     "type": "raster",
-                    "tiles": [this.tileUrl],
-                    "tileSize": 256
+                    "tiles": [me.tileUrl],
+                    "tileSize": 256,
+                    "bounds": me.options.bounds
                 });
                 map.addLayer({
-                    "id": this.id,
+                    "id": me.id,
                     "type": "raster",
-                    "source": this.id,
+                    "source": me.id,
                     "minzoom": 0,
                     "maxzoom": 22,
                     'layout': {
@@ -81,23 +85,23 @@ export class TiledMapLayer extends mapboxgl.Evented {
                     },
                     'metadata': {
                         'type': 'overlayer',
-                        'url': this.options.url,
-                        'token': this.options.token ? this.options.token : "",
+                        'url': me.options.url,
+                        'token': me.options.token ? me.options.token : "",
                     }
                 })
             }
-
-            if (this.tileUrls) {
-                map.addSource(this.id, {
-                    "attribution": this.options.attribution ? this.options.attribution : '',
+            if (me.tileUrls) {
+                map.addSource(me.id, {
+                    "attribution": me.options.attribution ? me.options.attribution : '',
                     "type": "raster",
-                    "tiles": this.tileUrls,
-                    "tileSize": 256
+                    "tiles": me.tileUrls,
+                    "tileSize": 256,
+                    "bounds": me.options.bounds
                 });
                 map.addLayer({
-                    "id": this.id,
+                    "id": me.id,
                     "type": "raster",
-                    "source": this.id,
+                    "source": me.id,
                     "minzoom": 0,
                     "maxzoom": 22,
                     'layout': {
@@ -109,17 +113,132 @@ export class TiledMapLayer extends mapboxgl.Evented {
                     }
                 })
             }
+            me.layer = map.getLayer(me.id);
         } else {
-
+            this.getExtent(function(obj) {
+                var bounds = [];
+                if (obj)
+                    bounds = [obj.xmin, obj.ymin, obj.xmax, obj.ymax];
+                //Có bbox
+                if (bounds.length > 0) {
+                    if (me.tileUrl) {
+                        map.addSource(me.id, {
+                            "attribution": me.options.attribution ? me.options.attribution : '',
+                            "type": "raster",
+                            "tiles": [me.tileUrl],
+                            "tileSize": 256,
+                            "bounds": bounds
+                        });
+                        map.addLayer({
+                            "id": me.id,
+                            "type": "raster",
+                            "source": me.id,
+                            "minzoom": 0,
+                            "maxzoom": 22,
+                            'layout': {
+                                'visibility': 'visible'
+                            },
+                            'metadata': {
+                                'type': 'overlayer',
+                                'url': me.options.url,
+                                'token': me.options.token ? me.options.token : "",
+                            }
+                        })
+                    }
+                    if (me.tileUrls) {
+                        map.addSource(me.id, {
+                            "attribution": me.options.attribution ? me.options.attribution : '',
+                            "type": "raster",
+                            "tiles": me.tileUrls,
+                            "tileSize": 256,
+                            "bounds": bounds
+                        });
+                        map.addLayer({
+                            "id": me.id,
+                            "type": "raster",
+                            "source": me.id,
+                            "minzoom": 0,
+                            "maxzoom": 22,
+                            'layout': {
+                                'visibility': 'visible'
+                            },
+                            'metadata': {
+                                'type': 'overlayer',
+                                'url': ''
+                            }
+                        })
+                    }
+                } else {
+                    if (me.tileUrl) {
+                        map.addSource(me.id, {
+                            "attribution": me.options.attribution ? me.options.attribution : '',
+                            "type": "raster",
+                            "tiles": [me.tileUrl],
+                            "tileSize": 256
+                        });
+                        map.addLayer({
+                            "id": me.id,
+                            "type": "raster",
+                            "source": me.id,
+                            "minzoom": 0,
+                            "maxzoom": 22,
+                            'layout': {
+                                'visibility': 'visible'
+                            },
+                            'metadata': {
+                                'type': 'overlayer',
+                                'url': me.options.url,
+                                'token': me.options.token ? me.options.token : "",
+                            }
+                        })
+                    }
+                    if (me.tileUrls) {
+                        map.addSource(me.id, {
+                            "attribution": me.options.attribution ? me.options.attribution : '',
+                            "type": "raster",
+                            "tiles": me.tileUrls,
+                            "tileSize": 256
+                        });
+                        map.addLayer({
+                            "id": me.id,
+                            "type": "raster",
+                            "source": me.id,
+                            "minzoom": 0,
+                            "maxzoom": 22,
+                            'layout': {
+                                'visibility': 'visible'
+                            },
+                            'metadata': {
+                                'type': 'overlayer',
+                                'url': ''
+                            }
+                        })
+                    }
+                }
+                me.layer = map.getLayer(me.id);
+            })
         }
-        return this.map.getLayer(this.id);
     }
 
     /**
-     * @function mapboxgl.ekmap.TiledMapLayer.prototype.setUrls
-     * @description Updates the layer's URL template and redraws it.
+     * @function mapboxgl.ekmap.TiledMapLayer.prototype.removeFromMap
+     * @description Removes the layer and source with the given ID from the map's style.If not user layer.addTo, an error event is fired.
+     * @param {mapboxgl.Map} map - Adds the layer to the given map or layer group.
      * @returns this
      */
+    removeFromMap() {
+            if (this.map.getLayer(this.id)) {
+                this.map.removeLayer(this.id);
+                this.map.removeSource(this.id);
+            } else {
+                throw "Error: The layer '" + this.id + "' does not exist in the map's style and cannot be removed.";
+            }
+        }
+        /**
+         * @function mapboxgl.ekmap.TiledMapLayer.prototype.setUrls
+         * @description Updates the layer's URL template and redraws it.
+         * @returns this
+         */
     setUrls(url, token) {
         var source = this.map.getSource(this.id);
         if (typeof(url) == 'string') {
@@ -128,13 +247,13 @@ export class TiledMapLayer extends mapboxgl.Evented {
             //  (this.options.requestParams && Object.keys(this.options.requestParams).length > 0 ? Util.getParamString(this.options.requestParams) : '');
             this.map.removeLayer(this.id);
             this.map.removeSource(this.id);
-            map.addSource(this.id, {
+            this.map.addSource(this.id, {
                 "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": [this.tileUrl],
                 "tileSize": 256
             });
-            map.addLayer({
+            this.map.addLayer({
                 "id": this.id,
                 "type": "raster",
                 "source": this.id,
@@ -164,8 +283,6 @@ export class TiledMapLayer extends mapboxgl.Evented {
         return this.identifies;
     }
 
-
-
     /**
      * @function mapboxgl.ekmap.TiledMapLayer.prototype.find
      * @description Adds the layer to the given map or layer group.
@@ -185,6 +302,18 @@ export class TiledMapLayer extends mapboxgl.Evented {
     legend(callback, context) {
         return this.service.legend(callback, context);
     }
+
+    /**
+     * @function mapboxgl.ekmap.TiledMapLayer.prototype.legend
+     * @description legend of Tiled Map Layer.
+     * @param {RequestCallback} callback
+     *
+     */
+    getExtent(callback, context) {
+        return this.service.getExtent(callback, context);
+    }
+
+
 }
 
 mapboxgl.ekmap.TiledMapLayer = TiledMapLayer;

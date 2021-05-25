@@ -1,4 +1,3 @@
-import { feature } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import { Util } from '../core/Util';
 
@@ -46,96 +45,27 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         this.map = map;
         var me = this;
         map.setStyle(this.tileUrl);
-        me.fire('loadend', me);
-        // var listLayer = [];
-        // //Style point,line,polygon
-        // map.on('load', function() {
-        //     var layers = map.getStyle().layers;
-        //     layers.forEach(layer => {
-        //         var idCheck = layer.id % 2;
-        //         if (!isNaN(idCheck)) {
-        //             listLayer.push(layer)
-        //             me.arr.push(layer.id)
-        //             me.name.push(layer.metadata.name)
-        //         }
-        //     });
-
-        //     layers.forEach(layer => {
-        //         // if (layer.type == 'fill') {
-        //         //     map.addLayer({
-        //         //         "id": "areaResult" + guid12(),
-        //         //         "source": layer.source,
-        //         //         "type": "fill",
-        //         //         "source-layer": layer.id,
-        //         //         "metadata": {
-        //         //             'name': '',
-        //         //             'type': '',
-        //         //         },
-        //         //         'paint': layer.paint
-        //         //             // {
-        //         //             //     'line-color': [
-        //         //             //         'case', ['boolean', ['feature-state', 'hover'], false],
-        //         //             //         '#484896',
-        //         //             //         'transparent'
-        //         //             //     ],
-        //         //             //     'line-width': 2,
-        //         //             // }
-        //         //     });
-        //         // }
-
-        //         if (layer.type == 'line') {
-        //             me.layerPointLine.push(layer.id);
-        //             // map.addLayer({
-        //             //     "id": "lineResult" + guid12(),
-        //             //     "source": layer.source,
-        //             //     "type": "line",
-        //             //     "source-layer": layer.id,
-        //             //     "metadata": {
-        //             //         'name': '',
-        //             //         'type': '',
-        //             //     },
-        //             //     'layout': {
-        //             //         'line-join': 'round',
-        //             //         'line-cap': 'round'
-        //             //     },
-        //             //     'paint': {
-        //             //         'line-color': [
-        //             //             'case', ['boolean', ['feature-state', 'hover'], false],
-        //             //             'blue',
-        //             //             'transparent'
-        //             //         ],
-        //             //         'line-width': 2,
-        //             //     }
-        //             // });
-        //         }
-
-        //         if (layer.type == 'circle') {
-        //             me.layerPointLine.push(layer.id);
-        //             // map.addLayer({
-        //             //     'id': 'pointResult' + guid12(),
-        //             //     'type': 'circle',
-        //             //     "source": layer.source,
-        //             //     "source-layer": layer.id,
-        //             //     "metadata": {
-        //             //         'name': '',
-        //             //         'type': '',
-        //             //     },
-        //             //     'paint': {
-        //             //         "circle-color": "red",
-        //             //         "circle-stroke-color": [
-        //             //             'case', ['boolean', ['feature-state', 'hover'], false],
-        //             //             '#00ffff',
-        //             //             'transparent'
-        //             //         ],
-        //             //         "circle-stroke-width": 3,
-        //             //     },
-        //             // });
-        //         }
-        //     });
-
-        //     me.arr.forEach((key, i) => me.objectLayer[key] = me.name[i]);
-        // })
-        return this;
+        var listLayer = [];
+        //Style point,line,polygon
+        map.on('load', function() {
+            me.fire('loadend', me);
+            var layers = map.getStyle().layers;
+            layers.forEach(layer => {
+                var idCheck = layer.id % 2;
+                if (!isNaN(idCheck)) {
+                    listLayer.push(layer)
+                    me.arr.push(layer.id)
+                    me.name.push(layer.metadata.name)
+                }
+            });
+            listLayer.forEach(layer => {
+                if (layer.type == 'line') {
+                    me.layerPointLine.push(layer.id);
+                }
+            })
+            me.arr.forEach((key, i) => me.objectLayer[key] = me.name[i]);
+        })
+        return me;
 
     }
 
