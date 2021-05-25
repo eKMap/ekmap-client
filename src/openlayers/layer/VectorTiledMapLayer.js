@@ -24,11 +24,12 @@ export class VectorTiledMapLayer extends Observable {
                 this.tileUrl = (options.proxy ? options.proxy + '?' : '') + this.url + 'tile/{z}/{y}/{x}.pbf';
                 this.styleUrl = this.url + 'resources/styles'
             }
+            if (options.token) {
+                this.tileUrl += ('?token=' + this.options.token);
+                this.styleUrl += ('?token=' + this.options.token);
+            }
         }
-        if (options.token) {
-            this.tileUrl += ('?token=' + this.options.token);
-            this.styleUrl += ('?token=' + this.options.token);
-        }
+
         var styleDefault = new ol.style.Style({
             stroke: new ol.style.Stroke({
                 color: 'gray',
@@ -47,7 +48,7 @@ export class VectorTiledMapLayer extends Observable {
                 }),
                 radius: 7
             })
-        })
+        });
         this.style = this.options.style != undefined ? this.options.style : styleDefault
         this.map = '';
         this.arr = [];
@@ -72,47 +73,44 @@ export class VectorTiledMapLayer extends Observable {
         this.layer = new ol.layer.VectorTile({
             declutter: true,
             source: new ol.source.VectorTile({
-                // projection: "EPSG:4326",
-                maxZoom: 15,
                 format: new ol.format.MVT(),
-                tileType: 'ScaleXY',
-                url: me.tileUrl,
-                // tileGrid: new ol.tilegrid.TileGrid({
-                //     extent: [-180, -90, 180, 90],
-                //     tileSize: 512,
-                // })
+                url: this.tileUrl,
             }),
-            // style: createMapboxStreetsV6Style(ol.style.Style, ol.style.Fill, ol.style.Stroke, ol.style.Icon, ol.style.Text),
-            style: this.style,
-            type: 'VectorTileLayer',
-            url: this.urlMapService,
-            token: this.options.token,
-            vectorTile: true
+            style: this.style
         })
-        map.addLayer(this.layer);
-
-        var mapService = new ol.ekmap.MapService({
-            url: this.urlMapService,
-            token: this.options.token
-        })
-
-        var listLayer = []
-        mapService.getLayers(function(layers) {
-            layers.forEach(layer => {
-                if (layer.subLayers && layer.subLayers.length > 0) {
-                    var subLayers = layer.subLayers
-                    subLayers.forEach(sub => {
-                        listLayer.push(sub)
-                    });
-                }
-            });
-            listLayer.forEach((key, i) => {
-                me.objectLayer[key.id] = listLayer[i].name
-            });
-        });
+        this.map.addLayer(this.layer);
         return this;
-
     }
+
+
+
+    // Legend 
+    // style: createMapboxStreetsV6Style(ol.style.Style, ol.style.Fill, ol.style.Stroke, ol.style.Icon, ol.style.Text),
+    // style: this.style,
+    // type: 'VectorTileLayer',
+    // url: this.urlMapService,
+    // token: this.options.token,
+    // vectorTile: true
+    // var mapService = new ol.ekmap.MapService({
+    //     url: this.urlMapService,
+    //     token: this.options.token
+    // })
+
+    // var listLayer = []
+    // mapService.getLayers(function(layers) {
+    //     listLayer.forEach(layer => {
+    //         if (layer.subLayers && layer.subLayers.length > 0) {
+    //             var subLayers = layer.subLayers
+    //             subLayers.forEach(sub => {
+    //                 listLayer.push(sub)
+    //             });
+    //         }
+    //     });
+    //     listLayer.forEach((key, i) => {
+    //         me.objectLayer[key.id] = listLayer[i].name
+    //     });
+    // });
+
 
     /**
      * @function ol.ekmap.VectorTiledMapLayer.prototype.queryByGeometry

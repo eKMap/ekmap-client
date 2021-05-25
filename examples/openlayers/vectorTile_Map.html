@@ -32,59 +32,14 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [11588851.409902023, 2416085.760624543],
-                zoom: 15,
-                // projection: 'EPSG:4326'
+                center: [11688546.53, 1920825.04],
+                zoom: 6,
             })
         });
-
-        //mapbox://styles/mapbox/streets-v11
-
-        // var layer = new ol.layer.MapboxVector({
-        //     styleUrl: 'https://viegisserver.ekgis.vn/gserver/rest/services/121/VectorTileServer/resources/styles?apikey=1-zikhB5A2Dr7cddYntO0RAIqC4cUk62O6&usingEngine=true',
-        //     accessToken: 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg'
-        // })
-
-        // map.addLayer(layer)
-
-        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map)
-
         var vectorTile = new ol.ekmap.VectorTiledMapLayer({
-                url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer',
-                token: tokenKey
-            }).addTo(map)
-            // map.addLayer(new ol.layer.VectorTile({
-            //     declutter: true,
-            //     source: new ol.source.VectorTile({
-            //         // projection: ol.proj.get("EPSG:4326"),
-            //         maxZoom: 15,
-            //         format: new ol.format.MVT({
-            //             idProperty: 'iso_a3',
-            //         }),
-            //         url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/VectorTileServer/tile/{z}/{y}/{x}.pbf?token=1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x',
-            //     }),
-            //     style: new ol.style.Style({
-            //         stroke: new ol.style.Stroke({
-            //             color: 'gray',
-            //             width: 1,
-            //         }),
-            //         fill: new ol.style.Fill({
-            //             color: 'rgba(20,20,20,0.9)',
-            //         }),
-            //         image: new ol.style.Circle({
-            //             fill: new ol.style.Fill({
-            //                 color: '#B42222'
-            //             }),
-            //             stroke: new ol.style.Stroke({
-            //                 color: 'yellow',
-            //                 width: 3
-            //             }),
-            //             radius: 7
-            //         })
-            //     })
-            // }))
+            url: urlVectorService,
+            token: tokenForSDK
+        }).addTo(map)
     </script>
 </body>
 

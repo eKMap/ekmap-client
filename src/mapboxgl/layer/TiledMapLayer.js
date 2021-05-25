@@ -218,7 +218,6 @@ export class TiledMapLayer extends mapboxgl.Evented {
                 me.layer = map.getLayer(me.id);
             })
         }
-
     }
 
     /**

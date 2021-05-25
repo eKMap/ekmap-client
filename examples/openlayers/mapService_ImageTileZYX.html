@@ -15,6 +15,30 @@
         body {
             overflow: hidden;
         }
+        
+        #legend {
+            position: absolute;
+            z-index: 1;
+            bottom: 0px;
+            background: white;
+            opacity: 0.8;
+        }
+        
+        .titleLegend {
+            color: #134aae;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        ul {
+            padding: unset;
+            margin: unset;
+        }
+        
+        li {
+            padding: 5px 10px;
+            list-style: none;
+        }
     </style>
 </head>
 
@@ -22,13 +46,14 @@
     <div style="width: 100%;">
         <div id="divMapId" class="map">
         </div>
+        <div id="legend"></div>
     </div>
     <script>
         var map = new ol.Map({
             target: 'divMapId',
             view: new ol.View({
-                center: [103.97584219304474, 21.277728387286984],
-                zoom: 13.905413433260719,
+                center: [105, 17],
+                zoom: 6,
                 projection: 'EPSG:4326',
                 multiWorld: true
             })
@@ -37,11 +62,10 @@
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map);
-
         var tiledMap = new ol.ekmap.TiledMapLayer({
-            url: urlMapService,
+            url: ImageTileZYX,
+            token: tokenForSDK
         }).addTo(map);
-        map.removeLayer(vnMap);
     </script>
 </body>
 

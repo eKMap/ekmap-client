@@ -44,23 +44,22 @@
         var map = L.map('divMapId', {
             center: {
                 lon: 105,
-                lat: 17
+                lat: 21.5
             },
-            zoom: 6,
+            zoom: 8,
             zoomControl: true,
             attributionControl: false,
         });
 
         $('.leaflet-container').css('cursor', 'crosshair');
-        var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
-
-        var tiledMap;
-
-
+        var vnMap = new L.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map)
         tiledMap = new L.ekmap.TiledMapLayer({
-            url: urlMapServiceIdentify,
-            token: tokenOGC
-        }).addTo(map);
+            url: urlMapService,
+            token: tokenForSDK
+        });
+        tiledMap.addTo(map);
         var pane = document.getElementById('selectedFeatures');
         map.on('click', function(e) {
             pane.innerHTML = 'Loading';
@@ -73,10 +72,8 @@
                     } else {
                         if (obj.length > 0) {
                             pane.innerHTML = '';
-                            obj.forEach(element => {
-                                console.log(element)
-                                pane.innerHTML += element.attributes.nhanBanDo + '</br>'
-                            });
+                            var data = obj[0].attributes;
+                            pane.innerHTML += "Tên khu bảo tồn: " + data.Ten + '</br>' + "Cấp bảo tồn: " + data.Cap_BT + '</br>' + "Kiểu bảo tồn: " + data.Kieu_BT + '</br>' + "Năm đề xuất: " + data.Nam_Dexuat + '</br>' + "Quản lý: " + data.Quan_Ly + '</br>' + "Vị trí: " + data.Vitri + '</br>'
                         } else {
                             pane.innerHTML = 'No features identified.';
                         }

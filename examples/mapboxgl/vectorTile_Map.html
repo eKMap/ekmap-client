@@ -32,15 +32,21 @@
             container: 'divMapId', // container id
             minZoom: 4,
             center: [105, 17],
-            zoom: 4
+            zoom: 4.8
         });
-
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
             url: urlVectorService,
-            token: tokenKey
+            token: tokenForSDK
         }).addTo(map);
-
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+        var layers;
+        map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
+            layers = map.getStyle().layers;
+            console.log(layers)
+            map.moveLayer(layers[layers.length - 1].id, layers[0].id);
+        })
     </script>
 </body>
 

@@ -105,7 +105,7 @@
         .sidebar {
             transition: transform 1s;
             z-index: 1;
-            width: 300px;
+            width: 400px;
             height: 100%;
         }
         /*
@@ -114,11 +114,11 @@ The toggleSidebar() function removes this class from the element in order to exp
 */
         
         .left.collapsed {
-            transform: translateX(-295px);
+            transform: translateX(-395px);
         }
         
         .right.collapsed {
-            transform: translateX(295px);
+            transform: translateX(395px);
         }
     </style>
 </head>
@@ -145,8 +145,8 @@ The toggleSidebar() function removes this class from the element in order to exp
                 "sources": {},
                 "layers": []
             },
-            center: [105, 17],
-            zoom: 5
+            center: [105, 21.5],
+            zoom: 6.7
         });
         var tiledMap;
         map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -155,8 +155,8 @@ The toggleSidebar() function removes this class from the element in order to exp
                 token: tokenVN
             }).addTo(map)
             tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapServiceIdentify,
-                token: tokenOGC
+                url: urlMapService,
+                token: tokenForSDK
             });
             tiledMap.addTo(map);
             // tiledMap.setUrls(urlChange, tokenOGC);
@@ -176,8 +176,14 @@ The toggleSidebar() function removes this class from the element in order to exp
                 var topRow = resultsTable.insertRow(0);
                 var cell1 = topRow.insertCell(0);
                 var cell2 = topRow.insertCell(1);
-                cell1.innerHTML = "<b>Layer name</b>";
-                cell2.innerHTML = "<b>Name</b>";
+                var cell3 = topRow.insertCell(2);
+                var cell4 = topRow.insertCell(3);
+                var cell5 = topRow.insertCell(4);
+                cell1.innerHTML = "<b>Kiểu bảo tồn</b>";
+                cell2.innerHTML = "<b>Tên</b>";
+                cell3.innerHTML = "<b>Cấp bảo tồn</b>";
+                cell4.innerHTML = "<b>Quản lý</b>";
+                cell5.innerHTML = "<b>Năm đề xuất</b>";
                 widgets.loader.showLoader("data finding...");
                 tiledMap.find(params, function(e) {
                     if (e) {
@@ -188,13 +194,22 @@ The toggleSidebar() function removes this class from the element in order to exp
                             toggleSidebar('left');
                         widgets.loader.removeLoader();
                         e.forEach(function(data, i) {
-                            var layerName = data.layerName;
-                            var name = data.value;
+                            var values = data.value;
+                            var name = data.attributes.Ten;
+                            var Cap_BT = data.attributes.Cap_BT;
+                            var Quan_Ly = data.attributes.Quan_Ly;
+                            var Nam_Dexuat = data.attributes.Nam_Dexuat;
                             var row = resultsTable.insertRow(i + 1);
                             cell1 = row.insertCell(0);
                             cell2 = row.insertCell(1);
-                            cell1.innerHTML = layerName;
+                            cell3 = row.insertCell(2);
+                            cell4 = row.insertCell(3);
+                            cell5 = row.insertCell(4);
+                            cell1.innerHTML = values;
                             cell2.innerHTML = name;
+                            cell3.innerHTML = Cap_BT;
+                            cell4.innerHTML = Quan_Ly;
+                            cell5.innerHTML = Nam_Dexuat;
                         })
                     }
                 })

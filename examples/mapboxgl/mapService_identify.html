@@ -52,8 +52,8 @@
                 "sources": {},
                 "layers": []
             },
-            center: [105, 17],
-            zoom: 5,
+            center: [105, 21.5],
+            zoom: 6.7
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
@@ -65,8 +65,8 @@
                 token: tokenVN
             }).addTo(map)
             tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapServiceIdentify,
-                token: tokenOGC
+                url: urlMapService,
+                token: tokenForSDK
             });
             tiledMap.addTo(map);
         })
@@ -82,9 +82,8 @@
                     } else {
                         if (obj.length > 0) {
                             pane.innerHTML = '';
-                            obj.forEach(element => {
-                                pane.innerHTML += element.value + '</br>'
-                            });
+                            var data = obj[0].attributes;
+                            pane.innerHTML += "Tên khu bảo tồn: " + data.Ten + '</br>' + "Cấp bảo tồn: " + data.Cap_BT + '</br>' + "Kiểu bảo tồn: " + data.Kieu_BT + '</br>' + "Năm đề xuất: " + data.Nam_Dexuat + '</br>' + "Quản lý: " + data.Quan_Ly + '</br>' + "Vị trí: " + data.Vitri + '</br>'
                         } else {
                             pane.innerHTML = 'No features identified.';
                         }

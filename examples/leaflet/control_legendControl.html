@@ -31,10 +31,10 @@
     <script>
         var map = L.map('divMapId', {
             center: {
-                lon: 103.97584219304474,
-                lat: 21.277728387286984
+                lon: 105,
+                lat: 17
             },
-            zoom: 13.905413433260719,
+            zoom: 5.5,
             zoomControl: true,
             attributionControl: false,
         });
@@ -42,9 +42,10 @@
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         var tiledMap = new L.ekmap.TiledMapLayer({
-            url: urlMapService,
-            // token: tokenKey
-        }).addTo(map);
+            url: urlTNGT,
+            token: tokenMapService
+        })
+        tiledMap.addTo(map);
         var legend = new L.ekmap.control.Legend({
             layers: [tiledMap],
             position: 'topleft',
