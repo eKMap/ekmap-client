@@ -248,6 +248,13 @@ export class Util {
         return url;
     }
 
+    static cleanUrlNew(url) {
+        if (url[url.length - 1] == '/') {
+            url = url.substring(0, url.length - 1);
+        }
+        return url;
+    }
+
     static splitWords(str) {
         return this.trim(str).split(/\s+/);
     }

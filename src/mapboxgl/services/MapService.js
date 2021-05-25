@@ -130,7 +130,6 @@ export class MapService extends ServiceBase {
         params.f = 'json';
         var service = new MapService(this.options);
         return service.request('legend', params, function(error, response) {
-            console.log(response)
             callback.call(context, response);
         }, this);
     }
