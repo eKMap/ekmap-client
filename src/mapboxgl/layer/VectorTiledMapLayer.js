@@ -46,10 +46,10 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         this.map = map;
         var me = this;
         map.setStyle(this.tileUrl);
-        me.fire('loadend', me);
         var listLayer = [];
         //Style point,line,polygon
         map.on('load', function() {
+            me.fire('loadend', me);
             var layers = map.getStyle().layers;
             layers.forEach(layer => {
                 var idCheck = layer.id % 2;
@@ -135,7 +135,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
 
             me.arr.forEach((key, i) => me.objectLayer[key] = me.name[i]);
         })
-        return this;
+        return me;
 
     }
 
