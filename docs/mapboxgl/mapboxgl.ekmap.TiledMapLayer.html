@@ -168,6 +168,8 @@
 		<th>Type</th>
 		
 		
+		<th>Default</th>
+		
 		
 		<th class="last">Description</th>
 	</tr>
@@ -190,6 +192,10 @@
             
             </td>
             
+            
+                <td class="default">
+                
+                </td>
             
             
             <td class="description last">
@@ -214,6 +220,10 @@
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
@@ -237,10 +247,43 @@
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
                 <p>Contains an attribution to be displayed when the map is shown to a user.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>bounds</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    [-180,-85.051129,180,85.051129
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>An array containing the longitude and latitude of the southwest and northeast corners of the source's bounding box in the following <br> order: [sw.lng, sw.lat, ne.lng, ne.lat]. When this property is included in a source, no tiles outside of the given bounds are requested<br> by Mapbox GL.</p></td>
         </tr>
 	
 	
@@ -259,6 +302,10 @@
             
             </td>
             
+            
+                <td class="default">
+                
+                </td>
             
             
             <td class="description last">
@@ -358,7 +405,7 @@
     
         
         <div class="tag-source">
-            layer/TiledMapLayer.js, line 51
+            layer/TiledMapLayer.js, line 53
         </div>
         
     </div>
@@ -483,7 +530,7 @@ this
     
         
         <div class="tag-source">
-            layer/TiledMapLayer.js, line 121
+            layer/TiledMapLayer.js, line 285
         </div>
         
     </div>
@@ -622,7 +669,7 @@ this
     
         
         <div class="tag-source">
-            layer/TiledMapLayer.js, line 112
+            layer/TiledMapLayer.js, line 276
         </div>
         
     </div>
@@ -702,7 +749,7 @@ this
     
         
         <div class="tag-source">
-            layer/TiledMapLayer.js, line 131
+            layer/TiledMapLayer.js, line 295
         </div>
         
     </div>
@@ -807,6 +854,327 @@ this
     
 </dd>
 
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="legend">
+            
+            legend<span class="signature">(callback)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            layer/TiledMapLayer.js, line 305
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>legend of Tiled Map Layer.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">RequestCallback</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="removeFromMap">
+            
+            removeFromMap<span class="signature">(map)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            layer/TiledMapLayer.js, line 222
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Removes the layer and source with the given ID from the map's style.If not user layer.addTo, an error event is fired.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://www.mapbox.com/mapbox-gl-js/api/#map">mapboxgl.Map</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Adds the layer to the given map or layer group.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+
+this
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="setUrls">
+            
+            setUrls<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            layer/TiledMapLayer.js, line 236
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Updates the layer's URL template and redraws it.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+
+this
+
+
+    
+    
+    
+</dd>
+
         </dl>
     
     
@@ -821,7 +1189,7 @@ this
 
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Wed Mar 03 2021 14:45:20 GMT+0700 (Indochina Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Thu May 27 2021 16:36:19 GMT+0700 (Indochina Time)
         </footer>
     </div>
 </div>

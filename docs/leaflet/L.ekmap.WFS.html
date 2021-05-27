@@ -70,7 +70,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="ol.ekmap.control.TreeLayerGroup.html">Class: TreeLayerGroup</h1>
+        <h1 class="page-title" data-filename="L.ekmap.WFS.html">Class: WFS</h1>
         
 
 
@@ -78,11 +78,11 @@
 <section>
     
 <header>
-    <h2></span>TreeLayerGroup
+    <h2><span class="ancestors"><a href="L.html">L</a><a href="L.ekmap.html">.ekmap</a>.</span>WFS
     
     </h2>
     
-        <div class="class-description"><p>TreeLayerGroup.</p></div>
+        <div class="class-description"><p>Instantiates a WFS tile layer object given a base URL of the WFS service and a WFS parameters/options object..</p></div>
     
 </header>  
 
@@ -94,14 +94,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="TreeLayerGroup">
+        <h4 class="name" id="WFS">
             
-            new ol.ekmap.control.TreeLayerGroup<span class="signature">(options)</span>
+            new L.ekmap.WFS<span class="signature">(baseUrl, options)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/TreeLayerGroup.js, line 5
+            layer/WFS.js, line 4
         </div>
         
     </div>
@@ -139,6 +139,29 @@
 	
         <tr>
             
+                <td class="name"><code>baseUrl</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a base URL of the WFS service.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
                 <td class="name"><code>options</code></td>
             
             
@@ -155,7 +178,7 @@
             
             <td class="description last">
                 
-                <p>Construction parameters.</p>
+                <p>Control options.</p>
                 
 
 <table class="params">
@@ -180,13 +203,13 @@
 	
         <tr>
             
-                <td class="name"><code>layers</code></td>
+                <td class="name"><code>service</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;ol.Map></span>
+<span class="param-type">string</span>
 
 
             
@@ -195,19 +218,21 @@
             
                 <td class="default">
                 
+                    'WFS'
+                
                 </td>
             
             
             <td class="description last">
                 
-                <p>List of layers for which you want to display TreeLayerGroup.</p></td>
+                <p>(required) Comma-separated list of WFS layers to show.</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>target</code></td>
+                <td class="name"><code>typeName</code></td>
             
             
             <td class="type">
@@ -227,14 +252,14 @@
             
             <td class="description last">
                 
-                <p>Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default.</p></td>
+                <p>type name.</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>title</code></td>
+                <td class="name"><code>request</code></td>
             
             
             <td class="type">
@@ -249,21 +274,21 @@
             
                 <td class="default">
                 
-                    TreeLayerGroup
+                    'GetFeature'
                 
                 </td>
             
             
             <td class="description last">
                 
-                <p>Name of header.</p></td>
+                <p>Comma-separated list of WFS styles.</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>tooltip</code></td>
+                <td class="name"><code>maxFeatures</code></td>
             
             
             <td class="type">
@@ -278,21 +303,21 @@
             
                 <td class="default">
                 
-                    TreeLayerGroup
+                    50
                 
                 </td>
             
             
             <td class="description last">
                 
-                <p>Tooltip of button.</p></td>
+                <p>Limit the amount of features returned</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>className</code></td>
+                <td class="name"><code>format</code></td>
             
             
             <td class="type">
@@ -307,12 +332,72 @@
             
                 <td class="default">
                 
+                    'image/jpeg'
+                
                 </td>
             
             
             <td class="description last">
                 
-                <p>Style css of button.</p></td>
+                <p>WFS image format (use 'image/png' for layers with transparency).</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>outputFormat</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    'application/json'
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>version</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    '1.0.0'
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Version of the WFS service to use.</p></td>
         </tr>
 	
 	
@@ -367,7 +452,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new ol.Map({     //config.... }); var tiledMap = new ol.ekmap.TiledMapLayer({      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer' }).addTo(map); var TreeLayerGroup = new ol.ekmap.control.TreeLayerGroup({     layers: [tiledMap] }); map.addControl(TreeLayerGroup,"top-left");</code></pre>
+    <pre class="prettyprint"><code>var map = new L.Map({    container: 'divMapId',    zoom: 3.9996619013972636,    center: [-96.52559859275812, 39.21792880745451]});var wfs = new L.ekmap.WFS('https://demo.geo-solutions.it/geoserver/topp/ows', {    typeName: 'topp:states'})wfs.getFeature(function(e){    //JSON data})</code></pre>
     
 
     
@@ -377,6 +462,17 @@
     </div>
     
     
+        <h3 class="subsection-title">Extends</h3>
+        <ul>
+            
+            
+            
+            
+            <li>L.Evented</li>
+            
+            
+        </ul>
+    
 
     
     
@@ -390,6 +486,215 @@
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="addTo">
+            
+            addTo<span class="signature">(map)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            layer/WFS.js, line 52
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Adds the layer to the given map or layer group.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">L.Map</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Adds the layer to the given map or layer group.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+
+this
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="getFeature">
+            
+            getFeature<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            layer/WFS.js, line 82
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Adds the layer to the given map or layer group.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+
+geojson
+
+
+    
+    
+    
+</dd>
+
+        </dl>
     
     
     
@@ -403,7 +708,7 @@
 
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Thu May 27 2021 16:36:21 GMT+0700 (Indochina Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Thu May 27 2021 16:36:23 GMT+0700 (Indochina Time)
         </footer>
     </div>
 </div>
