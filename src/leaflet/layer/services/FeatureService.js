@@ -3,7 +3,6 @@ import '../../core/Base';
 import { ServiceBase } from './ServiceBase';
 import { Util } from '../../core/Util';
 import { Parse } from '../../core/Parse';
-import { feature } from '@turf/turf';
 
 /**
  * @class L.ekmap.FeatureService
@@ -229,6 +228,7 @@ export class FeatureService extends ServiceBase {
         var data = Util._setGeometry(lngLatBounds);
         param.f = 'geojson';
         param.outFields = '*';
+        param.returnGeometry = true;
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
         var me = this;
@@ -254,6 +254,7 @@ export class FeatureService extends ServiceBase {
         var me = this;
         param.f = 'geojson'; //me.type != undefined ? me.type : 'json'; 
         param.outFields = '*';
+        param.returnGeometry = true;
         if (params) {
             var geom = params;
             if (params.type == 'Point') {

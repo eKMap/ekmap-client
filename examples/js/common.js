@@ -122,11 +122,11 @@ function ekmap_inherits(child, parent) {
 };
 
 //var tokenKey = "";
-var tokenKey = "1-70EXlhFRzL5KI2qc98B0mQawwKHTAD3x";
+var tokenKey = "1-xR0cZaCFcuj5XpxgYVKUCGeCpGO2auVl";
 var tokenVN = "1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm";
 var tokenOGC = "1-zaGe5eE5aNsCVWB5qo1RsXitJTkJ3iXu";
 var tokenVectorTile = "1-oh5dhZCF12zVtrB9GI8NWQd0buuXf0Iq";
-var tokenForSDK = "1-xR0cZaCFcuj5XpxgYVKUCGeCpGO2auVl"
+// var tokenForSDK = "1-xR0cZaCFcuj5XpxgYVKUCGeCpGO2auVl"
 
 var urlOSMStandard = [
     "https://mt0.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png?apikey=1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm",
@@ -135,8 +135,13 @@ var urlOSMStandard = [
     "https://mt3.ekgis.vn/gserver/rest/services/imagetile/1472/2075/tile/{z}/{x}/{y}.png?apikey=1-jTI0sSpMOTopJEjPuWySWW4FTc1pPEPm"
 ]
 var TestUrls = 'https://server.ekgis.vn/ekmapserver/rest/services/87/MapServer'
-var ImageTileZYX = 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer' // bản đồ hành chính Việt Nam
-var urlMapService = 'https://server.ekgis.vn/ekmapserver/rest/services/147/MapServer' //Bản đồ về khu bản tồn tại Việt Nam
+var urlMapService = 'https://server.ekgis.vn/ekmapserver/rest/services/147/MapServer' //Khu bảo tồn quốc gia Việt Nam
 var urlVectSer_overlay = 'https://server.ekgis.vn/ekmapserver/rest/services/100/VectorTileServer' //Bản đồ camera Tam Dương - Vĩnh Phúc
-var urlVectorService = 'https://server.ekgis.vn/ekmapserver/rest/services/145/VectorTileServer' //Bản đồ hành chính Việt Nam
 var urLVectorServiceTest = 'https://server.ekgis.vn/ekmapserver/rest/services/147/VectorTileServer' // bản đồ khu bảo tồn Test Vector tile
+var urlMapLayerId = 'https://server.ekgis.vn/ekmapserver/rest/services/147/MapServer/1904' //Khu bảo tồn quốc gia Việt Nam
+var urlFeatureLayer = 'https://server.ekgis.vn/ekmapserver/rest/services/147/FeatureServer/1904' //Khu bảo tồn quốc gia Việt Nam
+var urlFeatureLayerEdit = 'https://server.ekgis.vn/ekmapserver/rest/services/148/FeatureServer/1905' //Cảng hàng không Việt Nam
+
+var urlMapService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer' // bản đồ hành chính Việt Nam
+var urlFeatureService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/FeatureServer' //Khu bảo tồn quốc gia Việt Nam
+var urlVectorService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/VectorTileServer' //Bản đồ hành chính Việt Nam

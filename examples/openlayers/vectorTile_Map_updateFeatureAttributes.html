@@ -150,29 +150,29 @@
             }),
             target: 'divMapId',
             view: new ol.View({
-                center: [103.93422987963572, 21.306082013420507],
-                zoom: 14.871024212757812,
+                center: [105, 17],
+                zoom: 6,
                 projection: 'EPSG:4326',
             })
         });
 
-        // var maps = new ol.ekmap.VectorTiledMapLayer({
-        //     url: urlVectorService,
-        //     token: tokenKey
-        // }).addTo(map);
+        var maps = new ol.ekmap.VectorTiledMapLayer({
+            url: urlVectorService145,
+            token: tokenKey
+        }).addTo(map);
+
 
         var draw;
         var listLayersServer = [];
-        var layerName = ['2949', '2950', '2951', '2952', '2954', '2955', '2956'];
         var data = [];
         var fields = [];
         var layerId;
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map)
-        var select = new ol.ekmap.control.Select({
-            url: 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/MapServer',
-            // token: tokenKey,
+        var select = new ol.ekmap.control.FeatureInfomation({
+            url: urlMapService145,
+            token: tokenKey,
             target: 'activeControl',
             setStyle: true
         })
@@ -246,17 +246,17 @@
                 var x = document.getElementById(element.text).value;
                 if (x != null && x != '') {
                     if (element.text == "maDoiTuong")
-                        arrayText.push('OBJECTID')
+                        arrayText.push('maDoiTuong')
                     else
                         arrayText.push(element.text)
                     arrayValue.push(x);
                 }
             });
             arrayText.forEach((key, i) => properties[key] = arrayValue[i]);
-            var url = 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/' + layerId;
-            var featureService = new ol.ekmap.FeatureService({
+            var url = urlFeatureService145 + "/" + layerId;
+            var featureService = new mapboxgl.ekmap.FeatureService({
                 url: url,
-                //token: tokenKey
+                token: tokenKey
             });
             var geojson = {
                 "type": "Feature",

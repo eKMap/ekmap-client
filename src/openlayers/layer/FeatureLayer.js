@@ -8,6 +8,7 @@ import Geometry from 'ol/geom/geometry';
  * @classdesc ol.ekmap.FeatureLayer is used to visualize, style, query and edit vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server. Copyright text from the service is added to map attribution automatically.
  * @category  Layer
  * @param {Object} options - Construction parameters.
+ * @param {string} options.id - Unique layer and source name.
  * @param {string} options.url - Required The URL to the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Feature Layer}.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @extends {ol.Observable}
@@ -32,6 +33,8 @@ export class FeatureLayer extends Observable {
             if (this.options.token) {
                 this.tileUrl += ('?token=' + this.options.token);
             }
+
+            this.id = this.options.id != undefined ? this.options.id : 'layer-vector' + guid12();
         }
     }
 
@@ -53,175 +56,42 @@ export class FeatureLayer extends Observable {
          */
         me.dispatchEvent({ type: 'loadstart', value: me });
 
-
+        var style = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: '#088'
+            }),
+            image: new ol.style.Circle({
+                radius: 5,
+                fill: new ol.style.Fill({
+                    color: 'red',
+                }),
+            })
+        })
+        var resultLayer;
         me.service.query(params, function(error, result) {
-            var features = {
-                type: "FeatureCollection",
-                features: result
-            };
-            if (result[0].geometry.type == "Point") {
+                var features = {
+                    type: "FeatureCollection",
+                    features: result
+                };
                 var vectorSource = new ol.source.Vector({
                     features: (new ol.format.GeoJSON()).readFeatures(features),
                     wrapX: false
                 });
-                var resultLayer = new ol.layer.Vector({
-                    source: vectorSource
+                resultLayer = new ol.layer.Vector({
+                    source: vectorSource,
+                    style: style
                 });
                 resultLayer.setProperties({
-                    'id': 'point'
+                    'id': me.id
                 })
                 map.addLayer(resultLayer);
-                // map.addSource('point', {
-                //     "type": "geojson",
-                //     "data": {
-                //         'type': 'FeatureCollection',
-                //         'features': result
-                //     }
-                // });
-
-                // map.addLayer({
-                //     "id": "point",
-                //     "type": "circle",
-                //     "paint": {
-                //         "circle-radius": 10,
-                //         "circle-color": "red",
-                //     },
-                //     "source": 'point'
-                // });
-
-                // map.addLayer({
-                //     "id": "point-selected",
-                //     "type": "circle",
-                //     "paint": {
-                //         "circle-radius": 10,
-                //         "circle-color": "red",
-                //         "circle-stroke-color": '#00ffff',
-                //         "circle-stroke-width": 3,
-                //     },
-                //     'filter': ['in', 'OBJECTID', ''],
-                //     "source": 'point'
-                // });
-            }
-            if (result[0].geometry.type == "LineString") {
-                var vectorSource = new ol.source.Vector({
-                    features: (new ol.format.GeoJSON()).readFeatures(features),
-                    wrapX: false
-                });
-                var resultLayer = new ol.layer.Vector({
-                    source: vectorSource
-                });
-                resultLayer.setProperties({
-                    'id': 'line'
-                })
-                map.addLayer(resultLayer);
-                // map.addSource('line', {
-                //     "type": "geojson",
-                //     "data": {
-                //         'type': 'FeatureCollection',
-                //         'features': result
-                //     }
-                // });
-
-                // map.addLayer({
-                //     'id': "line",
-                //     'type': 'line',
-                //     'layout': {
-                //         'line-join': 'round',
-                //         'line-cap': 'round'
-                //     },
-                //     'paint': {
-                //         'line-color': '#000',
-                //         'line-width': 5
-                //     },
-                //     "source": "line"
-                // });
-
-                // map.addLayer({
-                //     "id": "point-selected",
-                //     "type": "circle",
-                //     "paint": {
-                //         "circle-radius": 10,
-                //         "circle-color": "red",
-                //         "circle-stroke-color": '#00ffff',
-                //         "circle-stroke-width": 3,
-                //     },
-                //     'filter': ['in', 'OBJECTID', ''],
-                //     "source": 'point'
-                // });
-            }
-            if (result[0].geometry.type == "Polygon") {
-                var vectorSource = new ol.source.Vector({
-                    features: (new ol.format.GeoJSON()).readFeatures(features),
-                    wrapX: false
-                });
-                var resultLayer = new ol.layer.Vector({
-                    source: vectorSource
-                });
-                resultLayer.setProperties({
-                    'id': 'area'
-                })
-                map.addLayer(resultLayer);
-                // map.addSource('area', {
-                //     "type": "geojson",
-                //     // lineMetrics: true,
-                //     'data': {
-                //         'type': 'Feature',
-                //         'geometry': {
-                //             'type': 'Polygon',
-                //             'coordinates': result
-                //         }
-                //     }
-                // });
-
-                // map.addLayer({
-                //     'id': 'maine',
-                //     'type': 'fill',
-                //     'source': 'area',
-                //     'layout': {},
-                //     'paint': {
-                //         'fill-color': '#088',
-                //         'fill-opacity': 0.8
-                //     }
-                // });
-
-                // map.addLayer({
-                //     'id': 'area',
-                //     'type': 'line',
-                //     'layout': {
-                //         'line-join': 'round',
-                //         'line-cap': 'round'
-                //     },
-                //     // 'paint': {
-                //     //     'line-color': '#90c258',
-                //     //     'line-width': 5,
-                //     //     'line-gradient': [
-                //     //         'interpolate', ['linear'],
-                //     //         ['line-progress'],
-                //     //         0,
-                //     //         'blue',
-                //     //         0.1,
-                //     //         'royalblue',
-                //     //         0.3,
-                //     //         'cyan',
-                //     //         0.5,
-                //     //         'lime',
-                //     //         0.7,
-                //     //         'yellow',
-                //     //         1,
-                //     //         'red'
-                //     //     ],
-                //     // },
-                //     'source': 'area',
-                // })
-
-            }
+            })
             /**
              * @event ol.ekmap.FeatureLayer#loadend
              * @description Fired when the feature layer load end.
              */
-            me.dispatchEvent({ type: 'loadend', value: me });
-        })
-        return resultLayer;
+        me.dispatchEvent({ type: 'loadend', value: me });
+        return me;
     }
 
     /**
@@ -378,7 +248,7 @@ export class FeatureLayer extends Observable {
             });
             var layers = me.map.getLayers().array_;
             layers.forEach(function(layer) {
-                if (layer.getProperties().id == 'point' || layer.getProperties().id == 'line' || layer.getProperties().id == 'area') {
+                if (layer.getProperties().id == me.id) {
                     layer.setSource(vectorSource)
                 }
             });

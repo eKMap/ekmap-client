@@ -14,17 +14,17 @@
             width: 100%;
             height: calc(100vh - 15px);
         }
-
+        
         body {
             overflow: hidden;
         }
-
+        
         .nameCountry {
             color: #333333 !important;
             font-size: 1.2rem;
             text-decoration: none;
         }
-
+        
         .field {
             color: #333333 !important;
             font-weight: 600;
@@ -32,7 +32,7 @@
             text-decoration: none;
             padding-right: 10px;
         }
-
+        
         .value {
             color: #333333 !important;
             font-size: 1rem;
@@ -57,7 +57,7 @@
             zoom: 5
         });
         //Url by: https://carto.com/help/building-maps/basemap-list/
-        var maps = new mapboxgl.ekmap.TiledMapLayer({
+        var maps = new mapboxgl.ekmap.TileLayer({
             urls: [
                 "https://a.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
                 "https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
@@ -73,14 +73,16 @@
         var features = [];
         var hoveredStateId = null;
 
-        $.get("../data/Buffer_Covid.json", function (response) {
+        $.get("../data/Buffer_Covid.json", function(response) {
             var provinces = response.provinces
             provinces.forEach(province => {
                 var point = turf.point([province.Long, province.Lat]);
                 var confirmed = province.Confirmed;
                 var radius;
                 radius = getRadius(confirmed, 1, 394, 10, 60);
-                var buffered = turf.buffer(point, radius, { units: 'kilometers' });
+                var buffered = turf.buffer(point, radius, {
+                    units: 'kilometers'
+                });
                 buffered.properties.id = province.Province_Id;
                 buffered.properties.name = province.Province_Name;
                 buffered.properties.confirmed = province.Confirmed;
@@ -88,7 +90,7 @@
                 buffered.properties.recovered = province.Recovered;
                 features.push(buffered)
             });
-        }).done(function () {
+        }).done(function() {
             map.addLayer({
                 'id': 'state-fills',
                 'type': 'fill',
@@ -106,7 +108,7 @@
             })
         })
         var popup;
-        map.on('mousemove', 'state-fills', function (e) {
+        map.on('mousemove', 'state-fills', function(e) {
             if (e.features.length > 0) {
                 var fea = e.features[0];
                 if (!hoveredStateId) {
@@ -149,7 +151,7 @@
             }
         });
 
-        map.on('mouseleave', 'state-fills', function () {
+        map.on('mouseleave', 'state-fills', function() {
             popup.remove();
             hoveredStateId = null;
         });

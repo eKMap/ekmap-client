@@ -33,15 +33,15 @@
                 "sources": {
                     "vector-tiles": {
                         "type": "vector",
-                        "tiles": [urlVectSer_hover + "/tile/{z}/{y}/{x}.pdf?apikey=" + tokenForSDK]
+                        "tiles": [urlVectorService145 + "/tile/{z}/{y}/{x}.pbf?apikey=" + tokenKey]
                     },
                 },
                 // "glyphs": urlVectorService + "/resources/fonts/{fontstack}/{range}.pbf",
                 "layers": []
             },
             minZoom: 4,
-            center: [110.8572095386728, 16.105643201842312],
-            zoom: 5.0598853164770725
+            center: [105, 17],
+            zoom: 5
         });
         var hoveredStateId = null;
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
@@ -53,7 +53,7 @@
                 "id": "state-fills",
                 "source": "vector-tiles",
                 "type": "fill",
-                "source-layer": "480",
+                "source-layer": "1902",
                 "layout": {},
                 'paint': {
                     'fill-color': '#627BC1',
@@ -68,7 +68,7 @@
                 'id': 'state-borders',
                 'type': 'line',
                 'source': 'vector-tiles',
-                "source-layer": "480",
+                "source-layer": "1902",
                 'layout': {},
                 'paint': {
                     'line-color': '#627BC1',
@@ -83,7 +83,7 @@
                     map.setFeatureState({
                         source: 'vector-tiles',
                         id: hoveredStateId,
-                        sourceLayer: '480'
+                        sourceLayer: '1902'
                     }, {
                         hover: false
                     });
@@ -92,7 +92,7 @@
                 map.setFeatureState({
                     source: 'vector-tiles',
                     id: hoveredStateId,
-                    sourceLayer: '480'
+                    sourceLayer: '1902'
                 }, {
                     hover: true
                 });
@@ -106,7 +106,7 @@
                 map.setFeatureState({
                     source: 'vector-tiles',
                     id: hoveredStateId,
-                    sourceLayer: '480'
+                    sourceLayer: '1902'
                 }, {
                     hover: false
                 });

@@ -63,9 +63,25 @@
             }).addTo(map)
 
             featureLayer = new mapboxgl.ekmap.FeatureLayer({
-                url: urlFeatureLayer,
-                // token: tokenKey
+                url: urlFeatureLayerEdit,
+                token: tokenKey,
+                id: 'sourceUpdate'
             }).addTo(map);
+
+            featureLayer.on("loadend", function() {
+                map.addLayer({
+                    "id": "selected",
+                    "type": "circle",
+                    "paint": {
+                        "circle-radius": 10,
+                        "circle-color": "red",
+                        "circle-stroke-color": '#00ffff',
+                        "circle-stroke-width": 3,
+                    },
+                    'filter': ['in', 'OBJECTID', ''],
+                    "source": 'sourceUpdate'
+                });
+            })
         })
         map.on('click', function(e) {
             var bbox = [
@@ -73,7 +89,7 @@
                 [e.point.x + 5, e.point.y + 5]
             ];
             var features = map.queryRenderedFeatures(bbox, {
-                layers: ['point']
+                layers: ['sourceUpdate']
             });
             var filter = features.reduce(
                 function(memo, feature) {
@@ -83,8 +99,8 @@
             );
             if (features.length > 0) {
                 document.getElementById("selectedFeatures").innerHTML = "Click on the feature to update.<br>Then select the point you need to move to.";
-                console.log(features[0])
                 idUpdate = features[0].id;
+                map.setFilter('selected', filter);
             } else {
                 if (idUpdate) {
                     var geojson = {
@@ -106,11 +122,12 @@
                         }
                         document.getElementById("selectedFeatures").innerHTML = "Click on the point on the map to update the location.";
                         featureLayer.refresh();
+                        map.setFilter('selected', ["in", "OBJECTID", ""]);
                         idUpdate = null;
                         widgets.loader.removeLoader();
                     });
                 } else
-                    map.setFilter('point-selected', filter);
+                    map.setFilter('selected', filter);
             }
         });
     </script>

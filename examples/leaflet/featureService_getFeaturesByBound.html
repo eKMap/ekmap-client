@@ -65,7 +65,8 @@
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         var featurelayer = new L.ekmap.FeatureLayer({
-            url: urlFeatureLayer
+            url: urlFeatureLayerEdit,
+            token: tokenKey
         }).addTo(map);
 
         var editableLayers = new L.FeatureGroup();
@@ -112,7 +113,8 @@
             editableLayers.addLayer(layer);
 
             new L.ekmap.FeatureService({
-                url: urlFeatureLayer,
+                url: urlFeatureLayerEdit,
+                token: tokenKey
             }).queryByBound(layer.getBounds(), function(error, evt) {
                 if (error) {
                     console.log(error)

@@ -31,8 +31,8 @@
             }),
             target: 'divMapId',
             view: new ol.View({
-                center: [103.96544848210965, 21.38199998283456],
-                zoom: 8,
+                center: [105, 17],
+                zoom: 6,
                 projection: 'EPSG:4326',
                 multiWorld: true
             })
@@ -44,8 +44,8 @@
         }).addTo(map)
 
         var featureLayer = new ol.ekmap.FeatureLayer({
-            url: urlFeatureLayer,
-            //token: tokenKey
+            url: urlFeatureLayerEdit,
+            token: tokenKey
         }).addTo(map);
 
         var idDelete;

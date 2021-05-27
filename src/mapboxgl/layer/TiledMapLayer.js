@@ -26,9 +26,8 @@ export class TiledMapLayer extends mapboxgl.Evented {
                 this.tileUrl = (options.proxy ? options.proxy + '?' : '') + options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
                 //if (options.url.indexOf('{s}') !== -1 && options.subdomains && options.url)
                 //    options.url = options.url.replace('{s}', options.subdomains[0]);
-
-                this.service = new mapboxgl.ekmap.MapService(options);
             }
+            this.service = new mapboxgl.ekmap.MapService(options);
             this.identifies = this.service.identify();
             if (options.urls)
                 this.tileUrls = options.urls

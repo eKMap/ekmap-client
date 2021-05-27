@@ -14,6 +14,11 @@ import Overlay from './Overlay';
  * @param {Array.<string>} options.fields List fields display and fields properties data.
  * @param {Array.<string>} options.colors Color corresponds to the data. 
  * @param {string} options.backgroundColor If type is 'bar', backgroundColor will hepl set backgroundColor for bar chart. (Default: 'rgb(245, 222, 179)').
+ * @param {string} options.width If type is 'bar', backgroundColor will hepl set backgroundColor for bar chart. (Default: 'rgb(245, 222, 179)').
+ * @param {string} options.backgroundColor If type is 'bar', backgroundColor will hepl set backgroundColor for bar chart. (Default: 'rgb(245, 222, 179)').
+ * @param {number} options.width A number representing the value for the width.
+ * @param {number} options.height A number representing the value for the height.
+ * 
  * @extends {mapboxgl.Overlay}
  */
 export class DomOverlay extends Overlay {
@@ -52,6 +57,8 @@ export class DomOverlay extends Overlay {
             // bind render doms to each move..performance to be promoted.
             opts.map.on("move", this.redraw);
         }
+        this.width = opts.width ? opts.width : 160;
+        this.height = opts.height ? opts.height : 160;
         this.doms = []; // store dom elements.
         this.lastData = [];
         this.redraw();
@@ -153,7 +160,7 @@ function _redraw() {
             } else if (chartData != undefined && chartType != undefined) {
                 if (Util.isChanged(this.lastData[i], chartData)) {
                     // setChart would contaminate input Data.
-                    Util.setChart(dom, dataClone, chartType, chartHeight * 2, me.backgroundColor);
+                    Util.setChart(dom, dataClone, chartType, this.width, this.height, me.backgroundColor);
                     this.lastData[i] = chartData;
                 }
             } else {

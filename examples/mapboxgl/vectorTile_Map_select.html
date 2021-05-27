@@ -113,21 +113,21 @@
         var mapTS = new mapboxgl.Map({
             container: 'divMapId', // container id
             minZoom: 4,
-            center: [103.93422987963572, 21.306082013420507],
-            zoom: 14.871024212757812
+            center: [105, 17],
+            zoom: 5
         });
         var hoveredStateId = null;
         var select;
         var vectorTileLayer = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService,
+            url: urlVectorService145,
             token: tokenKey
         }).addTo(mapTS);
         mapTS.on('load', function() {
             select = new mapboxgl.ekmap.control.Select({
-                url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/MapServer',
+                url: urlMapService145,
                 token: tokenKey,
                 target: 'activeControl',
-                setStyle: true
+                showPopup: true
             })
             mapTS.addControl(select);
             select.on('startselect', function() {
@@ -136,7 +136,9 @@
             })
             select.on('selectfeatures', function(e) {
                 console.log(e)
-                    // vectorTileLayer.flyTo(103, 2951, {
+                var featureId = e.features[0].attributes.gid
+                select.setDataPopup(e.features[0].attributes.ten_tinh)
+                    // vectorTileLayer.flyTo(featureId, 1902, {
                     //         zoom: 9
                     //     })
                     // var code = e.properties.CODE;
@@ -155,6 +157,7 @@
             var y = document.getElementById('removeFeature');
             y.addEventListener("click", function(e) {
                 //deactivate control
+                vectorTileLayer.removeHighlight();
                 select.removeFeature();
             });
         })

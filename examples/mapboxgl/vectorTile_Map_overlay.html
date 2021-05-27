@@ -31,13 +31,13 @@
         var map = new mapboxgl.Map({
             container: 'divMapId', // container id
             minZoom: 4,
-            center: [105.5254624, 21.3780789],
-            zoom: 11.5,
+            center: [107.06601354597547, 15.471386173275462],
+            zoom: 4.848587811931847
         });
 
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectSer_overlay,
-            token: tokenForSDK
+            url: urlVectorService145,
+            token: tokenKey
         }).addTo(map);
 
         maps.on('loadend', function() {

@@ -238,9 +238,25 @@
             }).addTo(map)
 
             featureLayer = new mapboxgl.ekmap.FeatureLayer({
-                url: urlFeatureLayer,
-                // token: tokenKey
+                url: urlFeatureLayerEdit,
+                token: tokenKey,
+                id: 'sourceApplyEdit'
             }).addTo(map);
+
+            featureLayer.once("loadend", function() {
+                map.addLayer({
+                    "id": "selected",
+                    "type": "circle",
+                    "paint": {
+                        "circle-radius": 10,
+                        "circle-color": "red",
+                        "circle-stroke-color": '#00ffff',
+                        "circle-stroke-width": 3,
+                    },
+                    'filter': ['in', 'OBJECTID', ''],
+                    "source": 'sourceApplyEdit'
+                });
+            })
         });
 
         window.onload = function() {
@@ -281,7 +297,6 @@
                     featureLayer.refresh();
                     color = null;
                     widgets.loader.removeLoader();
-                    map.setFilter('point-selected', filter);
                 });
             });
 
@@ -291,11 +306,11 @@
                 var param = {
                     "deletes": x
                 };
-                console.log(param.deletes)
                 widgets.loader.showLoader("data updating...");
                 featureLayer.applyEdits(param, function(e) {
                     widgets.loader.removeLoader();
                     featureLayer.refresh();
+                    map.setFilter('selected', ["in", "OBJECTID"]);
                     divAddFea.style.display = 'block';
                     divAddTemp.style.display = 'block';
                     divUpdate.style.display = 'none';
@@ -333,7 +348,7 @@
                     [obj.point.x + 5, obj.point.y + 5]
                 ];
                 var features = map.queryRenderedFeatures(bbox, {
-                    layers: ['point']
+                    layers: ['sourceApplyEdit']
                 });
                 if (features.length > 0) {
                     if (map.getLayer('selectedFeature')) {
@@ -349,8 +364,8 @@
                     //         return memo;
                     //     }, ['in', 'OBJECTID']
                     // );
-                    idFeatureSelected = features[0].properties.maDoiTuong;
-                    // map.setFilter('point-selected', filter);
+                    idFeatureSelected = features[0].properties.OBJECTID;
+                    // map.setFilter('selected', filter);
                     map.addLayer({
                         "id": "selectedFeature",
                         "type": "circle",
@@ -368,7 +383,7 @@
                             }
                         }
                     });
-                    document.getElementById("desName").value = features[0].properties.tenDoiTuon;
+                    document.getElementById("desName").value = features[0].properties.ten;
                 }
             }
         });

@@ -85,8 +85,8 @@
             }),
             target: 'divMapId',
             view: new ol.View({
-                center: [103.96544848210965, 21.38199998283456],
-                zoom: 8,
+                center: [105, 17],
+                zoom: 6,
                 projection: 'EPSG:4326',
                 multiWorld: true
             })
@@ -98,7 +98,8 @@
         }).addTo(map);
 
         var featureLayer = new ol.ekmap.FeatureLayer({
-            url: urlFeatureLayer
+            url: urlFeatureLayerEdit,
+            token: tokenKey
         }).addTo(map);
 
         map.addLayer(vector)
@@ -122,7 +123,8 @@
                 var feature = evt.feature;
                 var bound = feature.getGeometry().getExtent();
                 new ol.ekmap.FeatureService({
-                    url: urlFeatureLayer,
+                    url: urlFeatureLayerEdit,
+                    token: tokenKey
                 }).on(map).queryByBound(bound, function(error, evt) {
                     if (error) {
                         console.log(error)
@@ -143,7 +145,7 @@
                                     image: new ol.style.Circle({
                                         radius: 7,
                                         fill: new ol.style.Fill({
-                                            color: 'red'
+                                            color: 'yellow'
                                         }),
                                         stroke: new ol.style.Stroke({
                                             color: '#00ffff',

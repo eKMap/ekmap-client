@@ -24,7 +24,7 @@ var exampleConfig = {
                     {
                         name: "Bounds query",
                         name_en: "Bounds query",
-                        thumbnail: "featureService_queryByBound.png",
+                        thumbnail: "mapService_queryByBound.png",
                         fileName: "mapService_queryByBound",
                         subject: "Use queryByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
                         description: "Create bound, displaying data on the bound area."
@@ -32,7 +32,7 @@ var exampleConfig = {
                     {
                         name: "Geometry query",
                         name_en: "Geometry query",
-                        thumbnail: "featureService_queryByGeometry.png",
+                        thumbnail: "mapService_queryByGeometry.png",
                         fileName: "mapService_queryByGeometry",
                         subject: "Use queryByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
                         description: "Create polygon, display data on polygon"
@@ -49,8 +49,8 @@ var exampleConfig = {
                     {
                         name: "Image Tile ZYX",
                         name_en: "Image Tile ZYX",
-                        thumbnail: "ImageTileZYX.png",
-                        fileName: "mapService_ImageTileZYX.png",
+                        thumbnail: "mapService_ImageTileZYX.png",
+                        fileName: "mapService_ImageTileZYX",
                         subject: "Use mapboxgl.ekmap.TiledMapLayer to add image tile ZYX to your map.",
                         description: "Upload data as images (Administrative map of Vietnam)"
                     },
@@ -116,14 +116,14 @@ var exampleConfig = {
                         subject: "Attributes Query.",
                         description: "Attributes Query."
                     },
-                    {
-                        name: "Update Feature Attributes",
-                        name_en: "Update Feature Attributes",
-                        thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
-                        fileName: "vectorTile_Map_updateFeatureAttributes",
-                        subject: "Update Feature Attributes.",
-                        description: "Use control Select to get point information and use service to change that point information"
-                    }
+                    // {
+                    //     name: "Update Feature Attributes",
+                    //     name_en: "Update Feature Attributes",
+                    //     thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
+                    //     fileName: "vectorTile_Map_updateFeatureAttributes",
+                    //     subject: "Update Feature Attributes.",
+                    //     description: "Use control Select to get point information and use service to change that point information"
+                    // }
                 ]
             },
             vectortile: {

@@ -83,8 +83,8 @@
             }).addTo(map);
 
             var featureLayer = new mapboxgl.ekmap.FeatureLayer({
-                url: urlMapLayer,
-                // token: tokenKey
+                url: urlMapLayerId,
+                token: tokenKey
             }).addTo(map);
 
             draw = new mapboxgl.ekmap.control.Draw({
@@ -114,7 +114,8 @@
                 var polygonBoundingBox = turf.bbox(polygon);
                 var lngLatBounds = new mapboxgl.LngLatBounds(polygonBoundingBox)
                 new mapboxgl.ekmap.MapService({
-                    url: urlMapLayer,
+                    url: urlMapLayerId,
+                    token: tokenKey
                 }).on(map).queryByBound(lngLatBounds, function(error, evt) {
                     var features = evt;
                     if (error) {
@@ -137,40 +138,13 @@
                         }
 
                         map.addLayer({
-                            'id': "queryEK-" + guid12(),
-                            'type': 'line',
-                            'layout': {
-                                'line-join': 'round',
-                                'line-cap': 'round'
-                            },
-                            'paint': {
-                                'line-color': 'blue',
-                                'line-width': 2
-                            },
-                            "source": 'msvQuery_Bound',
-                            'filter': ['==', '$type', 'LineString']
-                        });
-
-                        map.addLayer({
-                            "id": "queryEK-" + guid12(),
-                            "type": "circle",
-                            "paint": {
-                                "circle-color": "red",
-                                "circle-stroke-color": '#00ffff',
-                                "circle-stroke-width": 3,
-                                "circle-radius": 10
-                            },
-                            "source": 'msvQuery_Bound',
-                            'filter': ['==', '$type', 'Point']
-                        });
-
-                        map.addLayer({
                             "id": "queryEK-" + guid12(),
                             'type': 'fill',
                             'layout': {},
                             'paint': {
-                                'fill-color': '#088',
-                                'fill-opacity': 0.8
+                                'fill-color': 'yellow',
+                                'fill-opacity': 0.8,
+                                'fill-outline-color': 'red'
                             },
                             "source": 'msvQuery_Bound',
                             'filter': ['==', '$type', 'Polygon']

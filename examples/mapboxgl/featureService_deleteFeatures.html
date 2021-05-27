@@ -62,8 +62,9 @@
             }).addTo(map)
 
             featureLayer = new mapboxgl.ekmap.FeatureLayer({
-                url: urlFeatureLayer,
-                //token: tokenKey
+                url: urlFeatureLayerEdit,
+                token: tokenKey,
+                id: 'sourceDelete'
             }).addTo(map);
         })
         var idDelete;
@@ -74,7 +75,7 @@
                 [obj.point.x + 5, obj.point.y + 5]
             ];
             var features = map.queryRenderedFeatures(bbox, {
-                layers: ['point']
+                layers: ['sourceDelete']
             });
             if (features.length > 0) {
                 idDelete = features[0].id;

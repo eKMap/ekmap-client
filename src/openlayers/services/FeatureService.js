@@ -97,8 +97,7 @@ export class FeatureService extends ServiceBase {
         var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(feature.getGeometry()));
         var geojson = {
             'type': 'Feature',
-            'geometry': geometry,
-            'properties': feature.getProperties()
+            'geometry': geometry
         }
         var fea = Parse.geojsonToArcGIS(geojson);
         var data = [];
@@ -132,6 +131,8 @@ export class FeatureService extends ServiceBase {
     updateFeatures(feature, callback, context) {
         var properties = feature.getProperties();
         var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(feature.getGeometry()))
+        var properties = feature.getProperties();
+        delete properties['geometry']
         var geojson = {
             'type': 'Feature',
             'geometry': geometry,
@@ -240,6 +241,7 @@ export class FeatureService extends ServiceBase {
         param.outFields = '*';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        param.returnGeometry = true;
         var me = this;
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
@@ -266,6 +268,7 @@ export class FeatureService extends ServiceBase {
         var data = Util._setGeometry(params);
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        param.returnGeometry = true;
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
             var result = undefined;
@@ -296,15 +299,13 @@ export class FeatureService extends ServiceBase {
             var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(feature))
             geojson = {
                 'type': 'Feature',
-                'geometry': geometry,
-                'properties': params.adds.getProperties()
+                'geometry': geometry
             }
             var fea = Parse.geojsonToArcGIS(geojson);
             var arr1 = [];
             arr1.push(fea);
             param.adds = JSON.stringify(arr1)
-        } else
-            param.adds = false;
+        }
         if (params.updates) {
             var geojson;
             var feature = params.updates;
@@ -312,21 +313,20 @@ export class FeatureService extends ServiceBase {
                 feature = feature.getGeometry();
             }
             var geometry = JSON.parse((new ol.format.GeoJSON()).writeGeometry(feature))
+            var properties = params.updates.getProperties();
+            delete properties['geometry'];
             geojson = {
                 'type': 'Feature',
                 'geometry': geometry,
-                'properties': params.updates.getProperties()
+                'properties': properties
             }
             var dataUpdate = Parse.geojsonToArcGIS(geojson);
             var arr2 = [];
             arr2.push(dataUpdate);
             param.updates = JSON.stringify(arr2)
-        } else
-            param.updates = false;
+        }
         if (params.deletes)
             param.deletes = params.deletes;
-        else
-            param.deletes = false;
         var service = new FeatureService(this.options);
         return service.post('applyEdits', param, function(error, response) {
             callback.call(context, error, response, response);

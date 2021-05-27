@@ -146,6 +146,8 @@ export class MapService extends ServiceBase {
         param.f = 'geojson';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        param.returnGeometry = true;
+        param.outFields = '*';
         var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {
@@ -166,6 +168,8 @@ export class MapService extends ServiceBase {
         var data = Util._setGeometry(params);
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        param.returnGeometry = true;
+        param.outFields = '*';
         var me = this;
         var service = new MapService(this.options);
         return service.request('query', param, function(error, response) {

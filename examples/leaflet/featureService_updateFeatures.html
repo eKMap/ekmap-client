@@ -65,8 +65,8 @@
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         featureLayer = new L.ekmap.FeatureLayer({
-            url: urlFeatureLayer,
-            // token: tokenKey
+            url: urlFeatureLayerEdit,
+            token: tokenKey,
         }).addTo(map);
 
         map.on('click', function(e) {
@@ -81,7 +81,7 @@
                         if (idUpdate) {
                             var geojson = L.marker(e.latlng).toGeoJSON();
                             geojson.properties = {
-                                'maDoiTuong': idUpdate
+                                'OBJECTID': idUpdate
                             }
                             widgets.loader.showLoader("data updating...");
                             featureLayer.updateFeature(geojson, function(error, response) {

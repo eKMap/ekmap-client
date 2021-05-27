@@ -64,8 +64,8 @@
 
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
         var featureLayer = new L.ekmap.FeatureLayer({
-            url: urlMapLayer,
-            // token: tokenKey
+            url: urlMapLayerId,
+            token: tokenKey
         }).addTo(map);
         var editableLayers = new L.FeatureGroup();
         map.addLayer(editableLayers);
@@ -108,7 +108,8 @@
             editableLayers.addLayer(layer);
 
             new L.ekmap.MapService({
-                url: urlMapLayer,
+                url: urlMapLayerId,
+                token: tokenKey
             }).queryByGeometry(layer.toGeoJSON().geometry, function(error, evt) {
                 if (error) {
                     console.log(error)
@@ -120,6 +121,10 @@
                         resultLayer = L.geoJSON(evt, {
                             pointToLayer: function(feature, latlng) {
                                 return L.circleMarker(latlng, geojsonMarkerOptions);
+                            },
+                            style: {
+                                "fillColor": "yellow",
+                                "fillOpacity": 0.8
                             }
                         }).addTo(map);
                 }

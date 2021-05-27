@@ -389,7 +389,7 @@ export class Util {
         }
     }
 
-    static setChart(dom, data, type, height, backgroundColor) {
+    static setChart(dom, data, type, width, height, backgroundColor) {
         if (!Chart) {
             return;
         }
@@ -422,7 +422,7 @@ export class Util {
         });
         canv.height = height;
         canv.style.height = canv.height + 'px';
-        canv.width = height;
+        canv.width = width;
         canv.style.width = canv.width + 'px';
         dom.appendChild(canv);
         return chart;

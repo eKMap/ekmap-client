@@ -202,7 +202,7 @@ export class FeatureService extends ServiceBase {
             param.objectIds = params.objectIds
 
         if (!params.layerDefs) {
-            param.outFields = '*';
+            param.outFields = params.outFields != undefined ? params.outFields : "*";
             param.returnGeometry = true;
             param.f = 'geojson';
         }
@@ -229,6 +229,7 @@ export class FeatureService extends ServiceBase {
         param.outFields = '*';
         param.geometryType = data.geometryType;
         param.geometry = data.geometry;
+        param.returnGeometry = true;
         var me = this;
         var service = new FeatureService(this.options);
         return service.request('query', param, function(error, response) {
@@ -252,6 +253,7 @@ export class FeatureService extends ServiceBase {
         var me = this;
         param.f = 'geojson'; //me.type != undefined ? me.type : 'json'; 
         param.outFields = '*';
+        param.returnGeometry = true;
         if (params) {
             var geom = params;
             if (params.type == 'Point') {
@@ -306,19 +308,16 @@ export class FeatureService extends ServiceBase {
             var arr1 = [];
             arr1.push(dataAdd);
             param.adds = JSON.stringify(arr1)
-        } else
-            param.adds = false;
+        }
         if (params.updates) {
             var dataUpdate = Parse.geojsonToArcGIS(params.updates);
             var arr2 = [];
             arr2.push(dataUpdate);
             param.updates = JSON.stringify(arr2)
-        } else
-            param.updates = false;
+        }
         if (params.deletes)
             param.deletes = params.deletes;
-        else
-            param.deletes = false;
+
         var service = new FeatureService(this.options);
         return service.post('applyEdits', param, function(error, response) {
             callback.call(context, error, response, response);

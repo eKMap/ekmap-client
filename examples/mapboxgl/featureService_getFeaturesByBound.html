@@ -66,13 +66,13 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            center: [103.85587283904749, 21.420743576013905],
             style: {
                 "version": 8,
                 "sources": {},
                 "layers": []
             },
-            zoom: 9.538890805463664
+            center: [105, 17],
+            zoom: 5
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var draw;
@@ -83,7 +83,8 @@
             }).addTo(map)
 
             var featurelayer = new mapboxgl.ekmap.FeatureLayer({
-                url: urlFeatureLayer
+                url: urlFeatureLayerEdit,
+                token: tokenKey
             }).addTo(map);
 
 
@@ -115,7 +116,8 @@
                 var polygonBoundingBox = turf.bbox(polygon);
                 var lngLatBounds = new mapboxgl.LngLatBounds(polygonBoundingBox)
                 new mapboxgl.ekmap.FeatureService({
-                    url: urlFeatureLayer,
+                    url: urlFeatureLayerEdit,
+                    token: tokenKey
                 }).on(map).queryByBound(lngLatBounds, function(error, evt) {
                     if (error) {
                         console.log(error)
@@ -139,43 +141,16 @@
                         }
 
                         map.addLayer({
-                            'id': "queryEK-" + guid12(),
-                            'type': 'line',
-                            'layout': {
-                                'line-join': 'round',
-                                'line-cap': 'round'
-                            },
-                            'paint': {
-                                'line-color': 'blue',
-                                'line-width': 2
-                            },
-                            "source": 'fsvQuery_Bound',
-                            'filter': ['==', '$type', 'LineString']
-                        });
-
-                        map.addLayer({
                             "id": "queryEK-" + guid12(),
                             "type": "circle",
                             "paint": {
-                                "circle-color": "red",
+                                "circle-color": "yellow",
                                 "circle-stroke-color": '#00ffff',
-                                "circle-stroke-width": 3,
+                                "circle-stroke-width": 5,
                                 "circle-radius": 10
                             },
                             "source": 'fsvQuery_Bound',
                             'filter': ['==', '$type', 'Point']
-                        });
-
-                        map.addLayer({
-                            "id": "queryEK-" + guid12(),
-                            'type': 'fill',
-                            'layout': {},
-                            'paint': {
-                                'fill-color': '#088',
-                                'fill-opacity': 0.8
-                            },
-                            "source": 'fsvQuery_Bound',
-                            'filter': ['==', '$type', 'Polygon']
                         });
                     }
                 });

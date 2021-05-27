@@ -7,6 +7,7 @@ import mapboxgl from 'mapbox-gl';
  * @classdesc Select.
  * @param {Object} options Construction parameters.
  * @param {string} options.icon=fa-flickr Icon of button.
+ * @param {Boolean} options.showPopup=true Show popup when click.
  * @param {Boolean} options.setStyle=true If setStyle = false, the selected feature will not set style and vice versa it will set style default.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @param {String} options.circleColor='red' Circle color.
@@ -39,6 +40,7 @@ export class Select extends mapboxgl.Evented {
         this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.target = this.options.target;
         this.mode = this.options.mode != undefined ? this.options.mode : 'multi';
+        this.showPopup = this.options.showPopup != undefined ? this.options.showPopup : false;
         this.listeners = {};
     }
 
@@ -120,12 +122,29 @@ export class Select extends mapboxgl.Evented {
         return button
     }
 
+    /**
+     * @function mapboxgl.ekmap.control.Select.prototype.setDataPopup
+     * @description Sets the popup's content to the HTML provided as a string.<br>This method does not perform HTML filtering or sanitization, and must be used only with trusted content.
+     * @param {string} html A string representing HTML content for the popup.
+     */
+    setDataPopup(html) {
+        if (this.popup)
+            this.popup.setHTML(html);
+        else
+            throw "Error: Popup is undefined. You need set option 'showPopup' of control.";
+    }
+
     onClick(e) {
         var me = this;
         var mapService = new mapboxgl.ekmap.MapService({
             url: me.options.url,
             token: me.options.token
         });
+        if (this.showPopup) {
+            this.popup = new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .addTo(me._map);
+        }
         mapService.identify().on(me._map).at(e.lngLat).run(function(error, obj) {
             /**
              * @event mapboxgl.ekmap.control.Select#selectfeatures
@@ -161,8 +180,7 @@ export class Select extends mapboxgl.Evented {
                                 "circle-stroke-width": me.options.strokeWidth != undefined ? me.options.strokeWidth : 3,
                             },
                         });
-                    }
-                    if (feature.geometryType == "esriGeometryPolyline") {
+                    } else if (feature.geometryType == "esriGeometryPolyline") {
                         me._map.addLayer({
                             "id": "selectedEK-" + guid12(),
                             "source": {
@@ -188,6 +206,31 @@ export class Select extends mapboxgl.Evented {
                                 'line-color': me.options.lineColor != undefined ? me.options.lineColor : 'blue',
                                 'line-width': me.options.lineWidth != undefined ? me.options.lineWidth : 2,
                             }
+                        });
+                    } else {
+                        me._map.addLayer({
+                            "id": "selectedEK-" + guid12(),
+                            "source": {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'Polygon',
+                                        'coordinates': feature.geometry.rings[0]
+                                    }
+                                }
+                            },
+                            "type": "fill",
+                            "metadata": {
+                                'name': '',
+                                'type': '',
+                            },
+                            'layout': {},
+                            'paint': {
+                                'fill-color': 'yellow',
+                                'fill-opacity': 0.8,
+                                'fill-outline-color': 'red'
+                            },
                         });
                     }
                 });

@@ -64,31 +64,15 @@
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
         map.on('load', function() {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
 
-                var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                    token: tokenVN
-                }).addTo(map);
-
-                var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                    url: ImageTileZYX,
-                    token: tokenForSDK
-                }).addTo(map);
-            })
-            // var urlLegend = ImageTileZYX + "/legend?apikey=" + tokenForSDK;
-            // fetch(urlLegend)
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         var htmlLegend = "";
-            //         var layers = data.layers;
-            //         layers.forEach(function(element) {
-            //             htmlLegend += "</ul>";
-            //             var legend = element.legend;
-            //             legend.forEach(function(item) {
-            //                 htmlLegend += "<li><img src='data:image/png;base64," + item.imageData + "'></img><span class='titleLegend'>" + item.label + "</span></li>";
-            //             });
-            //         })
-            //         document.getElementById('legend').innerHTML = htmlLegend;
-            //     });
+            var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+                url: urlMapService145,
+                token: tokenKey
+            }).addTo(map);
+        })
     </script>
 </body>
 

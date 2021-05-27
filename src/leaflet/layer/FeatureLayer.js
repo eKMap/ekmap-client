@@ -55,7 +55,7 @@ export class FeatureLayer extends Layer {
          */
         me.fire('loadstart', me);
         me.service.query(params, function(error, result) {
-            if (result[0].geometry.type == "Point") {
+            if (result[0].geometry.type == "Point" || result[0].geometry.type == "MultiPoint") {
                 var geojsonMarkerOptions = {
                     radius: 8,
                     fillColor: "#ff7800",
@@ -76,7 +76,7 @@ export class FeatureLayer extends Layer {
                     },
                 }).addTo(map);
             }
-            if (result[0].geometry.type == "LineString") {
+            if (result[0].geometry.type == "LineString" || result[0].geometry.type == "MultiLineString") {
                 var arr = []
                 result.forEach(element => {
                     if (element.geometry.coordinates.length > 0)
@@ -89,7 +89,7 @@ export class FeatureLayer extends Layer {
                     }
                 }).addTo(map);
             }
-            if (result[0].geometry.type == "Polygon") {
+            if (result[0].geometry.type == "Polygon" || result[0].geometry.type == "MultiPolygon") {
                 var arr = []
                 result.forEach(element => {
                     if (element.geometry.coordinates.length > 0)
@@ -98,7 +98,8 @@ export class FeatureLayer extends Layer {
                 me.layer = L.geoJSON(arr, {
                     style: {
                         "fillColor": "#088",
-                        fillOpacity: 0.8
+                        "fillOpacity": 0.8,
+                        "stroke": false
                     }
                 }).addTo(map);
             }

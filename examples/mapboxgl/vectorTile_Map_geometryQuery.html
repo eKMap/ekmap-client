@@ -95,11 +95,11 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            center: [103.93422987963572, 21.306082013420507],
-            zoom: 14.871024212757812
+            center: [107.06601354597547, 15.471386173275462],
+            zoom: 4.848587811931847
         });
         var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService,
+            url: urlVectorService145,
             token: tokenKey
         }).addTo(map);
 
@@ -137,7 +137,7 @@
 
             myLineBuffer.on("lineBufferDrawn", function(e) {
                 featureService = new mapboxgl.ekmap.FeatureService({
-                    url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/FeatureServer',
+                    url: urlFeatureService145 + '/1902',
                     token: tokenKey
                 })
                 featureService.on(map).queryByGeometry(e.data.geometry, function(error, evt) {
@@ -190,7 +190,7 @@
                 var polygon1 = turf.polygon(e.features[0].geometry.coordinates);
 
                 featureService = new mapboxgl.ekmap.FeatureService({
-                    url: 'https://viegisserver.ekgis.vn/gserver/rest/services/114/FeatureServer',
+                    url: urlFeatureService145 + '/1902',
                     token: tokenKey
                 })
                 featureService.on(map).queryByGeometry(polygon1.geometry, function(error, evt) {
@@ -198,7 +198,6 @@
                         console.log(error)
                     } else {
                         var features = evt;
-                        console.log(features)
                         highlightFeature(features)
                     }
                 });
@@ -214,42 +213,7 @@
         function highlightFeature(features) {
             var dataFeature = []
             features.forEach(feature => {
-                if (feature.geometryType == "esriGeometryPolyline") {
-                    var arr = feature.features;
-                    arr.forEach(element => {
-                        dataFeature.push({
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'LineString',
-                                'coordinates': element.geometry.paths[0]
-                            }
-                        }, )
-                    });
-                }
-                if (feature.geometryType == "esriGeometryPoint") {
-                    var arr = feature.features;
-                    arr.forEach(element => {
-                        dataFeature.push({
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': [element.geometry.x, element.geometry.y]
-                            }
-                        }, )
-                    });
-                }
-                // if (feature.geometryType == "esriGeometryPolygon") {
-                //     var arr = feature.features;
-                //     arr.forEach(element => {
-                //         dataFeature.push({
-                //             'type': 'Feature',
-                //             'geometry': {
-                //                 'type': 'Polygon',
-                //                 'coordinates': 
-                //             }
-                //         }, )
-                //     });
-                // }
+                dataFeature.push(feature)
 
             });
             var source = map.getSource('fsvQuery_Geometry');

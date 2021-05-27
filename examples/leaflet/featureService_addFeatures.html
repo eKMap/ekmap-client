@@ -59,8 +59,8 @@
         var symbols;
 
         featureLayer = new L.ekmap.FeatureLayer({
-            url: urlFeatureLayer,
-            //token: tokenKey
+            url: urlFeatureLayerEdit,
+            token: tokenKey
         }).addTo(map);
 
         map.on('click', function(e) {
@@ -70,7 +70,7 @@
                     console.log('error adding feature ' + error.message);
                 } else {
                     console.log('Successfully added feature ' + response.objectId);
-                    resultLayer = L.geoJSON(params).addTo(map);
+                    featureLayer.refresh();
                 }
             });
         });

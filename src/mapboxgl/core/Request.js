@@ -99,9 +99,12 @@ export class Request {
         if (data.adds || data.updates || data.deletes) {
             var dataPost = new FormData();
             dataPost.append("f", "json");
-            dataPost.append("adds", data.adds);
-            dataPost.append("updates", data.updates);
-            dataPost.append("deletes", data.deletes);
+            if (data.adds)
+                dataPost.append("adds", data.adds);
+            if (data.updates)
+                dataPost.append("updates", data.updates);
+            if (data.deletes)
+                dataPost.append("deletes", data.deletes);
             if (options.token) dataPost.append("token", options.token)
         } else {
             if (isNaN(data % 2)) {

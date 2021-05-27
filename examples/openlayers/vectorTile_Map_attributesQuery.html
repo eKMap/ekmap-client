@@ -95,13 +95,7 @@
             <div id="terrainMenu">
                 Search by attribute above <a href='#'>layerId</a>
                 <select id="mySelect" class="cesium-button" onchange="changeMenu()">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
+                    <option value="1902">1902</option>
                 </select>
             </div>
             <div id="calculated-area">
@@ -109,8 +103,6 @@
             </div>
         </div>
     </div>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css" type="text/css" />
     <script>
         var map = new ol.Map({
             controls: ol.control.defaults({
@@ -118,8 +110,8 @@
             }),
             target: 'divMapId',
             view: new ol.View({
-                center: [103.96544848210965, 21.38199998283456],
-                zoom: 8,
+                center: [105, 17],
+                zoom: 6,
                 projection: 'EPSG:4326',
                 multiWorld: true
             })
@@ -132,7 +124,6 @@
 
         var draw;
         var listLayersServer = [];
-        var layerName = ['1', '2', '3', '4', '6', '7', '8'];
         var data = [];
         var fields = [];
         var listFields = [];
@@ -140,12 +131,11 @@
             token: tokenVN
         }).addTo(map)
         var service = new ol.ekmap.MapService({
-            'url': 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/MapServer',
-            //'token': tokenKey
+            'url': urlMapService145,
+            'token': tokenKey
         })
         service.getLayers(function(obj) {
             listLayersServer = obj.layers;
-            console.log(listLayersServer)
             changeMenu();
         })
 
@@ -160,9 +150,12 @@
                 if (layer.id == id) {
                     var fields = layer.fields;
                     fields.forEach(element => {
+                        var data = element.alias;
+                        if (data == "OBJECTID")
+                            data = "maDoiTuong"
                         listFields.push({
-                            text: element.alias,
-                            value: element.alias,
+                            text: data,
+                            value: data,
                         })
                     });
                 }
@@ -221,10 +214,10 @@
             param.where = str;
 
             var x = document.getElementById("mySelect").value;
-            var url = 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/' + x;
+            var url = urlFeatureService145 + '/' + x;
             var featureService = new ol.ekmap.FeatureService({
                 url: url,
-                //token: tokenKey
+                token: tokenKey
             });
             featureService.query(param, function(error, obj) {
                 if (error) {

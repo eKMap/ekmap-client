@@ -62,8 +62,8 @@
         var map = new ol.Map({
             target: 'divMapId',
             view: new ol.View({
-                center: [103.96544848210965, 21.38199998283456],
-                zoom: 8,
+                center: [103.85587283904749, 21.420743576013905],
+                zoom: 9.538890805463664,
                 projection: 'EPSG:4326',
                 multiWorld: true
             })
@@ -94,11 +94,11 @@
 
         var styleChange = new ol.style.Style({
             stroke: new ol.style.Stroke({
-                color: 'blue',
+                color: 'red',
                 width: 3,
             }),
             fill: new ol.style.Fill({
-                color: 'rgba(0, 0, 255, 0.1)',
+                color: 'yellow',
             }),
             image: new ol.style.Circle({
                 radius: 5,
@@ -110,9 +110,11 @@
 
         map.addLayer(vector)
         var featureLayer = new ol.ekmap.FeatureLayer({
-            url: urlMapLayer,
+            url: urlMapLayerId,
+            token: tokenKey
         }).addTo(map);
 
+        var featureOverlay;
 
         function addInteraction() {
             draw = new ol.interaction.Draw({
@@ -130,17 +132,12 @@
         }
 
         function updateAreaPolygon(e) {
-            // var layers = map.getLayers();
-            // layers.forEach(layer => {
-            //     if (layer.id.indexOf('queryEK-') != -1) {
-            //         map.removeLayer(layer.id)
-            //     }
-            // });
             addInteraction();
             draw.on('drawend', function(f) {
                 param = f.feature.getGeometry().getExtent();
                 new ol.ekmap.MapService({
-                    url: urlMapLayer,
+                    url: urlMapLayerId,
+                    token: tokenKey
                 }).on(map).queryByBound(param, function(error, evt) {
                     var features = evt;
                     if (error) {
@@ -153,13 +150,15 @@
                         var dataSource = new ol.source.Vector({
                             features: new ol.format.GeoJSON('bound_query').readFeatures(geojsonObject),
                         });
-                        var featureOverlay = new ol.layer.Vector({
-                            'id': "queryEK-" + guid12(),
-                            source: dataSource,
-                            style: styleChange
-                        });
-                        console.log(featureOverlay)
-                        map.addLayer(featureOverlay);
+                        if (!featureOverlay) {
+                            featureOverlay = new ol.layer.Vector({
+                                'id': "queryEK-" + guid12(),
+                                source: dataSource,
+                                style: styleChange
+                            });
+                            map.addLayer(featureOverlay);
+                        } else
+                            featureOverlay.setSource(dataSource);
                     }
                 })
             })

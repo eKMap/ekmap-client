@@ -139,7 +139,7 @@ var exampleConfig = {
                     {
                         name: "Mapbox Vector Tile Overlay",
                         name_en: "Mapbox Vector Tile Overlay",
-                        thumbnail: "vectorTile_Map_full.png",
+                        thumbnail: "vectorTile_Map_overlay.png",
                         fileName: "vectorTile_Map_overlay",
                         subject: "Add vector tile overlay to the map.",
                         description: "Tam Duong - Vinh Phuc (VietNam) camera map"

@@ -6,6 +6,7 @@ import mapboxgl from 'mapbox-gl';
  * @classdesc mapboxgl.ekmap.FeatureLayer is used to visualize, style, query and edit vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server. Copyright text from the service is added to map attribution automatically.
  * @category  Layer
  * @param {Object} options - Construction parameters.
+ * @param {string} options.id - Unique layer and source name.
  * @param {string} options.url - Required The URL to the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Feature Layer}.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @extends {mapboxgl.Evented}
@@ -30,6 +31,7 @@ export class FeatureLayer extends mapboxgl.Evented {
             if (this.options.token) {
                 this.tileUrl += ('?token=' + this.options.token);
             }
+            this.id = this.options.id != undefined ? this.options.id : 'raster-tiles' + guid12();
         }
     }
 
@@ -49,10 +51,10 @@ export class FeatureLayer extends mapboxgl.Evented {
          * @event mapboxgl.ekmap.FeatureLayer#loadstart
          * @description Fired when the feature layer load start.
          */
-        me.fire('loadstart', me);
-        me.service.query(params, function(error, result) {
-            if (result[0].geometry.type == "Point") {
-                map.addSource('point', {
+        this.fire('loadstart', this);
+        this.service.query(params, function(error, result) {
+            if (result[0].geometry.type == "Point" || result[0].geometry.type == "MultiPoint") {
+                map.addSource(me.id, {
                     "type": "geojson",
                     "data": {
                         'type': 'FeatureCollection',
@@ -61,13 +63,13 @@ export class FeatureLayer extends mapboxgl.Evented {
                 });
 
                 map.addLayer({
-                    "id": "point",
+                    "id": me.id,
                     "type": "circle",
                     "paint": {
                         "circle-radius": 10,
                         "circle-color": "red",
                     },
-                    "source": 'point'
+                    "source": me.id
                 });
 
                 // map.addLayer({
@@ -83,8 +85,8 @@ export class FeatureLayer extends mapboxgl.Evented {
                 //     "source": 'point'
                 // });
             }
-            if (result[0].geometry.type == "LineString") {
-                map.addSource('line', {
+            if (result[0].geometry.type == "LineString" || result[0].geometry.type == "MultiLineString") {
+                map.addSource(me.id, {
                     "type": "geojson",
                     "data": {
                         'type': 'FeatureCollection',
@@ -93,7 +95,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                 });
 
                 map.addLayer({
-                    'id': "line",
+                    'id': me.id,
                     'type': 'line',
                     'layout': {
                         'line-join': 'round',
@@ -103,7 +105,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                         'line-color': '#000',
                         'line-width': 5
                     },
-                    "source": "line"
+                    "source": me.id
                 });
 
                 // map.addLayer({
@@ -119,23 +121,21 @@ export class FeatureLayer extends mapboxgl.Evented {
                 //     "source": 'point'
                 // });
             }
-            if (result[0].geometry.type == "Polygon") {
-                map.addSource('area', {
+            if (result[0].geometry.type == "Polygon" || result[0].geometry.type == "MultiPolygon") {
+                map.addSource(me.id, {
                     "type": "geojson",
                     // lineMetrics: true,
                     'data': {
-                        'type': 'Feature',
-                        'geometry': {
-                            'type': 'Polygon',
-                            'coordinates': result
-                        }
+                        'type': 'FeatureCollection',
+                        'features': result
                     }
                 });
 
+
                 map.addLayer({
-                    'id': 'maine',
+                    'id': me.id,
                     'type': 'fill',
-                    'source': 'area',
+                    'source': me.id,
                     'layout': {},
                     'paint': {
                         'fill-color': '#088',
@@ -174,23 +174,14 @@ export class FeatureLayer extends mapboxgl.Evented {
                 // })
 
             }
-            /**
-             * @event mapboxgl.ekmap.FeatureLayer#loadend
-             * @description Fired when the feature layer load end. 
-             */
-            me.fire('loadend', me);
+            map.once("data", function() {
+                /**
+                 * @event mapboxgl.ekmap.FeatureLayer#loadend
+                 * @description Fired when the feature layer load end. 
+                 */
+                me.fire('loadend', me);
+            })
         })
-        return me;
-    }
-
-    /**
-     * @function mapboxgl.ekmap.FeatureLayer.prototype.on
-     * @description On map
-     * @param {mapboxgl.Map} map The map is defined.
-     * @returns {this}
-     */
-    on(map) {
-        this.map = map
         return this;
     }
 
@@ -315,19 +306,13 @@ export class FeatureLayer extends mapboxgl.Evented {
         var params = {
             where: '1=1'
         };
-        this.service.query(params, function(result) {
+        this.service.query(params, function(error, result) {
             data = {
                 'type': 'FeatureCollection',
                 'features': result
             };
-            if (me.map.getLayer('point')) {
-                me.map.getSource('point').setData(data);
-            }
-            if (me.map.getLayer('line')) {
-                me.map.getSource('line').setData(data);
-            }
-            if (me.map.getLayer('area')) {
-                me.map.getSource('area').setData(data);
+            if (me.map.getLayer(me.id)) {
+                me.map.getSource(me.id).setData(data);
             }
         });
     }

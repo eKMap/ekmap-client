@@ -47,7 +47,7 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         map.setStyle(this.tileUrl);
         var listLayer = [];
         //Style point,line,polygon
-        map.on('load', function() {
+        map.on('style.load', function() {
             me.fire('loadend', me);
             var layers = map.getStyle().layers;
             layers.forEach(layer => {
@@ -62,7 +62,10 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                 if (layer.type == 'line') {
                     me.layerPointLine.push(layer.id);
                 }
-            })
+                if (layer.type == 'circle') {
+                    me.layerPointLine.push(layer.id);
+                }
+            });
             me.arr.forEach((key, i) => me.objectLayer[key] = me.name[i]);
         })
         return me;
@@ -241,7 +244,8 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                     'layout': {},
                     'paint': {
                         'fill-color': '#088',
-                        'fill-opacity': 0.8
+                        'fill-opacity': 0.8,
+                        'fill-outline-color': "yellow",
                     },
                     "source": 'highlight',
                     'filter': ['==', '$type', 'Polygon']

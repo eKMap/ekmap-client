@@ -216,8 +216,8 @@
             }),
             target: 'divMapId',
             view: new ol.View({
-                center: [105.6685713, 20.9003181],
-                zoom: 7,
+                center: [105, 17],
+                zoom: 6,
                 projection: 'EPSG:4326',
                 multiWorld: true
             })
@@ -239,8 +239,8 @@
         }).addTo(map)
 
         featureLayer = new ol.ekmap.FeatureLayer({
-            url: urlFeatureLayer,
-            // token: tokenKey
+            url: urlFeatureLayerEdit,
+            token: tokenKey
         }).addTo(map);
 
         window.onload = function() {
@@ -264,8 +264,8 @@
             });
             document.getElementById("btnUpdate").addEventListener("click", function() {
                 featureSelected.setProperties({
-                    'maDoiTuong': idFeatureSelected,
-                    'tenDoiTuon': document.getElementById("desName").value
+                    'OBJECTID': idFeatureSelected,
+                    'ten': document.getElementById("desName").value
                 })
 
                 var param = {
@@ -316,6 +316,7 @@
                         divAddTemp.style.display = 'none';
                         divUpdate.style.display = 'block';
                         color = null;
+                        featureLayer.refresh();
                         if (response.addResults.length > 0)
                             idFeatureSelected = response.addResults[0].objectId
 
@@ -328,8 +329,8 @@
                         divAddFea.style.display = 'none';
                         divAddTemp.style.display = 'none';
                         divUpdate.style.display = 'block';
-                        idFeatureSelected = feature.get('maDoiTuong');
-                        document.getElementById("desName").value = feature.get('tenDoiTuon')
+                        idFeatureSelected = feature.get('OBJECTID');
+                        document.getElementById("desName").value = feature.get('ten')
                     }
                 })
             }

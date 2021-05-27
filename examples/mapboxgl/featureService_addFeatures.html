@@ -71,8 +71,8 @@
             }).addTo(map)
 
             featureLayer = new mapboxgl.ekmap.FeatureLayer({
-                url: urlFeatureLayer,
-                //token: tokenKey
+                url: urlFeatureLayerEdit,
+                token: tokenKey
             }).addTo(map);
             symbols = document.querySelector('#symbols');
         })
