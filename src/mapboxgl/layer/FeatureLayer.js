@@ -27,10 +27,6 @@ export class FeatureLayer extends mapboxgl.Evented {
                     options.url = options.url.replace('{s}', options.subdomains[0]);
                 this.service = new mapboxgl.ekmap.FeatureService(options);
             }
-
-            if (this.options.token) {
-                this.tileUrl += ('?token=' + this.options.token);
-            }
             this.id = this.options.id != undefined ? this.options.id : 'raster-tiles' + guid12();
         }
     }

@@ -145,3 +145,5 @@ var urlFeatureLayerEdit = 'https://server.ekgis.vn/ekmapserver/rest/services/148
 var urlMapService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer' // bản đồ hành chính Việt Nam
 var urlFeatureService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/FeatureServer' //Khu bảo tồn quốc gia Việt Nam
 var urlVectorService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/VectorTileServer' //Bản đồ hành chính Việt Nam
+
+var urlWMS = 'https://server.ekgis.vn/ekmapserver/rest/services/169/WMS' //Quy hoạch chung Hà Nội (WMS).

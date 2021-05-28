@@ -7,6 +7,7 @@ import mapboxgl from 'mapbox-gl';
  * @category Layer
  * @param {string} baseUrl  a base URL of the WMS service.
  * @param {Object} options  Control options.
+ * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @param {string} options.layers (required) Comma-separated list of WMS layers to show.
  * @param {string} options.styles Comma-separated list of WMS styles.
  * @param {string} options.tileSize=256 
@@ -34,12 +35,13 @@ export class WMS extends mapboxgl.Evented {
     constructor(url, options) {
         super();
         this._url = url;
+        options = Util.getUrlParams(options);
         this.defaultWmsParams = {
             service: 'WMS',
             request: 'GetMap',
             layers: '',
             styles: '',
-            format: 'image/jpeg',
+            format: 'image/png',
             transparent: false,
             version: '1.1.1',
             tileSize: 256,
@@ -74,8 +76,9 @@ export class WMS extends mapboxgl.Evented {
         this._crs = this.options.crs;
         this._wmsVersion = parseFloat(this.wmsParams.version);
         var projectionKey = this._wmsVersion >= 1.3 ? 'crs' : 'srs';
-        this.wmsParams[projectionKey] = 'EPSG:900913';
+        this.wmsParams[projectionKey] = 'EPSG:3857';
         var baseUrl = this._url + '?' + Util.serialize(this.wmsParams);
+        console.log(baseUrl)
         map.addSource('wms', {
             'type': 'raster',
             'tiles': [baseUrl],
