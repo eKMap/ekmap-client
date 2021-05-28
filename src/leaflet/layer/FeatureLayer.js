@@ -1,6 +1,7 @@
 import { Util } from '../core/Util';
 import L, { map } from 'leaflet';
 import { Layer } from 'leaflet';
+import { getUid } from 'ol';
 
 
 /**
@@ -33,7 +34,7 @@ export class FeatureLayer extends Layer {
                 this.tileUrl += ('?token=' + this.options.token);
             }
         }
-        this.id = 'featureLayer';
+        this.id = this.options.id != undefined ? this.options.id : 'feature-layer' + guid12();
         this.layer = null;
     }
 
@@ -249,7 +250,7 @@ export class FeatureLayer extends Layer {
             });
 
             me.map.eachLayer(function(layer) {
-                if (layer.id && layer.id == 'featureLayer') {
+                if (layer.id && layer.id == me.id) {
                     me.layer.clearLayers();
                     me.layer.addData(arr);
                 }

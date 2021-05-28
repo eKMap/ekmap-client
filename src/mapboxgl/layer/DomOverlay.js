@@ -14,10 +14,8 @@ import Overlay from './Overlay';
  * @param {Array.<string>} options.fields List fields display and fields properties data.
  * @param {Array.<string>} options.colors Color corresponds to the data. 
  * @param {string} options.backgroundColor If type is 'bar', backgroundColor will hepl set backgroundColor for bar chart. (Default: 'rgb(245, 222, 179)').
- * @param {string} options.width If type is 'bar', backgroundColor will hepl set backgroundColor for bar chart. (Default: 'rgb(245, 222, 179)').
- * @param {string} options.backgroundColor If type is 'bar', backgroundColor will hepl set backgroundColor for bar chart. (Default: 'rgb(245, 222, 179)').
- * @param {number} options.width A number representing the value for the width.
- * @param {number} options.height A number representing the value for the height.
+ * @param {number} options.size Array object include id of feature and size. Eg: arraySize = [{id: 31, size: 100}].
+ * @param {number} options.tooltip=fasle show/hide tooltip of DomOverlay.
  * 
  * @extends {mapboxgl.Overlay}
  */
@@ -31,27 +29,58 @@ export class DomOverlay extends Overlay {
         this.fields = opts.fields;
         this.backgroundColor = opts.backgroundColor;
         this.domOpts = [];
-        this.features.forEach(fea => {
-            var data = []
-            this.fields.forEach(field => {
-                data.push(fea.properties[field])
-            })
-            this.domOpts.push({
-                type: opts.type,
-                data: {
-                    datasets: [{
-                        data: data,
-                        backgroundColor: opts.colors,
-                        datalabels: {
-                            color: '#FFCE56'
-                        }
-                    }],
-                    labels: this.fields
-                },
-                lon: fea.geometry.coordinates[0],
-                lat: fea.geometry.coordinates[1]
-            })
-        });
+        this.toolTip = opts.tooltip != undefined ? opts.tooltip : false;
+        this.arraySize = opts.size != undefined ? opts.size : [];
+        if (this.arraySize.length > 0) {
+            this.features.forEach(fea => {
+                var data = []
+                this.fields.forEach(field => {
+                    data.push(fea.properties[field])
+                })
+                this.arraySize.forEach(obj => {
+                    this.domOpts.push({
+                        type: opts.type,
+                        data: {
+                            datasets: [{
+                                data: data,
+                                backgroundColor: opts.colors,
+                                datalabels: {
+                                    color: '#FFCE56'
+                                }
+                            }],
+                            labels: this.fields
+                        },
+                        lon: fea.geometry.coordinates[0],
+                        lat: fea.geometry.coordinates[1],
+                        width: obj.id == fea.id ? obj.size : 160,
+                    })
+                })
+            });
+        } else {
+            this.features.forEach(fea => {
+                var data = []
+                this.fields.forEach(field => {
+                    data.push(fea.properties[field])
+                })
+                this.domOpts.push({
+                    type: opts.type,
+                    data: {
+                        datasets: [{
+                            data: data,
+                            backgroundColor: opts.colors,
+                            datalabels: {
+                                color: '#FFCE56'
+                            }
+                        }],
+                        labels: this.fields
+                    },
+                    lon: fea.geometry.coordinates[0],
+                    lat: fea.geometry.coordinates[1],
+                    width: 160
+                })
+            });
+        }
+
         if (opts && opts.map) {
             Overlay.setMap(opts.map);
             // bind render doms to each move..performance to be promoted.
@@ -160,7 +189,7 @@ function _redraw() {
             } else if (chartData != undefined && chartType != undefined) {
                 if (Util.isChanged(this.lastData[i], chartData)) {
                     // setChart would contaminate input Data.
-                    Util.setChart(dom, dataClone, chartType, this.width, this.height, me.backgroundColor);
+                    Util.setChart(dom, dataClone, chartType, domOpt['width'], me.backgroundColor, me.toolTip);
                     this.lastData[i] = chartData;
                 }
             } else {
@@ -217,7 +246,6 @@ function preStyleEles(line, dot, dom, pix, chartType) {
 
 function styleChartContainer(dom) {
     dom.style.borderWidth = '0';
-    dom.style.zIndex = 9999;
     // dom.style.backgroundColor = 'rgba(0,0,0,0.0)';
 }
 

@@ -392,7 +392,7 @@ export class Util {
         }
     }
 
-    static setChart(dom, data, type, width, height, backgroundColor) {
+    static setChart(dom, data, type, width, backgroundColor, toolTip) {
         if (!Chart) {
             return;
         }
@@ -410,6 +410,9 @@ export class Util {
                 legend: {
                     display: false
                 },
+                tooltips: {
+                    enabled: toolTip
+                }
                 // plugins: {
                 //     labels: {
                 //         render: function (args) {
@@ -423,8 +426,8 @@ export class Util {
                 // }
             }
         });
-        canv.height = height;
-        canv.style.height = canv.height + 'px';
+        canv.height = width;
+        canv.style.height = canv.width + 'px';
         canv.width = width;
         canv.style.width = canv.width + 'px';
         dom.appendChild(canv);
