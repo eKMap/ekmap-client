@@ -14,7 +14,7 @@ import Overlay from './Overlay';
  * @param {Array.<string>} options.fields List fields display and fields properties data.
  * @param {Array.<string>} options.colors Color corresponds to the data. 
  * @param {string} options.backgroundColor If type is 'bar', backgroundColor will hepl set backgroundColor for bar chart. (Default: 'rgb(245, 222, 179)').
- * @param {number} options.size Array object include id of feature and size. Eg: arraySize = [{id: 31, size: 100}].
+ * @param {Array.<Object>} options.size Array object include id of feature and size. Eg: arraySize = [{id: 31, size: [100,50]}]. (width: 100, height: 50)
  * @param {number} options.tooltip=fasle show/hide tooltip of DomOverlay.
  * 
  * @extends {mapboxgl.Overlay}
@@ -52,7 +52,8 @@ export class DomOverlay extends Overlay {
                         },
                         lon: fea.geometry.coordinates[0],
                         lat: fea.geometry.coordinates[1],
-                        width: obj.id == fea.id ? obj.size : 160,
+                        width: obj.id == fea.id ? obj.size[0] : 160,
+                        height: obj.id == fea.id ? obj.size[1] : 80,
                     })
                 })
             });
@@ -76,7 +77,8 @@ export class DomOverlay extends Overlay {
                     },
                     lon: fea.geometry.coordinates[0],
                     lat: fea.geometry.coordinates[1],
-                    width: 160
+                    width: 160,
+                    height: 80
                 })
             });
         }
@@ -86,8 +88,6 @@ export class DomOverlay extends Overlay {
             // bind render doms to each move..performance to be promoted.
             opts.map.on("move", this.redraw);
         }
-        this.width = opts.width ? opts.width : 160;
-        this.height = opts.height ? opts.height : 160;
         this.doms = []; // store dom elements.
         this.lastData = [];
         this.redraw();
@@ -189,7 +189,7 @@ function _redraw() {
             } else if (chartData != undefined && chartType != undefined) {
                 if (Util.isChanged(this.lastData[i], chartData)) {
                     // setChart would contaminate input Data.
-                    Util.setChart(dom, dataClone, chartType, domOpt['width'], me.backgroundColor, me.toolTip);
+                    Util.setChart(dom, dataClone, chartType, domOpt['width'], domOpt['height'], me.backgroundColor, me.toolTip);
                     this.lastData[i] = chartData;
                 }
             } else {

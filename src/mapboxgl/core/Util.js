@@ -392,12 +392,15 @@ export class Util {
         }
     }
 
-    static setChart(dom, data, type, width, backgroundColor, toolTip) {
+    static setChart(dom, data, type, width, height, backgroundColor, toolTip) {
         if (!Chart) {
             return;
         }
+        let div = document.createElement('div')
+        div.className = 'chart-container'
         let canv = document.createElement('canvas'),
             ctx = canv.getContext('2d');
+        div.appendChild(canv);
         if (type == 'bar')
             canv.style.backgroundColor = backgroundColor ? backgroundColor : 'rgb(245, 222, 179)';
         else
@@ -407,6 +410,7 @@ export class Util {
             type: type,
             data: data,
             options: {
+                maintainAspectRatio: false,
                 legend: {
                     display: false
                 },
@@ -426,11 +430,11 @@ export class Util {
                 // }
             }
         });
-        canv.height = width;
-        canv.style.height = canv.width + 'px';
+        chart.canvas.parentNode.style.height = height + 'px';
+        chart.canvas.parentNode.style.width = width + 'px';
+        canv.height = height;
         canv.width = width;
-        canv.style.width = canv.width + 'px';
-        dom.appendChild(canv);
+        dom.appendChild(div);
         return chart;
     }
 
