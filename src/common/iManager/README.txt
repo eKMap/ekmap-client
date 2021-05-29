@@ -1,0 +1,1 @@
+存放iClient对接iManager服务的代码。

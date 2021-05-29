@@ -109,12 +109,6 @@
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
-            <div id="left" class="sidebar flex-center left collapsed">
-                <div id="divResults" class="sidebar-content rounded-rect flex-center">
-                    <table id="tbl" style="width: 100%;padding: 10px;font-size: 15px;">
-                    </table>
-                </div>
-            </div>
         </div>
         <div id="popup" class="ol-popup">
             <div id="popup-content"></div>
@@ -128,8 +122,9 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [11688546.53, 1920825.04],
-                zoom: 6,
+                center: [105.73732943945129, 21.16898923449925],
+                zoom: 13,
+                projection: 'EPSG:4326',
             })
         });
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
@@ -137,56 +132,14 @@
         }).addTo(map)
 
         var wms = new ol.ekmap.WMS({
-            url: 'https://server.ekgis.vn/ekmapserver/rest/services/32/WMS',
+            url: urlWMS,
+            token: tokenKey,
             params: {
-                'apikey': tokenOGC,
-                'LAYERS': '364',
+                'LAYERS': 'bddiachinh,htkt_caodosannen,htkt_cd_duongday,htkt_cd_trambienap,htkt_cn_ongcapnuoc,htkt_tn_congthoatnuoc,htkt_tnm_cuaxa,htkt_tnm_matnuoc,htkt_tnm_mlthoatnuocmua,htkt_ttll_tramttll,htkt_ttll_tuyencapquang,htkt_vsmt1,phankhun1_giaothong,phankhun1_sdd',
                 'VERSION': '1.1.1',
-            }
+            },
+            format: 'text/html'
         }).addTo(map);
-        var urlLegend = "https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer" + "/legend?apikey=" + tokenOGC;
-        var resultsTable = document.getElementById("tbl");
-        var arr = [];
-        fetch(urlLegend)
-            .then(response => response.json())
-            .then(data => {
-                arr.push(data.layers[0].legend);
-
-                document.getElementById("divResults").style = " margin-left: 10px !important;";
-                document.getElementById('tbl').style.color = 'black';
-                resultsTable.innerHTML = "";
-                var topRow = resultsTable.insertRow(0);
-                var cell1 = topRow.insertCell(0);
-                var cell2 = topRow.insertCell(1);
-                cell1.innerHTML = "<b>Màu</b>";
-                cell2.innerHTML = "<b>Chú giải</b>";
-                toggleSidebar('left');
-                arr[0].forEach(function(e, i) {
-                    var name = e.label;
-                    var row = resultsTable.insertRow(i + 1);
-                    cell1 = row.insertCell(0);
-                    cell2 = row.insertCell(1);
-                    cell1.innerHTML = "<img src = 'data:image/png;base64," + e.imageData + "' > </img>";
-                    cell2.innerHTML = name;
-                })
-            })
-
-        function toggleSidebar(id) {
-            var elem = document.getElementById(id);
-            var classes = elem.className.split(' ');
-            var collapsed = classes.indexOf('collapsed') !== -1;
-
-            var padding = {};
-
-            if (collapsed) {
-                classes.splice(classes.indexOf('collapsed'), 1);
-                padding[id] = 300;
-            } else {
-                padding[id] = 0;
-                classes.push('collapsed');
-            }
-            elem.className = classes.join(' ');
-        }
     </script>
 </body>
 

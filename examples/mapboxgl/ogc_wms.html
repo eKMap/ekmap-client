@@ -29,15 +29,16 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            center: [106.5090846096723, 16.787962287423255],
-            zoom: 5.1128594812072485
+            center: [105.73732943945129, 21.16898923449925],
+            zoom: 12.630794297072477
         });
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map);
         var wms = new mapboxgl.ekmap.WMS(urlWMS, {
             token: tokenKey,
-            layers: 'htkt_cn_ongcapnuoc',
+            tileSize: 101,
+            layers: 'bddiachinh,htkt_caodosannen,htkt_cd_duongday,htkt_cd_trambienap,htkt_cn_ongcapnuoc,htkt_tn_congthoatnuoc,htkt_tnm_cuaxa,htkt_tnm_matnuoc,htkt_tnm_mlthoatnuocmua,htkt_ttll_tramttll,htkt_ttll_tuyencapquang,htkt_vsmt1,phankhun1_giaothong,phankhun1_sdd',
             transparent: true
         }).addTo(map);
     </script>

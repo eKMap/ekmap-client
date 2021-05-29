@@ -48,76 +48,22 @@
     <script>
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            center: [106.5090846096723, 16.787962287423255],
-            zoom: 5.1128594812072485
+            center: [105.73732943945129, 21.16898923449925],
+            zoom: 13
         });
         var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map);
 
-        var wfs = new mapboxgl.ekmap.WFS('https://localhost:44347/ekmapserver/rest/services/39/WFS?', {
-            typeName: 'dev4gis:Sanbay',
-            apikey: '1-agFaBZOXeZ83QKAWjH5ZNiMR5RRVmrp8'
+        var wfs = new mapboxgl.ekmap.WFS(urlWFS, {
+            typeName: 'htkt_cd_duongday',
+            token: tokenKey,
+            maxFeatures: 300
         }).addTo(map);
-
-        map.loadImage('./img/marker-icon-red.png', function(error, image) {
-            if (error) throw error;
-            map.addImage('point', image);
-        });
-
-        wfs.getFeature(function(response) {
-            map.addLayer({
-                'id': 'sanbay',
-                "type": "symbol",
-                "layout": {
-                    "icon-image": "point",
-                    "icon-size": 0.05
-                },
-                'source': {
-                    'type': 'geojson',
-                    'data': response
-                }
-            });
+        wfs.on('load', function() {
+            widgets.loader.removeLoader();
         })
-
-        var popup = new mapboxgl.Popup({
-            closeButton: false,
-            closeOnClick: false
-        });
-
-        map.on('mouseenter', 'sanbay', function(e) {
-            map.getCanvas().style.cursor = 'pointer';
-            var coordinates = e.features[0].geometry.coordinates.slice();
-            var description = e.features[0].properties;
-            var content = '';
-            content += '<div style="max-width:2000px">';
-            content += '   <div class="form-group">';
-            content += '      <div class="width:30%">';
-            content += '           <a href="javascript:;" class="field">Tên sân bay: </a>'
-            content += '      </div>'
-            content += '      <div class="width:70%">'
-            content += '           <a href="javascript:;" class="value">' + description.Ten + '</a>'
-            content += '      </div>'
-            content += '   </div>'
-            content += '   <div class="form-group" style="margin-bottom:20px">';
-            content += '      <div class="width:20%">';
-            content += '          <a href="javascript:;" class="field">Loại: </a>'
-            content += '      </div>'
-            content += '      <div class="width:80%">'
-            content += '          <a href="javascript:;" class="value">' + description.Loai + '</a>'
-            content += '      </div>'
-            content += '   </div>'
-            content += '</div>'
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-            popup.setLngLat(coordinates).setHTML(content).addTo(map);
-        });
-
-        map.on('mouseleave', 'sanbay', function() {
-            map.getCanvas().style.cursor = '';
-            popup.remove();
-        });
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>
 

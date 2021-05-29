@@ -7,6 +7,7 @@ import mapboxgl from 'mapbox-gl';
  * @category Layer
  * @param {string} baseUrl  a base URL of the WFS service.
  * @param {Object} options  Control options.
+ * @param {string} options.token - Will use this token to authenticate all calls to the service.
  * @param {string} options.service='WFS' (required) Comma-separated list of WFS layers to show.
  * @param {string} options.typeName type name.
  * @param {string} options.request='GetFeature' Comma-separated list of WFS styles.
@@ -37,12 +38,13 @@ export class WFS extends mapboxgl.Evented {
             service: 'WFS',
             request: 'GetFeature',
             typeName: '',
-            maxFeatures: '50',
+            maxFeatures: options.maxFeatures != undefined ? options.maxFeatures : 50,
             format: 'image/jpeg',
             outputFormat: 'application/json',
             version: '1.0.0',
-            apikey: ''
+            token: ''
         }
+        this.id = options.id != undefined ? options.id : "ogc-wfs" + guid12();
         var WFSParams = Util.extend({}, this.defaultWFSParams);
         // all keys that are not TileLayer options go to WFS params
         for (var i in options) {
@@ -63,7 +65,7 @@ export class WFS extends mapboxgl.Evented {
         var baseUrl = this._url + '?' + Util.serialize(this.WFSParams);
         $.get(baseUrl, function(res) {
             map.addLayer({
-                'id': 'park-boundary',
+                'id': 'polygon-' + guid12(),
                 'type': 'fill',
                 'source': {
                     'type': 'geojson',
@@ -72,7 +74,39 @@ export class WFS extends mapboxgl.Evented {
                 'paint': {
                     'fill-color': '#888888',
                     'fill-opacity': 0.4
-                }
+                },
+                'filter': ['==', ["geometry-type"], 'Polygon']
+            });
+            map.addLayer({
+                'id': 'point-' + guid12(),
+                'type': 'circle',
+                'source': {
+                    'type': 'geojson',
+                    'data': res,
+                },
+                "paint": {
+                    "circle-radius": 10,
+                    "circle-color": "red"
+                },
+                'filter': ['==', ["geometry-type"], 'Point']
+            });
+
+            map.addLayer({
+                'id': 'line-' + guid12(),
+                'type': 'line',
+                'source': {
+                    'type': 'geojson',
+                    'data': res,
+                },
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#000',
+                    'line-width': 5
+                },
+                'filter': ['==', ["geometry-type"], 'LineString']
             });
             /**
              * @event mapboxgl.ekmap.WFS#load

@@ -44,7 +44,7 @@ export class WMS extends mapboxgl.Evented {
             format: 'image/png',
             transparent: false,
             version: '1.1.1',
-            tileSize: 256,
+            tileSize: options.tileSize != undefined ? options.tileSize : 256,
             bbox: '{bbox-epsg-3857}',
             onClick: true
         }
@@ -78,7 +78,6 @@ export class WMS extends mapboxgl.Evented {
         var projectionKey = this._wmsVersion >= 1.3 ? 'crs' : 'srs';
         this.wmsParams[projectionKey] = 'EPSG:3857';
         var baseUrl = this._url + '?' + Util.serialize(this.wmsParams);
-        console.log(baseUrl)
         map.addSource('wms', {
             'type': 'raster',
             'tiles': [baseUrl],
@@ -122,6 +121,7 @@ export class WMS extends mapboxgl.Evented {
         $.ajax({
             url: url,
             success: function(data, status, xhr) {
+                console.log(data)
                 var err = typeof data === 'string' ? null : data;
                 showResults(err, evt.lngLat, data, callback);
             },
@@ -157,7 +157,8 @@ export class WMS extends mapboxgl.Evented {
             width: tileSize.x * realRetina,
             layers: this.wmsParams.layers,
             query_layers: this.wmsParams.layers,
-            info_format: this.wmsParams.onClick ? 'text/html' : 'application/json'
+            info_format: this.wmsParams.onClick ? 'text/html' : 'application/json',
+            token: this.wmsParams.token != undefined ? this.wmsParams.token : ''
         };
 
         params[params.version === '1.3.0' ? 'i' : 'x'] = 50;

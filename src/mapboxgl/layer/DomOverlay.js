@@ -1,3 +1,4 @@
+import { map } from 'leaflet';
 import mapboxgl from 'mapbox-gl';
 import { Util } from '../core/Util';
 import Overlay from './Overlay';
@@ -155,6 +156,7 @@ const lineHeight = 60,
  */
 function _redraw() {
     let doms = this.domOpts;
+    console.log(doms)
     var me = this;
     if (doms && Array.isArray(doms)) {
         // append each of domPopups to domContainer.
@@ -210,6 +212,13 @@ function _redraw() {
                 this.domContainer.appendChild(dom);
                 this.domContainer.appendChild(line);
                 this.domContainer.appendChild(dot);
+                dom.addEventListener('click', function(event) {
+                    event.stopPropagation()
+                });
+                dom.addEventListener('mousewheel', function(event) {
+                    event.stopPropagation()
+                    console.log('vao1')
+                });
                 this.doms.push(...[dom, line, dot]);
             }
         }

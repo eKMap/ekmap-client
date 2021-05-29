@@ -33,9 +33,10 @@ export class WFS extends Observable {
 
     addTo(map) {
         var bound = map.getView().calculateExtent(map.getSize());
+        console.log(this.params)
         var vectorSource = new ol.source.Vector({
             format: new ol.format.GeoJSON(),
-            url: this.url + '?service=WFS&version=1.1.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&apikey=' + this.params.apikey,
+            url: this.url + '?service=WFS&version=1.1.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&token=' + this.params.token,
             strategy: ol.loadingstrategy.bbox
         });
         var vector = new ol.layer.Vector({
@@ -58,7 +59,7 @@ export class WFS extends Observable {
 
     getFeatures() {
         var bound = map.getView().calculateExtent(map.getSize());
-        var baseUrl = this.url + '?service=WFS&version=1.1.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&apikey=' + this.params.apikey;
+        var baseUrl = this.url + '?service=WFS&version=1.1.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&token=' + this.params.token;
         if (baseUrl) {
             return fetch(baseUrl)
                 .then(res => res.json());

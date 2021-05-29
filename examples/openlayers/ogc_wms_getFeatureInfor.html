@@ -190,8 +190,9 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [11688546.53, 1920825.04],
-                zoom: 6,
+                center: [105.73732943945129, 21.16898923449925],
+                zoom: 13,
+                projection: 'EPSG:4326'
             })
         });
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
@@ -201,38 +202,38 @@
         var wms = new ol.ekmap.WMS({
             url: 'https://server.ekgis.vn/ekmapserver/rest/services/32/WMS',
             params: {
-                'apikey': tokenOGC,
+                'token': tokenKey,
                 'LAYERS': '364',
                 'VERSION': '1.1.1',
             }
         }).addTo(map);
-        wms.getLayers();
-        var urlLegend = "https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer" + "/legend?apikey=" + tokenOGC;
+        var urlLegend = "https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer" + "/legend?apikey=" + tokenKey;
         var resultsTable = document.getElementById("tbl");
         var arr = [];
-        fetch(urlLegend)
-            .then(response => response.json())
-            .then(data => {
-                arr.push(data.layers[0].legend);
-
-                document.getElementById("divResults").style = " margin-left: 10px !important;";
-                document.getElementById('tbl').style.color = 'black';
-                resultsTable.innerHTML = "";
-                var topRow = resultsTable.insertRow(0);
-                var cell1 = topRow.insertCell(0);
-                var cell2 = topRow.insertCell(1);
-                cell1.innerHTML = "<b>Màu</b>";
-                cell2.innerHTML = "<b>Chú giải</b>";
-                toggleSidebar('left');
-                arr[0].forEach(function(e, i) {
-                    var name = e.label;
-                    var row = resultsTable.insertRow(i + 1);
-                    cell1 = row.insertCell(0);
-                    cell2 = row.insertCell(1);
-                    cell1.innerHTML = "<img src = 'data:image/png;base64," + e.imageData + "' > </img>";
-                    cell2.innerHTML = name;
-                })
+        var ms = new ol.ekmap.MapService({
+            url: 'https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer',
+            token: tokenKey
+        })
+        ms.legend(function(data) {
+            arr.push(data.layers[0].legend);
+            document.getElementById("divResults").style = " margin-left: 10px !important;";
+            document.getElementById('tbl').style.color = 'black';
+            resultsTable.innerHTML = "";
+            var topRow = resultsTable.insertRow(0);
+            var cell1 = topRow.insertCell(0);
+            var cell2 = topRow.insertCell(1);
+            cell1.innerHTML = "<b>Màu</b>";
+            cell2.innerHTML = "<b>Chú giải</b>";
+            toggleSidebar('left');
+            arr[0].forEach(function(e, i) {
+                var name = e.label;
+                var row = resultsTable.insertRow(i + 1);
+                cell1 = row.insertCell(0);
+                cell2 = row.insertCell(1);
+                cell1.innerHTML = "<img src = 'data:image/png;base64," + e.imageData + "' > </img>";
+                cell2.innerHTML = name;
             })
+        })
         map.on('click', function(evt) {
             var result = wms.getFeatureInfoUrl(evt.coordinate);
             if (result) {

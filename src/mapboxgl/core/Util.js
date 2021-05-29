@@ -454,6 +454,20 @@ export class Util {
             return lay.source;
         }
     }
+
+    /**
+     * @function mapboxgl.ekmap.Util.toSuperMapGeometry
+     * @description 将 GeoJSON 对象转为 SuperMap 几何图形。
+     * @param {GeoJSONObject} geoJSON - GeoJSON 对象。
+     * @returns {SuperMap.Geometry}
+     */
+    static toEkmapGeometry(geoJSON) {
+        if (geoJSON && geoJSON.type) {
+            var format = new GeoJSONFormat();
+            var result = format.read(geoJSON, "FeatureCollection");
+            return result[0].geometry;
+        }
+    }
 }
 
 mapboxgl.ekmap.Util = Util;
