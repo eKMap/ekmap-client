@@ -98,26 +98,28 @@ export class TreeLayer extends mapboxgl.Evented {
                 listId.forEach(id => {
                     var checkDom = document.getElementById(id);
                     var layer = me._map.getLayer(id);
-                    if (checkDom.value != 'change' || checkDom.checked == true) {
-                        if (zoom < layer.minzoom || zoom > layer.maxzoom) {
-                            checkDom.checked = false
-                            checkDom.disabled = true;
-                        } else {
-                            checkDom.checked = true
-                            checkDom.disabled = false;
+                    if (checkDom) {
+                        if (checkDom.value != 'change' || checkDom.checked == true) {
+                            if (zoom < layer.minzoom || zoom > layer.maxzoom) {
+                                checkDom.checked = false
+                                checkDom.disabled = true;
+                            } else {
+                                checkDom.checked = true
+                                checkDom.disabled = false;
+                            }
                         }
-                    }
-                    if (checkDom.value == 'change' && checkDom.checked == false) {
-                        if (zoom < layer.minzoom || zoom > layer.maxzoom) {
-                            checkDom.checked = false;
-                            checkDom.disabled = false;
-                        } else {
-                            checkDom.checked = false;
-                            checkDom.disabled = false;
+                        if (checkDom.value == 'change' && checkDom.checked == false) {
+                            if (zoom < layer.minzoom || zoom > layer.maxzoom) {
+                                checkDom.checked = false;
+                                checkDom.disabled = false;
+                            } else {
+                                checkDom.checked = false;
+                                checkDom.disabled = false;
+                            }
                         }
-                    }
-                    if (checkDom.value == 'change' && checkDom.checked == true) {
-                        checkDom.value = ''
+                        if (checkDom.value == 'change' && checkDom.checked == true) {
+                            checkDom.value = ''
+                        }
                     }
                 });
             }
