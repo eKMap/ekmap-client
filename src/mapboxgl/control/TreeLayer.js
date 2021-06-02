@@ -1,5 +1,7 @@
 import '../core/Base';
 import mapboxgl from 'mapbox-gl';
+import { Util } from '../core/Util';
+
 /**
  * @class mapboxgl.ekmap.control.TreeLayer
  * @category  Control
@@ -11,6 +13,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.title=TREELAYER Name of header.
  * @param {string} options.width=220px width of treelayer.
  * @param {String} options.tooltip=Treelayer Tooltip of button.
+ * @param {Array<String>} options.layerIdHidden Array layerId you not show on treelayer.
  * 
  *
  * @example
@@ -64,7 +67,10 @@ export class TreeLayer extends mapboxgl.Evented {
         this._baseLayersOption = options.baseLayers || null;
         this._overLayersOption = options.overLayers || null;
         this._vectorTiledOption = options.vectorTiledMapLayer || null;
-        this.widthDiv = options.width != undefined ? options.width : '220px'
+        this.layerIdHidden = options.layerIdHidden || null;
+        if (this.layerIdHidden)
+            this.layerIdHidden = Util.isArray(options.layerIdHidden) ? options.layerIdHidden : [options.layerIdHidden];
+        this.widthDiv = options.width != undefined ? options.width : '220px';
         this.listLayer = this._vectorTiledOption;
         if (this._vectorTiledOption !== null)
             this._vectorTiledOption = this._vectorTiledOption.objectLayer
@@ -225,24 +231,49 @@ export class TreeLayer extends mapboxgl.Evented {
                 Object.keys(me._vectorTiledOption).forEach((layerId) => {
                     var check = false;
                     const br = document.createElement('br');
-                    _.forEach(listLengend, function(leg) {
-                        var layer = me._map.getLayer(layerId)
-                        if (layer.metadata.name == leg.layerName) {
-                            me._checkBoxControlAdd(layerId, div, leg);
+                    if (me.layerIdHidden) {
+                        if (me.layerIdHidden.indexOf(layerId) == -1) {
+                            _.forEach(listLengend, function(leg) {
+                                var layer = me._map.getLayer(layerId)
+                                if (layer.metadata.name == leg.layerName) {
+                                    me._checkBoxControlAdd(layerId, div, leg);
+                                    div.appendChild(br);
+                                    if (me._opacityControlOption) {
+                                        me._rangeControlAdd(layerId, div);
+                                        div.appendChild(br);
+                                    }
+                                    check = true;
+                                }
+                            })
+                            if (!check) {
+                                me._checkBoxControlAdd(layerId, div, null);
+                                div.appendChild(br);
+                                if (me._opacityControlOption) {
+                                    me._rangeControlAdd(layerId, div);
+                                    div.appendChild(br);
+                                }
+                            }
+                        }
+                    } else {
+                        _.forEach(listLengend, function(leg) {
+                            var layer = me._map.getLayer(layerId)
+                            if (layer.metadata.name == leg.layerName) {
+                                me._checkBoxControlAdd(layerId, div, leg);
+                                div.appendChild(br);
+                                if (me._opacityControlOption) {
+                                    me._rangeControlAdd(layerId, div);
+                                    div.appendChild(br);
+                                }
+                                check = true;
+                            }
+                        })
+                        if (!check) {
+                            me._checkBoxControlAdd(layerId, div, null);
                             div.appendChild(br);
                             if (me._opacityControlOption) {
                                 me._rangeControlAdd(layerId, div);
                                 div.appendChild(br);
                             }
-                            check = true;
-                        }
-                    })
-                    if (!check) {
-                        me._checkBoxControlAdd(layerId, div, null);
-                        div.appendChild(br);
-                        if (me._opacityControlOption) {
-                            me._rangeControlAdd(layerId, div);
-                            div.appendChild(br);
                         }
                     }
                 });
