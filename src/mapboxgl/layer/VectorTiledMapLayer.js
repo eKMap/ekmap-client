@@ -50,7 +50,6 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         map.on('style.load', function() {
             me.fire('loadend', me);
             var layers = map.getStyle().layers;
-            console.log(layers)
             layers.forEach(layer => {
                 var id = parseInt(layer.id);
                 if (!isNaN(id)) {

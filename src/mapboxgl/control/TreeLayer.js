@@ -9,6 +9,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {Array} options.overLayers=null List of overlayer for which you want to display TreeLayer.
  * @param {Boolean} options.opacityControl=false Display opacity.
  * @param {string} options.title=TREELAYER Name of header.
+ * @param {string} options.width=220px width of treelayer.
  * @param {String} options.tooltip=Treelayer Tooltip of button.
  * 
  *
@@ -63,6 +64,7 @@ export class TreeLayer extends mapboxgl.Evented {
         this._baseLayersOption = options.baseLayers || null;
         this._overLayersOption = options.overLayers || null;
         this._vectorTiledOption = options.vectorTiledMapLayer || null;
+        this.widthDiv = options.width != undefined ? options.width : '220px'
         this.listLayer = this._vectorTiledOption;
         if (this._vectorTiledOption !== null)
             this._vectorTiledOption = this._vectorTiledOption.objectLayer
@@ -164,8 +166,8 @@ export class TreeLayer extends mapboxgl.Evented {
         var div = document.createElement("div");
         div.id = 'opacity-control';
         div.style.maxHeight = "300px";
-        div.style.maxWidth = "300px";
-        div.style.width = "220px";
+        div.style.maxWidth = "500px";
+        div.style.width = this.widthDiv;
         div.style.padding = "0px 1rem";
         div.className = 'scrollbar';
         var header = document.createElement("div");
@@ -218,16 +220,33 @@ export class TreeLayer extends mapboxgl.Evented {
         }
 
         if (this._vectorTiledOption !== null) {
-            Object.keys(this._vectorTiledOption).forEach((layer) => {
-                const layerId = layer;
-                const br = document.createElement('br');
-                this._checkBoxControlAdd(layerId, div);
-                div.appendChild(br);
-                if (this._opacityControlOption) {
-                    this._rangeControlAdd(layerId, div);
-                    div.appendChild(br);
-                }
-            });
+            this.listLayer.legend(function(data) {
+                var listLengend = data.layers;
+                Object.keys(me._vectorTiledOption).forEach((layerId) => {
+                    var check = false;
+                    const br = document.createElement('br');
+                    _.forEach(listLengend, function(leg) {
+                        var layer = me._map.getLayer(layerId)
+                        if (layer.metadata.name == leg.layerName) {
+                            me._checkBoxControlAdd(layerId, div, leg);
+                            div.appendChild(br);
+                            if (me._opacityControlOption) {
+                                me._rangeControlAdd(layerId, div);
+                                div.appendChild(br);
+                            }
+                            check = true;
+                        }
+                    })
+                    if (!check) {
+                        me._checkBoxControlAdd(layerId, div, null);
+                        div.appendChild(br);
+                        if (me._opacityControlOption) {
+                            me._rangeControlAdd(layerId, div);
+                            div.appendChild(br);
+                        }
+                    }
+                });
+            })
         }
         return div;
     }
@@ -263,7 +282,8 @@ export class TreeLayer extends mapboxgl.Evented {
         div.appendChild(layerName);
     }
 
-    _checkBoxControlAdd(layerId, div) {
+    _checkBoxControlAdd(layerId, div, leg) {
+        var me = this;
         const checkBox = document.createElement('input');
         checkBox.setAttribute('type', 'checkbox');
         checkBox.id = layerId;
@@ -294,6 +314,7 @@ export class TreeLayer extends mapboxgl.Evented {
             }
         });
 
+
         const layerName = document.createElement('strong');
         if (this._vectorTiledOption !== null) {
             layerName.appendChild(document.createTextNode(this._vectorTiledOption[layerId]));
@@ -302,7 +323,17 @@ export class TreeLayer extends mapboxgl.Evented {
         if (this._overLayersOption !== null)
             layerName.appendChild(document.createTextNode(this._overLayersOption[layerId]));
         var divInput = document.createElement('div');
+        divInput.style.display = 'flex';
         divInput.appendChild(checkBox)
+        if (leg && layer.metadata.name == leg.layerName) {
+            var img = document.createElement("img");
+            img.width = 20;
+            img.height = 20;
+            img.style.display = 'block';
+            img.style.margin = '0px 5px 0px 0px';
+            img.src = "data:image/png;base64," + leg.legend[0].imageData;
+            divInput.appendChild(img);
+        }
         divInput.appendChild(layerName)
         div.appendChild(divInput);
     }
