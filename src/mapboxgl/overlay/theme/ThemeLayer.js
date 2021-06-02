@@ -85,7 +85,6 @@ export class ThemeLayer {
      * @description 向底图添加该图层。
      */
     onAdd(map) {
-        console.log('vao')
         this.map = map;
         this._createCanvasContainer();
 

@@ -33,24 +33,26 @@ export class WFS extends Observable {
 
     addTo(map) {
         var bound = map.getView().calculateExtent(map.getSize());
-        console.log(this.params)
         var vectorSource = new ol.source.Vector({
             format: new ol.format.GeoJSON(),
-            url: this.url + '?service=WFS&version=1.1.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&token=' + this.params.token,
+            url: this.url + '?service=WFS&version=1.0.0&request=GetFeature' + '&typename=' + this.params.typename + '&outputFormat=application/json&srsname=EPSG:3857&bbox=' + bound + '&token=' + this.params.token,
             strategy: ol.loadingstrategy.bbox
         });
         var vector = new ol.layer.Vector({
             source: vectorSource,
             style: new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: '#088'
+                }),
                 image: new ol.style.Circle({
                     fill: new ol.style.Fill({
                         color: 'red'
                     }),
                     radius: 10
                 }),
+                stroke: new ol.style.Stroke({ color: 'black' })
             })
         });
-
         map.addLayer(vector);
         return this;
     }

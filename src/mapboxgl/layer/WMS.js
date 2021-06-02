@@ -121,7 +121,6 @@ export class WMS extends mapboxgl.Evented {
         $.ajax({
             url: url,
             success: function(data, status, xhr) {
-                console.log(data)
                 var err = typeof data === 'string' ? null : data;
                 showResults(err, evt.lngLat, data, callback);
             },
@@ -180,8 +179,10 @@ export class WMS extends mapboxgl.Evented {
             return callback(err);
         }
         //content: html
+        console.log(content)
         var content = String(content);
-        // Otherwise show the content in a popup, or something.
+        console.log(content)
+            // Otherwise show the content in a popup, or something.
         new mapboxgl.Popup({ maxWidth: 800 })
             .setLngLat(latlng)
             .setHTML(content)

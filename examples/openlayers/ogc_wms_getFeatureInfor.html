@@ -113,8 +113,6 @@
             border: 1px solid #cccccc;
             bottom: 15px;
             left: -50px;
-            min-width: 270px;
-            height: 250px;
         }
         
         .ol-popup:after,
@@ -159,12 +157,6 @@
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
-            <div id="left" class="sidebar flex-center left collapsed">
-                <div id="divResults" class="sidebar-content rounded-rect flex-center">
-                    <table id="tbl" style="width: 100%;padding: 10px;font-size: 15px;">
-                    </table>
-                </div>
-            </div>
         </div>
         <div id="popup" class="ol-popup">
             <div id="popup-content"></div>
@@ -200,54 +192,50 @@
         }).addTo(map)
 
         var wms = new ol.ekmap.WMS({
-            url: 'https://server.ekgis.vn/ekmapserver/rest/services/32/WMS',
+            url: urlWMS,
+            token: tokenKey,
             params: {
-                'token': tokenKey,
-                'LAYERS': '364',
+                'LAYERS': 'bddiachinh,htkt_caodosannen,htkt_cd_duongday,htkt_cd_trambienap,htkt_cn_ongcapnuoc,htkt_tn_congthoatnuoc,htkt_tnm_cuaxa,htkt_tnm_matnuoc,htkt_tnm_mlthoatnuocmua,htkt_ttll_tramttll,htkt_ttll_tuyencapquang,htkt_vsmt1,phankhun1_giaothong,phankhun1_sdd',
                 'VERSION': '1.1.1',
-            }
+            },
+            format: 'text/html'
         }).addTo(map);
-        var urlLegend = "https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer" + "/legend?apikey=" + tokenKey;
-        var resultsTable = document.getElementById("tbl");
-        var arr = [];
-        var ms = new ol.ekmap.MapService({
-            url: 'https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer',
-            token: tokenKey
-        })
-        ms.legend(function(data) {
-            arr.push(data.layers[0].legend);
-            document.getElementById("divResults").style = " margin-left: 10px !important;";
-            document.getElementById('tbl').style.color = 'black';
-            resultsTable.innerHTML = "";
-            var topRow = resultsTable.insertRow(0);
-            var cell1 = topRow.insertCell(0);
-            var cell2 = topRow.insertCell(1);
-            cell1.innerHTML = "<b>Màu</b>";
-            cell2.innerHTML = "<b>Chú giải</b>";
-            toggleSidebar('left');
-            arr[0].forEach(function(e, i) {
-                var name = e.label;
-                var row = resultsTable.insertRow(i + 1);
-                cell1 = row.insertCell(0);
-                cell2 = row.insertCell(1);
-                cell1.innerHTML = "<img src = 'data:image/png;base64," + e.imageData + "' > </img>";
-                cell2.innerHTML = name;
-            })
-        })
+        // var urlLegend = "https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer" + "/legend?apikey=" + tokenKey;
+        // var resultsTable = document.getElementById("tbl");
+        // var arr = [];
+        // var ms = new ol.ekmap.MapService({
+        //     url: 'https://server.ekgis.vn/ekmapserver/rest/services/32/MapServer',
+        //     token: tokenKey
+        // })
+        // ms.legend(function(data) {
+        //     arr.push(data.layers[0].legend);
+        //     document.getElementById("divResults").style = " margin-left: 10px !important;";
+        //     document.getElementById('tbl').style.color = 'black';
+        //     resultsTable.innerHTML = "";
+        //     var topRow = resultsTable.insertRow(0);
+        //     var cell1 = topRow.insertCell(0);
+        //     var cell2 = topRow.insertCell(1);
+        //     cell1.innerHTML = "<b>Màu</b>";
+        //     cell2.innerHTML = "<b>Chú giải</b>";
+        //     toggleSidebar('left');
+        //     arr[0].forEach(function(e, i) {
+        //         var name = e.label;
+        //         var row = resultsTable.insertRow(i + 1);
+        //         cell1 = row.insertCell(0);
+        //         cell2 = row.insertCell(1);
+        //         cell1.innerHTML = "<img src = 'data:image/png;base64," + e.imageData + "' > </img>";
+        //         cell2.innerHTML = name;
+        //     })
+        // })
         map.on('click', function(evt) {
             var result = wms.getFeatureInfoUrl(evt.coordinate);
             if (result) {
-                result.then(data => {
-                    var attrs = data.features[0].properties;
-                    if (data.features.length > 0) {
-                        content.innerHTML = '<p>Địa danh : ' + attrs.diaDanh + '</p><p>maDonViHanhChinh : ' + attrs.maDonViHanhChinh + '</p><p>rbduongbo : ' + attrs.rbduongbo + '</p><p>tongrb : ' + attrs.tongrb + '</p><p>tongsl : ' + attrs.tongsl + '</p><p>tongvuot : ' + attrs.tongvuot + '</p><p> trangThai: ' + attrs.trangThai + '</p>';
-                        overlay.setPosition(evt.coordinate);
-                    } else {
-
-                    }
-                });
+                result.then(function(html) {
+                    content.innerHTML = html;
+                    overlay.setPosition(evt.coordinate);
+                })
             }
-        })
+        });
 
         function toggleSidebar(id) {
             var elem = document.getElementById(id);

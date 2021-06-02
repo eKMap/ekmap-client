@@ -38,8 +38,8 @@
                 "sources": {},
                 "layers": []
             },
-            center: [103.97584219304474, 21.277728387286984],
-            zoom: 13.905413433260719
+            center: [105, 17],
+            zoom: 5
         });
         map.on('load', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
@@ -47,7 +47,7 @@
             }).addTo(map)
             var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
                 url: urlMapService,
-                // token: tokenKey
+                token: tokenKey
             }).addTo(map);
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             var legend = new mapboxgl.ekmap.control.Legend({

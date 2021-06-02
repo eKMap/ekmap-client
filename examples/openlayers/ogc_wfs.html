@@ -146,27 +146,12 @@
 <body>
     <div style="width: 100%;">
         <div id="divMapId" class="map">
-            <div id="left" class="sidebar flex-center left collapsed">
-                <div id="divResults" class="sidebar-content rounded-rect flex-center">
-                    <table id="tbl" style="width: 100%;padding: 10px;font-size: 15px;">
-                    </table>
-                </div>
-            </div>
         </div>
         <div id="popup" class="ol-popup">
             <div id="popup-content"></div>
         </div>
     </div>
     <script>
-        var container = document.getElementById('popup');
-        var content = document.getElementById('popup-content');
-        var overlay = new ol.Overlay({
-            element: container,
-            autoPan: true,
-            autoPanAnimation: {
-                duration: 250,
-            },
-        });
         var popup;
         var map = new ol.Map({
             target: 'divMapId',
@@ -175,10 +160,10 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [11688546.53, 1920825.04],
-                zoom: 6,
-            }),
-            overlays: [overlay]
+                center: [105.73732943945129, 21.16898923449925],
+                zoom: 13,
+                projection: 'EPSG:4326'
+            })
         });
 
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
@@ -186,65 +171,12 @@
         }).addTo(map);
 
         var wfs = new ol.ekmap.WFS({
-            url: 'https://server.ekgis.vn/ekmapserver/rest/services/33/WFS',
+            url: urlWFS,
             params: {
                 'token': tokenKey,
-                'typename': '369',
+                'typename': 'htkt_cd_duongday',
             }
         }).addTo(map);
-        map.on('click', function(evt) {
-            var feature = map.forEachFeatureAtPixel(evt.pixel,
-                function(feature) {
-                    return feature;
-                }
-            );
-            if (feature) {
-                content.innerHTML = '<h4>' + feature.values_.tenDoiTuong + '</h4>';
-                var coordinates = this.getCoordinateFromPixel(evt.pixel);
-                overlay.setPosition(coordinates);
-            }
-        });
-        var result = wfs.getFeatures();
-        var arr = [];
-        var resultsTable = document.getElementById("tbl");
-        result.then(data => {
-            arr.push(data.features);
-            document.getElementById("divResults").style = " margin-left: 10px !important;";
-            document.getElementById('tbl').style.color = 'black';
-            resultsTable.innerHTML = "";
-            var topRow = resultsTable.insertRow(0);
-            var cell1 = topRow.insertCell(0);
-            var cell2 = topRow.insertCell(1);
-            cell1.innerHTML = "<b>Mã</b>";
-            cell2.innerHTML = "<b>Tên</b>";
-            toggleSidebar('left');
-            arr[0].forEach(function(e, i) {
-                var id = e.properties.maLienKet;
-                var name = e.properties.tenDoiTuong;
-                var row = resultsTable.insertRow(i + 1);
-                cell1 = row.insertCell(0);
-                cell2 = row.insertCell(1);
-                cell1.innerHTML = id;
-                cell2.innerHTML = name;
-            })
-        })
-
-        function toggleSidebar(id) {
-            var elem = document.getElementById(id);
-            var classes = elem.className.split(' ');
-            var collapsed = classes.indexOf('collapsed') !== -1;
-
-            var padding = {};
-
-            if (collapsed) {
-                classes.splice(classes.indexOf('collapsed'), 1);
-                padding[id] = 300;
-            } else {
-                padding[id] = 0;
-                classes.push('collapsed');
-            }
-            elem.className = classes.join(' ');
-        }
     </script>
 </body>
 

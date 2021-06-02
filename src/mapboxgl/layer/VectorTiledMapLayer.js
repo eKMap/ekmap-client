@@ -50,12 +50,16 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         map.on('style.load', function() {
             me.fire('loadend', me);
             var layers = map.getStyle().layers;
+            console.log(layers)
             layers.forEach(layer => {
-                var idCheck = layer.id % 2;
-                if (!isNaN(idCheck)) {
+                var id = parseInt(layer.id);
+                if (!isNaN(id)) {
                     listLayer.push(layer)
                     me.arr.push(layer.id)
-                    me.name.push(layer.metadata.name)
+                    if (layer.metadata)
+                        me.name.push(layer.metadata.name)
+                    else
+                        me.name.push(layer.id)
                 }
             });
             listLayer.forEach(layer => {

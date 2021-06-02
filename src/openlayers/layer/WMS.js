@@ -93,7 +93,7 @@ export class WMS extends Observable {
         );
 
         if (url) {
-            return fetch(url).then(resp => resp.json())
+            return fetch(url).then(function(response) { return response.text(); })
         }
         return "";
     }

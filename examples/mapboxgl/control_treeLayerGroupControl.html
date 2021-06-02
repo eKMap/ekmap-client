@@ -45,7 +45,8 @@
             id: 'vnMap'
         }).addTo(map);
         var imgLayer = new mapboxgl.ekmap.ImageMapLayer({
-            url: "https://s2.cloudgis.vn/arcgis/rest/services/GIS/V6_DC_CTDT_TPTHAIBINH_Export/MapServer/",
+            url: urlMapService,
+            token: tokenKey
         }).addTo(map);
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         var treelayer = new mapboxgl.ekmap.control.TreeLayerGroup({
