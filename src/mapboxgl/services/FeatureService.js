@@ -203,7 +203,7 @@ export class FeatureService extends ServiceBase {
 
         if (!params.layerDefs) {
             param.outFields = params.outFields != undefined ? params.outFields : "*";
-            param.returnGeometry = true;
+            param.returnGeometry = params.returnGeometry != undefined ? params.returnGeometry : true;
             param.f = 'geojson';
         }
         var service = new FeatureService(this.options);
