@@ -1,17 +1,14 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../../SuperMap';
-import {TemplateBase} from './TemplateBase';
+import { Ekmap } from '../../Ekmap';
+import { TemplateBase } from './TemplateBase';
 
 /**
- * @class SuperMap.Components.NavTabsPage
+ * @class Ekmap.Components.NavTabsPage
  * @classdesc 标签页面组件。
  * @version 9.1.1
  * @param {Object} options - 组件配置参数。
  * @param {string} optionsArr.id - 组件 dom 元素 id。
  * @param {Array.<Object>} [options.tabs=[]] - 标签对象数组，形如：[{title: "",content: HTMLElement}]，初始时，传入则创建页面。
- * @extends {SuperMap.Components.TemplateBase}
+ * @extends {Ekmap.Components.TemplateBase}
  * @category Components Common
  */
 //  todo 思考拆分的控件应该以哪种方式使用
@@ -59,7 +56,7 @@ export class NavTabsPage extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.NavTabsPage.prototype.setTabs
+     * @function Ekmap.Components.NavTabsPage.prototype.setTabs
      * @description 设置标签。
      * @param {Array.<Object>} tabs - 标签对象数组，形如：[{title: "",content: {}}]。
      */
@@ -69,7 +66,7 @@ export class NavTabsPage extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.NavTabsPage.prototype.appendTabs
+     * @function Ekmap.Components.NavTabsPage.prototype.appendTabs
      * @description 添加标签页面。
      * @param {Array.<Object>} tabs - 标签对象数组，形如：[{title: "",content: {}}]。
      */
@@ -94,7 +91,7 @@ export class NavTabsPage extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.NavTabsPage.prototype.removeTab
+     * @function Ekmap.Components.NavTabsPage.prototype.removeTab
      * @description 删除某个标签页面。
      * @param {number} index - 标签索引号。
      */
@@ -104,7 +101,7 @@ export class NavTabsPage extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.NavTabsPage.prototype.removeAllTabs
+     * @function Ekmap.Components.NavTabsPage.prototype.removeAllTabs
      * @description 删除所有标签。
      */
     removeAllTabs() {
@@ -128,4 +125,4 @@ export class NavTabsPage extends TemplateBase {
 
 }
 
-SuperMap.Components.NavTabsPage = NavTabsPage;
+Ekmap.Components.NavTabsPage = NavTabsPage;

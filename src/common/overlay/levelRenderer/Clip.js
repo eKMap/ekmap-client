@@ -1,18 +1,18 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Easing as AEasing} from './Easing';
+import { Easing as AEasing } from './Easing';
 
 /**
- * @class  SuperMap.LevelRenderer.Animation.Clip
+ * @class  Ekmap.LevelRenderer.Animation.Clip
  * @category Visualization Theme
  * @classdec 动画片段
  * @private 
  */
 export class Clip {
-    
+
     /**
-     * @function SuperMap.LevelRenderer.Animation.Clip.prototype.constructor
+     * @function Ekmap.LevelRenderer.Animation.Clip.prototype.constructor
      * @description 构造函数。
      * @param {Object} options - 参数。
      * @param {Object} options.target - 动画对象，可以是数组，如果是数组的话会批量分发 onframe 等事件。
@@ -36,14 +36,14 @@ export class Clip {
         // 延时
         this._delay = options.delay || 0;
         // 开始时间
-        this._startTime = new Date().getTime() + this._delay;// 单位毫秒
+        this._startTime = new Date().getTime() + this._delay; // 单位毫秒
 
         // 结束时间
         this._endTime = this._startTime + this._life * 1000;
 
         // 是否循环
-        this.loop = typeof options.loop == 'undefined'
-            ? false : options.loop;
+        this.loop = typeof options.loop == 'undefined' ?
+            false : options.loop;
 
         this.gap = options.gap || 0;
 
@@ -52,11 +52,11 @@ export class Clip {
         this.onframe = options.onframe;
         this.ondestroy = options.ondestroy;
         this.onrestart = options.onrestart;
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Animation.Clip";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Animation.Clip";
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.Clip.prototype.destroy
+     * @function Ekmap.LevelRenderer.Animation.Clip.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -74,12 +74,12 @@ export class Clip {
 
         percent = Math.min(percent, 1);
 
-        var easingFunc = typeof this.easing == 'string'
-            ? easing[this.easing]
-            : this.easing;
-        var schedule = typeof easingFunc === 'function'
-            ? easingFunc(percent)
-            : percent;
+        var easingFunc = typeof this.easing == 'string' ?
+            easing[this.easing] :
+            this.easing;
+        var schedule = typeof easingFunc === 'function' ?
+            easingFunc(percent) :
+            percent;
 
         this.fire('frame', schedule);
 

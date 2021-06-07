@@ -1,17 +1,17 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Vector} from '../commontypes/Vector';
-import {ServerGeometry} from './ServerGeometry';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { Vector } from '../commontypes/Vector';
+import { ServerGeometry } from './ServerGeometry';
+import { Util } from '../commontypes/Util';
 
 /**
- * @class SuperMap.ServerFeature
+ * @class Ekmap.ServerFeature
  * @category  iServer  
  * @classdesc 服务端矢量要素类。该类描述了服务端返回的矢量要素的相关信息，包括字段和几何信息。
  * @param {Object} options - 参数。
- * @param {SuperMap.ServerGeometry} geometry - 矢量要素的几何信息。
+ * @param {Ekmap.ServerGeometry} geometry - 矢量要素的几何信息。
  * @param {Array.<string>} [options.fieldNames] - 矢量要素的属性字段名集合。
  * @param {Array.<string>} [options.fieldValues] - 矢量要素的属性字段值集合。
  */
@@ -20,19 +20,19 @@ export class ServerFeature {
     constructor(options) {
 
         /**
-         * @member {Array.<string>} [SuperMap.ServerFeature.prototype.fieldNames]
+         * @member {Array.<string>} [Ekmap.ServerFeature.prototype.fieldNames]
          * @description 矢量要素的属性字段名集合。
          */
         this.fieldNames = null;
 
         /**
-         * @member {Array.<string>} [SuperMap.ServerFeature.prototype.fieldValues]
+         * @member {Array.<string>} [Ekmap.ServerFeature.prototype.fieldValues]
          * @description 矢量要素的属性字段值集合。
          */
         this.fieldValues = null;
 
         /**
-         * @member {SuperMap.ServerGeometry} SuperMap.ServerFeature.prototype.geometry
+         * @member {Ekmap.ServerGeometry} Ekmap.ServerFeature.prototype.geometry
          * @description 矢量要素的几何信息。
          */
         this.geometry = null;
@@ -40,11 +40,11 @@ export class ServerFeature {
             Util.extend(this, options);
         }
 
-        this.CLASS_NAME = "SuperMap.ServerFeature";
+        this.CLASS_NAME = "Ekmap.ServerFeature";
     }
 
     /**
-     * @function SuperMap.ServerFeature.prototype.destroy
+     * @function Ekmap.ServerFeature.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -58,9 +58,9 @@ export class ServerFeature {
     }
 
     /**
-     * @function SuperMap.ServerFeature.prototype.toFeature
+     * @function Ekmap.ServerFeature.prototype.toFeature
      * @description 将服务端矢量要素 ServerFeature 转换为客户端矢量要素 Feature。
-     * @returns {SuperMap.Vector} 转换后的客户端矢量要素。
+     * @returns {Ekmap.Vector} 转换后的客户端矢量要素。
      */
     toFeature() {
         var names, values, geo,
@@ -85,10 +85,10 @@ export class ServerFeature {
     }
 
     /**
-     * @function SuperMap.ServerFeature.prototype.fromJson
+     * @function Ekmap.ServerFeature.prototype.fromJson
      * @description 将 JSON 对象表示服务端矢量要素转换为 ServerFeature。
      * @param {Object} jsonObject - 要转换的 JSON 对象。
-     * @returns {SuperMap.ServerFeature} 转化后的 ServerFeature 对象。
+     * @returns {Ekmap.ServerFeature} 转化后的 ServerFeature 对象。
      */
     static fromJson(jsonObject) {
         var geo = null;
@@ -109,4 +109,4 @@ export class ServerFeature {
 }
 
 
-SuperMap.ServerFeature = ServerFeature;
+Ekmap.ServerFeature = ServerFeature;

@@ -1,17 +1,14 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../../SuperMap';
-import {TemplateBase} from './TemplateBase';
+import { Ekmap } from '../../Ekmap';
+import { TemplateBase } from './TemplateBase';
 
 /**
- * @class SuperMap.Components.IndexTabsPageContainer
+ * @class Ekmap.Components.IndexTabsPageContainer
  * @description 标签索引组件。
  * @version 9.1.1
  * @param {Object} options - 可选参数。
  * @param {string} options.id - 组件 dom 元素 id。
  * @category Components Common
- * @extends {SuperMap.Components.TemplateBase}
+ * @extends {Ekmap.Components.TemplateBase}
  */
 export class IndexTabsPageContainer extends TemplateBase {
     constructor(options) {
@@ -41,7 +38,7 @@ export class IndexTabsPageContainer extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.IndexTabsPageContainer.prototype.setTabs
+     * @function Ekmap.Components.IndexTabsPageContainer.prototype.setTabs
      * @description 设置标签元素。
      * @param {Array.<Element>} tabs
      */
@@ -51,7 +48,7 @@ export class IndexTabsPageContainer extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.IndexTabsPageContainer.prototype.appendTabs
+     * @function Ekmap.Components.IndexTabsPageContainer.prototype.appendTabs
      * @description 追加标签元素。
      * @param {Array.<Element>} tabs
      */
@@ -76,7 +73,7 @@ export class IndexTabsPageContainer extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.IndexTabsPageContainer.prototype.removeTab
+     * @function Ekmap.Components.IndexTabsPageContainer.prototype.removeTab
      * @description 删除某个标签页面。
      * @param {number} index - 标签索引号。
      */
@@ -86,7 +83,7 @@ export class IndexTabsPageContainer extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.IndexTabsPageContainer.prototype.removeAllTabs
+     * @function Ekmap.Components.IndexTabsPageContainer.prototype.removeAllTabs
      * @description 删除所有标签。
      */
     removeAllTabs() {
@@ -110,4 +107,4 @@ export class IndexTabsPageContainer extends TemplateBase {
 
 }
 
-SuperMap.Components.IndexTabsPageContainer = IndexTabsPageContainer;
+Ekmap.Components.IndexTabsPageContainer = IndexTabsPageContainer;

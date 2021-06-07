@@ -1,24 +1,24 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Tool.Http
+ * @class  Ekmap.LevelRenderer.Tool.Http
  * @category Visualization Theme
  * @classdesc LevelRenderer 工具-Http
  */
 export class Http {
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Http.constructor
+     * @function Ekmap.LevelRenderer.Tool.Http.constructor
      * @description 构造函数。
      */
     constructor() {
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Tool.Http"
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Http"
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Http.prototype.get
+     * @function Ekmap.LevelRenderer.Tool.Http.prototype.get
      * @description get请求。
      * @param {(string|IHTTPGetOption)} url - 请求url
      * @param {function} onsuccess - 请求成功函数
@@ -34,11 +34,11 @@ export class Http {
             onerror = obj.onerror;
 
         }
-        var xhr = window.XMLHttpRequest
-            ? new XMLHttpRequest()
-            : new window.ActiveXObject('Microsoft.XMLHTTP');
+        var xhr = window.XMLHttpRequest ?
+            new XMLHttpRequest() :
+            new window.ActiveXObject('Microsoft.XMLHTTP');
         xhr.open('GET', url, true);
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
                     onsuccess && onsuccess(xhr.responseText);

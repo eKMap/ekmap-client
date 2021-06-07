@@ -1,70 +1,70 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Eventful} from './Eventful';
-import {Config} from './Config';
-import {SUtil} from './SUtil';
+import { Eventful } from './Eventful';
+import { Config } from './Config';
+import { SUtil } from './SUtil';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Handler
+ * @class  Ekmap.LevelRenderer.Handler
  * @category Visualization Theme
  * @classdesc Handler控制模块。
- * @extends {SuperMap.LevelRenderer.Eventful}
+ * @extends {Ekmap.LevelRenderer.Eventful}
  */
 export class Handler extends Eventful {
 
     /**
-     * @function SuperMap.LevelRenderer.Handler.constructor
+     * @function Ekmap.LevelRenderer.Handler.constructor
      * @description 构造函数。
      * @param {HTMLElement} root - 绘图区域。
-     * @param {SuperMap.LevelRenderer.Storage} storage - Storage 实例。
-     * @param {SuperMap.LevelRenderer.Painter} painter - Painter 实例。
+     * @param {Ekmap.LevelRenderer.Storage} storage - Storage 实例。
+     * @param {Ekmap.LevelRenderer.Painter} painter - Painter 实例。
      */
     constructor(root, storage, painter) {
         super(root, storage, painter);
         /**
-         * @member {HTMLElement} SuperMap.LevelRenderer.Handler.prototype.root
+         * @member {HTMLElement} Ekmap.LevelRenderer.Handler.prototype.root
          * @description 绘图区域
          */
         this.root = root;
         /**
-         * @member {SuperMap.LevelRenderer.Storage} SuperMap.LevelRenderer.Handler.prototype.storage
+         * @member {Ekmap.LevelRenderer.Storage} Ekmap.LevelRenderer.Handler.prototype.storage
          * @description Storage 实例
          */
         this.storage = storage;
         /**
-         * @member {SuperMap.LevelRenderer.Painter} SuperMap.LevelRenderer.Handler.prototype.Painter
+         * @member {Ekmap.LevelRenderer.Painter} Ekmap.LevelRenderer.Handler.prototype.Painter
          * @description Painter 实例
          */
         this.painter = painter;
         /**
-         * @member {number} [SuperMap.LevelRenderer.Handler.prototype._lastX=0]
+         * @member {number} [Ekmap.LevelRenderer.Handler.prototype._lastX=0]
          * @description 上一次鼠标位置x坐标值
          */
         this._lastX = 0;
         /**
-         * @member {number} [SuperMap.LevelRenderer.Handler.prototype._lastY=0]
+         * @member {number} [Ekmap.LevelRenderer.Handler.prototype._lastY=0]
          * @description 上一次鼠标位置y坐标值
          */
         this._lastY = 0;
         /**
-         * @member {number} [SuperMap.LevelRenderer.Handler.prototype._mouseX=0]
+         * @member {number} [Ekmap.LevelRenderer.Handler.prototype._mouseX=0]
          * @description 当前鼠标位置x坐标值
          */
         this._mouseX = 0;
         /**
-         * @member {number} [SuperMap.LevelRenderer.Handler.prototype._mouseY=0]
+         * @member {number} [Ekmap.LevelRenderer.Handler.prototype._mouseY=0]
          * @description 当前鼠标位置y坐标值
          */
         this._mouseY = 0;
         /**
-         * @member {Function} SuperMap.LevelRenderer.Handler.prototype._findHover
+         * @member {Function} Ekmap.LevelRenderer.Handler.prototype._findHover
          * @description 查找 Hover 图形
          */
         this._findHover = null;
         /**
-         * @member {Object} SuperMap.LevelRenderer.Handler.prototype._domHover
+         * @member {Object} Ekmap.LevelRenderer.Handler.prototype._domHover
          * @description 高亮 DOM
          */
         this._domHover = null;
@@ -83,7 +83,7 @@ export class Handler extends Eventful {
         this._findHover = bind3Arg(findHover, this);
         this._domHover = painter.getDomHover();
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Handler";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Handler";
         var domHandlers = {
             /**
              * Method: resize
@@ -93,7 +93,7 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            resize: function (event) {
+            resize: function(event) {
                 event = event || window.event;
                 this._lastHover = null;
                 this._isMouseDown = 0;
@@ -110,13 +110,13 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            click: function (event) {
+            click: function(event) {
                 event = this._zrenderEventFixed(event);
 
                 // 分发SuperMap.LevelRenderer.Config.EVENT.CLICK事件
                 var _lastHover = this._lastHover;
-                if ((_lastHover && _lastHover.clickable)
-                    || !_lastHover
+                if ((_lastHover && _lastHover.clickable) ||
+                    !_lastHover
                 ) {
 
                     // 判断没有发生拖拽才触发click事件
@@ -136,14 +136,14 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            dblclick: function (event) {
+            dblclick: function(event) {
                 event = event || window.event;
                 event = this._zrenderEventFixed(event);
 
                 // 分发SuperMap.LevelRenderer.Config.EVENT.DBLCLICK事件
                 var _lastHover = this._lastHover;
-                if ((_lastHover && _lastHover.clickable)
-                    || !_lastHover
+                if ((_lastHover && _lastHover.clickable) ||
+                    !_lastHover
                 ) {
 
                     // 判断没有发生拖拽才触发dblclick事件
@@ -163,13 +163,14 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            mousewheel: function (event) {
+            mousewheel: function(event) {
                 event = this._zrenderEventFixed(event);
 
                 // http://www.sitepoint.com/html5-javascript-mouse-wheel/
                 // https://developer.mozilla.org/en-US/docs/DOM/DOM_event_reference/mousewheel
                 var delta = event.wheelDelta // Webkit
-                    || -event.detail; // Firefox
+                    ||
+                    -event.detail; // Firefox
                 var scale = delta > 0 ? 1.1 : 1 / 1.1;
 
                 var layers = this.painter.getLayers();
@@ -216,7 +217,7 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            mousemove: function (event) {
+            mousemove: function(event) {
                 // 拖拽不触发click事件
                 this._clickThreshold++;
 
@@ -241,8 +242,8 @@ export class Handler extends Eventful {
                 // 找到的在迭代函数里做了处理，没找到得在迭代完后处理
                 if (!this._hasfound) {
                     // 过滤首次拖拽产生的mouseout和dragLeave
-                    if (!this._draggingTarget
-                        || (this._lastHover && this._lastHover != this._draggingTarget)
+                    if (!this._draggingTarget ||
+                        (this._lastHover && this._lastHover != this._draggingTarget)
                     ) {
                         // 可能出现SuperMap.LevelRenderer.Config.EVENT.MOUSEOUT事件
                         this._processOutShape(event);
@@ -311,7 +312,7 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            mouseout: function (event) {
+            mouseout: function(event) {
                 event = this._zrenderEventFixed(event);
 
                 var element = event.toElement || event.relatedTarget;
@@ -349,7 +350,7 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            mousedown: function (event) {
+            mousedown: function(event) {
                 // 重置 clickThreshold
                 this._clickThreshold = 0;
 
@@ -378,7 +379,7 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            mouseup: function (event) {
+            mouseup: function(event) {
                 event = this._zrenderEventFixed(event);
                 this.root.style.cursor = '';
                 this._isMouseDown = 0;
@@ -398,7 +399,7 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            touchstart: function (event) {
+            touchstart: function(event) {
                 // SUtil.Util_event.stop(event);// 阻止浏览器默认事件，重要
                 event = this._zrenderEventFixed(event, true);
                 this._lastTouchMoment = new Date();
@@ -416,11 +417,11 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            touchmove: function (event) {
+            touchmove: function(event) {
                 event = this._zrenderEventFixed(event, true);
                 this._mousemoveHandler(event);
                 if (this._isDragging) {
-                    SUtil.Util_event.stop(event);// 阻止浏览器默认事件，重要
+                    SUtil.Util_event.stop(event); // 阻止浏览器默认事件，重要
                 }
             },
 
@@ -432,7 +433,7 @@ export class Handler extends Eventful {
              * event - {Event} event。
              *
              */
-            touchend: function (event) {
+            touchend: function(event) {
                 // SUtil.Util_event.stop(event);// 阻止浏览器默认事件，重要
                 event = this._zrenderEventFixed(event, true);
                 this._mouseupHandler(event);
@@ -444,7 +445,7 @@ export class Handler extends Eventful {
                     if (now - this._lastClickMoment < Config.EVENT.touchClickDelay / 2) {
                         this._dblclickHandler(event);
                         if (this._lastHover && this._lastHover.clickable) {
-                            SUtil.Util_event.stop(event);// 阻止浏览器默认事件，重要
+                            SUtil.Util_event.stop(event); // 阻止浏览器默认事件，重要
                         }
                     }
                     this._lastClickMoment = now;
@@ -501,7 +502,7 @@ export class Handler extends Eventful {
          * {Function}
          */
         function bind1Arg(handler, context) {
-            return function (e) {
+            return function(e) {
                 return handler.call(context, e);
             };
         }
@@ -517,7 +518,7 @@ export class Handler extends Eventful {
 
         // bind 三个参数的 function
         function bind3Arg(handler, context) {
-            return function (arg1, arg2, arg3) {
+            return function(arg1, arg2, arg3) {
                 return handler.call(context, arg1, arg2, arg3);
             };
         }
@@ -527,7 +528,7 @@ export class Handler extends Eventful {
          * 为控制类实例初始化 dom 事件处理函数。
          *
          * Parameters:
-         * instance - {<SuperMap.LevelRenderer.Handler>} 控制类实例 。
+         * instance - {<Ekmap.LevelRenderer.Handler>} 控制类实例 。
          *
          * Returns:
          * {Function}
@@ -563,7 +564,8 @@ export class Handler extends Eventful {
             var me = this;
             if (
                 (me._draggingTarget && me._draggingTarget.id == shape.id) // 迭代到当前拖拽的图形上
-                || shape.isSilent() // 打酱油的路过，啥都不响应的shape~
+                ||
+                shape.isSilent() // 打酱油的路过，啥都不响应的shape~
             ) {
                 return false;
             }
@@ -634,7 +636,7 @@ export class Handler extends Eventful {
 
                 me._hasfound = 1;
 
-                return true;    // 找到则中断迭代查找
+                return true; // 找到则中断迭代查找
             }
 
             return false;
@@ -644,7 +646,7 @@ export class Handler extends Eventful {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Handler.prototype.destroy
+     * @function Ekmap.LevelRenderer.Handler.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为null。
      */
     destroy() {
@@ -660,11 +662,11 @@ export class Handler extends Eventful {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Handler.prototype.on
+     * @function Ekmap.LevelRenderer.Handler.prototype.on
      * @description 自定义事件绑定。
      * @param {string} eventName - 事件名称，resize、hover、drag等。
      * @param {function} handler - 响应函数。
-     * @returns {SuperMap.LevelRenderer.Handler} this。
+     * @returns {Ekmap.LevelRenderer.Handler} this。
      */
     on(eventName, handler) {
         this.bind(eventName, handler);
@@ -672,11 +674,11 @@ export class Handler extends Eventful {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Handler.prototype.un
+     * @function Ekmap.LevelRenderer.Handler.prototype.un
      * @description 自定义事件解除绑定。
      * @param {string} eventName - 事件名称，resize、hover、drag等。
      * @param {function} handler - 响应函数。
-     * @returns {SuperMap.LevelRenderer.Handler} this。
+     * @returns {Ekmap.LevelRenderer.Handler} this。
      */
     un(eventName, handler) {
         this.unbind(eventName, handler);
@@ -684,7 +686,7 @@ export class Handler extends Eventful {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Handler.prototype.trigger
+     * @function Ekmap.LevelRenderer.Handler.prototype.trigger
      * @description 事件触发。
      * @param {string} eventName - 事件名称，resize、hover、drag等。
      * @param {event} eventArgs - dom事件对象。
@@ -706,7 +708,7 @@ export class Handler extends Eventful {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Handler.prototype.dispose
+     * @function Ekmap.LevelRenderer.Handler.prototype.dispose
      * @description 释放，解绑所有事件。
      */
     dispose() {
@@ -763,11 +765,11 @@ export class Handler extends Eventful {
     _processDragStart(event) {
         var _lastHover = this._lastHover;
 
-        if (this._isMouseDown
-            && _lastHover
-            && _lastHover.draggable
-            && !this._draggingTarget
-            && this._mouseDownTarget == _lastHover
+        if (this._isMouseDown &&
+            _lastHover &&
+            _lastHover.draggable &&
+            !this._draggingTarget &&
+            this._mouseDownTarget == _lastHover
         ) {
             // 拖拽点击生效时长阀门，某些场景需要降低拖拽敏感度
             if (_lastHover.dragEnableTime &&
@@ -962,8 +964,8 @@ export class Handler extends Eventful {
         }
 
         while (el) {
-            el[eventHandler]
-            && (eventPacket.cancelBubble = el[eventHandler](eventPacket));
+            el[eventHandler] &&
+                (eventPacket.cancelBubble = el[eventHandler](eventPacket));
             el.dispatch(eventName, eventPacket);
 
             el = el.parent;
@@ -1032,10 +1034,10 @@ export class Handler extends Eventful {
     _mobildFindFixed(event) {
         // touch指尖错觉的尝试偏移量配置
         var MOBILE_TOUCH_OFFSETS = [
-            {x: 10},
-            {x: -20},
-            {x: 10, y: 10},
-            {y: -20}
+            { x: 10 },
+            { x: -20 },
+            { x: 10, y: 10 },
+            { y: -20 }
         ];
 
         this._lastHover = null;
@@ -1078,25 +1080,25 @@ export class Handler extends Eventful {
         if (!isTouch) {
             event = event || window.event;
             // 进入对象优先~
-            var target = event.toElement
-                || event.relatedTarget
-                || event.srcElement
-                || event.target;
+            var target = event.toElement ||
+                event.relatedTarget ||
+                event.srcElement ||
+                event.target;
 
             if (target && target != this._domHover) {
-                event.zrenderX = (typeof event.offsetX != 'undefined'
-                    ? event.offsetX
-                    : event.layerX)
-                    + target.offsetLeft;
-                event.zrenderY = (typeof event.offsetY != 'undefined'
-                    ? event.offsetY
-                    : event.layerY)
-                    + target.offsetTop;
+                event.zrenderX = (typeof event.offsetX != 'undefined' ?
+                        event.offsetX :
+                        event.layerX) +
+                    target.offsetLeft;
+                event.zrenderY = (typeof event.offsetY != 'undefined' ?
+                        event.offsetY :
+                        event.layerY) +
+                    target.offsetTop;
             }
         } else {
-            var touch = event.type != 'touchend'
-                ? event.targetTouches[0]
-                : event.changedTouches[0];
+            var touch = event.type != 'touchend' ?
+                event.targetTouches[0] :
+                event.changedTouches[0];
             if (touch) {
                 var rBounding = this.root.getBoundingClientRect();
                 // touch事件坐标是全屏的~
@@ -1111,9 +1113,9 @@ export class Handler extends Eventful {
 
 
     // SMIC-方法扩展 - start
-  
+
     /**
-     * @function SuperMap.LevelRenderer.Handler.prototype.getLastHoverOne
+     * @function Ekmap.LevelRenderer.Handler.prototype.getLastHoverOne
      * @description 获取单个高亮图形
      */
     getLastHoverOne() {

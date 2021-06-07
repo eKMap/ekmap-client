@@ -457,9 +457,9 @@ export class Util {
 
     /**
      * @function mapboxgl.ekmap.Util.toSuperMapGeometry
-     * @description 将 GeoJSON 对象转为 SuperMap 几何图形。
+     * @description 将 GeoJSON 对象转为 Ekmap 几何图形。
      * @param {GeoJSONObject} geoJSON - GeoJSON 对象。
-     * @returns {SuperMap.Geometry}
+     * @returns {Ekmap.Geometry}
      */
     static toEkmapGeometry(geoJSON) {
         if (geoJSON && geoJSON.type) {

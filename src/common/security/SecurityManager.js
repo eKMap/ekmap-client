@@ -1,28 +1,25 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {FetchRequest} from '../util/FetchRequest';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { FetchRequest } from '../util/FetchRequest';
 
 /**
  * @name SecurityManager
- * @memberOf SuperMap
+ * @memberOf Ekmap
  * @namespace
  * @category Security
  * @description 安全管理中心，提供 iServer,iPortal,Online 统一权限认证管理。
  *  > 使用说明：
- *  > 创建任何一个服务之前调用 {@link SuperMap.SecurityManager.registerToken}或
- *  > {@link SuperMap.SecurityManager.registerKey}注册凭据。
+ *  > 创建任何一个服务之前调用 {@link Ekmap.SecurityManager.registerToken}或
+ *  > {@link Ekmap.SecurityManager.registerKey}注册凭据。
  *  > 发送请求时根据 url 或者服务 id 获取相应的 key 或者 token 并自动添加到服务地址中。
  */
 export class SecurityManager {
 
     /**
      * @description 从服务器获取一个token,在此之前要注册服务器信息。
-     * @function SuperMap.SecurityManager.generateToken
+     * @function Ekmap.SecurityManager.generateToken
      * @param {string} url - 服务器域名+端口，如：http://localhost:8092。
-     * @param {SuperMap.TokenServiceParameter} tokenParam - token 申请参数。
+     * @param {Ekmap.TokenServiceParameter} tokenParam - token 申请参数。
      * @returns {Promise} 返回包含 token 信息的 Promise 对象。
      */
 
@@ -31,15 +28,15 @@ export class SecurityManager {
         if (!serverInfo) {
             return;
         }
-        return FetchRequest.post(serverInfo.tokenServiceUrl, JSON.stringify(tokenParam.toJSON())).then(function (response) {
+        return FetchRequest.post(serverInfo.tokenServiceUrl, JSON.stringify(tokenParam.toJSON())).then(function(response) {
             return response.text();
         });
     }
 
     /**
      * @description 注册安全服务器相关信息。
-     * @function SuperMap.SecurityManager.registerServers
-     * @param {SuperMap.ServerInfo} serverInfos - 服务器信息。
+     * @function Ekmap.SecurityManager.registerServers
+     * @param {Ekmap.ServerInfo} serverInfos - 服务器信息。
      */
     static registerServers(serverInfos) {
         this.servers = this.servers || {};
@@ -54,7 +51,7 @@ export class SecurityManager {
 
     /**
      * @description 服务请求都会自动带上这个 token。
-     * @function SuperMap.SecurityManager.registerToken
+     * @function Ekmap.SecurityManager.registerToken
      * @param {string} url -服务器域名+端口：如http://localhost:8090。
      * @param {string} token - token
      */
@@ -69,7 +66,7 @@ export class SecurityManager {
 
     /**
      * @description 注册 key,ids 为数组(存在一个 key 对应多个服务)。
-     * @function SuperMap.SecurityManager.registerKey
+     * @function Ekmap.SecurityManager.registerKey
      * @param {Array} ids - 可以是服务 id 数组或者 url 地址数组或者 webAPI 类型数组。
      * @param {string} key - key
      */
@@ -88,9 +85,9 @@ export class SecurityManager {
 
     /**
      * @description 获取服务器信息。
-     * @function SuperMap.SecurityManager.getServerInfo
+     * @function Ekmap.SecurityManager.getServerInfo
      * @param {string} url - 服务器域名+端口，如：http://localhost:8092。
-     * @returns {SuperMap.ServerInfo} 服务器信息。
+     * @returns {Ekmap.ServerInfo} 服务器信息。
      */
     static getServerInfo(url) {
         this.servers = this.servers || {};
@@ -99,7 +96,7 @@ export class SecurityManager {
 
     /**
      * @description 根据 Url 获取token。
-     * @function SuperMap.SecurityManager.getToken
+     * @function Ekmap.SecurityManager.getToken
      * @param {string} url - 服务器域名+端口，如：http://localhost:8092。
      * @returns {string} token
      */
@@ -114,7 +111,7 @@ export class SecurityManager {
 
     /**
      * @description 根据 Url 获取 key。
-     * @function SuperMap.SecurityManager.getKey
+     * @function Ekmap.SecurityManager.getKey
      * @param {string} id - id
      * @returns {string} key
      */
@@ -126,7 +123,7 @@ export class SecurityManager {
 
     /**
      * @description iServer 登录验证。
-     * @function SuperMap.SecurityManager.loginiServer
+     * @function Ekmap.SecurityManager.loginiServer
      * @param {string} url - iServer 首页地址，如：http://localhost:8090/iserver。
      * @param {string} username - 用户名。
      * @param {string} password - 密码。
@@ -146,7 +143,7 @@ export class SecurityManager {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             }
         };
-        return FetchRequest.post(url, loginInfo, requestOptions).then(function (response) {
+        return FetchRequest.post(url, loginInfo, requestOptions).then(function(response) {
             return response.json();
         });
 
@@ -154,7 +151,7 @@ export class SecurityManager {
 
     /**
      * @description iServer登出。
-     * @function SuperMap.SecurityManager.logoutiServer
+     * @function Ekmap.SecurityManager.logoutiServer
      * @param {string} url - iServer 首页地址,如：http://localhost:8090/iserver。
      * @returns {Promise} 是否登出成功。
      */
@@ -166,9 +163,9 @@ export class SecurityManager {
             },
             withoutFormatSuffix: true
         };
-        return FetchRequest.get(url, "", requestOptions).then(function () {
+        return FetchRequest.get(url, "", requestOptions).then(function() {
             return true;
-        }).catch(function () {
+        }).catch(function() {
             return false;
         });
 
@@ -176,7 +173,7 @@ export class SecurityManager {
 
     /**
      * @description Online 登录验证。
-     * @function SuperMap.SecurityManager.loginOnline
+     * @function Ekmap.SecurityManager.loginOnline
      * @param {string} callbackLocation - 跳转位置。
      * @param {boolean} [newTab=true] - 是否新窗口打开。
      */
@@ -187,7 +184,7 @@ export class SecurityManager {
 
     /**
      * @description iPortal登录验证。
-     * @function SuperMap.SecurityManager.loginiPortal
+     * @function Ekmap.SecurityManager.loginiPortal
      * @param {string} url - iportal 首页地址,如：http://localhost:8092/iportal.
      * @param {string} username - 用户名。
      * @param {string} password - 密码。
@@ -206,7 +203,7 @@ export class SecurityManager {
             },
             withCredentials: true
         };
-        return FetchRequest.post(url, loginInfo, requestOptions).then(function (response) {
+        return FetchRequest.post(url, loginInfo, requestOptions).then(function(response) {
             return response.json();
         });
 
@@ -214,7 +211,7 @@ export class SecurityManager {
 
     /**
      * @description iPortal 登出。
-     * @function SuperMap.SecurityManager.logoutiPortal
+     * @function Ekmap.SecurityManager.logoutiPortal
      * @param {string} url - iportal 首页地址,如：http://localhost:8092/iportal.
      * @returns {Promise} 如果登出成功，返回 true;否则返回 false。
      */
@@ -227,9 +224,9 @@ export class SecurityManager {
             withCredentials: true,
             withoutFormatSuffix: true
         };
-        return FetchRequest.get(url, "", requestOptions).then(function () {
+        return FetchRequest.get(url, "", requestOptions).then(function() {
             return true;
-        }).catch(function () {
+        }).catch(function() {
             return false;
         });
 
@@ -237,7 +234,7 @@ export class SecurityManager {
 
     /**
      * @description iManager 登录验证。
-     * @function SuperMap.SecurityManager.loginManager
+     * @function Ekmap.SecurityManager.loginManager
      * @param {string} url - iManager 地址。地址参数为 iManager 首页地址，如： http://localhost:8390/imanager。
      * @param {Object} [loginInfoParams] - iManager 登录参数。
      * @param {string} loginInfoParams.userName - 用户名。
@@ -266,8 +263,8 @@ export class SecurityManager {
             }
         };
         var me = this;
-        return FetchRequest.post(requestUrl, loginInfo, requestOptions).then(function (response) {
-            response.text().then(function (result) {
+        return FetchRequest.post(requestUrl, loginInfo, requestOptions).then(function(response) {
+            response.text().then(function(result) {
                 me.imanagerToken = result;
                 return result;
             });
@@ -276,7 +273,7 @@ export class SecurityManager {
 
     /**
      * @description 清空全部验证信息。
-     * @function SuperMap.SecurityManager.destroyAllCredentials
+     * @function Ekmap.SecurityManager.destroyAllCredentials
      */
     static destroyAllCredentials() {
         this.keys = null;
@@ -286,7 +283,7 @@ export class SecurityManager {
 
     /**
      * @description 清空令牌信息。
-     * @function SuperMap.SecurityManager.destroyToken
+     * @function Ekmap.SecurityManager.destroyToken
      * @param {string} url - iportal 首页地址,如：http://localhost:8092/iportal.
      */
     static destroyToken(url) {
@@ -302,7 +299,7 @@ export class SecurityManager {
 
     /**
      * @description 清空服务授权码。
-     * @function SuperMap.SecurityManager.destroyKey
+     * @function Ekmap.SecurityManager.destroyKey
      * @param {string} url - iServer 首页地址,如：http://localhost:8090/iserver。
      */
     static destroyKey(url) {
@@ -355,7 +352,6 @@ export class SecurityManager {
 }
 SecurityManager.INNER_WINDOW_WIDTH = 600;
 SecurityManager.INNER_WINDOW_HEIGHT = 600;
-SecurityManager.SSO = "https://sso.supermap.com";
+SecurityManager.SSO = "https://sso.Ekmap.com";
 SecurityManager.ONLINE = "https://www.supermapol.com";
-SuperMap.SecurityManager = SecurityManager;
-
+Ekmap.SecurityManager = SecurityManager;

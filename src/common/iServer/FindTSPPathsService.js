@@ -1,24 +1,21 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 import { Util } from '../commontypes/Util';
 import { NetworkAnalystServiceBase } from './NetworkAnalystServiceBase';
 import { FindTSPPathsParameters } from './FindTSPPathsParameters';
 import { GeoJSON } from '../format/GeoJSON';
 
 /**
- * @class SuperMap.FindTSPPathsService
+ * @class Ekmap.FindTSPPathsService
  * @category  iServer NetworkAnalyst TSPPath
  * @classdesc 旅行商分析服务类
  *            旅行商分析是路径分析的一种，它从起点开始（默认为用户指定的第一点）查找能够遍历所有途经点且花费最小的路径。
  *            旅行商分析也可以指定到达的终点，这时查找从起点能够遍历所有途经点最后到达终点，且花费最小的路径。
  *            该类负责将客户端指定的旅行商分析参数传递给服务端，并接收服务端返回的结果数据。
  *            旅行商分析结果通过该类支持的事件的监听函数参数获取
- * @extends {SuperMap.NetworkAnalystServiceBase}
+ * @extends {Ekmap.NetworkAnalystServiceBase}
  * @example
  * (start code)
- * var myFindTSPPathsService = new SuperMap.FindTSPPathsService(url, {
+ * var myFindTSPPathsService = new Ekmap.FindTSPPathsService(url, {
  *     eventListeners: {
  *	      "processCompleted": findTSPPathsCompleted,
  *		  "processFailed": findTSPPathsError
@@ -38,11 +35,11 @@ export class FindTSPPathsService extends NetworkAnalystServiceBase {
     constructor(url, options) {
         super(url, options);
 
-        this.CLASS_NAME = "SuperMap.FindTSPPathsService";
+        this.CLASS_NAME = "Ekmap.FindTSPPathsService";
     }
 
     /**
-     * @function SuperMap.FindTSPPathsService.prototype.destroy
+     * @function Ekmap.FindTSPPathsService.prototype.destroy
      * @override
      */
     destroy() {
@@ -50,18 +47,19 @@ export class FindTSPPathsService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindTSPPathsService.prototype.processAsync
+     * @function Ekmap.FindTSPPathsService.prototype.processAsync
      * @description 负责将客户端的查询参数传递到服务端。
-     * @param {SuperMap.FindTSPPathsParameters} params - 旅行商分析服务参数类。
+     * @param {Ekmap.FindTSPPathsParameters} params - 旅行商分析服务参数类。
      */
     processAsync(params) {
         if (!(params instanceof FindTSPPathsParameters)) {
             return;
         }
-        var me = this, jsonObject;
+        var me = this,
+            jsonObject;
         me.url = Util.urlPathAppend(me.url, 'tsppath');
         jsonObject = {
-            parameter: SuperMap.Util.toJSON(params.parameter),
+            parameter: Ekmap.Util.toJSON(params.parameter),
             endNodeAssigned: params.endNodeAssigned,
             nodes: me.getNodesJson(params)
         };
@@ -75,13 +73,14 @@ export class FindTSPPathsService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindTSPPathsService.prototype.getNodesJson
+     * @function Ekmap.FindTSPPathsService.prototype.getNodesJson
      * @description 将节点对象转化为JSON字符串。
-     * @param {SuperMap.FindTSPPathsParameters} params - 旅行商分析服务参数类。
+     * @param {Ekmap.FindTSPPathsParameters} params - 旅行商分析服务参数类。
      * @returns {string} 转化后的JSON字符串。
      */
     getNodesJson(params) {
-        var jsonParameters = "", nodesString, i, len, nodes;
+        var jsonParameters = "",
+            nodesString, i, len, nodes;
         if (params.isAnalyzeById === false) {
             for (nodesString = "[", i = 0, nodes = params.nodes, len = nodes.length; i < len; i++) {
                 if (i > 0) {
@@ -92,7 +91,9 @@ export class FindTSPPathsService extends NetworkAnalystServiceBase {
             nodesString += ']';
             jsonParameters += nodesString;
         } else if (params.isAnalyzeById === true) {
-            let nodeIDsString = "[", nodes = params.nodes, len = nodes.length;
+            let nodeIDsString = "[",
+                nodes = params.nodes,
+                len = nodes.length;
             for (let i = 0; i < len; i++) {
                 if (i > 0) {
                     nodeIDsString += ",";
@@ -106,7 +107,7 @@ export class FindTSPPathsService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindTSPPathsService.prototype.toGeoJSONResult
+     * @function Ekmap.FindTSPPathsService.prototype.toGeoJSONResult
      * @description 将含有 geometry 的数据转换为 GeoJSON 格式。
      * @param {Object} result - 服务器返回的结果对象。
      */
@@ -115,7 +116,7 @@ export class FindTSPPathsService extends NetworkAnalystServiceBase {
             return null;
         }
         var geoJSONFormat = new GeoJSON();
-        result.tspPathList.forEach(function (path) {
+        result.tspPathList.forEach(function(path) {
             if (path.route) {
                 path.route = geoJSONFormat.toGeoJSON(path.route);
             }
@@ -134,4 +135,4 @@ export class FindTSPPathsService extends NetworkAnalystServiceBase {
 
 }
 
-SuperMap.FindTSPPathsService = FindTSPPathsService;
+Ekmap.FindTSPPathsService = FindTSPPathsService;

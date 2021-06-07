@@ -1,17 +1,14 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {SpatialAnalystBase} from './SpatialAnalystBase';
-import {InterpolationRBFAnalystParameters} from './InterpolationRBFAnalystParameters';
-import {InterpolationDensityAnalystParameters} from './InterpolationDensityAnalystParameters';
-import {InterpolationIDWAnalystParameters} from './InterpolationIDWAnalystParameters';
-import {InterpolationKrigingAnalystParameters} from './InterpolationKrigingAnalystParameters';
-import {InterpolationAnalystParameters} from './InterpolationAnalystParameters';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { SpatialAnalystBase } from './SpatialAnalystBase';
+import { InterpolationRBFAnalystParameters } from './InterpolationRBFAnalystParameters';
+import { InterpolationDensityAnalystParameters } from './InterpolationDensityAnalystParameters';
+import { InterpolationIDWAnalystParameters } from './InterpolationIDWAnalystParameters';
+import { InterpolationKrigingAnalystParameters } from './InterpolationKrigingAnalystParameters';
+import { InterpolationAnalystParameters } from './InterpolationAnalystParameters';
 
 /**
- * @class SuperMap.InterpolationAnalystService
+ * @class Ekmap.InterpolationAnalystService
  * @category iServer SpatialAnalyst InterpolationAnalyst
  * @classdesc 插值分析服务类。
  * 插值分析可以将有限的采样点数据，通过插值算法对采样点周围的数值情况进行预测，可以掌握研究区域内数据的总体分布状况，从而使采样的离散点不仅仅反映其所在位置的数值情况，
@@ -22,14 +19,14 @@ import {InterpolationAnalystParameters} from './InterpolationAnalystParameters';
  * @param {Object} options.eventListeners - 需要被注册的监听器对象。
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
  * @param {Object} [options.headers] - 请求头。
- * @extends {SuperMap.SpatialAnalystBase}
+ * @extends {Ekmap.SpatialAnalystBase}
  * @example 例如：
  * (start code)
- * var myTInterpolationAnalystService = new SuperMap.InterpolationAnalystService(url);
+ * var myTInterpolationAnalystService = new Ekmap.InterpolationAnalystService(url);
  * myTInterpolationAnalystService.events.on({
-     *     "processCompleted": processCompleted,
-     *     "processFailed": processFailed
-     *     }
+ *     "processCompleted": processCompleted,
+ *     "processFailed": processFailed
+ *     }
  * );
  * (end)
  *
@@ -40,7 +37,7 @@ export class InterpolationAnalystService extends SpatialAnalystBase {
     constructor(url, options) {
         super(url, options);
         /**
-         * @member {string} SuperMap.InterpolationAnalystService.prototype.mode
+         * @member {string} Ekmap.InterpolationAnalystService.prototype.mode
          * @description 插值分析类型。
          */
 
@@ -51,19 +48,19 @@ export class InterpolationAnalystService extends SpatialAnalystBase {
     }
 
     /**
-     * @function SuperMap.InterpolationAnalystService.prototype.destroy
+     * @function Ekmap.InterpolationAnalystService.prototype.destroy
      * @description 释放资源,将引用资源的属性置空。
      */
     destroy() {
         super.destroy();
         this.mode = null;
-        this.CLASS_NAME = "SuperMap.InterpolationAnalystService";
+        this.CLASS_NAME = "Ekmap.InterpolationAnalystService";
     }
 
     /**
-     * @function SuperMap.InterpolationAnalystService.prototype.processAsync
+     * @function Ekmap.InterpolationAnalystService.prototype.processAsync
      * @description 负责将客户端的查询参数传递到服务端。
-     * @param {SuperMap.InterpolationAnalystParameters} parameter - 插值分析参数类。
+     * @param {Ekmap.InterpolationAnalystParameters} parameter - 插值分析参数类。
      */
     processAsync(parameter) {
         var parameterObject = {};
@@ -112,4 +109,4 @@ export class InterpolationAnalystService extends SpatialAnalystBase {
     }
 }
 
-SuperMap.InterpolationAnalystService = InterpolationAnalystService;
+Ekmap.InterpolationAnalystService = InterpolationAnalystService;

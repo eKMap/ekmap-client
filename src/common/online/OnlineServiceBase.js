@@ -1,14 +1,14 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
 // import {SecurityManager} from '../security/SecurityManager';
-import {ServerType} from '../REST';
-import {FetchRequest} from '../util/FetchRequest';
+import { ServerType } from '../REST';
+import { FetchRequest } from '../util/FetchRequest';
 
 /**
- * @class SuperMap.OnlineServiceBase
+ * @class Ekmap.OnlineServiceBase
  * @classdesc Online 服务基类（使用 key 作为权限限制的类需要实现此类）。
  * @category iPortal/Online
  * @param {Object} options - 服务参数。
@@ -21,11 +21,11 @@ export class OnlineServiceBase {
         options = options || {};
         Util.extend(this, options);
         this.serverType = ServerType.ONLINE;
-        this.CLASS_NAME = "SuperMap.OnlineServiceBase";
+        this.CLASS_NAME = "Ekmap.OnlineServiceBase";
     }
 
     /**
-     * @function SuperMap.OnlineServiceBase.prototype.request
+     * @function Ekmap.OnlineServiceBase.prototype.request
      * @description 请求 online 服务
      * @param {string} [method='GET'] - 请求方式, 'GET', 'PUT', 'POST', 'DELETE'。
      * @param {string} url - 服务地址。
@@ -43,7 +43,7 @@ export class OnlineServiceBase {
     }
 
     /**
-     * @function SuperMap.OnlineServiceBase.prototype.createCredentialUrl
+     * @function Ekmap.OnlineServiceBase.prototype.createCredentialUrl
      * @description 追加授权信息。
      * @param {string} url - 对接的 online 服务地址。
      */
@@ -74,4 +74,4 @@ export class OnlineServiceBase {
 
 }
 
-SuperMap.OnlineServiceBase = OnlineServiceBase;
+Ekmap.OnlineServiceBase = OnlineServiceBase;

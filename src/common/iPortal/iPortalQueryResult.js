@@ -1,11 +1,8 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
 
 /**
- * @class SuperMap.iPortalQueryResult
+ * @class Ekmap.iPortalQueryResult
  * @classdesc iPortal 资源结果集封装类。
  * @version 10.0.1
  * @category iPortal/Online
@@ -29,5 +26,4 @@ export class IPortalQueryResult {
 
 }
 
-SuperMap.iPortalQueryResult = IPortalQueryResult;
-
+Ekmap.iPortalQueryResult = IPortalQueryResult;

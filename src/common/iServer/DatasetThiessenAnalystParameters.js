@@ -1,18 +1,15 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {ThiessenAnalystParameters} from './ThiessenAnalystParameters';
-import {ServerGeometry} from './ServerGeometry';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { ThiessenAnalystParameters } from './ThiessenAnalystParameters';
+import { ServerGeometry } from './ServerGeometry';
 
 /**
- * @class SuperMap.DatasetThiessenAnalystParameters
+ * @class Ekmap.DatasetThiessenAnalystParameters
  * @category iServer SpatialAnalyst ThiessenAnalyst
  * @classdesc 数据集泰森多边形分析参数类。
  * @param {Object} options - 参数。 
- * @param {SuperMap.FilterParameter} [options.filterQueryParameter] - 对待分析数据集中的点进行过滤，即对数据集中的所有点进行分析。
- * @extends {SuperMap.ThiessenAnalystParameters}
+ * @param {Ekmap.FilterParameter} [options.filterQueryParameter] - 对待分析数据集中的点进行过滤，即对数据集中的所有点进行分析。
+ * @extends {Ekmap.ThiessenAnalystParameters}
  */
 export class DatasetThiessenAnalystParameters extends ThiessenAnalystParameters {
 
@@ -20,10 +17,10 @@ export class DatasetThiessenAnalystParameters extends ThiessenAnalystParameters 
     constructor(options) {
         super(options);
         /**
-         * @member {SuperMap.FilterParameter} [SuperMap.DatasetThiessenAnalystParameters.prototype.filterQueryParameter]
+         * @member {Ekmap.FilterParameter} [Ekmap.DatasetThiessenAnalystParameters.prototype.filterQueryParameter]
          * @description 过滤条件，对待分析数据集中的点进行过滤，即对数据集中的所有点进行分析。
          * @example
-         *  var filterQueryParameter = new SuperMap.FilterParameter({
+         *  var filterQueryParameter = new Ekmap.FilterParameter({
          *   name: "Countries@World",
          *   attributeFilter: "SmID>100"
          *  });
@@ -31,7 +28,7 @@ export class DatasetThiessenAnalystParameters extends ThiessenAnalystParameters 
         this.filterQueryParameter = null;
 
         /**
-         * @member {string} SuperMap.DatasetThiessenAnalystParameters.prototype.dataset
+         * @member {string} Ekmap.DatasetThiessenAnalystParameters.prototype.dataset
          * @description 数据集名称待分析的数据集名称，请使用 "datasetName@datasourceName" 格式来表示。
          */
         this.dataset = null;
@@ -41,11 +38,11 @@ export class DatasetThiessenAnalystParameters extends ThiessenAnalystParameters 
         }
 
 
-        this.CLASS_NAME = "SuperMap.DatasetThiessenAnalystParameters";
+        this.CLASS_NAME = "Ekmap.DatasetThiessenAnalystParameters";
     }
 
     /**
-     * @function SuperMap.DatasetThiessenAnalystParameters.prototype.destroy
+     * @function Ekmap.DatasetThiessenAnalystParameters.prototype.destroy
      * @override
      */
     destroy() {
@@ -58,9 +55,9 @@ export class DatasetThiessenAnalystParameters extends ThiessenAnalystParameters 
     }
 
     /**
-     * @function SuperMap.DatasetThiessenAnalystParameters.toObject
-     * @param {SuperMap.DatasetThiessenAnalystParameters} datasetThiessenAnalystParameters - 泰森多边形分析服务参数类。
-     * @param {SuperMap.DatasetThiessenAnalystParameters} tempObj - 泰森多边形分析服务参数对象。
+     * @function Ekmap.DatasetThiessenAnalystParameters.toObject
+     * @param {Ekmap.DatasetThiessenAnalystParameters} datasetThiessenAnalystParameters - 泰森多边形分析服务参数类。
+     * @param {Ekmap.DatasetThiessenAnalystParameters} tempObj - 泰森多边形分析服务参数对象。
      * @description 将泰森多边形分析服务参数对象转换为 JSON 对象。
      * @returns JSON 对象。
      */
@@ -76,4 +73,4 @@ export class DatasetThiessenAnalystParameters extends ThiessenAnalystParameters 
 
 }
 
-SuperMap.DatasetThiessenAnalystParameters = DatasetThiessenAnalystParameters;
+Ekmap.DatasetThiessenAnalystParameters = DatasetThiessenAnalystParameters;

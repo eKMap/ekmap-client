@@ -1,18 +1,18 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
-import {SmicPolygon} from './SmicPolygon';
-import {SUtil} from './SUtil';
+import { Shape } from './Shape';
+import { SmicPolygon } from './SmicPolygon';
+import { SUtil } from './SUtil';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicBrokenLine
+ * @class  Ekmap.LevelRenderer.Shape.SmicBrokenLine
  * @category Visualization Theme
  * @classdesc 折线(ic)。
- * @extends SuperMap.LevelRenderer.Shape
+ * @extends Ekmap.LevelRenderer.Shape
  * @example
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicBrokenLine({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicBrokenLine({
  *         style: {
  *             pointList: [[0, 0], [100, 100], [100, 0]],
  *             smooth: 'bezier',
@@ -26,7 +26,7 @@ import {SUtil} from './SUtil';
 export class SmicBrokenLine extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicBrokenLine.prototype.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.style
      * @description 绘制样式。
      *
      * @param {Array} pointList - 节点数组，二维数组。默认值：null，必设参数。其形式如下：
@@ -58,7 +58,7 @@ export class SmicBrokenLine extends Shape {
     //打开接口 style
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicBrokenLine.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicBrokenLine.constructor
      * @description 构造函数。
      *
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -67,19 +67,19 @@ export class SmicBrokenLine extends Shape {
     constructor(options) {
         super(options);
         /**
-         * @member {string}  SuperMap.LevelRenderer.Shape.SmicBrokenLine.prototype.brushTypeOnly
+         * @member {string}  Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.brushTypeOnly
          * @description 线条只能描边。
          */
         this.brushTypeOnly = 'stroke';
 
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicBrokenLine.prototype.textPosition
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.textPosition
          * @description 文本位置。
          */
         this.textPosition = 'end';
 
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicBrokenLine.prototype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.type
          * @description 图形类型.
          */
         this.type = 'smicbroken-line';
@@ -87,12 +87,12 @@ export class SmicBrokenLine extends Shape {
             this.refOriginalPosition = [0, 0];
         }
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicBrokenLine";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicBrokenLine";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicBrokenLine.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -105,7 +105,7 @@ export class SmicBrokenLine extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicBrokenLine.prototype.buildPath
+     * @function Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.buildPath
      * @description 创建折线路径。
      *
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -153,11 +153,11 @@ export class SmicBrokenLine extends Shape {
                 for (let i = 1; i < len; i++) {
                     ctx.lineTo(pointList[i][0] + __OP[0], pointList[i][1] + __OP[1]);
                 }
-            } else if (style.lineType === 'dashed'
-                || style.lineType === 'dotted'
-                || style.lineType === 'dot'
-                || style.lineType === 'dash'
-                || style.lineType === 'longdash'
+            } else if (style.lineType === 'dashed' ||
+                style.lineType === 'dotted' ||
+                style.lineType === 'dot' ||
+                style.lineType === 'dash' ||
+                style.lineType === 'longdash'
             ) {
                 let dashLength = (style.lineWidth || 1);
                 let pattern1 = dashLength;
@@ -216,12 +216,11 @@ export class SmicBrokenLine extends Shape {
                         ctx,
                         pointList[i - 1][0] + __OP[0], pointList[i - 1][1] + __OP[1],
                         pointList[i][0] + __OP[0], pointList[i][1] + __OP[1],
-                        dashLength,
-                        [pattern1, pattern2]
+                        dashLength, [pattern1, pattern2]
                     );
                 }
-            } else if (style.lineType === 'dashdot'
-                || style.lineType === 'longdashdot'
+            } else if (style.lineType === 'dashdot' ||
+                style.lineType === 'longdashdot'
             ) {
                 let dashLength = (style.lineWidth || 1);
                 let pattern1 = dashLength;
@@ -255,16 +254,15 @@ export class SmicBrokenLine extends Shape {
                     }
                 }
 
-                dashLength = (style.lineWidth || 1)
-                    * (style.lineType === 'dashed' ? 5 : 1);
+                dashLength = (style.lineWidth || 1) *
+                    (style.lineType === 'dashed' ? 5 : 1);
                 ctx.moveTo(pointList[0][0] + __OP[0], pointList[0][1] + __OP[1]);
                 for (let i = 1; i < len; i++) {
                     SUtil.SUtil_dashedLineTo(
                         ctx,
                         pointList[i - 1][0] + __OP[0], pointList[i - 1][1] + __OP[1],
                         pointList[i][0] + __OP[0], pointList[i][1] + __OP[1],
-                        dashLength,
-                        [pattern1, pattern2, pattern3, pattern4]
+                        dashLength, [pattern1, pattern2, pattern3, pattern4]
                     );
                 }
             }
@@ -275,7 +273,7 @@ export class SmicBrokenLine extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicBrokenLine.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.getRect
      * @description 计算返回折线包围盒矩形。该包围盒是直接从四个控制点计算，并非最小包围盒。
      *
      * @param {Object} style - style

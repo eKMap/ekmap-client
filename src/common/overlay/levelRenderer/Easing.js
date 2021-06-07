@@ -1,8 +1,8 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 /**
- * @class  SuperMap.LevelRenderer.Animation.easing
+ * @class  Ekmap.LevelRenderer.Animation.easing
  * @category Visualization Theme
  * @classdesc 缓动
  * @private 
@@ -12,16 +12,16 @@
 export class Easing {
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.constructor
+     * @function Ekmap.LevelRenderer.Animation.easing.constructor
      * @description 构造函数。
      */
     constructor() {
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Animation.easing";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Animation.easing";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.destroy
+     * @function Ekmap.LevelRenderer.Animation.easing.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -30,7 +30,7 @@ export class Easing {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.Linear
+     * @function Ekmap.LevelRenderer.Animation.easing.Linear
      * @description 线性缓动
      * @param {number} k - 参数
      * @return {number} 输入值
@@ -41,7 +41,7 @@ export class Easing {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuadraticIn
+     * @function Ekmap.LevelRenderer.Animation.easing.QuadraticIn
      * @description 二次方的缓动（t^2）
      * @param {number} k - 参数
      * @return {number} 二次方的缓动的值
@@ -51,7 +51,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuadraticOut
+     * @function Ekmap.LevelRenderer.Animation.easing.QuadraticOut
      * @description 返回按二次方缓动退出的值
      * @param {number} k - 参数
      * @return {number} 按二次方缓动退出的值
@@ -61,7 +61,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuadraticInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.QuadraticInOut
      * @description 返回按二次方缓动进入和退出的值
      * @param {number} k - 参数
      * @return {number} 按二次方缓动进入和退出的值
@@ -75,7 +75,7 @@ export class Easing {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.CubicIn
+     * @function Ekmap.LevelRenderer.Animation.easing.CubicIn
      * @description 三次方的缓动（t^3）
      * @param {number} k - 参数
      * @return {number} 按三次方缓动的值
@@ -85,7 +85,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.CubicOut
+     * @function Ekmap.LevelRenderer.Animation.easing.CubicOut
      * @description 返回按三次方缓动退出的值
      * @param {number} k - 参数
      * @return {number} 按三次方缓动退出的值
@@ -95,7 +95,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.CubicInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.CubicInOut
      * @description 返回按三次方缓动进入退出的值
      * @param {number} k - 参数
      * @return {number} 按三次方缓动进入退出的值
@@ -109,7 +109,7 @@ export class Easing {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuarticIn
+     * @function Ekmap.LevelRenderer.Animation.easing.QuarticIn
      * @description  返回按四次方缓动进入的值
      * @param {number} k - 参数
      * @return {number}  按四次方缓动进入的值
@@ -117,9 +117,9 @@ export class Easing {
     QuarticIn(k) {
         return k * k * k * k;
     }
-    
+
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuarticOut
+     * @function Ekmap.LevelRenderer.Animation.easing.QuarticOut
      * @description  返回按四次方缓动退出的值
      * @param {number} k - 参数
      * @return {number}  按四次方缓动退出的值
@@ -129,7 +129,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuarticInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.QuarticInOut
      * @description  返回按四次方缓动进入退出的值
      * @param {number} k - 参数
      * @return {number}  按四次方缓动进入退出的值
@@ -144,7 +144,7 @@ export class Easing {
 
     // 五次方的缓动（t^5）
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuinticIn
+     * @function Ekmap.LevelRenderer.Animation.easing.QuinticIn
      * @description  返回按五次方缓动的值
      * @param {number} k - 参数
      * @return {number}  按五次方缓动的值
@@ -154,7 +154,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuinticOut
+     * @function Ekmap.LevelRenderer.Animation.easing.QuinticOut
      * @description  返回按五次方缓动退出的值
      * @param {number} k - 参数
      * @return {number}  按五次方缓动退出的值
@@ -164,7 +164,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.QuinticInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.QuinticInOut
      * @description 返回按五次方缓动进入退出的值
      * @param {number} k - 参数
      * @return {number} 按五次方缓动进入退出的值
@@ -179,7 +179,7 @@ export class Easing {
 
     // 正弦曲线的缓动（sin(t)）
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.SinusoidalIn
+     * @function Ekmap.LevelRenderer.Animation.easing.SinusoidalIn
      * @description 返回按正弦曲线的缓动进入的值
      * @param {number} k - 参数
      * @return {number} 按正弦曲线的缓动进入的值
@@ -189,7 +189,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.SinusoidalOut
+     * @function Ekmap.LevelRenderer.Animation.easing.SinusoidalOut
      * @description 返回按正弦曲线的缓动退出的值
      * @param {number} k - 参数
      * @return {number} 按正弦曲线的缓动退出的值
@@ -199,7 +199,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.SinusoidalInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.SinusoidalInOut
      * @description 返回按正弦曲线的缓动进入退出的值
      * @param {number} k - 参数
      * @return {number} 按正弦曲线的缓动进入退出的值
@@ -211,7 +211,7 @@ export class Easing {
 
     // 指数曲线的缓动（2^t）
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.ExponentialIn
+     * @function Ekmap.LevelRenderer.Animation.easing.ExponentialIn
      * @description 返回按指数曲线的缓动进入的值
      * @param {number} k - 参数
      * @return {number} 按指数曲线的缓动进入的值
@@ -221,7 +221,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.ExponentialOut
+     * @function Ekmap.LevelRenderer.Animation.easing.ExponentialOut
      * @description 返回按指数曲线的缓动退出的值
      * @param {number} k - 参数
      * @return {number} 按指数曲线的缓动退出的值
@@ -231,7 +231,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.ExponentialInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.ExponentialInOut
      * @description 返回按指数曲线的缓动进入退出的值
      * @param {number} k - 参数
      * @return {number} 按指数曲线的缓动进入退出的值
@@ -252,7 +252,7 @@ export class Easing {
 
     // 圆形曲线的缓动（sqrt(1-t^2)）
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.CircularIn
+     * @function Ekmap.LevelRenderer.Animation.easing.CircularIn
      * @description 返回按圆形曲线的缓动进入的值
      * @param {number} k - 参数
      * @return {number} 按圆形曲线的缓动进入的值
@@ -262,7 +262,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.CircularOut
+     * @function Ekmap.LevelRenderer.Animation.easing.CircularOut
      * @description 返回按圆形曲线的缓动退出的值
      * @param {number} k - 参数
      * @return {number} 按圆形曲线的缓动退出的值
@@ -272,7 +272,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.CircularInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.CircularInOut
      * @description 返回按圆形曲线的缓动进入退出的值
      * @param {number} k - 参数
      * @return {number} 按圆形曲线的缓动进入退出的值
@@ -287,7 +287,7 @@ export class Easing {
 
     // 创建类似于弹簧在停止前来回振荡的动画
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.ElasticIn
+     * @function Ekmap.LevelRenderer.Animation.easing.ElasticIn
      * @description 返回按类似于弹簧在停止前来回振荡的动画的缓动进入的值
      * @param {number} k - 参数
      * @return {number} 按类似于弹簧在停止前来回振荡的动画的缓动进入的值
@@ -313,7 +313,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.ElasticOut
+     * @function Ekmap.LevelRenderer.Animation.easing.ElasticOut
      * @description 返回按类似于弹簧在停止前来回振荡的动画的缓动退出的值
      * @param {number} k - 参数
      * @return {number} 按类似于弹簧在停止前来回振荡的动画的缓动退出的值
@@ -339,7 +339,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.ElasticInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.ElasticInOut
      * @description 返回按类似于弹簧在停止前来回振荡的动画的缓动进入退出的值
      * @param {number} k - 参数
      * @return {number} 按类似于弹簧在停止前来回振荡的动画的缓动进入退出的值
@@ -361,18 +361,18 @@ export class Easing {
             s = p * Math.asin(1 / a) / (2 * Math.PI);
         }
         if ((k *= 2) < 1) {
-            return -0.5 * (a * Math.pow(2, 10 * (k -= 1))
-                * Math.sin((k - s) * (2 * Math.PI) / p));
+            return -0.5 * (a * Math.pow(2, 10 * (k -= 1)) *
+                Math.sin((k - s) * (2 * Math.PI) / p));
         }
-        return a * Math.pow(2, -10 * (k -= 1))
-            * Math.sin((k - s) * (2 * Math.PI) / p) * 0.5 + 1;
+        return a * Math.pow(2, -10 * (k -= 1)) *
+            Math.sin((k - s) * (2 * Math.PI) / p) * 0.5 + 1;
 
     }
 
 
     // 在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.BackIn
+     * @function Ekmap.LevelRenderer.Animation.easing.BackIn
      * @description 返回按在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动的缓动进入的值
      * @param {number} k - 参数
      * @return {number} 按在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动的缓动进入的值
@@ -383,7 +383,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.BackOut
+     * @function Ekmap.LevelRenderer.Animation.easing.BackOut
      * @description 返回按在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动的缓动退出的值
      * @param {number} k - 参数
      * @return {number} 按在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动的缓动退出的值
@@ -394,7 +394,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.BackInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.BackInOut
      * @description 返回按在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动的缓动进入退出的值
      * @param {number} k - 参数
      * @return {number} 按在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动的缓动进入退出的值
@@ -410,7 +410,7 @@ export class Easing {
 
     // 创建弹跳效果
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.BounceIn
+     * @function Ekmap.LevelRenderer.Animation.easing.BounceIn
      * @description 返回按弹跳效果的缓动进入的值
      * @param {number} k - 参数
      * @return {number} 按弹跳效果的缓动进入的值
@@ -420,7 +420,7 @@ export class Easing {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.BounceOut
+     * @function Ekmap.LevelRenderer.Animation.easing.BounceOut
      * @description 返回按弹跳效果的缓动退出的值
      * @param {number} k - 参数
      * @return {number} 按弹跳效果的缓动退出的值
@@ -436,9 +436,9 @@ export class Easing {
             return 7.5625 * (k -= (2.625 / 2.75)) * k + 0.984375;
         }
     }
-    
+
     /**
-     * @function SuperMap.LevelRenderer.Animation.easing.BounceInOut
+     * @function Ekmap.LevelRenderer.Animation.easing.BounceInOut
      * @description 返回按弹跳效果的缓动进入退出的值
      * @param {number} k - 参数
      * @return {number} 按弹跳效果的缓动进入退出的值

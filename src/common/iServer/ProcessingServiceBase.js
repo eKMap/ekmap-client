@@ -1,9 +1,6 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import {
-    SuperMap
-} from '../SuperMap';
+    Ekmap
+} from '../Ekmap';
 import {
     CommonServiceBase
 } from './CommonServiceBase';
@@ -18,16 +15,16 @@ import {
 } from '../security/SecurityManager';
 
 /**
- * @class SuperMap.ProcessingServiceBase
+ * @class Ekmap.ProcessingServiceBase
  * @category  iServer ProcessingService
  * @classdesc 分布式分析服务基类
- * @extends {SuperMap.CommonServiceBase}
+ * @extends {Ekmap.CommonServiceBase}
  * @param {string} url - 分布式分析服务地址。
  * @param {Object} options - 参数。
- * @param {SuperMap.Events} options.events - 处理所有事件的对象。
+ * @param {Ekmap.Events} options.events - 处理所有事件的对象。
  * @param {number} options.index - 服务访问地址在数组中的位置。
  * @param {number} options.length - 服务访问地址数组长度。
- * @param {SuperMap.ServerType} [options.serverType=SuperMap.ServerType.ISERVER] - 服务器类型，ISERVER|IPORTAL|ONLINE。
+ * @param {Ekmap.ServerType} [options.serverType=Ekmap.ServerType.ISERVER] - 服务器类型，ISERVER|IPORTAL|ONLINE。
  * @param {Object} [options.eventListeners] - 事件监听器对象。有 processCompleted 属性可传入处理完成后的回调函数。processFailed 属性传入处理失败后的回调函数。
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
  * @param {Object} [options.headers] - 请求头。
@@ -47,11 +44,11 @@ export class ProcessingServiceBase extends CommonServiceBase {
         options.EVENT_TYPES = ["processCompleted", "processFailed", "processRunning"];
         super(url, options);
 
-        this.CLASS_NAME = "SuperMap.ProcessingServiceBase";
+        this.CLASS_NAME = "Ekmap.ProcessingServiceBase";
     }
 
     /**
-     * @function SuperMap.ProcessingServiceBase.prototype.destroy
+     * @function Ekmap.ProcessingServiceBase.prototype.destroy
      * @override
      */
     destroy() {
@@ -59,7 +56,7 @@ export class ProcessingServiceBase extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.ProcessingServiceBase.prototype.getJobs
+     * @function Ekmap.ProcessingServiceBase.prototype.getJobs
      * @description 获取分布式分析任务。
      * @param {string} url - 资源地址。
      */
@@ -67,13 +64,13 @@ export class ProcessingServiceBase extends CommonServiceBase {
         var me = this;
         FetchRequest.get(me._processUrl(url), null, {
             proxy: me.proxy
-        }).then(function (response) {
+        }).then(function(response) {
             return response.json();
-        }).then(function (result) {
+        }).then(function(result) {
             me.events.triggerEvent("processCompleted", {
                 result: result
             });
-        }).catch(function (e) {
+        }).catch(function(e) {
             me.eventListeners.processFailed({
                 error: e
             });
@@ -81,7 +78,7 @@ export class ProcessingServiceBase extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.ProcessingServiceBase.prototype.addJob
+     * @function Ekmap.ProcessingServiceBase.prototype.addJob
      * @description 添加分布式分析任务。
      * @param {string} url - 资源根地址。
      * @param {Object} params - 创建一个空间分析的请求参数。
@@ -96,7 +93,7 @@ export class ProcessingServiceBase extends CommonServiceBase {
             paramType.toObject(params, parameterObject);
         }
         let headers = Object.assign({
-          'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded'
         }, me.headers || {})
         var options = {
             proxy: me.proxy,
@@ -105,15 +102,15 @@ export class ProcessingServiceBase extends CommonServiceBase {
             crossOrigin: me.crossOrigin,
             isInTheSameDomain: me.isInTheSameDomain
         };
-        FetchRequest.post(me._processUrl(url), JSON.stringify(parameterObject), options).then(function (response) {
+        FetchRequest.post(me._processUrl(url), JSON.stringify(parameterObject), options).then(function(response) {
             return response.json();
-        }).then(function (result) {
+        }).then(function(result) {
             if (result.succeed) {
                 me.serviceProcessCompleted(result, seconds);
             } else {
                 me.serviceProcessFailed(result);
             }
-        }).catch(function (e) {
+        }).catch(function(e) {
             me.serviceProcessFailed({
                 error: e
             });
@@ -125,13 +122,13 @@ export class ProcessingServiceBase extends CommonServiceBase {
         seconds = seconds || 1000;
         var me = this;
         if (result) {
-            var id = setInterval(function () {
+            var id = setInterval(function() {
                 FetchRequest.get(me._processUrl(result.newResourceLocation), {
                         _t: new Date().getTime()
                     })
-                    .then(function (response) {
+                    .then(function(response) {
                         return response.json();
-                    }).then(function (job) {
+                    }).then(function(job) {
                         me.events.triggerEvent("processRunning", {
                             id: job.id,
                             state: job.state
@@ -149,7 +146,7 @@ export class ProcessingServiceBase extends CommonServiceBase {
                                 result: job
                             });
                         }
-                    }).catch(function (e) {
+                    }).catch(function(e) {
                         clearInterval(id);
                         me.events.triggerEvent("processFailed", {
                             error: e
@@ -172,4 +169,4 @@ export class ProcessingServiceBase extends CommonServiceBase {
 
 }
 
-SuperMap.ProcessingServiceBase = ProcessingServiceBase;
+Ekmap.ProcessingServiceBase = ProcessingServiceBase;

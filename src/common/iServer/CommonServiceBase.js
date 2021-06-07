@@ -1,9 +1,6 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import {
-    SuperMap
-} from '../SuperMap';
+    Ekmap
+} from '../Ekmap';
 import {
     FetchRequest
 } from "../util/FetchRequest";
@@ -30,14 +27,14 @@ import {
 } from '../commontypes/BaseTypes';
 
 /**
- * @class SuperMap.CommonServiceBase
+ * @class Ekmap.CommonServiceBase
  * @category  iServer
  * @classdesc 对接 iServer 各种服务的 Service 的基类。
  * @param {string} url - 服务地址。
  * @param {Object} options - 参数。
  * @param {Object} options.eventListeners - 事件监听器对象。有 processCompleted 属性可传入处理完成后的回调函数。processFailed 属性传入处理失败后的回调函数。
  * @param {string} [options.proxy] - 服务代理地址。
- * @param {SuperMap.ServerType} [options.serverType=SuperMap.ServerType.ISERVER] - 服务器类型，ISERVER|IPORTAL|ONLINE。
+ * @param {Ekmap.ServerType} [options.serverType=Ekmap.ServerType.ISERVER] - 服务器类型，ISERVER|IPORTAL|ONLINE。
  * @param {boolean} [options.withCredentials=false] - 请求是否携带 cookie。
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
  * @param {Object} [options.headers] - 请求头。
@@ -78,8 +75,8 @@ export class CommonServiceBase {
         this.isInTheSameDomain = null;
 
         this.withCredentials = false;
-        
-        
+
+
 
         if (Util.isArray(url)) {
             me.urls = url;
@@ -100,7 +97,7 @@ export class CommonServiceBase {
             me.url = url[0];
             me.totalTimes = 1;
         }
-        
+
         me.serverType = me.serverType || ServerType.ISERVER;
 
         options = options || {};
@@ -115,11 +112,11 @@ export class CommonServiceBase {
             me.events.on(me.eventListeners);
         }
 
-        this.CLASS_NAME = "SuperMap.CommonServiceBase";
+        this.CLASS_NAME = "Ekmap.CommonServiceBase";
     }
 
     /**
-     * @function SuperMap.CommonServiceBase.prototype.destroy
+     * @function Ekmap.CommonServiceBase.prototype.destroy
      * @description 释放资源，将引用的资源属性置空。
      */
     destroy() {
@@ -147,7 +144,7 @@ export class CommonServiceBase {
     }
 
     /**
-     * @function  SuperMap.CommonServiceBase.prototype.request
+     * @function  Ekmap.CommonServiceBase.prototype.request
      * @description: 该方法用于向服务发送请求。
      * @param {Object} options - 参数。
      * @param {string} [options.method='GET'] - 请求方式，包括 "GET"，"POST"，"PUT"，"DELETE"。
@@ -187,10 +184,10 @@ export class CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.CommonServiceBase.prototype.getCredential
+     * @function Ekmap.CommonServiceBase.prototype.getCredential
      * @description  获取凭据信息
      * @param {string} url - 服务地址。
-     * @returns {SuperMap.Credential} 凭据信息对象。
+     * @returns {Ekmap.Credential} 凭据信息对象。
      */
     getCredential(url) {
         let keyUrl = url,
@@ -218,7 +215,7 @@ export class CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.CommonServiceBase.prototype.getUrlCompleted
+     * @function Ekmap.CommonServiceBase.prototype.getUrlCompleted
      * @description 请求成功后执行此方法。
      * @param {Object} result - 服务器返回的结果对象。
      */
@@ -229,7 +226,7 @@ export class CommonServiceBase {
 
 
     /**
-     * @function SuperMap.CommonServiceBase.prototype.getUrlFailed
+     * @function Ekmap.CommonServiceBase.prototype.getUrlFailed
      * @description 请求失败后执行此方法。
      * @param {Object} result - 服务器返回的结果对象。
      */
@@ -246,7 +243,7 @@ export class CommonServiceBase {
 
     /**
      *
-     * @function SuperMap.CommonServiceBase.prototype.ajaxPolling
+     * @function Ekmap.CommonServiceBase.prototype.ajaxPolling
      * @description 请求失败后，如果剩余请求失败次数不为 0，重新获取 URL 发送请求
      */
     ajaxPolling() {
@@ -263,7 +260,7 @@ export class CommonServiceBase {
 
 
     /**
-     * @function SuperMap.CommonServiceBase.prototype.calculatePollingTimes
+     * @function Ekmap.CommonServiceBase.prototype.calculatePollingTimes
      * @description 计算剩余请求失败执行次数。
      */
     calculatePollingTimes() {
@@ -290,19 +287,19 @@ export class CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.CommonServiceBase.prototype.isServiceSupportPolling
+     * @function Ekmap.CommonServiceBase.prototype.isServiceSupportPolling
      * @description 判断服务是否支持轮询。
      */
     isServiceSupportPolling() {
         let me = this;
         return !(
-            me.CLASS_NAME === "SuperMap.REST.ThemeService" ||
-            me.CLASS_NAME === "SuperMap.REST.EditFeaturesService"
+            me.CLASS_NAME === "Ekmap.REST.ThemeService" ||
+            me.CLASS_NAME === "Ekmap.REST.EditFeaturesService"
         );
     }
 
     /**
-     * @function SuperMap.CommonServiceBase.prototype.serviceProcessCompleted
+     * @function Ekmap.CommonServiceBase.prototype.serviceProcessCompleted
      * @description 状态完成，执行此方法。
      * @param {Object} result - 服务器返回的结果对象。
      */
@@ -314,7 +311,7 @@ export class CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.CommonServiceBase.prototype.serviceProcessFailed
+     * @function Ekmap.CommonServiceBase.prototype.serviceProcessFailed
      * @description 状态失败，执行此方法。
      * @param {Object} result - 服务器返回的结果对象。
      */
@@ -340,7 +337,7 @@ export class CommonServiceBase {
             crossOrigin: options.crossOrigin,
             timeout: options.async ? 0 : null,
             proxy: options.proxy
-        }).then(function (response) {
+        }).then(function(response) {
             if (response.text) {
                 return response.text();
             }
@@ -348,7 +345,7 @@ export class CommonServiceBase {
                 return response.json();
             }
             return response;
-        }).then(function (text) {
+        }).then(function(text) {
             var result = text;
             if (typeof text === "string") {
                 result = new JSON().read(text);
@@ -372,14 +369,14 @@ export class CommonServiceBase {
                 var success = (options.scope) ? FunctionExt.bind(options.success, options.scope) : options.success;
                 success(result);
             }
-        }).catch(function (e) {
+        }).catch(function(e) {
             var failure = (options.scope) ? FunctionExt.bind(options.failure, options.scope) : options.failure;
             failure(e);
         })
     }
 }
 
-SuperMap.CommonServiceBase = CommonServiceBase;
+Ekmap.CommonServiceBase = CommonServiceBase;
 
 /**
  * 服务器请求回调函数

@@ -1,16 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
+import { Shape } from './Shape';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicRectangle
+ * @class  Ekmap.LevelRenderer.Shape.SmicRectangle
  * @category Visualization Theme
  * @classdesc 矩形。
- * @extends SuperMap.LevelRenderer.Shape
+ * @extends Ekmap.LevelRenderer.Shape
  * @example
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicRectangle({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicRectangle({
  *         style: {
  *             x: 0,
  *             y: 0,
@@ -25,7 +25,7 @@ import {Shape} from './Shape';
 export class SmicRectangle extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicRectangle.prototype.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicRectangle.prototype.style
      * @description 绘制样式。
      *
      * @param {number} style.x - 左上角 x 坐标，必设参数。
@@ -53,7 +53,7 @@ export class SmicRectangle extends Shape {
     //打开接口 style
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicRectangle.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicRectangle.constructor
      * @description 构造函数。
      *
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -62,19 +62,19 @@ export class SmicRectangle extends Shape {
     constructor(options) {
         super(options);
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicRectangle.prototype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicRectangle.prototype.type
          * @description 图形类型.
          */
         this.type = 'smicrectangle';
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicRectangle";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicRectangle";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicRectangle.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicRectangle.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -175,7 +175,7 @@ export class SmicRectangle extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicRectangle.prototype.buildPath
+     * @function Ekmap.LevelRenderer.Shape.SmicRectangle.prototype.buildPath
      * @description 创建矩形路径。
      *
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -204,7 +204,7 @@ export class SmicRectangle extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicRectangle.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicRectangle.prototype.getRect
      * @description 计算返回矩形包围盒矩阵。该包围盒是直接从四个控制点计算，并非最小包围盒。
      * 
      * @param {Object} style - style

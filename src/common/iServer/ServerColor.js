@@ -1,10 +1,10 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 
 /**
- * @class SuperMap.ServerColor
+ * @class Ekmap.ServerColor
  * @category iServer Map Theme
  * @classdesc 颜色类。该类使用三原色（ RGB ）来表达颜色。
  * @param {Object} options - 参数。
@@ -17,28 +17,28 @@ export class ServerColor {
     constructor(red, green, blue) {
 
         /**
-         * @member {number} [SuperMap.ServerColor.prototype.red=255]
+         * @member {number} [Ekmap.ServerColor.prototype.red=255]
          * @description 获取或设置红色值。
          */
-        this.red = (!red && red != 0)?255:red;
+        this.red = (!red && red != 0) ? 255 : red;
 
         /**
-         * @member {number} [SuperMap.ServerColor.prototype.green=0]
+         * @member {number} [Ekmap.ServerColor.prototype.green=0]
          * @description 获取或设置绿色值。
          */
-        this.green = green||0;
+        this.green = green || 0;
 
         /**
-         * @member {number} [SuperMap.ServerColor.prototype.blue=0]
+         * @member {number} [Ekmap.ServerColor.prototype.blue=0]
          * @description 获取或设置蓝色值。
          */
-        this.blue = blue||0;
+        this.blue = blue || 0;
 
-        this.CLASS_NAME = "SuperMap.ServerColor";
+        this.CLASS_NAME = "Ekmap.ServerColor";
     }
 
     /**
-     * @function SuperMap.ServerColor.prototype.destroy
+     * @function Ekmap.ServerColor.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -50,10 +50,10 @@ export class ServerColor {
 
 
     /**
-     * @function SuperMap.ServerColor.formJson
+     * @function Ekmap.ServerColor.formJson
      * @description 将 JSON 对象转化为 ServerColor 对象。
      * @param {Object} jsonObject - 要转换的 JSON 对象。
-     * @returns {SuperMap.ServerColor} 转化后的 ServerColor 对象。
+     * @returns {Ekmap.ServerColor} 转化后的 ServerColor 对象。
      */
     static fromJson(jsonObject) {
         if (!jsonObject) {
@@ -82,5 +82,4 @@ export class ServerColor {
 
 }
 
-SuperMap.ServerColor = ServerColor;
-
+Ekmap.ServerColor = ServerColor;

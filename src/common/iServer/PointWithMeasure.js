@@ -1,19 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {Point} from '../commontypes/geometry/Point';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { Point } from '../commontypes/geometry/Point';
 
 /**
- * @class SuperMap.PointWithMeasure
+ * @class Ekmap.PointWithMeasure
  * @category  iServer SpatialAnalyst
  * @classdesc 路由点类。路由点是指具有线性度量值 (Measure) 的二维地理坐标点。
  * @param {Object} options - 参数。
  * @param {number} options.measure - 度量值，即路由对象属性值 M。
  * @param {number} options.x - 获取当前点对象在地理坐标系下的 X 坐标值。
  * @param {number} options.y - 获取当前点对象在地理坐标系下的 Y 坐标值。
- * @extends {SuperMap.Geometry.Point}
+ * @extends {Ekmap.Geometry.Point}
  */
 export class PointWithMeasure extends Point {
 
@@ -21,7 +18,7 @@ export class PointWithMeasure extends Point {
         super(options);
 
         /**
-         * @member {number} SuperMap.PointWithMeasure.prototype.measure
+         * @member {number} Ekmap.PointWithMeasure.prototype.measure
          * @description 度量值，即路由对象属性值 M。
          */
         this.measure = null;
@@ -30,13 +27,13 @@ export class PointWithMeasure extends Point {
             Util.extend(this, options);
         }
 
-        this.CLASS_NAME = "SuperMap.PointWithMeasure";
+        this.CLASS_NAME = "Ekmap.PointWithMeasure";
     }
 
     /**
-     * @function SuperMap.PointWithMeasure.prototype.equals
+     * @function Ekmap.PointWithMeasure.prototype.equals
      * @description 判断两个路由点对象是否相等。如果两个路由点对象具有相同的坐标以及度量值，则认为是相等的。
-     * @param {SuperMap.PointWithMeasure} geom - 需要判断的路由点对象。
+     * @param {Ekmap.PointWithMeasure} geom - 需要判断的路由点对象。
      * @returns {boolean} 两个路由点对象是否相等（true 为相等，false 为不等）。
      */
     equals(geom) {
@@ -45,17 +42,17 @@ export class PointWithMeasure extends Point {
             var isValueEquals = this.x === geom.x && this.y === geom.y && this.measure === geom.measure;
             var isNaNValue = isNaN(this.x) && isNaN(this.y) && isNaN(this.measure);
             var isNaNGeometry = isNaN(geom.x) && isNaN(geom.y) && isNaN(geom.measure);
-            equals = ( isValueEquals || ( isNaNValue && isNaNGeometry ));
+            equals = (isValueEquals || (isNaNValue && isNaNGeometry));
         }
         return equals;
     }
 
 
     /**
-     * @function SuperMap.PointWithMeasure.prototype.toJson
+     * @function Ekmap.PointWithMeasure.prototype.toJson
      * @description 转换为 JSON 对象。
      * */
-     toJson() {
+    toJson() {
         var result = "{";
         if (this.measure != null && this.measure != undefined) {
             result += "\"measure\":" + this.measure + ",";
@@ -67,8 +64,8 @@ export class PointWithMeasure extends Point {
     }
 
 
-     /**
-     * @function SuperMap.PointWithMeasure.prototype.destroy
+    /**
+     * @function Ekmap.PointWithMeasure.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -79,10 +76,10 @@ export class PointWithMeasure extends Point {
     }
 
     /**
-     * @function SuperMap.PointWithMeasure.fromJson
-     * @description 将 JSON 对象转换为{@link SuperMap.PointWithMeasure} 对象。
+     * @function Ekmap.PointWithMeasure.fromJson
+     * @description 将 JSON 对象转换为{@link Ekmap.PointWithMeasure} 对象。
      * @param {Object} jsonObject - JSON 对象表示的路由点。
-     * @returns {SuperMap.PointWithMeasure} 转化后的 PointWithMeasure 对象。
+     * @returns {Ekmap.PointWithMeasure} 转化后的 PointWithMeasure 对象。
      */
     static fromJson(jsonObject) {
         if (!jsonObject) {
@@ -97,4 +94,4 @@ export class PointWithMeasure extends Point {
 
 }
 
-SuperMap.PointWithMeasure = PointWithMeasure;
+Ekmap.PointWithMeasure = PointWithMeasure;

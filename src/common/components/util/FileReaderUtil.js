@@ -1,13 +1,10 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../../SuperMap';
+import { Ekmap } from '../../Ekmap';
 import XLSX from 'xlsx'
-import {FileTypes} from '../CommonTypes';
-import {Lang} from '../../lang/Lang';
+import { FileTypes } from '../CommonTypes';
+import { Lang } from '../../lang/Lang';
 
 /**
- * @class SuperMap.Components.FileReaderUtil
+ * @class Ekmap.Components.FileReaderUtil
  * @classdesc 组件读取文件工具类。
  * @version 9.1.1
  * @type {{rABS: (boolean|*), rABF: (boolean|*), rAT: (boolean|*), readFile: (function(*, *=, *=, *=, *=)), readTextFile: (function(*, *=, *=, *=)), readXLSXFile: (function(*, *=, *=, *=)), processDataToGeoJson: (function(string, Object): GeoJSONObject), processExcelDataToGeoJson: (function(Object): GeoJSONObject), isXField: (function(*)), isYField: (function(*)), string2Csv: (function(*, *=))}}
@@ -18,7 +15,7 @@ export let FileReaderUtil = {
     rAT: typeof FileReader !== 'undefined' && FileReader.prototype && FileReader.prototype.readAsText,
 
     /**
-     * @function SuperMap.Components.FileReaderUtil.prototype.readFile
+     * @function Ekmap.Components.FileReaderUtil.prototype.readFile
      * @description 读取文件
      * @param {string} fileType - 当前读取的文件类型
      *
@@ -44,10 +41,10 @@ export let FileReaderUtil = {
      */
     readTextFile(file, success, failed, context) {
         let reader = new FileReader();
-        reader.onloadend = function (evt) {
+        reader.onloadend = function(evt) {
             success && success.call(context, evt.target.result);
         };
-        reader.onerror = function (error) {
+        reader.onerror = function(error) {
             failed && failed.call(context, error)
         };
         this.rAT ? reader.readAsText(file.file, 'utf-8') : reader.readAsBinaryString(file.file);
@@ -62,9 +59,9 @@ export let FileReaderUtil = {
      */
     readXLSXFile(file, success, failed, context) {
         let reader = new FileReader();
-        reader.onloadend = function (evt) {
+        reader.onloadend = function(evt) {
             let xLSXData = new Uint8Array(evt.target.result);
-            let workbook = XLSX.read(xLSXData, {type: "array"});
+            let workbook = XLSX.read(xLSXData, { type: "array" });
             try {
                 if (workbook && workbook.SheetNames && workbook.SheetNames.length > 0) {
                     //暂时只读取第一个sheets的内容
@@ -76,14 +73,14 @@ export let FileReaderUtil = {
                 failed && failed.call(context, error);
             }
         };
-        reader.onerror = function (error) {
+        reader.onerror = function(error) {
             failed && failed.call(context, error)
         };
         this.rABF && reader.readAsArrayBuffer(file.file);
     },
 
     /**
-     * @function SuperMap.Components.FileReaderUtil.prototype.processDataToGeoJson
+     * @function Ekmap.Components.FileReaderUtil.prototype.processDataToGeoJson
      * @description 将读取回来得数据统一处理为 GeoJSON 格式
      * @param {string} type - 文件类型
      * @param {Object} data - 读取返回的数据对象
@@ -119,7 +116,7 @@ export let FileReaderUtil = {
         }
     },
     /**
-     * @function SuperMap.Components.FileReaderUtil.prototype.processExcelDataToGeoJson
+     * @function Ekmap.Components.FileReaderUtil.prototype.processExcelDataToGeoJson
      * @description 表格文件数据处理
      * @param {Object} data - 读取的表格文件数据
      * @returns {GeoJSONObject} 返回标准 GeoJSON 规范格式数据
@@ -213,5 +210,4 @@ export let FileReaderUtil = {
 
 };
 
-SuperMap.Components.FileReaderUtil = FileReaderUtil;
-
+Ekmap.Components.FileReaderUtil = FileReaderUtil;

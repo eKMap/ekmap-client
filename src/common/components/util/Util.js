@@ -1,7 +1,4 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {FileTypes} from '../CommonTypes';
+import { FileTypes } from '../CommonTypes';
 
 export let ComponentsUtil = {
     /**
@@ -10,9 +7,9 @@ export let ComponentsUtil = {
      */
     getFileType(fileName) {
         let regCSV = /^.*\.(?:csv)$/i;
-        let regExcel = /^.*\.(?:xls|xlsx)$/i; //文件名可以带空格
+        let regExcel = /^.*\.(?:xls|xlsx)$/i;
         let regGeojson = /^.*\.(?:geojson|json)$/i;
-        if (regExcel.test(fileName)) { //校验不通过
+        if (regExcel.test(fileName)) {
             return FileTypes.EXCEL;
         } else if (regCSV.test(fileName)) {
             return FileTypes.CSV;

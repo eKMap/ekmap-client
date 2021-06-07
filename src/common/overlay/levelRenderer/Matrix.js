@@ -1,34 +1,34 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Tool.Matrix
+ * @class  Ekmap.LevelRenderer.Tool.Matrix
  * @category Visualization Theme
  * @classdesc LevelRenderer 工具-3x2矩阵操作类
  */
 export class Matrix {
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.constructor
+     * @function Ekmap.LevelRenderer.Tool.Matrix.constructor
      * @description 构造函数。
      */
-   
+
     constructor() {
         /**
-         * @member {Object} SuperMap.LevelRenderer.Tool.Matrix.prototype.ArrayCtor
+         * @member {Object} Ekmap.LevelRenderer.Tool.Matrix.prototype.ArrayCtor
          * @description 数组类型控制
          */
-        this.ArrayCtor = typeof Float32Array === 'undefined'
-            ? Array
-            : Float32Array;
+        this.ArrayCtor = typeof Float32Array === 'undefined' ?
+            Array :
+            Float32Array;
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Tool.Matrix";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Matrix";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.create
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.create
      * @description 创建一个单位矩阵。
      * @returns {(Float32Array|Array.<number>)} 单位矩阵。
      */
@@ -42,7 +42,7 @@ export class Matrix {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.identity
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.identity
      * @description 设置矩阵为单位矩阵。
      * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
      * @returns {(Float32Array|Array.<number>)} 单位矩阵。
@@ -59,7 +59,7 @@ export class Matrix {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.copy
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.copy
      * @description 复制矩阵。
      * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
      * @returns {(Float32Array|Array.<number>)} 克隆矩阵。
@@ -75,7 +75,7 @@ export class Matrix {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.mul
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.mul
      * @description 矩阵相乘。
      * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
      * @param {(Float32Array|Array.<number>)} m1 - 矩阵m1。
@@ -93,7 +93,7 @@ export class Matrix {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.mul
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.mul
      * @description 平移变换。
      * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
      * @param {(Float32Array|Array.<number>)} a - 矩阵。
@@ -111,7 +111,7 @@ export class Matrix {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.rotate
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.rotate
      * @description 平移变换。
      * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
      * @param {(Float32Array|Array.<number>)} a - 矩阵。
@@ -138,7 +138,7 @@ export class Matrix {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.scale
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.scale
      * @description 缩放变换。
      * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
      * @param {(Float32Array|Array.<number>)} a - 矩阵。
@@ -158,7 +158,7 @@ export class Matrix {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.invert
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.invert
      * @description 求逆矩阵。
      * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
      * @param {(Float32Array|Array.<number>)} a - 矩阵。
@@ -188,7 +188,7 @@ export class Matrix {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Matrix.prototype.mulVector
+     * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.mulVector
      * @description 矩阵左乘向量。
      * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
      * @param {(Float32Array|Array.<number>)} a - 矩阵。

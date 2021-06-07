@@ -1,11 +1,11 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
 
 /**
- * @class SuperMap.UpdateTurnNodeWeightParameters
+ * @class Ekmap.UpdateTurnNodeWeightParameters
  * @category  iServer NetworkAnalyst TurnNodeWeight
  * @classdesc 转向耗费权重更新服务参数类。
  * @param {Object} options - 参数。 
@@ -22,40 +22,40 @@ export class UpdateTurnNodeWeightParameters {
             return;
         }
         /**
-         * @member {string} SuperMap.UpdateTurnNodeWeightParameters.prototype.nodeId
+         * @member {string} Ekmap.UpdateTurnNodeWeightParameters.prototype.nodeId
          * @description 转向结点的  ID。
          */
         this.nodeId = "";
 
         /**
-         * @member {string} SuperMap.UpdateTurnNodeWeightParameters.prototype.fromEdgeId
+         * @member {string} Ekmap.UpdateTurnNodeWeightParameters.prototype.fromEdgeId
          * @description 起始边的  ID。
          */
         this.fromEdgeId = "";
 
         /**
-         * @member {string} SuperMap.UpdateTurnNodeWeightParameters.prototype.toEdgeId
+         * @member {string} Ekmap.UpdateTurnNodeWeightParameters.prototype.toEdgeId
          * @description 终止边的  ID。
          */
         this.toEdgeId = "";
 
         /**
-         * @member {string} SuperMap.UpdateTurnNodeWeightParameters.prototype.weightField
+         * @member {string} Ekmap.UpdateTurnNodeWeightParameters.prototype.weightField
          * @description 转向结点的耗费字段。
          */
         this.weightField = "";
 
         /**
-         * @member {string} SuperMap.UpdateTurnNodeWeightParameters.prototype.turnNodeWeight
+         * @member {string} Ekmap.UpdateTurnNodeWeightParameters.prototype.turnNodeWeight
          * @description 耗费权重。
          */
         this.turnNodeWeight = "";
         Util.extend(this, options);
-        this.CLASS_NAME = "SuperMap.UpdateTurnNodeWeightParameters";
+        this.CLASS_NAME = "Ekmap.UpdateTurnNodeWeightParameters";
     }
 
     /**
-     * @function SuperMap.UpdateTurnNodeWeightParameters.prototype.destroy
+     * @function Ekmap.UpdateTurnNodeWeightParameters.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -68,4 +68,4 @@ export class UpdateTurnNodeWeightParameters {
 
 }
 
-SuperMap.UpdateTurnNodeWeightParameters = UpdateTurnNodeWeightParameters;
+Ekmap.UpdateTurnNodeWeightParameters = UpdateTurnNodeWeightParameters;

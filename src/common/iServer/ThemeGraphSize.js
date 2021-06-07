@@ -1,11 +1,11 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
 
 /**
- * @class SuperMap.ThemeGraphSize
+ * @class Ekmap.ThemeGraphSize
  * @category  iServer Map Theme
  * @classdesc 统计专题图符号尺寸类。
  * @param {Object} options - 参数。
@@ -16,13 +16,13 @@ export class ThemeGraphSize {
 
     constructor(options) {
         /**
-         * @member {number} [SuperMap.ThemeGraphSize.prototype.maxGraphSize=0]
+         * @member {number} [Ekmap.ThemeGraphSize.prototype.maxGraphSize=0]
          * @description 获取或设置统计图中显示的最大图表尺寸基准值，单位为像素。
          */
         this.maxGraphSize = 0;
 
         /**
-         * @member {number} [SuperMap.ThemeGraphSize.prototype.minGraphSize=0]
+         * @member {number} [Ekmap.ThemeGraphSize.prototype.minGraphSize=0]
          * @description 获取或设置统计图中显示的最小图表尺寸基准值，单位为像素。
          */
         this.minGraphSize = 0;
@@ -31,11 +31,11 @@ export class ThemeGraphSize {
             Util.extend(this, options);
         }
 
-       this.CLASS_NAME = "SuperMap.ThemeGraphSize";
+        this.CLASS_NAME = "Ekmap.ThemeGraphSize";
     }
 
     /**
-     * @function SuperMap.ThemeGraphSize.prototype.destroy
+     * @function Ekmap.ThemeGraphSize.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -45,10 +45,10 @@ export class ThemeGraphSize {
     }
 
     /**
-     * @function SuperMap.ThemeGraphSize.fromObj
+     * @function Ekmap.ThemeGraphSize.fromObj
      * @description 从传入对象获统计专题图符号尺寸类。
      * @param {Object} obj - 传入对象。
-     * @returns {SuperMap.ThemeGraphSize}  ThemeGraphSize 对象。
+     * @returns {Ekmap.ThemeGraphSize}  ThemeGraphSize 对象。
      */
     static fromObj(obj) {
         var res = new ThemeGraphSize();
@@ -58,4 +58,4 @@ export class ThemeGraphSize {
 
 }
 
-SuperMap.ThemeGraphSize = ThemeGraphSize;
+Ekmap.ThemeGraphSize = ThemeGraphSize;

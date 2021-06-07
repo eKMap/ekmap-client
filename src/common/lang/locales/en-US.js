@@ -1,21 +1,17 @@
-﻿
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../../SuperMap';
+﻿import { Ekmap } from '../../Ekmap';
 /**
- * Namespace: SuperMap.Lang["en"]
+ * Namespace: Ekmap.Lang["en"]
  * Dictionary for English.  Keys for entries are used in calls to
- *     <SuperMap.Lang.translate>.  Entry bodies are normal strings or
- *     strings formatted for use with <SuperMap.String.format> calls.
+ *     <Ekmap.Lang.translate>.  Entry bodies are normal strings or
+ *     strings formatted for use with <Ekmap.String.format> calls.
  */
 let en = {
     'title_dataFlowService': 'Data Flow Service',
     'title_distributedAnalysis': 'Distributed Analysis',
     'title_clientComputing': 'Client Computing',
     'title_dataServiceQuery': 'Data Service Query',
-    'title_searchCity':'Search city',
-    'title_searchLayer':' Search layer',
+    'title_searchCity': 'Search city',
+    'title_searchLayer': ' Search layer',
 
     'text_input_value_inputDataFlowUrl': 'Please enter the data stream service address such as: ws://{serviceRoot}/{dataFlowName}/dataflow/subscribe',
     'text_displayFeaturesInfo': 'Display feature information',
@@ -24,7 +20,7 @@ let en = {
 
     'text_densityAnalysis': 'Density Analysis',
     'text_CalculateTheValuePerUnitArea': 'Calculate the value per unit area within the neighborhood shape',
-    'text_option_selectDataset':'Please select a dataset',
+    'text_option_selectDataset': 'Please select a dataset',
     'text_label_dataset': 'Dataset',
     'text_option_simplePointDensityAnalysis': 'Simple point density analysis',
     'text_option_nuclearDensityAnalysis': 'Nuclear density analysis',
@@ -107,17 +103,17 @@ let en = {
     'msg_dataInWrongGeoJSONFormat': 'Wrong data format! Non standard GEOJSON format data!',
     'msg_dataInWrongFormat': 'Wrong data format! Non standard EXCEL, CSV or GEOJSON format data!',
     'msg_searchKeywords': "Search keywords cannot be empty. Please enter your search criteria.",
-    'msg_searchGeocodeField':"Did not match the address matching service data!",
-    'msg_cityGeocodeField':"The address matching service of the current city is not configured.",
-    'msg_getFeatureField':"No related vector features found!",
-    'msg_dataflowservicesubscribed':'The data stream service has been subscribed to.',
-    'msg_subscribesucceeded':'The data stream service subscription was successful.',
-    'msg_crsunsupport':'Does not support the coordinate system of the current map',
-    'msg_tilematrixsetunsupport':'Incoming TileMatrixSet is not supported',
+    'msg_searchGeocodeField': "Did not match the address matching service data!",
+    'msg_cityGeocodeField': "The address matching service of the current city is not configured.",
+    'msg_getFeatureField': "No related vector features found!",
+    'msg_dataflowservicesubscribed': 'The data stream service has been subscribed to.',
+    'msg_subscribesucceeded': 'The data stream service subscription was successful.',
+    'msg_crsunsupport': 'Does not support the coordinate system of the current map',
+    'msg_tilematrixsetunsupport': 'Incoming TileMatrixSet is not supported',
     'msg_jsonResolveFiled': 'JSON format parsing failure！',
     'msg_requestContentFiled': 'Failed to request data through iportal!',
     'msg_getdatafailed': 'Failed to get data!'
 
 };
 export { en };
-SuperMap.Lang['en-US'] = en;
+Ekmap.Lang['en-US'] = en;

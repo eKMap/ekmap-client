@@ -1,18 +1,18 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
-import {Util as CommonUtil} from '../../commontypes/Util';
-import {SUtil} from './SUtil';
+import { Shape } from './Shape';
+import { Util as CommonUtil } from '../../commontypes/Util';
+import { SUtil } from './SUtil';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicPolygon
+ * @class  Ekmap.LevelRenderer.Shape.SmicPolygon
  * @category Visualization Theme
  * @classdesc 多边形。
- * @extends SuperMap.LevelRenderer.Shape
+ * @extends Ekmap.LevelRenderer.Shape
  * @example
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicPolygon({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicPolygon({
  *         style: {
  *             // 100x100 的正方形
  *             pointList: [[0, 0], [100, 0], [100, 100], [0, 100]],
@@ -25,7 +25,7 @@ import {SUtil} from './SUtil';
 export class SmicPolygon extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicPolygon.prototype.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicPolygon.prototype.style
      * @description 绘制样式。
      *
      * @param {Array} pointList - 节点数组，二维数组。默认值：null，必设参数。其形式如下：
@@ -59,7 +59,7 @@ export class SmicPolygon extends Shape {
     //打开接口 style
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicPolygon.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicPolygon.constructor
      * @description 构造函数。
      *
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -68,13 +68,13 @@ export class SmicPolygon extends Shape {
     constructor(options) {
         super(options);
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicPolygon.prototype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicPolygon.prototype.type
          * @description 图形类型.
          */
         this.type = 'smicpolygon';
 
         /**
-         * @member {Array} SuperMap.LevelRenderer.Shape.SmicPolygon.prototype._holePolygonPointList
+         * @member {Array} Ekmap.LevelRenderer.Shape.SmicPolygon.prototype._holePolygonPointList
          * @description 岛洞面多边形顶点数组（三维数组）
          *
          */
@@ -83,12 +83,12 @@ export class SmicPolygon extends Shape {
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicPolygon";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicPolygon";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicPolygon.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicPolygon.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -99,7 +99,7 @@ export class SmicPolygon extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicPolygon.prototype.brush
+     * @function Ekmap.LevelRenderer.Shape.SmicPolygon.prototype.brush
      * @description 笔触。
      *
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -128,23 +128,22 @@ export class SmicPolygon extends Shape {
 
         // 先 fill 再stroke
         var hasPath = false;
-        if (style.brushType == 'fill' || style.brushType == 'both' || typeof style.brushType == 'undefined') {    // 默认为fill
+        if (style.brushType == 'fill' || style.brushType == 'both' || typeof style.brushType == 'undefined') { // 默认为fill
             ctx.beginPath();
-            if (style.lineType == 'dashed'
-                || style.lineType == 'dotted'
-                || style.lineType == 'dot'
-                || style.lineType == 'dash'
-                || style.lineType == 'dashdot'
-                || style.lineType == 'longdash'
-                || style.lineType == 'longdashdot'
+            if (style.lineType == 'dashed' ||
+                style.lineType == 'dotted' ||
+                style.lineType == 'dot' ||
+                style.lineType == 'dash' ||
+                style.lineType == 'dashdot' ||
+                style.lineType == 'longdash' ||
+                style.lineType == 'longdashdot'
             ) {
                 // 特殊处理，虚线围不成path，实线再build一次
                 this.buildPath(ctx, {
-                        lineType: 'solid',
-                        lineWidth: style.lineWidth,
-                        pointList: style.pointList
-                    }
-                );
+                    lineType: 'solid',
+                    lineWidth: style.lineWidth,
+                    pointList: style.pointList
+                });
             } else {
                 this.buildPath(ctx, style);
                 hasPath = true; // 这个path能用
@@ -182,23 +181,22 @@ export class SmicPolygon extends Shape {
                     ctx.globalCompositeOperation = "destination-out";
                     // 先 fill 再stroke
                     hasPath = false;
-                    if (hpStyle.brushType == 'fill' || hpStyle.brushType == 'both' || typeof hpStyle.brushType == 'undefined') {    // 默认为fill
+                    if (hpStyle.brushType == 'fill' || hpStyle.brushType == 'both' || typeof hpStyle.brushType == 'undefined') { // 默认为fill
                         ctx.beginPath();
-                        if (hpStyle.lineType == 'dashed'
-                            || hpStyle.lineType == 'dotted'
-                            || hpStyle.lineType == 'dot'
-                            || hpStyle.lineType == 'dash'
-                            || hpStyle.lineType == 'dashdot'
-                            || hpStyle.lineType == 'longdash'
-                            || hpStyle.lineType == 'longdashdot'
+                        if (hpStyle.lineType == 'dashed' ||
+                            hpStyle.lineType == 'dotted' ||
+                            hpStyle.lineType == 'dot' ||
+                            hpStyle.lineType == 'dash' ||
+                            hpStyle.lineType == 'dashdot' ||
+                            hpStyle.lineType == 'longdash' ||
+                            hpStyle.lineType == 'longdashdot'
                         ) {
                             // 特殊处理，虚线围不成path，实线再build一次
                             this.buildPath(ctx, {
-                                    lineType: 'solid',
-                                    lineWidth: hpStyle.lineWidth,
-                                    pointList: hpStyle.pointList
-                                }
-                            );
+                                lineType: 'solid',
+                                lineWidth: hpStyle.lineWidth,
+                                pointList: hpStyle.pointList
+                            });
                         } else {
                             this.buildPath(ctx, hpStyle);
                             hasPath = true; // 这个path能用
@@ -232,7 +230,7 @@ export class SmicPolygon extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicPolygon.prototype.buildPath
+     * @function Ekmap.LevelRenderer.Shape.SmicPolygon.prototype.buildPath
      * @description 创建多边形路径。
      *
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -287,11 +285,11 @@ export class SmicPolygon extends Shape {
                     ctx.lineTo(pointList[i][0] + __OP[0], pointList[i][1] + __OP[1]);
                 }
                 ctx.lineTo(pointList[0][0] + __OP[0], pointList[0][1] + __OP[1]);
-            } else if (style.lineType === 'dashed'
-                || style.lineType === 'dotted'
-                || style.lineType === 'dot'
-                || style.lineType === 'dash'
-                || style.lineType === 'longdash'
+            } else if (style.lineType === 'dashed' ||
+                style.lineType === 'dotted' ||
+                style.lineType === 'dot' ||
+                style.lineType === 'dash' ||
+                style.lineType === 'longdash'
             ) {
                 // SMIC-方法修改 - start
                 let dashLengthForStyle = style._dashLength || (style.lineWidth || 1) * (style.lineType == 'dashed' ? 5 : 1);
@@ -357,8 +355,7 @@ export class SmicPolygon extends Shape {
                         pointList[i - 1][1] + __OP[1],
                         pointList[i][0] + __OP[0],
                         pointList[i][1] + __OP[1],
-                        dashLength,
-                        [pattern1, pattern2]
+                        dashLength, [pattern1, pattern2]
                     );
                 }
                 SUtil.SUtil_dashedLineTo(
@@ -367,11 +364,10 @@ export class SmicPolygon extends Shape {
                     pointList[pointList.length - 1][1] + __OP[1],
                     pointList[0][0] + __OP[0],
                     pointList[0][1] + __OP[1],
-                    dashLength,
-                    [pattern1, pattern2]
+                    dashLength, [pattern1, pattern2]
                 );
-            } else if (style.lineType === 'dashdot'
-                || style.lineType === 'longdashdot'
+            } else if (style.lineType === 'dashdot' ||
+                style.lineType === 'longdashdot'
             ) {
                 let dashLengthForStyle = style._dashLength || (style.lineWidth || 1) * (style.lineType == 'dashed' ? 5 : 1);
                 style._dashLength = dashLengthForStyle;
@@ -417,8 +413,7 @@ export class SmicPolygon extends Shape {
                         pointList[i - 1][1] + __OP[1],
                         pointList[i][0] + __OP[0],
                         pointList[i][1] + __OP[1],
-                        dashLength,
-                        [pattern1, pattern2, pattern3, pattern4]
+                        dashLength, [pattern1, pattern2, pattern3, pattern4]
                     );
                 }
                 SUtil.SUtil_dashedLineTo(
@@ -427,8 +422,7 @@ export class SmicPolygon extends Shape {
                     pointList[pointList.length - 1][1] + __OP[1],
                     pointList[0][0] + __OP[0],
                     pointList[0][1] + __OP[1],
-                    dashLength,
-                    [pattern1, pattern2, pattern3, pattern4]
+                    dashLength, [pattern1, pattern2, pattern3, pattern4]
                 );
             }
 
@@ -438,7 +432,7 @@ export class SmicPolygon extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicPolygon.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicPolygon.prototype.getRect
      * @description 计算返回多边形包围盒矩阵。该包围盒是直接从四个控制点计算，并非最小包围盒。
      * 
      * @param {Object} style - style

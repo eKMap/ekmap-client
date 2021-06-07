@@ -1,11 +1,8 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Events} from '../commontypes/Events';
+import { Ekmap } from '../Ekmap';
+import { Events } from '../commontypes/Events';
 
 /**
- * @class SuperMap.TimeControlBase
+ * @class Ekmap.TimeControlBase
  * @classdesc 时间控制基类类。
  * @category  Control
  * @param {Object} options - 该类开放的可选属性。
@@ -26,57 +23,57 @@ export class TimeControlBase {
 
 
         /**
-         * @member {number} [SuperMap.TimeControlBase.prototype.speed=1]
+         * @member {number} [Ekmap.TimeControlBase.prototype.speed=1]
          * @description 步长，必须为非负数，默认为1（表示前后两次渲染的数据之间的间隔为1）
          */
         this.speed = (options.speed && options.speed >= 0) ? options.speed : 1;
 
         /**
-         * @member {number} [SuperMap.TimeControlBase.prototype.frequency=1000]
+         * @member {number} [Ekmap.TimeControlBase.prototype.frequency=1000]
          * @description 刷新频率(单位ms)，服务器刷新的时间间隔。
          */
         this.frequency = (options.speed && options.frequency >= 0) ? options.frequency : 1000;
 
         /**
-         * @member {number} [SuperMap.TimeControlBase.prototype.startTime=0]
+         * @member {number} [Ekmap.TimeControlBase.prototype.startTime=0]
          * @description 记录的起始时间，必须为数字，
          *              如果不设置，初始化时为0，建议设置
          */
         this.startTime = (options.startTime && options.startTime != null) ? options.startTime : 0;
 
         /**
-         * @member {number} SuperMap.TimeControlBase.prototype.endTime
+         * @member {number} Ekmap.TimeControlBase.prototype.endTime
          * @description 记录的结束时间，必须为数字，
          *              如果不设置，初始化时以当前时间进行设置，建议设置
          */
         this.endTime = (options.endTime && options.endTime != null && options.endTime >= me.startTime) ? options.endTime : +new Date();
 
         /**
-         * @member {boolean} [SuperMap.TimeControlBase.prototype.repeat=true]
+         * @member {boolean} [Ekmap.TimeControlBase.prototype.repeat=true]
          * @description 是否重复循环。
          */
         this.repeat = (options.repeat !== undefined) ? options.repeat : true;
 
         /**
-         * @member {boolean} [SuperMap.TimeControlBase.prototype.reverse=false]
+         * @member {boolean} [Ekmap.TimeControlBase.prototype.reverse=false]
          * @description 是否反向。
          */
         this.reverse = (options.reverse !== undefined) ? options.reverse : false;
 
         /**
-         * @member {number} SuperMap.TimeControlBase.prototype.currentTime
+         * @member {number} Ekmap.TimeControlBase.prototype.currentTime
          * @description 记录近期的时间，也就是当前帧运行到的时间。
          */
         this.currentTime = null;
 
         /**
-         * @member {number} SuperMap.TimeControlBase.prototype.oldTime
+         * @member {number} Ekmap.TimeControlBase.prototype.oldTime
          * @description 记录上一帧的时间，也就是之前运行到的时间。
          */
         this.oldTime = null;
 
         /**
-         * @member {boolean} [SuperMap.TimeControlBase.prototype.running=false]
+         * @member {boolean} [Ekmap.TimeControlBase.prototype.running=false]
          * @description 记录当前是否处于运行中。
          */
         this.running = false;
@@ -84,7 +81,7 @@ export class TimeControlBase {
 
         /**
          * @private
-         * @member {Array.<string>} SuperMap.TimeControlBase.prototype.EVENT_TYPES
+         * @member {Array.<string>} Ekmap.TimeControlBase.prototype.EVENT_TYPES
          * @description 此类支持的事件类型。
          *
          */
@@ -92,7 +89,7 @@ export class TimeControlBase {
 
         /**
          * @private
-         * @member {SuperMap.Events} SuperMap.TimeControlBase.prototype.events
+         * @member {Ekmap.Events} Ekmap.TimeControlBase.prototype.events
          * @description 事件
          */
         me.events = new Events(this, null, this.EVENT_TYPES);
@@ -108,12 +105,12 @@ export class TimeControlBase {
         //初始化当前时间
         me.currentTime = me.startTime;
 
-        this.CLASS_NAME = "SuperMap.TimeControlBase";
+        this.CLASS_NAME = "Ekmap.TimeControlBase";
     }
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.updateOptions
+     * @function Ekmap.TimeControlBase.prototype.updateOptions
      * @param {Object} options - 设置参数得可选参数。设置步长，刷新频率、开始结束时间、是否循环、是否反向。
      */
     updateOptions(options) {
@@ -151,7 +148,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.start
+     * @function Ekmap.TimeControlBase.prototype.start
      * @description 开始。
      */
     start() {
@@ -166,7 +163,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.pause
+     * @function Ekmap.TimeControlBase.prototype.pause
      * @description 暂停。
      */
     pause() {
@@ -177,7 +174,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.stop
+     * @function Ekmap.TimeControlBase.prototype.stop
      * @description 停止，停止后返回起始状态。
      */
     stop() {
@@ -193,7 +190,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.toggle
+     * @function Ekmap.TimeControlBase.prototype.toggle
      * @description 开关切换，切换的是开始和暂停。
      */
     toggle() {
@@ -208,7 +205,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.setSpeed
+     * @function Ekmap.TimeControlBase.prototype.setSpeed
      * @description 设置步长。
      * @param {number} [speed=1] - 步长，必须为非负数。
      * @returns {boolean} true 代表设置成功，false 设置失败（speed 小于 0 时失败）。
@@ -224,7 +221,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.getSpeed
+     * @function Ekmap.TimeControlBase.prototype.getSpeed
      * @description 获取步长。
      * @returns {number} 返回当前的步长
      */
@@ -234,7 +231,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.setFrequency
+     * @function Ekmap.TimeControlBase.prototype.setFrequency
      * @description 设置刷新频率。
      * @param {number} [frequency=1000] - 刷新频率，单位为 ms。
      * @returns {boolean} true 代表设置成功，false 设置失败（frequency 小于 0 时失败）。
@@ -250,7 +247,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.getFrequency
+     * @function Ekmap.TimeControlBase.prototype.getFrequency
      * @description 获取刷新频率。
      * @returns {number} 返回当前的刷新频率。
      */
@@ -260,7 +257,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.setStartTime
+     * @function Ekmap.TimeControlBase.prototype.setStartTime
      * @description 设置起始时间，设置完成后如果当前时间小于起始时间，则从起始时间开始。
      * @param {number} startTime - 需要设置的起始时间。
      * @returns {boolean} true 代表设置成功，false 设置失败（startTime 大于结束时间时失败）。
@@ -283,7 +280,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.getStartTime
+     * @function Ekmap.TimeControlBase.prototype.getStartTime
      * @description 获取起始时间。
      * @returns {number} 返回当前的起始时间。
      */
@@ -293,7 +290,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.setEndTime
+     * @function Ekmap.TimeControlBase.prototype.setEndTime
      * @description 设置结束时间，设置完成后如果当前时间大于结束，则从起始时间开始。
      * @param {number} endTime - 需要设置的结束时间。
      * @returns {boolean} true 代表设置成功，false 设置失败（endTime 小于开始时间时失败）。
@@ -316,7 +313,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.getEndTime
+     * @function Ekmap.TimeControlBase.prototype.getEndTime
      * @description 获取结束时间。
      * @returns {number} 返回当前的结束时间。
      */
@@ -326,7 +323,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.setCurrentTime
+     * @function Ekmap.TimeControlBase.prototype.setCurrentTime
      * @description 设置当前时间。
      * @param {number} currentTime - 需要设置的当前时间。
      * @returns {boolean} true 代表设置成功，false 设置失败。
@@ -346,7 +343,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.getCurrentTime
+     * @function Ekmap.TimeControlBase.prototype.getCurrentTime
      * @description 获取当前时间。
      * @returns {number} 返回当前时间。
      */
@@ -356,7 +353,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.setRepeat
+     * @function Ekmap.TimeControlBase.prototype.setRepeat
      * @description 设置是否重复循环。
      * @param {boolean} [repeat=true] - 是否重复循环。
      */
@@ -366,7 +363,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.getRepeat
+     * @function Ekmap.TimeControlBase.prototype.getRepeat
      * @description 获取是否重复循环，默认是 true。
      * @returns {boolean} 返回是否重复循环。
      */
@@ -376,7 +373,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.setReverse
+     * @function Ekmap.TimeControlBase.prototype.setReverse
      * @description 设置是否反向。
      * @param {boolean} [reverse=false] - 是否反向。
      */
@@ -386,7 +383,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.getReverse
+     * @function Ekmap.TimeControlBase.prototype.getReverse
      * @description 获取是否反向，默认是false。
      * @returns {boolean} 返回是否反向。
      */
@@ -396,7 +393,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.getRunning
+     * @function Ekmap.TimeControlBase.prototype.getRunning
      * @description 获取运行状态。
      * @returns {boolean} true 代表正在运行，false 发表没有运行。
      */
@@ -406,7 +403,7 @@ export class TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeControlBase.prototype.destroy
+     * @function Ekmap.TimeControlBase.prototype.destroy
      * @description 销毁 Animator 对象，释放资源。
      */
     destroy() {
@@ -428,5 +425,4 @@ export class TimeControlBase {
 
 }
 
-SuperMap.TimeControlBase = TimeControlBase;
-
+Ekmap.TimeControlBase = TimeControlBase;

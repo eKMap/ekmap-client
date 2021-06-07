@@ -1,16 +1,13 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 import { Util } from '../commontypes/Util';
 import { NetworkAnalystServiceBase } from './NetworkAnalystServiceBase';
 import { FacilityAnalystStreamParameters } from './FacilityAnalystStreamParameters';
 
 /**
- * @class SuperMap.FacilityAnalystStreamService
+ * @class Ekmap.FacilityAnalystStreamService
  * @category iServer NetworkAnalyst UpstreamCriticalFacilities
  * @classdesc 上游/下游 关键设施查找资源服务类；即查找给定弧段或节点的上游/下游中的关键设施结点，返回关键结点 ID 数组及其下游弧段 ID 数组。
- * @extends SuperMap.NetworkAnalystServiceBase
+ * @extends Ekmap.NetworkAnalystServiceBase
  * @param {string} url - 网络分析服务地址。请求网络分析服务，URL应为：
  *                       http://{服务器地址}:{服务端口号}/iserver/services/{网络分析服务名}/rest/networkanalyst/{网络数据集@数据源}；
  *                       例如: "http://localhost:8090/iserver/services/test/rest/networkanalyst/WaterNet@FacilityNet";
@@ -23,12 +20,12 @@ export class FacilityAnalystStreamService extends NetworkAnalystServiceBase {
 
     constructor(url, options) {
         super(url, options);
-        this.CLASS_NAME = "SuperMap.FacilityAnalystStreamService";
+        this.CLASS_NAME = "Ekmap.FacilityAnalystStreamService";
     }
 
 
     /**
-     * @function SuperMap.FacilityAnalystStreamService.prototype.destroy
+     * @function Ekmap.FacilityAnalystStreamService.prototype.destroy
      * @override
      */
     destroy() {
@@ -37,9 +34,9 @@ export class FacilityAnalystStreamService extends NetworkAnalystServiceBase {
 
 
     /**
-     * @function SuperMap.FacilityAnalystStreamService.prototype.processAsync
+     * @function Ekmap.FacilityAnalystStreamService.prototype.processAsync
      * @description 负责将客户端的查询参数传递到服务端。
-     * @param {SuperMap.FacilityAnalystStreamParameters} params - 上游/下游关键设施查找资源参数类。
+     * @param {Ekmap.FacilityAnalystStreamParameters} params - 上游/下游关键设施查找资源参数类。
      */
     processAsync(params) {
         if (!(params instanceof FacilityAnalystStreamParameters)) {
@@ -84,4 +81,4 @@ export class FacilityAnalystStreamService extends NetworkAnalystServiceBase {
 
 }
 
-SuperMap.FacilityAnalystStreamService = FacilityAnalystStreamService;
+Ekmap.FacilityAnalystStreamService = FacilityAnalystStreamService;

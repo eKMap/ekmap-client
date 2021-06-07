@@ -1,32 +1,32 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Theme} from './feature/Theme';
-import {Circle as RenderCircle} from './feature/Circle';
-import {ShapeFactory} from './feature/ShapeFactory';
-import {RankSymbol} from './RankSymbol';
+import { Ekmap } from '../Ekmap';
+import { Theme } from './feature/Theme';
+import { Circle as RenderCircle } from './feature/Circle';
+import { ShapeFactory } from './feature/ShapeFactory';
+import { RankSymbol } from './RankSymbol';
 
 /**
- * @class SuperMap.Feature.Theme.Circle
+ * @class Ekmap.Feature.Theme.Circle
  * @classdesc 圆类。
  * @category Visualization Theme
- * @extends SuperMap.Feature.Theme.RankSymbol
- * @param {SuperMap.Feature.Vector} data - 用户数据。
- * @param {SuperMap.Layer.RankSymbol} layer - 此专题要素所在图层。
+ * @extends Ekmap.Feature.Theme.RankSymbol
+ * @param {Ekmap.Feature.Vector} data - 用户数据。
+ * @param {Ekmap.Layer.RankSymbol} layer - 此专题要素所在图层。
  * @param {Array.<string>} fields - data 中的参与此图表生成的字段名称。
- * @param {SuperMap.Feature.Theme.Circle.setting} setting - 图表配置对象。
- * @param {SuperMap.LonLat} [lonlat] - 专题要素地理位置，默认为 data 指代的地理要素 Bounds 中心。
+ * @param {Ekmap.Feature.Theme.Circle.setting} setting - 图表配置对象。
+ * @param {Ekmap.LonLat} [lonlat] - 专题要素地理位置，默认为 data 指代的地理要素 Bounds 中心。
  */
 export class Circle extends RankSymbol {
 
     constructor(data, layer, fields, setting, lonlat) {
         super(data, layer, fields, setting, lonlat);
-        this.CLASS_NAME = "SuperMap.Feature.Theme.Circle";
+        this.CLASS_NAME = "Ekmap.Feature.Theme.Circle";
     }
 
     /**
-     * @function SuperMap.Feature.Theme.Circle.prototype.destroy
+     * @function Ekmap.Feature.Theme.Circle.prototype.destroy
      * @override
      */
     destroy() {
@@ -34,7 +34,7 @@ export class Circle extends RankSymbol {
     }
 
     /**
-     * @function SuperMap.Feature.Theme.Circle.prototype.assembleShapes
+     * @function Ekmap.Feature.Theme.Circle.prototype.assembleShapes
      * @description 装配图形（扩展接口）。
      */
     assembleShapes() {
@@ -99,7 +99,7 @@ export class Circle extends RankSymbol {
             }
         }
 
-        var dvbCenter = this.DVBCenterPoint;        // 数据视图框中心作为圆心
+        var dvbCenter = this.DVBCenterPoint; // 数据视图框中心作为圆心
 
         //圆形对象参数
         var circleSP = new RenderCircle(dvbCenter[0], dvbCenter[1], r);
@@ -107,7 +107,7 @@ export class Circle extends RankSymbol {
         //circleSP.sytle 初始化
         circleSP.style = ShapeFactory.ShapeStyleTool(null, sets.circleStyle, null, null, 0);
         //图形的填充颜色
-        if (typeof (sets.fillColor) !== "undefined") {
+        if (typeof(sets.fillColor) !== "undefined") {
             //用户自定义
             circleSP.style.fillColor = sets.fillColor;
         } else {
@@ -143,7 +143,7 @@ export class Circle extends RankSymbol {
 }
 
 /**
- * @typedef {Object} SuperMap.Feature.Theme.Circle.setting
+ * @typedef {Object} Ekmap.Feature.Theme.Circle.setting
  * @property {Array.<number>} codomain - 图表允许展示的数据值域，长度为 2 的一维数组，第一个元素表示值域下限，第二个元素表示值域上限。
  * @property {number} [maxR] - 圆形的最大半径。
  * @property {number} [minR] - 圆形的最小半径。
@@ -156,4 +156,4 @@ export class Circle extends RankSymbol {
  * 
  */
 
-SuperMap.Feature.Theme.Circle = Circle;
+Ekmap.Feature.Theme.Circle = Circle;

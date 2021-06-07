@@ -1,31 +1,27 @@
-﻿/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-
-import { SuperMap } from '../../SuperMap';
+﻿import { Ekmap } from '../../Ekmap';
 
 /**
- * Namespace: SuperMap.Lang["zh-CN"]
+ * Namespace: Ekmap.Lang["zh-CN"]
  * Dictionary for Simplified Chinese.  Keys for entries are used in calls to
- *     <SuperMap.Lang.translate>.  Entry bodies are normal strings or
- *     strings formatted for use with <SuperMap.String.format> calls.
+ *     <Ekmap.Lang.translate>.  Entry bodies are normal strings or
+ *     strings formatted for use with <Ekmap.String.format> calls.
  */
 let zh = {
     'title_dataFlowService': '数据流服务',
     'title_distributedAnalysis': '分布式分析',
     'title_clientComputing': '客户端计算',
     'title_dataServiceQuery': '数据服务查询',
-    'title_searchCity':'搜索城市',
-    'title_searchLayer':'搜索图层',
+    'title_searchCity': '搜索城市',
+    'title_searchLayer': '搜索图层',
 
     'text_input_value_inputDataFlowUrl': '请输入数据流服务地址如:ws://{serviceRoot}/{dataFlowName}/dataflow/subscribe',
     'text_displayFeaturesInfo': '显示要素信息',
     'text_subscribe': '订阅',
     'text_cancelSubscribe': '取消订阅',
-    
+
     'text_densityAnalysis': '密度分析',
     'text_CalculateTheValuePerUnitArea': '计算点指定邻域形状内的每单位面积量值',
-    'text_option_selectDataset':'请选择数据集',
+    'text_option_selectDataset': '请选择数据集',
     'text_label_dataset': '数据集',
     'text_option_simplePointDensityAnalysis': '简单点密度分析',
     'text_option_nuclearDensityAnalysis': '核密度分析',
@@ -93,7 +89,7 @@ let zh = {
     "btn_query": "查询",
     "btn_querying": "查询中",
     "btn_emptyTheRresultLayer": "清除所有结果图层",
-    
+
 
     'msg_dataFlowServiceHasBeenSubscribed': '已订阅该数据流服务。',
     'msg_inputDataFlowUrlFirst': '请先输入数据流服务地址。',
@@ -109,17 +105,16 @@ let zh = {
     'msg_dataInWrongGeoJSONFormat': '数据格式错误！非标准的 GEOJSON 格式数据！',
     'msg_dataInWrongFormat': '数据格式错误！非标准的 EXCEL, CSV 或 GEOJSON 格式数据！',
     'msg_searchKeywords': "搜索关键字不能为空，请输入搜索条件。",
-    'msg_searchGeocodeField':"未匹配到地址匹配服务数据！",
-    'msg_cityGeocodeField':"未配置当前城市的地址匹配服务。",
-    'msg_getFeatureField':"未查找到相关矢量要素！",
-    'msg_dataflowservicesubscribed':'已订阅该数据流服务。',
-    'msg_subscribesucceeded':'数据流服务订阅成功。',
-    'msg_crsunsupport':'不支持当前地图的坐标系',
-    'msg_tilematrixsetunsupport':'不支持传入的TileMatrixSet',
+    'msg_searchGeocodeField': "未匹配到地址匹配服务数据！",
+    'msg_cityGeocodeField': "未配置当前城市的地址匹配服务。",
+    'msg_getFeatureField': "未查找到相关矢量要素！",
+    'msg_dataflowservicesubscribed': '已订阅该数据流服务。',
+    'msg_subscribesucceeded': '数据流服务订阅成功。',
+    'msg_crsunsupport': '不支持当前地图的坐标系',
+    'msg_tilematrixsetunsupport': '不支持传入的TileMatrixSet',
     'msg_jsonResolveFiled': 'json格式解析失败！',
     'msg_requestContentFiled': '通过iportal请求数据失败！',
     'msg_getdatafailed': '获取数据失败！'
 };
 export { zh };
-SuperMap.Lang["zh-CN"] = zh;
-
+Ekmap.Lang["zh-CN"] = zh;

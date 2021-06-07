@@ -6,7 +6,6 @@ export var getMeterPerMapUnit = function(mapUnit) {
     if (mapUnit === Unit.METER) {
         meterPerMapUnit = 1;
     } else if (mapUnit === Unit.DEGREE) {
-        // 每度表示多少米。
         meterPerMapUnit = (Math.PI * 2 * earchRadiusInMeters) / 360;
     } else if (mapUnit === Unit.KILOMETER) {
         meterPerMapUnit = 1.0e-3;

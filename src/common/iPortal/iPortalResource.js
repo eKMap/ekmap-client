@@ -1,11 +1,8 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {IPortalServiceBase} from './iPortalServiceBase';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { IPortalServiceBase } from './iPortalServiceBase';
 /**
- * @class SuperMap.iPortalResource
+ * @class Ekmap.iPortalResource
  * @classdesc iPortal 资源详情类。
  * @version 10.0.1
  * @category iPortal/Online
@@ -25,14 +22,14 @@ import {IPortalServiceBase} from './iPortalServiceBase';
  * @param {number} [resourceInfo.personalDirId] - 资源所在的个人目录的id
  * @param {number} [resourceInfo.resourceId] - 资源表(maps,services等)里的id
  * @param {string} [resourceInfo.resourceSubType] - 某类资源的具体子类型。
- * @param {SuperMap.ResourceType} [resourceInfo.resourceType] - 资源类型
+ * @param {Ekmap.ResourceType} [resourceInfo.resourceType] - 资源类型
  * @param {number} [resourceInfo.serviceRootUrlId] - 批量注册服务时，服务根地址的ID
  * @param {Array} [resourceInfo.tags] - 资源的标签
  * @param {string} [resourceInfo.thumbnail] - 资源的缩略图
  * @param {Date} [resourceInfo.updateTime] - 资源的更新时间
  * @param {string} [resourceInfo.userName] - 搜索的关键词
  * @param {Object} [resourceInfo.sourceJSON] - 提供了门户项目返回的所有信息。
- * @extends {SuperMap.iPortalServiceBase}
+ * @extends {Ekmap.iPortalServiceBase}
  */
 export class IPortalResource extends IPortalServiceBase {
     constructor(portalUrl, resourceInfo) {
@@ -58,11 +55,11 @@ export class IPortalResource extends IPortalServiceBase {
         this.thumbnail = null;
         this.updateTime = 0;
         this.userName = "";
-        this.sourceJSON = {};//返回门户资源详细信息
+        this.sourceJSON = {}; //返回门户资源详细信息
         Util.extend(this, resourceInfo); // INSIGHTS_WORKSPACE MAP_DASHBOARD
-        this.resourceUrl = portalUrl + "/web/"+this.resourceType.replace("_","").toLowerCase()+"s/" + this.resourceId;
+        this.resourceUrl = portalUrl + "/web/" + this.resourceType.replace("_", "").toLowerCase() + "s/" + this.resourceId;
         if (this.withCredentials) {
-            this.resourceUrl = portalUrl + "/web/mycontent/"+this.resourceType.replace("_","").toLowerCase()+"s/" + this.resourceId;
+            this.resourceUrl = portalUrl + "/web/mycontent/" + this.resourceType.replace("_", "").toLowerCase() + "s/" + this.resourceId;
         }
         // if (this.id) {
         //     this.mapUrl = mapUrl + "/" + this.id;
@@ -70,14 +67,14 @@ export class IPortalResource extends IPortalServiceBase {
     }
 
     /**
-     * @function SuperMap.iPortalResource.prototype.load
+     * @function Ekmap.iPortalResource.prototype.load
      * @description 加载资源信息。
      * @returns {Promise} 返回 Promise 对象。如果成功，Promise 没有返回值，请求返回结果自动填充到该类的属性中；如果失败，Promise 返回值包含错误信息。
      */
     load() {
         var me = this;
         return me.request("GET", me.resourceUrl + ".json")
-            .then(function (resourceInfo) {
+            .then(function(resourceInfo) {
                 if (resourceInfo.error) {
                     return resourceInfo;
                 }
@@ -86,27 +83,27 @@ export class IPortalResource extends IPortalServiceBase {
     }
 
     /**
-     * @function SuperMap.iPortalResource.prototype.update
+     * @function Ekmap.iPortalResource.prototype.update
      * @description 更新资源属性信息。
      * @returns {Promise} 返回包含更新操作状态的 Promise 对象。
      */
     update() {
-        var resourceName = this.resourceType.replace("_","").toLowerCase();
+        var resourceName = this.resourceType.replace("_", "").toLowerCase();
         var options = {
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         };
-        if( resourceName === 'data') {
+        if (resourceName === 'data') {
             this.resourceUrl = this.resourceUrl + "/attributes.json";
         }
         var entity = JSON.stringify(this.sourceJSON);
         //对服务资源进行编辑时，请求体内容只留关键字字段（目前如果是全部字段 更新返回成功 但其实没有真正的更新）
-        if( resourceName === 'service') {
+        if (resourceName === 'service') {
             var serviceInfo = {
-                authorizeSetting:this.sourceJSON.authorizeSetting,
-                metadata:this.sourceJSON.metadata,
-                tags:this.sourceJSON.tags,
-                thumbnail:this.sourceJSON.thumbnail,
-                tokenRefreshUrl:this.sourceJSON.tokenRefreshUrl
+                authorizeSetting: this.sourceJSON.authorizeSetting,
+                metadata: this.sourceJSON.metadata,
+                tags: this.sourceJSON.tags,
+                thumbnail: this.sourceJSON.thumbnail,
+                tokenRefreshUrl: this.sourceJSON.tokenRefreshUrl
             };
             entity = JSON.stringify(serviceInfo);
         }
@@ -115,5 +112,4 @@ export class IPortalResource extends IPortalServiceBase {
 
 }
 
-SuperMap.iPortalResource = IPortalResource;
-
+Ekmap.iPortalResource = IPortalResource;

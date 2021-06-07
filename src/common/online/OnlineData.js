@@ -1,12 +1,12 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {OnlineServiceBase} from './OnlineServiceBase';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { OnlineServiceBase } from './OnlineServiceBase';
 
 /**
- * @class SuperMap.OnlineData
+ * @class Ekmap.OnlineData
  * @classdesc Online myData 服务。
  * @category iPortal/Online
  * @param {string} serviceRootUrl - 服务根地址。
@@ -67,11 +67,11 @@ export class OnlineData extends OnlineServiceBase {
         if (this.id) {
             this.serviceUrl = serviceRootUrl + "/" + this.id;
         }
-        this.CLASS_NAME = "SuperMap.OnlineData";
+        this.CLASS_NAME = "Ekmap.OnlineData";
     }
 
     /**
-     * @function SuperMap.OnlineData.prototype.load
+     * @function Ekmap.OnlineData.prototype.load
      * @description 通过 URL 请求获取该服务完整信息。
      * @returns {Promise} 返回不包含请求结果的 Promise 对象,请求返回结果自动填充到该类属性中。
      */
@@ -80,13 +80,13 @@ export class OnlineData extends OnlineServiceBase {
             return;
         }
         var me = this;
-        return me.request("GET", this.serviceUrl).then(function (result) {
+        return me.request("GET", this.serviceUrl).then(function(result) {
             Util.extend(me, result);
         });
     }
 
     /**
-     * @function SuperMap.OnlineData.prototype.getPublishedServices
+     * @function Ekmap.OnlineData.prototype.getPublishedServices
      * @description 获取数据发布的所有服务。
      * @returns {Object} 数据发布的所有服务。
      */
@@ -95,7 +95,7 @@ export class OnlineData extends OnlineServiceBase {
     }
 
     /**
-     * @function SuperMap.OnlineData.prototype.getAuthorizeSetting
+     * @function Ekmap.OnlineData.prototype.getAuthorizeSetting
      * @description 获取数据的权限信息。
      * @returns {Object} 权限信息。
      */
@@ -106,4 +106,4 @@ export class OnlineData extends OnlineServiceBase {
 
 }
 
-SuperMap.OnlineData = OnlineData;
+Ekmap.OnlineData = OnlineData;

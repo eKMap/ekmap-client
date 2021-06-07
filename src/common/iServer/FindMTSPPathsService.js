@@ -1,14 +1,11 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {NetworkAnalystServiceBase} from './NetworkAnalystServiceBase';
-import {FindMTSPPathsParameters} from './FindMTSPPathsParameters';
-import {GeoJSON} from '../format/GeoJSON';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { NetworkAnalystServiceBase } from './NetworkAnalystServiceBase';
+import { FindMTSPPathsParameters } from './FindMTSPPathsParameters';
+import { GeoJSON } from '../format/GeoJSON';
 
 /**
- * @class SuperMap.FindMTSPPathsService
+ * @class Ekmap.FindMTSPPathsService
  * @category  iServer NetworkAnalyst MTSPPath
  * @classdesc 多旅行商分析服务类
  *            多旅行商分析也称为物流配送，是指在网络数据集中，给定 M 个配送中心点和 N 个配送目的地（M，N 为大于零的整数）。
@@ -16,9 +13,9 @@ import {GeoJSON} from '../format/GeoJSON';
  *            物流配送功能就是解决如何合理分配配送次序和送货路线，使配送总花费达到最小或每个配送中心的花费达到最小。
  *            该类负责将客户端指定的多旅行商分析参数传递给服务端，并接收服务端返回的结果数据。
  *            多旅行商分析结果通过该类支持的事件的监听函数参数获取
- * @extends {SuperMap.NetworkAnalystServiceBase}
+ * @extends {Ekmap.NetworkAnalystServiceBase}
  * @example
- * var myFindMTSPPathsService = new SuperMap.FindMTSPPathsService(url, {
+ * var myFindMTSPPathsService = new Ekmap.FindMTSPPathsService(url, {
  *     eventListeners: {
  *         "processCompleted": findMTSPPathsCompleted,
  *		   "processFailed": findMTSPPathsError
@@ -37,11 +34,11 @@ export class FindMTSPPathsService extends NetworkAnalystServiceBase {
     constructor(url, options) {
         super(url, options);
 
-        this.CLASS_NAME = "SuperMap.FindMTSPPathsService";
+        this.CLASS_NAME = "Ekmap.FindMTSPPathsService";
     }
 
     /**
-     * @function SuperMap.FindMTSPPathsService.prototype.destroy
+     * @function Ekmap.FindMTSPPathsService.prototype.destroy
      * @override
      */
     destroy() {
@@ -49,9 +46,9 @@ export class FindMTSPPathsService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindMTSPPathsService..prototype.processAsync
+     * @function Ekmap.FindMTSPPathsService..prototype.processAsync
      * @description 负责将客户端的查询参数传递到服务端。
-     * @param {SuperMap.FindMTSPPathsParameters} params - 多旅行商分析服务参数类
+     * @param {Ekmap.FindMTSPPathsParameters} params - 多旅行商分析服务参数类
      */
     processAsync(params) {
         if (!(params instanceof FindMTSPPathsParameters)) {
@@ -79,7 +76,7 @@ export class FindMTSPPathsService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindMTSPPathsService.prototype.getJson
+     * @function Ekmap.FindMTSPPathsService.prototype.getJson
      * @description 将对象转化为JSON字符串。
      * @param {boolean} isAnalyzeById - 是否通过id分析
      * @param {Array} params - 需要转换的数字
@@ -109,7 +106,7 @@ export class FindMTSPPathsService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindMTSPPathsService.prototype.toGeoJSONResult
+     * @function Ekmap.FindMTSPPathsService.prototype.toGeoJSONResult
      * @description 将含有 geometry 的数据转换为 GeoJSON 格式。
      * @param {Object} result - 服务器返回的结果对象。
      */
@@ -118,7 +115,7 @@ export class FindMTSPPathsService extends NetworkAnalystServiceBase {
             return null;
         }
         var geoJSONFormat = new GeoJSON();
-        result.pathList.map(function (path) {
+        result.pathList.map(function(path) {
             if (path.route) {
                 path.route = geoJSONFormat.toGeoJSON(path.route);
             }
@@ -138,4 +135,4 @@ export class FindMTSPPathsService extends NetworkAnalystServiceBase {
 
 }
 
-SuperMap.FindMTSPPathsService = FindMTSPPathsService;
+Ekmap.FindMTSPPathsService = FindMTSPPathsService;

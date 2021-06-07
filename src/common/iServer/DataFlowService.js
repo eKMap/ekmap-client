@@ -1,16 +1,13 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {CommonServiceBase} from './CommonServiceBase';
-import {Util} from '../commontypes/Util';
-import {SecurityManager} from '../security/SecurityManager';
+import { Ekmap } from '../Ekmap';
+import { CommonServiceBase } from './CommonServiceBase';
+import { Util } from '../commontypes/Util';
+import { SecurityManager } from '../security/SecurityManager';
 
 /**
- * @class SuperMap.DataFlowService
+ * @class Ekmap.DataFlowService
  * @category iServer DataFlow
  * @classdesc 数据流服务类
- * @extends {SuperMap.CommonServiceBase}
+ * @extends {Ekmap.CommonServiceBase}
  * @param {string} url - 数据流服务地址
  * @param {Object} options - 参数。
  * @param {function} options.style - 设置数据加载样式。
@@ -34,47 +31,47 @@ export class DataFlowService extends CommonServiceBase {
         super(url, options);
 
         /**
-         * @member {GeoJSONObject} SuperMap.DataFlowService.prototype.geometry
+         * @member {GeoJSONObject} Ekmap.DataFlowService.prototype.geometry
          * @description 指定几何范围，该范围内的要素才能被订阅。
          */
         this.geometry = null;
 
         /**
-         * @member {Object} SuperMap.DataFlowService.prototype.prjCoordSys
+         * @member {Object} Ekmap.DataFlowService.prototype.prjCoordSys
          * @description 动态投影参数
          */
         this.prjCoordSys = null;
 
         /**
-         * @member {Object} SuperMap.DataFlowService.prototype.excludeField
+         * @member {Object} Ekmap.DataFlowService.prototype.excludeField
          * @description 排除字段
          */
         this.excludeField = null;
 
         Util.extend(this, options);
 
-        this.CLASS_NAME = "SuperMap.DataFlowService";
+        this.CLASS_NAME = "Ekmap.DataFlowService";
     }
 
     /**
-     * @function SuperMap.DataFlowService.prototype.initBroadcast
+     * @function Ekmap.DataFlowService.prototype.initBroadcast
      * @description 初始化广播
-     * @returns {SuperMap.DataFlowService}
+     * @returns {Ekmap.DataFlowService}
      */
     initBroadcast() {
         var me = this;
         this.broadcastWebSocket = this._connect(Util.urlPathAppend(me.url, 'broadcast'));
-        this.broadcastWebSocket.onopen = function (e) {
+        this.broadcastWebSocket.onopen = function(e) {
             me.broadcastWebSocket.isOpen = true;
             e.eventType = 'broadcastSocketConnected';
             me.events.triggerEvent('broadcastSocketConnected', e);
         };
-        this.broadcastWebSocket.onclose = function (e) {
+        this.broadcastWebSocket.onclose = function(e) {
             me.broadcastWebSocket.isOpen = false;
             e.eventType = 'broadcastSocketConnected';
             me.events.triggerEvent('broadcastSocketConnected', e);
         };
-        this.broadcastWebSocket.onerror = function (e) {
+        this.broadcastWebSocket.onerror = function(e) {
             e.eventType = 'broadcastSocketError';
             me.events.triggerEvent('broadcastSocketError', e);
         };
@@ -82,12 +79,12 @@ export class DataFlowService extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.DataFlowService.prototype.broadcast
+     * @function Ekmap.DataFlowService.prototype.broadcast
      * @description 加载广播数据。
      * @param {GeoJSONObject} geoJSONFeature - JSON 格式的要素数据。
      */
     broadcast(geoJSONFeature) {
-        if (!this.broadcastWebSocket||!this.broadcastWebSocket.isOpen) {
+        if (!this.broadcastWebSocket || !this.broadcastWebSocket.isOpen) {
             this.events.triggerEvent('broadcastFailed');
             return;
         }
@@ -97,23 +94,23 @@ export class DataFlowService extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.DataFlowService.prototype.initSubscribe
+     * @function Ekmap.DataFlowService.prototype.initSubscribe
      * @description 初始化订阅数据
      * @returns {this} this
      */
     initSubscribe() {
         var me = this;
         this.subscribeWebSocket = this._connect(Util.urlPathAppend(me.url, 'subscribe'));
-        this.subscribeWebSocket.onopen = function (e) {
+        this.subscribeWebSocket.onopen = function(e) {
             me.subscribeWebSocket.send(me._getFilterParams());
             e.eventType = 'subscribeSocketConnected';
             me.events.triggerEvent('subscribeSocketConnected', e);
         };
-        this.subscribeWebSocket.onerror = function (e) {
+        this.subscribeWebSocket.onerror = function(e) {
             e.eventType = 'subscribeSocketError';
             me.events.triggerEvent('subscribeSocketError', e);
         };
-        this.subscribeWebSocket.onmessage = function (e) {
+        this.subscribeWebSocket.onmessage = function(e) {
             me._onMessage(e);
         };
         return this;
@@ -121,7 +118,7 @@ export class DataFlowService extends CommonServiceBase {
 
 
     /**
-     * @function SuperMap.DataFlowService.prototype.setExcludeField
+     * @function Ekmap.DataFlowService.prototype.setExcludeField
      * @description 设置排除字段
      * @param {Object} excludeField - 排除字段
      * @returns {this} this
@@ -133,7 +130,7 @@ export class DataFlowService extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.DataFlowService.prototype.setGeometry
+     * @function Ekmap.DataFlowService.prototype.setGeometry
      * @description 设置添加的几何要素数据
      * @param {GeoJSONObject} geometry - 指定几何范围，该范围内的要素才能被订阅。
      * @returns {this} this
@@ -145,7 +142,7 @@ export class DataFlowService extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.DataFlowService.prototype.unSubscribe
+     * @function Ekmap.DataFlowService.prototype.unSubscribe
      * @description 结束订阅数据
      */
     unSubscribe() {
@@ -157,7 +154,7 @@ export class DataFlowService extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.DataFlowService.prototype.unBroadcast
+     * @function Ekmap.DataFlowService.prototype.unBroadcast
      * @description 结束加载广播
      */
     unBroadcast() {
@@ -169,7 +166,7 @@ export class DataFlowService extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.DataFlowService.prototype.destroy
+     * @function Ekmap.DataFlowService.prototype.destroy
      * @override
      */
     destroy() {
@@ -229,10 +226,10 @@ export class DataFlowService extends CommonServiceBase {
         if (token) {
             url = Util.urlAppend(url, "token=" + token);
         }
-       
+
         return url;
     }
 
 }
 
-SuperMap.DataFlowService = DataFlowService;
+Ekmap.DataFlowService = DataFlowService;

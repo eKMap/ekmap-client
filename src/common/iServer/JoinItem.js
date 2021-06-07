@@ -1,11 +1,8 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
 
 /**
- * @class SuperMap.JoinItem
+ * @class Ekmap.JoinItem
  * @category iServer
  * @classdesc 连接信息类。
  * 该类用于矢量数据集与外部表的连接。外部表可以为另一个矢量数据集（其中纯属性数据集中没有空间几何信息）所对应的 DBMS 表，也可以是用户自建的业务表。
@@ -17,30 +14,30 @@ import {Util} from '../commontypes/Util';
  * @param {Object} options - 参数。 
  * @param {string} options.foreignTableName - 外部表的名称。 
  * @param {string} options.joinFilter - 矢量数据集与外部表之间的连接表达式，即设定两个表之间关联的字段。 
- * @param {SuperMap.JoinType} options.joinType - 两个表之间连接类型。 
+ * @param {Ekmap.JoinType} options.joinType - 两个表之间连接类型。 
  * @example 下面以 SQL 查询说明 joinItem 的使用方法：
  *(start code)
  *   function queryBySQL() {
-     *       // 设置与外部表的连接信息
-     *       var joinItem = new SuperMap.JoinItem({
-     *           foreignTableName: "foreignTable",
-     *           joinFilter: "foreignTable.CONTINENT = Countries.CONTINENT",
-     *           joinType: "LEFTJOIN"
-     *       })
-     *       var queryParam, queryBySQLParams, queryBySQLService;
-     *       // 设置查询参数，在查询参数中添加joinItem关联条件信息
-     *       queryParam = new SuperMap.FilterParameter({
-     *            name: "Countries@World",
-     *            joinItems: [joinItem]
-     *         }),
-     *       queryBySQLParams = new SuperMap.QueryBySQLParameters({
-     *             queryParams: [queryParam]
-     *         }),
-     *       queryBySQLService = new SuperMap.QueryBySQLService(url, {
-     *             eventListeners: { "processCompleted": processCompleted, "processFailed": processFailed}
-     *         });
-     *       queryBySQLService.processAsync(queryBySQLParams);
-     *  }
+ *       // 设置与外部表的连接信息
+ *       var joinItem = new Ekmap.JoinItem({
+ *           foreignTableName: "foreignTable",
+ *           joinFilter: "foreignTable.CONTINENT = Countries.CONTINENT",
+ *           joinType: "LEFTJOIN"
+ *       })
+ *       var queryParam, queryBySQLParams, queryBySQLService;
+ *       // 设置查询参数，在查询参数中添加joinItem关联条件信息
+ *       queryParam = new Ekmap.FilterParameter({
+ *            name: "Countries@World",
+ *            joinItems: [joinItem]
+ *         }),
+ *       queryBySQLParams = new Ekmap.QueryBySQLParameters({
+ *             queryParams: [queryParam]
+ *         }),
+ *       queryBySQLService = new Ekmap.QueryBySQLService(url, {
+ *             eventListeners: { "processCompleted": processCompleted, "processFailed": processFailed}
+ *         });
+ *       queryBySQLService.processAsync(queryBySQLParams);
+ *  }
  *  function processCompleted(queryEventArgs) {//todo}
  *  function processFailed(e) {//todo}
  * (end)
@@ -49,7 +46,7 @@ export class JoinItem {
 
     constructor(options) {
         /**
-         * @member {string} SuperMap.JoinItem.prototype.foreignTableName
+         * @member {string} Ekmap.JoinItem.prototype.foreignTableName
          * @description 外部表的名称。
          * 如果外部表的名称是以 “表名@数据源名” 命名方式，则该属性只需赋值表名。
          * 例如：外部表 Name@changchun，Name 为表名，changchun 为数据源名称，则该属性的赋值应为：Name。
@@ -57,7 +54,7 @@ export class JoinItem {
         this.foreignTableName = null;
 
         /**
-         * @member {string} SuperMap.JoinItem.prototype.joinFilter
+         * @member {string} Ekmap.JoinItem.prototype.joinFilter
          * @description 矢量数据集与外部表之间的连接表达式，即设定两个表之间关联的字段。
          * 例如，将房屋面数据集（Building）的 district 字段与房屋拥有者的纯属性数据集（Owner）的 region 字段相连接，
          * 两个数据集对应的表名称分别为 Table_Building 和 Table_Owner，
@@ -67,7 +64,7 @@ export class JoinItem {
         this.joinFilter = null;
 
         /**
-         * @member {SuperMap.JoinType} SuperMap.JoinItem.prototype.joinType
+         * @member {Ekmap.JoinType} Ekmap.JoinItem.prototype.joinType
          * @description 两个表之间连接类型。
          * 连接类型决定了对两个表进行连接查询后返回的记录的情况。
          */
@@ -76,12 +73,12 @@ export class JoinItem {
         if (options) {
             Util.extend(this, options);
         }
-        this.CLASS_NAME = "SuperMap.JoinItem";
+        this.CLASS_NAME = "Ekmap.JoinItem";
     }
 
 
     /**
-     * @function SuperMap.JoinItem.prototype.destroy
+     * @function Ekmap.JoinItem.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -92,7 +89,7 @@ export class JoinItem {
     }
 
     /**
-     * @function SuperMap.JoinItem.prototype.toServerJSONObject
+     * @function Ekmap.JoinItem.prototype.toServerJSONObject
      * @description 转换成对应的 JSON 格式对象。
      */
     toServerJSONObject() {
@@ -103,4 +100,4 @@ export class JoinItem {
     }
 }
 
-SuperMap.JoinItem = JoinItem;
+Ekmap.JoinItem = JoinItem;

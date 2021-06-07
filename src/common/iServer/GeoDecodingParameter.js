@@ -1,11 +1,8 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
 
 /**
- * @class SuperMap.GeoDecodingParameter
+ * @class Ekmap.GeoDecodingParameter
  * @category iServer AddressMatch
  * @classdesc 地理反向匹配参数类。
  * @param {Object} options - 参数。 
@@ -26,48 +23,48 @@ export class GeoDecodingParameter {
             options.filters = options.filters.split(',');
         }
         /**
-         * @member {number} SuperMap.GeoDecodingParameter.prototype.x
+         * @member {number} Ekmap.GeoDecodingParameter.prototype.x
          * @description 查询位置的横坐标。
          */
         this.x = null;
 
         /**
-         * @member {number} SuperMap.GeoDecodingParameter.prototype.y
+         * @member {number} Ekmap.GeoDecodingParameter.prototype.y
          * @description 查询位置的纵坐标。
          */
         this.y = null;
         /**
-         * @member {number} [SuperMap.GeoDecodingParameter.prototype.fromIndex]
+         * @member {number} [Ekmap.GeoDecodingParameter.prototype.fromIndex]
          * @description  设置返回对象的起始索引值。
          */
         this.fromIndex = null;
 
         /**
-         * @member {number} [SuperMap.GeoDecodingParameter.prototype.toIndex]
+         * @member {number} [Ekmap.GeoDecodingParameter.prototype.toIndex]
          * @description 设置返回对象的结束索引值。
          */
         this.toIndex = null;
 
         /**
-         * @member {Array.<string>} [SuperMap.GeoDecodingParameter.prototype.filters]
+         * @member {Array.<string>} [Ekmap.GeoDecodingParameter.prototype.filters]
          * @description 过滤字段，限定查询区域。
          */
         this.filters = null;
 
         /**
-         * @member {string} [SuperMap.GeoDecodingParameter.prototype.prjCoordSys]
+         * @member {string} [Ekmap.GeoDecodingParameter.prototype.prjCoordSys]
          * @description 查询结果的坐标系。
          */
         this.prjCoordSys = null;
 
         /**
-         *  @member {number} [SuperMap.GeoDecodingParameter.prototype.maxReturn]
+         *  @member {number} [Ekmap.GeoDecodingParameter.prototype.maxReturn]
          *  @description 最大返回结果数。
          */
         this.maxReturn = null;
 
         /**
-         * @member {number} SuperMap.GeoDecodingParameter.prototype.geoDecodingRadius
+         * @member {number} Ekmap.GeoDecodingParameter.prototype.geoDecodingRadius
          * @description 查询半径。
          */
         this.geoDecodingRadius = null;
@@ -75,7 +72,7 @@ export class GeoDecodingParameter {
     }
 
     /**
-     * @function SuperMap.GeoDecodingParameter.prototype.destroy
+     * @function Ekmap.GeoDecodingParameter.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -91,4 +88,4 @@ export class GeoDecodingParameter {
 
 }
 
-SuperMap.GeoDecodingParameter = GeoDecodingParameter;
+Ekmap.GeoDecodingParameter = GeoDecodingParameter;

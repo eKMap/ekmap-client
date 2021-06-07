@@ -1,11 +1,11 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Curve} from './Curve';
-import {Vector} from './Vector';
+import { Curve } from './Curve';
+import { Vector } from './Vector';
 
 /**
- * @class  SuperMap.LevelRenderer.Tool.ComputeBoundingBox
+ * @class  Ekmap.LevelRenderer.Tool.ComputeBoundingBox
  * @category Visualization Theme
  * @classdesc LevelRenderer 工具-图形 Bounds 计算
  * @private 
@@ -13,7 +13,7 @@ import {Vector} from './Vector';
 export class ComputeBoundingBox {
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.ComputeBoundingBox.prototype.constructor
+     * @function Ekmap.LevelRenderer.Tool.ComputeBoundingBox.prototype.constructor
      * @description 构造函数。
      */
     constructor() {
@@ -21,11 +21,11 @@ export class ComputeBoundingBox {
             this.computeBoundingBox(arguments);
         }
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Tool.ComputeBoundingBox";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.ComputeBoundingBox";
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.ComputeBoundingBox.prototype.computeBoundingBox
+     * @function Ekmap.LevelRenderer.Tool.ComputeBoundingBox.prototype.computeBoundingBox
      * @description 从顶点数组中计算出最小包围盒，写入'min'和'max'中。
      * @param {Array.<Object>} points - 顶点数组。
      * @param {Array} min - 最小
@@ -61,9 +61,9 @@ export class ComputeBoundingBox {
         max[0] = right;
         max[1] = bottom;
     }
-    
+
     /**
-     * @function SuperMap.LevelRenderer.Tool.ComputeBoundingBox.prototype.cubeBezier
+     * @function Ekmap.LevelRenderer.Tool.ComputeBoundingBox.prototype.cubeBezier
      * @description 从三阶贝塞尔曲线(p0, p1, p2, p3)中计算出最小包围盒，写入'min'和'max'中。原：computeCubeBezierBoundingBox。
      * @param {Array.<number>} p0 - 三阶贝塞尔曲线p0点
      * @param {Array.<number>} p1 - 三阶贝塞尔曲线p1点
@@ -99,9 +99,9 @@ export class ComputeBoundingBox {
         max[0] = right;
         max[1] = bottom;
     }
-    
+
     /**
-     * @function SuperMap.LevelRenderer.Tool.ComputeBoundingBox.prototype.quadraticBezier
+     * @function Ekmap.LevelRenderer.Tool.ComputeBoundingBox.prototype.quadraticBezier
      * @description 从二阶贝塞尔曲线(p0, p1, p2)中计算出最小包围盒，写入'min'和'max'中。原：computeQuadraticBezierBoundingBox。
      * @param {Array.<number>} p0 - 二阶贝塞尔曲线p0点
      * @param {Array.<number>} p1 - 二阶贝塞尔曲线p1点
@@ -122,27 +122,27 @@ export class ComputeBoundingBox {
         var ct1 = 1 - t1;
         var ct2 = 1 - t2;
 
-        var x1 = ct1 * ct1 * p0[0]
-            + 2 * ct1 * t1 * p1[0]
-            + t1 * t1 * p2[0];
-        var y1 = ct1 * ct1 * p0[1]
-            + 2 * ct1 * t1 * p1[1]
-            + t1 * t1 * p2[1];
+        var x1 = ct1 * ct1 * p0[0] +
+            2 * ct1 * t1 * p1[0] +
+            t1 * t1 * p2[0];
+        var y1 = ct1 * ct1 * p0[1] +
+            2 * ct1 * t1 * p1[1] +
+            t1 * t1 * p2[1];
 
-        var x2 = ct2 * ct2 * p0[0]
-            + 2 * ct2 * t2 * p1[0]
-            + t2 * t2 * p2[0];
-        var y2 = ct2 * ct2 * p0[1]
-            + 2 * ct2 * t2 * p1[1]
-            + t2 * t2 * p2[1];
+        var x2 = ct2 * ct2 * p0[0] +
+            2 * ct2 * t2 * p1[0] +
+            t2 * t2 * p2[0];
+        var y2 = ct2 * ct2 * p0[1] +
+            2 * ct2 * t2 * p1[1] +
+            t2 * t2 * p2[1];
         min[0] = Math.min(p0[0], p2[0], x1, x2);
         min[1] = Math.min(p0[1], p2[1], y1, y2);
         max[0] = Math.max(p0[0], p2[0], x1, x2);
         max[1] = Math.max(p0[1], p2[1], y1, y2);
     }
-    
+
     /**
-     * @function SuperMap.LevelRenderer.Tool.ComputeBoundingBox.prototype.arc
+     * @function Ekmap.LevelRenderer.Tool.ComputeBoundingBox.prototype.arc
      * @description 从圆弧中计算出最小包围盒，写入'min'和'max'中。原：computeArcBoundingBox。
      * @param {number} x - 圆弧中心点 x
      * @param {number} y - 圆弧中心点 y

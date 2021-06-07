@@ -1,6 +1,6 @@
 import {
-    SuperMap
-} from '../SuperMap';
+    Ekmap
+} from '../Ekmap';
 
 export class ArrayStatistic {
 
@@ -14,10 +14,10 @@ export class ArrayStatistic {
         //         //     this.geostatsInstance = new geostats();
         //         // }
         // window.dataList = [];
-        if(!this.geostatsInstance) {
+        if (!this.geostatsInstance) {
 
             this.geostatsInstance = new window.geostats();
-          
+
         }
         return this.geostatsInstance;
     }
@@ -39,21 +39,21 @@ export class ArrayStatistic {
      * @param array 需要统计的数组
      * @param type  统计方法
      */
-    static getArrayStatistic(array, type){
-        if(!array.length) {
+    static getArrayStatistic(array, type) {
+        if (!array.length) {
             return 0;
         }
-        if(type === "Sum" || type === "求和"){
+        if (type === "Sum" || type === "求和") {
             return this.getSum(array);
-        } else if(type === "Maximum" || type === "最大值"){
+        } else if (type === "Maximum" || type === "最大值") {
             return this.getMax(array);
-        } else if(type === "Minimum" || type === "最小值"){
+        } else if (type === "Minimum" || type === "最小值") {
             return this.getMin(array);
-        } else if(type === "Average" || type === "平均值"){
+        } else if (type === "Average" || type === "平均值") {
             return this.getMean(array);
-        } else if(type === "Median" || type === "中位数"){
+        } else if (type === "Median" || type === "中位数") {
             return this.getMedian(array);
-        } else if(type === "times" || type === "计数"){
+        } else if (type === "times" || type === "计数") {
             return this.getTimes(array);
         }
     }
@@ -66,27 +66,27 @@ export class ArrayStatistic {
      * @param segNum 分段个数
      */
     static getArraySegments(array, type, segNum) {
-        if(type === "offset") {
+        if (type === "offset") {
             return this.getEqInterval(array, segNum);
-        } else if(type === "jenks") {
+        } else if (type === "jenks") {
             return this.getJenks(array, segNum);
-        } else if(type === "square") {
+        } else if (type === "square") {
             // 数据都必须 >= 0
             let minValue = this.getMin(array);
-            if(minValue >= 0){
+            if (minValue >= 0) {
                 return this.getSqrtInterval(array, segNum);
-            }else {
+            } else {
                 //console.log('数据都必须 >= 0');
                 // Util.showMessage(Language.hasNegValue + Language.noSupportRange, 'ERROR');
                 return false;
             }
 
-        } else if(type === "logarithm") {
+        } else if (type === "logarithm") {
             // 数据都必须 > 0
             let minValue = this.getMin(array);
-            if(minValue > 0){
+            if (minValue > 0) {
                 return this.getGeometricProgression(array, segNum);
-            }else {
+            } else {
                 //console.log('数据都必须 > 0');
                 // Util.showMessage(Language.hasZeroNegValue + Language.noSupportRange, 'ERROR');
                 return false;
@@ -99,7 +99,7 @@ export class ArrayStatistic {
      * @param array
      * @returns {number}
      */
-    static getSum(array){
+    static getSum(array) {
         return this.getInstance(array).sum();
     }
 
@@ -108,7 +108,7 @@ export class ArrayStatistic {
      * @param array
      * @returns {*}
      */
-    static getMax(array){
+    static getMax(array) {
         return this.getInstance(array).max();
     }
 
@@ -117,7 +117,7 @@ export class ArrayStatistic {
      * @param array
      * @returns {*}
      */
-    static getMin(array){
+    static getMin(array) {
         return this.getInstance(array).min();
     }
 
@@ -126,7 +126,7 @@ export class ArrayStatistic {
      * @param array
      * @returns {number}
      */
-    static getMean(array){
+    static getMean(array) {
         return this.getInstance(array).mean();
     }
 
@@ -159,7 +159,7 @@ export class ArrayStatistic {
     static getEqInterval(array, segNum) {
         return this.getInstance(array).getClassEqInterval(segNum);
     }
-    
+
     /**
      * 自然断裂法
      * 
@@ -185,7 +185,7 @@ export class ArrayStatistic {
             breaks.map(function(value) {
                 return value * value;
             })
-        ) 
+        )
     }
 
     /**
@@ -199,4 +199,4 @@ export class ArrayStatistic {
     }
 
 }
-SuperMap.ArrayStatistic = ArrayStatistic;
+Ekmap.ArrayStatistic = ArrayStatistic;

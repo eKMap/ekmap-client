@@ -1,13 +1,10 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {FilterParameter} from './FilterParameter';
-import {GetFeaturesParametersBase} from './GetFeaturesParametersBase';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { FilterParameter } from './FilterParameter';
+import { GetFeaturesParametersBase } from './GetFeaturesParametersBase';
 
 /**
- * @class SuperMap.GetFeaturesByIDsParameters
+ * @class Ekmap.GetFeaturesByIDsParameters
  * @category  iServer Data FeatureResults
  * @classdesc ID查询参数类。
  * @param {Object} options - 参数。  
@@ -19,7 +16,7 @@ import {GetFeaturesParametersBase} from './GetFeaturesParametersBase';
  * @param {number} [options.toIndex=19] - 查询结果的最大索引号。  
  * @param {string|number} [options.targetEpsgCode] - 动态投影的目标坐标系对应的 EPSG Code，使用此参数时，returnContent 参数需为 true。
  * @param {Object} [options.targetPrj] - 动态投影的目标坐标系。使用此参数时，returnContent 参数需为 true。 如：prjCoordSys={"epsgCode":3857}。当同时设置 targetEpsgCode 参数时，此参数不生效。
- * @extends {SuperMap.GetFeaturesParametersBase}
+ * @extends {Ekmap.GetFeaturesParametersBase}
  */
 export class GetFeaturesByIDsParameters extends GetFeaturesParametersBase {
 
@@ -27,30 +24,30 @@ export class GetFeaturesByIDsParameters extends GetFeaturesParametersBase {
     constructor(options) {
         super(options);
         /**
-         * @member {string} SuperMap.GetFeaturesByIDsParameters.prototype.getFeatureMode
+         * @member {string} Ekmap.GetFeaturesByIDsParameters.prototype.getFeatureMode
          * @description 数据集查询模式。
          */
         this.getFeatureMode = "ID";
 
         /**
-         * @member {Array.<number>} SuperMap.GetFeaturesByIDsParameters.prototype.IDs
+         * @member {Array.<number>} Ekmap.GetFeaturesByIDsParameters.prototype.IDs
          * @description 所要查询指定的元素 ID 信息。
          */
         this.IDs = null;
 
         /**
-         *  @member {Array.<string>} SuperMap.GetFeaturesByIDsParameters.prototype.fields
+         *  @member {Array.<string>} Ekmap.GetFeaturesByIDsParameters.prototype.fields
          *  @description 设置查询结果返回字段。当指定了返回结果字段后，则 GetFeaturesResult 中的 features 的属性字段只包含所指定的字段。不设置即返回全部字段。
          */
         this.fields = null;
         Util.extend(this, options);
 
-        this.CLASS_NAME = "SuperMap.GetFeaturesByIDsParameters";
+        this.CLASS_NAME = "Ekmap.GetFeaturesByIDsParameters";
     }
 
 
     /**
-     * @function SuperMap.GetFeaturesByIDsParameters.prototype.destroy
+     * @function Ekmap.GetFeaturesByIDsParameters.prototype.destroy
      * @override
      */
     destroy() {
@@ -67,9 +64,9 @@ export class GetFeaturesByIDsParameters extends GetFeaturesParametersBase {
     }
 
     /**
-     * @function SuperMap.GetFeaturesByIDsParameters.toJsonParameters
-     * @description 将 SuperMap.GetFeaturesByIDsParameters 对象转换为 JSON 字符串。
-     * @param {SuperMap.GetFeaturesByIDsParameters} params - ID 查询参数对象。
+     * @function Ekmap.GetFeaturesByIDsParameters.toJsonParameters
+     * @description 将 Ekmap.GetFeaturesByIDsParameters 对象转换为 JSON 字符串。
+     * @param {Ekmap.GetFeaturesByIDsParameters} params - ID 查询参数对象。
      * @returns {string} 转化后的 JSON 字符串。
      */
     static toJsonParameters(params) {
@@ -97,4 +94,4 @@ export class GetFeaturesByIDsParameters extends GetFeaturesParametersBase {
 
 }
 
-SuperMap.GetFeaturesByIDsParameters = GetFeaturesByIDsParameters;
+Ekmap.GetFeaturesByIDsParameters = GetFeaturesByIDsParameters;

@@ -1,11 +1,8 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
 
 /**
- * @class SuperMap.BurstPipelineAnalystParameters
+ * @class Ekmap.BurstPipelineAnalystParameters
  * @category iServer NetworkAnalyst BurstAnalyse
  * @classdesc 爆管分析参数类。
  * @param {Object} options - 参数。 
@@ -20,25 +17,25 @@ export class BurstPipelineAnalystParameters {
     constructor(options) {
         var me = this;
         /**
-         * @member {Array.<number>} SuperMap.BurstPipelineAnalystParameters.prototype.sourceNodeIDs
+         * @member {Array.<number>} Ekmap.BurstPipelineAnalystParameters.prototype.sourceNodeIDs
          * @description 指定的设施点 ID 数组。
          */
         this.sourceNodeIDs = null;
 
         /**
-         * @member {number} [SuperMap.BurstPipelineAnalystParameters.prototype.edgeID]
+         * @member {number} [Ekmap.BurstPipelineAnalystParameters.prototype.edgeID]
          * @description 指定的弧段 ID，edgeID 与 nodeID 必须指定一个。 
          */
         this.edgeID = null;
 
         /**
-         * @member {number} [SuperMap.BurstPipelineAnalystParameters.prototype.nodeID]
+         * @member {number} [Ekmap.BurstPipelineAnalystParameters.prototype.nodeID]
          * @description 指定的结点 ID，edgeID 与 nodeID 必须指定一个。 
          */
         this.nodeID = null;
 
         /**
-         * @member {boolean} [SuperMap.BurstPipelineAnalystParameters.prototype.isUncertainDirectionValid=false]
+         * @member {boolean} [Ekmap.BurstPipelineAnalystParameters.prototype.isUncertainDirectionValid=false]
          * @description 指定不确定流向是否有效。
          * 指定为 true，表示不确定流向有效，遇到不确定流向时分析继续进行。
          * 指定为 false，表示不确定流向无效，遇到不确定流向将停止在该方向上继续查找。
@@ -47,11 +44,11 @@ export class BurstPipelineAnalystParameters {
 
         Util.extend(me, options);
 
-        this.CLASS_NAME = "SuperMap.BurstPipelineAnalystParameters";
+        this.CLASS_NAME = "Ekmap.BurstPipelineAnalystParameters";
     }
 
     /**
-     * @function SuperMap.BurstPipelineAnalystParameters.prototype.destroy
+     * @function Ekmap.BurstPipelineAnalystParameters.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -65,4 +62,4 @@ export class BurstPipelineAnalystParameters {
 
 }
 
-SuperMap.BurstPipelineAnalystParameters = BurstPipelineAnalystParameters;
+Ekmap.BurstPipelineAnalystParameters = BurstPipelineAnalystParameters;

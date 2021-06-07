@@ -1,24 +1,21 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Format} from './Format';
-import {StringExt} from '../commontypes/BaseTypes';
-import {Vector} from '../commontypes/Vector';
-import {Point} from '../commontypes/geometry/Point';
-import {MultiPoint} from '../commontypes/geometry/MultiPoint';
-import {LineString} from '../commontypes/geometry/LineString';
-import {MultiLineString} from '../commontypes/geometry/MultiLineString';
-import {LinearRing} from '../commontypes/geometry/LinearRing';
-import {Polygon} from '../commontypes/geometry/Polygon';
-import {MultiPolygon} from '../commontypes/geometry/MultiPolygon';
+import { Ekmap } from '../Ekmap';
+import { Format } from './Format';
+import { StringExt } from '../commontypes/BaseTypes';
+import { Vector } from '../commontypes/Vector';
+import { Point } from '../commontypes/geometry/Point';
+import { MultiPoint } from '../commontypes/geometry/MultiPoint';
+import { LineString } from '../commontypes/geometry/LineString';
+import { MultiLineString } from '../commontypes/geometry/MultiLineString';
+import { LinearRing } from '../commontypes/geometry/LinearRing';
+import { Polygon } from '../commontypes/geometry/Polygon';
+import { MultiPolygon } from '../commontypes/geometry/MultiPolygon';
 
 /**
- * @class SuperMap.Format.WKT
- * @classdesc 用于读写常见文本的类。通过 {@link SuperMap.Format.WKT} 构造器来创建一个新的实例。
+ * @class Ekmap.Format.WKT
+ * @classdesc 用于读写常见文本的类。通过 {@link Ekmap.Format.WKT} 构造器来创建一个新的实例。
  * @category BaseTypes Format
- * @extends {SuperMap.Format}
- * @param {Object} options - 可选的选项对象，其属性将被设置到实例。option 具体配置项继承自 {@link SuperMap.Format}。
+ * @extends {Ekmap.Format}
+ * @param {Object} options - 可选的选项对象，其属性将被设置到实例。option 具体配置项继承自 {@link Ekmap.Format}。
  */
 export class WKT extends Format {
 
@@ -28,10 +25,11 @@ export class WKT extends Format {
             'typeStr': /^\s*(\w+)\s*\(\s*(.*)\s*\)\s*$/,
             'spaces': /\s+/,
             'parenComma': /\)\s*,\s*\(/,
-            'doubleParenComma': /\)\s*\)\s*,\s*\(\s*\(/,  // can't use {2} here
+            'doubleParenComma': /\)\s*\)\s*,\s*\(\s*\(/, // can't use {2} here
             'trimParens': /^\s*\(?(.*?)\)?\s*$/
         };
-        this.CLASS_NAME = "SuperMap.Format.WKT"; /**
+        this.CLASS_NAME = "Ekmap.Format.WKT";
+        /**
          * @private
          * @description Object with properties corresponding to the geometry types.
          * Property values are functions that do the actual data extraction.
@@ -39,20 +37,20 @@ export class WKT extends Format {
         this.extract = {
             /**
              * @description Return a space delimited string of point coordinates.
-             * @param {SuperMap.Geometry.Point} point
+             * @param {Ekmap.Geometry.Point} point
              * @returns  {string} A string of coordinates representing the point
              */
-            'point': function (point) {
+            'point': function(point) {
                 return point.x + ' ' + point.y;
             },
 
             /**
              * @description  Return a comma delimited string of point coordinates from a multipoint.
-             * @param {SuperMap.Geometry.MultiPoint} multipoint
+             * @param {Ekmap.Geometry.MultiPoint} multipoint
              * @returns  {string} A string of point coordinate strings representing
              *                  the multipoint
              */
-            'multipoint'(multipoint) {
+            'multipoint' (multipoint) {
                 var array = [];
                 for (var i = 0, len = multipoint.components.length; i < len; ++i) {
                     array.push('(' +
@@ -64,11 +62,11 @@ export class WKT extends Format {
 
             /**
              * @description  Return a comma delimited string of point coordinates from a line.
-             * @param {SuperMap.Geometry.LineString} linestring
+             * @param {Ekmap.Geometry.LineString} linestring
              * @returns  {string} A string of point coordinate strings representing
              *                  the linestring
              */
-            'linestring'(linestring) {
+            'linestring' (linestring) {
                 var array = [];
                 for (var i = 0, len = linestring.components.length; i < len; ++i) {
                     array.push(this.extract.point.apply(this, [linestring.components[i]]));
@@ -78,11 +76,11 @@ export class WKT extends Format {
 
             /**
              * @description  Return a comma delimited string of linestring strings from a multilinestring.
-             * @param {SuperMap.Geometry.MultiLineString} multilinestring
+             * @param {Ekmap.Geometry.MultiLineString} multilinestring
              * @returns  {string} A string of of linestring strings representing
              *                  the multilinestring
              */
-            'multilinestring'(multilinestring) {
+            'multilinestring' (multilinestring) {
                 var array = [];
                 for (var i = 0, len = multilinestring.components.length; i < len; ++i) {
                     array.push('(' +
@@ -94,10 +92,10 @@ export class WKT extends Format {
 
             /**
              * @description  Return a comma delimited string of linear ring arrays from a polygon.
-             * @param {SuperMap.Geometry.Polygon} polygon
+             * @param {Ekmap.Geometry.Polygon} polygon
              * @returns  {string} An array of linear ring arrays representing the polygon
              */
-            'polygon'(polygon) {
+            'polygon' (polygon) {
                 var array = [];
                 for (var i = 0, len = polygon.components.length; i < len; ++i) {
                     array.push('(' +
@@ -109,11 +107,11 @@ export class WKT extends Format {
 
             /**
              * @description  Return an array of polygon arrays from a multipolygon.
-             * @param {SuperMap.Geometry.MultiPolygon} multipolygon
+             * @param {Ekmap.Geometry.MultiPolygon} multipolygon
              * @returns  {string} An array of polygon arrays representing
              *                  the multipolygon
              */
-            'multipolygon'(multipolygon) {
+            'multipolygon' (multipolygon) {
                 var array = [];
                 for (var i = 0, len = multipolygon.components.length; i < len; ++i) {
                     array.push('(' +
@@ -124,11 +122,11 @@ export class WKT extends Format {
             },
 
             /**
-             * @description  Return the WKT portion between 'GEOMETRYCOLLECTION(' and ')' for an <SuperMap.Geometry.Collection>
-             * @param {SuperMap.Geometry.Collection} collection
+             * @description  Return the WKT portion between 'GEOMETRYCOLLECTION(' and ')' for an <Ekmap.Geometry.Collection>
+             * @param {Ekmap.Geometry.Collection} collection
              * @returns  {string} internal WKT representation of the collection
              */
-            'collection'(collection) {
+            'collection' (collection) {
                 var array = [];
                 for (var i = 0, len = collection.components.length; i < len; ++i) {
                     array.push(this.extractGeometry.apply(this, [collection.components[i]]));
@@ -148,22 +146,21 @@ export class WKT extends Format {
              * @private
              * @description  Return point feature given a point WKT fragment.
              * @param {string} str A WKT fragment representing the point
-             * @returns  {SuperMap.Feature.Vector} A point feature
+             * @returns  {Ekmap.Feature.Vector} A point feature
              *
              */
-            'point': function (str) {
+            'point': function(str) {
                 var coords = StringExt.trim(str).split(this.regExes.spaces);
-                return new Vector(new Point(coords[0], coords[1])
-                );
+                return new Vector(new Point(coords[0], coords[1]));
             },
 
             /**
              * @description  Return a multipoint feature given a multipoint WKT fragment.
              * @param {string} A WKT fragment representing the multipoint
-             * @returns  {SuperMap.Feature.Vector} A multipoint feature
+             * @returns  {Ekmap.Feature.Vector} A multipoint feature
              * @private
              */
-            'multipoint': function (str) {
+            'multipoint': function(str) {
                 var point;
                 var points = StringExt.trim(str).split(',');
                 var components = [];
@@ -179,10 +176,10 @@ export class WKT extends Format {
             /**
              * @description  Return a linestring feature given a linestring WKT fragment.
              * @param {string} A WKT fragment representing the linestring
-             * @returns  {SuperMap.Feature.Vector} A linestring feature
+             * @returns  {Ekmap.Feature.Vector} A linestring feature
              * @private
              */
-            'linestring': function (str) {
+            'linestring': function(str) {
                 var points = StringExt.trim(str).split(',');
                 var components = [];
                 for (var i = 0, len = points.length; i < len; ++i) {
@@ -196,10 +193,10 @@ export class WKT extends Format {
             /**
              * @description  Return a multilinestring feature given a multilinestring WKT fragment.
              * @param {string} A WKT fragment representing the multilinestring
-             * @returns  {SuperMap.Feature.Vector} A multilinestring feature
+             * @returns  {Ekmap.Feature.Vector} A multilinestring feature
              * @private
              */
-            'multilinestring': function (str) {
+            'multilinestring': function(str) {
                 var line;
                 var lines = StringExt.trim(str).split(this.regExes.parenComma);
                 var components = [];
@@ -215,10 +212,10 @@ export class WKT extends Format {
             /**
              * @description  Return a polygon feature given a polygon WKT fragment.
              * @param {string} A WKT fragment representing the polygon
-             * @returns  {SuperMap.Feature.Vector} A polygon feature
+             * @returns  {Ekmap.Feature.Vector} A polygon feature
              * @private
              */
-            'polygon': function (str) {
+            'polygon': function(str) {
                 var ring, linestring, linearring;
                 var rings = StringExt.trim(str).split(this.regExes.parenComma);
                 var components = [];
@@ -237,10 +234,10 @@ export class WKT extends Format {
              * @private
              * @description  Return a multipolygon feature given a multipolygon WKT fragment.
              * @param {string} A WKT fragment representing the multipolygon
-             * @returns  {SuperMap.Feature.Vector} A multipolygon feature
+             * @returns  {Ekmap.Feature.Vector} A multipolygon feature
              *
              */
-            'multipolygon': function (str) {
+            'multipolygon': function(str) {
                 var polygon;
                 var polygons = StringExt.trim(str).split(this.regExes.doubleParenComma);
                 var components = [];
@@ -257,10 +254,10 @@ export class WKT extends Format {
             /**
              * @description  Return an array of features given a geometrycollection WKT fragment.
              * @param {string} A WKT fragment representing the geometrycollection
-             * @returns  {Array} An array of SuperMap.Feature.Vector
+             * @returns  {Array} An array of Ekmap.Feature.Vector
              * @private
              */
-            'geometrycollection': function (str) {
+            'geometrycollection': function(str) {
                 // separate components of the collection with |
                 str = str.replace(/,\s*([A-Za-z])/g, '|$1');
                 var wktArray = StringExt.trim(str).split('|');
@@ -277,13 +274,13 @@ export class WKT extends Format {
 
 
     /**
-     * @function SuperMap.Format.WKT.prototype.read
+     * @function Ekmap.Format.WKT.prototype.read
      * @description Deserialize a WKT string and return a vector feature or an
      * array of vector features.  Supports WKT for POINT, MULTIPOINT,
      * LINESTRING, MULTILINESTRING, POLYGON, MULTIPOLYGON, and
      * GEOMETRYCOLLECTION.
      * @param {string} wkt - A WKT string
-     * @returns {SuperMap.Feature.Vector|Array} A feature or array of features for
+     * @returns {Ekmap.Feature.Vector|Array} A feature or array of features for
      * GEOMETRYCOLLECTION WKT.
      */
     read(wkt) {
@@ -302,9 +299,9 @@ export class WKT extends Format {
 
 
     /**
-     * @function SuperMap.Format.WKT.prototype.write
+     * @function Ekmap.Format.WKT.prototype.write
      * @description Serialize a feature or array of features into a WKT string.
-     * @param {(SuperMap.Feature.Vector|Array)} features - A feature or array of features
+     * @param {(Ekmap.Feature.Vector|Array)} features - A feature or array of features
      * @returns {string} The WKT string representation of the input geometries
      */
     write(features) {
@@ -334,9 +331,9 @@ export class WKT extends Format {
     }
 
     /**
-     * @function SuperMap.Format.WKT.prototype.extractGeometry
+     * @function Ekmap.Format.WKT.prototype.extractGeometry
      * @description Entry point to construct the WKT for a single Geometry object.
-     * @param {SuperMap.Geometry} geometry 
+     * @param {Ekmap.Geometry} geometry 
      * @returns {string} A WKT string of representing the geometry
      */
     extractGeometry(geometry) {
@@ -350,4 +347,4 @@ export class WKT extends Format {
     }
 }
 
-SuperMap.Format.WKT = WKT;
+Ekmap.Format.WKT = WKT;

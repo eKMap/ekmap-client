@@ -1,13 +1,10 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {SpatialAnalystBase} from './SpatialAnalystBase';
-import {DensityKernelAnalystParameters} from './DensityKernelAnalystParameters';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { SpatialAnalystBase } from './SpatialAnalystBase';
+import { DensityKernelAnalystParameters } from './DensityKernelAnalystParameters';
 
 /**
- * @class SuperMap.DensityAnalystService
+ * @class Ekmap.DensityAnalystService
  * @category iServer SpatialAnalyst DensityAnalyst
  * @classdesc
  * 密度分析服务类，密度分析可计算每个输出栅格像元周围圆形邻域内输入的点或线对象的密度。
@@ -17,9 +14,9 @@ import {DensityKernelAnalystParameters} from './DensityKernelAnalystParameters';
  * @param {Object} options.eventListeners - 需要被注册的监听器对象。
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
  * @param {Object} [options.headers] - 请求头。
- * @extends {SuperMap.SpatialAnalystBase}
+ * @extends {Ekmap.SpatialAnalystBase}
  * @example  例如：
- *  var myDensityAnalystService = new SuperMap.DensityAnalystService(url);
+ *  var myDensityAnalystService = new Ekmap.DensityAnalystService(url);
  *  myDensityAnalystService.on({
  *     "processCompleted": processCompleted,
  *     "processFailed": processFailed
@@ -32,7 +29,7 @@ export class DensityAnalystService extends SpatialAnalystBase {
     constructor(url, options) {
         super(url, options);
         /**
-         * @member {string} SuperMap.DensityAnalystService.prototype.mode
+         * @member {string} Ekmap.DensityAnalystService.prototype.mode
          * @description 密度分析类型。
          */
         this.mode = null;
@@ -41,11 +38,11 @@ export class DensityAnalystService extends SpatialAnalystBase {
             Util.extend(this, options);
         }
 
-        this.CLASS_NAME = "SuperMap.DensityAnalystService";
+        this.CLASS_NAME = "Ekmap.DensityAnalystService";
     }
 
     /**
-     * @function SuperMap.DensityAnalystService.prototype.destroy
+     * @function Ekmap.DensityAnalystService.prototype.destroy
      * @description 释放资源,将引用资源的属性置空。
      */
     destroy() {
@@ -54,9 +51,9 @@ export class DensityAnalystService extends SpatialAnalystBase {
     }
 
     /**
-     * @function SuperMap.DensityAnalystService.prototype.processAsync
+     * @function Ekmap.DensityAnalystService.prototype.processAsync
      * @description 负责将客户端的查询参数传递到服务端。
-     * @param {SuperMap.DensityKernelAnalystParameters} parameter - 核密度分析参数。
+     * @param {Ekmap.DensityKernelAnalystParameters} parameter - 核密度分析参数。
      */
     processAsync(parameter) {
         var me = this;
@@ -82,4 +79,4 @@ export class DensityAnalystService extends SpatialAnalystBase {
 
 }
 
-SuperMap.DensityAnalystService = DensityAnalystService;
+Ekmap.DensityAnalystService = DensityAnalystService;

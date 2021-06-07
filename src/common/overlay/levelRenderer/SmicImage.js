@@ -1,16 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
+import { Shape } from './Shape';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicImage
+ * @class  Ekmap.LevelRenderer.Shape.SmicImage
  * @category Visualization Theme
  * @classdesc 图片绘制。
- * @extends SuperMap.LevelRenderer.Shape
+ * @extends Ekmap.LevelRenderer.Shape
  * @example
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicImage({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicImage({
  *         style: {
  *             image: 'test.jpg',
  *             x: 100,
@@ -24,7 +24,7 @@ import {Shape} from './Shape';
 export class SmicImage extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicImage.prototype.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicImage.prototype.style
      * @description 绘制样式。
      *
      * @param {number} style.x - 左上角横坐标，必设参数。
@@ -51,7 +51,7 @@ export class SmicImage extends Shape {
     //打开接口 style
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicImage.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicImage.constructor
      * @description 构造函数。
      *
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -60,25 +60,25 @@ export class SmicImage extends Shape {
     constructor(options) {
         super(options);
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicImage.prototype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicImage.prototype.type
          * @description  图形类型。
          */
         this.type = 'smicimage';
 
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicImage.prototype._imageCache
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicImage.prototype._imageCache
          * @description 图片缓存。
          */
         this._imageCache = {};
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicImage";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicImage";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicImage.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicImage.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -89,7 +89,7 @@ export class SmicImage extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicImage.prototype.buildPath
+     * @function Ekmap.LevelRenderer.Shape.SmicImage.prototype.buildPath
      * @description 创建图片。
      * 
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -120,12 +120,12 @@ export class SmicImage extends Shape {
                 image = this._imageCache[src];
             } else {
                 image = new Image();
-                image.onload = function () {
+                image.onload = function() {
                     image.onload = null;
                     clearTimeout(SmicImage._refreshTimeout);
                     SmicImage._needsRefresh.push(me);
                     // 防止因为缓存短时间内触发多次onload事件
-                    SmicImage._refreshTimeout = setTimeout(function () {
+                    SmicImage._refreshTimeout = setTimeout(function() {
                         refresh && refresh(SmicImage._needsRefresh);
                         // 清空 needsRefresh
                         SmicImage._needsRefresh = [];
@@ -212,7 +212,7 @@ export class SmicImage extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicImage.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicImage.prototype.getRect
      * @description 计算返回图片的包围盒矩形。
      *
      * @param {Object} style - style
@@ -234,7 +234,7 @@ export class SmicImage extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicImage.prototype.clearCache
+     * @function Ekmap.LevelRenderer.Shape.SmicImage.prototype.clearCache
      * @description 清除图片缓存。
      *
      * @param {Object} style - style

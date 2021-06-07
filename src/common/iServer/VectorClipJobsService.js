@@ -1,16 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 import { Util } from '../commontypes/Util';
 import { ProcessingServiceBase } from './ProcessingServiceBase';
 import { VectorClipJobsParameter } from './VectorClipJobsParameter';
 
 /**
- * @class SuperMap.VectorClipJobsService
+ * @class Ekmap.VectorClipJobsService
  * @category  iServer ProcessingService VectorClip
  * @classdesc 矢量裁剪分析服务类
- * @extends {SuperMap.ProcessingServiceBase}
+ * @extends {Ekmap.ProcessingServiceBase}
  * @param {string} url -矢量裁剪分析服务地址。
  * @param {Object} options - 交互服务时所需可选参数。
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
@@ -20,7 +20,7 @@ export class VectorClipJobsService extends ProcessingServiceBase {
     constructor(url, options) {
         super(url, options);
         this.url = Util.urlPathAppend(this.url, 'spatialanalyst/vectorclip');
-        this.CLASS_NAME = 'SuperMap.VectorClipJobsService';
+        this.CLASS_NAME = 'Ekmap.VectorClipJobsService';
     }
 
     /**
@@ -31,7 +31,7 @@ export class VectorClipJobsService extends ProcessingServiceBase {
     }
 
     /**
-     * @function SuperMap.VectorClipJobsService.protitype.getVectorClipJobs
+     * @function Ekmap.VectorClipJobsService.protitype.getVectorClipJobs
      * @description 获取矢量裁剪分析所有任务
      */
     getVectorClipJobs() {
@@ -39,7 +39,7 @@ export class VectorClipJobsService extends ProcessingServiceBase {
     }
 
     /**
-     * @function SuperMap.KernelDensityJobsService.protitype.getVectorClipJob
+     * @function Ekmap.KernelDensityJobsService.protitype.getVectorClipJob
      * @description 获取指定id的矢量裁剪分析服务
      * @param {string} id - 指定要获取数据的id
      */
@@ -48,9 +48,9 @@ export class VectorClipJobsService extends ProcessingServiceBase {
     }
 
     /**
-     * @function SuperMap.VectorClipJobsService.protitype.addVectorClipJob
+     * @function Ekmap.VectorClipJobsService.protitype.addVectorClipJob
      * @description 新建矢量裁剪分析服务
-     * @param {SuperMap.VectorClipJobsParameter} params - 创建一个空间分析的请求参数。
+     * @param {Ekmap.VectorClipJobsParameter} params - 创建一个空间分析的请求参数。
      * @param {number} seconds - 开始创建后，获取创建成功结果的时间间隔。
      */
     addVectorClipJob(params, seconds) {
@@ -58,4 +58,4 @@ export class VectorClipJobsService extends ProcessingServiceBase {
     }
 }
 
-SuperMap.VectorClipJobsService = VectorClipJobsService;
+Ekmap.VectorClipJobsService = VectorClipJobsService;

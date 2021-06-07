@@ -1,30 +1,30 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Util} from '../levelRenderer/Util';
-import {Eventful} from './Eventful';
-import {Clip} from './Clip';
-import {SUtil} from './SUtil';
-import {Util as CommonUtil} from "../../commontypes/Util";
+import { Util } from '../levelRenderer/Util';
+import { Eventful } from './Eventful';
+import { Clip } from './Clip';
+import { SUtil } from './SUtil';
+import { Util as CommonUtil } from "../../commontypes/Util";
 
 /**
- * @class SuperMap.LevelRenderer.Animation
+ * @class Ekmap.LevelRenderer.Animation
  * @classdesc 动画主类, 调度和管理所有动画控制器
  * @category Visualization Theme
- * @extends {SuperMap.LevelRenderer.Eventful}
+ * @extends {Ekmap.LevelRenderer.Eventful}
  * @private 
  */
 export class Animation extends Eventful {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.prototype.constructor
+     * @function Ekmap.LevelRenderer.Animation.prototype.constructor
      * @description 构造函数。
      * @param {Object} options - 动画参数。
      * @param {Object} options.onframe - onframe。
      * @param {Object} options.stage - stage。
      * (start code)
-     *     var animation = new SuperMap.LevelRenderer.Animation();
+     *     var animation = new Ekmap.LevelRenderer.Animation();
      *     var obj = {
      *         x: 100,
      *         y: 100
@@ -46,47 +46,46 @@ export class Animation extends Eventful {
 
         options = options || {};
         /**
-         * @member {Object} SuperMap.LevelRenderer.Animation.prototype.stage
+         * @member {Object} Ekmap.LevelRenderer.Animation.prototype.stage
          * @description stage。
          */
         this.stage = {};
 
         /**
-         * @member {Object} SuperMap.LevelRenderer.Animation.prototype.onframe
+         * @member {Object} Ekmap.LevelRenderer.Animation.prototype.onframe
          * @description onframe。
          */
-        this.onframe = function () {
-        };
+        this.onframe = function() {};
 
         /**
-         * @member {Array} SuperMap.LevelRenderer.Animation.prototype._clips
+         * @member {Array} Ekmap.LevelRenderer.Animation.prototype._clips
          * @description _clips。
          */
         this._clips = [];
-        
+
         /**
-         * @member {boolean} SuperMap.LevelRenderer.Animation.prototype._running
+         * @member {boolean} Ekmap.LevelRenderer.Animation.prototype._running
          * @description _running。
          */
         this._running = false;
 
         /**
-         * @member {number} SuperMap.LevelRenderer.Animation.prototype._time
+         * @member {number} Ekmap.LevelRenderer.Animation.prototype._time
          * @description _time。
          */
         this._time = 0;
 
         CommonUtil.extend(this, options);
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Animation";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Animation";
 
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.prototype.add
+     * @function Ekmap.LevelRenderer.Animation.prototype.add
      * @description 添加动画片段。
-     * @param {SuperMap.LevelRenderer.Animation.Clip} clip - 动画片段。
+     * @param {Ekmap.LevelRenderer.Animation.Clip} clip - 动画片段。
      */
     add(clip) {
         this._clips.push(clip);
@@ -94,9 +93,9 @@ export class Animation extends Eventful {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.prototype.remove
+     * @function Ekmap.LevelRenderer.Animation.prototype.remove
      * @description 删除动画片段。
-     * @param {SuperMap.LevelRenderer.Animation.Clip} clip - 动画片段。
+     * @param {Ekmap.LevelRenderer.Animation.Clip} clip - 动画片段。
      */
     remove(clip) {
         var idx = new Util().indexOf(this._clips, clip);
@@ -107,7 +106,7 @@ export class Animation extends Eventful {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.prototype.update
+     * @function Ekmap.LevelRenderer.Animation.prototype.update
      * @description 更新动画片段。
      */
     _update() {
@@ -157,15 +156,16 @@ export class Animation extends Eventful {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.prototype.start
+     * @function Ekmap.LevelRenderer.Animation.prototype.start
      * @description 开始运行动画。
      */
     start() {
-        var requestAnimationFrame = window.requestAnimationFrame
-            || window.msRequestAnimationFrame
-            || window.mozRequestAnimationFrame
-            || window.webkitRequestAnimationFrame
-            || function (func) {
+        var requestAnimationFrame = window.requestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+
+            function(func) {
                 setTimeout(func, 16);
             };
 
@@ -186,7 +186,7 @@ export class Animation extends Eventful {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.prototype.stop
+     * @function Ekmap.LevelRenderer.Animation.prototype.stop
      * @description 停止运行动画。
      */
     stop() {
@@ -195,7 +195,7 @@ export class Animation extends Eventful {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.prototype.clear
+     * @function Ekmap.LevelRenderer.Animation.prototype.clear
      * @description 清除所有动画片段。
      */
     clear() {
@@ -204,14 +204,14 @@ export class Animation extends Eventful {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.prototype.animate
+     * @function Ekmap.LevelRenderer.Animation.prototype.animate
      * @description 对一个目标创建一个animator对象，可以指定目标中的属性使用动画。
      * @param {Object} target - 目标对象。
      * @param {Object} options - 动画参数选项。
      * @param {boolean} [options.loop=false] - 是否循环播放动画。
      * @param {function} [options.getter] - 如果指定getter函数，会通过getter函数取属性值。
      * @param {function} [options.setter] - 如果指定setter函数，会通过setter函数设置属性值。
-     * @returns {SuperMap.LevelRenderer.Animation.Animator} Animator。
+     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator。
      */
     animate(target, options) {
         options = options || {};
@@ -281,9 +281,9 @@ export class Animation extends Eventful {
     static _catmullRomInterpolate(p0, p1, p2, p3, t, t2, t3) {
         var v0 = (p2 - p0) * 0.5;
         var v1 = (p3 - p1) * 0.5;
-        return (2 * (p1 - p2) + v0 + v1) * t3
-            + (-3 * (p1 - p2) - 2 * v0 - v1) * t2
-            + v0 * t + p1;
+        return (2 * (p1 - p2) + v0 + v1) * t3 +
+            (-3 * (p1 - p2) - 2 * v0 - v1) * t2 +
+            v0 * t + p1;
     }
 
     static _cloneValue(value) {
@@ -315,12 +315,12 @@ export class Animation extends Eventful {
 }
 
 /**
- * @class SuperMap.LevelRenderer.Animation.Animator
+ * @class Ekmap.LevelRenderer.Animation.Animator
  */
 export class Animator {
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.Animator.prototype.animate
+     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.animate
      * @description 构造函数
      * @param {Object} target - 目标对象。
      * @param {Object} options - 动画参数选项。
@@ -330,65 +330,65 @@ export class Animator {
      */
     constructor(target, loop, getter, setter) {
         /**
-         * @member {Object} SuperMap.LevelRenderer.Animation.Animator.prototype._tracks
+         * @member {Object} Ekmap.LevelRenderer.Animation.Animator.prototype._tracks
          * @description _tracks。
          */
         this._tracks = {};
 
         /**
-         * @member {Object} SuperMap.LevelRenderer.Animation.Animator.prototype._target
+         * @member {Object} Ekmap.LevelRenderer.Animation.Animator.prototype._target
          * @description _target。
          */
         this._target = target;
-        
+
         /**
-         * @member {boolean} SuperMap.LevelRenderer.Animation.Animator.prototype._loop
+         * @member {boolean} Ekmap.LevelRenderer.Animation.Animator.prototype._loop
          * @description _loop。
          */
         this._loop = loop || false;
 
         /**
-         * @member {function} SuperMap.LevelRenderer.Animation.Animator.prototype._getter
+         * @member {function} Ekmap.LevelRenderer.Animation.Animator.prototype._getter
          * @description _getter。
          */
         this._getter = getter || _defaultGetter;
 
         /**
-         * @member {function} SuperMap.LevelRenderer.Animation.Animator.prototype._setter
+         * @member {function} Ekmap.LevelRenderer.Animation.Animator.prototype._setter
          * @description _setter。
          */
         this._setter = setter || _defaultSetter;
 
         /**
-         * @member {number} SuperMap.LevelRenderer.Animation.Animator.prototype._clipCount
+         * @member {number} Ekmap.LevelRenderer.Animation.Animator.prototype._clipCount
          * @description _clipCount。
          */
         this._clipCount = 0;
 
         /**
-         * @member {number} SuperMap.LevelRenderer.Animation.Animator.prototype._delay
+         * @member {number} Ekmap.LevelRenderer.Animation.Animator.prototype._delay
          * @description _delay。
          */
         this._delay = 0;
 
         /**
-         * @member {Array} SuperMap.LevelRenderer.Animation.Animator.prototype._doneList
+         * @member {Array} Ekmap.LevelRenderer.Animation.Animator.prototype._doneList
          * @description _doneList。
          */
         this._doneList = [];
 
         /**
-         * @member {Array} SuperMap.LevelRenderer.Animation.Animator.prototype._onframeList
+         * @member {Array} Ekmap.LevelRenderer.Animation.Animator.prototype._onframeList
          * @description _onframeList。
          */
         this._onframeList = [];
 
         /**
-         * @member {Array} SuperMap.LevelRenderer.Animation.Animator.prototype._clipList
+         * @member {Array} Ekmap.LevelRenderer.Animation.Animator.prototype._clipList
          * @description _clipList。
          */
         this._clipList = [];
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Animation.Animator";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Animation.Animator";
         //Function
         function _defaultGetter(target, key) {
             return target[key];
@@ -401,13 +401,13 @@ export class Animator {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.Animator.prototype.when
+     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.when
      * @description 设置动画关键帧
      * @param {number} time - 关键帧时间，单位是ms
      * @param {Object} props - 关键帧的属性值，key-value表示
-     * @returns {SuperMap.LevelRenderer.Animation.Animator} Animator
+     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
      */
-    when(time /* ms */, props) {
+    when(time /* ms */ , props) {
         for (var propName in props) {
             if (!this._tracks[propName]) {
                 this._tracks[propName] = [];
@@ -434,10 +434,10 @@ export class Animator {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.Animator.prototype.during
+     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.during
      * @description 添加动画每一帧的回调函数
      * @param {RequestCallback} callback - 回调函数
-     * @returns {SuperMap.LevelRenderer.Animation.Animator} Animator
+     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
      */
     during(callback) {
         this._onframeList.push(callback);
@@ -446,10 +446,10 @@ export class Animator {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.Animator.prototype.start
+     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.start
      * @description 开始执行动画
-     * @param {(string|function)} easing - 动画缓动函数。详见：<{@link SuperMap.LevelRenderer.Animation.easing}>。
-     * @returns {SuperMap.LevelRenderer.Animation.Animator} Animator
+     * @param {(string|function)} easing - 动画缓动函数。详见：<{@link Ekmap.LevelRenderer.Animation.easing}>。
+     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
      */
     start(easing) {
         var self = this;
@@ -458,7 +458,7 @@ export class Animator {
         var onFrameListLen = self._onframeList.length;
         var useSpline = easing === 'spline';
 
-        var ondestroy = function () {
+        var ondestroy = function() {
             self._clipCount--;
             if (self._clipCount === 0) {
                 // Clear all tracks
@@ -471,7 +471,7 @@ export class Animator {
             }
         };
 
-        var createTrackClip = function (keyframes, propName) {
+        var createTrackClip = function(keyframes, propName) {
             var trackLen = keyframes.length;
             if (!trackLen) {
                 return;
@@ -483,12 +483,12 @@ export class Animator {
 
             // For vertices morphing
             var arrDim = (
-                isValueArray
-                && Animation._isArrayLike(firstVal[0])
-            )
-                ? 2 : 1;
+                    isValueArray &&
+                    Animation._isArrayLike(firstVal[0])
+                ) ?
+                2 : 1;
             // Sort keyframe as ascending
-            keyframes.sort(function (a, b) {
+            keyframes.sort(function(a, b) {
                 return a.time - b.time;
             });
             var trackMaxTime = keyframes[trackLen - 1].time;
@@ -502,7 +502,7 @@ export class Animator {
                 var value = keyframes[i].value;
                 if (typeof(value) == 'string') {
                     value = SUtil.Util_color.toArray(value);
-                    if (value.length === 0) {    // Invalid color
+                    if (value.length === 0) { // Invalid color
                         value[0] = value[1] = value[2] = 0;
                         value[3] = 1;
                     }
@@ -528,7 +528,7 @@ export class Animator {
                 var rgba = [0, 0, 0, 0];
             }
 
-            var onframe = function (target, percent) {
+            var onframe = function(target, percent) {
                 // Find the range keyframes
                 // kf1-----kf2---------current--------kf3
                 // find kf2 and kf3 and do interpolation
@@ -572,7 +572,7 @@ export class Animator {
                     } else {
                         let value;
                         if (isValueColor) {
-                            // value = SuperMap.LevelRenderer.Animation._catmullRomInterpolateArray(
+                            // value = Ekmap.LevelRenderer.Animation._catmullRomInterpolateArray(
                             //     p0, p1, p2, p3, w, w * w, w * w * w,
                             //     rgba, 1
                             // );
@@ -644,7 +644,7 @@ export class Animator {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.Animator.prototype.stop
+     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.stop
      * @description 停止动画
      */
     stop() {
@@ -657,22 +657,22 @@ export class Animator {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Animation.Animator.prototype.delay
+     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.delay
      * @description 设置动画延迟开始的时间
      * @param {number} time - 时间，单位ms
-     * @returns {SuperMap.LevelRenderer.Animation.Animator} Animator
+     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
      */
     delay(time) {
         this._delay = time;
         return this;
     }
 
-    
+
     /**
-     * @function SuperMap.LevelRenderer.Animation.Animator.prototype.done
+     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.done
      * @description 添加动画结束的回调
      * @param {function} cb - Function
-     * @returns {SuperMap.LevelRenderer.Animation.Animator} Animator
+     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
      */
     done(cb) {
         if (cb) {
@@ -682,5 +682,3 @@ export class Animator {
     }
 
 }
-
-

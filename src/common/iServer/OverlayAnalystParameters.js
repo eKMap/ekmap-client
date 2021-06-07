@@ -1,12 +1,9 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {OverlayOperationType} from '../REST';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { OverlayOperationType } from '../REST';
 
 /**
- * @class SuperMap.OverlayAnalystParameters
+ * @class Ekmap.OverlayAnalystParameters
  * @category  iServer SpatialAnalyst OverlayAnalyst
  * @classdesc 叠加分析参数基类。数据集叠加分析参数和几何对象叠加分析参数均继承此基类。
  * @param {Object} options - 参数。
@@ -16,7 +13,7 @@ export class OverlayAnalystParameters {
 
     constructor(options) {
         /**
-         * @member {SuperMap.OverlayOperationType} [SuperMap.OverlayAnalystParameters.prototype.operation=SuperMap.OverlayOperationType.UNION]
+         * @member {Ekmap.OverlayOperationType} [Ekmap.OverlayAnalystParameters.prototype.operation=Ekmap.OverlayOperationType.UNION]
          * @description 指定叠加分析操作类型。
          */
         this.operation = OverlayOperationType.UNION;
@@ -24,11 +21,11 @@ export class OverlayAnalystParameters {
         if (options) {
             Util.extend(this, options);
         }
-        this.CLASS_NAME = "SuperMap.OverlayAnalystParameters";
+        this.CLASS_NAME = "Ekmap.OverlayAnalystParameters";
     }
 
     /**
-     * @function SuperMap.OverlayAnalystParameters.prototype.destroy
+     * @function Ekmap.OverlayAnalystParameters.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -39,4 +36,4 @@ export class OverlayAnalystParameters {
 
 }
 
-SuperMap.OverlayAnalystParameters = OverlayAnalystParameters;
+Ekmap.OverlayAnalystParameters = OverlayAnalystParameters;

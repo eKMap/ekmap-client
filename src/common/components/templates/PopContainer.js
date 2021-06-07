@@ -1,17 +1,14 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../../SuperMap';
-import {TemplateBase} from './TemplateBase';
+import { Ekmap } from '../../Ekmap';
+import { TemplateBase } from './TemplateBase';
 
 /**
- * @class SuperMap.Components.PopContainer
+ * @class Ekmap.Components.PopContainer
  * @classdesc 弹框组件。
  * @version 9.1.1
  * @param {Object} options - 组件配置参数。
  * @param {string} options.id - 组件 dom 元素 id。
  * @param {string} options.title - 弹框组件名称。
- * @extends {SuperMap.Components.TemplateBase}
+ * @extends {Ekmap.Components.TemplateBase}
  * @category Components Common
  */
 export class PopContainer extends TemplateBase {
@@ -56,7 +53,7 @@ export class PopContainer extends TemplateBase {
     }
 
     /**
-     * @function SuperMap.Components.PopContainer.prototype.appendContent
+     * @function Ekmap.Components.PopContainer.prototype.appendContent
      * @description 追加内容。
      * @param {Element} dom - 内容元素。
      */
@@ -66,4 +63,4 @@ export class PopContainer extends TemplateBase {
 
 }
 
-SuperMap.Components.PopContainer = PopContainer;
+Ekmap.Components.PopContainer = PopContainer;

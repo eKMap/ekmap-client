@@ -1,48 +1,48 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Point} from '../commontypes/geometry/Point';
-import {MultiPoint} from '../commontypes/geometry/MultiPoint';
-import {LinearRing} from '../commontypes/geometry/LinearRing';
-import {LineString} from '../commontypes/geometry/LineString';
-import {MultiLineString} from '../commontypes/geometry/MultiLineString';
-import {Polygon} from '../commontypes/geometry/Polygon';
-import {MultiPolygon} from '../commontypes/geometry/MultiPolygon';
-import {ServerStyle} from './ServerStyle';
-import {Route} from './Route';
-import {Util} from '../commontypes/Util';
-import {GeometryType} from '../REST';
+import { Ekmap } from '../Ekmap';
+import { Point } from '../commontypes/geometry/Point';
+import { MultiPoint } from '../commontypes/geometry/MultiPoint';
+import { LinearRing } from '../commontypes/geometry/LinearRing';
+import { LineString } from '../commontypes/geometry/LineString';
+import { MultiLineString } from '../commontypes/geometry/MultiLineString';
+import { Polygon } from '../commontypes/geometry/Polygon';
+import { MultiPolygon } from '../commontypes/geometry/MultiPolygon';
+import { ServerStyle } from './ServerStyle';
+import { Route } from './Route';
+import { Util } from '../commontypes/Util';
+import { GeometryType } from '../REST';
 
 /**
- * @class SuperMap.ServerGeometry
+ * @class Ekmap.ServerGeometry
  * @category  iServer  
  * @classdesc 服务端几何对象类。该类描述几何对象（矢量）的特征数据（坐标点对、几何对象的类型等）。基于服务端的空间分析、空间关系运算、查询等 GIS 服务功能使用服务端几何对象。
  * @param {Object} options - 参数。
  * @param {string} options.id - 服务端几何对象唯一标识符。
  * @param {Array.<number>} options.parts - 服务端几何对象中各个子对象所包含的节点个数。
- * @param {Array.<SuperMap.Geometry.Point>} options.points - 组成几何对象的节点的坐标对数组。
- * @param {SuperMap.GeometryType} options.type - 几何对象的类型。
- * @param {SuperMap.ServerStyle} [options.style] - 服务端几何对象的风格。
+ * @param {Array.<Ekmap.Geometry.Point>} options.points - 组成几何对象的节点的坐标对数组。
+ * @param {Ekmap.GeometryType} options.type - 几何对象的类型。
+ * @param {Ekmap.ServerStyle} [options.style] - 服务端几何对象的风格。
  */
 export class ServerGeometry {
 
     constructor(options) {
 
         /**
-         * @member {string} SuperMap.ServerGeometry.prototype.id
+         * @member {string} Ekmap.ServerGeometry.prototype.id
          * @description 服务端几何对象唯一标识符。
          */
         this.id = 0;
-        
+
         /**
-         * @member {SuperMap.ServerStyle} [SuperMap.ServerGeometry.prototype.style]
+         * @member {Ekmap.ServerStyle} [Ekmap.ServerGeometry.prototype.style]
          * @description 服务端几何对象的风格（ServerStyle）。
          */
         this.style = null;
 
         /**
-         * @member {Array.<number>} SuperMap.ServerGeometry.prototype.parts
+         * @member {Array.<number>} Ekmap.ServerGeometry.prototype.parts
          * @description 服务端几何对象中各个子对象所包含的节点个数。<br>
          * 1.几何对象从结构上可以分为简单几何对象和复杂几何对象。
          * 简单几何对象与复杂几何对象的区别：简单的几何对象一般为单一对象，
@@ -59,7 +59,7 @@ export class ServerGeometry {
         this.parts = null;
 
         /**
-         * @member {Array.<SuperMap.Geometry.Point>} SuperMap.ServerGeometry.prototype.points
+         * @member {Array.<Ekmap.Geometry.Point>} Ekmap.ServerGeometry.prototype.points
          * @description 组成几何对象的节点的坐标对数组。<br>
          * 1.所有几何对象（点、线、面）都是由一些简单的点坐标组成的，
          * 该字段存放了组成几何对象的点坐标的数组。
@@ -70,13 +70,13 @@ export class ServerGeometry {
         this.points = null;
 
         /**
-         * @member {SuperMap.GeometryType} SuperMap.ServerGeometry.prototype.type
+         * @member {Ekmap.GeometryType} Ekmap.ServerGeometry.prototype.type
          * @description 几何对象的类型（GeometryType）。
          */
         this.type = null;
 
         /**
-         * @member {Object} SuperMap.ServerGeometry.prototype.prjCoordSys
+         * @member {Object} Ekmap.ServerGeometry.prototype.prjCoordSys
          * @description 投影坐标参数，现仅在缓冲区分析中有效。
          */
         this.prjCoordSys = null;
@@ -84,11 +84,11 @@ export class ServerGeometry {
             Util.extend(this, options);
         }
 
-        this.CLASS_NAME = "SuperMap.ServerGeometry";
+        this.CLASS_NAME = "Ekmap.ServerGeometry";
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.destroy
+     * @function Ekmap.ServerGeometry.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -103,9 +103,9 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.toGeometry
+     * @function Ekmap.ServerGeometry.prototype.toGeometry
      * @description 将服务端几何对象 ServerGeometry 转换为客户端几何对象 Geometry。
-     * @returns {SuperMap.Geometry} 转换后的客户端几何对象。
+     * @returns {Ekmap.Geometry} 转换后的客户端几何对象。
      */
     toGeometry() {
         var me = this,
@@ -129,9 +129,9 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.toGeoPoint
+     * @function Ekmap.ServerGeometry.prototype.toGeoPoint
      * @description 将服务端的点几何对象转换为客户端几何对象。包括 Point、MultiPoint。
-     * @returns {SuperMap.Geometry} 转换后的客户端几何对象。
+     * @returns {Ekmap.Geometry} 转换后的客户端几何对象。
      */
     toGeoPoint() {
         var me = this,
@@ -154,9 +154,9 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.toGeoLine
+     * @function Ekmap.ServerGeometry.prototype.toGeoLine
      * @description 将服务端的线几何对象转换为客户端几何对象。包括 LinearRing、LineString、MultiLineString。
-     * @returns {SuperMap.Geometry} 转换后的客户端几何对象。
+     * @returns {Ekmap.Geometry} 转换后的客户端几何对象。
      */
     toGeoLine() {
         var me = this,
@@ -193,9 +193,9 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.toGeoLineEPS
+     * @function Ekmap.ServerGeometry.prototype.toGeoLineEPS
      * @description 将服务端的线几何对象转换为客户端几何对象。包括 LinearRing、LineString、MultiLineString。
-     * @returns {SuperMap.Geometry} 转换后的客户端几何对象。
+     * @returns {Ekmap.Geometry} 转换后的客户端几何对象。
      */
     toGeoLineEPS() {
         var me = this,
@@ -237,9 +237,9 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.toGeoLine
+     * @function Ekmap.ServerGeometry.prototype.toGeoLine
      * @description 将服务端的路由线几何对象转换为客户端几何对象。包括 LinearRing、LineString、MultiLineString。
-     * @returns {SuperMap.Geometry} 转换后的客户端几何对象。
+     * @returns {Ekmap.Geometry} 转换后的客户端几何对象。
      */
     toGeoLinem() {
         var me = this;
@@ -247,9 +247,9 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.toGeoRegion
+     * @function Ekmap.ServerGeometry.prototype.toGeoRegion
      * @description 将服务端的面几何对象转换为客户端几何对象。类型为 Polygon。
-     * @returns {SuperMap.Geometry} 转换后的客户端几何对象。
+     * @returns {Ekmap.Geometry} 转换后的客户端几何对象。
      */
     toGeoRegion() {
         var me = this,
@@ -293,7 +293,7 @@ export class ServerGeometry {
             );
             pointList = [];
             polygonArrayTemp.push(polygon);
-            if (geoTopo.length === 0){
+            if (geoTopo.length === 0) {
                 polygonBounds.push(polygon.getBounds());
             }
             CCWIdent.push(1);
@@ -363,9 +363,9 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.toGeoRegionEPS
+     * @function Ekmap.ServerGeometry.prototype.toGeoRegionEPS
      * @description 将服务端的面几何对象转换为客户端几何对象。类型为 Polygon。
-     * @returns {SuperMap.Geometry} 转换后的客户端几何对象。
+     * @returns {Ekmap.Geometry} 转换后的客户端几何对象。
      */
     toGeoRegionEPS() {
         var me = this,
@@ -415,7 +415,7 @@ export class ServerGeometry {
             );
             pointList = [];
             polygonArrayTemp.push(polygon);
-            if (geoTopo.length === 0){
+            if (geoTopo.length === 0) {
                 polygonBounds.push(polygon.getBounds());
             }
             CCWIdent.push(1);
@@ -484,10 +484,10 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.fromJson
+     * @function Ekmap.ServerGeometry.prototype.fromJson
      * @description 将 JSON 对象表示服务端几何对象转换为 ServerGeometry。
      * @param {Object} jsonObject - 要转换的 JSON 对象。
-     * @returns {SuperMap.ServerGeometry} 转换后的 ServerGeometry 对象。
+     * @returns {Ekmap.ServerGeometry} 转换后的 ServerGeometry 对象。
      */
     static fromJson(jsonObject) {
         if (!jsonObject) {
@@ -509,10 +509,10 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.fromGeometry
+     * @function Ekmap.ServerGeometry.prototype.fromGeometry
      * @description 将客户端 Geometry 转换成服务端 ServerGeometry。
-     * @param {SuperMap.Geometry} geometry - 要转换的客户端 Geometry 对象。
-     * @returns {SuperMap.ServerGeometry} 转换后的 ServerGeometry 对象。
+     * @param {Ekmap.Geometry} geometry - 要转换的客户端 Geometry 对象。
+     * @returns {Ekmap.ServerGeometry} 转换后的 ServerGeometry 对象。
      */
     static fromGeometry(geometry) {
         if (!geometry) {
@@ -524,13 +524,13 @@ export class ServerGeometry {
             type = null,
             icomponents = geometry.components,
             className = geometry.CLASS_NAME,
-            prjCoordSys = {"epsgCode": geometry.SRID};
+            prjCoordSys = { "epsgCode": geometry.SRID };
 
         if (!isNaN(geometry.id)) {
             id = geometry.id;
         }
         //坑爹的改法，没法，为了支持态势标绘，有时间就得全改
-        if (className != "SuperMap.Geometry.LinearRing" && className != "SuperMap.Geometry.LineString" && (geometry instanceof MultiPoint || geometry instanceof MultiLineString)) {
+        if (className != "Ekmap.Geometry.LinearRing" && className != "Ekmap.Geometry.LineString" && (geometry instanceof MultiPoint || geometry instanceof MultiLineString)) {
             let ilen = icomponents.length;
             for (let i = 0; i < ilen; i++) {
                 let partPointsCount = icomponents[i].getVertices().length;
@@ -540,7 +540,7 @@ export class ServerGeometry {
                 }
             }
             //这里className不是多点就全部是算线
-            type = (className == "SuperMap.Geometry.MultiPoint") ? GeometryType.POINT : GeometryType.LINE;
+            type = (className == "Ekmap.Geometry.MultiPoint") ? GeometryType.POINT : GeometryType.LINE;
         } else if (geometry instanceof MultiPolygon) {
             let ilen = icomponents.length;
             for (let i = 0; i < ilen; i++) {
@@ -592,9 +592,9 @@ export class ServerGeometry {
     }
 
     /**
-     * @function SuperMap.ServerGeometry.prototype.IsClockWise
+     * @function Ekmap.ServerGeometry.prototype.IsClockWise
      * @description 判断 linearRing 中的点的顺序。返回值大于 0，逆时针；小于 0，顺时针。
-     * @param {SuperMap.Geometry} geometry - 要转换的客户端 Geometry 对象。
+     * @param {Ekmap.Geometry} geometry - 要转换的客户端 Geometry 对象。
      * @returns {number} 返回值大于 0，逆时针；小于 0，顺时针。
      */
     static IsClockWise(points) {
@@ -610,7 +610,7 @@ export class ServerGeometry {
         return s * 0.5;
     }
 
-    static bubbleSort(areaArray, pointList, geoTopo,polygonBounds) {
+    static bubbleSort(areaArray, pointList, geoTopo, polygonBounds) {
         for (var i = 0; i < areaArray.length; i++) {
             for (var j = 0; j < areaArray.length; j++) {
                 if (areaArray[i] > areaArray[j]) {
@@ -637,4 +637,4 @@ export class ServerGeometry {
 
 }
 
-SuperMap.ServerGeometry = ServerGeometry;
+Ekmap.ServerGeometry = ServerGeometry;

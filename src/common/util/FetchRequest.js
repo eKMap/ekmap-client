@@ -1,53 +1,53 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import 'promise-polyfill/dist/polyfill';
 import 'fetch-ie8';
 import fetchJsonp from 'fetch-jsonp';
-import { SuperMap } from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 import { Util } from '../commontypes/Util';
 
 let fetch = window.fetch;
-export var setFetch = function (newFetch) {
-    fetch = newFetch;
-}
-/**
- * @function SuperMap.setCORS
- * @description 设置是否允许跨域请求，全局配置，优先级低于 service 下的 crossOring 参数。
- * @param {boolean} cors - 是否允许跨域请求。
- */
-export var setCORS = SuperMap.setCORS = function (cors) {
-    SuperMap.CORS = cors;
-}
-/**
- * @function SuperMap.isCORS
- * @description 是是否允许跨域请求。
- * @returns {boolean} 是否允许跨域请求。
- */
-export var isCORS = SuperMap.isCORS = function () {
-    if (SuperMap.CORS != undefined) {
-        return SuperMap.CORS;
+export var setFetch = function(newFetch) {
+        fetch = newFetch;
     }
-    return window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest();
+    /**
+     * @function Ekmap.setCORS
+     * @description 设置是否允许跨域请求，全局配置，优先级低于 service 下的 crossOring 参数。
+     * @param {boolean} cors - 是否允许跨域请求。
+     */
+export var setCORS = Ekmap.setCORS = function(cors) {
+        Ekmap.CORS = cors;
+    }
+    /**
+     * @function Ekmap.isCORS
+     * @description 是是否允许跨域请求。
+     * @returns {boolean} 是否允许跨域请求。
+     */
+export var isCORS = Ekmap.isCORS = function() {
+        if (Ekmap.CORS != undefined) {
+            return Ekmap.CORS;
+        }
+        return window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest();
+    }
+    /**
+     * @function Ekmap.setRequestTimeout
+     * @description 设置请求超时时间。
+     * @param {number} [timeout=45] - 请求超时时间，单位秒。
+     */
+export var setRequestTimeout = Ekmap.setRequestTimeout = function(timeout) {
+        return Ekmap.RequestTimeout = timeout;
+    }
+    /**
+     * @function Ekmap.getRequestTimeout
+     * @description 获取请求超时时间。
+     * @returns {number} 请求超时时间。
+     */
+export var getRequestTimeout = Ekmap.getRequestTimeout = function() {
+    return Ekmap.RequestTimeout || 45000;
 }
-/**
- * @function SuperMap.setRequestTimeout
- * @description 设置请求超时时间。
- * @param {number} [timeout=45] - 请求超时时间，单位秒。
- */
-export var setRequestTimeout = SuperMap.setRequestTimeout = function (timeout) {
-    return SuperMap.RequestTimeout = timeout;
-}
-/**
- * @function SuperMap.getRequestTimeout
- * @description 获取请求超时时间。
- * @returns {number} 请求超时时间。
- */
-export var getRequestTimeout = SuperMap.getRequestTimeout = function () {
-    return SuperMap.RequestTimeout || 45000;
-}
-export var FetchRequest = SuperMap.FetchRequest = {
-    commit: function (method, url, params, options) {
+export var FetchRequest = Ekmap.FetchRequest = {
+    commit: function(method, url, params, options) {
         method = method ? method.toUpperCase() : method;
         switch (method) {
             case 'GET':
@@ -62,7 +62,7 @@ export var FetchRequest = SuperMap.FetchRequest = {
                 return this.get(url, params, options);
         }
     },
-    supportDirectRequest: function (url, options) {
+    supportDirectRequest: function(url, options) {
         if (Util.isInTheSameDomain(url)) {
             return true;
         }
@@ -72,7 +72,7 @@ export var FetchRequest = SuperMap.FetchRequest = {
             return isCORS() || options.proxy;
         }
     },
-    get: function (url, params, options) {
+    get: function(url, params, options) {
         options = options || {};
         var type = 'GET';
         url = Util.urlAppend(url, this._getParameterString(params || {}));
@@ -83,7 +83,7 @@ export var FetchRequest = SuperMap.FetchRequest = {
                 url: url,
                 data: params
             };
-            return SuperMap.Util.RequestJSONPPromise.GET(config);
+            return Ekmap.Util.RequestJSONPPromise.GET(config);
         }
         if (!this.urlIsLong(url)) {
             return this._fetch(url, params, options, type);
@@ -92,7 +92,7 @@ export var FetchRequest = SuperMap.FetchRequest = {
         }
     },
 
-    delete: function (url, params, options) {
+    delete: function(url, params, options) {
         options = options || {};
         var type = 'DELETE';
         url = Util.urlAppend(url, this._getParameterString(params || {}));
@@ -103,14 +103,14 @@ export var FetchRequest = SuperMap.FetchRequest = {
                 url: url += "&_method=DELETE",
                 data: params
             };
-            return SuperMap.Util.RequestJSONPPromise.DELETE(config);
+            return Ekmap.Util.RequestJSONPPromise.DELETE(config);
         }
         if (this.urlIsLong(url)) {
             return this._postSimulatie(type, url.substring(0, url.indexOf('?') - 1), params, options);
         }
         return this._fetch(url, params, options, type);
     },
-    post: function (url, params, options) {
+    post: function(url, params, options) {
         options = options || {};
         if (!this.supportDirectRequest(url, options)) {
             url = url.replace('.json', '.jsonp');
@@ -118,12 +118,12 @@ export var FetchRequest = SuperMap.FetchRequest = {
                 url: url += "&_method=POST",
                 data: params
             };
-            return SuperMap.Util.RequestJSONPPromise.POST(config);
+            return Ekmap.Util.RequestJSONPPromise.POST(config);
         }
         return this._fetch(this._processUrl(url, options), params, options, 'POST');
     },
 
-    put: function (url, params, options) {
+    put: function(url, params, options) {
         options = options || {};
         url = this._processUrl(url, options);
         if (!this.supportDirectRequest(url, options)) {
@@ -132,11 +132,11 @@ export var FetchRequest = SuperMap.FetchRequest = {
                 url: url += "&_method=PUT",
                 data: params
             };
-            return SuperMap.Util.RequestJSONPPromise.PUT(config);
+            return Ekmap.Util.RequestJSONPPromise.PUT(config);
         }
         return this._fetch(url, params, options, 'PUT');
     },
-    urlIsLong: function (url) {
+    urlIsLong: function(url) {
         //当前url的字节长度。
         var totalLength = 0,
             charCode = null;
@@ -153,7 +153,7 @@ export var FetchRequest = SuperMap.FetchRequest = {
         }
         return totalLength < 2000 ? false : true;
     },
-    _postSimulatie: function (type, url, params, options) {
+    _postSimulatie: function(type, url, params, options) {
         var separator = url.indexOf('?') > -1 ? '&' : '?';
         url += separator + '_method=' + type;
         if (typeof params !== 'string') {
@@ -162,7 +162,7 @@ export var FetchRequest = SuperMap.FetchRequest = {
         return this.post(url, params, options);
     },
 
-    _processUrl: function (url, options) {
+    _processUrl: function(url, options) {
         if (this._isMVTRequest(url)) {
             return url;
         }
@@ -188,7 +188,7 @@ export var FetchRequest = SuperMap.FetchRequest = {
         return url;
     },
 
-    _fetch: function (url, params, options, type) {
+    _fetch: function(url, params, options, type) {
         options = options || {};
         options.headers = options.headers || {};
         if (!options.headers['Content-Type']) {
@@ -204,7 +204,7 @@ export var FetchRequest = SuperMap.FetchRequest = {
                     credentials: this._getWithCredentials(options),
                     mode: 'cors',
                     timeout: getRequestTimeout()
-                }).then(function (response) {
+                }).then(function(response) {
                     return response;
                 })
             );
@@ -216,12 +216,12 @@ export var FetchRequest = SuperMap.FetchRequest = {
             credentials: this._getWithCredentials(options),
             mode: 'cors',
             timeout: getRequestTimeout()
-        }).then(function (response) {
+        }).then(function(response) {
             return response;
         });
     },
 
-    _getWithCredentials: function (options) {
+    _getWithCredentials: function(options) {
         if (options.withCredentials === true) {
             return 'include';
         }
@@ -231,26 +231,26 @@ export var FetchRequest = SuperMap.FetchRequest = {
         return 'same-origin';
     },
 
-    _fetchJsonp: function (url, options) {
+    _fetchJsonp: function(url, options) {
         options = options || {};
         return fetchJsonp(url, {
             method: 'GET',
             timeout: options.timeout
-        }).then(function (response) {
+        }).then(function(response) {
             return response;
         });
     },
 
-    _timeout: function (seconds, promise) {
-        return new Promise(function (resolve, reject) {
-            setTimeout(function () {
+    _timeout: function(seconds, promise) {
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {
                 reject(new Error('timeout'));
             }, seconds);
             promise.then(resolve, reject);
         });
     },
 
-    _getParameterString: function (params) {
+    _getParameterString: function(params) {
         var paramsArray = [];
         for (var key in params) {
             var value = params[key];
@@ -267,40 +267,40 @@ export var FetchRequest = SuperMap.FetchRequest = {
         return paramsArray.join('&');
     },
 
-    _isMVTRequest: function (url) {
+    _isMVTRequest: function(url) {
         return url.indexOf('.mvt') > -1 || url.indexOf('.pbf') > -1;
     }
 }
-SuperMap.Util.RequestJSONPPromise = {
+Ekmap.Util.RequestJSONPPromise = {
     limitLength: 1500,
     queryKeys: [],
     queryValues: [],
     supermap_callbacks: {},
-    addQueryStrings: function (values) {
+    addQueryStrings: function(values) {
         var me = this;
         for (var key in values) {
             me.queryKeys.push(key);
             if (typeof values[key] !== 'string') {
-                values[key] = SuperMap.Util.toJSON(values[key]);
+                values[key] = Ekmap.Util.toJSON(values[key]);
             }
             var tempValue = encodeURIComponent(values[key]);
             me.queryValues.push(tempValue);
         }
     },
-    issue: function (config) {
+    issue: function(config) {
         var me = this,
             uid = me.getUid(),
             url = config.url,
             splitQuestUrl = [];
-        var p = new Promise(function (resolve) {
-            me.supermap_callbacks[uid] = function (response) {
+        var p = new Promise(function(resolve) {
+            me.supermap_callbacks[uid] = function(response) {
                 delete me.supermap_callbacks[uid];
                 resolve(response);
             };
         });
 
         // me.addQueryStrings({
-        //     callback: "SuperMap.Util.RequestJSONPPromise.supermap_callbacks[" + uid + "]"
+        //     callback: "Ekmap.Util.RequestJSONPPromise.supermap_callbacks[" + uid + "]"
         // });
         var sectionURL = url,
             keysCount = 0; //此次sectionURL中有多少个key
@@ -357,19 +357,19 @@ SuperMap.Util.RequestJSONPPromise = {
         splitQuestUrl.push(sectionURL);
         me.send(
             splitQuestUrl,
-            'SuperMap.Util.RequestJSONPPromise.supermap_callbacks[' + uid + ']',
+            'Ekmap.Util.RequestJSONPPromise.supermap_callbacks[' + uid + ']',
             config && config.proxy
         );
         return p;
     },
 
-    getUid: function () {
+    getUid: function() {
         var uid = new Date().getTime(),
             random = Math.floor(Math.random() * 1e17);
         return uid * 1000 + random;
     },
 
-    send: function (splitQuestUrl, callback, proxy) {
+    send: function(splitQuestUrl, callback, proxy) {
         var len = splitQuestUrl.length;
         if (len > 0) {
             var jsonpUserID = new Date().getTime();
@@ -395,7 +395,7 @@ SuperMap.Util.RequestJSONPPromise = {
         }
     },
 
-    GET: function (config) {
+    GET: function(config) {
         var me = this;
         me.queryKeys.length = 0;
         me.queryValues.length = 0;
@@ -403,7 +403,7 @@ SuperMap.Util.RequestJSONPPromise = {
         return me.issue(config);
     },
 
-    POST: function (config) {
+    POST: function(config) {
         var me = this;
         me.queryKeys.length = 0;
         me.queryValues.length = 0;
@@ -413,7 +413,7 @@ SuperMap.Util.RequestJSONPPromise = {
         return me.issue(config);
     },
 
-    PUT: function (config) {
+    PUT: function(config) {
         var me = this;
         me.queryKeys.length = 0;
         me.queryValues.length = 0;
@@ -422,7 +422,7 @@ SuperMap.Util.RequestJSONPPromise = {
         });
         return me.issue(config);
     },
-    DELETE: function (config) {
+    DELETE: function(config) {
         var me = this;
         me.queryKeys.length = 0;
         me.queryValues.length = 0;

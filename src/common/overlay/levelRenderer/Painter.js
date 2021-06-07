@@ -1,81 +1,81 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Transformable} from './Transformable';
-import {SmicImage} from './SmicImage';
-import {Util as CommonUtil} from '../../commontypes/Util';
-import {Util} from './Util';
-import {Config} from './Config';
-import {SUtil} from './SUtil';
+import { Transformable } from './Transformable';
+import { SmicImage } from './SmicImage';
+import { Util as CommonUtil } from '../../commontypes/Util';
+import { Util } from './Util';
+import { Config } from './Config';
+import { SUtil } from './SUtil';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Painter
+ * @class  Ekmap.LevelRenderer.Painter
  * @category Visualization Theme
  * @classdesc Painter 绘图模块。
  */
 export class Painter {
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.constructor
+     * @function Ekmap.LevelRenderer.Painter.constructor
      * @description 构造函数。
      *
      * @param {HTMLElement} root - 绘图区域（DIV）。
-     * @param {SuperMap.LevelRenderer.Storage} storage - Storage 实例。
+     * @param {Ekmap.LevelRenderer.Storage} storage - Storage 实例。
      *
      */
     constructor(root, storage) {
         /**
-         * @member {HTMLElement} SuperMap.LevelRenderer.Painter.prototype.root
+         * @member {HTMLElement} Ekmap.LevelRenderer.Painter.prototype.root
          * @description  绘图容器。
          *
          */
         this.root = root;
 
         /**
-         * @member {Array} SuperMap.LevelRenderer.Painter.prototype.storage
+         * @member {Array} Ekmap.LevelRenderer.Painter.prototype.storage
          * @description 图形仓库。
          *
          */
         this.storage = storage;
 
         /**
-         * @member {HTMLElement} SuperMap.LevelRenderer.Painter.prototype._domRoot
+         * @member {HTMLElement} Ekmap.LevelRenderer.Painter.prototype._domRoot
          * @description 容器根 dom 对象。
          *
          */
         this._domRoot = null;
 
         /**
-         * @member {Object} SuperMap.LevelRenderer.Painter.prototype._layers
+         * @member {Object} Ekmap.LevelRenderer.Painter.prototype._layers
          * @description 绘制层对象。
          *
          */
         this._layers = {};
 
         /**
-         * @member {Array} SuperMap.LevelRenderer.Painter.prototype._zlevelList
+         * @member {Array} Ekmap.LevelRenderer.Painter.prototype._zlevelList
          * @description  层列表。
          *
          */
         this._zlevelList = [];
 
         /**
-         * @member {Object} SuperMap.LevelRenderer.Painter.prototype._layerConfig
+         * @member {Object} Ekmap.LevelRenderer.Painter.prototype._layerConfig
          * @description 绘制层配置对象。
          *
          */
         this._layerConfig = {};
 
         /**
-         * @member {Object} SuperMap.LevelRenderer.Painter.prototype._bgDom
+         * @member {Object} Ekmap.LevelRenderer.Painter.prototype._bgDom
          * @description 背景层 Canvas （Dom）。
          *
          */
         this._bgDom = null;
 
         /**
-         * @member {Function} SuperMap.LevelRenderer.Painter.prototype.shapeToImage
+         * @member {Function} Ekmap.LevelRenderer.Painter.prototype.shapeToImage
          * @description 形状转图像函数。
          *
          */
@@ -83,7 +83,7 @@ export class Painter {
         // retina 屏幕优化
         Painter.devicePixelRatio = Math.max((window.devicePixelRatio || 1), 1);
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Painter";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Painter";
         this.root.innerHTML = '';
         this._width = this._getWidth(); // 宽，缓存记录
         this._height = this._getHeight(); // 高，缓存记录
@@ -103,7 +103,7 @@ export class Painter {
         // 创建各层canvas
         // 背景
         //this._bgDom = Painter.createDom('bg', 'div', this);
-        this._bgDom = Painter.createDom(CommonUtil.createUniqueID("SuperMap.Theme_background_"), 'div', this);
+        this._bgDom = Painter.createDom(CommonUtil.createUniqueID("Ekmap.Theme_background_"), 'div', this);
         domRoot.appendChild(this._bgDom);
         this._bgDom.onselectstart = returnFalse;
         this._bgDom.style['-webkit-user-select'] = 'none';
@@ -123,7 +123,7 @@ export class Painter {
         hoverLayer.dom.style['-webkit-touch-callout'] = 'none';
 
         var me = this;
-        this.updatePainter = function (shapeList, callback) {
+        this.updatePainter = function(shapeList, callback) {
             me.refreshShapes(shapeList, callback);
         };
 
@@ -134,14 +134,14 @@ export class Painter {
 
         /* eslint-disable */
         // 什么都不干的空方法
-        function doNothing() {  //NOSONAR
+        function doNothing() { //NOSONAR
         }
         /* eslint-enable */
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.destroy
+     * @function Ekmap.LevelRenderer.Painter.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -154,11 +154,11 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.render
+     * @function Ekmap.LevelRenderer.Painter.prototype.render
      * @description 渲染。首次绘图，创建各种 dom 和 context。
      *
      * @param {Function} callback - 绘画结束后的回调函数。
-     * @return {SuperMap.LevelRenderer.Painter} this。
+     * @return {Ekmap.LevelRenderer.Painter} this。
      */
     render(callback) {
         // TODO
@@ -169,12 +169,12 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.refresh
+     * @function Ekmap.LevelRenderer.Painter.prototype.refresh
      * @description 刷新。
      *
      * @param {Function} callback - 刷新结束后的回调函数。
      * @param {boolean} paintAll - 强制绘制所有 shape。
-     * @return {SuperMap.LevelRenderer.Painter} this。
+     * @return {Ekmap.LevelRenderer.Painter} this。
      */
     refresh(callback, paintAll) {
         var list = this.storage.getShapeList(true);
@@ -268,9 +268,8 @@ export class Painter {
             }
 
             if (((currentLayer && currentLayer.dirty) || paintAll) && !shape.invisible) {
-                if (
-                    !shape.onbrush
-                    || (shape.onbrush && !shape.onbrush(ctx, false))
+                if (!shape.onbrush ||
+                    (shape.onbrush && !shape.onbrush(ctx, false))
                 ) {
                     if (Config.catchBrushException) {
                         try {
@@ -319,11 +318,11 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.getLayer
+     * @function Ekmap.LevelRenderer.Painter.prototype.getLayer
      * @description 获取 zlevel 所在层，如果不存在则会创建一个新的层。
      *
      * @param {number} zlevel - zlevel。
-     * @return {SuperMap.LevelRenderer.Painter} this。
+     * @return {Ekmap.LevelRenderer.Painter} this。
      */
     getLayer(zlevel) {
         // Change draw layer
@@ -335,8 +334,8 @@ export class Painter {
             if (len > 0 && zlevel > this._zlevelList[0]) {
                 for (i = 0; i < len - 1; i++) {
                     if (
-                        this._zlevelList[i] < zlevel
-                        && this._zlevelList[i + 1] > zlevel
+                        this._zlevelList[i] < zlevel &&
+                        this._zlevelList[i + 1] > zlevel
                     ) {
                         break;
                     }
@@ -375,7 +374,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.getLayers
+     * @function Ekmap.LevelRenderer.Painter.prototype.getLayers
      * @description 获取所有已创建的层。
      * @return {Array.<Painter.Layer>} 已创建的层
      */
@@ -425,12 +424,12 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.refreshShapes
+     * @function Ekmap.LevelRenderer.Painter.prototype.refreshShapes
      * @description 更新的图形元素列表。
      *
      * @param {number} shapeList - 需要更新的图形元素列表。
      * @param {number} callback - 视图更新后回调函数。
-     * @return {SuperMap.LevelRenderer.Painter} this。
+     * @return {Ekmap.LevelRenderer.Painter} this。
      */
     refreshShapes(shapeList, callback) {
         for (var i = 0, l = shapeList.length; i < l; i++) {
@@ -444,9 +443,9 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.clear
+     * @function Ekmap.LevelRenderer.Painter.prototype.clear
      * @description 清除 hover 层外所有内容。
-     * @return {SuperMap.LevelRenderer.Painter} this。
+     * @return {Ekmap.LevelRenderer.Painter} this。
      */
     clear() {
         for (var k in this._layers) {
@@ -461,7 +460,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.modLayer
+     * @function Ekmap.LevelRenderer.Painter.prototype.modLayer
      * @description 修改指定 zlevel 的绘制参数。
      *
      * @param {string} zlevel - zlevel。
@@ -494,7 +493,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.delLayer
+     * @function Ekmap.LevelRenderer.Painter.prototype.delLayer
      * @description 删除指定层。
      *
      * @param {string} zlevel - 层所在的 zlevel。
@@ -518,9 +517,9 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.refreshHover
+     * @function Ekmap.LevelRenderer.Painter.prototype.refreshHover
      * @description 刷新 hover 层。
-     * @return {SuperMap.LevelRenderer.Painter} this。
+     * @return {Ekmap.LevelRenderer.Painter} this。
      */
     refreshHover() {
         this.clearHover();
@@ -535,9 +534,9 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.clearHover
+     * @function Ekmap.LevelRenderer.Painter.prototype.clearHover
      * @description 清除 hover 层所有内容。
-     * @return {SuperMap.LevelRenderer.Painter} this。
+     * @return {Ekmap.LevelRenderer.Painter} this。
      */
     clearHover() {
         var hover = this._layers.hover;
@@ -548,9 +547,9 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.resize
+     * @function Ekmap.LevelRenderer.Painter.prototype.resize
      * @description 区域大小变化后重绘。
-     * @return {SuperMap.LevelRenderer.Painter} this。
+     * @return {Ekmap.LevelRenderer.Painter} this。
      */
     resize() {
         var domRoot = this._domRoot;
@@ -582,7 +581,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.clearLayer
+     * @function Ekmap.LevelRenderer.Painter.prototype.clearLayer
      * @description 清除指定的一个层。
      * @param {number} zLevel - 层。
      */
@@ -595,7 +594,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.dispose
+     * @function Ekmap.LevelRenderer.Painter.prototype.dispose
      * @description 释放。
      *
      */
@@ -610,7 +609,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.getDomHover
+     * @function Ekmap.LevelRenderer.Painter.prototype.getDomHover
      * @description 获取 Hover 层的 Dom。
      */
     getDomHover() {
@@ -619,7 +618,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.toDataURL
+     * @function Ekmap.LevelRenderer.Painter.prototype.toDataURL
      * @description 图像导出。
      * @param {string} type - 图片类型。
      * @param {string} backgroundColor - 背景色。默认值：'#fff'。
@@ -628,11 +627,11 @@ export class Painter {
      */
     toDataURL(type, backgroundColor, args) {
         //var imageDom = Painter.createDom('image', 'canvas', this);
-        var imageDom = Painter.createDom(CommonUtil.createUniqueID("SuperMap.Theme.image_"), 'canvas', this);
+        var imageDom = Painter.createDom(CommonUtil.createUniqueID("Ekmap.Theme.image_"), 'canvas', this);
         this._bgDom.appendChild(imageDom);
         var ctx = imageDom.getContext('2d');
-        Painter.devicePixelRatio != 1
-        && ctx.scale(Painter.devicePixelRatio, Painter.devicePixelRatio);
+        Painter.devicePixelRatio != 1 &&
+            ctx.scale(Painter.devicePixelRatio, Painter.devicePixelRatio);
 
         ctx.fillStyle = backgroundColor || '#fff';
         ctx.rect(
@@ -646,11 +645,12 @@ export class Painter {
         // 升序遍历，shape上的zlevel指定绘画图层的z轴层叠
 
         this.storage.iterShape(
-            function (shape) {
+            function(shape) {
                 if (!shape.invisible) {
                     if (!shape.onbrush // 没有onbrush
                         // 有onbrush并且调用执行返回false或undefined则继续粉刷
-                        || (shape.onbrush && !shape.onbrush(ctx, false))
+                        ||
+                        (shape.onbrush && !shape.onbrush(ctx, false))
                     ) {
                         if (Config.catchBrushException) {
                             try {
@@ -667,8 +667,7 @@ export class Painter {
                         }
                     }
                 }
-            },
-            {normal: 'up', update: true}
+            }, { normal: 'up', update: true }
         );
         var image = imageDom.toDataURL(type, args);
         ctx = null;
@@ -678,7 +677,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.getWidth
+     * @function Ekmap.LevelRenderer.Painter.prototype.getWidth
      * @description  获取绘图区域宽度。
      * @return {number} 绘图区域宽度。
      */
@@ -688,7 +687,7 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.getHeight
+     * @function Ekmap.LevelRenderer.Painter.prototype.getHeight
      * @description 获取绘图区域高度。
      * @return {number} 绘图区域高度。
      */
@@ -703,12 +702,13 @@ export class Painter {
      */
     _getWidth() {
         var root = this.root;
-        var stl = root.currentStyle
-            || document.defaultView.getComputedStyle(root);
+        var stl = root.currentStyle ||
+            document.defaultView.getComputedStyle(root);
 
-        return ((root.clientWidth || parseInt(stl.width, 10))
-            - parseInt(stl.paddingLeft, 10) // 请原谅我这比较粗暴
-            - parseInt(stl.paddingRight, 10)).toFixed(0) - 0;
+        return ((root.clientWidth || parseInt(stl.width, 10)) -
+            parseInt(stl.paddingLeft, 10) // 请原谅我这比较粗暴
+            -
+            parseInt(stl.paddingRight, 10)).toFixed(0) - 0;
     }
 
 
@@ -718,12 +718,13 @@ export class Painter {
      */
     _getHeight() {
         var root = this.root;
-        var stl = root.currentStyle
-            || document.defaultView.getComputedStyle(root);
+        var stl = root.currentStyle ||
+            document.defaultView.getComputedStyle(root);
 
-        return ((root.clientHeight || parseInt(stl.height, 10))
-            - parseInt(stl.paddingTop, 10) // 请原谅我这比较粗暴
-            - parseInt(stl.paddingBottom, 10)).toFixed(0) - 0;
+        return ((root.clientHeight || parseInt(stl.height, 10)) -
+            parseInt(stl.paddingTop, 10) // 请原谅我这比较粗暴
+            -
+            parseInt(stl.paddingBottom, 10)).toFixed(0) - 0;
     }
 
 
@@ -736,7 +737,8 @@ export class Painter {
 
         if (!shape.onbrush // 没有onbrush
             // 有onbrush并且调用执行返回false或undefined则继续粉刷
-            || (shape.onbrush && !shape.onbrush(ctx, true))
+            ||
+            (shape.onbrush && !shape.onbrush(ctx, true))
         ) {
             var layer = this.getLayer(shape.zlevel);
             if (layer.needTransform) {
@@ -823,7 +825,7 @@ export class Painter {
     _createShapeToImageProcessor() {
         var me = this;
 
-        return function (id, e, width, height) {
+        return function(id, e, width, height) {
             return me._shapeToImage(
                 id, e, width, height, Painter.devicePixelRatio
             );
@@ -833,7 +835,7 @@ export class Painter {
 
     // SMIC-方法扩展 - start
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.updateHoverLayer
+     * @function Ekmap.LevelRenderer.Painter.prototype.updateHoverLayer
      * @description 更新设置显示高亮图层。
      * @param {Array} shapes - 图形数组。
      */
@@ -854,12 +856,12 @@ export class Painter {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Painter.prototype.createDom
+     * @function Ekmap.LevelRenderer.Painter.prototype.createDom
      * @description 创建 Dom。
      *
      * @param {string} id - Dom id
      * @param {string} type - Dom type
-     * @param {SuperMap.LevelRenderer.Painter} painter - Painter 实例。
+     * @param {Ekmap.LevelRenderer.Painter} painter - Painter 实例。
      * @return {Object} Dom
      */
     static createDom(id, type, painter) {
@@ -887,7 +889,7 @@ export class Painter {
  * @private
  * @class Painter.Layer
  * @classdesc 绘制层类。
- * @extends SuperMap.LevelRenderer.Transformable
+ * @extends Ekmap.LevelRenderer.Transformable
  */
 export class PaintLayer extends Transformable {
 
@@ -896,7 +898,7 @@ export class PaintLayer extends Transformable {
      * @description 构造函数。
      *
      * @param {string} id - id。
-     * @param {SuperMap.LevelRenderer.Painter} painter - Painter 实例。
+     * @param {Ekmap.LevelRenderer.Painter} painter - Painter 实例。
      *
      */
     constructor(id, painter) {
@@ -920,7 +922,7 @@ export class PaintLayer extends Transformable {
         this.ctxBack = null;
 
         /**
-         * @member {SuperMap.LevelRenderer.Painter} Painter.Layer.prototype.painter
+         * @member {Ekmap.LevelRenderer.Painter} Painter.Layer.prototype.painter
          * @description painter。
          */
         this.painter = painter;
@@ -997,7 +999,7 @@ export class PaintLayer extends Transformable {
          * @description Canvas 上下文。
          */
         this.ctx = null;
-        this.dom = Painter.createDom(CommonUtil.createUniqueID("SuperMap.Theme" + id), 'canvas', painter);
+        this.dom = Painter.createDom(CommonUtil.createUniqueID("Ekmap.Theme" + id), 'canvas', painter);
         this.dom.onselectstart = returnFalse; // 避免页面选中的尴尬
         this.dom.style['-webkit-user-select'] = 'none';
         this.dom.style['user-select'] = 'none';
@@ -1007,7 +1009,7 @@ export class PaintLayer extends Transformable {
         function returnFalse() {
             return false;
         }
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Painter.Layer";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Painter.Layer";
     }
 
     /**
@@ -1051,7 +1053,7 @@ export class PaintLayer extends Transformable {
      * @description  创建备份缓冲。
      */
     createBackBuffer() {
-        this.domBack = Painter.createDom(CommonUtil.createUniqueID("SuperMap.Theme.back-" + this.id), 'canvas', this.painter);
+        this.domBack = Painter.createDom(CommonUtil.createUniqueID("Ekmap.Theme.back-" + this.id), 'canvas', this.painter);
         this.ctxBack = this.domBack.getContext('2d');
 
         if (Painter.devicePixelRatio != 1) {

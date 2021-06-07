@@ -1,17 +1,17 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
-import {SUtil} from './SUtil';
+import { Shape } from './Shape';
+import { SUtil } from './SUtil';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicSector
+ * @class  Ekmap.LevelRenderer.Shape.SmicSector
  * @category Visualization Theme
  * @classdesc 扇形。
- * @extends SuperMap.LevelRenderer.Shape
+ * @extends Ekmap.LevelRenderer.Shape
  * @example
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicSector({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicSector({
  *         style: {
  *             x: 100,
  *             y: 100,
@@ -28,7 +28,7 @@ import {SUtil} from './SUtil';
 export class SmicSector extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicSector.prototype.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicSector.prototype.style
      * @description 绘制样式。
      *
      * @param {number} style.x - 圆心 x 坐标，必设参数。
@@ -59,7 +59,7 @@ export class SmicSector extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicSector.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicSector.constructor
      * @description 构造函数。
      * 
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -68,18 +68,18 @@ export class SmicSector extends Shape {
     constructor(options) {
         super(options);
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicSector.protptype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicSector.protptype.type
          * @description 图形类型。
          */
         this.type = 'smicsector';
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicSector";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicSector";
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicSector.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicSector.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -88,7 +88,7 @@ export class SmicSector extends Shape {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicSector.prototype.buildPath
+     * @function Ekmap.LevelRenderer.Shape.SmicSector.prototype.buildPath
      * @description 创建扇形路径。
      * 
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -101,12 +101,12 @@ export class SmicSector extends Shape {
         }
         var __OP = this.refOriginalPosition;
 
-        var x = style.x + __OP[0];   // 圆心x
-        var y = style.y + __OP[1];   // 圆心y
-        var r0 = style.r0 || 0;     // 形内半径[0,r)
-        var r = style.r;            // 扇形外半径(0,r]
-        var startAngle = style.startAngle;          // 起始角度[0,360)
-        var endAngle = style.endAngle;              // 结束角度(0,360]
+        var x = style.x + __OP[0]; // 圆心x
+        var y = style.y + __OP[1]; // 圆心y
+        var r0 = style.r0 || 0; // 形内半径[0,r)
+        var r = style.r; // 扇形外半径(0,r]
+        var startAngle = style.startAngle; // 起始角度[0,360)
+        var endAngle = style.endAngle; // 结束角度(0,360]
         var clockWise = style.clockWise || false;
 
         startAngle = SUtil.Util_math.degreeToRadian(startAngle);
@@ -148,7 +148,7 @@ export class SmicSector extends Shape {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicSector.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicSector.prototype.getRect
      * @description 返回扇形包围盒矩形
      *
      * @param {Object} style - style
@@ -170,10 +170,10 @@ export class SmicSector extends Shape {
         var max0 = SUtil.Util_vector.create();
         var max1 = SUtil.Util_vector.create();
 
-        var x = style.x + __OP[0];   // 圆心x
-        var y = style.y + __OP[1];   // 圆心y
-        var r0 = style.r0 || 0;     // 形内半径[0,r)
-        var r = style.r;            // 扇形外半径(0,r]
+        var x = style.x + __OP[0]; // 圆心x
+        var y = style.y + __OP[1]; // 圆心y
+        var r0 = style.r0 || 0; // 形内半径[0,r)
+        var r = style.r; // 扇形外半径(0,r]
         var startAngle = SUtil.Util_math.degreeToRadian(style.startAngle);
         var endAngle = SUtil.Util_math.degreeToRadian(style.endAngle);
         var clockWise = style.clockWise;

@@ -1,17 +1,17 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import {
-    SuperMap
-} from '../SuperMap';
+    Ekmap
+} from '../Ekmap';
 
 /**
  * @enum ServiceStatus
- * @memberOf SuperMap
+ * @memberOf Ekmap
  * @category iPortal/Online
  * @description 服务发布状态。
  */
-var ServiceStatus = SuperMap.ServiceStatus = {
+var ServiceStatus = Ekmap.ServiceStatus = {
     /** 不涉及，不可发布。 */
     DOES_NOT_INVOLVE: "DOES_NOT_INVOLVE",
     /** 发布失败。 */
@@ -32,11 +32,11 @@ export {
 /**
  * 
  * @enum DataItemType
- * @memberOf SuperMap
+ * @memberOf Ekmap
  * @category iPortal/Online
  * @description 数据项类型。
  */
-var DataItemType = SuperMap.DataItemType = {
+var DataItemType = Ekmap.DataItemType = {
     /** AUDIO */
     AUDIO: "AUDIO",
     /** COLOR */
@@ -88,14 +88,14 @@ var DataItemType = SuperMap.DataItemType = {
     /** WORKSPACE */
     WORKSPACE: "WORKSPACE"
 };
-export {DataItemType}
+export { DataItemType }
 /**
  * @enum DataItemOrderBy
- * @memberOf SuperMap
+ * @memberOf Ekmap
  * @category iPortal/Online
  * @description 数据排序字段。
  */
-var DataItemOrderBy = SuperMap.DataItemOrderBy = {
+var DataItemOrderBy = Ekmap.DataItemOrderBy = {
     /** FILENAME */
     FILENAME: "FILENAME",
     /** ID */
@@ -123,11 +123,11 @@ export {
 
 /**
  * @enum FilterField
- * @memberOf SuperMap
+ * @memberOf Ekmap
  * @category iPortal/Online
  * @description 关键字查询时的过滤字段。
  */
-var FilterField = SuperMap.FilterField = {
+var FilterField = Ekmap.FilterField = {
     /** LINKPAGE */
     LINKPAGE: "LINKPAGE",
     /** LINKPAGE */

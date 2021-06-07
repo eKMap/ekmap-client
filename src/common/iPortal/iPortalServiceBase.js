@@ -1,14 +1,11 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 import { ServerType } from '../REST';
 import { SecurityManager } from '../security/SecurityManager';
 import { Credential } from '../commontypes/Credential';
 import { FetchRequest } from '../util/FetchRequest';
 
 /**
- * @class SuperMap.iPortalServiceBase
+ * @class Ekmap.iPortalServiceBase
  * @classdesc iPortal 服务基类（有权限限制的类需要实现此类）。
  * @category iPortal/Online
  * @param {string} url - iPortal 服务地址。
@@ -23,14 +20,14 @@ export class IPortalServiceBase {
         options = options || {};
         this.serviceUrl = url;
         this.serverType = ServerType.iPortal;
-        this.CLASS_NAME = "SuperMap.iPortalServiceBase";
+        this.CLASS_NAME = "Ekmap.iPortalServiceBase";
         this.withCredentials = options.withCredentials || false;
         this.crossOrigin = options.crossOrigin
         this.headers = options.headers
     }
 
     /**
-     * @function SuperMap.iPortalServiceBase.prototype.request
+     * @function Ekmap.iPortalServiceBase.prototype.request
      * @description 子类统一通过该方法发送请求。
      * @param {string} [method='GET'] - 请求类型。
      * @param {string} url - 服务地址。
@@ -39,16 +36,16 @@ export class IPortalServiceBase {
      * @returns {Promise} 返回包含请求结果的 Promise 对象。
      */
 
-    request(method, url, param, requestOptions = {headers: this.headers, crossOrigin: this.crossOrigin, withCredentials: this.withCredentials }) {
+    request(method, url, param, requestOptions = { headers: this.headers, crossOrigin: this.crossOrigin, withCredentials: this.withCredentials }) {
         url = this.createCredentialUrl(url);
-        return FetchRequest.commit(method, url, param, requestOptions).then(function (response) {
+        return FetchRequest.commit(method, url, param, requestOptions).then(function(response) {
             return response.json();
         });
     }
 
 
     /**
-     * @function SuperMap.iPortalServiceBase.prototype.createCredentialUrl
+     * @function Ekmap.iPortalServiceBase.prototype.createCredentialUrl
      * @description 追加授权信息。
      * @param {string} url - 创建证书 URL 地址。
      * @returns {string} 携带 token 或 key 的新地址。
@@ -74,7 +71,7 @@ export class IPortalServiceBase {
 
 
     /**
-     * @function SuperMap.iPortalServiceBase.prototype.getCredential
+     * @function Ekmap.iPortalServiceBase.prototype.getCredential
      * @description 获取 token。
      * @returns {string} 返回获取的 token。
      *
@@ -93,15 +90,15 @@ export class IPortalServiceBase {
 
 
     /**
-     * @function SuperMap.iPortalServiceBase.prototype.getKey
+     * @function Ekmap.iPortalServiceBase.prototype.getKey
      * @description 其子类需要重写该方法，修改其中获取 key 的字段，存储 key 可能是服务 ID 字段，可能是 URL。
      */
     getKey() {
-        //return SuperMap.SecurityManager.getKey(this.id);
+        //return Ekmap.SecurityManager.getKey(this.id);
         //或
-        //return SuperMap.SecurityManager.getKey(this.serviceUrl);
+        //return Ekmap.SecurityManager.getKey(this.serviceUrl);
     }
 
 }
 
-SuperMap.iPortalServiceBase = IPortalServiceBase;
+Ekmap.iPortalServiceBase = IPortalServiceBase;

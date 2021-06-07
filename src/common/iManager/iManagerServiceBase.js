@@ -1,12 +1,9 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {SecurityManager} from '../security/SecurityManager';
-import {FetchRequest} from '../util/FetchRequest';
+import { Ekmap } from '../Ekmap';
+import { SecurityManager } from '../security/SecurityManager';
+import { FetchRequest } from '../util/FetchRequest';
 
 /**
- * @class SuperMap.iManagerServiceBase
+ * @class Ekmap.iManagerServiceBase
  * @classdesc iManager 服务基类（有权限限制的类需要实现此类）。
  * @category iManager
  * @param {string} url - iManager 首页地址，如：http://localhost:8390/imanager。
@@ -16,17 +13,17 @@ import {FetchRequest} from '../util/FetchRequest';
  */
 export class IManagerServiceBase {
 
-    constructor(url,options) {
+    constructor(url, options) {
         if (url) {
             var end = url.substr(url.length - 1, 1);
             this.serviceUrl = end === "/" ? url.substr(0, url.length - 2) : url;
         }
         this.options = options || {};
-        this.CLASS_NAME = "SuperMap.iManagerServiceBase";
+        this.CLASS_NAME = "Ekmap.iManagerServiceBase";
     }
 
     /**
-     * @function SuperMap.iManagerServiceBase.prototype.request
+     * @function Ekmap.iManagerServiceBase.prototype.request
      * @description 子类统一通过该方法发送请求。
      * @param {string} url - 请求 URL。
      * @param {string} [method='GET'] - 请求类型。
@@ -57,11 +54,11 @@ export class IManagerServiceBase {
         if (param) {
             param = JSON.stringify(param);
         }
-        return FetchRequest.commit(method, url, param, requestOptions).then(function (response) {
+        return FetchRequest.commit(method, url, param, requestOptions).then(function(response) {
             return response.json();
         });
     }
 
 }
 
-SuperMap.iManagerServiceBase = IManagerServiceBase;
+Ekmap.iManagerServiceBase = IManagerServiceBase;

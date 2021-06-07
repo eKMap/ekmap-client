@@ -1,9 +1,9 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../../SuperMap';
+import { Ekmap } from '../../Ekmap';
 /**
- * @class  SuperMap.Feature.ShapeParameters
+ * @class  Ekmap.Feature.ShapeParameters
  * @category Visualization Theme
  * @classdesc 图形参数基类，此类不可实例化
  */
@@ -12,13 +12,13 @@ export class ShapeParameters {
 
 
     /**
-     * @function SuperMap.Feature.ShapeParameters.prototype.constructor
+     * @function Ekmap.Feature.ShapeParameters.prototype.constructor
      * @description 图形参数对象。
-     * @returns {SuperMap.Feature.ShapeParameters} 图形参数对象。
+     * @returns {Ekmap.Feature.ShapeParameters} 图形参数对象。
      */
     constructor() {
         /**
-         * @member {Array} [SuperMap.Feature.ShapeParameters.prototype.refOriginalPosition=[0,0]]
+         * @member {Array} [Ekmap.Feature.ShapeParameters.prototype.refOriginalPosition=[0,0]]
          * @description 图形参考原点位置，图形的参考中心位置。
          * refOriginalPosition 是长度为 2 的数组，第一个元素表示 x 坐标，第二个元素表示 y 坐标。
          * refOriginalPosition 表示图形的参考中心，通常情况下，图形是使用 canvas 的原点位置作为位置参考，
@@ -32,60 +32,60 @@ export class ShapeParameters {
         this.refOriginalPosition = [0, 0];
 
         /**
-         * @member {string} SuperMap.Feature.ShapeParameters.prototype.refDataID
-         * @description 图形所关联数据的 ID（<{@link SuperMap.Feature.Vector}> 的 id）。
+         * @member {string} Ekmap.Feature.ShapeParameters.prototype.refDataID
+         * @description 图形所关联数据的 ID（<{@link Ekmap.Feature.Vector}> 的 id）。
          */
         this.refDataID = null;
-        
+
         /**
-         * @member {boolean} SuperMap.Feature.ShapeParameters.prototype.isHoverByRefDataID
+         * @member {boolean} Ekmap.Feature.ShapeParameters.prototype.isHoverByRefDataID
          * @description 是否根据 refDataID 进行高亮。用于同时高亮所有 refDataID 相同的图形。
          */
         this.isHoverByRefDataID = false;
 
         /**
-         * @member {string} SuperMap.Feature.ShapeParameters.prototype.refDataHoverGroup
+         * @member {string} Ekmap.Feature.ShapeParameters.prototype.refDataHoverGroup
          * @description 高亮图形组的组名。此属性在 refDataID 有效且 isHoverByRefDataID 为 true 时生效。
          * 一旦设置此属性，且属性值有效，只有关联同一个数据的图形且此属性相同的图形才会高亮。
          */
         this.refDataHoverGroup = null;
 
         /**
-         * @member {Object} SuperMap.Feature.ShapeParameters.prototype.dataInfo
+         * @member {Object} Ekmap.Feature.ShapeParameters.prototype.dataInfo
          * @description 图形携带的附加数据。
          */
         this.dataInfo = null;
 
         /**
-         * @member {boolean} SuperMap.Feature.ShapeParameters.prototype.clickable
+         * @member {boolean} Ekmap.Feature.ShapeParameters.prototype.clickable
          * @description 是否可点击。
          */
         this.clickable = true;
 
         /**
-         * @member {boolean} SuperMap.Feature.ShapeParameters.prototype.hoverable
+         * @member {boolean} Ekmap.Feature.ShapeParameters.prototype.hoverable
          * @description 是否可点击。
          */
         this.hoverable = true;
 
         /**
-         * @member {Object} SuperMap.Feature.ShapeParameters.prototype.style
+         * @member {Object} Ekmap.Feature.ShapeParameters.prototype.style
          * @description 图形样式对象，可设样式属性在子类中确定。
          */
         this.style = null;
-        
+
         /**
-         * @member {Object} SuperMap.Feature.ShapeParameters.prototype.highlightStyle
+         * @member {Object} Ekmap.Feature.ShapeParameters.prototype.highlightStyle
          * @description 高亮样式对象，可设样式属性与 style 的可设样式属性相同。
          */
         this.highlightStyle = {};
 
-        this.CLASS_NAME = "SuperMap.Feature.ShapeParameters";
+        this.CLASS_NAME = "Ekmap.Feature.ShapeParameters";
     }
 
-    
+
     /**
-     * @function SuperMap.Feature.ShapeParameters.prototype.destroy
+     * @function Ekmap.Feature.ShapeParameters.prototype.destroy
      * @description 销毁对象。
      */
     destroy() {
@@ -101,5 +101,5 @@ export class ShapeParameters {
     }
 
 }
-SuperMap.Feature = SuperMap.Feature || {};
-SuperMap.Feature.ShapeParameters = ShapeParameters;
+Ekmap.Feature = Ekmap.Feature || {};
+Ekmap.Feature.ShapeParameters = ShapeParameters;

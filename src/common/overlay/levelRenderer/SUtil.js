@@ -1,22 +1,22 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Area} from './Area';
-import {Color} from './Color';
-import {ComputeBoundingBox} from './ComputeBoundingBox';
-import {Curve} from './Curve';
-import {Env} from './Env';
-import {Event} from './Event';
-import {Http} from './Http';
-import {Log} from './Log';
-import {Math as SMath} from './Math';
-import {Matrix} from './Matrix';
-import {Util} from './Util';
-import {Vector} from './Vector';
+import { Area } from './Area';
+import { Color } from './Color';
+import { ComputeBoundingBox } from './ComputeBoundingBox';
+import { Curve } from './Curve';
+import { Env } from './Env';
+import { Event } from './Event';
+import { Http } from './Http';
+import { Log } from './Log';
+import { Math as SMath } from './Math';
+import { Matrix } from './Matrix';
+import { Util } from './Util';
+import { Vector } from './Vector';
 
 export class SUtil {
     /**
-     * @function SuperMap.LevelRenderer.SUtil.SUtil_smoothBezier
+     * @function Ekmap.LevelRenderer.SUtil.SUtil_smoothBezier
      * @description 贝塞尔平滑曲线。
      * @private 
      * @param {Array} points - 线段顶点数组。
@@ -107,7 +107,7 @@ export class SUtil {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.SUtil.SUtil_smoothSpline
+     * @function Ekmap.LevelRenderer.SUtil.SUtil_smoothSpline
      * @description 插值折线。
      * @private 
      * @param {Array} points - 线段顶点数组。
@@ -167,22 +167,22 @@ export class SUtil {
         function interpolate(p0, p1, p2, p3, t, t2, t3) {
             var v0 = (p2 - p0) * 0.5;
             var v1 = (p3 - p1) * 0.5;
-            return (2 * (p1 - p2) + v0 + v1) * t3
-                + (-3 * (p1 - p2) - 2 * v0 - v1) * t2
-                + v0 * t + p1;
+            return (2 * (p1 - p2) + v0 + v1) * t3 +
+                (-3 * (p1 - p2) - 2 * v0 - v1) * t2 +
+                v0 * t + p1;
         }
     }
 
     /**
-     * @function SuperMap.LevelRenderer.SUtil.SUtil_dashedLineTo
+     * @function Ekmap.LevelRenderer.SUtil.SUtil_dashedLineTo
      * @description 虚线 lineTo。
      */
     static SUtil_dashedLineTo(ctx, x1, y1, x2, y2, dashLength, customDashPattern) {
         // http://msdn.microsoft.com/en-us/library/ie/dn265063(v=vs.85).aspx
         var dashPattern = [5, 5];
-        dashLength = typeof dashLength != 'number'
-            ? 5
-            : dashLength;
+        dashLength = typeof dashLength != 'number' ?
+            5 :
+            dashLength;
 
         if (ctx.setLineDash) {
             dashPattern[0] = dashLength;

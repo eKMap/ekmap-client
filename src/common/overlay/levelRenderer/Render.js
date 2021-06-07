@@ -1,90 +1,30 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-/**
- * @private
- * @class SuperMap.LevelRenderer.Render
- * @category Visualization Theme
- * @classdesc Render 接口类，对外可用的所有接口都在这里。内部使用非 get 接口统一返回 this 对象，支持链式调用。
- */
-import {Util} from './Util';
-import {Util as CommonUtil} from '../../commontypes/Util';
-import {Storage} from './Storage';
-import {Painter} from './Painter';
-import {Handler} from './Handler';
-import {Animation} from './Animation';
-import {SUtil} from './SUtil';
+import { Util } from './Util';
+import { Util as CommonUtil } from '../../commontypes/Util';
+import { Storage } from './Storage';
+import { Painter } from './Painter';
+import { Handler } from './Handler';
+import { Animation } from './Animation';
+import { SUtil } from './SUtil';
 
 export class Render {
 
-
-    /**
-     * @function SuperMap.LevelRenderer.Render.constructor
-     * @description 构造函数。
-     *
-     * @param {string} id - 唯一标识。
-     * @param {HTMLElement} dom - Dom 对象。
-     */
     constructor(id, dom) {
-        /**
-         * @member {string} SuperMap.LevelRenderer.Render.prototype.id
-         * @description 唯一标识。
-         */
         this.id = id;
-
-        /**
-         * @member {SuperMap.LevelRenderer.Storage} SuperMap.LevelRenderer.Render.prototype.storage
-         * @description 图形仓库对象。
-         */
         this.storage = new Storage();
-
-        /**
-         * @member {SuperMap.LevelRenderer.Painter} SuperMap.LevelRenderer.Render.prototype.painter
-         * @description 绘制器对象。
-         *
-         */
         this.painter = new Painter(dom, this.storage);
-
-        /**
-         * @member {SuperMap.LevelRenderer.Handler} SuperMap.LevelRenderer.Render.prototype.handler
-         * @description 事件处理对象。
-         *
-         */
         this.handler = new Handler(dom, this.storage, this.painter);
-
-        /**
-         * @member {Array} SuperMap.LevelRenderer.Render.prototype.animatingElements
-         * @description 动画控制数组。
-         *
-         */
         this.animatingElements = [];
-
-        /**
-         * @member {SuperMap.LevelRenderer.animation.Animation} SuperMap.LevelRenderer.Render.prototype.animation
-         * @description 动画对象。
-         *
-         */
         this.animation = new Animation({
             stage: {
                 update: Render.getFrameCallback(this)
             }
         });
-
-        /**
-         * @member {boolean} SuperMap.LevelRenderer.Render.prototype._needsRefreshNextFrame
-         * @description 是否需要刷新下一帧。
-         *
-         */
         this._needsRefreshNextFrame = false;
         this.animation.start();
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Render";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Render";
 
     }
 
-    /**
-     * @function SuperMap.LevelRenderer.Render.prototype.destory
-     * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
-     */
     destroy() {
         this.id = null;
         this.storage = null;
@@ -96,7 +36,7 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.getId
+     * @function Ekmap.LevelRenderer.Render.prototype.getId
      * @description 获取实例唯一标识。
      * @return {string} 实例唯一标识。
      */
@@ -105,11 +45,11 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.addShape
+     * @function Ekmap.LevelRenderer.Render.prototype.addShape
      * @description 添加图形形状到根节点。
      *
-     * @param {SuperMap.LevelRenderer.Shape} shape - 图形对象，可用属性全集，详见各 shape。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @param {Ekmap.LevelRenderer.Shape} shape - 图形对象，可用属性全集，详见各 shape。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     addShape(shape) {
         this.storage.addRoot(shape);
@@ -117,15 +57,15 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.addGroup
+     * @function Ekmap.LevelRenderer.Render.prototype.addGroup
      * @description 添加组到根节点。
      *
      * (code)
      * //添加组到根节点例子
-     * var render = new SuperMap.LevelRenderer.Render("Render",document.getElementById('lRendertest'));
+     * var render = new Ekmap.LevelRenderer.Render("Render",document.getElementById('lRendertest'));
      * render.clear();
-     * var g = new SuperMap.LevelRenderer.Group();
-     * g.addChild(new SuperMap.LevelRenderer.Shape.Circle({
+     * var g = new Ekmap.LevelRenderer.Group();
+     * g.addChild(new Ekmap.LevelRenderer.Shape.Circle({
      *     style: {
      *         x: 100,
      *         y: 100,
@@ -137,8 +77,8 @@ export class Render {
      * render.render();
      * (end)
      *
-     * @param {SuperMap.LevelRenderer.Group} group - 组对象。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @param {Ekmap.LevelRenderer.Group} group - 组对象。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     addGroup(group) {
         this.storage.addRoot(group);
@@ -146,11 +86,11 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.delShape
+     * @function Ekmap.LevelRenderer.Render.prototype.delShape
      * @description 从根节点删除图形形状。
      *
      * @param {string} shapeId - 图形对象唯一标识。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     delShape(shapeId) {
         this.storage.delRoot(shapeId);
@@ -158,11 +98,11 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.delGroup
+     * @function Ekmap.LevelRenderer.Render.prototype.delGroup
      * @description 从根节点删除组。
      *
      * @param {string} groupId - 组对象唯一标识。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     delGroup(groupId) {
         this.storage.delRoot(groupId);
@@ -170,12 +110,12 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.modShape
+     * @function Ekmap.LevelRenderer.Render.prototype.modShape
      * @description 修改图形形状。
      *
      * @param {string} shapeId - 图形对象唯一标识。
-     * @param {SuperMap.LevelRenderer.Shape} shape - 图形对象。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @param {Ekmap.LevelRenderer.Shape} shape - 图形对象。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     modShape(shapeId, shape) {
         this.storage.mod(shapeId, shape);
@@ -183,12 +123,12 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.modGroup
+     * @function Ekmap.LevelRenderer.Render.prototype.modGroup
      * @description 修改组。
      *
      * @param {string} groupId - 组对象唯一标识。
-     * @param {SuperMap.LevelRenderer.Group} group - 组对象。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @param {Ekmap.LevelRenderer.Group} group - 组对象。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     modGroup(groupId, group) {
         this.storage.mod(groupId, group);
@@ -196,7 +136,7 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.modLayer
+     * @function Ekmap.LevelRenderer.Render.prototype.modLayer
      * @description 修改指定 zlevel 的绘制配置项。
      *
      * @param {string} zLevel - 组对象唯一标识。
@@ -209,7 +149,7 @@ export class Render {
      * @param {Array.<number>} scale - 层的缩放。
      * @param {boolean} zoomable - 层是否支持鼠标缩放操作。默认值：false。
      * @param {boolean} panable - 层是否支持鼠标平移操作。默认值：false。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     modLayer(zLevel, config) {
         this.painter.modLayer(zLevel, config);
@@ -217,11 +157,11 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.addHoverShape
+     * @function Ekmap.LevelRenderer.Render.prototype.addHoverShape
      * @description 添加额外高亮层显示，仅提供添加方法，每次刷新后高亮层图形均被清空。
      *
-     * @param {SuperMap.LevelRenderer.Shape} shape - 图形对象。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @param {Ekmap.LevelRenderer.Shape} shape - 图形对象。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     addHoverShape(shape) {
         this.storage.addHover(shape);
@@ -229,11 +169,11 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.render
+     * @function Ekmap.LevelRenderer.Render.prototype.render
      * @description 渲染。
      *
      * @callback {Function} callback - 渲染结束后回调函数。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     render(callback) {
         this.painter.render(callback);
@@ -242,11 +182,11 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.refresh
+     * @function Ekmap.LevelRenderer.Render.prototype.refresh
      * @description 视图更新。
      *
      * @callback {Function} callback - 视图更新后回调函数。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     refresh(callback) {
         this.painter.refresh(callback);
@@ -255,9 +195,9 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.refreshNextFrame
+     * @function Ekmap.LevelRenderer.Render.prototype.refreshNextFrame
      * @description 标记视图在浏览器下一帧需要绘制。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     refreshNextFrame() {
         this._needsRefreshNextFrame = true;
@@ -265,10 +205,10 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.refreshHover
+     * @function Ekmap.LevelRenderer.Render.prototype.refreshHover
      * @description 绘制（视图更新）高亮层。
      * @callback {Function} callback - 视图更新后回调函数。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     refreshHover(callback) {
         this.painter.refreshHover(callback);
@@ -276,12 +216,12 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.refreshShapes
+     * @function Ekmap.LevelRenderer.Render.prototype.refreshShapes
      * @description 视图更新。
      *
-     * @param {Array.<SuperMap.LevelRenderer.Shape>} shapeList - 需要更新的图形列表。
+     * @param {Array.<Ekmap.LevelRenderer.Shape>} shapeList - 需要更新的图形列表。
      * @callback {Function} callback - 视图更新后回调函数。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     refreshShapes(shapeList, callback) {
         this.painter.refreshShapes(shapeList, callback);
@@ -289,9 +229,9 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.resize
+     * @function Ekmap.LevelRenderer.Render.prototype.resize
      * @description 调整视图大小。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     resize() {
         this.painter.resize();
@@ -299,7 +239,7 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.animate
+     * @function Ekmap.LevelRenderer.Render.prototype.animate
      * @description 动画。
      *
      * @example
@@ -309,10 +249,10 @@ export class Render {
      *         .start()
      * 
      *
-     * @param {Array.<(SuperMap.LevelRenderer.Shape/SuperMap.LevelRenderer.Group)>} el - 动画对象。
-     * @param {string} path - 需要添加动画的属性获取路径，可以通过 a.b.c 来获取深层的属性。若传入对象为<SuperMap.LevelRenderer.Group>,path需为空字符串。
+     * @param {Array.<(Ekmap.LevelRenderer.Shape/Ekmap.LevelRenderer.Group)>} el - 动画对象。
+     * @param {string} path - 需要添加动画的属性获取路径，可以通过 a.b.c 来获取深层的属性。若传入对象为<Ekmap.LevelRenderer.Group>,path需为空字符串。
      * @param {Function} loop - 动画是否循环。
-     * @return {SuperMap.LevelRenderer.animation.Animator} Animator。
+     * @return {Ekmap.LevelRenderer.animation.Animator} Animator。
      */
     animate(el, path, loop) {
         if (typeof(el) === 'string') {
@@ -338,10 +278,10 @@ export class Render {
 
             if (!target) {
                 SUtil.Util_log(
-                    'Property "'
-                    + path
-                    + '" is not existed in element '
-                    + el.id
+                    'Property "' +
+                    path +
+                    '" is not existed in element ' +
+                    el.id
                 );
                 return;
             }
@@ -356,8 +296,8 @@ export class Render {
             }
             el.__aniCount++;
 
-            return this.animation.animate(target, {loop: loop})
-                .done(function () {
+            return this.animation.animate(target, { loop: loop })
+                .done(function() {
                     el.__aniCount--;
                     if (el.__aniCount === 0) {
                         // 从animatingElements里移除
@@ -371,7 +311,7 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.clearAnimation
+     * @function Ekmap.LevelRenderer.Render.prototype.clearAnimation
      * @description 停止所有动画。
      *
      */
@@ -380,7 +320,7 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.getWidth
+     * @function Ekmap.LevelRenderer.Render.prototype.getWidth
      * @description 获取视图宽度。
      * @return {number} 视图宽度。
      */
@@ -389,7 +329,7 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.getHeight
+     * @function Ekmap.LevelRenderer.Render.prototype.getHeight
      * @description 获取视图高度。
      * @return {number} 视图高度。
      */
@@ -398,7 +338,7 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.toDataURL
+     * @function Ekmap.LevelRenderer.Render.prototype.toDataURL
      * @description 图像导出。
      *
      * @param {string} type - 类型。
@@ -411,26 +351,26 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.shapeToImage
+     * @function Ekmap.LevelRenderer.Render.prototype.shapeToImage
      * @description 将常规 shape 转成 image shape。
      *
-     * @param {SuperMap.LevelRenderer.Shape} e - 图形。
+     * @param {Ekmap.LevelRenderer.Shape} e - 图形。
      * @param {number} width - 宽度。
      * @param {number} height - 高度。
      * @return {Object} image shape。
      */
     shapeToImage(e, width, height) {
-        var id = CommonUtil.createUniqueID("SuperMap.LevelRenderer.ToImage_");
+        var id = CommonUtil.createUniqueID("Ekmap.LevelRenderer.ToImage_");
         return this.painter.shapeToImage(id, e, width, height);
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.on
+     * @function Ekmap.LevelRenderer.Render.prototype.on
      * @description 事件绑定。
      *
      * @param {string} eventName - 事件名称。
      * @param {Function} eventHandler - 响应函数。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     on(eventName, eventHandler) {
         this.handler.on(eventName, eventHandler);
@@ -438,12 +378,12 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.un
+     * @function Ekmap.LevelRenderer.Render.prototype.un
      * @description 事件解绑定，参数为空则解绑所有自定义事件。
      *
      * @param {string} eventName - 事件名称。
      * @param {Function} eventHandler - 响应函数。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     un(eventName, eventHandler) {
         this.handler.un(eventName, eventHandler);
@@ -451,12 +391,12 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.trigger
+     * @function Ekmap.LevelRenderer.Render.prototype.trigger
      * @description  事件触发。
      *
      * @param {string} eventName - 事件名称，resize，hover，drag，etc。
      * @param {event} event - event dom事件对象。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     trigger(eventName, event) {
         this.handler.trigger(eventName, event);
@@ -465,9 +405,9 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.clear
+     * @function Ekmap.LevelRenderer.Render.prototype.clear
      * @description 清除当前 Render 下所有类图的数据和显示，clear 后 MVC 和已绑定事件均还存在在，Render 可用。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     clear() {
         this.storage.delRoot();
@@ -476,7 +416,7 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.dispose
+     * @function Ekmap.LevelRenderer.Render.prototype.dispose
      * @description 释放当前 Render 实例（删除包括 dom，数据、显示和事件绑定），dispose后 Render 不可用。
      */
     dispose() {
@@ -500,11 +440,11 @@ export class Render {
 
     // SMIC-方法扩展 - start
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.updateHoverShapes
+     * @function Ekmap.LevelRenderer.Render.prototype.updateHoverShapes
      * @description 更新设置显示高亮图层。
      *
-     * @param {Array.<SuperMap.LevelRenderer.Shape>} shapes - 图形数组。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @param {Array.<Ekmap.LevelRenderer.Shape>} shapes - 图形数组。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     updateHoverShapes(shapes) {
         this.painter.updateHoverLayer(shapes);
@@ -512,18 +452,18 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.getAllShapes
+     * @function Ekmap.LevelRenderer.Render.prototype.getAllShapes
      * @description 获取所有图形。
-     * @return {Array.<SuperMap.LevelRenderer.Shape>} 图形数组。
+     * @return {Array.<Ekmap.LevelRenderer.Shape>} 图形数组。
      */
     getAllShapes() {
         return this.storage._shapeList;
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.clearAll
+     * @function Ekmap.LevelRenderer.Render.prototype.clearAll
      * @description 清除高亮和图形图层。
-     * @return {SuperMap.LevelRenderer.Render} this。
+     * @return {Ekmap.LevelRenderer.Render} this。
      */
     clearAll() {
         this.clear();
@@ -532,16 +472,16 @@ export class Render {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Render.prototype.getHoverOne
+     * @function Ekmap.LevelRenderer.Render.prototype.getHoverOne
      * @description 获取单个高亮图形，当前鼠标对应。
-     * @return {SuperMap.LevelRenderer.Shape} 高亮图形。
+     * @return {Ekmap.LevelRenderer.Shape} 高亮图形。
      */
     getHoverOne() {
         return this.handler.getLastHoverOne();
     }
 
     static getFrameCallback(renderInstance) {
-        return function () {
+        return function() {
             var animatingElements = renderInstance.animatingElements;
 
             //animatingElements instanceof Array 临时解决 destory 报错

@@ -1,17 +1,14 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import mapboxgl from 'mapbox-gl';
 import '../../core/Base';
 import { GeometryPoint as Point, GeoText, GeometryVector as Vector } from '../../../common';
 import { Util } from '../../core/Util';
 
 /**
- * @class mapboxgl.supermap.ThemeFeature
+ * @class mapboxgl.ekmap.ThemeFeature
  * @category  Visualization Theme
- * @classdesc 专题图要素类。
- * @param {GeoJSONObject} geometry - 专题图要素几何对象。
- * @param {Object} [attributes] - 几何对象属性。
+ * @classdesc Thematic map feature class.
+ * @param {GeoJSONObject} geometry The geometric object of the thematic map element.
+ * @param {Object} attributes Geometric object properties.
  */
 export class ThemeFeature {
 
@@ -21,8 +18,8 @@ export class ThemeFeature {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeFeature.prototype.toFeature
-     * @description 转为矢量要素。
+     * @function mapboxgl.ekmap.ThemeFeature.prototype.toFeature
+     * @description Converted to vector elements.
      */
     toFeature() {
         var geometry = Util.toEkmapGeometry(this.geometry);

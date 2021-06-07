@@ -5,7 +5,7 @@ export * from './overlay';
 export * from './services';
 
 export {
-    SuperMap,
+    Ekmap,
     DataFormat,
     ServerType,
     GeometryType,

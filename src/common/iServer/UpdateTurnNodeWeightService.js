@@ -1,18 +1,18 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 import { Util } from '../commontypes/Util';
 import { NetworkAnalystServiceBase } from './NetworkAnalystServiceBase';
 import { UpdateTurnNodeWeightParameters } from './UpdateTurnNodeWeightParameters';
 
 /**
- * @class SuperMap.UpdateTurnNodeWeightService
+ * @class Ekmap.UpdateTurnNodeWeightService
  * @category  iServer NetworkAnalyst TurnNodeWeight
  * @classdesc 转向耗费权重更新服务类
- * @extends {SuperMap.NetworkAnalystServiceBase}
+ * @extends {Ekmap.NetworkAnalystServiceBase}
  * @example
- * var UpdateTurnNodeWeightService = new SuperMap.UpdateTurnNodeWeightService(url, {
+ * var UpdateTurnNodeWeightService = new Ekmap.UpdateTurnNodeWeightService(url, {
  *     eventListeners: {
  *         "processCompleted": UpdateTurnNodeWeightCompleted,    //参数为SuperMap.UpdateTurnNodeWeightEventArgs
  *		   "processFailed": UpdateTurnNodeWeightError          //参数为SuperMap.ServiceFailedEventArgs
@@ -29,7 +29,7 @@ export class UpdateTurnNodeWeightService extends NetworkAnalystServiceBase {
 
     constructor(url, options) {
         super(url, options);
-        this.CLASS_NAME = "SuperMap.UpdateTurnNodeWeightService";
+        this.CLASS_NAME = "Ekmap.UpdateTurnNodeWeightService";
     }
 
     /**
@@ -40,12 +40,12 @@ export class UpdateTurnNodeWeightService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.UpdateTurnNodeWeightService.prototype.processAsync
+     * @function Ekmap.UpdateTurnNodeWeightService.prototype.processAsync
      * @description 开始异步执行转向耗费权重的更新
-     * @param {SuperMap.UpdateTurnNodeWeightParameters} params - 转向耗费权重更新服务参数类
+     * @param {Ekmap.UpdateTurnNodeWeightParameters} params - 转向耗费权重更新服务参数类
      * @example
      * (code)
-     *  var updateTurnNodeWeightParam=new SuperMap.UpdateTurnNodeWeightParameters({
+     *  var updateTurnNodeWeightParam=new Ekmap.UpdateTurnNodeWeightParameters({
      *           nodeId:"106",
      *           fromEdgeId:"6508",
      *           toEdgeId:"6504",
@@ -73,7 +73,7 @@ export class UpdateTurnNodeWeightService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.UpdateTurnNodeWeightService.prototype.parse
+     * @function Ekmap.UpdateTurnNodeWeightService.prototype.parse
      * @description 将更新服务参数解析为用‘/’做分隔的字符串
      */
     parse(params) {
@@ -98,7 +98,7 @@ export class UpdateTurnNodeWeightService extends NetworkAnalystServiceBase {
                 case "weightField":
                     paramStr += "/weightfield/" + params[attr];
                     break;
-                default :
+                default:
                     break;
             }
         }
@@ -107,4 +107,4 @@ export class UpdateTurnNodeWeightService extends NetworkAnalystServiceBase {
 
 }
 
-SuperMap.UpdateTurnNodeWeightService = UpdateTurnNodeWeightService;
+Ekmap.UpdateTurnNodeWeightService = UpdateTurnNodeWeightService;

@@ -1,13 +1,13 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {CommonServiceBase} from './CommonServiceBase';
-import {TransferSolutionParameters} from './TransferSolutionParameters';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { CommonServiceBase } from './CommonServiceBase';
+import { TransferSolutionParameters } from './TransferSolutionParameters';
 
 /**
- * @class SuperMap.TransferSolutionService
+ * @class Ekmap.TransferSolutionService
  * @category  iServer TrafficTransferAnalyst TransferSolutions
  * @classdesc 交通换乘方案查询服务类。
  * 返回结果通过该类支持的事件的监听函数参数获取。
@@ -17,14 +17,14 @@ import {TransferSolutionParameters} from './TransferSolutionParameters';
  * @param {Object} options.eventListeners - 需要被注册的监听器对象。</br>
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
  * @param {Object} [options.headers] - 请求头。
- * @extends {SuperMap.CommonServiceBase}
+ * @extends {Ekmap.CommonServiceBase}
  * @example 例如：
  * (start code)
- * var myService = new SuperMap.TransferSolutionService(url, {eventListeners: {
-     *     "processCompleted": trafficTransferCompleted,
-     *     "processFailed": trafficTransferError
-     *     }
-     * };
+ * var myService = new Ekmap.TransferSolutionService(url, {eventListeners: {
+ *     "processCompleted": trafficTransferCompleted,
+ *     "processFailed": trafficTransferError
+ *     }
+ * };
  * (end)
  *
  */
@@ -32,7 +32,7 @@ export class TransferSolutionService extends CommonServiceBase {
 
     constructor(url, options) {
         super(url, options);
-        this.CLASS_NAME = "SuperMap.TransferSolutionService";
+        this.CLASS_NAME = "Ekmap.TransferSolutionService";
     }
 
     /**
@@ -43,9 +43,9 @@ export class TransferSolutionService extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.TransferSolutionService.prototype.processAsync
+     * @function Ekmap.TransferSolutionService.prototype.processAsync
      * @description 负责将客户端的更新参数传递到服务端。
-     * @param {SuperMap.TransferSolutionParameters} params - 交通换乘参数。
+     * @param {Ekmap.TransferSolutionParameters} params - 交通换乘参数。
      */
     processAsync(params) {
         if (!(params instanceof TransferSolutionParameters)) {
@@ -90,5 +90,4 @@ export class TransferSolutionService extends CommonServiceBase {
 
 }
 
-SuperMap.TransferSolutionService = TransferSolutionService;
-
+Ekmap.TransferSolutionService = TransferSolutionService;

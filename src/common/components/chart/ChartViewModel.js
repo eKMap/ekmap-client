@@ -1,27 +1,6 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../../SuperMap';
+import { Ekmap } from '../../Ekmap';
 import { ChartModel } from "./ChartModel";
 import { Events } from '../../commontypes/Events';
-
-/**
- * @class SuperMap.Components.ChartViewModel
- * @classdesc 图表组件功能类
- * @category Components Chart
- * @version 10.0.0
- * @param {Object} options - 可选参数。
- * @param {string} options.type - 图表类型。
- * @param {SuperMap.Components.Chart.Datasets} options.datasets - 数据来源。
- * @param {Array.<Object>} options.chartOptions - 图表可选参数。
- * @param {Array.<Object>} options.chartOptions.xAxis - 图表X轴。
- * @param {string} options.chartOptions.xAxis.field - 图表X轴字段名。
- * @param {string} options.chartOptions.xAxis.name - 图表X轴名称。
- * @param {Array.<Object>} options.chartOptions.yAxis - 图表Y轴。
- * @param {string} options.chartOptions.yAxis.field - 图表Y轴字段名。
- * @param {string} options.chartOptions.yAxis.name - 图表Y轴名称。
- * @fires SuperMap.Components.ChartViewModel#getdatafailed
- */
 
 export class ChartViewModel {
 
@@ -41,16 +20,11 @@ export class ChartViewModel {
         this.events = new Events(this, null, this.EVENT_TYPES);
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._initXYField
-     * @description 初始化XY字段。
-     * @private
-     * @param {Object} chartOptions - options里的图表参数
-     */
     _initXYField(chartOptions) {
         let me = this;
         if (chartOptions && chartOptions.length > 0) {
-            chartOptions.forEach(function (option) {
+            chartOptions.forEach(function(option) {
+
                 if (option.xAxis) {
                     me.xField.push({
                         field: option.xAxis.field,
@@ -66,40 +40,27 @@ export class ChartViewModel {
             });
         }
     }
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype.getDatasetInfo
-     * @description 获得数据集数据。
-     * @param {function} success - 成功回调函数
-     */
+
     getDatasetInfo(success) {
         this.createChart = success;
         if (this.datasets && this._checkUrl(this.datasets.url)) {
             this.chartModel = new ChartModel(this.datasets);
-            if(this.datasets.type === 'iServer'){
+            if (this.datasets.type === 'iServer') {
                 this.chartModel.getDatasetInfo(this._getDatasetInfoSuccess.bind(this));
-            }else if(this.datasets.type === 'iPortal'){
+            } else if (this.datasets.type === 'iPortal') {
                 this.chartModel.getDataInfoByIptl(this._getDataInfoSuccess.bind(this));
             }
-            /**
-             * @event SuperMap.Components.ChartViewModel#getdatafailed
-             * @description 监听到获取数据失败事件后触发
-             * @property {Object} error  - 事件对象。
-             */
-            this.chartModel.events.on({"getdatafailed":  (error) => {
-                this.events.triggerEvent("getdatafailed", error)
-            }});
+
+            this.chartModel.events.on({
+                "getdatafailed": (error) => {
+                    this.events.triggerEvent("getdatafailed", error)
+                }
+            });
         }
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._getDatasetInfoSuccess
-     * @description 成功回调函数。
-     * @private
-     * @param {Object} results - 数据集信息
-     */
     _getDatasetInfoSuccess(results) {
         let datasetUrl = this.datasets.url;
-        //判断服务为地图服务 或者 数据服务
         let restIndex = datasetUrl.indexOf("rest");
         if (restIndex > 0) {
             let index = datasetUrl.indexOf("/", restIndex + 5);
@@ -119,49 +80,25 @@ export class ChartViewModel {
         }
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._getDataInfoSuccess
-     * @description 请求iportal数据成功之后的回调
-     * @private
-     */
     _getDataInfoSuccess(results, type) {
         let me = this;
-        if(type === 'RESTMAP'){
+        if (type === 'RESTMAP') {
             me._getChartDatasFromLayer(results);
-        }else{
+        } else {
             me._getChartDatas(results);
         }
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._getDataFeatures
-     * @description 请求数据集的数据信息
-     * @private
-     * @param {Object} results - 数据集信息
-     */
     _getDataFeatures(results) {
         this.chartModel.getDataFeatures(results, this._getChartDatas.bind(this));
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._getLayerFeatures
-     * @description 请求图层的数据信息
-     * @private
-     * @param {Object} results - 数据集信息
-     */
     _getLayerFeatures(results) {
         this.chartModel.getLayerFeatures(results, this._getChartDatasFromLayer.bind(this));
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._getChartDatas
-     * @description 将请求回来的数据转换为图表所需的数据格式
-     * @private
-     * @param {Object} results - 数据要素信息
-     */
     _getChartDatas(results) {
         if (results) {
-            // 数据来自restdata---results.result.features
             this.features = results.result.features;
             let features = this.features.features;
             let data = {};
@@ -194,12 +131,7 @@ export class ChartViewModel {
             }
         }
     }
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._getChartDatasFromLayer
-     * @description 将请求回来的数据转换为图表所需的数据格式
-     * @private
-     * @param {Object} results - 图层数据要素信息
-     */
+
     _getChartDatasFromLayer(results) {
         if (results.result.recordsets) {
             let recordsets = results.result.recordsets[0];
@@ -229,22 +161,11 @@ export class ChartViewModel {
         }
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._createChartOptions
-     * @description 创建图表所需参数
-     * @private
-     * @param {Object} data - 图表数据
-     */
     _createChartOptions(data) {
         this.calculatedData = this._createChartDatas(data);
         return this.updateChartOptions(this.chartType);
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype.changeType
-     * @description 改变图表类型
-     * @param {string} type - 图表类型
-     */
     changeType(type) {
         if (type !== this.chartType) {
             this.chartType = type;
@@ -252,42 +173,22 @@ export class ChartViewModel {
         }
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype.updateData
-     * @description 改变图表类型
-     * @param {SuperMap.Components.Chart.Datasets} datasets - 数据来源
-     * @param {function} success 成功回调函数
-     */
     updateData(datasets, chartOption, success) {
         this.updateChart = success;
         this.xField = [];
         this.yField = [];
         this._initXYField(chartOption);
-        // type的设置默认值
         datasets.type = datasets.type || 'iServer';
-        // withCredentials的设置默认值
         datasets.withCredentials = datasets.withCredentials || false;
         this.datasets = datasets;
         this.getDatasetInfo(this._updateDataSuccess.bind(this));
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._updateDataSuccess
-     * @description 改变图表类型
-     * @private
-     * @param {Object} data - 图表数据
-     */
     _updateDataSuccess(data) {
         let options = this._createChartOptions(data);
         this.updateChart(options);
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype.updateChartOptions
-     * @description 更新图表所需参数
-     * @param {string} type - 图表类型
-     * @param {Object} style - 图表样式
-     */
     updateChartOptions(type, style) {
         if (this.calculatedData) {
             let grid = this.grid;
@@ -358,30 +259,25 @@ export class ChartViewModel {
         }
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._createChartDatas
-     * @description 构建图表数据
-     * @private
-     * @param {Object} data - 源数据
-     */
     _createChartDatas(data) {
-        let fieldIndex = 0, yfieldIndexs = [];
+        let fieldIndex = 0,
+            yfieldIndexs = [];
         let fieldCaptions = data.fieldCaptions;
         let me = this;
         //X
-        fieldCaptions.forEach(function (field, index) {
+        fieldCaptions.forEach(function(field, index) {
             if (me.xField[0] && field === me.xField[0].field) {
                 fieldIndex = index;
             }
         });
         //Y
         this.yFieldName = "";
-        this.yField.forEach(function (value, index) {
+        this.yField.forEach(function(value, index) {
             if (index !== 0) {
                 me.yFieldName = me.yFieldName + ",";
             }
             me.yFieldName = me.yFieldName + value.name;
-            fieldCaptions.forEach(function (field, index) {
+            fieldCaptions.forEach(function(field, index) {
                 if (field === value.field) {
                     yfieldIndexs.push(index);
                 }
@@ -390,7 +286,7 @@ export class ChartViewModel {
         let datas = this._getAttrData(data, fieldIndex);
         let yDatas = [];
         if (yfieldIndexs.length > 0) {
-            yfieldIndexs.forEach(function (yfieldIndex) {
+            yfieldIndexs.forEach(function(yfieldIndex) {
                 let yData = [];
                 for (let i in data.fieldValues[yfieldIndex]) {
                     yData.push({
@@ -399,12 +295,10 @@ export class ChartViewModel {
                 }
                 yDatas.push(yData);
             });
-        } else {                     //未指定Y字段时，y轴计数
+        } else {
             let YData = [],
                 XData = [],
                 len = datas.length;
-
-            //计算X轴，Y轴数据，并去重
             for (let i = 0; i < len; i++) {
                 let isSame = false;
                 for (let j = 0, leng = XData.length; j < leng; j++) {
@@ -431,13 +325,6 @@ export class ChartViewModel {
         }
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._getAttrData
-     * @description 选中字段数据
-     * @private
-     * @param {Object} datacontent - 图表数据
-     * @param {number} index - 字段索引
-     */
     _getAttrData(datacontent, index) {
         if (index === 0) {
             this.xField = [{
@@ -456,17 +343,10 @@ export class ChartViewModel {
         return fieldsDatas;
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._createChartSeries
-     * @description 图表数据
-     * @private
-     * @param {Object} calculatedData - 图表数据
-     * @param {string} chartType - 图表类型
-     */
     _createChartSeries(calculatedData, chartType) {
         let series = [];
         let yDatas = calculatedData.YData;
-        yDatas.forEach(function (yData) {
+        yDatas.forEach(function(yData) {
             let value = 0;
             let serieData = [];
             for (let data of yData) {
@@ -486,23 +366,11 @@ export class ChartViewModel {
         return series;
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._isDate
-     * @description 判断是否为日期
-     * @private
-     * @param {string} data - 字符串
-     */
     _isDate(data) {
         let reg = /((^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._])(10|12|0?[13578])([-\/\._])(3[01]|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._])(11|0?[469])([-\/\._])(30|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._])(0?2)([-\/\._])(2[0-8]|1[0-9]|0?[1-9])$)|(^([2468][048]00)([-\/\._])(0?2)([-\/\._])(29)$)|(^([3579][26]00)([-\/\._])(0?2)([-\/\._])(29)$)|(^([1][89][0][48])([-\/\._])(0?2)([-\/\._])(29)$)|(^([2-9][0-9][0][48])([-\/\._])(0?2)([-\/\._])(29)$)|(^([1][89][2468][048])([-\/\._])(0?2)([-\/\._])(29)$)|(^([2-9][0-9][2468][048])([-\/\._])(0?2)([-\/\._])(29)$)|(^([1][89][13579][26])([-\/\._])(0?2)([-\/\._])(29)$)|(^([2-9][0-9][13579][26])([-\/\._])(0?2)([-\/\._])(29)$))/ig;
         return reg.test(data);
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._isNumber
-     * @description 判断是否为数值
-     * @private
-     * @param {string} data - 字符串
-     */
     _isNumber(data) {
         let mdata = Number(data);
         if (mdata === 0) {
@@ -511,12 +379,6 @@ export class ChartViewModel {
         return !isNaN(mdata);
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._getDataType
-     * @description 判断数据的类型
-     * @private
-     * @param {string} data - 字符串
-     */
     _getDataType(data) {
         if (data !== null && data !== undefined && data !== '') {
             if (this._isDate(data)) {
@@ -529,18 +391,11 @@ export class ChartViewModel {
         return "STRING";
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._checkUrl
-     * @description 检查url是否符合要求
-     * @private
-     * @param {string} url
-     */
     _checkUrl(url) {
         let match;
         if (url === '' || !this._isMatchUrl(url)) {
             match = false;
         } else if (/^http[s]?:\/\/localhost/.test(url) || /^http[s]?:\/\/127.0.0.1/.test(url)) {
-            //不是实际域名
             match = false;
         } else {
             match = true;
@@ -548,21 +403,11 @@ export class ChartViewModel {
         return match;
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype._isMatchUrl
-     * @description 判断输入的地址是否符合地址格式
-     * @private
-     * @param {string} str - url
-     */
     _isMatchUrl(str) {
         var reg = new RegExp('(https?|http|file|ftp)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]');
         return reg.test(str);
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype.getStyle
-     * @description 获取图表样式。
-     */
     getStyle() {
         let style = {
             grid: this.grid,
@@ -572,21 +417,12 @@ export class ChartViewModel {
         return style;
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype.getFeatures
-     * @description 获取地图服务，数据服务请求返回的数据。
-     */
     getFeatures() {
         return this.features;
     }
 
-    /**
-     * @function SuperMap.Components.ChartViewModel.prototype.setStyle
-     * @description 设置图表样式。
-     * @param {Object} style - 图表样式
-     */
     setStyle(style) {
         return this.updateChartOptions(this.chartType, style);
     }
 }
-SuperMap.Components.ChartViewModel = ChartViewModel;
+Ekmap.Components.ChartViewModel = ChartViewModel;

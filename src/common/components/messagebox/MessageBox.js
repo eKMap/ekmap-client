@@ -1,10 +1,7 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../../SuperMap';
+import { Ekmap } from '../../Ekmap';
 
 /**
- * @class SuperMap.Components.MessageBox
+ * @class Ekmap.Components.MessageBox
  * @version 9.1.1
  * @classdesc 组件信息提示框。
  * @category Components Common
@@ -51,7 +48,7 @@ export class MessageBox {
     }
 
     /**
-     * @function SuperMap.Components.MessageBox.prototype.closeView
+     * @function Ekmap.Components.MessageBox.prototype.closeView
      * @description 关闭提示框。
      */
     closeView() {
@@ -59,7 +56,7 @@ export class MessageBox {
     }
 
     /**
-     * @function SuperMap.Components.MessageBox.prototype.showView
+     * @function Ekmap.Components.MessageBox.prototype.showView
      * @description 显示提示框。
      * @param {string} message - 提示框显示内容。
      * @param {string}[type="warring"] 提示框类型，如 "warring", "failure", "success"。
@@ -82,4 +79,4 @@ export class MessageBox {
     }
 }
 
-SuperMap.Components.MessageBox = MessageBox;
+Ekmap.Components.MessageBox = MessageBox;

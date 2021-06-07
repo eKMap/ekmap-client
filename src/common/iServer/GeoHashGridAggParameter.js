@@ -1,36 +1,33 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from "../SuperMap";
-import {AggregationType} from '../REST';
-import {Util} from '../commontypes/Util';
-import {AggregationParameter} from "./AggregationParameter";
+import { Ekmap } from "../Ekmap";
+import { AggregationType } from '../REST';
+import { Util } from '../commontypes/Util';
+import { AggregationParameter } from "./AggregationParameter";
 
 /**
- * @class SuperMap.GeoHashGridAggParameter
+ * @class Ekmap.GeoHashGridAggParameter
  * @classdesc 格网聚合查询参数类，该参数仅支持数据来源 Elasticsearch 服务的数据服务。
  * @category iServer Data FeatureResults
  * @param {Object} option - 初始化参数。
  * @param {number} [option.precision=5] - 网格中数字的精度。
- * @param {SuperMap.AggregationType} [option.aggType=SuperMap.AggregationType.GEOHASH_GRID] - 格网聚合类型。
+ * @param {Ekmap.AggregationType} [option.aggType=Ekmap.AggregationType.GEOHASH_GRID] - 格网聚合类型。
  */
 export class GeoHashGridAggParameter extends AggregationParameter {
     constructor(option) {
         super(option);
         /**
-         * @member {number} [SuperMap.GeoHashGridAggParameter.prototype.precision=5]
+         * @member {number} [Ekmap.GeoHashGridAggParameter.prototype.precision=5]
          * @description 网格中数字的精度。
          */
         this.precision = 5;
         /**
-         * @member {SuperMap.AggregationType} [SuperMap.GeoHashGridAggParameter.prototype.aggType=SuperMap.AggregationType.GEOHASH_GRID]
+         * @member {Ekmap.AggregationType} [Ekmap.GeoHashGridAggParameter.prototype.aggType=Ekmap.AggregationType.GEOHASH_GRID]
          * @description 格网聚合类型。
          */
         this.aggType = AggregationType.GEOHASH_GRID;
 
         Util.extend(this, option);
 
-        this.CLASS_NAME = "SuperMap.GeoHashGridAggParameter";
+        this.CLASS_NAME = "Ekmap.GeoHashGridAggParameter";
     }
 
     destroy() {
@@ -39,7 +36,7 @@ export class GeoHashGridAggParameter extends AggregationParameter {
     }
 
     /**
-     * @function SuperMap.GeoHashGridAggParameter.toJsonParameters
+     * @function Ekmap.GeoHashGridAggParameter.toJsonParameters
      * @description 将对象转为 JSON 格式。
      * @param param 转换对象。
      * @returns {string|object}
@@ -58,5 +55,4 @@ export class GeoHashGridAggParameter extends AggregationParameter {
     }
 }
 
-SuperMap.GeoHashGridAggParameter = GeoHashGridAggParameter;
-
+Ekmap.GeoHashGridAggParameter = GeoHashGridAggParameter;

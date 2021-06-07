@@ -1,13 +1,10 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 import { Util } from '../commontypes/Util';
 import { OutputSetting } from './OutputSetting';
 import { MappingParameters } from './MappingParameters';
 
 /**
- * @class SuperMap.OverlayGeoJobParameter
+ * @class Ekmap.OverlayGeoJobParameter
  * @category iServer ProcessingService OverlayAnalyst
  * @classdesc 叠加分析任务参数类。
  * @param {Object} options - 参数。
@@ -16,8 +13,8 @@ import { MappingParameters } from './MappingParameters';
  * @param {string} options.srcFields - 输入数据需要保留的字段。
  * @param {string} [options.overlayFields] - 叠加数据需要保留的字段。对分析模式为 clip、update、erase 时，此参数无效。
  * @param {string} [options.mode] - 叠加分析模式。
- * @param {SuperMap.OutputSetting} [options.output] - 输出参数设置。
- * @param {SuperMap.MappingParameters} [options.mappingParameters] - 分析后结果可视化的参数类。   
+ * @param {Ekmap.OutputSetting} [options.output] - 输出参数设置。
+ * @param {Ekmap.MappingParameters} [options.mappingParameters] - 分析后结果可视化的参数类。   
  */
 export class OverlayGeoJobParameter {
 
@@ -26,53 +23,53 @@ export class OverlayGeoJobParameter {
             return;
         }
         /**
-         * @member {string} SuperMap.OverlayGeoJobParameter.prototype.datasetName
+         * @member {string} Ekmap.OverlayGeoJobParameter.prototype.datasetName
          * @description 数据集名。
          */
         this.datasetName = "";
 
         /**
-         * @member {string} SuperMap.OverlayGeoJobParameter.prototype.datasetOverlay
+         * @member {string} Ekmap.OverlayGeoJobParameter.prototype.datasetOverlay
          * @description 叠加对象所在的数据集名称。
          */
         this.datasetOverlay = "";
 
         /**
-         * @member {string} [SuperMap.OverlayGeoJobParameter.prototype.mode]
+         * @member {string} [Ekmap.OverlayGeoJobParameter.prototype.mode]
          * @description 叠加分析模式。
          */
         this.mode = "";
 
         /**
-         * @member {string} SuperMap.OverlayGeoJobParameter.prototype.srcFields
+         * @member {string} Ekmap.OverlayGeoJobParameter.prototype.srcFields
          * @description 输入数据需要保留的字段。
          */
         this.srcFields = "";
 
         /**
-         * @member {string} SuperMap.OverlayGeoJobParameter.prototype.overlayFields
+         * @member {string} Ekmap.OverlayGeoJobParameter.prototype.overlayFields
          * @description 叠加数据需要保留的字段，对分析模式为 clip、update、erase 时，此参数无效。
          */
         this.overlayFields = "";
 
         /**
-         * @member {SuperMap.OutputSetting} [SuperMap.OverlayGeoJobParameter.prototype.output]
+         * @member {Ekmap.OutputSetting} [Ekmap.OverlayGeoJobParameter.prototype.output]
          * @description 输出参数设置类。
          */
         this.output = null;
 
         /**
-        * @member {SuperMap.MappingParameters} [SuperMap.OverlayGeoJobParameter.prototype.mappingParameters]
-        * @description 分析后结果可视化的参数类。   
-        */
+         * @member {Ekmap.MappingParameters} [Ekmap.OverlayGeoJobParameter.prototype.mappingParameters]
+         * @description 分析后结果可视化的参数类。   
+         */
         this.mappingParameters = null;
 
         Util.extend(this, options);
-        this.CLASS_NAME = "SuperMap.OverlayGeoJobParameter";
+        this.CLASS_NAME = "Ekmap.OverlayGeoJobParameter";
     }
 
     /**
-     * @function SuperMap.OverlayGeoJobParameter.destroy
+     * @function Ekmap.OverlayGeoJobParameter.destroy
      * @override
      */
     destroy() {
@@ -92,7 +89,7 @@ export class OverlayGeoJobParameter {
     }
 
     /**
-     * @function SuperMap.OverlayGeoJobParameter.toObject
+     * @function Ekmap.OverlayGeoJobParameter.toObject
      * @param {Object} OverlayGeoJobParameter - 点聚合分析任务参数。
      * @param {Object} tempObj - 目标对象。
      * @description 生成点聚合分析任务对象。
@@ -109,10 +106,10 @@ export class OverlayGeoJobParameter {
                 tempObj['output'] = OverlayGeoJobParameter[name];
                 continue;
             }
-            
+
             tempObj['analyst'] = tempObj['analyst'] || {};
             tempObj['analyst'][name] = OverlayGeoJobParameter[name];
-            if(name === 'mappingParameters'){
+            if (name === 'mappingParameters') {
                 tempObj['analyst'][name] = tempObj['analyst'][name] || {};
                 tempObj['analyst']['mappingParameters'] = OverlayGeoJobParameter[name];
             }
@@ -121,4 +118,4 @@ export class OverlayGeoJobParameter {
 
 }
 
-SuperMap.OverlayGeoJobParameter = OverlayGeoJobParameter;
+Ekmap.OverlayGeoJobParameter = OverlayGeoJobParameter;

@@ -1,25 +1,25 @@
-import {Color} from '../overlay/levelRenderer/Color';
+import { Color } from '../overlay/levelRenderer/Color';
 import {
-    SuperMap
-} from '../SuperMap';
+    Ekmap
+} from '../Ekmap';
 
 var ColorRender = new Color();
 // let "http://www.qzu.zj.cn": "#bd10e0"
-// 					"www.qzct.net": "#7ed321" = new SuperMap.LevelRenderer.Tool.Color();
+// 					"www.qzct.net": "#7ed321" = new Ekmap.LevelRenderer.Tool.Color();
 
 /**
  * Created by yzy on 2016/11/9.
  * 色带选择器工具类  用于1、创建canvas对象，2、从几种颜色中获取一定数量的渐变色
  *
  */
-export class ColorsPickerUtil  {
+export class ColorsPickerUtil {
     /**
      * 创建DOM canvas
      * @param height canvas 高度
      * @param width canvas 宽度
      *
      */
-    static createCanvas (height, width){
+    static createCanvas(height, width) {
         var canvas = document.createElement("canvas");
         canvas.height = height;
         canvas.width = width;
@@ -39,13 +39,13 @@ export class ColorsPickerUtil  {
      * Returns:
      * {CanvasGradient} Cavans 渐变颜色。
      */
-    static getLinearGradient (x0, y0, x1, y1, colorList){
+    static getLinearGradient(x0, y0, x1, y1, colorList) {
         if (!this._ctx) {
             this._ctx = this.getContext();
         }
         var gradient = this._ctx.createLinearGradient(x0, y0, x1, y1);
         var leng = colorList.length;
-        var add = 1/(leng -1);
+        var add = 1 / (leng - 1);
         var offset = 0;
         for (var i = 0; i < leng; i++) {
             gradient.addColorStop(offset, colorList[i]);
@@ -61,7 +61,7 @@ export class ColorsPickerUtil  {
      * Returns:
      * {Object} Cavans 上下文。
      */
-    static getContext () {
+    static getContext() {
         if (!this._ctx) {
             this._ctx = document.createElement('canvas').getContext('2d');
         }
@@ -80,7 +80,7 @@ export class ColorsPickerUtil  {
      * Returns:
      * {Array} 颜色数组。
      */
-    static getStepColors (start, end, step){
+    static getStepColors(start, end, step) {
         start = ColorRender.toRGBA(start);
         end = ColorRender.toRGBA(end);
         start = ColorRender.getData(start);
@@ -95,11 +95,11 @@ export class ColorsPickerUtil  {
         // fix by linfeng 颜色堆积
         for (var i = 0, r = start[0], g = start[1], b = start[2], a = start[3]; i < step; i++) {
             colors[i] = ColorRender.toColor([
-                ColorRender.adjust(Math.floor(r), [ 0, 255 ]),
-                ColorRender.adjust(Math.floor(g), [ 0, 255 ]),
-                ColorRender.adjust(Math.floor(b), [ 0, 255 ]),
+                ColorRender.adjust(Math.floor(r), [0, 255]),
+                ColorRender.adjust(Math.floor(g), [0, 255]),
+                ColorRender.adjust(Math.floor(b), [0, 255]),
                 a.toFixed(4) - 0
-            ],'hex');
+            ], 'hex');
             r += stepR;
             g += stepG;
             b += stepB;
@@ -125,31 +125,32 @@ export class ColorsPickerUtil  {
      * Returns:
      * {Array{String}} 颜色数组。
      */
-    static getGradientColors (colors, total, themeType){
-        var ret = [], step;
+    static getGradientColors(colors, total, themeType) {
+        var ret = [],
+            step;
         var i, n, len = colors.length;
         if (total === undefined) {
             return;
         }
-        if(len >= total){
-            if(themeType === 'RANGE'){
-                for(i = 0; i<total; i++){
+        if (len >= total) {
+            if (themeType === 'RANGE') {
+                for (i = 0; i < total; i++) {
                     ret.push(colors[i]);
                 }
-            }else {
+            } else {
                 //1/2前后取色
-                for(i = 0; i<total; i++){
-                    let ii = Math.floor(i/2);
-                    if(i%2 === 0){
+                for (i = 0; i < total; i++) {
+                    let ii = Math.floor(i / 2);
+                    if (i % 2 === 0) {
                         ret.push(colors[ii]);
-                    }else {
-                        let index = colors.length -1 - ii;
+                    } else {
+                        let index = colors.length - 1 - ii;
                         ret.push(colors[index]);
                     }
                 }
             }
         } else {
-            step = Math.ceil(total/(len-1));
+            step = Math.ceil(total / (len - 1));
             for (i = 0, n = len - 1; i < n; i++) {
                 var steps = this.getStepColors(colors[i], colors[i + 1], step);
                 if (i < n - 1) {
@@ -159,11 +160,11 @@ export class ColorsPickerUtil  {
             }
             //删除多余元素
             var nouse = ret.length - total;
-            for(var j = 0, index = 0; j< nouse; j++){
-                ret.splice(index+2,1);
+            for (var j = 0, index = 0; j < nouse; j++) {
+                ret.splice(index + 2, 1);
             }
         }
         return ret;
     }
 }
-SuperMap.ColorsPickerUtil = ColorsPickerUtil;
+Ekmap.ColorsPickerUtil = ColorsPickerUtil;

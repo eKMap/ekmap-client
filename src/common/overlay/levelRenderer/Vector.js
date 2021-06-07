@@ -1,9 +1,9 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Tool.Vector
+ * @class  Ekmap.LevelRenderer.Tool.Vector
  * @category Visualization Theme
  * @classdesc LevelRenderer 二维向量类
  *
@@ -11,19 +11,19 @@
 export class Vector {
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.constructor
+     * @function Ekmap.LevelRenderer.Tool.Vector.constructor
      * @description 构造函数
      */
     constructor() {
-        this.ArrayCtor = typeof Float32Array === 'undefined'
-            ? Array
-            : Float32Array;
+        this.ArrayCtor = typeof Float32Array === 'undefined' ?
+            Array :
+            Float32Array;
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Tool.Vector";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Vector";
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.create
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.create
      * @description 创建一个向量。
      * 
      * @param {number} x - x坐标
@@ -41,7 +41,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.copy
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.copy
      * @description 复制一个向量。
      * 
      * @param {Vector2} out - 基础向量。
@@ -55,7 +55,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.set
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.set
      * @description 设置向量的两个项。
      * 
      * @param {Vector2} out - 基础向量。
@@ -70,7 +70,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.add
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.add
      * @description 向量相加。
      * 
      * @param {Vector2} out - 基础向量。
@@ -85,7 +85,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.scaleAndAdd
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.scaleAndAdd
      * @description 向量缩放后相加。
      * @param {Vector2} out - 基础向量。
      * @param {Vector2} v1 - 向量 v1。
@@ -100,7 +100,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.sub
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.sub
      * @description 向量相减。
      * @param {Vector2} out - 基础向量。
      * @param {Vector2} v1 - 向量 v1。
@@ -114,7 +114,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.len
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.len
      * @description 向量长度。
      * @param {Vector2} v - 向量。
      * @return {number} 向量长度。
@@ -124,7 +124,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.lenSquare
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.lenSquare
      * @description 向量长度平方。
      * @param {Vector2} v - 向量。
      * @return {number} 向量长度平方。
@@ -134,7 +134,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.mul
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.mul
      * @description 向量乘法。
      * @param {Vector2} out - 基础向量。
      * @param {Vector2} v1 - 向量 v1。
@@ -148,7 +148,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.div
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.div
      * @description 向量除法。
      * 
      * @param {Vector2} out - 基础向量。
@@ -163,7 +163,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.dot
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.dot
      * @description 向量点乘。
      * 
      * @param  {Vector2} v1 - 向量 v1。
@@ -175,7 +175,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.scale
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.scale
      * @description 向量缩放。
      *
      * @param {Vector2} out - 基础向量。
@@ -190,7 +190,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.normalize
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.normalize
      * @description 向量归一化。
      *
      * @param {Vector2} out - 基础向量。
@@ -210,7 +210,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.distance
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.distance
      * @description 计算向量间距离。
      * 
      * @param {Vector2} v1 - 向量 v1。
@@ -219,13 +219,13 @@ export class Vector {
      */
     distance(v1, v2) {
         return Math.sqrt(
-            (v1[0] - v2[0]) * (v1[0] - v2[0])
-            + (v1[1] - v2[1]) * (v1[1] - v2[1])
+            (v1[0] - v2[0]) * (v1[0] - v2[0]) +
+            (v1[1] - v2[1]) * (v1[1] - v2[1])
         );
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.distanceSquare
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.distanceSquare
      * @description 向量距离平方。
      * 
      * @param {Vector2} v1 - 向量 v1。
@@ -233,12 +233,12 @@ export class Vector {
      * @return {number} 向量距离平方。
      */
     distanceSquare(v1, v2) {
-        return (v1[0] - v2[0]) * (v1[0] - v2[0])
-            + (v1[1] - v2[1]) * (v1[1] - v2[1]);
+        return (v1[0] - v2[0]) * (v1[0] - v2[0]) +
+            (v1[1] - v2[1]) * (v1[1] - v2[1]);
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.negate
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.negate
      * @description 求负向量。
      * 
      * @param {Vector2} out - 基础向量。
@@ -252,7 +252,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.lerp
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.lerp
      * @description 两点之间线性插值。
      *
      * @param {Vector2} out - 基础向量。
@@ -268,7 +268,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.applyTransform
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.applyTransform
      * @description 矩阵左乘向量。
      * 
      * @param {Vector2} out - 基础向量。
@@ -285,7 +285,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.min
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.min
      * @description 求两个向量最小值。
      * @param {Vector2} out - 基础向量。
      * @param {Vector2} v1 - 向量 v1。
@@ -299,7 +299,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.max
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.max
      * @description 求两个向量最大值。
      *
      * @param {Vector2} out - 基础向量。
@@ -315,7 +315,7 @@ export class Vector {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.length
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.length
      * @description 向量长度。
      * 
      * @param {Vector2} v - 向量。
@@ -326,7 +326,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.lengthSquare
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.lengthSquare
      * @description 向量长度平方。
      * 
      * @param {Vector2} v - 向量。
@@ -337,7 +337,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.dist
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.dist
      * @description 计算向量间距离。
      *
      * @param {Vector2} v1 - 向量 v1。
@@ -349,7 +349,7 @@ export class Vector {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Vector.prototype.distSquare
+     * @function Ekmap.LevelRenderer.Tool.Vector.prototype.distSquare
      * @description 向量距离平方。
      * 
      * @param {Vector2} v1 - 向量 v1。

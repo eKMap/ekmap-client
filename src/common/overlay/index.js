@@ -1,16 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Bar} from "./Bar";
-import {Bar3D} from "./Bar3D";
-import {Circle} from "./Circle";
-import {Graph} from "./Graph";
-import {Line} from "./Line";
-import {Pie} from "./Pie";
-import {Point as OverlayPoint} from "./Point";
-import {RankSymbol} from "./RankSymbol";
-import {Ring} from "./Ring";
-import {ThemeVector} from "./ThemeVector";
+import { Bar } from "./Bar";
+import { Bar3D } from "./Bar3D";
+import { Circle } from "./Circle";
+import { Graph } from "./Graph";
+import { Line } from "./Line";
+import { Pie } from "./Pie";
+import { Point as OverlayPoint } from "./Point";
+import { RankSymbol } from "./RankSymbol";
+import { Ring } from "./Ring";
+import { ThemeVector } from "./ThemeVector";
 import {
     ShapeFactory,
     ShapeParameters,
@@ -67,16 +67,16 @@ import {
     SUtil
 } from './levelRenderer';
 
-export {Bar} ;
-export {Bar3D} ;
-export {Circle} ;
-export {Graph} ;
-export {Line} ;
-export {Pie};
-export {OverlayPoint};
-export {RankSymbol};
-export {Ring} ;
-export {ThemeVector};
+export { Bar };
+export { Bar3D };
+export { Circle };
+export { Graph };
+export { Line };
+export { Pie };
+export { OverlayPoint };
+export { RankSymbol };
+export { Ring };
+export { ThemeVector };
 export {
     ShapeFactory,
     ShapeParameters,

@@ -1,16 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
+import { Shape } from './Shape';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicCircle
+ * @class  Ekmap.LevelRenderer.Shape.SmicCircle
  * @category Visualization Theme
  * @classdesc 圆形
- * @extends SuperMap.LevelRenderer.Shape
+ * @extends Ekmap.LevelRenderer.Shape
  * @example 
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicCircle({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicCircle({
  *         style: {
  *             x: 100,
  *             y: 100,
@@ -29,7 +29,7 @@ import {Shape} from './Shape';
 export class SmicCircle extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicCircle.prototype.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicCircle.prototype.style
      * @description 绘制样式。
      *
      * @param {number} x - 圆心x坐标,必设参数
@@ -56,7 +56,7 @@ export class SmicCircle extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicCircle.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicCircle.constructor
      * @description 构造函数。
      *
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -65,7 +65,7 @@ export class SmicCircle extends Shape {
     constructor(options) {
         super(options);
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicCircle.prototype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicCircle.prototype.type
          * @description 图形类型。
          */
         this.type = 'smiccircle';
@@ -73,12 +73,12 @@ export class SmicCircle extends Shape {
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicCircle";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicCircle";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicCircle.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicCircle.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -88,7 +88,7 @@ export class SmicCircle extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicCircle.prototype.buildPath
+     * @function Ekmap.LevelRenderer.Shape.SmicCircle.prototype.buildPath
      * @description 创建图形路径。
      * 
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -101,8 +101,8 @@ export class SmicCircle extends Shape {
         }
         var __OP = this.refOriginalPosition;
 
-        var x = style.x + __OP[0];   // 圆心x
-        var y = style.y + __OP[1];   // 圆心y
+        var x = style.x + __OP[0]; // 圆心x
+        var y = style.y + __OP[1]; // 圆心y
 
         ctx.moveTo(x + style.r, y);
         ctx.arc(x, y, style.r, 0, Math.PI * 2, true);
@@ -112,7 +112,7 @@ export class SmicCircle extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicCircle.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicCircle.prototype.getRect
      * @description 返回圆形包围盒矩形
      * 
      * @param {Object} style - style
@@ -129,9 +129,9 @@ export class SmicCircle extends Shape {
         }
         var __OP = this.refOriginalPosition;
 
-        var x = style.x + __OP[0];   // 圆心x
-        var y = style.y + __OP[1];   // 圆心y
-        var r = style.r;             // 圆r
+        var x = style.x + __OP[0]; // 圆心x
+        var y = style.y + __OP[1]; // 圆心y
+        var r = style.r; // 圆r
 
         var lineWidth;
         if (style.brushType == 'stroke' || style.brushType == 'fill') {

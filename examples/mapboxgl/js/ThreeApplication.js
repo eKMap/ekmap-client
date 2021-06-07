@@ -1,4 +1,3 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.*/
 var ThreeApplication = {
     data: null,
     buildingMesh: null,
@@ -9,42 +8,43 @@ var ThreeApplication = {
     buildingView: null,
     modelOpacity: 0.4,
 
-    register: function (renderer, scene, camera) {
+    register: function(renderer, scene, camera) {
         this.renderer = renderer;
         this.scene = scene;
         this.camera = camera;
         return this;
     },
 
-    setTargetLayer: function (threeLayer) {
+    setTargetLayer: function(threeLayer) {
         this.threeLayer = threeLayer;
         return this;
     },
-    setPosition: function (position) {
+    setPosition: function(position) {
         this.position = position;
         return this;
     },
 
-    start: function () {
+    start: function() {
         SceneBuilder.preLoader(ThreeApplication).load();
     }
 };
 
 
 var SceneBuilder = {
-    preLoader: function (app) {
+    preLoader: function(app) {
 
         var manager, slowLoopIntervalId, is3DDataLoaded = false;
+
         function loadData(onComplete) {
             var url = '../data/ThreeBuildingData.json';
             $.ajax({
                 dataType: 'json',
                 url: url,
-                success: function (result) {
+                success: function(result) {
                     app.data = new DataProcessor(result);
                     onComplete();
                 },
-                error: function (jqXHR, status, errorThrown) {
+                error: function(jqXHR, status, errorThrown) {
                     console.log(status, errorThrown);
                 }
             });
@@ -52,11 +52,11 @@ var SceneBuilder = {
 
         function loadResources() {
             manager = new THREE.LoadingManager();
-            manager.onProgress = function (item, loaded, total) {
+            manager.onProgress = function(item, loaded, total) {
 
             };
 
-            manager.onLoad = function () {
+            manager.onLoad = function() {
                 is3DDataLoaded = true;
             };
             loadBuildingModel();
@@ -67,26 +67,25 @@ var SceneBuilder = {
 
             var loader = new THREE.JSONLoader(manager);
             loader.setTexturePath('./js/obj/building/maps/');
-            loader.load('./js/obj/building/building.js', function (geometry, materials) {
-                    var material = new THREE.MultiMaterial(materials);
-                    for (var i = 0; i < materials.length; i++) {
-                        materials[i].transparent = true;
-                        materials[i].vertexColors = THREE.FaceColors;
-                    }
-
-                    scaleGeometry(geometry);
-
-                    for (var i = 0; i < geometry.faces.length; i++) {
-                        geometry.faces[i].color = new THREE.Color(0x08acff);
-                        geometry.colorsNeedUpdate = true;
-                    }
-                    app.buildingMesh = new THREE.Mesh(geometry, material);
-                    app.buildingMesh.geometry.computeBoundingSphere();
+            loader.load('./js/obj/building/building.js', function(geometry, materials) {
+                var material = new THREE.MultiMaterial(materials);
+                for (var i = 0; i < materials.length; i++) {
+                    materials[i].transparent = true;
+                    materials[i].vertexColors = THREE.FaceColors;
                 }
-            );
+
+                scaleGeometry(geometry);
+
+                for (var i = 0; i < geometry.faces.length; i++) {
+                    geometry.faces[i].color = new THREE.Color(0x08acff);
+                    geometry.colorsNeedUpdate = true;
+                }
+                app.buildingMesh = new THREE.Mesh(geometry, material);
+                app.buildingMesh.geometry.computeBoundingSphere();
+            });
 
             var loader = new THREE.JSONLoader(manager);
-            loader.load('./js/obj/building/building-roof.js', function (geometry, materials) {
+            loader.load('./js/obj/building/building-roof.js', function(geometry, materials) {
                 var material = new THREE.MultiMaterial(materials);
                 for (var i = 0; i < materials.length; i++) {
                     materials[i] = new THREE.MeshPhongMaterial({
@@ -115,7 +114,7 @@ var SceneBuilder = {
                     slug = data.slug,
                     loader = new THREE.JSONLoader(manager);
 
-                loader.load("./js/" + data.objRoom, function (geometry, materials) {
+                loader.load("./js/" + data.objRoom, function(geometry, materials) {
                     var material = new THREE.MeshPhongMaterial({
                         color: 0xffffff
                     });
@@ -141,7 +140,7 @@ var SceneBuilder = {
         }
 
         function waitForLoading() {
-            slowLoopIntervalId = setInterval(function () {
+            slowLoopIntervalId = setInterval(function() {
                 if (is3DDataLoaded) {
                     is3DDataLoaded = false;
                     SceneBuilder.viewBuilder(app).build();
@@ -150,8 +149,8 @@ var SceneBuilder = {
             }, 500);
         }
 
-        this.load = function () {
-            loadData(function () {
+        this.load = function() {
+            loadData(function() {
                 loadResources();
             });
             waitForLoading();
@@ -160,8 +159,8 @@ var SceneBuilder = {
     },
 
     //构建模型场景
-    viewBuilder: function (app) {
-        this.build = function () {
+    viewBuilder: function(app) {
+        this.build = function() {
             app.buildingView = app.buildingView || new BuildingView(app);
             var buildingView = app.buildingView;
             buildingView.setOpacity(app.modelOpacity);
@@ -394,7 +393,7 @@ function BuildingView(app) {
     }
 
 
-    this.setOpacity = function (val) {
+    this.setOpacity = function(val) {
 
         var materials = buildingMesh.material.materials;
         for (var i = 0; i < materials.length; i++) {

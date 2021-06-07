@@ -1,14 +1,11 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {SpatialAnalystBase} from './SpatialAnalystBase';
-import {DatasetBufferAnalystParameters} from './DatasetBufferAnalystParameters';
-import {GeometryBufferAnalystParameters} from './GeometryBufferAnalystParameters';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { SpatialAnalystBase } from './SpatialAnalystBase';
+import { DatasetBufferAnalystParameters } from './DatasetBufferAnalystParameters';
+import { GeometryBufferAnalystParameters } from './GeometryBufferAnalystParameters';
 
 /**
- * @class SuperMap.BufferAnalystService
+ * @class Ekmap.BufferAnalystService
  * @category iServer SpatialAnalyst BufferAnalyst
  * @classdesc 缓冲区分析服务类。
  * 该类负责将客户设置的缓冲区分析参数传递给服务端，并接收服务端返回的缓冲区分析结果数据。
@@ -18,15 +15,15 @@ import {GeometryBufferAnalystParameters} from './GeometryBufferAnalystParameters
  * @param {Object} options.eventListeners - 需要被注册的监听器对象。
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
  * @param {Object} [options.headers] - 请求头。
- * @extends {SuperMap.SpatialAnalystBase}
+ * @extends {Ekmap.SpatialAnalystBase}
  * @example 例如：
  * (start code)
- * var myBufferAnalystService = new SuperMap.BufferAnalystService(url, {
-     *     eventListeners: {
-     *           "processCompleted": bufferCompleted,
-     *           "processFailed": bufferFailed
-     *           }
-     *    });
+ * var myBufferAnalystService = new Ekmap.BufferAnalystService(url, {
+ *     eventListeners: {
+ *           "processCompleted": bufferCompleted,
+ *           "processFailed": bufferFailed
+ *           }
+ *    });
  * (end)
  *
  *
@@ -37,19 +34,19 @@ export class BufferAnalystService extends SpatialAnalystBase {
     constructor(url, options) {
         super(url, options);
         /**
-         * @member {string} SuperMap.BufferAnalystService.prototype.mode
+         * @member {string} Ekmap.BufferAnalystService.prototype.mode
          * @description 缓冲区分析类型
          */
         this.mode = null;
         if (options) {
             Util.extend(this, options);
         }
-        this.CLASS_NAME = "SuperMap.BufferAnalystService";
+        this.CLASS_NAME = "Ekmap.BufferAnalystService";
     }
 
 
     /**
-     * @function SuperMap.BufferAnalystService.prototype.destroy
+     * @function Ekmap.BufferAnalystService.prototype.destroy
      * @override
      */
     destroy() {
@@ -59,9 +56,9 @@ export class BufferAnalystService extends SpatialAnalystBase {
 
 
     /**
-     * @method SuperMap.BufferAnalystService.prototype.processAsync
+     * @method Ekmap.BufferAnalystService.prototype.processAsync
      * @description 负责将客户端的查询参数传递到服务端。
-     * @param {SuperMap.BufferAnalystParameters} parameter - 缓冲区分析参数
+     * @param {Ekmap.BufferAnalystParameters} parameter - 缓冲区分析参数
      */
     processAsync(parameter) {
         var parameterObject = {};
@@ -89,4 +86,4 @@ export class BufferAnalystService extends SpatialAnalystBase {
 
 }
 
-SuperMap.BufferAnalystService = BufferAnalystService;
+Ekmap.BufferAnalystService = BufferAnalystService;

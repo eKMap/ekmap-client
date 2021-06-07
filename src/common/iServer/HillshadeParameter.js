@@ -1,13 +1,10 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import { SuperMap } from '../SuperMap';
+import { Ekmap } from '../Ekmap';
 import { Util } from '../commontypes/Util';
 import { RasterFunctionParameter } from './RasterFunctionParameter';
 import { RasterFunctionType } from '../REST';
 
 /**
- * @class SuperMap.HillshadeParameter
+ * @class Ekmap.HillshadeParameter
  * @category iServer Map
  * @classdesc 阴影面分析参数类
  * @param {Object} options - 参数。
@@ -28,54 +25,54 @@ import { RasterFunctionType } from '../REST';
  *                                      60           0.00001792
  *                                      70           0.00002619
  *                                      80           0.00005156
- * @extends {SuperMap.RasterFunctionParameter}
+ * @extends {Ekmap.RasterFunctionParameter}
  */
 export class HillshadeParameter extends RasterFunctionParameter {
     constructor(options) {
         super(options);
         /**
-         * @member {number} [SuperMap.HillshadeParameter.prototype.altitude = 45]
+         * @member {number} [Ekmap.HillshadeParameter.prototype.altitude = 45]
          * @description 高于地平线的光源高度角。高度角由正度数表示，0 度代表地平线，而 90 度代表头顶正上方。
          */
         this.altitude = 45;
 
         /**
-         * @member {number} [SuperMap.HillshadeParameter.prototype.azimuth = 315]
+         * @member {number} [Ekmap.HillshadeParameter.prototype.azimuth = 315]
          * @description 光源的方位角。方位角由0到360度之间的正度数表示，以北为基准方向按顺时针进行测量。
          */
         this.azimuth = 315;
 
         /**
-         * @member {number} [SuperMap.HillshadeParameter.prototype.zFactor = 1]
+         * @member {number} [Ekmap.HillshadeParameter.prototype.zFactor = 1]
          * @description 一个表面 z 单位中地面 x,y 单位的数量。z 单位与输入表面的 x,y 单位不同时，可使用 z 因子调整 z 单位的测量单位。计算最终输出表面时，将用 z 因子乘以输入表面的 z 值。
          */
         this.zFactor = 1;
 
         /**
-         * @member {SuperMap.RasterFunctionType} SuperMap.RasterFunctionParameter.prototype.type
+         * @member {Ekmap.RasterFunctionType} Ekmap.RasterFunctionParameter.prototype.type
          * @description 栅格分析方法。
          */
         this.type = RasterFunctionType.HILLSHADE;
         Util.extend(this, options);
 
-        this.CLASS_NAME = 'SuperMap.HillshadeParameter';
+        this.CLASS_NAME = 'Ekmap.HillshadeParameter';
     }
 
     /**
-     * @function SuperMap.HillshadeParameter.prototype.destroy
+     * @function Ekmap.HillshadeParameter.prototype.destroy
      * @override
      */
     destroy() {
-        super.destroy();
-        this.altitude = null;
-        this.azimuth = null;
-        this.zFactor = null;
-    }
-    /**
-     * @function SuperMap.HillshadeParameter.prototype.toJSON
-     * @description 将 HillshadeParameter 对象转化为 JSON 字符串。
-     * @returns {string} 返回转换后的 JSON 字符串。
-     */
+            super.destroy();
+            this.altitude = null;
+            this.azimuth = null;
+            this.zFactor = null;
+        }
+        /**
+         * @function Ekmap.HillshadeParameter.prototype.toJSON
+         * @description 将 HillshadeParameter 对象转化为 JSON 字符串。
+         * @returns {string} 返回转换后的 JSON 字符串。
+         */
     toJSON() {
         return {
             altitude: this.altitude,
@@ -86,4 +83,4 @@ export class HillshadeParameter extends RasterFunctionParameter {
     }
 }
 
-SuperMap.HillshadeParameter = HillshadeParameter;
+Ekmap.HillshadeParameter = HillshadeParameter;

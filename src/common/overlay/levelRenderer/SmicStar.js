@@ -1,17 +1,17 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
-import {SUtil} from './SUtil';
+import { Shape } from './Shape';
+import { SUtil } from './SUtil';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicStar
+ * @class  Ekmap.LevelRenderer.Shape.SmicStar
  * @category Visualization Theme
  * @classdesc n 角星（n>3）。
- * @extends SuperMap.LevelRenderer.Shape
+ * @extends Ekmap.LevelRenderer.Shape
  * @example 
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicStar({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicStar({
  *         style: {
  *             x: 200,
  *             y: 100,
@@ -27,7 +27,7 @@ import {SUtil} from './SUtil';
 export class SmicStar extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicStar.prototype.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicStar.prototype.style
      * @description 绘制样式。
      *
      * @param {number} style.x - n 角星外接圆心 x 坐标，必设参数。
@@ -56,7 +56,7 @@ export class SmicStar extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicStar.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicStar.constructor
      * @description 构造函数。
      * 
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -65,7 +65,7 @@ export class SmicStar extends Shape {
     constructor(options) {
         super(options);
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicStar.prototype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicStar.prototype.type
          * @description 图形类型。  
          */
         this.type = 'smicstar';
@@ -74,11 +74,11 @@ export class SmicStar extends Shape {
             this.refOriginalPosition = [0, 0];
         }
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicStar";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicStar";
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicStar.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicStar.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -87,7 +87,7 @@ export class SmicStar extends Shape {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicStar.prototype.buildPath
+     * @function Ekmap.LevelRenderer.Shape.SmicStar.prototype.buildPath
      * @description 创建n  角星（n>3）路径。
      *
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -119,9 +119,11 @@ export class SmicStar extends Shape {
             r0 = n > 4
                 // 相隔的外部顶点的连线的交点，
                 // 被取为内部交点，以此计算r0
-                ? r * cos(2 * PI / n) / cos(PI / n)
+                ?
+                r * cos(2 * PI / n) / cos(PI / n)
                 // 二三四角星的特殊处理
-                : r / 3;
+                :
+                r / 3;
         }
 
         var dStep = PI / n;
@@ -152,7 +154,7 @@ export class SmicStar extends Shape {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicStar.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicStar.prototype.getRect
      * @description 返回 n 角星包围盒矩形。
      *
      * @param {Object} style - style

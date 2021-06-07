@@ -1,6 +1,3 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import mapboxgl from 'mapbox-gl';
 import '../../core/Base';
 import { ThemeFeature } from './ThemeFeature';
@@ -16,64 +13,63 @@ import {
 } from '../../../common';
 
 /**
- * @class mapboxgl.supermap.ThemeLayer
+ * @class mapboxgl.ekmap.ThemeLayer
  * @category Visualization Theme
- * @classdesc 专题图基类。
- * @param {string} name - 专题图图层名。
- * @param {Object} options -可选参数。
- * @param {mapboxgl.Map} options.map - 当前 mapboxgl map 对象，将在下个版本弃用，请用 map.addLayer()方法添加图层。
- * @param {string} [options.id] - 专题图层 ID。默认使用 CommonUtil.createUniqueID("themeLayer_") 创建专题图层 ID。
- * @param {boolean} [options.loadWhileAnimating=true] - 是否实时重绘。
- * @param {boolean} [options.visibility=true] - 图层是否可见。
- * @param {number} [options.opacity=1] - 图层透明度。
- * @fires mapboxgl.supermap.ThemeLayer#changelayer
- * @fires mapboxgl.supermap.ThemeLayer#featuresremoved
+ * @classdesc Thematic map base class. 
+ * @param {string} name The name of the thematic map layer.
+ * @param {Object} options Optional parameters.
+ * @param {mapboxgl.Map} options.map The current mapboxgl map object will be deprecated in the next version. Please use the map.addLayer() method to add a layer.
+ * @param {string} options.id Thematic layer ID. By default, CommonUtil.createUniqueID("themeLayer_") is used to create the thematic layer ID.
+ * @param {boolean} options.loadWhileAnimating=true Whether to redraw in real time.
+ * @param {boolean} options.visibility=true Whether the layer is visible.
+ * @param {number} options.opacity=1 Layer transparency.
+ * @fires mapboxgl.ekmap.ThemeLayer#changelayer
+ * @fires mapboxgl.ekmap.ThemeLayer#featuresremoved
  */
 export class ThemeLayer {
 
     constructor(name, opt_options) {
         var options = opt_options ? opt_options : {};
         /**
-         * @member {string} mapboxgl.supermap.ThemeLayer.prototype.name
-         * @description 专题图图层名称。
+         * @member {string} mapboxgl.ekmap.ThemeLayer.prototype.name
+         * @description The name of the thematic map layer.
          */
         this.name = name;
 
         /**
-         * @member {string} [mapboxgl.supermap.ThemeLayer.prototype.id]
-         * @description 专题图图层 id。
+         * @member {string} [mapboxgl.ekmap.ThemeLayer.prototype.id]
+         * @description The thematic map layer id.
          */
         this.id = options.id ? options.id : CommonUtil.createUniqueID("themeLayer_");
 
         this.type = 'custom';
         /**
-         * @member {float} [mapboxgl.supermap.ThemeLayer.prototype.opacity=1]
-         * @description 图层透明度。
+         * @member {float} [mapboxgl.ekmap.ThemeLayer.prototype.opacity=1]
+         * @description Layer transparency.
          */
         this.opacity = options.opacity ? options.opacity : 1;
 
         /**
-         * @member {boolean} [mapboxgl.supermap.ThemeLayer.prototype.visibility=true]
-         * @description 图层是否可见。
+         * @member {boolean} [mapboxgl.ekmap.ThemeLayer.prototype.visibility=true]
+         * @description Whether the layer is visible.
          */
         this.visibility = true;
 
         /**
-         * @member {boolean} [mapboxgl.supermap.ThemeLayer.prototype.loadWhileAnimating=true]
-         * @description 是否实时重绘。(当绘制大数据量要素的情况下会出现卡顿，建议把该参数设为 false)。
+         * @member {boolean} [mapboxgl.ekmap.ThemeLayer.prototype.loadWhileAnimating=true]
+         * @description Whether to redraw in real time. (When drawing large data elements, there will be lag, it is recommended to set this parameter to false).
          */
         this.loadWhileAnimating = options.loadWhileAnimating === undefined ? true : options.loadWhileAnimating;
 
         /**
-         * @member {mapboxgl.Map} mapboxgl.supermap.ThemeLayer.prototype.map
-         * @description map 对象。
+         * @member {mapboxgl.Map} mapboxgl.ekmap.ThemeLayer.prototype.map
+         * @description map object.
          */
         this.map = options.map ? options.map : null;
 
         this.features = [];
         this.TFEvents = [];
 
-        //todo 保留之前创建图层同时添加到图层的用法，在下个版本遗弃
         if (this.map) {
             this.map.addLayer(this);
         }
@@ -81,14 +77,13 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.onAdd
-     * @description 向底图添加该图层。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.onAdd
+     * @description Add this layer to the basemap.
      */
     onAdd(map) {
         this.map = map;
         this._createCanvasContainer();
 
-        //处理用户预先（在图层添加到 map 前）监听的事件
         this.addTFEvents();
         this.map.on('resize', this.resizeEvent.bind(this));
         this.map.on('zoomstart', this.zoomStartEvent.bind(this));
@@ -108,8 +103,8 @@ export class ThemeLayer {
     render() {}
 
     /**
-     * @function mapboxgl.supermap.HeatMapLayer.prototype.refresh
-     * @description 强制刷新当前热点显示，在图层热点数组发生变化后调用，更新显示。
+     * @function mapboxgl.ekmap.HeatMapLayer.prototype.refresh
+     * @description Force to refresh the current hotspot display, called after the layer hotspot array changes, to update the display.
      */
     refresh() {
         if (this.features.length === 0) {
@@ -142,9 +137,9 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.destroyFeatures
-     * @description 销毁某个要素。
-     * @param {SuperMap.Feature.Vector} features - 将被销毁的要素。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.destroyFeatures
+     * @description Destroy an element.
+     * @param {ekmap.Feature.Vector} features Elements to be destroyed.
      */
     destroyFeatures(features) {
         var all = (features == undefined);
@@ -160,9 +155,9 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.setVisibility
-     * @description 设置图层可见性，设置图层的隐藏，显示，重绘的相应的可见标记。
-     * @param {boolean} [visibility] - 是否显示图层（当前地图的 resolution 在最大最小 resolution 之间）。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.setVisibility
+     * @description Set the visibility of the layer, and set the corresponding visible mark for hiding, displaying, and redrawing the layer.
+     * @param {boolean} visibility Whether to display the layer (the resolution of the current map is between the maximum and minimum resolution).
      */
     setVisibility(visibility) {
         if (visibility !== this.visibility) {
@@ -173,18 +168,18 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.display
-     * @description 临时隐藏或者显示图层。通过对 CSS 控制产生即时效果，重新渲染失效。一般用 setVisibility 方法来动态控制图层的显示和隐藏。
-     * @param {boolean} [display] - 是否显示图层。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.display
+     * @description Temporarily hide or show the layer. By generating real-time effects on CSS control, re-rendering becomes invalid. The setVisibility method is generally used to dynamically control the display and hide of the layer.
+     * @param {boolean} display Whether to display the layer.
      */
     display(display) {
         this.div.style.display = display ? "block" : "none";
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.setOpacity
-     * @description 设置图层的不透明度,取值[0-1]之间。
-     * @param {number} [opacity] - 不透明度。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.setOpacity
+     * @description Set the opacity of the layer, the value is between [0-1].
+     * @param {number} opacity Opacity.
      */
     setOpacity(opacity) {
         if (opacity !== this.opacity) {
@@ -195,10 +190,10 @@ export class ThemeLayer {
 
             if (this.map !== null) {
                 /**
-                 * @event mapboxgl.supermap.ThemeLayer#changelayer
-                 * @description 图层属性改变之后触发。
-                 * @property {Object} layer - 图层。
-                 * @property {string} property - 被改变的属性。
+                 * @event mapboxgl.ekmap.ThemeLayer#changelayer
+                 * @description Triggered after the layer properties are changed.
+                 * @property {Object} layer Layers.
+                 * @property {string} property The attribute being changed.
                  */
                 mapboxgl.Evented.prototype.fire('changelayer', { layer: this, property: "opacity" });
             }
@@ -206,22 +201,22 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.addFeatures
-     * @param {mapboxgl.supermap.ThemeFeature|SuperMap.ServerFeature|GeoJSONObject} features - 待添加要素。
-     * @description 抽象方法，可实例化子类必须实现此方法。向专题图图层中添加数据 ,
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.addFeatures
+     * @param {mapboxgl.ekmap.ThemeFeature|ekmap.ServerFeature|GeoJSONObject} features Elements to be added.
+     * @description Abstract method, instantiable subclass must implement this method. Add data to the thematic map layer.
      */
-    addFeatures(features) { // eslint-disable-line no-unused-vars
+    addFeatures(features) {
 
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.removeFeatures
-     * @param {Array.<SuperMap.Feature.Vector>} features - 要删除 feature 的数组。
-     * @description 从专题图中删除 feature。这个函数删除所有传递进来的矢量要素。
-     *              参数中的 features 数组中的每一项，必须是已经添加到当前图层中的 feature，
-     *              如果无法确定 feature 数组，则可以调用 removeAllFeatures 来删除所有 feature。
-     *              如果要删除的 feature 数组中的元素特别多，推荐使用 removeAllFeatures，
-     *              删除所有 feature 后再重新添加。这样效率会更高。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.removeFeatures
+     * @param {Array.<ekmap.Feature.Vector>} features The array of feature to be deleted.
+     * @description Delete feature from the thematic map. This function deletes all the vector elements passed in.
+     *              Each item in the features array in the parameter must be a feature that has been added to the current layer，
+     *              If you cannot determine the feature array, you can call removeAllFeatures to delete all features.
+     *              If there are too many elements in the feature array to be deleted, it is recommended to use removeAllFeatures，
+     *              Delete all the features and add them again. This will be more efficient.
      */
     removeFeatures(features) {
         if (!features || features.length === 0) {
@@ -236,8 +231,6 @@ export class ThemeLayer {
         var featuresFailRemoved = [];
         for (var i = features.length - 1; i >= 0; i--) {
             var feature = features[i];
-            //如果我们传入的feature在features数组中没有的话，则不进行删除，
-            //并将其放入未删除的数组中。
             var findex = CommonUtil.indexOf(this.features, feature);
             if (findex === -1) {
                 featuresFailRemoved.push(feature);
@@ -252,23 +245,22 @@ export class ThemeLayer {
         }
         this.features = [];
         this.addFeatures(drawFeatures);
-        //绘制专题要素
         if (this.renderer) {
             this.redrawThematicFeatures(this.map.getBounds());
         }
         var succeed = featuresFailRemoved.length == 0 ? true : false;
         /**
-         * @event mapboxgl.supermap.ThemeLayer#featuresremoved
-         * @description 要素删除之后触发。
-         * @property {Array.<SuperMap.Feature.Vector>} features - 未被成功删除的要素。
-         * @property {boolean} succeed - 删除成功与否。
+         * @event mapboxgl.ekmap.ThemeLayer#featuresremoved
+         * @description Triggered after the element is deleted.
+         * @property {Array.<Feature>} features Elements that were not successfully deleted.
+         * @property {boolean} succeed Whether the deletion is successful or not.
          */
         mapboxgl.Evented.prototype.fire("featuresremoved", { features: featuresFailRemoved, succeed: succeed });
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.removeAllFeatures
-     * @description 清除当前图层所有的矢量要素。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.removeAllFeatures
+     * @description Clear all the vector features of the current layer.
      */
     removeAllFeatures() {
         if (this.renderer) {
@@ -279,9 +271,9 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.getFeatures
-     * @description 查看当前图层中的有效数据。
-     * @returns {SuperMap.Feature.Vector} 用户加入图层的有效数据。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.getFeatures
+     * @description View the valid data in the current layer.
+     * @returns {ekmap.Feature.Vector} Valid data added to the layer by the user.
      */
     getFeatures() {
         var len = this.features.length;
@@ -293,12 +285,12 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.getFeatureBy
-     * @description 在专题图的要素数组 features 里面遍历每一个 feature，当 feature[property] === value 时，
-     *              返回此 feature（并且只返回第一个）。
-     * @param {string} property - feature 的某个属性名称。
-     * @param {string} value - property 所对应的值。
-     * @returns {SuperMap.Feature.Vector} 第一个匹配属性和值的矢量要素。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.getFeatureBy
+     * @description Traverse each feature in the feature array features of the thematic map, when feature[property] === value，
+     *              Return this feature (and only the first one).
+     * @param {string} property The name of an attribute of feature.
+     * @param {string} value The value corresponding to the property.
+     * @returns {ekmap.Feature.Vector} The first vector feature that matches the attribute and value.
      */
     getFeatureBy(property, value) {
         var feature = null;
@@ -312,21 +304,21 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.getFeatureById
-     * @description 通过给定一个 id，返回对应的矢量要素。
-     * @param {string} featureId - 矢量要素的属性 id。
-     * @returns {SuperMap.Feature.Vector} 对应 id 的 feature，如果不存在则返回 null。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.getFeatureById
+     * @description Given an id, return the corresponding vector element.
+     * @param {string} featureId The attribute id of the vector feature.
+     * @returns {ekmap.Feature.Vector} The feature corresponding to id, or null if it does not exist.
      */
     getFeatureById(featureId) {
         return this.getFeatureBy('id', featureId);
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.getFeaturesByAttribute
-     * @description 通过给定一个属性的 key 值和 value 值，返回所有匹配的要素数组。
-     * @param {string} attrName - 属性的 key。
-     * @param {string} attrValue - 矢量要素的属性 id。
-     * @returns {Array.<SuperMap.Feature.Vector>} 一个匹配的 feature 数组。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.getFeaturesByAttribute
+     * @description Given the key value and value value of an attribute, return an array of all matched features.
+     * @param {string} attrName The key of the attribute.
+     * @param {string} attrValue The attribute id of the vector feature.
+     * @returns {Array.<Feature>} An array of matching features.
      */
     getFeaturesByAttribute(attrName, attrValue) {
         var feature,
@@ -343,21 +335,20 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.redrawThematicFeatures
-     * @description 抽象方法，可实例化子类必须实现此方法。重绘专题要素。
-     * @param {mapboxgl.LngLatBounds} extent - 重绘的范围。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.redrawThematicFeatures
+     * @description Abstract method, instantiable subclass must implement this method. Redraw thematic elements.
+     * @param {mapboxgl.LngLatBounds} extent The scope of redrawing.
      */
-    redrawThematicFeatures(extent) { // eslint-disable-line no-unused-vars
-    }
+    redrawThematicFeatures(extent) {}
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.on
-     * @description 添加专题要素事件监听。添加专题要素事件监听。
-     * @param {Event} event - 监听事件。
-     * @param {function} callback - 回调函数。
-     * @param {string} context - 信息。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.on
+     * @description Add thematic element event monitoring. Add thematic element event monitoring.
+     * @param {Event} event Listen for events.
+     * @param {function} callback Callback.
+     * @param {string} context Information.
      */
-    on(event, callback, context) { // eslint-disable-line no-unused-vars
+    on(event, callback, context) {
         if (this.renderer) {
             this.renderer.on(event, callback);
         } else {
@@ -367,11 +358,11 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.off
-     * @description 移除专题要素事件监听。
-     * @param {Event} event - 监听事件。
-     * @param {function} callback - 回调函数。
-     * @param {string} context - 信息。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.off
+     * @description Remove thematic element event monitoring.
+     * @param {Event} event Listen for events.
+     * @param {function} callback Callback.
+     * @param {string} context Information.
      */
     off(event, callback, context) { // eslint-disable-line no-unused-vars
         var me = this;
@@ -384,8 +375,8 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.addTFEvents
-     * @description 将图层添加到地图上之前用户要求添加的事件监听添加到图层。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.addTFEvents
+     * @description The event listener requested by the user before adding the layer to the map is added to the layer.
      * @private
      */
     addTFEvents() {
@@ -398,9 +389,9 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.getLocalXY
-     * @description 地理坐标转为像素坐标。
-     * @param {Object} [coordinate] - 坐标位置。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.getLocalXY
+     * @description The geographic coordinates are converted to pixel coordinates.
+     * @param {Object} coordinate Coordinate position.
      */
     getLocalXY(coordinate) {
         var pixelP, map = this.map;
@@ -416,10 +407,10 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.toFeature
-     * @description 转为 iClient 要素。
-     * @param {mapboxgl.supermap.ThemeFeature|GeoJSONObject} features - 待转要素。
-     * @returns {SuperMap.Feature.Vector} 转换后的 iClient 要素。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.toFeature
+     * @description Converted to Ekmap elements.
+     * @param {mapboxgl.ekmap.ThemeFeature|GeoJSONObject} features Elements to be transferred.
+     * @returns {ekmap.Feature.Vector} The converted Ekmap element.
      */
     toiClientFeature(features) {
         if (!CommonUtil.isArray(features)) {
@@ -428,18 +419,14 @@ export class ThemeLayer {
 
         let featuresTemp = [];
         for (let i = 0; i < features.length; i++) {
-            //mapboxgl.supermap.ThemeFeature 类型
             if (features[i] instanceof ThemeFeature) {
                 featuresTemp.push(features[i].toFeature());
             } else if (features[i] instanceof GeometryVector) {
-                // 若是 GeometryVector 直接返回
                 featuresTemp.push(features[i]);
             } else if (["FeatureCollection", "Feature", "Geometry"].indexOf(features[i].type) != -1) {
-                //GeoJSON 规范数据类型
                 let format = new GeoJSONFormat();
                 featuresTemp = featuresTemp.concat(format.read(features[i]));
             } else if (features[i].geometry && features[i].geometry.parts) {
-                //iServer服务器返回数据格式
                 featuresTemp.push(ServerFeature.fromJson(features[i]).toFeature());
             } else {
                 throw new Error(`features's type is not be supported.`);
@@ -450,11 +437,11 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.toFeature
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.toFeature
      * @deprecated
-     * @description 转为 iClient 要素，该方法将被弃用，由 {@link mapboxgl.supermap.ThemeLayer#toiClientFeature} 代替。
-     * @param {mapboxgl.supermap.ThemeFeature|GeoJSONObject} features - 待转要素。
-     * @returns {SuperMap.Feature.Vector} 转换后的 iClient 要素。
+     * @description Converted to iClient elements, this method will be deprecated, by {@link mapboxgl.ekmap.ThemeLayer#toiClientFeature} instead.
+     * @param {mapboxgl.ekmap.ThemeFeature|GeoJSONObject} features Elements to be transferred.
+     * @returns {ekmap.Feature.Vector} The converted Ekmap element.
      */
     toFeature(features) {
         return this.toiClientFeature(features);
@@ -562,8 +549,8 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.removeFromMap
-     * @description 移除图层。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.removeFromMapConverted to vector elements.
+     * @description Remove the layer.
      */
     removeFromMap() {
         this.mapContainer.removeChild(this.div);
@@ -571,10 +558,10 @@ export class ThemeLayer {
     }
 
     /**
-     * @function mapboxgl.supermap.ThemeLayer.prototype.moveTo
-     * @description 将图层移动到某个图层之前。
-     * @param {string} layerID - 待插入的图层 ID。
-     * @param {boolean} [before=true] - 是否将本图层插入到图层 id 为 layerID 的图层之前(如果为 false 则将本图层插入到图层 id 为 layerID 的图层之后)。
+     * @function mapboxgl.ekmap.ThemeLayer.prototype.moveTo
+     * @description Move the layer before a certain layer.
+     * @param {string} layerID The ID of the layer to be inserted.
+     * @param {boolean} before=true Whether to insert this layer before the layer whose layer id is layerID (if false, insert this layer after the layer whose layer id is layerID).
      */
     moveTo(layerID, before) {
         const layer = document.getElementById(this.div.id);

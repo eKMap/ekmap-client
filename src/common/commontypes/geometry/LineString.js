@@ -1,38 +1,14 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../../SuperMap';
-import {Point} from './Point';
-import {Curve} from './Curve';
+import { Ekmap } from '../../Ekmap';
+import { Point } from './Point';
+import { Curve } from './Curve';
 
-/**
- * @class SuperMap.Geometry.LineString
- * @classdesc 几何对象线串类。
- * @category BaseTypes Geometry
- * @param {Array.<SuperMap.Geometry.Point>} points - 用来生成线串的点数组。
- * @extends {SuperMap.Geometry.Curve}
- * @example
- * var points = [new SuperMap.Geometry.Point(4933.319287022352, -3337.3849141502124),
- *     new SuperMap.Geometry.Point(4960.9674060199022, -3349.3316322355736),
- *     new SuperMap.Geometry.Point(5006.0235999418364, -3358.8890067038628),
- *     new SuperMap.Geometry.Point(5075.3145648369318, -3378.0037556404409),
- *     new SuperMap.Geometry.Point(5305.19551436013, -3376.9669111768926)],
- * var roadLine = new SuperMap.Geometry.LineString(points)；
- */
 export class LineString extends Curve {
 
     constructor(points) {
         super(points);
-        this.CLASS_NAME = "SuperMap.Geometry.LineString";
+        this.CLASS_NAME = "Ekmap.Geometry.LineString";
         this.geometryType = "LineString";
     }
-
-    /**
-     * @function SuperMap.Geometry.LineString.prototype.removeComponent
-     * @description 只有在线串上有三个或更多的点的时候，才会允许移除点（否则结果将会是单一的点）。
-     * @param {SuperMap.Geometry.Point} point - 将被删除的点。
-     * @returns {boolean} 删除的点。
-     */
     removeComponent(point) { // eslint-disable-line no-unused-vars
         var removed = this.components && (this.components.length > 2);
         if (removed) {
@@ -41,16 +17,10 @@ export class LineString extends Curve {
         return removed;
     }
 
-    /**
-     * @function SuperMap.Geometry.LineString.prototype.getSortedSegments
-     * @returns {Array} An array of segment objects.  Segment objects have properties
-     *     x1, y1, x2, and y2.  The start point is represented by x1 and y1.
-     *     The end point is represented by x2 and y2.  Start and end are
-     *     ordered so that x1 < x2.
-     */
     getSortedSegments() {
         var numSeg = this.components.length - 1;
-        var segments = new Array(numSeg), point1, point2;
+        var segments = new Array(numSeg),
+            point1, point2;
         for (var i = 0; i < numSeg; ++i) {
             point1 = this.components[i];
             point2 = this.components[i + 1];
@@ -79,12 +49,6 @@ export class LineString extends Curve {
         return segments.sort(byX1);
     }
 
-    /**
-     * @function SuperMap.Geometry.LineString.prototype.getVertices
-     * @description 返回几何图形的所有顶点的列表。
-     * @param {boolean} [nodes] - 对于线来说，仅仅返回作为端点的顶点，如果设为 false，则返回非端点的顶点。如果没有设置此参数，则返回所有顶点。
-     * @returns {Array} 几何图形的顶点列表。
-     */
     getVertices(nodes) {
         var vertices;
         if (nodes === true) {
@@ -99,19 +63,6 @@ export class LineString extends Curve {
         }
         return vertices;
     }
-
-    /**
-     * @function SuperMap.Geometry.LineString.calculateCircle
-     * @description 三点画圆弧。
-     * @param {Array.<SuperMap.Geometry.Point>} points - 传入的待计算的初始点串。
-     * @returns {Array.<SuperMap.Geometry.Point>} 计算出相应的圆弧控制点。
-     * @example
-     * var points = [];
-     * points.push(new SuperMap.Geometry.Point(-50,30));
-     * points.push(new SuperMap.Geometry.Point(-30,50));
-     * points.push(new SuperMap.Geometry.Point(2,60));
-     * var circle = SuperMap.Geometry.LineString.calculateCircle(points);
-     */
     static calculateCircle(points) {
         if (points.length < 3) {
             return points
@@ -249,20 +200,6 @@ export class LineString extends Curve {
         return circlePoints;
     }
 
-    /**
-     * @function SuperMap.Geometry.LineString.createLineEPS
-     * @description 根据点的类型画出不同类型的曲线。
-     * 点的类型有三种：LTypeArc，LTypeCurve，NONE。
-     * @param {Array.<SuperMap.Geometry.Point>} points - 传入的待计算的初始点串。
-     * @returns {Array.<SuperMap.Geometry.Point>} 计算出相应的 lineEPS 控制点。
-     * @example
-     * var points = [];
-     * points.push(new SuperMap.Geometry.Point(-50,30));
-     * points.push(new SuperMap.Geometry.Point(-30,50,"LTypeArc"));
-     * points.push(new SuperMap.Geometry.Point(2,60));
-     * points.push(new SuperMap.Geometry.Point(8,20));
-     * var lineEPS = SuperMap.Geometry.LineString.createLineEPS(points);
-     */
     static createLineEPS(points) {
         var list = [],
             len = points.length;
@@ -303,7 +240,8 @@ export class LineString extends Curve {
     }
 
     static addPointEPS(points, i, len, type) {
-        var bezierP = [], j = i + 1;
+        var bezierP = [],
+            j = i + 1;
         if (i == 0) {
             Array.prototype.push.apply(bezierP, [points[i], points[i + 1]]);
         } else if (i == len - 1) {
@@ -321,6 +259,4 @@ export class LineString extends Curve {
     }
 }
 
-SuperMap.Geometry.LineString = LineString;
-
- 
+Ekmap.Geometry.LineString = LineString;

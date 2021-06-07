@@ -1,16 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
+import { Shape } from './Shape';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicEllipse
+ * @class  Ekmap.LevelRenderer.Shape.SmicEllipse
  * @category Visualization Theme
  * @classdesc 椭圆。
- * @extends SuperMap.LevelRenderer.Shape
+ * @extends Ekmap.LevelRenderer.Shape
  * @example  
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicEllipse({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicEllipse({
  *       style: {
  *           x: 100,
  *           y: 100,
@@ -30,7 +30,7 @@ import {Shape} from './Shape';
 export class SmicEllipse extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicEllipse.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicEllipse.style
      * @description 绘制样式。
      *
      * @param {number} style.x - 圆心 x 坐标，必设参数。
@@ -56,7 +56,7 @@ export class SmicEllipse extends Shape {
      */
     //打开接口 style
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicEllipse.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicEllipse.constructor
      * @description 构造函数。
      *
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -66,7 +66,7 @@ export class SmicEllipse extends Shape {
         super(options);
 
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicEllipse.prototype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicEllipse.prototype.type
          * @description 图形类型。
          */
         this.type = 'smicellipse';
@@ -75,12 +75,12 @@ export class SmicEllipse extends Shape {
             this.refOriginalPosition = [0, 0];
         }
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicEllipse";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicEllipse";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicEllipse.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicEllipse.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -90,7 +90,7 @@ export class SmicEllipse extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicEllipse.prototype.buildPath
+     * @function Ekmap.LevelRenderer.Shape.SmicEllipse.prototype.buildPath
      * @description 构建椭圆的 Path。
      *
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -121,7 +121,7 @@ export class SmicEllipse extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicEllipse.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicEllipse.prototype.getRect
      * @description 计算返回椭圆包围盒矩形
      *
      * @param {Object} style - style

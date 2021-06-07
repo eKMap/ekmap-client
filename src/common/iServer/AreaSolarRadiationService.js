@@ -1,13 +1,10 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {SpatialAnalystBase} from './SpatialAnalystBase';
-import {AreaSolarRadiationParameters} from './AreaSolarRadiationParameters';
-import {Util} from '../commontypes/Util';
+import { Ekmap } from '../Ekmap';
+import { SpatialAnalystBase } from './SpatialAnalystBase';
+import { AreaSolarRadiationParameters } from './AreaSolarRadiationParameters';
+import { Util } from '../commontypes/Util';
 
 /**
- * @class SuperMap.AreaSolarRadiationService
+ * @class Ekmap.AreaSolarRadiationService
  * @category iServer SpatialAnalyst SolarRadiationAnalyst
  * @classdesc 地区太阳辐射服务类。
  * @param {string} url - 服务的访问地址。如：</br>http://localhost:8090/iserver/services/spatialanalyst-sample/restjsr/spatialanalyst。</br>
@@ -15,14 +12,14 @@ import {Util} from '../commontypes/Util';
  * @param {Object} options.eventListeners - 需要被注册的监听器对象。
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
  * @param {Object} [options.headers] - 请求头。
- * @extends {SuperMap.SpatialAnalystBase}
+ * @extends {Ekmap.SpatialAnalystBase}
  * @example 例如：
  * (start code)
- * var myAreaSolarRadiationService = new SuperMap.AreaSolarRadiationService(url);
+ * var myAreaSolarRadiationService = new Ekmap.AreaSolarRadiationService(url);
  * myAreaSolarRadiationService.on({
-     *     "processCompleted": processCompleted,
-     *     "processFailed": processFailed
-     *     }
+ *     "processCompleted": processCompleted,
+ *     "processFailed": processFailed
+ *     }
  * );
  * (end)
  *
@@ -31,11 +28,11 @@ export class AreaSolarRadiationService extends SpatialAnalystBase {
 
     constructor(url, options) {
         super(url, options);
-        this.CLASS_NAME = "SuperMap.AreaSolarRadiationService";
+        this.CLASS_NAME = "Ekmap.AreaSolarRadiationService";
     }
 
     /**
-     * @function SuperMap.AreaSolarRadiationService.prototype.destroy
+     * @function Ekmap.AreaSolarRadiationService.prototype.destroy
      * @override
      */
     destroy() {
@@ -43,9 +40,9 @@ export class AreaSolarRadiationService extends SpatialAnalystBase {
     }
 
     /**
-     * @function SuperMap.AreaSolarRadiationService.prototype.processAsync
+     * @function Ekmap.AreaSolarRadiationService.prototype.processAsync
      * @description 负责将客户端的查询参数传递到服务端。
-     * @param {SuperMap.AreaSolarRadiationParameters} parameter - 地区太阳辐射参数。
+     * @param {Ekmap.AreaSolarRadiationParameters} parameter - 地区太阳辐射参数。
      */
     processAsync(parameter) {
         if (!(parameter instanceof AreaSolarRadiationParameters)) {
@@ -71,5 +68,4 @@ export class AreaSolarRadiationService extends SpatialAnalystBase {
     }
 }
 
-SuperMap.AreaSolarRadiationService = AreaSolarRadiationService;
-
+Ekmap.AreaSolarRadiationService = AreaSolarRadiationService;

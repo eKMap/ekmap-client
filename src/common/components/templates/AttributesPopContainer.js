@@ -1,18 +1,15 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../../SuperMap';
-import {PopContainer} from './PopContainer';
+import { Ekmap } from '../../Ekmap';
+import { PopContainer } from './PopContainer';
 
 /**
- * @class SuperMap.Components.AttributesPopContainer
+ * @class Ekmap.Components.AttributesPopContainer
  * @classdesc 属性弹框组件
  * @version 9.1.1
  * @param {Object} options - 组件配置参数。
  * @param {string} options.id - 组件 dom 元素 id。
  * @param {Object} options.title - 属性弹框组件名称。
  * @param {Object} options.attributes - 组件需要显示的属性内容。
- * @extends {SuperMap.Components.PopContainer}
+ * @extends {Ekmap.Components.PopContainer}
  * @category Components Common
  */
 export class AttributesPopContainer extends PopContainer {
@@ -56,4 +53,4 @@ export class AttributesPopContainer extends PopContainer {
     }
 }
 
-SuperMap.Components.AttributesPopContainer = AttributesPopContainer;
+Ekmap.Components.AttributesPopContainer = AttributesPopContainer;

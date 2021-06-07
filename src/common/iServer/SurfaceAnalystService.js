@@ -1,16 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {SpatialAnalystBase} from './SpatialAnalystBase';
-import {Util} from '../commontypes/Util';
-import {DatasetSurfaceAnalystParameters} from './DatasetSurfaceAnalystParameters';
-import {GeometrySurfaceAnalystParameters} from './GeometrySurfaceAnalystParameters';
-import {SurfaceAnalystParameters} from './SurfaceAnalystParameters';
+import { Ekmap } from '../Ekmap';
+import { SpatialAnalystBase } from './SpatialAnalystBase';
+import { Util } from '../commontypes/Util';
+import { DatasetSurfaceAnalystParameters } from './DatasetSurfaceAnalystParameters';
+import { GeometrySurfaceAnalystParameters } from './GeometrySurfaceAnalystParameters';
+import { SurfaceAnalystParameters } from './SurfaceAnalystParameters';
 
 
 /**
- * @class SuperMap.SurfaceAnalystService
+ * @class Ekmap.SurfaceAnalystService
  * @category  iServer SpatialAnalyst SurfaceAnalyst
  * @classdesc 表面分析服务类。
  * 该类负责将客户设置的表面分析服务参数传递给服务端，并接收服务端返回的表面分析服务分析结果数据。
@@ -20,15 +20,15 @@ import {SurfaceAnalystParameters} from './SurfaceAnalystParameters';
  * @param {Object} options.eventListeners - 需要被注册的监听器对象。
  * @param {boolean} [options.crossOrigin] - 是否允许跨域请求。
  * @param {Object} [options.headers] - 请求头。
- * @extends {SuperMap.SpatialAnalystBase}
+ * @extends {Ekmap.SpatialAnalystBase}
  * @example 例如：
  * (start code)
- * var mySurfaceAnalystService = new SuperMap.SurfaceAnalystService(url, {
-     *      eventListeners: {
-     *	       "processCompleted": surfaceAnalysCompleted,
-     *		   "processFailed": surfaceAnalysFailed
-     *		   }
-     * });
+ * var mySurfaceAnalystService = new Ekmap.SurfaceAnalystService(url, {
+ *      eventListeners: {
+ *	       "processCompleted": surfaceAnalysCompleted,
+ *		   "processFailed": surfaceAnalysFailed
+ *		   }
+ * });
  * (end)
  *
  */
@@ -36,11 +36,11 @@ export class SurfaceAnalystService extends SpatialAnalystBase {
 
     constructor(url, options) {
         super(url, options);
-        this.CLASS_NAME = "SuperMap.SurfaceAnalystService";
+        this.CLASS_NAME = "Ekmap.SurfaceAnalystService";
     }
 
     /**
-     * @function SuperMap.SurfaceAnalystService.prototype.destroy
+     * @function Ekmap.SurfaceAnalystService.prototype.destroy
      * @description 释放资源,将引用的资源属性置空。
      */
     destroy() {
@@ -48,15 +48,16 @@ export class SurfaceAnalystService extends SpatialAnalystBase {
     }
 
     /**
-     * @function SuperMap.SurfaceAnalystService.prototype.processAsync
+     * @function Ekmap.SurfaceAnalystService.prototype.processAsync
      * @description 负责将客户端的表面分析服务参数传递到服务端。
-     * @param {SuperMap.SurfaceAnalystParameters} params - 表面分析提取操作参数类。
+     * @param {Ekmap.SurfaceAnalystParameters} params - 表面分析提取操作参数类。
      */
     processAsync(params) {
         if (!(params instanceof SurfaceAnalystParameters)) {
             return;
         }
-        var me = this, jsonParameters;
+        var me = this,
+            jsonParameters;
         jsonParameters = me.getJsonParameters(params);
         me.request({
             method: "POST",
@@ -68,9 +69,9 @@ export class SurfaceAnalystService extends SpatialAnalystBase {
     }
 
     /**
-     * @function SuperMap.SurfaceAnalystService.prototype.getJsonParameters
+     * @function Ekmap.SurfaceAnalystService.prototype.getJsonParameters
      * @description 将参数转化为 JSON 字符串。
-     * @param {SuperMap.SurfaceAnalystParameters} params - 表面分析提取操作参数类。
+     * @param {Ekmap.SurfaceAnalystParameters} params - 表面分析提取操作参数类。
      * @returns {Object} 转化后的JSON字符串。
      */
     getJsonParameters(params) {
@@ -95,4 +96,4 @@ export class SurfaceAnalystService extends SpatialAnalystBase {
     }
 }
 
-SuperMap.SurfaceAnalystService = SurfaceAnalystService;
+Ekmap.SurfaceAnalystService = SurfaceAnalystService;

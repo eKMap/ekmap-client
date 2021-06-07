@@ -1,18 +1,18 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {ServerColor} from './ServerColor';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { ServerColor } from './ServerColor';
 
 /**
- * @class SuperMap.ThemeGridRangeItem
+ * @class Ekmap.ThemeGridRangeItem
  * @category  iServer Map Theme
  * @classdesc 栅格分段专题图子项类。
  * @description 在栅格分段专题图中，将栅格值按照某种分段模式被分成多个范围段。
  *              本类用来设置每个范围段的分段起始值、终止值、名称和颜色等。每个分段所表示的范围为 [Start,End)。
  * @param {Object} options - 参数。
- * @param {SuperMap.ServerColor} options.color - 栅格分段专题图中每一个分段专题图子项的对应的颜色。
+ * @param {Ekmap.ServerColor} options.color - 栅格分段专题图中每一个分段专题图子项的对应的颜色。
  * @param {string} [options.caption] - 栅格分段专题图子项的标题。
  * @param {number} [options.end=0] - 栅格分段专题图子项的终止值。
  * @param {number} [options.start=0] - 栅格分段专题图子项的起始值。
@@ -22,32 +22,32 @@ export class ThemeGridRangeItem {
 
     constructor(options) {
         /**
-         * @member {string} [SuperMap.ThemeGridRangeItem.prototype.caption]
+         * @member {string} [Ekmap.ThemeGridRangeItem.prototype.caption]
          * @description 栅格分段专题图子项的标题。
          */
         this.caption = null;
 
         /**
-         * @member {SuperMap.ServerColor} SuperMap.ThemeGridRangeItem.prototype.color
+         * @member {Ekmap.ServerColor} Ekmap.ThemeGridRangeItem.prototype.color
          * @description 栅格分段专题图中每一个分段专题图子项的对应的颜色。
          */
-        this.color =  new ServerColor();
+        this.color = new ServerColor();
 
         /**
-         * @member {number} [SuperMap.ThemeGridRangeItem.prototype.end=0]
+         * @member {number} [Ekmap.ThemeGridRangeItem.prototype.end=0]
          * @description 栅格分段专题图子项的终止值，即该段专题值范围的最大值。
          */
         this.end = 0;
 
         /**
-         * @member {number} [SuperMap.ThemeGridRangeItem.prototype.start=0]
+         * @member {number} [Ekmap.ThemeGridRangeItem.prototype.start=0]
          * @description 栅格分段专题图子项的起始值，即该段专题值范围的最小值。
          */
         this.start = 0;
 
 
         /**
-         * @member {boolean} [SuperMap.ThemeGridRangeItem.prototype.visible=true]
+         * @member {boolean} [Ekmap.ThemeGridRangeItem.prototype.visible=true]
          * @description 栅格分段专题图子项是否可见。
          */
         this.visible = true;
@@ -55,11 +55,11 @@ export class ThemeGridRangeItem {
         if (options) {
             Util.extend(this, options);
         }
-        this.CLASS_NAME = "SuperMap.ThemeGridRangeItem";
+        this.CLASS_NAME = "Ekmap.ThemeGridRangeItem";
     }
 
     /**
-     * @function SuperMap.ThemeGridRangeItem.prototype.destroy
+     * @function Ekmap.ThemeGridRangeItem.prototype.destroy
      * @description 释放资源，将引用资源的属性置空。
      */
     destroy() {
@@ -76,7 +76,7 @@ export class ThemeGridRangeItem {
     }
 
     /**
-     * @function SuperMap.ThemeGridRangeItem.prototype.toServerJSONObject
+     * @function Ekmap.ThemeGridRangeItem.prototype.toServerJSONObject
      * @description 转换成对应的 JSON 格式对象。
      * @returns {Object} 对应的 JSON 格式对象。
      */
@@ -92,10 +92,10 @@ export class ThemeGridRangeItem {
     }
 
     /**
-     * @function SuperMap.ThemeGridRangeItem.fromObj
+     * @function Ekmap.ThemeGridRangeItem.fromObj
      * @description 从传入对象获取栅格分段专题图子项类。
      * @param {Object} obj - 传入对象。
-     * @returns {SuperMap.ThemeGridRangeItem} ThemeGridRangeItem 对象。
+     * @returns {Ekmap.ThemeGridRangeItem} ThemeGridRangeItem 对象。
      */
     static fromObj(obj) {
         if (!obj) {
@@ -109,4 +109,4 @@ export class ThemeGridRangeItem {
 
 }
 
-SuperMap.ThemeGridRangeItem = ThemeGridRangeItem;
+Ekmap.ThemeGridRangeItem = ThemeGridRangeItem;

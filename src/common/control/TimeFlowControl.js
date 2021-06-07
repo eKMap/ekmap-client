@@ -1,17 +1,14 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {TimeControlBase} from './TimeControlBase';
+import { Ekmap } from '../Ekmap';
+import { TimeControlBase } from './TimeControlBase';
 
 /**
- * @class SuperMap.TimeFlowControl
+ * @class Ekmap.TimeFlowControl
  * @classdesc 时间管理类。
  * @category  Control
  * @description 此类只负责时间上的控制，具体执行的操作需要用户在初始化时的回调函数内部进行实现。
  * 如设置起始时间为 1000，结束时间是 2000，步长设置为 1，
  * 那么表示按照每次1年（可以通过 setSpeed 进行修改）的变化从公元 1000 年开始到公元 2000 年为止，默认每 1 秒会 1 次（通过 setFrequency 修改）
- * @extends {SuperMap.TimeControlBase}
+ * @extends {Ekmap.TimeControlBase}
  * @param {function} callback - 每次刷新回调函数。具体的效果需要用户在此回调函数里面实现。
  * @param {Object} options - 该类开放的可选属性。
  * @param {number} [options.speed=1] - 步长（单位 ms）。不能小于 0，（每次刷新的数据之间的间隔为 1ms）。
@@ -28,26 +25,26 @@ export class TimeFlowControl extends TimeControlBase {
         super(options);
         var me = this;
         /**
-         * @member SuperMap.TimeFlowControl.prototype.callback -{function}
+         * @member Ekmap.TimeFlowControl.prototype.callback -{function}
          * @description 每次刷新执行的回调函数。
          */
         me.callback = callback;
 
         //先让IE下支持bind方法
         if (!Function.prototype.bind) {
-            Function.prototype.bind = function (oThis) {
+            Function.prototype.bind = function(oThis) {
                 if (typeof this !== "function") {
                     throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
                 }
                 var aArgs = Array.prototype.slice.call(arguments, 1),
                     fToBind = this,
-                    fNOP = function () {
+                    fNOP = function() {
                         //empty Function
                     },
-                    fBound = function () {
-                        return fToBind.apply(this instanceof fNOP && oThis
-                            ? this
-                            : oThis,
+                    fBound = function() {
+                        return fToBind.apply(this instanceof fNOP && oThis ?
+                            this :
+                            oThis,
                             aArgs.concat(Array.prototype.slice.call(arguments)));
                     };
                 fNOP.prototype = this.prototype;
@@ -60,12 +57,12 @@ export class TimeFlowControl extends TimeControlBase {
 
         me.oldTime = me.currentTime;
 
-        me.CLASS_NAME = "SuperMap.TimeFlowControl";
+        me.CLASS_NAME = "Ekmap.TimeFlowControl";
     }
 
 
     /**
-     * @function SuperMap.TimeFlowControl.prototype.updateOptions
+     * @function Ekmap.TimeFlowControl.prototype.updateOptions
      * @override
      */
     updateOptions(options) {
@@ -75,7 +72,7 @@ export class TimeFlowControl extends TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeFlowControl.prototype.start
+     * @function Ekmap.TimeFlowControl.prototype.start
      * @override
      */
     start() {
@@ -100,7 +97,7 @@ export class TimeFlowControl extends TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeFlowControl.prototype.stop
+     * @function Ekmap.TimeFlowControl.prototype.stop
      * @override
      */
     stop() {
@@ -117,7 +114,7 @@ export class TimeFlowControl extends TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeFlowControl.prototype.destroy
+     * @function Ekmap.TimeFlowControl.prototype.destroy
      * @override
      */
     destroy() {
@@ -129,7 +126,7 @@ export class TimeFlowControl extends TimeControlBase {
 
 
     /**
-     * @function SuperMap.TimeFlowControl.prototype.tick
+     * @function Ekmap.TimeFlowControl.prototype.tick
      * @description 定时刷新。
      */
     tick() {
@@ -141,7 +138,7 @@ export class TimeFlowControl extends TimeControlBase {
     }
 
     /**
-     * @function SuperMap.TimeFlowControl.prototype.update
+     * @function Ekmap.TimeFlowControl.prototype.update
      * @override
      */
     update() {
@@ -152,7 +149,7 @@ export class TimeFlowControl extends TimeControlBase {
             return;
         }
         //调用回调函数
-        me.callback && me.callback(me.currentTime);    //destroy之后callback就为空，所以需要判定一下
+        me.callback && me.callback(me.currentTime); //destroy之后callback就为空，所以需要判定一下
 
         if (!me.reverse) {
             //如果相等，则代表上一帧已经运行到了最后，下一帧运行初始化的状态
@@ -167,7 +164,7 @@ export class TimeFlowControl extends TimeControlBase {
                 me.currentTime = me.startTime;
                 me.oldTime = me.currentTime;
                 me.start();
-            } else {//否则时间递增
+            } else { //否则时间递增
                 me.oldTime = me.currentTime;
                 me.currentTime += me.speed;
             }
@@ -187,7 +184,7 @@ export class TimeFlowControl extends TimeControlBase {
 
                 me.oldTime = me.endTime;
                 me.currentTime = me.oldTime;
-            } else {//否则时间递减
+            } else { //否则时间递减
                 me.currentTime = me.oldTime;
                 me.oldTime -= me.speed;
             }
@@ -202,5 +199,4 @@ export class TimeFlowControl extends TimeControlBase {
 
 }
 
-SuperMap.TimeFlowControl = TimeFlowControl;
-
+Ekmap.TimeFlowControl = TimeFlowControl;

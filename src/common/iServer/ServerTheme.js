@@ -1,24 +1,24 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {LonLat} from '../commontypes/LonLat';
-import {ThemeLabel} from './ThemeLabel';
-import {ThemeUnique} from './ThemeUnique';
-import {ThemeGraph} from './ThemeGraph';
-import {ThemeDotDensity} from './ThemeDotDensity';
-import {ThemeGraduatedSymbol} from './ThemeGraduatedSymbol';
-import {ThemeRange} from './ThemeRange';
-import {UGCSubLayer} from './UGCSubLayer';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { LonLat } from '../commontypes/LonLat';
+import { ThemeLabel } from './ThemeLabel';
+import { ThemeUnique } from './ThemeUnique';
+import { ThemeGraph } from './ThemeGraph';
+import { ThemeDotDensity } from './ThemeDotDensity';
+import { ThemeGraduatedSymbol } from './ThemeGraduatedSymbol';
+import { ThemeRange } from './ThemeRange';
+import { UGCSubLayer } from './UGCSubLayer';
 
 /**
- * @class SuperMap.ServerTheme
+ * @class Ekmap.ServerTheme
  * @category  iServer Map Theme
  * @classdesc UGC 专题图图层类。
- * @extends {SuperMap.UGCSubLayer}
- * @param {SuperMap.Theme} theme - 专题图对象。
- * @param {SuperMap.LonLat} themeElementPosition - 专题图元素位置。
+ * @extends {Ekmap.UGCSubLayer}
+ * @param {Ekmap.Theme} theme - 专题图对象。
+ * @param {Ekmap.LonLat} themeElementPosition - 专题图元素位置。
  */
 export class ServerTheme extends UGCSubLayer {
 
@@ -27,24 +27,24 @@ export class ServerTheme extends UGCSubLayer {
         super(options);
 
         /**
-         * @member {SuperMap.Theme} SuperMap.ServerTheme.prototype.theme
+         * @member {Ekmap.Theme} Ekmap.ServerTheme.prototype.theme
          * @description 专题图对象。
          */
         this.theme = null;
 
         /**
-         * @member {SuperMap.LonLat} SuperMap.ServerTheme.prototype.themeElementPosition
+         * @member {Ekmap.LonLat} Ekmap.ServerTheme.prototype.themeElementPosition
          * @description 专题图元素位置。
          */
         this.themeElementPosition = null;
 
-        this.CLASS_NAME = "SuperMap.ServerTheme";
+        this.CLASS_NAME = "Ekmap.ServerTheme";
 
     }
 
 
     /**
-     * @function SuperMap.ServerTheme.prototype.destroy
+     * @function Ekmap.ServerTheme.prototype.destroy
      * @override
      */
     destroy() {
@@ -54,7 +54,7 @@ export class ServerTheme extends UGCSubLayer {
 
 
     /**
-     * @function SuperMap.ServerTheme.prototype.fromJson
+     * @function Ekmap.ServerTheme.prototype.fromJson
      * @description 将服务端 JSON 对象转换成当前客户端对象
      * @param {Object} jsonObject - 要转换的 JSON 对象。
      */
@@ -91,7 +91,7 @@ export class ServerTheme extends UGCSubLayer {
     }
 
     /**
-     * @function SuperMap.ServerTheme.prototype.toServerJSONObject
+     * @function Ekmap.ServerTheme.prototype.toServerJSONObject
      * @description 转换成对应的 JSON 格式对象。
      */
     toServerJSONObject() {
@@ -113,4 +113,4 @@ export class ServerTheme extends UGCSubLayer {
 
 }
 
-SuperMap.ServerTheme = ServerTheme;
+Ekmap.ServerTheme = ServerTheme;

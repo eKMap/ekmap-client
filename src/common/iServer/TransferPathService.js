@@ -1,19 +1,19 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {CommonServiceBase} from './CommonServiceBase';
-import {TransferPathParameters} from './TransferPathParameters';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { CommonServiceBase } from './CommonServiceBase';
+import { TransferPathParameters } from './TransferPathParameters';
 
 /**
- * @class SuperMap.TransferPathService
+ * @class Ekmap.TransferPathService
  * @category  iServer TrafficTransferAnalyst TransferPath
  * @classdesc 交通换乘线路查询服务类，根据交通换乘分析结果(TransferSolutionResult)，获取某一条乘车路线的详细信息。
  *            返回结果通过该类支持的事件的监听函数参数获取
- * @extends {SuperMap.CommonServiceBase}
+ * @extends {Ekmap.CommonServiceBase}
  * @example 例如：
- * var myService = new SuperMap.TransferPathService(url, {eventListeners: {
+ * var myService = new Ekmap.TransferPathService(url, {eventListeners: {
  *     "processCompleted": TrafficTransferCompleted,
  *     "processFailed": TrafficTransferError
  *     }
@@ -29,7 +29,7 @@ export class TransferPathService extends CommonServiceBase {
 
     constructor(url, options) {
         super(url, options);
-        this.CLASS_NAME = "SuperMap.TransferPathService";
+        this.CLASS_NAME = "Ekmap.TransferPathService";
     }
 
     /**
@@ -40,9 +40,9 @@ export class TransferPathService extends CommonServiceBase {
     }
 
     /**
-     * @function SuperMap.TransferPathService.prototype.processAsync
+     * @function Ekmap.TransferPathService.prototype.processAsync
      * @description 负责将客户端的更新参数传递到服务端。
-     * @param {SuperMap.TransferPathParameters} params - 交通换乘参数。
+     * @param {Ekmap.TransferPathParameters} params - 交通换乘参数。
      */
     processAsync(params) {
         if (!(params instanceof TransferPathParameters)) {
@@ -69,4 +69,4 @@ export class TransferPathService extends CommonServiceBase {
 
 }
 
-SuperMap.TransferPathService = TransferPathService;
+Ekmap.TransferPathService = TransferPathService;

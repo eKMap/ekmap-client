@@ -1,32 +1,32 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Tool.Math
+ * @class  Ekmap.LevelRenderer.Tool.Math
  * @category Visualization Theme
  * @classdesc LevelRenderer 工具-数学辅助类
  */
 export class Math {
 
-     /**
-     * @function SuperMap.LevelRenderer.Tool.Math.constructor
+    /**
+     * @function Ekmap.LevelRenderer.Tool.Math.constructor
      * @description 构造函数。
      */
 
     constructor() {
-       
+
         /**
-         * @member {number} SuperMap.LevelRenderer.Tool.Math._radians
+         * @member {number} Ekmap.LevelRenderer.Tool.Math._radians
          * @description 角度与弧度转化参数
          */
         this._radians = window.Math.PI / 180;
 
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Tool.Math";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Math";
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Math.prototype.sin
+     * @function Ekmap.LevelRenderer.Tool.Math.prototype.sin
      * @description 正弦函数。
      * @param {number} angle - 弧度（角度）参数。
      * @param {boolean} [isDegrees=false] - angle参数是否为角度计算，angle为以弧度计量的角度。
@@ -37,7 +37,7 @@ export class Math {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Math.prototype.cos
+     * @function Ekmap.LevelRenderer.Tool.Math.prototype.cos
      * @description 余弦函数。
      * @param {number} angle - 弧度（角度）参数。
      * @param {boolean} [isDegrees=false] - angle参数是否为角度计算，angle为以弧度计量的角度。
@@ -48,7 +48,7 @@ export class Math {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Math.prototype.degreeToRadian
+     * @function Ekmap.LevelRenderer.Tool.Math.prototype.degreeToRadian
      * @description 角度转弧度。
      * @param {number} angle - 弧度（角度）参数。
      * @param {boolean} [isDegrees=false] - angle参数是否为角度计算，angle为以弧度计量的角度。
@@ -59,13 +59,13 @@ export class Math {
     }
 
     /**
-     * @function SuperMap.LevelRenderer.Tool.Math.prototype.radianToDegree
+     * @function Ekmap.LevelRenderer.Tool.Math.prototype.radianToDegree
      * @description 弧度转角度。
      * @param {number} angle - 弧度（角度）参数。
      * @param {boolean} [isDegrees=false] - angle参数是否为角度计算，angle为以弧度计量的角度。
      * @returns {number} 角度。
      */
-   
+
     radianToDegree(angle) {
         return angle / this._radians;
     }

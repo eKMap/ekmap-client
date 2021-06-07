@@ -1,23 +1,20 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {SuperMap} from '../SuperMap';
-import {Util} from '../commontypes/Util';
-import {NetworkAnalystServiceBase} from './NetworkAnalystServiceBase';
-import {FindPathParameters} from './FindPathParameters';
-import {GeoJSON} from '../format/GeoJSON';
+import { Ekmap } from '../Ekmap';
+import { Util } from '../commontypes/Util';
+import { NetworkAnalystServiceBase } from './NetworkAnalystServiceBase';
+import { FindPathParameters } from './FindPathParameters';
+import { GeoJSON } from '../format/GeoJSON';
 
 /**
- * @class SuperMap.FindPathService
+ * @class Ekmap.FindPathService
  * @category iServer NetworkAnalyst Path
  * @classdesc 最佳路径分析服务类。
  *            最佳路径是在网络数据集中指定一些节点，按照节点的选择顺序，
  *            顺序访问这些节点从而求解起止点之间阻抗最小的路经。
  *            该类负责将客户端指定的最佳路径分析参数传递给服务端，并接收服务端返回的结果数据。
  *            最佳路径分析结果通过该类支持的事件的监听函数参数获取
- * @extends {SuperMap.NetworkAnalystServiceBase}
+ * @extends {Ekmap.NetworkAnalystServiceBase}
  * @example
- * var myFindPathService = new SuperMap.FindPathService(url, {
+ * var myFindPathService = new Ekmap.FindPathService(url, {
  *     eventListeners: {
  *	       "processCompleted": findPathCompleted,
  *		   "processFailed": findPathError
@@ -36,11 +33,11 @@ export class FindPathService extends NetworkAnalystServiceBase {
     constructor(url, options) {
         super(url, options);
 
-        this.CLASS_NAME = "SuperMap.FindPathService";
+        this.CLASS_NAME = "Ekmap.FindPathService";
     }
 
     /**
-     * @function SuperMap.FindPathService.prototype.destroy
+     * @function Ekmap.FindPathService.prototype.destroy
      * @override
      */
     destroy() {
@@ -48,15 +45,16 @@ export class FindPathService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindPathService.prototype.processAsync
+     * @function Ekmap.FindPathService.prototype.processAsync
      * @description 负责将客户端的查询参数传递到服务端。
-     * @param {SuperMap.FindPathParameters} params - 最佳路径分析服务参数类
+     * @param {Ekmap.FindPathParameters} params - 最佳路径分析服务参数类
      */
     processAsync(params) {
         if (!(params instanceof FindPathParameters)) {
             return;
         }
-        var me = this, jsonObject;
+        var me = this,
+            jsonObject;
         me.url = Util.urlPathAppend(me.url, 'path');
         jsonObject = {
             hasLeastEdgeCount: params.hasLeastEdgeCount,
@@ -73,7 +71,7 @@ export class FindPathService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindPathService.prototype.getJson
+     * @function Ekmap.FindPathService.prototype.getJson
      * @description 将对象转化为JSON字符串。
      * @param {boolean} isAnalyzeById - 是否通过id分析
      * @param {Array} params - 需要转换的数字
@@ -103,7 +101,7 @@ export class FindPathService extends NetworkAnalystServiceBase {
     }
 
     /**
-     * @function SuperMap.FindMTSPPathsService.prototype.toGeoJSONResult
+     * @function Ekmap.FindMTSPPathsService.prototype.toGeoJSONResult
      * @description 将含有 geometry 的数据转换为 GeoJSON 格式。
      * @param {Object} result - 服务器返回的结果对象。
      */
@@ -112,7 +110,7 @@ export class FindPathService extends NetworkAnalystServiceBase {
             return null;
         }
         var geoJSONFormat = new GeoJSON();
-        result.pathList.forEach(function (path) {
+        result.pathList.forEach(function(path) {
             if (path.route) {
                 path.route = geoJSONFormat.toGeoJSON(path.route);
             }
@@ -132,4 +130,4 @@ export class FindPathService extends NetworkAnalystServiceBase {
 
 }
 
-SuperMap.FindPathService = FindPathService;
+Ekmap.FindPathService = FindPathService;

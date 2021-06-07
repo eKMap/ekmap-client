@@ -1,16 +1,16 @@
-/* Copyright© 2000 - 2020 SuperMap Software Co.Ltd. All rights reserved.
+/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
  * This program are made available under the terms of the Apache License, Version 2.0
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-import {Shape} from './Shape';
-import {SUtil} from './SUtil';
+import { Shape } from './Shape';
+import { SUtil } from './SUtil';
 
 /**
  * @private
- * @class  SuperMap.LevelRenderer.Shape.SmicText
+ * @class  Ekmap.LevelRenderer.Shape.SmicText
  * @category Visualization Theme
- * @extends {SuperMap.LevelRenderer.Shape}
+ * @extends {Ekmap.LevelRenderer.Shape}
  * @example
- *   var shape = new SuperMap.LevelRenderer.Shape.SmicText({
+ *   var shape = new Ekmap.LevelRenderer.Shape.SmicText({
  *         style: {
  *             text: 'Label',
  *             x: 100,
@@ -24,7 +24,7 @@ import {SUtil} from './SUtil';
 export class SmicText extends Shape {
 
     /**
-     * @member {Object} SuperMap.LevelRenderer.Shape.SmicText.prototype.style
+     * @member {Object} Ekmap.LevelRenderer.Shape.SmicText.prototype.style
      * @description 绘制样式。
      *
      * @param {number} style.x - 横坐标，必设参数。
@@ -48,7 +48,7 @@ export class SmicText extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicText.constructor
+     * @function Ekmap.LevelRenderer.Shape.SmicText.constructor
      * @description 构造函数。
      *
      * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
@@ -57,19 +57,19 @@ export class SmicText extends Shape {
     constructor(options) {
         super(options);
         /**
-         * @member {string} SuperMap.LevelRenderer.Shape.SmicText.prototype.type
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicText.prototype.type
          * @description 图形类型.
          */
         this.type = 'smictext';
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
-        this.CLASS_NAME = "SuperMap.LevelRenderer.Shape.SmicText";
+        this.CLASS_NAME = "Ekmap.LevelRenderer.Shape.SmicText";
     }
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicText.prototype.destroy
+     * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.destroy
      * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
      */
     destroy() {
@@ -80,7 +80,7 @@ export class SmicText extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicText.prototype.brush
+     * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.brush
      * @description 笔触。
      *
      * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
@@ -308,7 +308,7 @@ export class SmicText extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicText.prototype.getRect
+     * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.getRect
      * @description 返回文字包围盒矩形
      */
     getRect(style) {
@@ -355,7 +355,7 @@ export class SmicText extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicText.prototype.getRectNoRotation
+     * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.getRectNoRotation
      * @description 返回忽略旋转和maxWidth时文字包围盒矩形
      */
     getRectNoRotation(style) {
@@ -371,7 +371,7 @@ export class SmicText extends Shape {
         var height = SUtil.Util_area.getTextHeight(style.text, style.textFont);
 
         //处理文字位置，注：文本的绘制是由此 rect 决定
-        var textX = style.x + __OP[0];                 // 默认start == left
+        var textX = style.x + __OP[0]; // 默认start == left
         if (style.textAlign == 'end' || style.textAlign == 'right') {
             textX -= width;
         } else if (style.textAlign == 'center') {
@@ -434,7 +434,7 @@ export class SmicText extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicText.prototype.getTextBackground
+     * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.getTextBackground
      * @description 获取文本背景框范围
      * 
      * @param {Object} style - 样式。
@@ -490,7 +490,7 @@ export class SmicText extends Shape {
 
 
     /**
-     * @function SuperMap.LevelRenderer.Shape.SmicText.prototype.getRotatedLocation
+     * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.getRotatedLocation
      * @description 获取一个点绕旋转中心顺时针旋转后的位置。（此方法用于屏幕坐标）
      * 
      * @param {number} x - 旋转点横坐标。
@@ -501,11 +501,12 @@ export class SmicText extends Shape {
      * @return {Array} 旋转后的坐标位置，长度为 2 的一维数组，数组第一个元素表示 x 坐标，第二个元素表示 y 坐标。
      */
     getRotatedLocation(x, y, rx, ry, angle) {
-        var loc = new Array(), x0, y0;
+        var loc = new Array(),
+            x0, y0;
 
         y = -y;
         ry = -ry;
-        angle = -angle;//顺时针旋转
+        angle = -angle; //顺时针旋转
         x0 = (x - rx) * Math.cos((angle / 180) * Math.PI) - (y - ry) * Math.sin((angle / 180) * Math.PI) + rx;
         y0 = (x - rx) * Math.sin((angle / 180) * Math.PI) + (y - ry) * Math.cos((angle / 180) * Math.PI) + ry;
 
