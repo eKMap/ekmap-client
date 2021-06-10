@@ -11,6 +11,8 @@ import { TileLayer } from './TileLayer';
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name=VietNamMap Name of layer.
  * @param {string} options.image=https://map.ekgis.vn/Common/images/vnmap.png Thumbnail of layer.
+ * * @param {Number} options.minzoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden (between 0 and 24 inclusive).
+ * @param {Number} options.maxzoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden (between 0 and 24 inclusive).
  * @param {string} options.visibility=visible Show or hide layer.
  * 
  * @extends {mapboxgl.ekmap.TileLayer}
@@ -45,7 +47,9 @@ export class TiledVietNamMapLayer extends TileLayer {
             token: this.options.token,
             name: this.options.name != undefined ? this.options.name : 'VietNam Map',
             visibility: this.options.visibility,
-            image: this.options.image != undefined ? this.options.image : 'https://map.ekgis.vn/Common/images/vnmap.png'
+            image: this.options.image != undefined ? this.options.image : 'https://map.ekgis.vn/Common/images/vnmap.png',
+            minzoom: this.options.minzoom != undefined ? this.options.minzoom : 0,
+            maxzoom: this.options.maxzoom != undefined ? this.options.maxzoom : 24,
         })
     }
 

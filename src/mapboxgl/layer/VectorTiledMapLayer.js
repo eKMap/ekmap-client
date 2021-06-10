@@ -169,6 +169,27 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
                         }
                     });
                 }
+                if (feature._geometry.type == "Polygon") {
+                    map.addLayer({
+                        "id": "queryEK-" + guid12(),
+                        "source": {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'geometry': feature._geometry
+                            }
+                        },
+                        "type": "fill",
+                        "metadata": {
+                            'name': '',
+                            'type': '',
+                        },
+                        'paint': {
+                            'fill-color': '#088',
+                            'fill-opacity': 0.8
+                        }
+                    });
+                }
             }
         });
         return callback(features);

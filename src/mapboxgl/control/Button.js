@@ -8,6 +8,7 @@ import mapboxgl from 'mapbox-gl';
  *
  * @param {Object} options Construction parameters.
  * @param {string} options.icon=fa-flickr Icon of button.
+ * @param {string} options.className Style class of button.
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
@@ -39,6 +40,8 @@ export class Button extends mapboxgl.Evented {
         this._div = document.createElement('div');
         this._div.title = "Click button";
         this._div.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        if (this.options.className)
+            this._div.className += " " + this.options.className;
         this._div.style.fontSize = "14px"
 
         let input = this.createLayerInputToggle();

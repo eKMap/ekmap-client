@@ -1,4 +1,4 @@
 export { ThemeFeature }
 from './ThemeFeature'
-export { ThemeLayer }
+export { Theme }
 from './ThemeLayer'

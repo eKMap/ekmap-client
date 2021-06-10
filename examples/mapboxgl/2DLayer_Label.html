@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets,bootstrap,admin-lte" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Label Theme Layer</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        .aqi_indexs {
+            background-color: #fff;
+            position: absolute;
+            right: 80px;
+            top: 10px;
+            z-index: 999;
+            height: 42px;
+            width: 320px;
+            box-shadow: 0px 0px 3px 0px rgb(117 117 117);
+            -webkit-box-shadow: 0px 0px 3px 0px rgb(117 117 117);
+            -moz-box-shadow: 0px 0px 3px 0px rgba(117, 117, 117, 1);
+            padding: 10px;
+            padding-top: 0;
+        }
+        
+        .aqi_indexs .leveltext {
+            height: 20px;
+            color: #222;
+            padding: 0 !important;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .aqi_indexs .level {
+            height: 6px;
+            padding: 0;
+            padding: 0 !important;
+            color: transparent;
+            line-height: 6px !important;
+        }
+        
+        .nameCountry {
+            color: #333333 !important;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        .field {
+            color: #333333 !important;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            padding-right: 10px;
+        }
+        
+        .value {
+            color: #333333 !important;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+        <div class="aqi_indexs hidden-xs">
+            <label style="font-size: 10px;font-weight: bold;padding: 0;margin: 0">AQI - Các chỉ số mức độ an toàn của không khí</label>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td class="level" style="background-color: #00E400">____</td>
+                        <td class="level" style="background-color: #FFFF00">____</td>
+                        <td class="level" style="background-color: #FF7E00">____</td>
+                        <td class="level" style="background-color: #FF0000">____</td>
+                        <td class="level" style="background-color: #8F3F97">____</td>
+                        <td class="level" style="background-color: #7E0023">____</td>
+                    </tr>
+                    <tr>
+                        <td class="leveltext">0 - Tốt</td>
+                        <td class="leveltext">51 - Trung bình</td>
+                        <td class="leveltext">101 - Kém</td>
+                        <td class="leveltext">151 - Xấu</td>
+                        <td class="leveltext">201 - Rất xấu</td>
+                        <td class="leveltext">301 - Nguy hại</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        var themeLayer, popup;
+        var attribution = "© Map" +
+            " by <a href='https://carto.com/' target='_blank' style='color:blue'> Carto</a>"
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {},
+                "layers": []
+            },
+            center: [105.81295567463667, 21.00496552078829],
+            zoom: 11.523029564606253
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.on('load', function() {
+            var me = this;
+            new mapboxgl.ekmap.BasemapArcgisLayer('Topographic').addTo(map);
+
+            var features = [];
+            //https://moitruongthudo.vn/
+            $.get("../data/nhietDoHN.json", function(response) {
+                response.forEach(province => {
+                    var lng = province.longtitude;
+                    var lat = province.latitude;
+                    var text = parseFloat(province.aqi).toFixed(0);
+                    var attrs = {};
+                    attrs.name = province.name;
+                    attrs.address = province.address;
+                    attrs.aqi = province.aqi;
+                    attrs.aqiText = province.aqiText;
+                    attrs.humid = province.humid;
+                    attrs.temp = province.temp;
+                    var fea = new mapboxgl.ekmap.ThemeFeature([lng, lat, text], attrs);
+                    features.push(fea);
+                });
+            }).done(function() {
+                addThemeLayer();
+                themeLayer.addFeatures(features);
+            })
+        });
+
+        function addThemeLayer() {
+            themeLayer = new mapboxgl.ekmap.LabelThemeLayer("labelThemeLayer", {
+                attributions: " ",
+                cluster: false,
+                style: new Ekmap.ThemeStyle({
+                    labelRect: true,
+                    fontColor: "#000000",
+                    fontWeight: "bolder",
+                    fontSize: "18px",
+                    fill: true,
+                    fillColor: "#FFFFFF",
+                    fillOpacity: 1,
+                    stroke: false,
+                    strokeColor: "#8B7B8B"
+                }),
+                themeField: "aqi",
+                styleGroups: [{
+                    start: 0,
+                    end: 51,
+                    style: {
+                        fillColor: "#6ACD06",
+                        fontSize: "17px"
+                    }
+                }, {
+                    start: 51,
+                    end: 101,
+                    style: {
+                        fillColor: "#FBD12A",
+                        fontSize: "19px"
+                    }
+                }, {
+                    start: 101,
+                    end: 151,
+                    style: {
+                        fillColor: "#FE8800",
+                        fontSize: "22px"
+                    }
+                }, {
+                    start: 151,
+                    end: 201,
+                    style: {
+                        fillColor: "#FF0000",
+                        fontSize: "24px"
+                    }
+                }, {
+                    start: 201,
+                    end: 301,
+                    style: {
+                        fillColor: "#CC0000",
+                        fontSize: "26px"
+                    }
+                }, {
+                    start: 301,
+                    end: 601,
+                    style: {
+                        fillColor: "#960453",
+                        fontSize: "28px"
+                    }
+                }]
+            });
+            map.addLayer(themeLayer);
+            themeLayer.on('mousemove', handleMouseOver);
+            // addFeatures();
+        }
+
+        function handleMouseOver(e) {
+            if (e.target && e.target.refDataID) {
+                var fid = e.target.refDataID;
+                var fea = themeLayer.getFeatureById(fid);
+                if (fea) {
+                    updateInfoView(fea, e);
+                }
+            } else {
+                removePopup();
+            }
+        }
+
+        function updateInfoView(feature, e) {
+
+            if (!feature && popup) {
+                removePopup();
+                return;
+            }
+
+            if (!popup) {
+                popup = new mapboxgl.Popup({
+                    maxWidth: 'none'
+                });
+            }
+            var content = '';
+            content += '<div >';
+            content += '   <div class="form-group row" style="text-align: center">';
+            content += '       <span href="javascript:;" class="nameCountry">' + feature.attributes.name + '</span>'
+            content += '   </div>'
+            content += '   <div class="form-group row">';
+            content += '      <div class="col-md-12">';
+            content += '           <span href="javascript:;" class="value">Địa chỉ : ' + feature.attributes.address + '</span>'
+            content += '      </div>'
+            content += '   </div>'
+            content += '   <div class="form-group row">';
+            content += '      <div class="col-md-6" style="text-align: center">';
+            content += '          <span href="javascript:;" class="value">AQI  ' + feature.attributes.aqi + '</span>'
+            content += '      </div>'
+            content += '      <div class="col-md-6" style="text-align: center">'
+            content += '          <span href="javascript:;" class="value">' + feature.attributes.aqiText + '</span>'
+            content += '      </div>'
+            content += '   </div>'
+            content += '   <div class="form-group row">';
+            content += '      <div class="col-md-6" style="text-align: center">';
+            content += '          <span href="javascript:;" class="value"><i class="fa fa-tint fa-2x" style="margin-right:6px;"></i>' + feature.attributes.temp + ' °C</span>'
+            content += '      </div>'
+            content += '      <div class="col-md-6" style="text-align: center">'
+            content += '          <span href="javascript:;" class="value"><i class="fa fa-thermometer-empty fa-2x" style="margin-right:6px;"></i>' + feature.attributes.humid + ' %</span>'
+            content += '      </div>'
+            content += '   </div>'
+            content += '</div>'
+            var tempPoint = map.unproject(new window.mapboxgl.Point(e.event.x, e.event.y));
+            popup.setLngLat([tempPoint.lng, tempPoint.lat]).setHTML(content).setMaxWidth("500px").addTo(map);
+        }
+
+        function removePopup() {
+            popup && popup.remove();
+        }
+    </script>
+</body>
+
+</html>

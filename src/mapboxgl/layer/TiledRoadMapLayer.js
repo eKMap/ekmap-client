@@ -12,6 +12,8 @@ import { TileLayer } from './TileLayer';
  * @param {string} options.name=RoadMap Name of layer.
  * @param {string} options.image=https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9 Thumbnail of layer.
  * @param {string} options.visibility=visible Show or hide layer.
+ * @param {Number} options.minzoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden (between 0 and 24 inclusive).
+ * @param {Number} options.maxzoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden (between 0 and 24 inclusive).
  * 
  * @extends {mapboxgl.ekmap.TileLayer}
  * @example
@@ -42,7 +44,9 @@ export class TiledRoadMapLayer extends TileLayer {
             token: this.options.token,
             name: this.options.name != undefined ? this.options.name : 'Road Map',
             visibility: this.options.visibility,
-            image: this.options.image != undefined ? this.options.image : 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9'
+            image: this.options.image != undefined ? this.options.image : 'https://g3.cloudgis.vn/gservices/rest/maps/roadmap/tile/5/25/14.png?apikey=1-B27W7NTVd63eQdYAqOuEx8o3qTxDETo9',
+            minzoom: this.options.minzoom != undefined ? this.options.minzoom : 0,
+            maxzoom: this.options.maxzoom != undefined ? this.options.maxzoom : 24,
         })
     }
 

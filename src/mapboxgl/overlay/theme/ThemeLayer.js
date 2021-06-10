@@ -26,7 +26,7 @@ import {
  * @fires mapboxgl.ekmap.ThemeLayer#changelayer
  * @fires mapboxgl.ekmap.ThemeLayer#featuresremoved
  */
-export class ThemeLayer {
+export class Theme {
 
     constructor(name, opt_options) {
         var options = opt_options ? opt_options : {};
@@ -592,4 +592,4 @@ export class ThemeLayer {
     }
 }
 
-mapboxgl.ekmap.ThemeLayer = ThemeLayer;
+mapboxgl.ekmap.ThemeLayer = Theme;

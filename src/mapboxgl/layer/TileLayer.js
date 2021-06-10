@@ -10,6 +10,8 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.token Will use this token to authenticate all calls to the service.
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name Name of layer.
+ * @param {Number} options.minzoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden (between 0 and 24 inclusive).
+ * @param {Number} options.maxzoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden (between 0 and 24 inclusive).
  * @param {string} options.visibility=visible show or hide layer.
  * 
  * 
@@ -69,8 +71,8 @@ export class TileLayer extends mapboxgl.Evented {
                 "id": id,
                 "type": "raster",
                 "source": id,
-                "minzoom": 0,
-                "maxzoom": 22,
+                "minzoom": this.options.minzoom != undefined ? this.options.minzoom : 0,
+                "maxzoom": this.options.maxzoom != undefined ? this.options.maxzoom : 24,
                 'layout': {
                     'visibility': this.options.visibility ? this.options.visibility : 'visible'
                 },
@@ -95,8 +97,8 @@ export class TileLayer extends mapboxgl.Evented {
                 "id": id,
                 "type": "raster",
                 "source": id,
-                "minzoom": 0,
-                "maxzoom": 22,
+                "minzoom": this.options.minzoom != undefined ? this.options.minzoom : 0,
+                "maxzoom": this.options.maxzoom != undefined ? this.options.maxzoom : 24,
                 'layout': {
                     'visibility': this.options.visibility ? this.options.visibility : 'visible'
                 },

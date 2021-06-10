@@ -11,6 +11,8 @@ import { TileLayer } from './TileLayer';
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name=OSMap Name of layer.
  * @param {string} options.visibility=visible Show or hide layer.
+ * @param {Number} options.minzoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden (between 0 and 24 inclusive).
+ * @param {Number} options.maxzoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden (between 0 and 24 inclusive).
  * 
  * @extends {mapboxgl.ekmap.TileLayer}
  * @example
@@ -41,7 +43,9 @@ export class TiledOSMapLayer extends TileLayer {
             id: this.options.id,
             token: this.options.token,
             name: this.options.name != undefined ? this.options.name : 'OS Map',
-            visibility: this.options.visibility
+            visibility: this.options.visibility,
+            minzoom: this.options.minzoom != undefined ? this.options.minzoom : 0,
+            maxzoom: this.options.maxzoom != undefined ? this.options.maxzoom : 24,
         })
     }
 

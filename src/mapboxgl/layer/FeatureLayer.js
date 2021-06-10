@@ -9,6 +9,8 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.id - Unique layer and source name.
  * @param {string} options.url - Required The URL to the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Feature Layer}.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
+ * @param {Number} options.minzoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden (between 0 and 24 inclusive).
+ * @param {Number} options.maxzoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden (between 0 and 24 inclusive).
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.FeatureLayer#loadstart
  * @fires mapboxgl.ekmap.FeatureLayer#loadend
@@ -61,6 +63,8 @@ export class FeatureLayer extends mapboxgl.Evented {
                 map.addLayer({
                     "id": me.id,
                     "type": "circle",
+                    "minzoom": me.options.minzoom != undefined ? me.options.minzoom : 0,
+                    "maxzoom": me.options.maxzoom != undefined ? me.options.maxzoom : 24,
                     "paint": {
                         "circle-radius": 10,
                         "circle-color": "red",
@@ -97,6 +101,8 @@ export class FeatureLayer extends mapboxgl.Evented {
                         'line-join': 'round',
                         'line-cap': 'round'
                     },
+                    "minzoom": me.options.minzoom != undefined ? me.options.minzoom : 0,
+                    "maxzoom": me.options.maxzoom != undefined ? me.options.maxzoom : 24,
                     'paint': {
                         'line-color': '#000',
                         'line-width': 5
@@ -132,6 +138,8 @@ export class FeatureLayer extends mapboxgl.Evented {
                     'id': me.id,
                     'type': 'fill',
                     'source': me.id,
+                    "minzoom": me.options.minzoom != undefined ? me.options.minzoom : 0,
+                    "maxzoom": me.options.maxzoom != undefined ? me.options.maxzoom : 24,
                     'layout': {},
                     'paint': {
                         'fill-color': '#088',

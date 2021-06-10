@@ -472,6 +472,29 @@ var exampleConfig = {
                     }
                 ]
             },
+            Thematic: {
+                name: "2D thematic layer",
+                name_en: "2D thematic layer",
+                content: [{
+                        name: "Rank symbol",
+                        name_en: "Rank symbol",
+                        version: "",
+                        thumbnail: "2DLayer_RankSymbol.png",
+                        fileName: "2DLayer_RankSymbol",
+                        subject: "Use RankSymbolThemeLayer to display data.",
+                        description: "Use mapboxgl.ekmap.RankSymbolThemeLayer to display data."
+                    },
+                    {
+                        name: "Label",
+                        name_en: "Label",
+                        version: "",
+                        thumbnail: "2DLayer_Label.png",
+                        fileName: "2DLayer_Label",
+                        subject: "Use LabelThemeLayer to display AQI",
+                        description: "AQI - Air Safety Level Indicators - Hoan Kiem District Air Safety Level Indicators (29/05/2021 09:00). Source: https://moitruongthudo.vn/"
+                    }
+                ]
+            },
             LayerChart: {
                 name: "Layer Chart",
                 name_en: "Layer Chart",

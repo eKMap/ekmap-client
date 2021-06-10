@@ -6,7 +6,7 @@ import {
 } from "../../common";
 
 import {
-    ThemeLayer
+    Theme
 } from './theme/ThemeLayer';
 
 /**
@@ -33,10 +33,10 @@ import {
  * @param {Object} opt_options.chartsSetting.circleHoverStyle The style of the circle hover state, valid when circleHoverAble is true.
  * @param {boolean} opt_options.chartsSetting.circleHoverAble=true Whether to allow the circle to use the hover state. At the same time, setting circleHoverAble and circleClickAble to false can directly shield the response of the graphics to thematic layer events.
  * @param {boolean} opt_options.chartsSetting.circleClickAble=true Whether to allow the circle to be clicked. At the same time, setting circleHoverAble and circleClickAble to false can directly shield the response of the graphics to thematic layer events.
- * @extends {mapboxgl.ekmap.ThemeLayer}
+ * @extends {mapboxgl.ekmap.Theme}
  * @fires mapboxgl.ekmap.GraphThemeLayer#beforefeaturesadded
  */
-export class GraphThemeLayer extends ThemeLayer {
+export class GraphThemeLayer extends Theme {
 
     constructor(name, chartsType, opt_options) {
         super(name, opt_options);

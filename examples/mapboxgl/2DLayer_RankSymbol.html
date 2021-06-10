@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Rank Symbol Theme Layer</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        .nameCountry {
+            color: #333333 !important;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .field {
+            color: #333333 !important;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            padding-right: 10px;
+        }
+        
+        .value {
+            color: #333333 !important;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var themeLayer, popup;
+        var attribution = "© Map" +
+            " by <a href='https://carto.com/' target='_blank' style='color:blue'> Carto</a>"
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {},
+                "layers": []
+            },
+            center: [105, 17],
+            zoom: 5
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.on('load', function() {
+            var me = this;
+            var maps = new mapboxgl.ekmap.TileLayer({
+                urls: [
+                    "https://a.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
+                    "https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
+                    "https://c.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png"
+                ]
+            }).addTo(map)
+
+            map.addControl(new mapboxgl.AttributionControl({
+                customAttribution: attribution,
+                compact: false
+            }));
+            var features = [];
+            $.get("../data/Buffer_Covid.json", function(response) {
+                var provinces = response.provinces;
+                provinces.forEach(province => {
+                    var confirmed = province.Confirmed;
+                    var point = new mapboxgl.LngLat(province.Long, province.Lat);
+                    var radius = getRadius(confirmed, 1, 394, 10, 60);
+                    var attrs = {};
+                    attrs.name = province.Province_Name;
+                    attrs.confirmed = province.Confirmed;
+                    attrs.deaths = province.Deaths;
+                    attrs.recovered = province.Recovered;
+                    attrs.radius = radius
+                    var fea = new mapboxgl.ekmap.ThemeFeature(point, attrs);
+                    features.push(fea);
+                });
+            }).done(function() {
+                addThemeLayer();
+                themeLayer.addFeatures(features);
+            })
+        });
+
+        function addThemeLayer() {
+            themeLayer = new mapboxgl.ekmap.RankSymbolThemeLayer("RankSymbolLayer", "Circle", {
+                attributions: " ",
+                themeField: "radius",
+                symbolSetting: {
+                    codomain: [0, 100],
+                    maxR: 100,
+                    minR: 0,
+                    circleStyle: {
+                        fillOpacity: 0.5
+                    },
+                    fillColor: "red",
+                    circleHoverStyle: {
+                        fillOpacity: 1
+                    }
+                }
+            });
+            map.addLayer(themeLayer);
+            themeLayer.on('mousemove', showInfoWin);
+        }
+
+        function showInfoWin(e) {
+            if (e.target && e.target.refDataID && e.target.dataInfo) {
+                closeInfoWin();
+                var fea = themeLayer.getFeatureById(e.target.refDataID);
+                var info = e.target.dataInfo;
+                var content = '';
+                content += '<div style="width:150px">';
+                content += '   <div class="form-group row" style="text-align: center">';
+                content += '       <span href="javascript:;" class="nameCountry">' + fea.attributes.name + '</span>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '           <span href="javascript:;" class="field">Confirmed : </span>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '           <span href="javascript:;" class="value">' + fea.attributes.confirmed + '</span>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <span href="javascript:;" class="field">Deaths : </span>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <span href="javascript:;" class="value">' + fea.attributes.deaths + '</span>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '   <div class="form-group row" style="display: flex;">';
+                content += '      <div class="width:70%">';
+                content += '          <span href="javascript:;" class="field">Recovered : </span>'
+                content += '      </div>'
+                content += '      <div class="width:30%">'
+                content += '          <span href="javascript:;" class="value">' + fea.attributes.recovered + '</span>'
+                content += '      </div>'
+                content += '   </div>'
+                content += '</div>'
+                var tempPoint = map.unproject(new window.mapboxgl.Point(e.event.x, e.event.y));
+                popup = new mapboxgl.Popup({
+                        closeOnClick: false,
+                        closeButton: false
+                    })
+                    .setLngLat([tempPoint.lng, tempPoint.lat])
+                    .setHTML(content)
+                    .addTo(map);
+                return;
+            }
+
+            closeInfoWin();
+        }
+
+        function closeInfoWin() {
+            if (popup) {
+                popup.remove(map);
+            }
+        }
+    </script>
+</body>
+
+</html>
