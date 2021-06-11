@@ -21,8 +21,6 @@ export class ThemeMapLayer {
         this.options = options ? options : {};
         if (options) {
             options = Util.setOptions(this, options);
-
-            this.options = Util.getUrlParams(options);
             if (this.options.url)
                 this.url = this.options.url;
         }

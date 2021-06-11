@@ -37,15 +37,25 @@
                 "sources": {},
                 "layers": []
             },
-            center: [106.5090846096723, 16.787962287423255],
-            zoom: 5.1128594812072485
+            center: [105.10335295268351, 20.19460311786966],
+            zoom: 7.176181112850266
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.on('load', function() {
             var me = this;
-            new mapboxgl.ekmap.BasemapArcgisLayer('Topographic').addTo(map);
-            //Source: KTTV
-            $.get("../data/weather/rain.json ", function(response) {
+            var maps = new mapboxgl.ekmap.TileLayer({
+                urls: [
+                    "https://a.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
+                    "https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
+                    "https://c.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png"
+                ]
+            }).addTo(map);
+            map.addControl(new mapboxgl.AttributionControl({
+                customAttribution: attribution,
+                compact: false
+            }));
+            //Source: http://vnmha.gov.vn/
+            $.get("../data/weather/temp_rain.json", function(response) {
                 var features = response.features
                 for (var i = 0; i < features.length; i++) {
                     var lng = features[i].properties.longtitude;

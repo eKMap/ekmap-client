@@ -499,8 +499,8 @@ var exampleConfig = {
                         version: "",
                         thumbnail: "2DLayer_Theme.png",
                         fileName: "2DLayer_Theme",
-                        subject: "Use LabelThemeLayer to display AQI",
-                        description: "AQI - Air Safety Level Indicators - Hoan Kiem District Air Safety Level Indicators (29/05/2021 09:00). Source: https://moitruongthudo.vn/"
+                        subject: "Use LabelThemeLayer to display Temperature and Precipitation",
+                        description: "Climate characteristics of provinces and cities in Vietnam. Source: http://vnmha.gov.vn/"
                     }
                 ]
             },
