@@ -46,12 +46,13 @@
                 token: tokenVN
             }).addTo(map)
             var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
-                url: urlMapService,
+                url: urlMapService145,
                 token: tokenKey
             }).addTo(map);
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             var legend = new mapboxgl.ekmap.control.Legend({
-                layers: [tiledMap]
+                layers: [tiledMap],
+                showLabel: false
             });
             map.addControl(legend, "top-left");
         })

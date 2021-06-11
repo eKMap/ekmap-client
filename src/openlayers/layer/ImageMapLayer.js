@@ -41,7 +41,7 @@ export class ImageMapLayer {
             extend = [extend.xmin, extend.ymin, extend.xmax, extend.ymax];
             var param = {
                 bbox: extend,
-                layers: 'show',
+                layers: '',
                 format: 'png32',
                 dpi: 96,
                 transparent: true,
@@ -76,6 +76,9 @@ export class ImageMapLayer {
                 if (intersects(bbox, extend) == true) {
                     var url = me.options.url;
                     url += 'export?' + Util.serialize(param);
+                    if (me.options.token) {
+                        url += ('&token=' + me.options.token);
+                    }
                     me.layer.setSource(new ol.source.ImageStatic({
                         url: url,
                         imageExtent: bbox
@@ -84,6 +87,6 @@ export class ImageMapLayer {
                 }
             })
         })
-        return me.layer;
+        return me;
     }
 }

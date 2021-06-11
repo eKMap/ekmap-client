@@ -67,7 +67,7 @@ export class TiledMapLayer {
      */
     addTo(map) {
         map.addLayer(this.layer);
-        return this.layer;
+        return this;
     }
 
     /**

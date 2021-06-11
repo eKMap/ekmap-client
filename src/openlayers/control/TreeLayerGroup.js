@@ -54,7 +54,8 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                 me._panel = me.createLayerInputToggle();
                 me.element.appendChild(me._panel);
                 var service = new ol.ekmap.MapService({
-                    url: me.layer.options.url
+                    url: me.layer.options.url,
+                    token: me.layer.options.token
                 });
                 service.getLayers(function(e) {
                     var layers = e.layers;
@@ -76,7 +77,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                             if (this.values.toString() == '') {
                                 param = {
                                     bbox: bbox,
-                                    layers: 'hide:0',
+                                    layers: 'hide',
                                     format: 'png32',
                                     dpi: 96,
                                     transparent: true,
@@ -100,6 +101,8 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                             me.url = me.layer.options.url;
                             me.layer.listDataOpen = this.values.toString();
                             me.url += 'export?' + Util.serialize(param);
+                            if (me.layer.options.token)
+                                me.url += '&token=' + me.layer.options.token
                             me.layer.layer.setSource(
                                 new ol.source.ImageStatic({
                                     url: me.url,
@@ -116,7 +119,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                     if (arr.type == 'Group Layer' && !arr.parentLayer && arr.subLayers.length > 0) {
                         nodeParent++;
                         nodeChild.push(i)
-                        nodeparentArr.push(i)
+                        nodeparentArr.push(arr.id)
                         tree.push({
                             "id": arr.id,
                             "text": arr.name,
@@ -153,7 +156,7 @@ var TreeLayerGroup = /*@__PURE__*/ (function(Control) {
                         });
                     }
                     if (arr.type == 'Feature Layer' && !arr.parentLayer && arr.subLayers.length == 0) {
-                        nodeparentArr.push(i)
+                        nodeparentArr.push(arr.id)
                         nodeParent++;
                         tree.push({
                             "id": arr.id,

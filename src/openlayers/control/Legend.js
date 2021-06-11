@@ -12,6 +12,7 @@ import Control from 'ol/control/Control';
  * @param {string} options.title=LEGEND Name of header.
  * @param {string} options.tooltip=Legend Tooltip of button.
  * @param {string} options.className Style css of button.
+ * @param {boolean} options.showLabel=true Show label of legend.
  *
  * @example
  *  var map = new ol.Map({
@@ -30,6 +31,7 @@ var Legend = /*@__PURE__*/ (function(Control) {
         this.options = opt_options ? opt_options : {};
         this.layers = Util.isArray(this.options.layers) ? this.options.layers : [this.options.layers];
         this.target = this.options.target;
+        this.showLabel = this.options.showLabel != undefined ? this.options.showLabel : true;
         var me = this;
         if (!this.target) {
             this.button = document.createElement("button");
@@ -137,27 +139,34 @@ var Legend = /*@__PURE__*/ (function(Control) {
                     var li = document.createElement("li");
                     li.className = 'row';
                     li.style.paddingBottom = '10px';
-                    var strong = document.createElement("strong");
-                    strong.className = 'col-sm-9';
-                    strong.innerHTML = listLenged[i].layerName;
+                    // var strong = document.createElement("strong");
+                    // strong.className = 'col-sm-9';
+                    // strong.innerHTML = listLenged[i].layerName;
                     for (var j = 0; j < listLenged[i].legend.length; j++) {
                         var img = document.createElement("img");
                         img.width = 20;
                         img.height = 20;
+                        if (!me.showLabel)
+                            img.style.width = 'auto';
                         img.style.display = 'block';
-                        img.style.margin = '0 auto';
+                        img.style.margin = '0 10px';
                         img.src = "data:image/png;base64," + listLenged[i].legend[j].imageData;
-                        // var span = document.createElement("span");
-                        // span.innerHTML = listLenged[i].legend[j].label;
-                        // span.style.paddingLeft = '15px';
+                        var span
+                        if (me.showLabel) {
+                            span = document.createElement("span");
+                            span.innerHTML = listLenged[i].legend[j].label;
+                            span.style.paddingLeft = '15px';
+                        }
                         var li1 = document.createElement("li");
+                        li1.style.display = 'flex';
                         li1.appendChild(img);
-                        // li1.appendChild(span);
+                        if (span)
+                            li1.appendChild(span);
                         var ul1 = document.createElement("ul");
-                        ul1.className = 'col-sm-3'
+                        ul1.className = 'col-12'
                         ul1.style.listStyleType = "none";
                         ul1.appendChild(li1);
-                        li.appendChild(strong);
+                        // li.appendChild(strong);
                         li.appendChild(ul1);
                         ul.appendChild(li);
                         div.appendChild(ul);

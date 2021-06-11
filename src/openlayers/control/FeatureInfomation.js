@@ -143,7 +143,9 @@ var FeatureInfomation = /*@__PURE__*/ (function(Control) {
                         obj.forEach(feature => {
                             if (feature.geometryType == 'esriGeometryPoint')
                                 listData.push(new ol.Feature(new ol.geom.Point([feature.geometry.x, feature.geometry.y])))
-                            else {
+                            else if (feature.geometryType == 'esriGeometryPolygon') {
+                                listData.push(new ol.Feature(new ol.geom.LineString(feature.geometry.rings[0])))
+                            } else {
                                 listData.push(new ol.Feature(new ol.geom.LineString(feature.geometry.paths[0])))
                             }
                         });

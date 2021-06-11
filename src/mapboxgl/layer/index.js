@@ -42,3 +42,6 @@ from './TileLayer';
 
 export { ImageMapLayer }
 from './ImageMapLayer';
+
+export { ThemeMapLayer }
+from './ThemeMapLayer';

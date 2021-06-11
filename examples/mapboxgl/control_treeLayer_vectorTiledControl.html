@@ -57,7 +57,8 @@
                 opacityControl: true
             });
             var legend = new mapboxgl.ekmap.control.Legend({
-                layers: [maps]
+                layers: [maps],
+                showLabel: false
             });
             map.addControl(legend, "top-left");
             map.addControl(Opacity, 'top-left');

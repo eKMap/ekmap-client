@@ -41,8 +41,8 @@
             }),
             target: 'divMapId',
             view: new ol.View({
-                center: [103.97584219304474, 21.277728387286984],
-                zoom: 13.905413433260719,
+                center: [105, 17],
+                zoom: 6,
                 projection: 'EPSG:4326',
             })
         });
@@ -51,12 +51,13 @@
             token: tokenVN
         }).addTo(map)
         var tiledMap = new ol.ekmap.TiledMapLayer({
-            url: urlMapService,
-            // token: tokenKey
+            url: urlMapService145,
+            token: tokenKey
         }).addTo(map);
         var legend = new ol.ekmap.control.Legend({
             layers: [tiledMap],
-            className: 'cssButton'
+            className: 'cssButton',
+            showLabel: false
         });
         map.addControl(legend);
     </script>

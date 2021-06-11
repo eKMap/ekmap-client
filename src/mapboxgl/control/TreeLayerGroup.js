@@ -51,7 +51,8 @@ export class TreeLayerGroup extends mapboxgl.Evented {
                 me._panel = me.createLayerInputToggle();
                 me._container.appendChild(me._panel);
                 var service = new mapboxgl.ekmap.MapService({
-                    url: me.layer.options.url
+                    url: me.layer.options.url,
+                    token: me.layer.options.token
                 });
                 service.getLayers(function(e) {
                     var layers = e.layers;
@@ -70,7 +71,7 @@ export class TreeLayerGroup extends mapboxgl.Evented {
                             if (this.values.toString() == '') {
                                 param = {
                                     bbox: bbox,
-                                    layers: 'hide:0',
+                                    layers: 'hide',
                                     format: 'png32',
                                     dpi: 96,
                                     transparent: true,
@@ -93,7 +94,10 @@ export class TreeLayerGroup extends mapboxgl.Evented {
                             }
                             me.url = me.layer.options.url;
                             me.url += 'export?' + Util.serialize(param);
-                            map.getSource('image-layer').updateImage({
+                            if (me.layer.options.token)
+                                me.url += '&token=' + me.layer.options.token
+                            var sourceId = me.layer.id;
+                            map.getSource(sourceId).updateImage({
                                 url: me.url,
                                 coordinates: [
                                     [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
@@ -117,7 +121,7 @@ export class TreeLayerGroup extends mapboxgl.Evented {
                     if (arr.type == 'Group Layer' && !arr.parentLayer && arr.subLayers.length > 0) {
                         nodeParent++;
                         nodeChild.push(i);
-                        nodeParentArr.push(i);
+                        nodeParentArr.push(arr.id);
                         tree.push({
                             "id": arr.id,
                             "text": arr.name,
@@ -155,7 +159,7 @@ export class TreeLayerGroup extends mapboxgl.Evented {
                     }
                     if (arr.type == 'Feature Layer' && !arr.parentLayer && arr.subLayers.length == 0) {
                         nodeParent++;
-                        nodeParentArr.push(i);
+                        nodeParentArr.push(arr.id);
                         tree.push({
                             "id": arr.id,
                             "text": arr.name,
@@ -211,8 +215,8 @@ export class TreeLayerGroup extends mapboxgl.Evented {
             div.id = 'content-control';
             div.style.maxHeight = "500px";
             div.style.maxWidth = "300px";
-            div.style.width = "300px";
-            div.style.height = "300px";
+            // div.style.width = "300px";
+            // div.style.height = "300px";
             div.style.padding = "0px 1rem";
             div.className = 'scrollbar';
             var header = document.createElement("div");

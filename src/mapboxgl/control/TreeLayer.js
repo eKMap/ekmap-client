@@ -237,7 +237,7 @@ export class TreeLayer extends mapboxgl.Evented {
                         if (me.layerIdHidden.indexOf(layerId) == -1) {
                             _.forEach(listLengend, function(leg) {
                                 var layer = me._map.getLayer(layerId)
-                                if (layer.metadata.name == leg.layerName) {
+                                if (layer.metadata && layer.metadata.name && layer.metadata.name == leg.layerName) {
                                     me._checkBoxControlAdd(layerId, div, leg);
                                     div.appendChild(br);
                                     if (me._opacityControlOption) {
@@ -259,7 +259,7 @@ export class TreeLayer extends mapboxgl.Evented {
                     } else {
                         _.forEach(listLengend, function(leg) {
                             var layer = me._map.getLayer(layerId)
-                            if (layer.metadata.name == leg.layerName) {
+                            if (layer.metadata && layer.metadata.name && layer.metadata.name == leg.layerName) {
                                 me._checkBoxControlAdd(layerId, div, leg);
                                 div.appendChild(br);
                                 if (me._opacityControlOption) {

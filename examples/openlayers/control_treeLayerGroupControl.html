@@ -27,7 +27,7 @@
             background-color: unset;
         }
         
-        .tesst {
+        .test {
             top: 54px;
             left: 7px;
         }
@@ -47,17 +47,16 @@
             target: 'divMapId',
         });
 
-        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map)
+        var vnMap = new ol.ekmap.TiledRoadMapLayer({}).addTo(map)
 
         var imgLayer = new ol.ekmap.ImageMapLayer({
-            url: "https://s2.cloudgis.vn/arcgis/rest/services/GIS/V6_DC_CTDT_TPTHAIBINH_Export/MapServer/",
+            url: urlMapService145,
+            token: tokenKey
         }).addTo(map);
 
         var treelayer = new ol.ekmap.control.TreeLayerGroup({
             layer: imgLayer,
-            className: 'tesst'
+            className: 'test'
         });
         map.addControl(treelayer);
     </script>

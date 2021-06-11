@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets,bootstrap,admin-lte" src="../js/include-web.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Label Theme Layer</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var themeLayer, popup;
+        var attribution = "© Map" +
+            " by <a href='https://carto.com/' target='_blank' style='color:blue'> Carto</a>"
+        var map = new mapboxgl.Map({
+            container: 'divMapId',
+            style: {
+                "version": 8,
+                "sources": {},
+                "layers": []
+            },
+            center: [106.5090846096723, 16.787962287423255],
+            zoom: 5.1128594812072485
+        });
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.on('load', function() {
+            var me = this;
+            new mapboxgl.ekmap.BasemapArcgisLayer('Topographic').addTo(map);
+            //Source: KTTV
+            $.get("../data/weather/rain.json ", function(response) {
+                var features = response.features
+                for (var i = 0; i < features.length; i++) {
+                    var lng = features[i].properties.longtitude;
+                    var lat = features[i].properties.latitude;
+                    var sw = new mapboxgl.LngLat(lng - 0.2, lat - 0.2);
+                    var ne = new mapboxgl.LngLat(lng + 0.2, lat + 0.2);
+                    var bounds = new mapboxgl.LngLatBounds(sw, ne);
+                    var theme = new mapboxgl.ekmap.ThemeMapLayer({
+                        url: features[i].properties.chartUrl,
+                        bounds: bounds
+                    }).addTo(map);
+                }
+            })
+
+        });
+    </script>
+</body>
+
+</html>
