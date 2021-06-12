@@ -96,7 +96,7 @@
     <div class="nameContainer">
         <h4 class="name" id="WMS">
             
-            new ol.ekmap.WMS<span class="signature">(options)</span>
+            new ol.ekmap.WMS<span class="signature">(options, format)</span>
         </h4>
     
         
@@ -129,6 +129,8 @@
 		<th>Type</th>
 		
 		
+		<th>Default</th>
+		
 		
 		<th class="last">Description</th>
 	</tr>
@@ -152,6 +154,10 @@
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
@@ -167,6 +173,8 @@
 		
 		<th>Type</th>
 		
+		
+		<th>Default</th>
 		
 		
 		<th class="last">Description</th>
@@ -191,10 +199,41 @@
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
                 <p>WMS service URL.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>token</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Will use this token to authenticate all calls to the service.</p></td>
         </tr>
 	
 	
@@ -213,6 +252,10 @@
             
             </td>
             
+            
+                <td class="default">
+                
+                </td>
             
             
             <td class="description last">
@@ -237,6 +280,10 @@
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
@@ -247,7 +294,7 @@
 	
         <tr>
             
-                <td class="name"><code>id</code></td>
+                <td class="name"><code>projection</code></td>
             
             
             <td class="type">
@@ -260,16 +307,78 @@
             </td>
             
             
+                <td class="default">
+                
+                    EPSG:4326.
+                
+                </td>
+            
             
             <td class="description last">
                 
-                <p>Id of layer and source.</p></td>
+                </td>
         </tr>
 	
 	
 	</tbody>
 </table>
             </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>format</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    application/json
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>format of data return.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>options.id</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Id of layer and source.</p></td>
         </tr>
 	
 	
@@ -358,7 +467,7 @@
     
         
         <div class="tag-source">
-            layer/WMS.js, line 27
+            layer/WMS.js, line 36
         </div>
         
     </div>
@@ -478,12 +587,12 @@ this
     <div class="nameContainer">
         <h4 class="name" id="getFeatureInfoUrl">
             
-            getFeatureInfoUrl<span class="signature">(map)</span>
+            getFeatureInfoUrl<span class="signature">(coordinate)</span>
         </h4>
     
         
         <div class="tag-source">
-            layer/WMS.js, line 63
+            layer/WMS.js, line 75
         </div>
         
     </div>
@@ -525,13 +634,13 @@ this
 	
         <tr>
             
-                <td class="name"><code>map</code></td>
+                <td class="name"><code>coordinate</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">ol.Map</span>
+<span class="param-type">Array.&lt;number></span>
 
 
             
@@ -541,7 +650,7 @@ this
             
             <td class="description last">
                 
-                <p>Adds the layer to the given map or layer group.</p></td>
+                <p>Coordinate.</p></td>
         </tr>
 	
 	
@@ -608,7 +717,7 @@ this
     
         
         <div class="tag-source">
-            layer/WMS.js, line 46
+            layer/WMS.js, line 58
         </div>
         
     </div>
@@ -682,7 +791,7 @@ this
 
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Thu May 27 2021 16:36:21 GMT+0700 (Indochina Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Sat Jun 12 2021 09:34:09 GMT+0700 (Indochina Time)
         </footer>
     </div>
 </div>

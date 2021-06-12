@@ -94,13 +94,7 @@
             <div id="terrainMenu">
                 Search by attribute above <a href='#'>layerId</a>
                 <select id="mySelect" class="cesium-button" onchange="changeMenu()">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
+                    <option value="1902">1902</option>
                 </select>
             </div>
             <div id="calculated-area">
@@ -113,29 +107,31 @@
     <script>
         var map = L.map('divMapId', {
             center: {
-                lon: 103.93422987963572,
-                lat: 21.306082013420507
+                lon: 105,
+                lat: 17
             },
-            zoom: 14.871024212757812,
+            zoom: 5.5,
             zoomControl: true,
             attributionControl: false,
         });
 
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
-
+        var maps = new L.ekmap.TiledMapLayer({
+            url: urlMapService145,
+            token: tokenKey
+        }).addTo(map);
         var draw;
         var listLayersServer = [];
-        var layerName = ['1', '2', '3', '4', '6', '7', '8'];
+        var layerName = ['1902'];
         var data = [];
         var fields = [];
         var listFields = [];
         var service = new L.ekmap.MapService({
-            'url': urlMapService,
-            //'token': tokenKey
+            'url': urlMapService145,
+            'token': tokenKey
         })
         service.getLayers(function(obj) {
             listLayersServer = obj.layers;
-            console.log(listLayersServer)
             changeMenu();
         })
 
@@ -150,6 +146,9 @@
                 if (layer.id == id) {
                     var fields = layer.fields;
                     fields.forEach(element => {
+                        var data = element.alias;
+                        if (data == "OBJECTID")
+                            data = "maDoiTuong"
                         listFields.push({
                             text: element.alias,
                             value: element.alias,
@@ -211,10 +210,10 @@
             param.where = str;
 
             var x = document.getElementById("mySelect").value;
-            var url = 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/' + x;
+            var url = urlFeatureService145 + '/' + x;
             var featureService = new L.ekmap.FeatureService({
                 url: url,
-                //token: tokenKey
+                token: tokenKey
             });
             featureService.query(param, function(error, obj) {
                 if (error) {

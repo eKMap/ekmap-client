@@ -42,7 +42,8 @@
             token: tokenVN
         }).addTo(map)
         var imgLayer = new L.ekmap.ImageMapLayer({
-            url: "https://s2.cloudgis.vn/arcgis/rest/services/GIS/V6_DC_CTDT_TPTHAIBINH_Export/MapServer/",
+            url: urlMapService145,
+            token: tokenKey
         }).addTo(map);
 
         var trelayer = new L.ekmap.control.TreeLayerGroup({

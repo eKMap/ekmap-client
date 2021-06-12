@@ -31,6 +31,7 @@
         </div>
     </div>
     <script type="text/javascript">
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
         var map = new mapboxgl.Map({
             container: "divMapId",
             style: {
@@ -39,26 +40,38 @@
                 sources: {},
                 layers: [],
             },
-            center: [58.117655641467195, 12.140828304833803],
-            zoom: 1
+            center: [105.2416992187043, 16.199845421135464],
+            zoom: 5,
+            localIdeographFontFamily: "'Helvetica Neue', 'Arial','Helvetica', sans-serif"
         });
 
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
         map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-
-            //Data Source: https://earthquake.usgs.gov/earthquakes
-            $.get("../data/earthquake.json", function(response) {
-                var geojson = response;
+            map.setStyle('mapbox://styles/mapbox/navigation-day-v1')
+                //Data Source: https://ncov.moh.gov.vn/ban-do-vn
+            $.get("../data/covid_boyte.json", function(response) {
+                var data = response.data;
+                var features = [];
+                for (var i = 0; i < data.length; i++) {
+                    features.push({
+                        type: "Feature",
+                        geometry: {
+                            type: "Point",
+                            coordinates: [data[i].lng, data[i].lat]
+                        }
+                    })
+                }
+                var geojson = {
+                    type: "FeatureCollection",
+                    features: features
+                }
                 map.addSource("earthquakes", {
                     type: "geojson",
                     data: geojson,
                     cluster: true,
                     clusterMaxZoom: 14,
-                    clusterRadius: 100
+                    clusterRadius: 50
                 });
 
                 map.addLayer({
@@ -69,11 +82,11 @@
                     paint: {
                         "circle-color": [
                             "step", ["get", "point_count"],
-                            "#51bbd6",
+                            "rgba(110,204,57,.6)",
+                            10,
+                            "rgba(240,194,12,.6)",
                             100,
-                            "#f1f075",
-                            750,
-                            "#f28cb1"
+                            "rgba(241,128,23,.6)"
                         ],
                         "circle-radius": [
                             "step", ["get", "point_count"],
@@ -82,7 +95,17 @@
                             30,
                             750,
                             40
-                        ]
+                        ],
+                        "circle-stroke-width": 8,
+                        "circle-stroke-color": [
+                            "step", ["get", "point_count"],
+                            "rgba(110,204,57,.6)",
+                            10,
+                            "rgba(240,194,12,.6)",
+                            100,
+                            "rgba(241,128,23,.6)"
+                        ],
+                        "circle-stroke-opacity": 0.4
                     }
                 });
 
@@ -93,7 +116,10 @@
                     filter: ["has", "point_count"],
                     layout: {
                         'text-field': '{point_count_abbreviated}',
-                        'text-size': 12
+                        'text-size': 15,
+                    },
+                    paint: {
+                        "text-color": '#ffffff',
                     }
                 });
                 map.addLayer({
@@ -102,8 +128,8 @@
                     source: "earthquakes",
                     filter: ["!", ["has", "point_count"]],
                     paint: {
-                        "circle-color": "#11b4da",
-                        "circle-radius": 4,
+                        "circle-color": "red",
+                        "circle-radius": 5,
                         "circle-stroke-width": 1,
                         "circle-stroke-color": "#fff"
                     }

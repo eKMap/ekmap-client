@@ -1,0 +1,2472 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <title>eKMap Client SDKs</title>
+<script type="text/javascript">
+
+</script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+        <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/adminlte/app.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/adminlte/AdminLTE.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/adminlte/skin-blue.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="./../../examples/css/common.css">
+    <link type="text/css" rel="stylesheet" href="./../../examples/css/header.css">
+    <link type="text/css" rel="stylesheet" href="./../../examples/css/examples.css">
+    <link type="text/css" rel="stylesheet" href="./../../examples/css/style.customize.css">
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body class='sidebar-mini'>
+
+<div id="wrap" class="clearfix">
+    <header class="header-wrapper main-header ekmapclient-header">
+        <nav class="navbar navbar-static-top lite">
+            <div class="nav-header">
+                <div class="navbar-header">
+                    <div class="navbar-title">
+                        <a class="navbar-brand" target="_self" href="../">
+                            <span class="project-title vm" id="title">eKMap Client SDKs</span>
+                            <span style="vertical-align:super; font-size:14px; color:#ffffff; margin-left:5px;" id="version">&nbsp;</span>
+                        </a>
+                        <div id="suffix-title">for MapboxGL</div>
+                    </div>
+                    <button
+                        type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#navbar-collapse"
+                        aria-expanded="false"
+                    >
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse navbar-custom-menu" id="navbar-collapse">
+                    <ul class="nav navbar-nav nav-header-example">
+                        <li class="navbar-menu">
+                            <a class="center" target="_self" href="./../../examples">Examples</a>
+                        </li>
+                        <li class="navbar-menu active">
+                            <a class="center" target="_self" href="./../../docs">API Reference</a>
+                        </li>
+                        <li class="navbar-menu">
+                            <a class="center" target="_self" href="https://github.com/eKMap/ekmap-client">View on GitHub</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="navigationDiv">
+    </div>
+    <div class="main content-wrapper examples-container">
+        <h1 class="page-title" data-filename="mapboxgl.ekmap.RankSymbolThemeLayer.html">Class: RankSymbolThemeLayer</h1>
+        
+
+
+
+<section>
+    
+<header>
+    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a>.</span>RankSymbolThemeLayer
+    
+    </h2>
+    
+        <div class="class-description"><p>Thematic layer of graduated symbols.</p></div>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="RankSymbolThemeLayer">
+            
+            new mapboxgl.ekmap.RankSymbolThemeLayer<span class="signature">(name, symbolType, opt_options)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/RankSymbolThemeLayer.js, line 5
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The layer name.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>symbolType</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Symbol type.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_options</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Parameters.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Default</th>
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Thematic layer ID. By default, CommonUtil.createUniqueID(&quot;themeLayer_&quot;) is used to create the thematic layer ID.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>loadWhileAnimating</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Whether to redraw in real time.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://www.mapbox.com/mapbox-gl-js/api/#map">mapboxgl.Map</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>The current mapboxgl map object.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opacity</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Layer transparency.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>themeFields</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Specify the fields for creating thematic maps.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>cluster</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Whether to perform capping processing. If set to true, the chart that has capped the chart drawn in the layer will be hidden during the chart drawing process.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>chartsType</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Chart type. Currently available: &quot;Bar&quot;, &quot;Line&quot;, &quot;Pie&quot;.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>symbolSetting</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>For the settable attributes of the symbolSetting object of each type of chart, please refer to the description of the settable attributes of the symbolSetting object in the notes of the specific chart model class. The symbolSetting object usually has the following 5 basic settable properties:</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Thematic element (chart) width.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The height of thematic elements (charts).</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>codomain</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;number></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Value range, a one-dimensional array of length 2. The first element represents the lower limit of the value range, and the second element represents the upper limit of the value range.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>XOffset</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The offset value of the thematic element (chart) in the X direction, in pixels.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>YOffset</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The offset value of the thematic element (chart) in the Y direction, in pixels.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>dataViewBoxParameterThe</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;number></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>dataViewBox parameter of the data view box, which refers to the internal offset value of the chart box (the chart range box composed of chart position, chart width, and chart height) in the left, bottom, right, and top directions, and the length is 4 One-dimensional array of.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>decimalNumber</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Data value array dataValues element value decimal places, data decimal place processing parameters, value range: [0, 16]. If this parameter is not set, the data will not be processed with decimal places when fetching the data value.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+            </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+            </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+    
+    </div>
+    
+    
+        <h3 class="subsection-title">Extends</h3>
+        <ul>
+            
+            
+            
+            
+            <li><a href="mapboxgl.ekmap.GraphThemeLayer.html">mapboxgl.ekmap.GraphThemeLayer</a></li>
+            
+            
+        </ul>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="event:beforefeaturesadded">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#event:beforefeaturesadded">inherited</a></span>
+            
+            beforefeaturesadded
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 68
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Triggered before the element is added.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+        <h5 class="subsection-title">Properties:</h5>
+        
+        <dl>
+
+<table class="props">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name" 
+                ><code>features</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">ekmap.ServerFeature</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            <td class="description last"> <p>The element to be added.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table></dl>
+        
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="addFeatures">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#addFeatures">inherited</a></span>
+            
+            addFeatures<span class="signature">(features)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 62
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Add data to the thematic map layer. The supported feature type is: the feature JSON object returned by iServer.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>features</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">ekmap.ServerFeature</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Elements to be added.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="clear">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#clear">inherited</a></span>
+            
+            clear<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 357
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>The contents to be cleared include data (features), thematic elements, and cache.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="clearCache">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#clearCache">inherited</a></span>
+            
+            clearCache<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 316
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Clear cache</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="createThematicFeature">
+            
+            createThematicFeature<span class="signature">(feature)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/RankSymbolThemeLayer.js, line 48
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Create thematic graphic elements.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>feature</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Thematic graphic elements to be created.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="drawCharts">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#drawCharts">inherited</a></span>
+            
+            drawCharts<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 136
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Draw a chart. Including gland processing.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getShapesByFeatureID">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#getShapesByFeatureID">inherited</a></span>
+            
+            getShapesByFeatureID<span class="signature">(featureID)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 220
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Get all the graphics associated with feature through FeatureID. If this parameter is not passed in, the function will return all graphics.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>featureID</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Feature ID.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="isChartInMap">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#isChartInMap">inherited</a></span>
+            
+            isChartInMap<span class="signature">(mapPxBounds, chartPxBounds)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 296
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Determine whether the chart is in the map.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>mapPxBounds</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">ekmap.Bounds</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The pixel range of the map.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>chartPxBounds</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>An array of quadrilateral nodes of the chart range.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="isPointInPoly">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#isPointInPoly">inherited</a></span>
+            
+            isPointInPoly<span class="signature">(pt, poly)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 281
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Determine whether a point is inside the polygon. (Ray method)</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>pt</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The point object to be judged, the object contains the attribute x (abscissa) and attribute y (ordinate).</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>poly</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>An array of polygon nodes.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="isQuadrilateralOverLap">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#isQuadrilateralOverLap">inherited</a></span>
+            
+            isQuadrilateralOverLap<span class="signature">(quadrilateral, quadrilateral2)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 240
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Determine whether the two quadrilaterals have glands.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>quadrilateral</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>An array of quadrilateral nodes.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>quadrilateral2</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The second quadrilateral node array.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="redraw">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#redraw">inherited</a></span>
+            
+            redraw<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 344
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Redraw the layer.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="redrawThematicFeatures">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#redrawThematicFeatures">inherited</a></span>
+            
+            redrawThematicFeatures<span class="signature">(extent)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 86
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Redraw all thematic elements.
+This method includes all the steps of drawing thematic elements, including the conversion of user data to thematic elements, thinning out, and caching.
+Call this method to refresh the layer when the map is roaming.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>extent</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">mapboxgl.LngLatBounds</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The scope of the redraw.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="removeAllFeatures">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#removeAllFeatures">inherited</a></span>
+            
+            removeAllFeatures<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 335
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Remove all elements.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="removeFeatures">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#removeFeatures">inherited</a></span>
+            
+            removeFeatures<span class="signature">(features)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 325
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Delete feature from the thematic map. This function deletes all the vector elements passed in. Each item in the features array in the parameter must be a feature that has been added to the current layer.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>features</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">ekmap.Feature.Vector</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The element to be deleted.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="setChartsType">
+            
+                <span class="inherited"><a href="mapboxgl.ekmap.GraphThemeLayer.html#setChartsType">inherited</a></span>
+            
+            setChartsType<span class="signature">(chartsType)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/GraphThemeLayer.js, line 52
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Set the chart type, this function can dynamically change the chart type. Before calling this function, please make relevant configuration for the new type of chart through chartsSetting.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>chartsType</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Chart type. Currently available: &quot;Bar&quot;, &quot;Line&quot;, &quot;Pie&quot;.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="setSymbolType">
+            
+            setSymbolType<span class="signature">(symbolType)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            overlay/RankSymbolThemeLayer.js, line 38
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Set glyph.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>symbolType</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Symbol type.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+
+</article>
+
+</section>  
+
+
+
+
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Sat Jun 12 2021 09:34:06 GMT+0700 (Indochina Time)
+        </footer>
+    </div>
+</div>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

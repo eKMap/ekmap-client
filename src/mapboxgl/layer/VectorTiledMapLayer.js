@@ -307,7 +307,6 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
      * @function mapboxgl.ekmap.VectorTiledMapLayer.prototype.legend
      * @description legend of Tiled Map Layer.
      * @param {RequestCallback} callback
-     *
      */
     legend(callback, context) {
         var service = new mapboxgl.ekmap.MapService({

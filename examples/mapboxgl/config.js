@@ -336,10 +336,10 @@ var exampleConfig = {
                     name: "Cluster",
                     name_en: "Marker cluster",
                     version: "",
-                    thumbnail: "cluster.gif",
+                    thumbnail: "cluster.png",
                     fileName: "cluster",
                     subject: "Use Mapbox GL JS' built-in functions to visualize points as clusters.",
-                    description: "Use Mapbox GL JS' built-in functions to visualize points as clusters."
+                    description: "Use Mapbox GL JS' built-in functions to visualize points as clusters. Source: https://ncov.moh.gov.vn/ban-do-vn"
                 }]
             },
             animation: {
@@ -499,7 +499,7 @@ var exampleConfig = {
                         version: "",
                         thumbnail: "2DLayer_Theme.png",
                         fileName: "2DLayer_Theme",
-                        subject: "Use LabelThemeLayer to display Temperature and Precipitation",
+                        subject: "Use ThemeMapLayer to display Temperature and Precipitation",
                         description: "Climate characteristics of provinces and cities in Vietnam. Source: http://vnmha.gov.vn/"
                     }
                 ]

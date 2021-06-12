@@ -231,8 +231,9 @@
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         featureLayer = new L.ekmap.FeatureLayer({
-            url: urlFeatureLayer,
-            // token: tokenKey
+            url: urlFeatureLayerEdit,
+            token: tokenKey,
+            id: 'sourceApplyEdit'
         }).addTo(map);
 
         window.onload = function() {

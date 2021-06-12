@@ -67,7 +67,8 @@ export class TreeLayerGroup extends L.Control {
                 me._div.appendChild(me._panel);
 
                 var service = new L.ekmap.MapService({
-                    url: me.layer.options.url
+                    url: me.layer.options.url,
+                    token: me.layer.options.token
                 });
                 service.getLayers(function(e) {
                     var layers = e.layers;
@@ -89,7 +90,7 @@ export class TreeLayerGroup extends L.Control {
                             if (this.values.toString() == '') {
                                 param = {
                                     bbox: bbox,
-                                    layers: 'hide:0',
+                                    layers: 'hide',
                                     format: 'png32',
                                     dpi: 96,
                                     transparent: true,
@@ -112,9 +113,10 @@ export class TreeLayerGroup extends L.Control {
                             }
                             me.url = me.layer.options.url;
                             me.url += 'export?' + Util.serialize(param);
+                            if (me.layer.options.token)
+                                me.url += '&token=' + me.layer.options.token
                             me.layer.layer.setUrl(me.url);
                             me.layer.layer.setBounds(bound)
-                            console.log(me.layer)
                         },
                         loaded: function() {
                             if (me.layer.listIndex == null) {
@@ -130,7 +132,7 @@ export class TreeLayerGroup extends L.Control {
                     if (arr.type == 'Group Layer' && !arr.parentLayer && arr.subLayers.length > 0) {
                         nodeParent++;
                         nodeChild.push(i);
-                        nodeParentArr.push(i);
+                        nodeParentArr.push(arr.id);
                         tree.push({
                             "id": arr.id,
                             "text": arr.name,
@@ -168,7 +170,7 @@ export class TreeLayerGroup extends L.Control {
                     }
                     if (arr.type == 'Feature Layer' && !arr.parentLayer && arr.subLayers.length == 0) {
                         nodeParent++;
-                        nodeParentArr.push(i);
+                        nodeParentArr.push(arr.id);
                         tree.push({
                             "id": arr.id,
                             "text": arr.name,

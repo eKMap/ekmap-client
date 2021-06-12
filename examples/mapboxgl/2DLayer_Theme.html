@@ -28,32 +28,18 @@
     </div>
     <script>
         var themeLayer, popup;
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
         var attribution = "© Map" +
             " by <a href='https://carto.com/' target='_blank' style='color:blue'> Carto</a>"
         var map = new mapboxgl.Map({
             container: 'divMapId',
-            style: {
-                "version": 8,
-                "sources": {},
-                "layers": []
-            },
+            style: 'mapbox://styles/mapbox/light-v10',
             center: [105.10335295268351, 20.19460311786966],
             zoom: 7.176181112850266
         });
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.on('load', function() {
             var me = this;
-            var maps = new mapboxgl.ekmap.TileLayer({
-                urls: [
-                    "https://a.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
-                    "https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png",
-                    "https://c.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png"
-                ]
-            }).addTo(map);
-            map.addControl(new mapboxgl.AttributionControl({
-                customAttribution: attribution,
-                compact: false
-            }));
             //Source: http://vnmha.gov.vn/
             $.get("../data/weather/temp_rain.json", function(response) {
                 var features = response.features

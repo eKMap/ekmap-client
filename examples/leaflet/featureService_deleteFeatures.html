@@ -55,8 +55,8 @@
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
 
         featureLayer = new L.ekmap.FeatureLayer({
-            url: urlFeatureLayer,
-            // token: tokenKey
+            url: urlFeatureLayerEdit,
+            token: tokenKey,
         }).addTo(map);
         var idDelete;
 

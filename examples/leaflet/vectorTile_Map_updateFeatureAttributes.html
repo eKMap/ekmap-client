@@ -146,15 +146,20 @@
     <script>
         var map = L.map('divMapId', {
             center: {
-                lon: 103.93422987963572,
-                lat: 21.306082013420507
+                lon: 105,
+                lat: 17
             },
-            zoom: 14.871024212757812,
+            zoom: 5.5,
             zoomControl: true,
             attributionControl: false,
         });
-
-
+        var vnMap = new L.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        var maps = new L.ekmap.TiledMapLayer({
+            url: urlMapService145,
+            token: tokenKey
+        }).addTo(map);
         var draw;
         var listLayersServer = [];
         var layerName = ['2949', '2950', '2951', '2952', '2954', '2955', '2956'];
@@ -162,13 +167,7 @@
         var fields = [];
         var listFields = [];
         var layerId;
-        var vnMap = new L.ekmap.TiledVietNamMapLayer({
-            token: tokenVN
-        }).addTo(map);
 
-        var maps = new L.ekmap.TiledMapLayer({
-            url: urlMapService,
-        }).addTo(map);
         var featureInfo = new L.ekmap.control.FeatureInfomation({
             target: 'activeControl',
         }).addTo(map);

@@ -38,13 +38,14 @@ export class ImageMapLayer extends Layer {
     addTo(map) {
         var me = this;
         this.service.getExtent(function(extend) {
+            console.log(extend)
             var meters2degress = function(x, y) {
                 var lon = x * 180 / 20037508.34;
                 var lat = Math.atan(Math.exp(y * Math.PI / 20037508.34)) * 360 / Math.PI - 90;
                 return [lon, lat]
             }
-            var pointMin = meters2degress(extend.xmin, extend.ymin);
-            var pointMax = meters2degress(extend.xmax, extend.ymax);
+            var pointMin = [extend.xmin, extend.ymin];
+            var pointMax = [extend.xmax, extend.ymax];
             var extend = [pointMin[0], pointMin[1], pointMax[0], pointMax[1]];
             var bound = [
                 [pointMin[1], pointMin[0]],
@@ -55,7 +56,7 @@ export class ImageMapLayer extends Layer {
             size.push(map.getSize().y);
             var param = {
                 bbox: extend,
-                layers: 'show',
+                layers: '',
                 format: 'png32',
                 dpi: 96,
                 transparent: true,
@@ -93,6 +94,9 @@ export class ImageMapLayer extends Layer {
                 if (L.latLngBounds(newBounds).intersects(bound) == true) {
                     var url = me.options.url;
                     url += 'export?' + Util.serialize(params);
+                    if (me.options.token) {
+                        url += ('&token=' + me.options.token);
+                    }
                     me.layer.setUrl(url);
                     me.layer.setBounds(newBounds);
                 }
