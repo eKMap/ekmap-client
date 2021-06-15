@@ -84,8 +84,6 @@ export class ShapeFactory {
         }
 
         var sps = this.shapeParameters;
-
-
         if (sps instanceof Point) { // 点
             //设置style
             let style = new Object();
@@ -121,14 +119,23 @@ export class ShapeFactory {
 
             return shape;
         } else if (sps instanceof Polygon) { // 面
-            //检查参数 pointList 是否存在
             if (!sps.pointList) {
                 return null;
             }
-
+            var data = sps.dataInfo.value;
             //设置style
             let style = new Object();
             style["pointList"] = sps.pointList;
+            if(sps.showText){
+                style["text"] = data;
+                style["textPosition"] = sps.textPosition;
+                style["textAlign"] = sps.textAlign;
+                style["textFont"] = sps.textFont;
+                style["textColor"] = sps.textColor;
+                style["fontWeight"] = sps.fontWeight;
+                style["fontSize"] = sps.fontSize;
+                style["fontOpacity"] = sps.fontOpacity;
+            }
             style = Util.copyAttributesWithClip(style, sps.style, ['pointList']);
 
             //创建图形
@@ -136,7 +143,6 @@ export class ShapeFactory {
             shape.style = ShapeFactory.transformStyle(style);
             shape.highlightStyle = ShapeFactory.transformStyle(sps.highlightStyle);
             Util.copyAttributesWithClip(shape, sps, ['pointList', 'style', "highlightStyle"]);
-
             return shape;
         } else if (sps instanceof Rectangle) { // 矩形
             //检查参数 pointList 是否存在
@@ -162,12 +168,24 @@ export class ShapeFactory {
             return shape;
         } else if (sps instanceof Sector) { // 扇形
             //设置style
+            var data = sps.dataInfo.value;
             let style = new Object();
             style["x"] = sps.x;
             style["y"] = sps.y;
             style["r"] = sps.r;
             style["startAngle"] = sps.startAngle;
             style["endAngle"] = sps.endAngle;
+            if(sps.showText){
+                style["text"] = data;
+                style["textPosition"] = sps.textPosition;
+                style["textAlign"] = sps.textAlign;
+                style["textFont"] = sps.textFont;
+                style["textColor"] = sps.textColor;
+                style["fontWeight"] = sps.fontWeight;
+                style["fontSize"] = sps.fontSize;
+                style["fontOpacity"] = sps.fontOpacity;
+            }
+           
             if (sps["r0"]) {
                 style["r0"] = sps.r0
             }
@@ -178,13 +196,11 @@ export class ShapeFactory {
 
 
             style = Util.copyAttributesWithClip(style, sps.style, ['x', 'y', 'r', 'startAngle', 'endAngle', 'r0', 'endAngle']);
-
             //创建图形
             let shape = new SmicSector();
             shape.style = ShapeFactory.transformStyle(style);
             shape.highlightStyle = ShapeFactory.transformStyle(sps.highlightStyle);
             Util.copyAttributesWithClip(shape, sps, ['x', 'y', 'r', 'startAngle', 'endAngle', 'r0', 'endAngle', 'style', 'highlightStyle']);
-
             return shape;
         } else if (sps instanceof Label) { // 标签
             //设置style
@@ -268,7 +284,6 @@ export class ShapeFactory {
      */
     static transformStyle(style) {
         var newStyle = {};
-
         //字体 ["font-style", "font-variant", "font-weight", "font-size / line-height", "font-family"];
         var fontStr = ["normal", "normal", "normal", "12", "arial,sans-serif"];
 
@@ -350,7 +365,6 @@ export class ShapeFactory {
                     break;
             }
         }
-
         //拼接字体字符串
         newStyle["textFont"] = fontStr.join(" ");
 

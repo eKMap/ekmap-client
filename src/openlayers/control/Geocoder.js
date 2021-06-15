@@ -8,6 +8,9 @@ import olObject from 'ol/Object';
  * 
  * Không sử dụng trên bản đồ
  * @constructor
+ * @class ol.ekmap.control.Geocoder
+ * @category  Control
+ * @classdesc Geocode.
  * @extends {ol.Object}
  * @fires select (Sự kiện chọn địa chỉ)
  * @fires searchforcus (forcus ô nhập)

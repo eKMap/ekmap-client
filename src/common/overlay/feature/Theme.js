@@ -4,6 +4,11 @@ import { GeoText } from '../../commontypes/geometry/GeoText';
 import { LonLat } from '../../commontypes/LonLat';
 import { Util } from '../../commontypes/Util';
 
+/**
+ * @class  Ekmap.Feature.Theme
+ * @category Visualization Theme
+ * @classdesc The thematic element base class, this type cannot be instantiated.
+ */
 export class Theme {
     constructor(data, layer) {
 

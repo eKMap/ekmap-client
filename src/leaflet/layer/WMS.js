@@ -63,6 +63,7 @@ export class WMS extends L.Evented {
          */
     addTo(map) {
         this._map = map;
+        console.log(this.wmsParams)
         var layer = new L.tileLayer.wms(this._url, this.wmsParams);
         layer.addTo(map);
         return this;

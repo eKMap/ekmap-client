@@ -1,6 +1,3 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Ekmap } from '../Ekmap';
 import { ShapeFactory } from './feature/ShapeFactory';
 import { Sector } from './feature/Sector';
@@ -8,20 +5,20 @@ import { Graph } from './Graph';
 
 /**
  * @class Ekmap.Feature.Theme.Pie
- * @classdesc 饼图。
+ * @classdesc Pie chart.
  * @category Visualization Theme
- * @param {Ekmap.Feature.Vector} data - 用户数据。
- * @param {Ekmap.Layer.Graph} layer - 此专题要素所在图层。
- * @param {Array.<string>} fields - data 中的参与此图表生成的字段名称。
- * @param {Ekmap.Feature.Theme.Point.setting} setting - 图表配置对象。
- * @param {Ekmap.LonLat} [lonlat] - 专题要素地理位置。默认为 data 指代的地理要素 Bounds 中心。
+ * @param {Ekmap.Feature.Vector} data User data.
+ * @param {Ekmap.Layer.Graph} layer The layer of this thematic feature.
+ * @param {Array.<string>} fields The name of the field in the data that participated in the generation of this chart.
+ * @param {Ekmap.Feature.Theme.Pie.setting} setting Chart configuration object.
+ * @param {Ekmap.LonLat} lonlat Geographic location of thematic elements. The default is the Bounds center of the geographic feature referred to by data.
  * @extends Ekmap.Feature.Theme.Graph
  * @example
- * // sectorStyleByCodomain 的每个元素是个包含值域信息和与值域对应样式信息的对象，该对象（必须）有三个属性：
- * // start: 值域值下限（包含）;
- * // end: 值域值上限（不包含）;
- * // style: 数据可视化图形的 style，这个样式对象的可设属性： <Ekmap.Feature.ShapeParameters.Sector.style> 。
- * // sectorStyleByCodomain 数组形如：
+ * // sectorStyleByCodomain Each element of is an object containing range information and style information corresponding to the range. This object (must) have three attributes:
+ * // start: The lower limit of the value range (inclusive);
+ * // end: The upper limit of the value range (not included);
+ * // style: The style of the data visualization graph, the settable attributes of this style object: <Ekmap.Feature.ShapeParameters.Sector.style>.
+ * // sectorStyleByCodomain The array looks like:
  * [
  *   {
  *     start:0,
@@ -63,7 +60,7 @@ export class Pie extends Graph {
 
     /**
      * @function Ekmap.Feature.Theme.Pie.prototype.destroy
-     * @description 销毁此专题要素。调用 destroy 后此对象所以属性置为 null。
+     * @description Destroy this thematic element. After calling destroy, all properties of this object are set to null.
      */
     destroy() {
         super.destroy();
@@ -71,13 +68,10 @@ export class Pie extends Graph {
 
     /**
      * @function Ekmap.Feature.Theme.Pie.prototype.assembleShapes
-     * @description 装配图形（扩展接口）。
+     * @description Assembly graphics (extension interface).
      */
     assembleShapes() {
-        // 图表配置对象
         var sets = this.setting;
-
-        // 一个默认 style 组
         var defaultStyleGroup = [
             { fillColor: "#ff9277" }, { fillColor: "#dddd00" }, { fillColor: "#ffc877" }, { fillColor: "#bbe3ff" }, { fillColor: "#d5ffbb" },
             { fillColor: "#bbbbff" }, { fillColor: "#ddb000" }, { fillColor: "#b0dd00" }, { fillColor: "#e2bbff" }, { fillColor: "#ffbbe3" },
@@ -87,52 +81,47 @@ export class Pie extends Graph {
             { fillColor: "#0088aa" }, { fillColor: "#8400dd" }, { fillColor: "#aa0088" }, { fillColor: "#dd0000" }, { fillColor: "#772e00" }
         ];
 
-        // 重要步骤：初始化参数
         if (!this.initBaseParameter()) {
             return;
         }
 
-        // 背景框，默认不启用
         if (sets.useBackground) {
             this.shapes.push(ShapeFactory.Background(this.shapeFactory, this.chartBox, sets));
         }
 
-        // 数据值数组
         var fv = this.dataValues;
         if (fv.length < 1) {
             return;
-        } // 没有数据
+        } 
 
-        // 值域范围
         var codomain = this.DVBCodomain;
-        // 值域范围检测
         for (let i = 0; i < fv.length; i++) {
             if (fv[i] < codomain[0] || fv[i] > codomain[1]) {
                 return;
             }
         }
 
-        // 值的绝对值总和
         var valueSum = 0;
         for (let i = 0; i < fv.length; i++) {
             valueSum += Math.abs(fv[i]);
         }
 
-        // 重要步骤：定义图表 Pie 数据视图框中单位值的含义，单位值：每度代表的数值
         this.DVBUnitValue = 360 / valueSum;
         var uv = this.DVBUnitValue;
 
-        var dvbCenter = this.DVBCenterPoint; // 数据视图框中心作为扇心
+        var dvbCenter = this.DVBCenterPoint;
 
-        var startAngle = 0; // 扇形起始边角度
-        var endAngle = 0; // 扇形终止边角度
-        var startAngleTmp = startAngle; // 扇形临时起始边角度
-        // 扇形（自适应）半径
-        var r = this.DVBHeight < this.DVBWidth ? this.DVBHeight / 2 : this.DVBWidth / 2;
+        var startAngle = 0;
+        var endAngle = 0;
+        var startAngleTmp = startAngle;
+        var r
+        if(sets.radius)
+            r = sets.radius
+        else
+            r = this.DVBHeight < this.DVBWidth ? this.DVBHeight / 2 : this.DVBWidth / 2;
 
         for (var i = 0; i < fv.length; i++) {
             var fvi = Math.abs(fv[i]);
-            //计算终止角
             if (i === 0) {
                 endAngle = startAngle + fvi * uv;
             } else if (i === fvi.length - 1) {
@@ -140,47 +129,43 @@ export class Pie extends Graph {
             } else {
                 endAngle = startAngle + fvi * uv;
             }
-            //矫正误差计算
             if ((endAngle - startAngle) >= 360) {
                 endAngle = 359.9999999;
             }
 
-            // 扇形参数对象
             var sectorSP = new Sector(dvbCenter[0], dvbCenter[1], r, startAngle, endAngle);
-            // 扇形样式
             if (typeof(sets.sectorStyleByFields) === "undefined") {
-                // 使用默认 style 组
                 var colorIndex = i % defaultStyleGroup.length;
                 sectorSP.style = ShapeFactory.ShapeStyleTool(null, sets.sectorStyle, defaultStyleGroup, null, colorIndex);
             } else {
                 sectorSP.style = ShapeFactory.ShapeStyleTool(null, sets.sectorStyle, sets.sectorStyleByFields, sets.sectorStyleByCodomain, i, fv[i]);
             }
 
-            // 扇形 hover 样式
             sectorSP.highlightStyle = ShapeFactory.ShapeStyleTool(null, sets.sectorHoverStyle);
-            // 扇形 hover 与 click 设置
             if (typeof(sets.sectorHoverAble) !== "undefined") {
                 sectorSP.hoverable = sets.sectorHoverAble;
             }
             if (typeof(sets.sectorClickAble) !== "undefined") {
                 sectorSP.clickable = sets.sectorClickAble;
             }
-            // 图形携带的数据信息
             sectorSP.refDataID = this.data.id;
             sectorSP.dataInfo = {
                 field: this.fields[i],
                 value: fv[i]
             };
-
-            // 创建扇形并把此扇形添加到图表图形数组
+            //Text
+            sectorSP.showText = sets.showText;
+            sectorSP.textColor = sets.textColor;
+            sectorSP.textFont = sets.textFont;
+            sectorSP.textPosition = sets.textPosition;
+            sectorSP.textAlign = sets.textAlign;
+            sectorSP.fontWeight = sets.fontWeight;
+            sectorSP.fontSize = sets.fontSize;
+            sectorSP.fontOpacity = sets.fontOpacity;
             this.shapes.push(this.shapeFactory.createShape(sectorSP));
-
-            // 把上一次的结束角度作为下一次的起始角度
             startAngle = endAngle;
         }
 
-        // 重要步骤：将图形转为由相对坐标表示的图形，以便在地图平移缩放过程中快速重绘图形
-        // （统计专题图模块从结构上要求使用相对坐标，assembleShapes() 函数必须在图形装配完成后调用 shapesConvertToRelativeCoordinate() 函数）
         this.shapesConvertToRelativeCoordinate();
     }
 
@@ -188,24 +173,24 @@ export class Pie extends Graph {
 
 /**
  * @typedef {Object} Ekmap.Feature.Theme.Pie.setting
- * @property {number} width - 专题要素（图表）宽度。
- * @property {number} height - 专题要素（图表）高度。
- * @property {Array.<number>} codomain - 图表允许展示的数据值域，长度为 2 的一维数组，第一个元素表示值域下限，第二个元素表示值域上限。
- * @property {number} [XOffset] - 专题要素（图表）在 X 方向上的偏移值，单位像素。
- * @property {number} [YOffset] - 专题要素（图表）在 Y 方向上的偏移值，单位像素。
- * @property {Array.<number>} [dataViewBoxParameter=[0, 0, 0, 0]] - 数据视图框 dataViewBox 参数，
- * 它是指图表框 chartBox （由图表位置、图表宽度、图表高度构成的图表范围框）在左、下，右，上四个方向上的内偏距值。
- * @property {Array.<number>} decimalNumber - 数据值数组 dataValues 元素值小数位数，数据的小数位处理参数，取值范围：[0, 16]。如果不设置此参数，在取数据值时不对数据做小数位处理。
- * @property {boolean} [useBackground=false] - 是否使用图表背景框。
- * @property {Ekmap.Feature.ShapeParameters.Rectangle.style} backgroundStyle - 背景样式。
- * @property {Array.<number>} [backgroundRadius=[0, 0, 0, 0]] - 背景框矩形圆角半径，可以用数组分别指定四个角的圆角半径，设：左上、右上、右下、左下角的半径依次为 r1、r2、r3、r4 ，则 backgroundRadius 为 [r1、r2、r3、r4 ]。
- * @property {Ekmap.Feature.ShapeParameters.Sector.style} sectorStyle - 饼图中扇形的基础 style，此参数控制饼图扇形基础样式，优先级低于 sectorStyleByFields 和 sectorStyleByCodomain。
- * @property {Array.<Ekmap.Feature.ShapeParameters.Sector.style>} sectorStyleByFields - 按专题字段 themeFields（<Ekmap.Layer.Graph.themeFields>）为饼图扇形赋 style，此参数按字段控制饼图扇形样式，优先级低于 sectorStyleByCodomain，高于 sectorStyle。此参数中的 style 与 themeFields 中的字段一一对应 。例如： themeFields（<Ekmap.Layer.Graph.themeFields>） 为 ["POP_1992", "POP_1995", "POP_1999"],
- * sectorStyleByFields 为[style1, style2, style3]，则在图表中，字段 POP_1992 对应的饼图扇形使用 style1，字段 POP_1995 对应的饼图扇形使用 style2 ，字段 POP_1999 对应的饼图扇形使用 style3。
- * @property {Array.<Object>} sectorStyleByCodomain - 按饼图扇形代表的数据值所在值域范围控制饼图扇形样式，优先级高于 sectorStyle 和 sectorStyleByFields。
- * @property {Object} [sectorHoverStyle] 饼图扇形 hover 状态时的样式，sectorHoverAble 为 true 时有效。
- * @property {boolean} [sectorHoverAble=true] 是否允许饼图扇形使用 hover 状态。同时设置 sectorHoverAble 和 sectorClickAble 为 false，可以直接屏蔽饼图扇形对专题图层事件的响应。
- * @property {boolean} [sectorClickAble=true] 是否允许饼图扇形被点击。同时设置 sectorHoverAble 和 sectorClickAble 为 false，可以直接屏蔽饼图扇形对专题图层事件的响应。
+ * @property {number} width Thematic element (chart) width.
+ * @property {number} height The height of thematic elements (charts).
+ * @property {Array.<number>} codomain The data range that the chart allows to display is a one-dimensional array of length 2. The first element represents the lower limit of the value range, and the second element represents the upper limit of the value range.
+ * @property {number} XOffset The offset value of the thematic element (chart) in the X direction, in pixels.
+ * @property {number} YOffset The offset value of the thematic element (chart) in the Y direction, in pixels.
+ * @property {Array.<number>} dataViewBoxParameter=[0, 0, 0, 0] The dataViewBox parameter of the data view box,
+ * It refers to the inner offset value of the chart box chartBox (chart range box composed of chart position, chart width, and chart height) in the left, bottom, right, and top directions.
+ * @property {Array.<number>} decimalNumber Data value array dataValues element value decimal places, data decimal place processing parameters, value range: [0, 16]. If this parameter is not set, the data will not be processed with decimal places when fetching the data value.
+ * @property {boolean} useBackground=false Whether to use the chart background frame.
+ * @property {Ekmap.Feature.ShapeParameters.Rectangle.style} backgroundStyle Background style.
+ * @property {Array.<number>} backgroundRadius=[0, 0, 0, 0] The corner radius of the background frame rectangle, you can use the array to specify the corner radius of the four corners respectively, set: the radius of the upper left, upper right, lower right, and lower left corners are r1, r2, r3, r4, then backgroundRadius is [r1 r2, r3, r4 ].
+ * @property {Ekmap.Feature.ShapeParameters.Sector.style} sectorStyle The basic style of the sector in the pie chart. This parameter controls the basic style of the sector in the pie chart. The priority is lower than sectorStyleByFields and sectorStyleByCodomain.
+ * @property {Array.<Ekmap.Feature.ShapeParameters.Sector.style>} sectorStyleByFields According to thematic field themeFields (<Ekmap.Layer.Graph.themeFields>), assign style to the pie chart sector. This parameter controls the pie chart sector style according to the field. The priority is lower than sectorStyleByCodomain and higher than sectorStyle. The style in this parameter corresponds to the fields in themeFields one-to-one. For example: themeFields(<Ekmap.Layer.Graph.themeFields>) is ["POP_1992", "POP_1995", "POP_1999"],
+ * The sectorStyleByFields is [style1, style2, style3], then in the chart, the pie chart sector corresponding to the field POP_1992 uses style1, the pie chart sector corresponding to the field POP_1995 uses style2, and the pie chart sector corresponding to the field POP_1999 uses style3.
+ * @property {Array.<Object>} sectorStyleByCodomain The pie chart sector style is controlled according to the range of the data value represented by the pie chart sector, and the priority is higher than sectorStyle and sectorStyleByFields.
+ * @property {Object} sectorHoverStyle The style of the pie chart in the hover state. It is valid when sectorHoverAble is true.
+ * @property {boolean} sectorHoverAble=true Whether to allow the pie chart sector to use the hover state. Setting sectorHoverAble and sectorClickAble to false at the same time can directly block the response of the pie chart sector to thematic layer events.
+ * @property {boolean} sectorClickAble=true Whether to allow the pie chart sector to be clicked. Setting sectorHoverAble and sectorClickAble to false at the same time can directly block the response of the pie chart sector to thematic layer events.
  */
 
 Ekmap.Feature.Theme.Pie = Pie;

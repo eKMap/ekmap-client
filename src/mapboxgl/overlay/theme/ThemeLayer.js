@@ -416,7 +416,6 @@ export class Theme {
         if (!CommonUtil.isArray(features)) {
             features = [features];
         }
-
         let featuresTemp = [];
         for (let i = 0; i < features.length; i++) {
             if (features[i] instanceof ThemeFeature) {

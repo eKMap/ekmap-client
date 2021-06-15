@@ -130,6 +130,10 @@
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map)
+         var maps = new ol.ekmap.TiledMapLayer({
+            url: urlMapService145,
+            token: tokenKey
+        }).addTo(map);
         var service = new ol.ekmap.MapService({
             'url': urlMapService145,
             'token': tokenKey

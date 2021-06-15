@@ -13,6 +13,7 @@ import ekmap_common from '../core/Common';
  * . Một phần của bản đồ được xem ở mức thu phóng khác
  *
  * @constructor
+ * @category  Control
  * @extends {ol_Overlay}
  * @param {} options Kế thừa toàn bộ option từ ol_Overlay và bổ sung một số lựa chọn mở rộng sau
  *	@param {String} options.className CSS

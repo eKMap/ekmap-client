@@ -8,9 +8,6 @@ import mapboxgl from 'mapbox-gl';
  * @param {Object} options Construction parameters.
  * @param {string} options.url Required: URL of the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Map Service} with a tile cache.
  * @param {string} options.token Will use this token to authenticate all calls to the service.
- * @param {string} options.id Id of source and layer.
- * @param {mapboxgl.LngLatBounds} option.bounds Default the geographical bounds of the map.
- * @param {string} options.projection=4326 Will use this token to authenticate all calls to the service.
  * 
  * 
  * @extends {mapboxgl.Evented}
@@ -37,50 +34,50 @@ export class ThemeMapLayer {
     addTo(map) {
         var me = this;
         this.map = map;
-        var nameID = 'image-layer' + guid12();
-        if (this.options.id)
-            this.id = this.options.id;
-        else
-            this.id = nameID;
-
-        if (this.options.bounds) {
-            var bounds = this.options.bounds;
-            map.addSource(this.id, {
-                type: 'image',
-                url: me.url,
-                coordinates: [
-                    [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
-                    [bounds.getNorthEast().lng, bounds.getNorthEast().lat],
-                    [bounds.getNorthEast().lng, bounds.getSouthWest().lat],
-                    [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
-                ]
-            });
-            map.addLayer({
-                'id': this.id,
-                'type': 'raster',
-                'source': this.id,
-                'paint': {
-                    'raster-fade-duration': 0
-                }
-            });
-        } else {
-            throw "Error: bounds: array length 4 expected, length 2 found";
-        }
-
-
         return me;
     }
 
     /**
-     * @function mapboxgl.ekmap.ThemeMapLayer.prototype.setCoordinates
-     * @description Sets the image's bounds and re-renders the map.
-     * @param {Array<Array<number>>} option.coordinates Four geographical coordinates, represented as arrays of longitude and latitude numbers, which define the corners of the image. The coordinates start at the top left corner of the image and proceed in clockwise order. They do not have to represent a rectangle.
-     * @returns this
+     * @function mapboxgl.ekmap.ThemeMapLayer.prototype.addFeatures
+     * @description Abstract method, instantiable subclass must implement this method. Add data to the theme map layer.
+     * @param {GeoJSONObject | Array<Object>} data Elements to be added.
      */
-    setCoordinates(coordinates) {
-        var mySource = this.map.getSource(this.id);
-        if (mySource)
-            mySource.setCoordinates(coordinates);
+    addFeatures(data){
+        if (this.map){
+            var features
+            if (data.length && data.length > 0) {
+                features = data;
+            }else
+                features = data.features;
+            for(var i = 0; i < features.length; i ++){
+                var lng = features[i].properties.longtitude;
+                var lat = features[i].properties.latitude;
+                var sw = new mapboxgl.LngLat(lng - 0.2, lat - 0.2);
+                var ne = new mapboxgl.LngLat(lng + 0.2, lat + 0.2);
+                var bounds = new mapboxgl.LngLatBounds(sw, ne);
+                var id = 'image_' + guid12();
+                map.addSource(id, {
+                    type: 'image',
+                    url: features[i].properties.chartUrl,
+                    coordinates: [
+                        [bounds.getSouthWest().lng, bounds.getNorthEast().lat],
+                        [bounds.getNorthEast().lng, bounds.getNorthEast().lat],
+                        [bounds.getNorthEast().lng, bounds.getSouthWest().lat],
+                        [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
+                    ]
+                });
+                map.addLayer({
+                    'id': id,
+                    'type': 'raster',
+                    'source': id,
+                    'paint': {
+                        'raster-fade-duration': 0
+                    }
+                });
+            }
+        }else {
+            throw "Error: ThemeMapLayer not yet added to the map.";
+        }
     }
 }
 

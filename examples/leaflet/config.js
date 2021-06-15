@@ -19,7 +19,9 @@ var exampleConfig = {
                         thumbnail: "mapService_find.png",
                         fileName: "mapService_find",
                         subject: "Use the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.",
-                        description: "Enter the name of habitat/species management area, province name, nature reserve, protected landscape area, special forest, ramsar site, national park of VietNam to see a list of information by search name."
+                        description: "Enter the name of habitat/species management area, province name, nature reserve, protected landscape area, special forest, ramsar site, national park of VietNam to see a list of information by search name.",
+                        urlApi: "/docs/leaflet/L.ekmap.TiledMapLayer.html#find",
+                        nameApi:"L.ekmap.TiledMapLayer"
                     },
                     {
                         name: "Bounds query",
@@ -27,7 +29,9 @@ var exampleConfig = {
                         thumbnail: "mapService_queryByBound.png",
                         fileName: "mapService_queryByBound",
                         subject: "Use queryByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-                        description: "Create bound, displaying data on the bound area."
+                        description: "Create bound, displaying data on the bound area.",
+                        urlApi: "/docs/leaflet/L.ekmap.MapService.html#queryByBound",
+                        nameApi:"L.ekmap.MapService"
                     },
                     {
                         name: "Geometry query",
@@ -35,7 +39,9 @@ var exampleConfig = {
                         thumbnail: "mapService_queryByGeometry.png",
                         fileName: "mapService_queryByGeometry",
                         subject: "Use queryByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-                        description: "Create polygon, display data on polygon"
+                        description: "Create polygon, display data on polygon",
+                        urlApi: "/docs/leaflet/L.ekmap.MapService.html#queryByGeometry",
+                        nameApi:"L.ekmap.MapService"
                     },
                     {
                         name: "Identify",
@@ -43,7 +49,9 @@ var exampleConfig = {
                         thumbnail: "mapService_identify.png",
                         fileName: "mapService_identify",
                         subject: "Use identify of mapboxgle.ekmap.TiledMapLayer resource to discover features at a geographic location",
-                        description: "Click on points on the map to display detailed information of Vietnam's national protected areas"
+                        description: "Click on points on the map to display detailed information of Vietnam's national protected areas",
+                        urlApi: "/docs/leaflet/L.ekmap.TiledMapLayer.html#identify",
+                        nameApi:"L.ekmap.TiledMapLayer"
                     },
                     {
                         name: "Image Tile ZYX",
@@ -51,7 +59,9 @@ var exampleConfig = {
                         thumbnail: "mapService_ImageTileZYX.png",
                         fileName: "mapService_ImageTileZYX",
                         subject: "Use mapboxgl.ekmap.TiledMapLayer to add image tile ZYX to your map.",
-                        description: "Upload data as images (Administrative map of Vietnam)"
+                        description: "Upload data as images (Administrative map of Vietnam)",
+                        urlApi: "/docs/leaflet/L.ekmap.TiledMapLayer.html",
+                        nameApi:"L.ekmap.TiledMapLayer"
                     },
                 ]
             },
@@ -64,7 +74,9 @@ var exampleConfig = {
                         thumbnail: "featureService_queryByBound.png",
                         fileName: "featureService_getFeaturesByBound",
                         subject: "Use getFeaturesByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-                        description: "Create bound, displaying data on the bound area."
+                        description: "Create bound, displaying data on the bound area.",
+                        urlApi: "/docs/leaflet/L.ekmap.FeatureService.html#queryByBound",
+                        nameApi:"L.ekmap.FeatureService"
 
                     },
                     {
@@ -73,7 +85,9 @@ var exampleConfig = {
                         thumbnail: "featureService_queryByGeometry.png",
                         fileName: "featureService_getFeaturesByGeometry",
                         subject: "Use getFeaturesByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-                        description: "Create polygon, display data on polygon"
+                        description: "Create polygon, display data on polygon",
+                        urlApi: "/docs/leaflet/L.ekmap.FeatureService.html#queryByGeometry",
+                        nameApi:"L.ekmap.FeatureService"
                     },
                     {
                         name: "Apply Edits",
@@ -81,7 +95,9 @@ var exampleConfig = {
                         thumbnail: "featureService_applyEditsFeatures.png",
                         fileName: "featureService_applyEditsFeatures",
                         subject: "Use applyEditsFeatures of mapboxgl.ekmap.FeatureLayer to add, edit, or delete operations.",
-                        description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete)."
+                        description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete).",
+                        urlApi: "/docs/leaflet/L.ekmap.FeatureLayer.html#applyEdits",
+                        nameApi:"L.ekmap.FeatureLayer"
                     },
                     {
                         name: "Add Features",
@@ -89,7 +105,9 @@ var exampleConfig = {
                         thumbnail: "featureService_addFeatures.png",
                         fileName: "featureService_addFeatures",
                         subject: "Use addFeatures of mapboxgl.ekmap.FeatureLayer to add points to the map.",
-                        description: "Click on the map to add points (marker color selectable)."
+                        description: "Click on the map to add points (marker color selectable).",
+                        urlApi: "/docs/leaflet/L.ekmap.FeatureLayer.html#addFeature",
+                        nameApi:"L.ekmap.FeatureLayer"
                     },
                     {
                         name: "Update Features",
@@ -97,7 +115,9 @@ var exampleConfig = {
                         thumbnail: "featureService_updateFeatures.png",
                         fileName: "featureService_updateFeatures",
                         subject: "Use updateFeatures of mapboxgl.ekmap.FeatureLayer to update location points on the map.",
-                        description: "Update location. Select the feature to change, then choose the desired position."
+                        description: "Update location. Select the feature to change, then choose the desired position.",
+                        urlApi: "/docs/leaflet/L.ekmap.FeatureLayer.html#updateFeature",
+                        nameApi:"L.ekmap.FeatureLayer"
                     },
                     {
                         name: "Delete Features",
@@ -105,7 +125,9 @@ var exampleConfig = {
                         thumbnail: "featureService_deleteFeatures.png",
                         fileName: "featureService_deleteFeatures",
                         subject: "Use deleteFeatures of mapboxgl.ekmap.FeatureLayer to delete points on the map.",
-                        description: "Select feature to delete on the map to delete"
+                        description: "Select feature to delete on the map to delete",
+                        urlApi: "/docs/leaflet/L.ekmap.FeatureLayer.html#deleteFeature",
+                        nameApi:"L.ekmap.FeatureLayer"
                     },
                     {
                         name: "Attributes Query",
@@ -113,7 +135,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_attributesQuery.png",
                         fileName: "vectorTile_Map_attributesQuery",
                         subject: "Attributes Query.",
-                        description: "Attributes Query."
+                        description: "Attributes Query.",
+                        urlApi: "/docs/leaflet/L.ekmap.FeatureService.html#query",
+                        nameApi:"L.ekmap.FeatureService"
                     },
                     {
                         name: "Update Feature Attributes",
@@ -121,7 +145,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
                         fileName: "vectorTile_Map_updateFeatureAttributes",
                         subject: "Update Feature Attributes.",
-                        description: "Use control Select to get point information and use service to change that point information"
+                        description: "Use control Select to get point information and use service to change that point information",
+                        urlApi: "/docs/leaflet/L.ekmap.FeatureService.html#updateFeatures",
+                        nameApi:"L.ekmap.FeatureService"
                     }
                 ]
             },
@@ -195,7 +221,9 @@ var exampleConfig = {
                         thumbnail: "control_legendControl.png",
                         fileName: "control_legendControl",
                         subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
-                        description: "Click on the button below control: navigationControl to display Legend"
+                        description: "Click on the button below control: navigationControl to display Legend",
+                        urlApi: "/docs/leaflet/L.ekmap.control.Legend.html",
+                        nameApi:"L.ekmap.control.Legend"
                     },
 
                     {
@@ -204,7 +232,9 @@ var exampleConfig = {
                         thumbnail: "control_treeLayerGroupControl.png",
                         fileName: "control_treeLayerGroupControl",
                         subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
-                        description: "Click on the button below control: navigationControl to display Legend"
+                        description: "Click on the button below control: navigationControl to display Legend",
+                        urlApi: "/docs/leaflet/L.ekmap.control.TreeLayerGroup.html",
+                        nameApi:"L.ekmap.control.TreeLayerGroup"
                     },
                     {
                         name: "Feature Infomation Control",
@@ -212,7 +242,9 @@ var exampleConfig = {
                         thumbnail: "control_featureInfomationControl.png",
                         fileName: "control_featureInfomationControl",
                         subject: "Use control featureInfomation to retrieve the selected object.",
-                        description: "Click on the map to retrieve the selected object."
+                        description: "Click on the map to retrieve the selected object.",
+                        urlApi: "/docs/leaflet/L.ekmap.control.FeatureInfomation.html",
+                        nameApi:"L.ekmap.control.FeatureInfomation"
                     },
                     // {
                     //     name: "Tree Layer",
@@ -256,7 +288,10 @@ var exampleConfig = {
                         thumbnail: "tiledMap_osmMap.png",
                         fileName: "tiledMap_osmMap",
                         subject: "OSM Standard",
-                        description: "Use mapboxgl.ekmap.TiledOSMapLayer to display OSM Standard layer on the map"
+                        description: "Use mapboxgl.ekmap.TiledOSMapLayer to display OSM Standard layer on the map",
+                        urlApi: "/docs/leaflet/L.ekmap.TiledOSMapLayer.html",
+                        nameApi:"L.ekmap.TiledOSMapLayer"
+                        
                     },
                     // {
                     //     name: "Add Tile Layer",
@@ -271,16 +306,16 @@ var exampleConfig = {
                         name_en: "Showing an ArcGIS basemap",
                         thumbnail: "basemapLayer.png",
                         fileName: "basemapLayer",
-                        subject: "Display an ArcGIS Online basemap.",
-                        description: "Display an ArcGIS Online basemap."
+                        urlApi: "/docs/leaflet/L.ekmap.BasemapArcgisLayer.html",
+                        nameApi:"L.ekmap.BasemapArcgisLayer"
                     },
                     {
                         name: "Basemap with labels",
                         name_en: "Basemap with labels",
                         thumbnail: "basemapLayer_labels.png",
                         fileName: "basemapLayer_labels",
-                        subject: "Showing an ArcGIS Online basemap with a separate label layer",
-                        description: "Showing an ArcGIS Online basemap with a separate label layer."
+                        urlApi: "/docs/leaflet/L.ekmap.BasemapArcgisLayer.html",
+                        nameApi:"L.ekmap.BasemapArcgisLayer"
                     },
                     {
                         name: "Retina Basemap",
@@ -288,7 +323,9 @@ var exampleConfig = {
                         thumbnail: "retina-basemap.png",
                         fileName: "retina-basemap",
                         subject: "Retina Basemap",
-                        description: "Displaying basemaps at higher resolutions on retina devices with the detectRetina option. In this example the base layer is added at retina resolutions and the labels are added at regular resolutions."
+                        description: "Displaying basemaps at higher resolutions on retina devices with the detectRetina option. In this example the base layer is added at retina resolutions and the labels are added at regular resolutions.",
+                        urlApi: "/docs/leaflet/L.ekmap.BasemapArcgisLayer.html",
+                        nameApi:"L.ekmap.BasemapArcgisLayer"
                     }
                 ]
             },
@@ -315,6 +352,20 @@ var exampleConfig = {
                         description: "Use ol.ekmap.HeatMapLayer to add layer heatmap to the map"
                     },
                 ]
+            },
+            cluster: {
+                name: "Cluster",
+                name_en: "Cluster",
+                version: "",
+                content: [{
+                    name: "Cluster",
+                    name_en: "Marker cluster",
+                    version: "",
+                    thumbnail: "cluster.png",
+                    fileName: "cluster",
+                    subject: "DESTINATION INFORMATION OF POSITIVE CASES FOR SARS-CoV-2 June 14, 2021 : 16:17",
+                    description: "DESTINATION INFORMATION OF POSITIVE CASES FOR SARS-CoV-2 June 14, 2021 : 16:17. Source: https://ncov.moh.gov.vn/ban-do-vn"
+                }]
             },
             ECharts: {
                 name: "ECharts",
@@ -453,7 +504,9 @@ var exampleConfig = {
                     thumbnail: "ogc_wms.png",
                     fileName: "ogc_wms",
                     subject: "Use the Web Map Services service to display US states data.",
-                    description: "Click on the map to get info."
+                    description: "Click on the map to get info.",
+                    urlApi: "/docs/leaflet/L.ekmap.WMS.html",
+                    nameApi:"L.ekmap.WMS"
                 }]
             },
             WFS: {
@@ -465,27 +518,16 @@ var exampleConfig = {
                     thumbnail: "ogc_wfs.png",
                     fileName: "ogc_wfs",
                     subject: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
-                    description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data)."
+                    description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
+                    urlApi: "/docs/leaflet/L.ekmap.WFS.html",
+                    nameApi:"L.ekmap.WFS"
                 }]
             }
         }
     },
 
 
-    //         cluster: {
-    //             name: "Cluster",
-    //             name_en: "Cluster",
-    //             version: "",
-    //             content: [{
-    //                 name: "Cluster",
-    //                 name_en: "Marker cluster",
-    //                 version: "",
-    //                 thumbnail: "cluster.gif",
-    //                 fileName: "cluster",
-    //                 subject: "Use Mapbox GL JS' built-in functions to visualize points as clusters.",
-    //                 description: "Use Mapbox GL JS' built-in functions to visualize points as clusters."
-    //             }]
-    //         },
+
     //         animation: {
     //             name: "Animation",
     //             name_en: "Animation",

@@ -17,11 +17,11 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-        
+
         body {
             overflow: hidden;
         }
-        
+
         #selectedFeatures {
             position: absolute;
             top: 15px;
@@ -30,19 +30,19 @@
             background: white;
             padding: 1em;
         }
-        
+
         .leaflet-bar.map-text a {
             color: #79BD8F;
             display: inline;
         }
-        
+
         .line-heading {
             font-weight: normal;
             margin-top: 10px;
             margin-bottom: 10px;
             color: #323232;
         }
-        
+
         .ekmap-client-item-list__list-item {
             box-shadow: 0 1px 0 rgba(110, 110, 110, 0.3);
             padding: 3px 3px;
@@ -57,14 +57,14 @@
             display: flex;
             justify-content: space-between;
         }
-        
+
         .or-wrap {
             background-color: #e0e0e0;
             height: 1px;
             margin: 2em 0;
             overflow: visible;
         }
-        
+
         .or-text {
             background: #fff;
             line-height: 0;
@@ -72,13 +72,13 @@
             position: relative;
             bottom: 0.75em;
         }
-        
+
         .ekmap-client-item-list__list {
             list-style: none;
             margin: 0;
             padding: 0;
         }
-        
+
         .ekmap-client-button {
             align-items: center;
             background-color: #0079c1;
@@ -97,7 +97,7 @@
             width: 100%;
             transition: background-color 125ms ease-in-out, border 125ms ease-in-out;
         }
-        
+
         .ekmap-client-feature-form__label {
             display: flex;
             justify-content: space-between;
@@ -122,17 +122,13 @@
                     <option value="doughnut">donut</option>
                     <option value="bar">bar</option>
                 </select>
-                <!-- <br /> Colors scheme:
-                <select id="color" onchange="doAnimate()" style="margin-bottom: 5px;">
-                    <option value="classic">Classic</option>
-                    <option value="dark">Dark</option>
-                    <option value="pale">Pale</option>
-                    <option value="pastel">Pastel</option>
-                    <option value="neon">Neon</option>
-                    <option value="custom">Custom</option>
+                <br /> Show label:
+                <select id="label" onchange="doAnimate()" style="margin-bottom: 5px;">
+                    <option value="label">true</option>
+                    <option value="nolabel">false</option>
                 </select>
                 <br />
-                <button onclick="doAnimate();">Animate!</button> -->
+                <!-- <button onclick="doAnimate();">Animate!</button> -->
             </div>
         </div>
     </div>
@@ -160,17 +156,17 @@
         var doms = [];
         var features;
         var themeLayer
-        map.on('load', function() {
+        map.on('load', function () {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)
-            $.get("../data/water_quality.json", function(response) {
+            $.get("../data/water_quality.json", function (response) {
                 features = {
                     "type": "FeatureCollection",
                     "features": response.features
                 };
-            }).done(function() {
-                createPieThemeLayer()
+            }).done(function () {
+                createPieThemeLayer(true)
             })
 
 
@@ -178,13 +174,19 @@
 
         function doAnimate() {
             var typeGraph = document.getElementById("graph").value;
+            var value = document.getElementById("label").value;
+            var showLabel;
+            if (value == 'label')
+                showLabel = true;
+            else
+                showLabel = false;
             this.clearThemeLayer();
             if (typeGraph == 'pie')
-                this.createPieThemeLayer()
+                this.createPieThemeLayer(showLabel)
             else if (typeGraph == 'doughnut')
-                this.createRingThemeLayer()
+                this.createRingThemeLayer(showLabel)
             else
-                this.createBarThemeLayer()
+                this.createBarThemeLayer(showLabel)
         }
 
         function clearThemeLayer() {
@@ -204,18 +206,19 @@
         };
 
         //Bar chartsSetting
-        chartsSettingForBarAddBar3DCommon = {
-            width: 260,
-            height: 120,
+        chartsSettingForBarAddBarCommon = {
+            width: 200,
+            height: 100,
             codomain: [0, 5],
             xShapeBlank: [15, 15, 15],
             axisYTick: 4,
+            fontSize: 10,
             axisYLabels: ["4", "3", "2", "1", "0"],
             axisXLabels: ['P', 'Q+', 'Q-', 'Pin'],
             backgroundRadius: [5, 5, 5, 5],
             backgroundStyle: {
-                fillColor: "#d1eeee",
-                shadowBlur: 12,
+                fillColor: "transparent",
+                shadowBlur: 3,
                 shadowColor: "#d1eeee"
             }
         };
@@ -228,6 +231,7 @@
             sectorStyle: {
                 fillOpacity: 0.8
             },
+            textColor: "#ffffff",
             sectorStyleByFields: [{
                 fillColor: "#FFB980"
             }, {
@@ -249,8 +253,8 @@
             backgroundRadius: [5, 5, 5, 5],
         };
 
-        function createBarThemeLayer() {
-            var chartsSettingForBar = chartsSettingForBarAddBar3DCommon;
+        function createBarThemeLayer(showLabel) {
+            var chartsSettingForBar = chartsSettingForBarAddBarCommon;
             chartsSettingForBar.barStyle = {
                 fillOpacity: 0.7
             };
@@ -272,21 +276,25 @@
             ];
 
             themeLayerOptions.chartsSetting = chartsSettingForBar;
+            chartsSettingForBar.showText = showLabel;
             themeLayer = new mapboxgl.ekmap.GraphThemeLayer("BarLayer", "Bar", themeLayerOptions);
             map.addLayer(themeLayer);
             themeLayer.addFeatures(features);
         }
 
-        function createRingThemeLayer() {
+        function createRingThemeLayer(showLabel) {
             chartsSettingForPieOrRing.innerRingRadius = 20;
             themeLayerOptions.chartsSetting = chartsSettingForPieOrRing;
+            chartsSettingForPieOrRing.showText = showLabel;
             themeLayer = new mapboxgl.ekmap.GraphThemeLayer("RingSymbolLayer", "Ring", themeLayerOptions);
             map.addLayer(themeLayer);
             themeLayer.addFeatures(features);
         }
 
-        function createPieThemeLayer() {
+        function createPieThemeLayer(showLabel) {
             themeLayerOptions.chartsSetting = chartsSettingForPieOrRing;
+            chartsSettingForPieOrRing.showText = showLabel;
+            console.log(themeLayerOptions)
             themeLayer = new mapboxgl.ekmap.GraphThemeLayer("PieLayer", "Pie", themeLayerOptions);
             map.addLayer(themeLayer);
             themeLayer.addFeatures(features);

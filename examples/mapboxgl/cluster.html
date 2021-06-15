@@ -6,9 +6,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="../../examples/js/common.js"></script>
     <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <title>Marker Cluster</title>
@@ -17,10 +22,14 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-        
+
         body {
             overflow: hidden;
             margin: 8px;
+        }
+        .popup-fix{
+            border-radius: 12px !important;
+            padding: 1px !important
         }
     </style>
 </head>
@@ -36,7 +45,7 @@
             container: "divMapId",
             style: {
                 version: 8,
-                glyphs: "https://viegisserver.ekgis.vn/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
+                glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
                 sources: {},
                 layers: [],
             },
@@ -47,10 +56,12 @@
 
         map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
-        map.on('load', function() {
-            map.setStyle('mapbox://styles/mapbox/navigation-day-v1')
-                //Data Source: https://ncov.moh.gov.vn/ban-do-vn
-            $.get("../data/covid_boyte.json", function(response) {
+        map.on('load', function () {
+            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
+                token: tokenVN
+            }).addTo(map);
+            //Data Source: https://ncov.moh.gov.vn/ban-do-vn
+            $.get("../data/covid_boyte.json", function (response) {
                 var data = response.data;
                 var features = [];
                 for (var i = 0; i < data.length; i++) {
@@ -59,6 +70,13 @@
                         geometry: {
                             type: "Point",
                             coordinates: [data[i].lng, data[i].lat]
+                        },
+                        properties:{
+                            address: data[i].address,
+                            patientGroup: data[i].patientGroup,
+                            verifyDate: data[i].verifyDate,
+                            name: data[i].name,
+                            note: data[i].note
                         }
                     })
                 }
@@ -135,12 +153,12 @@
                     }
                 });
 
-                map.on('click', 'clusters', function(e) {
+                map.on('click', 'clusters', function (e) {
                     var features = map.queryRenderedFeatures(e.point, {
                         layers: ['clusters']
                     });
                     var clusterId = features[0].properties.cluster_id;
-                    map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function(
+                    map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function (
                         err, zoom) {
                         if (err)
                             return;
@@ -151,11 +169,44 @@
                     });
                 });
 
-                map.on('mouseenter', 'clusters', function() {
+                map.on('mouseenter', 'clusters', function () {
                     map.getCanvas().style.cursor = 'pointer';
                 });
-                map.on('mouseleave', 'clusters', function() {
+                map.on('mouseleave', 'clusters', function () {
                     map.getCanvas().style.cursor = '';
+                });
+
+                map.on('mouseenter', 'unclustered-point', function () {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('click', 'unclustered-point', function (e) {
+                    console.log(e)
+                    var features = map.queryRenderedFeatures(e.point, {
+                        layers: ['unclustered-point']
+                    });
+                    var data = features[0].properties
+                    var content = '';
+                content += '<div>';
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Tên: </strong>' + data.name
+                content += '   </div>'
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Phân loại: </strong>' + data.patientGroup
+                content += '   </div>'
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Địa chỉ: </strong>' + data.address
+                content += '   </div>'
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Thời gian: </strong>' + data.verifyDate
+                content += '   </div>'
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Ghi chú: </strong>' + data.note
+                content += '   </div>'
+                content += '</div>'
+                var popup = new mapboxgl.Popup({
+                    className: 'popup-fix'
+                }).setLngLat(e.lngLat).setHTML(content).addTo(map);
                 });
             })
         });

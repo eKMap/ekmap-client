@@ -162,7 +162,7 @@
         }).addTo(map);
         var draw;
         var listLayersServer = [];
-        var layerName = ['2949', '2950', '2951', '2952', '2954', '2955', '2956'];
+        var layerName = ['1902'];
         var data = [];
         var fields = [];
         var listFields = [];
@@ -247,10 +247,11 @@
                 }
             });
             arrayText.forEach((key, i) => properties[key] = arrayValue[i]);
-            var url = 'http://s2.cloudgis.vn/arcgis/rest/services/SonLa/CNSonLa/FeatureServer/' + layerId;
+
+            var url = urlFeatureService145 + '/' + layerId;
             var featureService = new L.ekmap.FeatureService({
                 url: url,
-                //token: tokenKey
+                token: tokenKey
             });
             var geojson = {
                 "type": "Feature",

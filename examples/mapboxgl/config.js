@@ -19,7 +19,9 @@ var exampleConfig = {
                         thumbnail: "find.png",
                         fileName: "mapService_find",
                         subject: "Use the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.",
-                        description: "Enter the name of habitat/species management area, province name, nature reserve, protected landscape area, special forest, ramsar site, national park of VietNam to see a list of information by search name."
+                        description: "Enter the name of habitat/species management area, province name, nature reserve, protected landscape area, special forest, ramsar site, national park of VietNam to see a list of information by search name.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.TiledMapLayer.html#find",
+                        nameApi:"mapboxgl.ekmap.TiledMapLayer"
                     },
                     {
                         name: "Bounds query",
@@ -27,7 +29,9 @@ var exampleConfig = {
                         thumbnail: "mapService_queryByBound.png",
                         fileName: "mapService_queryByBound",
                         subject: "Use queryByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-                        description: "Create bound, displaying data on the bound area."
+                        description: "Create bound, displaying data on the bound area.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.MapService.html#queryByBound",
+                        nameApi:"mapboxgl.ekmap.MapService"
                     },
                     {
                         name: "Geometry query",
@@ -35,7 +39,9 @@ var exampleConfig = {
                         thumbnail: "mapService_queryByGeometry.png",
                         fileName: "mapService_queryByGeometry",
                         subject: "Use queryByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-                        description: "Create polygon, display data on polygon"
+                        description: "Create polygon, display data on polygon",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.MapService.html#queryByGeometry",
+                        nameApi:"mapboxgl.ekmap.MapService"
                     },
                     {
                         name: "Identify",
@@ -43,7 +49,9 @@ var exampleConfig = {
                         thumbnail: "mapService_identify.png",
                         fileName: "mapService_identify",
                         subject: "Use identify of mapboxgle.ekmap.TiledMapLayer resource to discover features at a geographic location",
-                        description: "Click on points on the map to display detailed information of Vietnam's national protected areas"
+                        description: "Click on points on the map to display detailed information of Vietnam's national protected areas",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.TiledMapLayer.html#identity",
+                        nameApi:"mapboxgl.ekmap.TiledMapLayer"
                     },
                     {
                         name: "Image Tile ZYX",
@@ -51,7 +59,9 @@ var exampleConfig = {
                         thumbnail: "mapService_ImageTileZYX.png",
                         fileName: "mapService_ImageTileZYX",
                         subject: "Use mapboxgl.ekmap.TiledMapLayer to add image tile ZYX to your map.",
-                        description: "Upload data as images (Administrative map of Vietnam)"
+                        description: "Upload data as images (Administrative map of Vietnam)",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.TiledMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.TiledMapLayer"
                     },
                 ]
             },
@@ -64,8 +74,9 @@ var exampleConfig = {
                         thumbnail: "featureService_queryByBound.png",
                         fileName: "featureService_getFeaturesByBound",
                         subject: "Use getFeaturesByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-                        description: "Create bound, displaying data on the bound area."
-
+                        description: "Create bound, displaying data on the bound area.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureService.html#queryByBound",
+                        nameApi:"mapboxgl.ekmap.FeatureService"
                     },
                     {
                         name: "Geometry query",
@@ -73,7 +84,9 @@ var exampleConfig = {
                         thumbnail: "featureService_queryByGeometry.png",
                         fileName: "featureService_getFeaturesByGeometry",
                         subject: "Use getFeaturesByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-                        description: "Create polygon, display data on polygon"
+                        description: "Create polygon, display data on polygon",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureService.html#queryByGeometry",
+                        nameApi:"mapboxgl.ekmap.FeatureService"
                     },
                     {
                         name: "Apply Edits",
@@ -81,7 +94,9 @@ var exampleConfig = {
                         thumbnail: "featureService_applyEditsFeatures.png",
                         fileName: "featureService_applyEditsFeatures",
                         subject: "Use applyEditsFeatures of mapboxgl.ekmap.FeatureLayer to add, edit, or delete operations.",
-                        description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete)."
+                        description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete).",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureLayer.html#applyEdits",
+                        nameApi:"mapboxgl.ekmap.FeatureLayer"
                     },
                     {
                         name: "Add Features",
@@ -89,7 +104,9 @@ var exampleConfig = {
                         thumbnail: "featureService_addFeatures.png",
                         fileName: "featureService_addFeatures",
                         subject: "Use addFeatures of mapboxgl.ekmap.FeatureLayer to add points to the map.",
-                        description: "Click on the map to add points (marker color selectable)."
+                        description: "Click on the map to add points (marker color selectable).",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureLayer.html#addFeature",
+                        nameApi:"mapboxgl.ekmap.FeatureLayer"
                     },
                     {
                         name: "Update Features",
@@ -97,7 +114,9 @@ var exampleConfig = {
                         thumbnail: "featureService_updateFeatures.png",
                         fileName: "featureService_updateFeatures",
                         subject: "Use updateFeatures of mapboxgl.ekmap.FeatureLayer to update location points on the map.",
-                        description: "Update location. Select the feature to change, then choose the desired position."
+                        description: "Update location. Select the feature to change, then choose the desired position.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureLayer.html#updateFeature",
+                        nameApi:"mapboxgl.ekmap.FeatureLayer"
                     },
                     {
                         name: "Delete Features",
@@ -105,7 +124,9 @@ var exampleConfig = {
                         thumbnail: "featureService_deleteFeatures.png",
                         fileName: "featureService_deleteFeatures",
                         subject: "Use deleteFeatures of mapboxgl.ekmap.FeatureLayer to delete points on the map.",
-                        description: "Select feature to delete on the map to delete"
+                        description: "Select feature to delete on the map to delete",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureLayer.html#deleteFeature",
+                        nameApi:"mapboxgl.ekmap.FeatureLayer"
                     },
                     {
                         name: "Attributes Query",
@@ -113,7 +134,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_attributesQuery.png",
                         fileName: "vectorTile_Map_attributesQuery",
                         subject: "Attributes Query.",
-                        description: "Attributes Query."
+                        description: "Attributes Query.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureService.html#query",
+                        nameApi:"mapboxgl.ekmap.FeatureService"
                     },
                     {
                         name: "Update Feature Attributes",
@@ -121,7 +144,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_updateFeatureAttributes.png",
                         fileName: "vectorTile_Map_updateFeatureAttributes",
                         subject: "Update Feature Attributes.",
-                        description: "Use control Select to get point information and use service to change that point information"
+                        description: "Use control Select to get point information and use service to change that point information",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureService.html#updateFeature",
+                        nameApi:"mapboxgl.ekmap.FeatureService"
                     }
                 ]
             },
@@ -134,7 +159,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map.png",
                         fileName: "vectorTile_Map",
                         subject: "Add vector tile.",
-                        description: "Administrative map of Vietnam"
+                        description: "Administrative map of Vietnam",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.VectorTiledMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.VectorTiledMapLayer"
                     },
                     {
                         name: "Mapbox Vector Tile Overlay",
@@ -142,7 +169,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_overlay.png",
                         fileName: "vectorTile_Map_overlay",
                         subject: "Add vector tile overlay to the map.",
-                        description: "Tam Duong - Vinh Phuc (VietNam) camera map"
+                        description: "Tam Duong - Vinh Phuc (VietNam) camera map",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.VectorTiledMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.VectorTiledMapLayer"
                     },
                     {
                         name: "Mapbox Vector Tile Hover",
@@ -150,7 +179,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_hover.gif",
                         fileName: "vectorTile_Map_hover",
                         subject: "Using events and feature states to create a per feature hover effect.",
-                        description: "Using events and feature states to create a per feature hover effect."
+                        description: "Using events and feature states to create a per feature hover effect.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.VectorTiledMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.VectorTiledMapLayer"
                     },
                     {
                         name: "Mapbox Vector Tile Select",
@@ -158,7 +189,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_select.gif",
                         fileName: "vectorTile_Map_select",
                         subject: "Vector tile select on the map.",
-                        description: "Click on the map to query features using queryRenderedFeatures."
+                        description: "Click on the map to query features using queryRenderedFeatures.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Select.html",
+                        nameApi:"mapboxgl.ekmap.control.Select"
                     },
                     // {
                     //     name: "Resize Map",
@@ -174,7 +207,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_geometryQuery.png",
                         fileName: "vectorTile_Map_geometryQuery",
                         subject: "Geometry Query.",
-                        description: "Create polygon or line buffer to display data on polygon"
+                        description: "Create polygon or line buffer to display data on polygon",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.FeatureService.html#queryByGeometry",
+                        nameApi:"mapboxgl.ekmap.FeatureService"
                     },
                     {
                         name: "Filter Province",
@@ -182,7 +217,7 @@ var exampleConfig = {
                         thumbnail: "filterProvince.gif",
                         fileName: "filterProvince",
                         subject: "Filter Province.",
-                        description: "Create polygon or line buffer to display data on polygon"
+                        description: "Create polygon or line buffer to display data on polygon",
                     }
                 ]
             },
@@ -195,7 +230,9 @@ var exampleConfig = {
                         thumbnail: "control_legendControl.png",
                         fileName: "control_legendControl",
                         subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
-                        description: "Click on the button below control: navigationControl to display Legend"
+                        description: "Click on the button below control: navigationControl to display Legend",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Legend.html",
+                        nameApi:"mapboxgl.ekmap.control.Legend"
                     },
                     {
                         name: "Feature Infomation Control",
@@ -203,14 +240,18 @@ var exampleConfig = {
                         thumbnail: "control_featureInfomationControl.png",
                         fileName: "control_featureInfomationControl",
                         subject: "Use control featureInfomation to retrieve the selected object.",
-                        description: "Click on the map to retrieve the selected object."
+                        description: "Click on the map to retrieve the selected object.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.FeatureInfomation.html",
+                        nameApi:"mapboxgl.ekmap.control.FeatureInfomation"
                     }, {
                         name: "Tree Layer",
                         name_en: "Tree Layer",
                         thumbnail: "control_treeLayerControl.png",
                         fileName: "control_treeLayerControl",
                         subject: "Tree Layer.",
-                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.TreeLayer.html",
+                        nameApi:"mapboxgl.ekmap.control.TreeLayer"
                     },
                     {
                         name: "Tree Layer (VectorTile)",
@@ -218,7 +259,9 @@ var exampleConfig = {
                         thumbnail: "control_treeLayer_vectorTiledControl.png",
                         fileName: "control_treeLayer_vectorTiledControl",
                         subject: "Tree Layer (VectorTile).",
-                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.TreeLayer.html",
+                        nameApi:"mapboxgl.ekmap.control.TreeLayer"
                     },
                     {
                         name: "Base Layer",
@@ -226,7 +269,9 @@ var exampleConfig = {
                         thumbnail: "control_baseLayerControl.png",
                         fileName: "control_baseLayerControl",
                         subject: "Base Layer Control.",
-                        description: "Use mapboxgl.ekmap.control.BaseLayer to display, turn on / off map layers under the map"
+                        description: "Use mapboxgl.ekmap.control.BaseLayer to display, turn on / off map layers under the map",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.BaseLayer.html",
+                        nameApi:"mapboxgl.ekmap.control.BaseLayer"
                     },
                     {
                         name: "Tree Layer Group",
@@ -234,7 +279,9 @@ var exampleConfig = {
                         thumbnail: "control_treeLayerGroupControl.png",
                         fileName: "control_treeLayerGroupControl",
                         subject: "Tree Layer Group.",
-                        description: "Use mapboxgl.ekmap.control.TreeLayerGroup to display, turn on / off map layers"
+                        description: "Use mapboxgl.ekmap.control.TreeLayerGroup to display, turn on / off map layers",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.TreeLayerGroup.html",
+                        nameApi:"mapboxgl.ekmap.control.TreeLayerGroup"
                     }
 
                 ]
@@ -268,7 +315,9 @@ var exampleConfig = {
                         thumbnail: "tiledMap_vnMap.png",
                         fileName: "tiledMap_vnMap",
                         subject: "VietNam Map ",
-                        description: "Use mapboxgl.ekmap.TiledVietNamMapLayer to display VietNam map layer on the map"
+                        description: "Use mapboxgl.ekmap.TiledVietNamMapLayer to display VietNam map layer on the map",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.TiledVietNamMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.TiledVietNamMapLayer"
                     },
                     {
                         name: "OSM Standard",
@@ -276,7 +325,9 @@ var exampleConfig = {
                         thumbnail: "tiledMap_osmMap.png",
                         fileName: "tiledMap_osmMap",
                         subject: "OSM Standard",
-                        description: "Use mapboxgl.ekmap.TiledOSMapLayer to display OSM Standard layer on the map"
+                        description: "Use mapboxgl.ekmap.TiledOSMapLayer to display OSM Standard layer on the map",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.TiledOSMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.TiledOSMapLayer"
                     },
                     {
                         name: "Add Tile Layer",
@@ -284,7 +335,9 @@ var exampleConfig = {
                         thumbnail: "tiledMap_adminmap.png",
                         fileName: "tiledMap_add",
                         subject: "Add Tile Map",
-                        description: "Use mapboxgl.ekmap.TileMap to display map layer on the map"
+                        description: "Use mapboxgl.ekmap.TileMap to display map layer on the map",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.TileLayer.html",
+                        nameApi:"mapboxgl.ekmap.TileLayer"
                     },
                     {
                         name: "Showing an ArcGIS basemap",
@@ -292,7 +345,9 @@ var exampleConfig = {
                         thumbnail: "basemapLayer.png",
                         fileName: "basemapLayer",
                         subject: "Display an ArcGIS Online basemap.",
-                        description: "Display an ArcGIS Online basemap."
+                        description: "Display an ArcGIS Online basemap.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.BasemapArcgisLayer.html",
+                        nameApi:"mapboxgl.ekmap.BasemapArcgisLayer"
                     },
                     {
                         name: "Basemap with labels",
@@ -300,7 +355,9 @@ var exampleConfig = {
                         thumbnail: "basemapLayer_labels.png",
                         fileName: "basemapLayer_labels",
                         subject: "Showing an ArcGIS Online basemap with a separate label layer",
-                        description: "Showing an ArcGIS Online basemap with a separate label layer."
+                        description: "Showing an ArcGIS Online basemap with a separate label layer.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.BasemapArcgisLayer.html",
+                        nameApi:"mapboxgl.ekmap.BasemapArcgisLayer"
                     }
                 ]
             },
@@ -324,7 +381,9 @@ var exampleConfig = {
                         thumbnail: "heatMapLayer.png",
                         fileName: "heatMapLayer",
                         subject: "Add layer heatmap to the map",
-                        description: "Use mapboxgl.ekmap.HeatMapLayer to add layer heatmap to the map"
+                        description: "Use mapboxgl.ekmap.HeatMapLayer to add layer heatmap to the map",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.HeatMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.HeatMapLayer"
                     },
                 ]
             },
@@ -338,8 +397,8 @@ var exampleConfig = {
                     version: "",
                     thumbnail: "cluster.png",
                     fileName: "cluster",
-                    subject: "Use Mapbox GL JS' built-in functions to visualize points as clusters.",
-                    description: "Use Mapbox GL JS' built-in functions to visualize points as clusters. Source: https://ncov.moh.gov.vn/ban-do-vn"
+                    subject: "DESTINATION INFORMATION OF POSITIVE CASES FOR SARS-CoV-2 June 14, 2021 : 16:17",
+                    description: "DESTINATION INFORMATION OF POSITIVE CASES FOR SARS-CoV-2 June 14, 2021 : 16:17. Source: https://ncov.moh.gov.vn/ban-do-vn"
                 }]
             },
             animation: {
@@ -459,7 +518,9 @@ var exampleConfig = {
                         thumbnail: "threejsLayer_buildings.png",
                         fileName: "threejsLayer_buildings",
                         subject: "Use ThreeLayer to display buildings.",
-                        description: "Use mapboxgl.ekmap.ThreeLayer to display buildings."
+                        description: "Use mapboxgl.ekmap.ThreeLayer to display buildings.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.ThreeLayer.html",
+                        nameApi:"mapboxgl.ekmap.ThreeLayer"
                     },
                     {
                         name: "Airplane(gltf)",
@@ -468,7 +529,9 @@ var exampleConfig = {
                         thumbnail: "threejsLayer_airplane.gif",
                         fileName: "threejsLayer_airplane",
                         subject: "Use ThreeLayer to display airplane.",
-                        description: "Use mapboxgl.ekmap.ThreeLayer to display airplane."
+                        description: "Use mapboxgl.ekmap.ThreeLayer to display airplane.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.ThreeLayer.html",
+                        nameApi:"mapboxgl.ekmap.ThreeLayer"
                     }
                 ]
             },
@@ -482,7 +545,9 @@ var exampleConfig = {
                         thumbnail: "2DLayer_RankSymbol.png",
                         fileName: "2DLayer_RankSymbol",
                         subject: "Use RankSymbolThemeLayer to display data.",
-                        description: "Use mapboxgl.ekmap.RankSymbolThemeLayer to display data."
+                        description: "Use mapboxgl.ekmap.RankSymbolThemeLayer to display data.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.RankSymbolThemeLayer.html",
+                        nameApi:"mapboxgl.ekmap.RankSymbolThemeLayer"
                     },
                     {
                         name: "Label",
@@ -491,7 +556,9 @@ var exampleConfig = {
                         thumbnail: "2DLayer_Label.png",
                         fileName: "2DLayer_Label",
                         subject: "Use LabelThemeLayer to display AQI",
-                        description: "AQI - Air Safety Level Indicators - Hoan Kiem District Air Safety Level Indicators (29/05/2021 09:00). Source: https://moitruongthudo.vn/"
+                        description: "AQI - Air Safety Level Indicators - Hoan Kiem District Air Safety Level Indicators (29/05/2021 09:00). Source: https://moitruongthudo.vn/.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.LabelThemeLayer.html",
+                        nameApi:"mapboxgl.ekmap.LabelThemeLayer"
                     },
                     {
                         name: "Theme layer online",
@@ -500,7 +567,9 @@ var exampleConfig = {
                         thumbnail: "2DLayer_Theme.png",
                         fileName: "2DLayer_Theme",
                         subject: "Use ThemeMapLayer to display Temperature and Precipitation",
-                        description: "Climate characteristics of provinces and cities in Vietnam. Source: http://vnmha.gov.vn/"
+                        description: "Climate characteristics of provinces and cities in Vietnam. Source: http://vnmha.gov.vn/",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.ThemeMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.ThemeMapLayer"
                     }
                 ]
             },
@@ -513,7 +582,9 @@ var exampleConfig = {
                     thumbnail: "layerChart.png",
                     fileName: "layerChart",
                     subject: "Use DomOverlay to simulate measurement point position data with parameters (P, Q +, Q-, Pin).",
-                    description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively."
+                    description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively.",
+                    urlApi: "/docs/mapboxgl/mapboxgl.ekmap.GraphThemeLayer.html",
+                    nameApi:"mapboxgl.ekmap.GraphThemeLayer"
                 }]
             },
             '3DLayer': {
@@ -680,7 +751,9 @@ var exampleConfig = {
                     thumbnail: "ogc_wms.png",
                     fileName: "ogc_wms",
                     subject: "Use the Web Map Services service to display US states data.",
-                    description: "Click on the map to get info."
+                    description: "Click on the map to get info.",
+                    urlApi: "/docs/mapboxgl/mapboxgl.ekmap.WMS.html",
+                    nameApi:"mapboxgl.ekmap.WMS"
                 }]
             },
             WFS: {
@@ -692,7 +765,9 @@ var exampleConfig = {
                     thumbnail: "ogc_wfs.png",
                     fileName: "ogc_wfs",
                     subject: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
-                    description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data)."
+                    description: "Use the Web Feature Services service to get geojson data and display it on a map (US states data).",
+                    urlApi: "/docs/mapboxgl/mapboxgl.ekmap.WFS.html",
+                    nameApi:"mapboxgl.ekmap.WFS"
                 }]
             }
         }
@@ -750,7 +825,9 @@ var exampleConfig = {
                         thumbnail: "control_buttonControl.png",
                         fileName: "control_buttonControl",
                         subject: "Button Control",
-                        description: "Fire event when click button."
+                        description: "Fire event when click button.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Button.html",
+                        nameApi:"mapboxgl.ekmap.control.Button"
                     }
                 ]
             },
@@ -763,7 +840,9 @@ var exampleConfig = {
                         thumbnail: "control_drawControl.png",
                         fileName: "control_drawControl",
                         subject: "Use plugin mapbox-gl-draw. It adds support for drawing and editing features on maps. ",
-                        description: "A DrawControl control contains some buttons for drawing and editing features on map."
+                        description: "A DrawControl control contains some buttons for drawing and editing features on map.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Draw.html",
+                        nameApi:"mapboxgl.ekmap.control.Draw"
                     },
                     {
                         name: "Swipe between maps",
@@ -787,7 +866,9 @@ var exampleConfig = {
                         thumbnail: "control_snapShotControl.png",
                         fileName: "control_snapShotControl",
                         subject: "Snapshot Control",
-                        description: "A SnapshotControl control contains a button for screenshot."
+                        description: "A SnapshotControl control contains a button for screenshot.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.SnapShot.html",
+                        nameApi:"mapboxgl.ekmap.control.SnapShot"
                     },
                     {
                         name: "Reverse Geocoder",
@@ -795,7 +876,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_reverseGeocoder.gif",
                         fileName: "vectorTile_Map_reverseGeocoder",
                         subject: "Reverse Geocoder.",
-                        description: "Click button action draw and the area"
+                        description: "Click button action draw and the area",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Reverse.html",
+                        nameApi:"mapboxgl.ekmap.control.Reverse"
                     },
                     {
                         name: "Geocoder",
@@ -803,7 +886,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_geocoder.gif",
                         fileName: "vectorTile_Map_geocoder",
                         subject: "Use the geocoder control to search for places using the Mapbox Geocoding API.",
-                        description: "Use the geocoder control to search for places using the Mapbox Geocoding API."
+                        description: "Use the geocoder control to search for places using the Mapbox Geocoding API.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Geocoder.html",
+                        nameApi:"mapboxgl.ekmap.control.Geocoder"
                     },
                     {
                         name: "Draw Circle",
@@ -811,7 +896,9 @@ var exampleConfig = {
                         thumbnail: "control_drawCircleControl.gif",
                         fileName: "control_drawCircleControl",
                         subject: "Draw Circle.",
-                        description: "Use control DrawCircle to draw circle"
+                        description: "Use control DrawCircle to draw circle",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.DrawCircle.html",
+                        nameApi:"mapboxgl.ekmap.control.DrawCircle"
                     },
                     {
                         name: "Draw Line Buffer",
@@ -819,7 +906,9 @@ var exampleConfig = {
                         thumbnail: "control_drawLineBufferControl.gif",
                         fileName: "control_drawLineBufferControl",
                         subject: "Draw Line Buffer.",
-                        description: "Use control Draw and control DrawLine to draw line buffer"
+                        description: "Use control Draw and control DrawLine to draw line buffer",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.DrawLine.html",
+                        nameApi:"mapboxgl.ekmap.control.DrawLine"
                     },
                     {
                         name: "Show Drawn Polygon Area",
@@ -827,7 +916,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_drawS.png",
                         fileName: "vectorTile_Map_drawS",
                         subject: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers.",
-                        description: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers."
+                        description: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Draw.html",
+                        nameApi:"mapboxgl.ekmap.control.Draw"
                     },
                 ]
             }

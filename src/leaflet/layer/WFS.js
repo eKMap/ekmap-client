@@ -66,12 +66,7 @@ export class WFS extends L.Evented {
             success: function(data) {
                 WFSLayer = new L.geoJson(data, {
                     style: function(feature) {
-                        return {
-                            stroke: false,
-                            fillColor: '#FF0000',
-                            fillOpacity: 0,
-                            opacity: 0.5
-                        };
+                        return {};
                     }
                 }).addTo(map);
             }

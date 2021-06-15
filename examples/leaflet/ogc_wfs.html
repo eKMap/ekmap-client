@@ -26,15 +26,15 @@
     <script>
         var map = new L.Map('divMapId', {
             center: {
-                lon: 103.79882812500001,
-                lat: 16.762467717941604
+                lon: 105.73732943945129,
+                lat: 21.16898923449925
             },
-            zoom: 6,
+            zoom: 13,
         });
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
-        var wfs = new L.ekmap.WFS('https://localhost:44347/ekmapserver/rest/services/39/WFS', {
-            typeName: 'dev4gis:Sanbay',
-            apikey: '1-agFaBZOXeZ83QKAWjH5ZNiMR5RRVmrp8'
+        var wfs = new L.ekmap.WFS(urlWFS, {
+            typeName: 'htkt_cd_duongday',
+            apikey: tokenKey
         }).addTo(map);
         wfs.getFeature(function(e) {
             console.log(e)

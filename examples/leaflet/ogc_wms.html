@@ -26,14 +26,17 @@
     <script>
         var map = new L.map('divMapId', {
             center: {
-                lon: 103.79882812500001,
-                lat: 16.762467717941604
+                lon: 105.73732943945129,
+                lat: 21.16898923449925
             },
-            zoom: 6,
+            zoom: 13,
         });
         var osm = new L.ekmap.TiledOSMapLayer().addTo(map);
-        var wms = new L.ekmap.WMS('https://localhost:44347/ekmapserver/rest/services/40/WMS?apikey=1-1jFEpM75yKzPOFA5Z4H4FDWpNWqTkt0B', {
-            layers: 'dev4gis:Dia_phan_Tinh',
+        var wms = new L.ekmap.WMS(urlWMS, {
+            layers: 'bddiachinh,htkt_caodosannen,htkt_cd_duongday,htkt_cd_trambienap,htkt_cn_ongcapnuoc,htkt_tn_congthoatnuoc,htkt_tnm_cuaxa,htkt_tnm_matnuoc,htkt_tnm_mlthoatnuocmua,htkt_ttll_tramttll,htkt_ttll_tuyencapquang,htkt_vsmt1,phankhun1_giaothong,phankhun1_sdd',
+            token: tokenKey,
+            transparent: true,
+            format: 'image/png'
         }).addTo(map);
 
         map.on('click', function(e) {

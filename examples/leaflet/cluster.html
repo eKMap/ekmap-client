@@ -4,135 +4,92 @@
 <head>
     <meta charset="utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="../../examples/js/common.js"></script>
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
+    <link rel="stylesheet" href="../../dist/leaflet/MarkerCluster.css" />
+    <link rel="stylesheet" href="../../dist/leaflet/MarkerCluster.Default.css" />
+    <script src="../../dist/leaflet/leaflet.markercluster-src.js"></script>
     <title>Marker Cluster</title>
     <style type="text/css">
         .map {
             width: 100%;
             height: calc(100vh - 20px);
         }
-        
+
         body {
             overflow: hidden;
             margin: 8px;
+        }
+
+        body,
+        html {
+            color: #ffffff
         }
     </style>
 </head>
 
 <body>
     <div style="width: 100%;">
-        <div id="divMapId" class="map">
+        <div id="map" class="map">
         </div>
     </div>
     <script type="text/javascript">
-        var map = new mapboxgl.Map({
-            container: "divMapId",
-            style: {
-                version: 8,
-                glyphs: "https://viegisserver.ekgis.vn/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
-                sources: {},
-                layers: [],
-            },
-            center: [58.117655641467195, 12.140828304833803],
-            zoom: 1
+        var tiles = L.tileLayer('https://maps.vnpost.vn/api/tm/{z}/{x}/{y}@2x.png?apikey=f50f96fd875c023e6fd8acac6d9a7e0d15699071d3259542', {
+            maxZoom: 18,
+        }),
+            latlng = L.latLng(16.199845421135464, 105.2416992187043);
+        var map = L.map('map', {
+            center: latlng,
+            zoom: 6,
+            layers: [tiles]
         });
-
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
-        map.on('load', function() {
-            var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
-                token: tokenVN
-            }).addTo(map)
-
-            //Data Source: https://earthquake.usgs.gov/earthquakes
-            $.get("../data/earthquake.json", function(response) {
-                var geojson = response;
-                map.addSource("earthquakes", {
-                    type: "geojson",
-                    data: geojson,
-                    cluster: true,
-                    clusterMaxZoom: 14,
-                    clusterRadius: 100
-                });
-
-                map.addLayer({
-                    id: "clusters",
-                    type: "circle",
-                    source: "earthquakes",
-                    filter: ["has", "point_count"],
-                    paint: {
-                        "circle-color": [
-                            "step", ["get", "point_count"],
-                            "#51bbd6",
-                            100,
-                            "#f1f075",
-                            750,
-                            "#f28cb1"
-                        ],
-                        "circle-radius": [
-                            "step", ["get", "point_count"],
-                            20,
-                            100,
-                            30,
-                            750,
-                            40
-                        ]
-                    }
-                });
-
-                map.addLayer({
-                    id: "cluster-count",
-                    type: "symbol",
-                    source: "earthquakes",
-                    filter: ["has", "point_count"],
-                    layout: {
-                        'text-field': '{point_count_abbreviated}',
-                        'text-size': 12
-                    }
-                });
-                map.addLayer({
-                    id: "unclustered-point",
-                    type: "circle",
-                    source: "earthquakes",
-                    filter: ["!", ["has", "point_count"]],
-                    paint: {
-                        "circle-color": "#11b4da",
-                        "circle-radius": 4,
-                        "circle-stroke-width": 1,
-                        "circle-stroke-color": "#fff"
-                    }
-                });
-
-                map.on('click', 'clusters', function(e) {
-                    var features = map.queryRenderedFeatures(e.point, {
-                        layers: ['clusters']
-                    });
-                    var clusterId = features[0].properties.cluster_id;
-                    map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function(
-                        err, zoom) {
-                        if (err)
-                            return;
-                        map.easeTo({
-                            center: features[0].geometry.coordinates,
-                            zoom: zoom
-                        });
-                    });
-                });
-
-                map.on('mouseenter', 'clusters', function() {
-                    map.getCanvas().style.cursor = 'pointer';
-                });
-                map.on('mouseleave', 'clusters', function() {
-                    map.getCanvas().style.cursor = '';
-                });
-            })
+        var markers = L.markerClusterGroup({
+            maxClusterRadius: 30
         });
+        $.get("../data/covid_boyte.json", function (response) {
+            var data = response.data;
+            for (var i = 0; i < data.length; i++) {
+                var title = data[i].name;
+                var circleMarker;
+                if (data[i].patientGroup == 'F0')
+                    circleMarker = L.circleMarker(new L.latLng(data[i].lat, data[i].lng), {
+                        fillColor: 'yellow',
+                        fillOpacity: 1,
+                        stroke: false,
+                        radius: 5
+                    });
+                else
+                    circleMarker = L.circleMarker(new L.latLng(data[i].lat, data[i].lng), {
+                        fillColor: 'red',
+                        fillOpacity: 1,
+                        stroke: false,
+                        radius: 7
+                    });
+                var content = '';
+                content += '<div>';
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Tên: </strong>' + data[i].name
+                content += '   </div>'
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Phân loại: </strong>' + data[i].patientGroup
+                content += '   </div>'
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Địa chỉ: </strong>' + data[i].address
+                content += '   </div>'
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Thời gian: </strong>' + data[i].verifyDate
+                content += '   </div>'
+                content += '   <div style="margin-bottom:5px">';
+                content += '       <strong> Ghi chú: </strong>' + data[i].note
+                content += '   </div>'
+                content += '</div>'
+                var popup = L.popup()
+                    .setContent(content)
+                circleMarker.bindPopup(popup);
+                markers.addLayer(circleMarker);
+            }
+            map.addLayer(markers)
+        })
     </script>
 </body>
 

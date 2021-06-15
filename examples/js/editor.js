@@ -157,7 +157,27 @@ function createIFrame() {
             arr.forEach(element => {
                 if (element.fileName == id && element.description) {
                     span.innerHTML = element.name;
-                    p.innerHTML = element.description;
+                    if(element.nameApi){
+                        span.innerHTML += " (";
+                        var i = document.createElement("i");
+                        i.innerHTML = element.nameApi;
+                        i.style.color = '#337ab7';
+                        var spanChild = document.createElement("span");
+                        spanChild.innerHTML = ")";
+                        span.append(i);
+                        span.append(spanChild);
+                    }
+                   
+                    p.innerHTML = element.description;  
+                    if(element.urlApi){
+                        var spanChildP = document.createElement("span");
+                        spanChildP.innerHTML = " Learn more about using the API ";
+                        var a = document.createElement("a");
+                        a.innerHTML = "here";
+                        a.href = element.urlApi;
+                        spanChildP.append(a);
+                        p.append(spanChildP);
+                    }
                     k = 1;
                 }
             });

@@ -11,12 +11,12 @@ import {
 
 /**
  * @class mapboxgl.ekmap.GraphThemeLayer
- * @category  Layer
+ * @category Visualization Theme
  * @classdesc Statistics thematic layer
  * @param {string} name The layer name.
  * @param {string} chartsType Chart category.
  * @param {Object} opt_options Parameters.
- * @param {string} opt_options.import('@turf/helpers').id Thematic layer ID. By default, CommonUtil.createUniqueID("themeLayer_") is used to create the thematic layer Id.
+ * @param {string} opt_options.id Thematic layer ID. By default, CommonUtil.createUniqueID("themeLayer_") is used to create the thematic layer Id.
  * @param {boolean} opt_options.loadWhileAnimating=true Whether to redraw in real time
  * @param {mapboxgl.Map} opt_options.map Current mapboxgl map object.
  * @param {number} opt_options.opacity=1 Layer transparency
@@ -33,6 +33,15 @@ import {
  * @param {Object} opt_options.chartsSetting.circleHoverStyle The style of the circle hover state, valid when circleHoverAble is true.
  * @param {boolean} opt_options.chartsSetting.circleHoverAble=true Whether to allow the circle to use the hover state. At the same time, setting circleHoverAble and circleClickAble to false can directly shield the response of the graphics to thematic layer events.
  * @param {boolean} opt_options.chartsSetting.circleClickAble=true Whether to allow the circle to be clicked. At the same time, setting circleHoverAble and circleClickAble to false can directly shield the response of the graphics to thematic layer events.
+ * @param {boolean} opt_options.chartsSetting.showText=false Additional text in the graphic, default: false.
+ * @param {string} opt_options.chartsSetting.textColor Text color. Default value: "#ffffff'"
+ * @param {string} opt_options.chartsSetting.textFont Additional text styles ["font-style", "font-variant", "font-weight", "font-size / line-height", "font-family"]. Example:'normal normal normal 12 arial,sans-serif'。
+ * @param {string} opt_options.chartsSetting.textPosition Additional text position. Settable value:"inside", "left", "right", top", "bottom", "end". Default value："inside"。
+ * @param {string} opt_options.chartsSetting.textAlign Horizontal alignment of additional text. Possible values: "start", "end", "left", "right", "center". By default, it is automatically set according to textPosition.
+ * @param {string} opt_options.chartsSetting.fontWeight=normal
+ * @param {string} opt_options.chartsSetting.fontSize=12
+ * @param {string} opt_options.chartsSetting.fontOpacity=1 
+ * 
  * @extends {mapboxgl.ekmap.Theme}
  * @fires mapboxgl.ekmap.GraphThemeLayer#beforefeaturesadded
  */
@@ -44,6 +53,16 @@ export class GraphThemeLayer extends Theme {
         this.themeFields = opt_options.themeFields || null;
         this.overlayWeightField = opt_options.overlayWeightField || null;
         this.cluster = opt_options.cluster === undefined ? true : opt_options.cluster;
+        //Text
+        this.chartsSetting.showText = this.chartsSetting.showText === undefined ? false : this.chartsSetting.showText;
+        this.chartsSetting.textColor = this.chartsSetting.textColor === undefined ? '#ffffff' : this.chartsSetting.textColor;
+        this.chartsSetting.textFont = this.chartsSetting.textFont === undefined ? 'normal normal normal 12 arial,sans-serif' : this.chartsSetting.textFont;
+        this.chartsSetting.textPosition = this.chartsSetting.textPosition === undefined ? 'inside' : this.chartsSetting.textPosition;
+        this.chartsSetting.textAlign = this.chartsSetting.textAlign === undefined ? 'center' : this.chartsSetting.textAlign;
+        this.chartsSetting.fontWeight = this.chartsSetting.fontWeight === undefined ? 'normal' : this.chartsSetting.fontWeight;
+        this.chartsSetting.fontSize = this.chartsSetting.fontSize === undefined ? 12 : this.chartsSetting.fontSize;
+        this.chartsSetting.fontOpacity = this.chartsSetting.fontOpacity === undefined ? 1 : this.chartsSetting.fontOpacity;
+
         this.charts = opt_options.charts || [];
         this.cache = opt_options.cache || {};
         this.chartsType = chartsType;
@@ -123,6 +142,8 @@ export class GraphThemeLayer extends Theme {
      */
     createThematicFeature(feature) {
         var thematicFeature;
+        if(feature.data.radius)
+            this.chartsSetting.radius = feature.data.radius;
         if (FeatureTheme[this.chartsType] && this.themeFields && this.chartsSetting) {
             thematicFeature = new FeatureTheme[this.chartsType](feature, this, this.themeFields, this.chartsSetting);
         }

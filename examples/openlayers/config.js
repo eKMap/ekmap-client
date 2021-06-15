@@ -19,7 +19,9 @@ var exampleConfig = {
                         thumbnail: "mapService_find .png",
                         fileName: "mapService_find",
                         subject: "Use the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.",
-                        description: "Enter the name of habitat/species management area, province name, nature reserve, protected landscape area, special forest, ramsar site, national park of VietNam to see a list of information by search name."
+                        description: "Enter the name of habitat/species management area, province name, nature reserve, protected landscape area, special forest, ramsar site, national park of VietNam to see a list of information by search name.",
+                        urlApi: "/docs/openlayers/ol.ekmap.TiledMapLayer.html#find",
+                        nameApi:"ol.ekmap.TiledMapLayer"
                     },
                     {
                         name: "Bounds query",
@@ -27,7 +29,9 @@ var exampleConfig = {
                         thumbnail: "mapService_queryByBound.png",
                         fileName: "mapService_queryByBound",
                         subject: "Use queryByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-                        description: "Create bound, displaying data on the bound area."
+                        description: "Create bound, displaying data on the bound area.",
+                        urlApi: "/docs/openlayers/ol.ekmap.MapService.html#queryByBound",
+                        nameApi:"ol.ekmap.MapService"
                     },
                     {
                         name: "Geometry query",
@@ -35,7 +39,9 @@ var exampleConfig = {
                         thumbnail: "mapService_queryByGeometry.png",
                         fileName: "mapService_queryByGeometry",
                         subject: "Use queryByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-                        description: "Create polygon, display data on polygon"
+                        description: "Create polygon, display data on polygon",
+                        urlApi: "/docs/openlayers/ol.ekmap.MapService.html#queryByGeometry",
+                        nameApi:"ol.ekmap.MapService"
                     },
                     {
                         name: "Identify",
@@ -43,7 +49,9 @@ var exampleConfig = {
                         thumbnail: "mapService_identify.png",
                         fileName: "mapService_identify",
                         subject: "Use identify of mapboxgle.ekmap.TiledMapLayer resource to discover features at a geographic location",
-                        description: "Click on points on the map to display detailed information of Vietnam's national protected areas"
+                        description: "Click on points on the map to display detailed information of Vietnam's national protected areas",
+                        urlApi: "/docs/openlayers/ol.ekmap.TiledMapLayer.html#identity",
+                        nameApi:"ol.ekmap.TiledMapLayer"
 
                     },
                     {
@@ -52,7 +60,9 @@ var exampleConfig = {
                         thumbnail: "mapService_ImageTileZYX.png",
                         fileName: "mapService_ImageTileZYX",
                         subject: "Use mapboxgl.ekmap.TiledMapLayer to add image tile ZYX to your map.",
-                        description: "Upload data as images (Administrative map of Vietnam)"
+                        description: "Upload data as images (Administrative map of Vietnam)",
+                        urlApi: "/docs/openlayers/ol.ekmap.TiledMapLayer.html",
+                        nameApi:"ol.ekmap.TiledMapLayer"
                     },
                 ]
             },
@@ -65,8 +75,9 @@ var exampleConfig = {
                         thumbnail: "featureService_queryByBound.png",
                         fileName: "featureService_getFeaturesByBound",
                         subject: "Use getFeaturesByBound of mapboxgl.ekmap.FeatureLayer to query points in any bound.",
-                        description: "Create bound, displaying data on the bound area."
-
+                        description: "Create bound, displaying data on the bound area.",
+                        urlApi: "/docs/openlayers/ol.ekmap.FeatureService.html#queryByBound",
+                        nameApi:"ol.ekmap.FeatureService"
                     },
                     {
                         name: "Geometry query",
@@ -74,7 +85,9 @@ var exampleConfig = {
                         thumbnail: "featureService_queryByGeometry.png",
                         fileName: "featureService_getFeaturesByGeometry",
                         subject: "Use getFeaturesByGeometry of mapboxgl.ekmap.FeatureLayer to query points in any geometry.",
-                        description: "Create polygon, display data on polygon"
+                        description: "Create polygon, display data on polygon",
+                        urlApi: "/docs/openlayers/ol.ekmap.FeatureService.html#queryByGeometry",
+                        nameApi:"ol.ekmap.FeatureService"
                     },
                     {
                         name: "Apply Edits",
@@ -82,7 +95,9 @@ var exampleConfig = {
                         thumbnail: "featureService_applyEditsFeatures.png",
                         fileName: "featureService_applyEditsFeatures",
                         subject: "Use applyEditsFeatures of mapboxgl.ekmap.FeatureLayer to add, edit, or delete operations.",
-                        description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete)."
+                        description: "Select a color, then click on the map to add points. Without selecting a color, click on the point -> point information (edit, delete).",
+                        urlApi: "/docs/openlayers/ol.ekmap.FeatureLayer.html#applyEdits",
+                        nameApi:"ol.ekmap.FeatureLayer"
                     },
                     {
                         name: "Add Features",
@@ -90,7 +105,9 @@ var exampleConfig = {
                         thumbnail: "featureService_addFeatures.png",
                         fileName: "featureService_addFeatures",
                         subject: "Use addFeatures of mapboxgl.ekmap.FeatureLayer to add points to the map.",
-                        description: "Click on the map to add points (marker color selectable)."
+                        description: "Click on the map to add points (marker color selectable).",
+                        urlApi: "/docs/openlayers/ol.ekmap.FeatureLayer.html#addFeature",
+                        nameApi:"ol.ekmap.FeatureLayer"
                     },
                     {
                         name: "Update Features",
@@ -98,7 +115,9 @@ var exampleConfig = {
                         thumbnail: "featureService_updateFeatures.png",
                         fileName: "featureService_updateFeatures",
                         subject: "Use updateFeatures of mapboxgl.ekmap.FeatureLayer to update location points on the map.",
-                        description: "Update location. Select the feature to change, then choose the desired position."
+                        description: "Update location. Select the feature to change, then choose the desired position.",
+                        urlApi: "/docs/openlayers/ol.ekmap.FeatureLayer.html#updateFeature",
+                        nameApi:"ol.ekmap.FeatureLayer"
                     },
                     {
                         name: "Delete Features",
@@ -106,7 +125,9 @@ var exampleConfig = {
                         thumbnail: "featureService_deleteFeatures.png",
                         fileName: "featureService_deleteFeatures",
                         subject: "Use deleteFeatures of mapboxgl.ekmap.FeatureLayer to delete points on the map.",
-                        description: "Select feature to delete on the map to delete"
+                        description: "Select feature to delete on the map to delete",
+                        urlApi: "/docs/openlayers/ol.ekmap.TiledMapLayer.html#deleteFeature",
+                        nameApi:"ol.ekmap.TiledMapLayer"
                     },
                     {
                         name: "Attributes Query",
@@ -114,7 +135,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_attributesQuery.png",
                         fileName: "vectorTile_Map_attributesQuery",
                         subject: "Attributes Query.",
-                        description: "Attributes Query."
+                        description: "Attributes Query.",
+                        urlApi: "/docs/openlayers/ol.ekmap.FeatureService.html#query",
+                        nameApi:"ol.ekmap.FeatureService"
                     },
                     // {
                     //     name: "Update Feature Attributes",
@@ -126,10 +149,10 @@ var exampleConfig = {
                     // }
                 ]
             },
-            vectortile: {
-                name: "Vector Tile Services",
-                name_en: "Vector Tile Services",
-                content: [
+            // vectortile: {
+            //     name: "Vector Tile Services",
+            //     name_en: "Vector Tile Services",
+            //     content: [
                     // {
                     //     name: "Mapbox Vector Tile",
                     //     name_en: "Mapbox Vector Tile",
@@ -186,8 +209,8 @@ var exampleConfig = {
                     //     subject: "Filter Province.",
                     //     description: "Create polygon or line buffer to display data on polygon"
                     // }
-                ]
-            },
+            //     ]
+            // },
             control: {
                 name: "Control",
                 name_en: "Control",
@@ -197,7 +220,9 @@ var exampleConfig = {
                         thumbnail: "control_legendControl.png",
                         fileName: "control_legendControl",
                         subject: "Use control legend. It returns the legend information for all layers in the service. Each layer's legend information includes the symbol images and labels for each symbol.",
-                        description: "Click on the button below control: navigationControl to display Legend"
+                        description: "Click on the button below control: navigationControl to display Legend",
+                        urlApi: "/docs/openlayers/ol.ekmap.control.Legend.html",
+                        nameApi:"ol.ekmap.control.Legend"
                     },
                     {
                         name: "Feature Infomation Control",
@@ -205,7 +230,9 @@ var exampleConfig = {
                         thumbnail: "control_featureInfomationControl.png",
                         fileName: "control_featureInfomationControl",
                         subject: "Use control featureInfomation to retrieve the selected object.",
-                        description: "Click on the map to retrieve the selected object."
+                        description: "Click on the map to retrieve the selected object.",
+                        urlApi: "/docs/openlayers/ol.ekmap.control.FeatureInfomation.html",
+                        nameApi:"ol.ekmap.control.FeatureInfomation"
                     },
                     {
                         name: "Tree Layer",
@@ -213,7 +240,9 @@ var exampleConfig = {
                         thumbnail: "control_treeLayerControl.png",
                         fileName: "control_treeLayerControl",
                         subject: "Tree Layer.",
-                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers",
+                        urlApi: "/docs/openlayers/ol.ekmap.control.TreeLayer.html",
+                        nameApi:"ol.ekmap.control.TreeLayer"
                     },
                     {
                         name: "Tree Layer Group",
@@ -221,7 +250,9 @@ var exampleConfig = {
                         thumbnail: "control_treeLayerGroupControl.png",
                         fileName: "control_treeLayerGroupControl",
                         subject: "Tree Layer Group.",
-                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers"
+                        description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers",
+                        urlApi: "/docs/openlayers/ol.ekmap.control.TreeLayerGroup.html",
+                        nameApi:"ol.ekmap.control.TreeLayerGroup"
                     },
                     // {
                     //     name: "Tree Layer Service",
@@ -245,7 +276,9 @@ var exampleConfig = {
                         thumbnail: "control_baseLayerControl.png",
                         fileName: "control_baseLayerControl",
                         subject: "Base Layer Control.",
-                        description: "Use mapboxgl.ekmap.control.BaseLayer to display, turn on / off map layers under the map"
+                            description: "Use mapboxgl.ekmap.control.BaseLayer to display, turn on / off map layers under the map",
+                            urlApi: "/docs/openlayers/ol.ekmap.control.BaseLayerControl.html",
+                            nameApi:"ol.ekmap.control.BaseLayerControl"
                     },
                 ]
             }
@@ -278,7 +311,9 @@ var exampleConfig = {
                         thumbnail: "tiledMap_vnMap.png",
                         fileName: "tiledMap_vnMap",
                         subject: "VietNam Map ",
-                        description: "Use mapboxgl.ekmap.TiledVietNamMapLayer to display VietNam map layer on the map"
+                        description: "Use mapboxgl.ekmap.TiledVietNamMapLayer to display VietNam map layer on the map",
+                        urlApi: "/docs/openlayers/ol.ekmap.TiledVietNamMapLayer.html",
+                        nameApi:"ol.ekmap.TiledVietNamMapLayer"
                     },
                     {
                         name: "OSM Standard",
@@ -286,7 +321,9 @@ var exampleConfig = {
                         thumbnail: "tiledMap_osmMap.png",
                         fileName: "tiledMap_osmMap",
                         subject: "OSM Standard",
-                        description: "Use mapboxgl.ekmap.TiledOSMapLayer to display OSM Standard layer on the map"
+                        description: "Use mapboxgl.ekmap.TiledOSMapLayer to display OSM Standard layer on the map",
+                        urlApi: "/docs/openlayers/ol.ekmap.TiledOSMapLayer.html",
+                        nameApi:"ol.ekmap.TiledOSMapLayer"
                     },
                     {
                         name: "Showing an ArcGIS basemap",
@@ -294,7 +331,9 @@ var exampleConfig = {
                         thumbnail: "basemapLayer.png",
                         fileName: "basemapLayer",
                         subject: "Display an ArcGIS Online basemap.",
-                        description: "Display an ArcGIS Online basemap."
+                        description: "Display an ArcGIS Online basemap.",
+                        urlApi: "/docs/openlayers/ol.ekmap.BasemapArcgisLayer.html",
+                        nameApi:"ol.ekmap.BasemapArcgisLayer"
                     },
                     {
                         name: "Basemap with labels",
@@ -302,7 +341,9 @@ var exampleConfig = {
                         thumbnail: "basemapLayer_labels.png",
                         fileName: "basemapLayer_labels",
                         subject: "Showing an ArcGIS Online basemap with a separate label layer",
-                        description: "Showing an ArcGIS Online basemap with a separate label layer."
+                        description: "Showing an ArcGIS Online basemap with a separate label layer.",
+                        urlApi: "/docs/openlayers/ol.ekmap.BasemapArcgisLayer.html",
+                        nameApi:"ol.ekmap.BasemapArcgisLayer"
                     }
                 ]
             },
@@ -326,7 +367,9 @@ var exampleConfig = {
                         thumbnail: "heatMapLayer.png",
                         fileName: "heatMapLayer",
                         subject: "Add layer heatmap to the map",
-                        description: "Use mapboxgl.ekmap.HeatMapLayer to add layer heatmap to the map"
+                        description: "Use ol.layer.HeatMapLayer to add layer heatmap to the map",
+                        urlApi: "/docs/openlayers/ol.ekmap.HeatMapLayer.html",
+                        nameApi:"ol.ekmap.HeatMapLayer"
                     },
                 ]
             },
@@ -338,10 +381,10 @@ var exampleConfig = {
                     name: "Cluster",
                     name_en: "Marker cluster",
                     version: "",
-                    thumbnail: "cluster.gif",
+                    thumbnail: "cluster.png",
                     fileName: "cluster",
-                    subject: "Use Mapbox GL JS' built-in functions to visualize points as clusters.",
-                    description: "Use Mapbox GL JS' built-in functions to visualize points as clusters."
+                    subject: "DESTINATION INFORMATION OF POSITIVE CASES FOR SARS-CoV-2 June 14, 2021 : 16:17",
+                    description: "DESTINATION INFORMATION OF POSITIVE CASES FOR SARS-CoV-2 June 14, 2021 : 16:17. Source: https://ncov.moh.gov.vn/ban-do-vn"
                 }]
             },
             animation: {
@@ -483,7 +526,9 @@ var exampleConfig = {
                     thumbnail: "layerChart.png",
                     fileName: "layerChart",
                     subject: "Use DomOverlay to simulate measurement point position data with parameters (P, Q +, Q-, Pin).",
-                    description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively."
+                    description: "Three points position data with parameters (P, Q +, Q-, Pin) displayed by chart and color respectively.",
+                    urlApi: "/docs/openlayers/ol.ekmap.DomOverlay.html",
+                    nameApi:"ol.ekmap.DomOverlay"
                 }]
             },
             OverLay: {
@@ -495,7 +540,9 @@ var exampleConfig = {
                     thumbnail: "control_magnifyControl.png",
                     fileName: "overlay_magnify",
                     subject: "Scale the map layer to scale with a circle on the map.",
-                    description: "Scale the map layer to scale with a circle on the map"
+                    description: "Scale the map layer to scale with a circle on the map",
+                    urlApi: "/docs/openlayers/ol.ekmap.overlay.Magnify.html",
+                    nameApi:"ol.ekmap.overlay.Magnify"
                 }]
             },
             Interactions: {
@@ -507,7 +554,9 @@ var exampleConfig = {
                     thumbnail: "control_clipControl.png",
                     fileName: "interation_clip",
                     subject: "Cut the layer with a circle on the map.",
-                    description: "Cut the layer with a circle on the map."
+                    description: "Cut the layer with a circle on the map.",
+                    urlApi: "/docs/openlayers/ol.ekmap.interaction.Clip.html",
+                    nameApi:"ol.ekmap.interaction.Clip"
                 }, ]
             },
             // '3DLayer': {
@@ -674,7 +723,9 @@ var exampleConfig = {
                         thumbnail: "wms_layer.png",
                         fileName: "ogc_wms_addMap",
                         subject: "WMS OGC add to map",
-                        description: "WMS OGC add to map"
+                        description: "WMS OGC add to map",
+                        urlApi: "/docs/openlayers/ol.ekmap.WMS.html",
+                        nameApi:"ol.ekmap.WMS"
                     },
                     {
                         name: "WMS OGC Services",
@@ -682,7 +733,9 @@ var exampleConfig = {
                         thumbnail: "wms_layer.png",
                         fileName: "ogc_wms_getFeatureInfor",
                         subject: "WMS OGC calls the service getFeatureInfoUrl click to polygon show the data",
-                        description: "WMS OGC calls the service getFeatureInfoUrl click to polygon show the data"
+                        description: "WMS OGC calls the service getFeatureInfoUrl click to polygon show the data",
+                        urlApi: "/docs/openlayers/ol.ekmap.WMS.html",
+                        nameApi:"ol.ekmap.WMS"
                     }
                 ]
             },
@@ -708,7 +761,9 @@ var exampleConfig = {
                     thumbnail: "wmts_layer.png",
                     fileName: "ogc_wfs",
                     subject: "WFS OGC calls the service getFeature click to point show the data",
-                    description: "WFS OGC calls the service getFeature click to point show the data"
+                    description: "WFS OGC calls the service getFeature click to point show the data",
+                    urlApi: "/docs/openlayers/ol.ekmap.WFS.html",
+                    nameApi:"ol.ekmap.WFS"
                 }]
             }
         }
@@ -779,7 +834,8 @@ var exampleConfig = {
                         thumbnail: "control_drawControl.gif",
                         fileName: "control_drawControl",
                         subject: "Geolocate Control",
-                        description: "A GeolocateControl control provides a button that uses the browser's geolocation API to locate the user on the map."
+                        description: "A GeolocateControl control provides a button that uses the browser's geolocation API to locate the user on the map.",
+
                     },
                     {
                         name: "Snapshot maps",
@@ -787,7 +843,9 @@ var exampleConfig = {
                         thumbnail: "control_snapShotControl.png",
                         fileName: "control_snapShotControl",
                         subject: "Snapshot Control",
-                        description: "A SnapshotControl control contains a button for screenshot."
+                        description: "A SnapshotControl control contains a button for screenshot.",
+                    urlApi: "/docs/openlayers/ol.ekmap.control.SnapShot.html",
+                    nameApi:"ol.ekmap.control.SnapShot"
                     },
                     {
                         name: "Reverse Geocoder",
@@ -795,7 +853,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_reverseGeocoder.gif",
                         fileName: "vectorTile_Map_reverseGeocoder",
                         subject: "Reverse Geocoder.",
-                        description: "Click button action draw and the area"
+                        description: "Click button action draw and the area",
+                        urlApi: "/docs/openlayers/ol.ekmap.control.Reverse.html",
+                        nameApi:"ol.ekmap.control.Reverse"
                     },
                     {
                         name: "Geocoder",
@@ -803,7 +863,9 @@ var exampleConfig = {
                         thumbnail: "vectorTile_Map_geocoder.gif",
                         fileName: "vectorTile_Map_geocoder",
                         subject: "Use the geocoder control to search for places using the Mapbox Geocoding API.",
-                        description: "Use the geocoder control to search for places using the Mapbox Geocoding API."
+                        description: "Use the geocoder control to search for places using the Mapbox Geocoding API.",
+                        urlApi: "/docs/openlayers/ol.ekmap.control.Geocoder.html",
+                        nameApi:"ol.ekmap.control.Geocoder"
                     },
                     {
                         name: "Map Animation To Location",

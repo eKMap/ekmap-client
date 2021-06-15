@@ -12,7 +12,8 @@
 				"NAME": "Đà Nẵng",
 				"GNID": "440100",
 				"XZNAME": "",
-				"Field_SmGeoPosition": "-1"
+				"Field_SmGeoPosition": "-1",
+				"radius": 50
 			},
 			"geometry": {
 				"type": "Point",
@@ -35,7 +36,8 @@
 				"NAME": "Hà Nội",
 				"GNID": "310000",
 				"XZNAME": "",
-				"Field_SmGeoPosition": "2652824"
+				"Field_SmGeoPosition": "2652824",
+				"radius": 100
 			},
 			"geometry": {
 				"type": "Point",
@@ -58,7 +60,8 @@
 				"NAME": "Thành phố Hồ Chí Minh",
 				"GNID": "110000",
 				"XZNAME": "",
-				"Field_SmGeoPosition": "-1"
+				"Field_SmGeoPosition": "-1",
+				"radius": 75
 			},
 			"geometry": {
 				"type": "Point",

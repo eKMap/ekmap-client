@@ -43,17 +43,8 @@
             //Source: http://vnmha.gov.vn/
             $.get("../data/weather/temp_rain.json", function(response) {
                 var features = response.features
-                for (var i = 0; i < features.length; i++) {
-                    var lng = features[i].properties.longtitude;
-                    var lat = features[i].properties.latitude;
-                    var sw = new mapboxgl.LngLat(lng - 0.2, lat - 0.2);
-                    var ne = new mapboxgl.LngLat(lng + 0.2, lat + 0.2);
-                    var bounds = new mapboxgl.LngLatBounds(sw, ne);
-                    var theme = new mapboxgl.ekmap.ThemeMapLayer({
-                        url: features[i].properties.chartUrl,
-                        bounds: bounds
-                    }).addTo(map);
-                }
+                var theme = new mapboxgl.ekmap.ThemeMapLayer().addTo(map);
+                theme.addFeatures(features)
             })
 
         });
