@@ -174,7 +174,10 @@ function createIFrame() {
                         spanChildP.innerHTML = " Learn more about using the API ";
                         var a = document.createElement("a");
                         a.innerHTML = "here";
-                        a.href = element.urlApi;
+                        //Dev
+                        // a.href = element.urlApi;
+                        //Git
+                        a.href = '/ekmap-client' + element.urlApi
                         spanChildP.append(a);
                         p.append(spanChildP);
                     }
