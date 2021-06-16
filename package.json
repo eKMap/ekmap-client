@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "directories": {
         "doc": "doc",
-        "example": "examples"
+        "example": "examples"  
     },
     "scripts": {
         "start-watch": "watch \"npm run release-mapboxgl-es5\" src",

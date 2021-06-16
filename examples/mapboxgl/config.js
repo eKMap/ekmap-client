@@ -63,6 +63,16 @@ var exampleConfig = {
                         urlApi: "/docs/mapboxgl/mapboxgl.ekmap.TiledMapLayer.html",
                         nameApi:"mapboxgl.ekmap.TiledMapLayer"
                     },
+                    {
+                        name: "Image Tile Pattern",
+                        name_en: "Image Tile Pattern",
+                        thumbnail: "mapService_ImageTilePattern.png",
+                        fileName: "mapService_ImageTilePattern",
+                        subject: "Image Tile Pattern",
+                        description: "Image Tile Pattern",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.TiledMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.TiledMapLayer"
+                    }
                 ]
             },
             data: {
@@ -164,6 +174,16 @@ var exampleConfig = {
                         nameApi:"mapboxgl.ekmap.VectorTiledMapLayer"
                     },
                     {
+                        name: "Mapbox Vector Tile Pattern",
+                        name_en: "Mapbox  Vector Tile Pattern",
+                        thumbnail: "vectorTile_Map_Pattern.png",
+                        fileName: "vectorTile_Map_Pattern",
+                        subject: " Vector Tile Pattern",
+                        description: " Vector Tile Pattern",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.VectorTiledMapLayer.html",
+                        nameApi:"mapboxgl.ekmap.VectorTiledMapLayer"
+                    },
+                    {
                         name: "Mapbox Vector Tile Overlay",
                         name_en: "Mapbox Vector Tile Overlay",
                         thumbnail: "vectorTile_Map_overlay.png",
@@ -193,14 +213,14 @@ var exampleConfig = {
                         urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Select.html",
                         nameApi:"mapboxgl.ekmap.control.Select"
                     },
-                    // {
-                    //     name: "Resize Map",
-                    //     name_en: "Resize Map",
-                    //     thumbnail: "resizeMap.gif",
-                    //     fileName: "resizeMap",
-                    //     subject: "Resize Map.",
-                    //     description: "Click button"
-                    // },
+                    {
+                        name: "Pattern",
+                        name_en: "Pattern",
+                        thumbnail: "pattern.gif",
+                        fileName: "pattern",
+                        subject: "Vector Tile Pattern và Image Tile Pattern",
+                        description: "Vector Tile Pattern và Image Tile Pattern"
+                    },
                     {
                         name: "Geometry Query",
                         name_en: "Geometry Query",

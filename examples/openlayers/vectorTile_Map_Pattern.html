@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <script src="../../examples/js/include-web.js"></script>
+    <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
+    <title>Pattern </title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 20px);
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'divMapId', // container id
+            center: [
+                106.3432216500264,
+                20.454521351257175
+            ],
+            minZoom: 13,
+            zoom: 15,
+        });
+        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+            url: urlVectorService185,
+            token: tokenKey
+        }).addTo(map);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8" />
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+<script type="text/javascript" include="jquery" src="../js/include-web.js"></script>
+<script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
+<script src="../../examples/js/common.js"></script>
+<script src="../../examples/js/include-web.js"></script>
+<title>Pattern</title>
+<style>
+	.map {
+		width: 100%;
+		height: calc(100vh - 20px);
+		border: 1px solid;
+	}
+
+	body {
+		overflow: hidden;
+	}
+
+	.marker {
+		display: block;
+		border: none;
+		padding: 0;
+	}
+
+	.title {
+		position: absolute;
+    z-index: 10;
+    }
+</style>
+
+<body>
+	<div style="float: left; width: 50%;">
+		<div id="mapVector" class="map">
+			<h1 class="title">Vector Tile</h1>
+		</div>
+		
+	</div>
+	<div style="float: right; width: 50%;">
+		<div id="mapImage" class="map">
+			<h1 class="title">Image Tile</h1>
+		</div>
+	</div>
+	<hr />
+
+	<script>
+		var map1, map2, maps = [];
+		var fnMove = {
+		};
+		var mapconfig1 = {
+			"layers": [],
+			"center": [106.3432216500264, 20.454521351257175],
+			"minZoom": 0,
+			"maxZoom": 20,
+			"zoom": 15,
+		}
+		var mapconfig2 = {
+			"layers": [],
+			"center": [106.3432216500264, 20.454521351257175],
+			"minZoom": 0,
+			"maxZoom": 20,
+			"zoom": 15,
+		}
+		$(document).ready(function () {
+			initMap();
+		})
+		function initMap() {
+			loadMap1();
+			loadMap2();
+			syncMaps();
+		}
+		function loadMap1() {
+			map1 = new mapboxgl.Map({
+				container: 'mapVector', // container id
+				center: mapconfig1.center,
+				minZoom: mapconfig1.minZoom,
+				maxZoom: mapconfig1.maxZoom,
+				zoom: mapconfig1.zoom,
+			});
+			maps.push(map1);
+			var mapVector = new mapboxgl.ekmap.VectorTiledMapLayer({
+				url: urlVectorService185,
+				token: tokenKey
+			}).addTo(map1);
+		}
+		function loadMap2() {
+			map2 = new mapboxgl.Map({
+				container: 'mapImage', // container id
+				center: mapconfig2.center,
+				minZoom: mapconfig2.minZoom,
+				maxZoom: mapconfig2.maxZoom,
+				zoom: mapconfig2.zoom,
+			});
+			maps.push(map2);
+			var mapImage = new mapboxgl.ekmap.TiledMapLayer({
+				url: urlMapService185,
+				token: tokenKey,
+				attribution: 'Map By <a style="color:#2196f3" target="_blank" href="http://ekgis.vn">eKGIS</a>'
+			}).addTo(map2);
+		}
+
+		function moveToMapPosition(master, clones) {
+			var center = master.getCenter();
+			var zoom = master.getZoom();
+			var bearing = master.getBearing();
+			var pitch = master.getPitch();
+
+			clones.forEach(function (clone) {
+				clone.jumpTo({
+					center: center,
+					zoom: zoom,
+					bearing: bearing,
+					pitch: pitch
+				});
+			});
+		}
+
+		function syncMaps() {
+			var fns = [];
+			maps.forEach(function (map, index) {
+				fns[index] = sync.bind(null, map, maps.filter(function (o, i) { return i !== index; }));
+			});
+
+			function on() {
+				maps.forEach(function (map, index) {
+					map.on('move', fns[index]);
+				});
+			}
+
+			function off() {
+				maps.forEach(function (map, index) {
+					map.off('move', fns[index]);
+				});
+			}
+
+			function sync(master, clones) {
+				off();
+				moveToMapPosition(master, clones);
+				on();
+			}
+
+			on();
+			return function () { off(); fns = []; };
+		}
+
+	</script>
+</body>
+
+</html>

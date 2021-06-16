@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../dist/ol/include-ol.js"></script>
+    <script src="../../examples/js/common.js"></script>
+    <title>Image Tile Pattern</title>
+    <style>
+        .map {
+            width: 100%;
+            height: calc(100vh - 15px);
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        #legend {
+            position: absolute;
+            z-index: 1;
+            bottom: 0px;
+            background: white;
+            opacity: 0.8;
+        }
+        
+        .titleLegend {
+            color: #134aae;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        ul {
+            padding: unset;
+            margin: unset;
+        }
+        
+        li {
+            padding: 5px 10px;
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <div id="divMapId" class="map">
+        </div>
+    </div>
+    <script>
+         var map = new ol.Map({
+            target: 'divMapId',
+            view: new ol.View({
+                center: [106.3432216500264,20.454521351257175],
+                zoom: 15,
+                projection: 'EPSG:4326',
+                multiWorld: true
+            })
+        });
+
+        var vnMap = new ol.ekmap.TiledVietNamMapLayer({
+            token: tokenVN
+        }).addTo(map);
+        var tiledMap = new ol.ekmap.TiledMapLayer({
+            url: urlMapService185,
+            token: tokenKey
+        }).addTo(map);
+    </script>
+</body>
+
+</html>

@@ -63,6 +63,16 @@ var exampleConfig = {
                         urlApi: "/docs/leaflet/L.ekmap.TiledMapLayer.html",
                         nameApi:"L.ekmap.TiledMapLayer"
                     },
+                    {
+                        name: "Image Tile Pattern",
+                        name_en: "Image Tile Pattern",
+                        thumbnail: "mapService_ImageTilePattern.png",
+                        fileName: "mapService_ImageTilePattern",
+                        subject: "Image Tile Pattern",
+                        description: "Image Tile Pattern",
+                        urlApi: "/docs/leaflet/L.ekmap.TiledMapLayer.html",
+                        nameApi:"L.ekmap.TiledMapLayer"
+                    }
                 ]
             },
             data: {

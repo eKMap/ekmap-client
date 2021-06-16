@@ -146,6 +146,9 @@ var urlMapService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/Ma
 var urlFeatureService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/FeatureServer' //Khu bảo tồn quốc gia Việt Nam
 var urlVectorService145 = 'https://server.ekgis.vn/ekmapserver/rest/services/145/VectorTileServer' //Bản đồ hành chính Việt Nam
 
+var urlVectorService185 = 'https://server.ekgis.vn/ekmapserver/rest/services/185/VectorTileServer' //Bản đồ nền Thái Bình
+var urlMapService185 = 'https://server.ekgis.vn/ekmapserver/rest/services/185/MapServer' //Bản đồ nền Thái Bình
+
 var urlWMS = 'https://server.ekgis.vn/ekmapserver/rest/services/169/WMS' //Quy hoạch chung Hà Nội (WMS).
 var urlWMS32 = 'https://server.ekgis.vn/ekmapserver/rest/services/32/WMS' //Tai nạn giao thông.
 var urlWFS = 'https://server.ekgis.vn/ekmapserver/rest/services/169/WFS' //Quy hoạch chung Hà Nội (WMS).

@@ -64,6 +64,16 @@ var exampleConfig = {
                         urlApi: "/docs/openlayers/ol.ekmap.TiledMapLayer.html",
                         nameApi:"ol.ekmap.TiledMapLayer"
                     },
+                    {
+                        name: "Image Tile Pattern",
+                        name_en: "Image Tile Pattern",
+                        thumbnail: "mapService_ImageTilePattern.png",
+                        fileName: "mapService_ImageTilePattern",
+                        subject: "Image Tile Pattern",
+                        description: "Image Tile Pattern",
+                        urlApi: "/docs/openlayers/ol.ekmap.TiledMapLayer.html",
+                        nameApi:"ol.ekmap.TiledMapLayer"
+                    }
                 ]
             },
             data: {
