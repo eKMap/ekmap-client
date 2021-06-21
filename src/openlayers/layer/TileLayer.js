@@ -28,7 +28,7 @@ export class TileLayer {
                     source: new ol.source.XYZ({
                         url: this.tileUrl,
                         attributions: this.options.attribution,
-                        crossOrigin: "Anonymous"
+                        crossOrigin: "Anonymous",
                     }),
                     baseLayer: true,
                     visible: this.options.visible != undefined ? this.options.visible : true,
@@ -51,7 +51,7 @@ export class TileLayer {
                     source: new ol.source.XYZ({
                         urls: this.tileUrls,
                         attributions: this.options.attribution,
-                        crossOrigin: "Anonymous"
+                        crossOrigin: "Anonymous",
                     }),
                     baseLayer: true,
                     visible: this.options.visible != undefined ? this.options.visible : true,

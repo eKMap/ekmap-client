@@ -28,16 +28,30 @@ function build(nav,navOrder,level){
                 
             }
         } else if(subNav){
-            ?>
-            <li class="treeview" >
-            <a> <?js  var value=subOrder.name;if(language&&language==='en'&&subOrder.name_en){ value=subOrder.name_en } ?><?js=  value  ?> <span class="pull-right-container"><i class="glyphicon glyphicon-menu-right"></i> </span></a>
-            <ul class="treeview-menu">
-            <?js
-              build(subNav,subOrder,level+1);
-            ?>
-            </ul>
-            </li>
-            <?js
+            if(subOrder.name == "Layer" || subOrder.name == "Visualization" || subOrder.name == "Theme"){
+                ?>
+                <li class="treeview" >
+                <a> <?js  var value=subOrder.name;if(language&&language==='en'&&subOrder.name_en){ value=subOrder.name_en } ?><?js=  value  ?> <span class="pull-right-container"><i class="glyphicon glyphicon-menu-right"></i> </span></a>
+                <ul class="treeview-menu" style="display:block">
+                <?js
+                build(subNav,subOrder,level+1);
+                ?>
+                </ul>
+                </li>
+                <?js
+            }else{
+                ?>
+                <li class="treeview" >
+                <a> <?js  var value=subOrder.name;if(language&&language==='en'&&subOrder.name_en){ value=subOrder.name_en } ?><?js=  value  ?> <span class="pull-right-container"><i class="glyphicon glyphicon-menu-right"></i> </span></a>
+                <ul class="treeview-menu">
+                <?js
+                build(subNav,subOrder,level+1);
+                ?>
+                </ul>
+                </li>
+                <?js
+            }
+            
         }
     }
 }

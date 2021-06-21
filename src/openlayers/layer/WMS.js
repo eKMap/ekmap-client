@@ -55,19 +55,30 @@ export class WMS extends Observable {
         return this;
     }
 
-    /**
+     /**
      * @function ol.ekmap.WMS.prototype.getLayers
      * @description Get layer name of map service.
+     * @param {RequestCallback} callback The callback of result data returned.
      */
-    getLayers() {
+      getLayers(callback,context) {
         var parser = new ol.format.WMSCapabilities();
-        fetch(this.url + '?request=GetCapabilities&service=WMS')
+        var url;
+        if(this.options.token)
+            url = this.url + '&request=GetCapabilities&service=WMS'
+        else
+        url = this.url + '?request=GetCapabilities&service=WMS'
+
+        fetch(url)
             .then(function(response) {
                 return response.text();
             })
             .then(function(text) {
                 var result = parser.read(text, null, 2);
-                return result;
+                var layers = result.Capability.Layer.Layer;
+                var arrName = []
+                for(var i = 0; i < layers.length; i++)
+                    arrName.push(layers[i].Name)
+                return callback.call(context,arrName)
             });
     }
 

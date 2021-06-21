@@ -1,7 +1,6 @@
-import { feature } from '@turf/turf';
 import { Util } from '../core/Util';
 import Observable from 'ol/Observable';
-
+require('ol-mapbox-style').default
 /**
  * @class ol.ekmap.VectorTiledMapLayer
  * @classdesc The VectorTiledMapLayer class.
@@ -30,7 +29,7 @@ export class VectorTiledMapLayer extends Observable {
             }
         }
 
-        var styleDefault = new ol.style.Style({
+        var styleDefault = new ol.style.Style({ 
             stroke: new ol.style.Stroke({
                 color: 'gray',
                 width: 1,
@@ -49,16 +48,15 @@ export class VectorTiledMapLayer extends Observable {
                 radius: 7
             })
         });
-        this.style = this.options.style != undefined ? this.options.style : styleDefault
-        this.map = '';
-        this.arr = [];
-        this.name = [];
-        this.objectLayer = {};
-        this.layerPointLine = [];
-        this.featuresCheck = '';
-        this.layer = null;
-        this.urlFeatureService = options.url.replace("VectorTileServer", "FeatureServer")
-        this.urlMapService = options.url.replace("VectorTileServer", "MapServer")
+        // this.map = '';
+        // this.arr = [];
+        // this.name = [];
+        // this.objectLayer = {};
+        // this.layerPointLine = [];
+        // this.featuresCheck = '';
+        // this.layer = null;
+        // this.urlFeatureService = options.url.replace("VectorTileServer", "FeatureServer")
+        // this.urlMapService = options.url.replace("VectorTileServer", "MapServer")
     }
 
     /**
@@ -70,16 +68,35 @@ export class VectorTiledMapLayer extends Observable {
     addTo(map) {
         this.map = map;
         var me = this;
-        this.layer = new ol.layer.VectorTile({
+        var layer = new ol.layer.VectorTile({
             declutter: true,
             source: new ol.source.VectorTile({
                 format: new ol.format.MVT(),
-                url: this.tileUrl,
-            }),
-            style: this.style
+                url: me.tileUrl,
+                projection: 'EPSG:4326',
+            }), 
         })
-        this.map.addLayer(this.layer);
+        layer.setStyle(me.style);
+        console.log(layer)
+        map.addLayer(layer)
+        // const baseUrl = 'https://api.mapbox.com/styles/v1/mapbox/bright-v9?access_token=pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
+        // new olms('divMapId',baseUrl);
         return this;
+    }
+
+    style(feature){
+        console.log(feature)
+        return [
+            new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: '#FF0000'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#000',
+                    width: 1
+                }),
+            })
+        ]
     }
 
 

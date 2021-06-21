@@ -34,6 +34,191 @@ export class Util {
         return guid;
     }
 
+    static getZoomForResolution(resolution, resolutions) {
+        let i = 0;
+        const ii = resolutions.length;
+        for (; i < ii; ++i) {
+          const candidate = resolutions[i];
+          if (candidate < resolution && i + 1 < ii) {
+            const zoomFactor = resolutions[i] / resolutions[i + 1];
+            return i + Math.log(resolutions[i] / resolution) / Math.log(zoomFactor);
+          }
+        }
+        return ii - 1;
+      }
+
+    static evaluateFilter(layerId, filter, feature, zoom) {
+        if (!(layerId in filterCache)) {
+          filterCache[layerId] = this.createFilter(filter).filter;
+        }
+        zoomObj.zoom = zoom;
+        return filterCache[layerId](zoomObj, feature);
+    }
+
+    static createFilter(filter) {
+        if (filter === null || filter === undefined) {
+            return {
+                filter: function () {
+                    return true;
+                },
+                needGeometry: false
+            };
+        }
+        if (!this.isExpressionFilter(filter)) {
+            filter = this.convertFilter(filter);
+        }
+        var compiled = createExpression(filter, filterSpec);
+        if (compiled.result === 'error') {
+            throw new Error(compiled.value.map(function (err) {
+                return err.key + ': ' + err.message;
+            }).join(', '));
+        } else {
+            var needGeometry = geometryNeeded(filter);
+            return {
+                filter: function (globalProperties, feature, canonical) {
+                    return compiled.value.evaluate(globalProperties, feature, {}, canonical);
+                },
+                needGeometry: needGeometry
+            };
+        }
+    }
+
+    static convertFilter(filter) {
+        if (!filter) {
+            return true;
+        }
+        var op = filter[0];
+        if (filter.length <= 1) {
+            return op !== 'any';
+        }
+        var converted = op === '==' ? this.convertComparisonOp(filter[1], filter[2], '==') : op === '!=' ? this.convertNegation(this.convertComparisonOp(filter[1], filter[2], '==')) : op === '<' || op === '>' || op === '<=' || op === '>=' ? this.convertComparisonOp(filter[1], filter[2], op) : op === 'any' ? this.convertDisjunctionOp(filter.slice(1)) : op === 'all' ? ['all'].concat(filter.slice(1).map(convertFilter)) : op === 'none' ? ['all'].concat(filter.slice(1).map(convertFilter).map(convertNegation)) : op === 'in' ? this.convertInOp(filter[1], filter.slice(2)) : op === '!in' ? this.convertNegation(this.convertInOp(filter[1], filter.slice(2))) : op === 'has' ? this.convertHasOp(filter[1]) : op === '!has' ? this.convertNegation(this.convertHasOp(filter[1])) : op === 'within' ? filter : true;
+        return converted;
+    }
+
+    static convertHasOp(property) {
+        switch (property) {
+        case '$type':
+            return true;
+        case '$id':
+            return ['filter-has-id'];
+        default:
+            return [
+                'filter-has',
+                property
+            ];
+        }
+    }
+
+    static convertInOp(property, values) {
+        if (values.length === 0) {
+            return false;
+        }
+        switch (property) {
+        case '$type':
+            return [
+                'filter-type-in',
+                [
+                    'literal',
+                    values
+                ]
+            ];
+        case '$id':
+            return [
+                'filter-id-in',
+                [
+                    'literal',
+                    values
+                ]
+            ];
+        default:
+            if (values.length > 200 && !values.some(function (v) {
+                    return typeof v !== typeof values[0];
+                })) {
+                return [
+                    'filter-in-large',
+                    property,
+                    [
+                        'literal',
+                        values.sort(compare)
+                    ]
+                ];
+            } else {
+                return [
+                    'filter-in-small',
+                    property,
+                    [
+                        'literal',
+                        values
+                    ]
+                ];
+            }
+        }
+    }
+
+    static convertNegation(filter) {
+        return [
+            '!',
+            filter
+        ];
+    }
+    static convertComparisonOp(property, value, op) {
+        switch (property) {
+        case '$type':
+            return [
+                'filter-type-' + op,
+                value
+            ];
+        case '$id':
+            return [
+                'filter-id-' + op,
+                value
+            ];
+        default:
+            return [
+                'filter-' + op,
+                property,
+                value
+            ];
+        }
+    }
+
+    static isExpressionFilter(filter) {
+        if (filter === true || filter === false) {
+            return true;
+        }
+        if (!Array.isArray(filter) || filter.length === 0) {
+            return false;
+        }
+        switch (filter[0]) {
+        case 'has':
+            return filter.length >= 2 && filter[1] !== '$id' && filter[1] !== '$type';
+        case 'in':
+            return filter.length >= 3 && (typeof filter[1] !== 'string' || Array.isArray(filter[2]));
+        case '!in':
+        case '!has':
+        case 'none':
+            return false;
+        case '==':
+        case '!=':
+        case '>':
+        case '>=':
+        case '<':
+        case '<=':
+            return filter.length !== 3 || (Array.isArray(filter[1]) || Array.isArray(filter[2]));
+        case 'any':
+        case 'all':
+            for (var i = 0, list = filter.slice(1); i < list.length; i += 1) {
+                var f = list[i];
+                if (!this.isExpressionFilter(f) && typeof f !== 'boolean') {
+                    return false;
+                }
+            }
+            return true;
+        default:
+            return true;
+        }
+    }
+   
     static hexToRgba(hex, opacity) {
         var color = [],
             rgba = [];

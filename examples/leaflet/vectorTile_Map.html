@@ -3,11 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
-    <script src="../../dist/mapboxgl/ekmap-mapboxgl.js"></script>
     <script src="../../examples/js/common.js"></script>
-    <script src="../../examples/js/include-web.js"></script>
+    <script src="../../dist/leaflet/include-leaflet.js"></script>
     <script type="text/javascript" include="jquery,papaparse,widgets" src="../js/include-web.js"></script>
     <title>Vector Tile Layer</title>
     <style>
@@ -28,19 +25,21 @@
         </div>
     </div>
     <script>
-        var map = new mapboxgl.Map({
-            container: 'divMapId', // container id
-            minZoom: 4,
-            center: [105, 17],
-            zoom: 4
+       var map = L.map('divMapId', {
+            center: {
+                lon: 105,
+                lat: 21.5
+            },
+            zoom: 8,
+            zoomControl: true,
+            attributionControl: true,
         });
 
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
-            url: urlVectorService,
+        var maps = new L.ekmap.VectorTiledMapLayer({
+            url: urlVectorService145,
             token: tokenKey
         }).addTo(map);
 
-        map.addControl(new mapboxgl.NavigationControl(), "top-left");
     </script>
 </body>
 

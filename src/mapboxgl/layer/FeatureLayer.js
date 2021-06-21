@@ -57,7 +57,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                     "data": {
                         'type': 'FeatureCollection',
                         'features': result
-                    }
+                    },
                 });
 
                 map.addLayer({
@@ -91,7 +91,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                     "data": {
                         'type': 'FeatureCollection',
                         'features': result
-                    }
+                    },
                 });
 
                 map.addLayer({
@@ -130,7 +130,7 @@ export class FeatureLayer extends mapboxgl.Evented {
                     'data': {
                         'type': 'FeatureCollection',
                         'features': result
-                    }
+                    },
                 });
 
 

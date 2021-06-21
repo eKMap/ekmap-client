@@ -48,7 +48,7 @@ export class TiledMapLayer extends TileLayer {
      * @returns this
      */
     addTo(map) {
-        return this.tileLayer.addTo(map);;
+        return this.tileLayer.addTo(map);
     }
 
     /**

@@ -10,6 +10,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.token Will use this token to authenticate all calls to the service.
  * @param {string} options.id Id of layer and source.
  * @param {string} options.name Name of layer.
+ * @param {string} options.tileSize=256 Units in pixels. The minimum visual size to display tiles for this layer. Only configurable for raster layers.
  * @param {Number} options.minzoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden (between 0 and 24 inclusive).
  * @param {Number} options.maxzoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden (between 0 and 24 inclusive).
  * @param {string} options.visibility=visible show or hide layer.
@@ -65,7 +66,7 @@ export class TileLayer extends mapboxgl.Evented {
                 "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": [this.tileUrl],
-                "tileSize": 256
+                "tileSize": this.options.tileSize != undefined ? this.options.tileSize : 256,
             });
             map.addLayer({
                 "id": id,
@@ -91,7 +92,7 @@ export class TileLayer extends mapboxgl.Evented {
                 "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": this.tileUrls,
-                "tileSize": 256
+                "tileSize": this.options.tileSize != undefined ? this.options.tileSize : 256,
             });
             map.addLayer({
                 "id": id,

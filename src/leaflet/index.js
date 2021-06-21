@@ -9,6 +9,7 @@ import {
     ImageMapLayer,
     WMS,
     WFS,
+    VectorTiledMapLayer
 } from './layer';
 import {
     MapService,
@@ -39,6 +40,7 @@ export {
     ImageMapLayer,
     WMS,
     WFS,
+    VectorTiledMapLayer
 };
 export {
     MapService,

@@ -13,7 +13,7 @@
             width: 100%;
             height: calc(100vh - 20px);
         }
-        
+
         body {
             overflow: hidden;
         }
@@ -32,14 +32,48 @@
                 zoom: true
             }),
             view: new ol.View({
-                center: [11688546.53, 1920825.04],
+                center: [105, 17],
                 zoom: 6,
-            })
+                projection: 'EPSG:4326',
+            }),
+            //             layers: [
+            //     new ol.layer.MapboxVector({
+            //       styleUrl: "https://server.ekgis.vn/ekmapserver/rest/services/145/VectorTileServer/resources/styles?token=1-xR0cZaCFcuj5XpxgYVKUCGeCpGO2auVl",
+
+            //     })
+            //   ],
         });
-        var vectorTile = new ol.ekmap.VectorTiledMapLayer({
-            url: urlVectorService,
-            token: tokenForSDK
-        }).addTo(map)
+
+
+        fetch(urlVectorService145 + '/resources/styles?token=1-xR0cZaCFcuj5XpxgYVKUCGeCpGO2auVl')
+            .then(r => r.json())
+            .then((glStyle) => {
+                var layer = new ol.layer.VectorTile({
+                    declutter: true,
+                    source: new ol.source.VectorTile({
+                        format: new ol.format.MVT(),
+                        url: 'https://server.ekgis.vn/ekmapserver/rest/services/145/VectorTileServer/tile/{z}/{x}/{y}.pbf?token=1-xR0cZaCFcuj5XpxgYVKUCGeCpGO2auVl',
+                        projection: 'EPSG:4326',
+                        tileSize: 256
+                    }),
+                    style: style
+                })
+                map.addLayer(layer)
+            });
+
+        function style(feature) {
+            console.log(feature)
+            return [new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: 'yellow'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#000',
+                    width: 1
+                }),
+
+            })]
+        }
     </script>
 </body>
 

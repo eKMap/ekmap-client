@@ -172,30 +172,30 @@ var exampleConfig = {
             //             subject: "Add vector tile.",
             //             description: ""
             //         },
-            //         {
-            //             name: "Mapbox Vector Tile Overlay",
-            //             name_en: "Mapbox Vector Tile Overlay",
-            //             thumbnail: "vectorTile_Map_full.png",
-            //             fileName: "vectorTile_Map_overlay",
-            //             subject: "Add vector tile overlay to the map.",
-            //             description: ""
-            //         },
-            //         {
-            //             name: "Mapbox Vector Tile Hover",
-            //             name_en: "Mapbox Vector Tile Hover",
-            //             thumbnail: "vectorTile_Map_hover.gif",
-            //             fileName: "vectorTile_Map_hover",
-            //             subject: "Using events and feature states to create a per feature hover effect.",
-            //             description: "Using events and feature states to create a per feature hover effect."
-            //         },
-            //         {
-            //             name: "Mapbox Vector Tile Select",
-            //             name_en: "Mapbox Vector Tile Select",
-            //             thumbnail: "vectorTile_Map_select.gif",
-            //             fileName: "vectorTile_Map_select",
-            //             subject: "Vector tile select on the map.",
-            //             description: "Click on the map to query features using queryRenderedFeatures."
-            //         },
+            //         // {
+            //         //     name: "Mapbox Vector Tile Overlay",
+            //         //     name_en: "Mapbox Vector Tile Overlay",
+            //         //     thumbnail: "vectorTile_Map_full.png",
+            //         //     fileName: "vectorTile_Map_overlay",
+            //         //     subject: "Add vector tile overlay to the map.",
+            //         //     description: ""
+            //         // },
+            //         // {
+            //         //     name: "Mapbox Vector Tile Hover",
+            //         //     name_en: "Mapbox Vector Tile Hover",
+            //         //     thumbnail: "vectorTile_Map_hover.gif",
+            //         //     fileName: "vectorTile_Map_hover",
+            //         //     subject: "Using events and feature states to create a per feature hover effect.",
+            //         //     description: "Using events and feature states to create a per feature hover effect."
+            //         // },
+            //         // {
+            //         //     name: "Mapbox Vector Tile Select",
+            //         //     name_en: "Mapbox Vector Tile Select",
+            //         //     thumbnail: "vectorTile_Map_select.gif",
+            //         //     fileName: "vectorTile_Map_select",
+            //         //     subject: "Vector tile select on the map.",
+            //         //     description: "Click on the map to query features using queryRenderedFeatures."
+            //         // },
             //         // {
             //         //     name: "Resize Map",
             //         //     name_en: "Resize Map",
@@ -204,22 +204,22 @@ var exampleConfig = {
             //         //     subject: "Resize Map.",
             //         //     description: "Click button"
             //         // },
-            //         {
-            //             name: "Geometry Query",
-            //             name_en: "Geometry Query",
-            //             thumbnail: "vectorTile_Map_geometryQuery.png",
-            //             fileName: "vectorTile_Map_geometryQuery",
-            //             subject: "Geometry Query.",
-            //             description: "Create polygon or line buffer to display data on polygon"
-            //         },
-            //         {
-            //             name: "Filter Province",
-            //             name_en: "Filter Province",
-            //             thumbnail: "filterProvince.gif",
-            //             fileName: "filterProvince",
-            //             subject: "Filter Province.",
-            //             description: "Create polygon or line buffer to display data on polygon"
-            //         }
+            //         // {
+            //         //     name: "Geometry Query",
+            //         //     name_en: "Geometry Query",
+            //         //     thumbnail: "vectorTile_Map_geometryQuery.png",
+            //         //     fileName: "vectorTile_Map_geometryQuery",
+            //         //     subject: "Geometry Query.",
+            //         //     description: "Create polygon or line buffer to display data on polygon"
+            //         // },
+            //         // {
+            //         //     name: "Filter Province",
+            //         //     name_en: "Filter Province",
+            //         //     thumbnail: "filterProvince.gif",
+            //         //     fileName: "filterProvince",
+            //         //     subject: "Filter Province.",
+            //         //     description: "Create polygon or line buffer to display data on polygon"
+            //         // }
             //     ]
             // },
             control: {

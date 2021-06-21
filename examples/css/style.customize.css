@@ -14,7 +14,7 @@
 
 /*---Menu----*/
 .main-header .navbar-custom-menu {
-  margin: 0 35px!important;
+  margin: 0 35px;
   float: left!important;
 }
 .skin-blue .main-header .navbar .nav>.active>a {
@@ -53,10 +53,12 @@ li.navbar-menu.active>a::after {
 
 /*---siderbar----*/
 .main-sidebar {
-  width: 265px!important;
+  width: 360px!important;
 }
 @media (min-width: 768px){
 .skin-blue.sidebar-mini.sidebar-collapse .main-sidebar { width: 70px !important;
+}
+.skin-blue.sidebar-mini .main-sidebar { width: 265px !important;
 }
 .main-sidebar .iconName {
   color: #2D356B!important;
@@ -261,8 +263,11 @@ li.navbar-menu.active>a::after {
   height: 65px!important;
 }
 .main-header .navbar-custom-menu {
-  margin: 0 35px!important;
+  margin: 0 35px;
   float: left!important;
+}
+.navbar-menu-api{
+  margin: 0 130px!important;
 }
 .header-wrapper.main-header.ekmapclient-header .navbar  .navbar-custom-menu .navbar-nav >.active>a {
   color: #0DB39E!important;
@@ -288,13 +293,11 @@ li.navbar-menu.active>a::after {
     width: calc(100% - 300px);
     display: block;
     margin: 0 auto;
-    padding-left: 300px;
+    padding-left: 160px;
     margin-top: 100px;
 }
 @media only screen and (min-width: 1501px) and (max-width: 1650px) {
-    .sidebar-mini #wrap.clearfix .main{
-        width: calc(100% - 230px);
-}
+    
 .category {
     padding-top: 25px!important;
     width: calc(100% - 300px);
@@ -305,9 +308,7 @@ li.navbar-menu.active>a::after {
 }
 }
 @media only screen and (min-width: 1351px) and (max-width: 1500px) {
-    .sidebar-mini #wrap.clearfix .main{
-        width: calc(100% - 140px);
-}
+    
 .category {
     padding-top: 25px!important;
     width: calc(100% - 270px);
@@ -319,9 +320,7 @@ li.navbar-menu.active>a::after {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1350px) {
-    .sidebar-mini #wrap.clearfix .main{
-        width: calc(100% - 120px);
-}
+   
 .category {
     padding-top: 25px!important;
     width: calc(100% - 240px);
@@ -332,9 +331,7 @@ li.navbar-menu.active>a::after {
 }
 }
 @media only screen and (min-width: 1000px) and (max-width: 1199px) {
-    .sidebar-mini #wrap.clearfix .main{
-        width: calc(100% - 100px);
-}
+    
 .category {
     padding-top: 25px!important;
     width: calc(100% - 180px);
@@ -345,9 +342,7 @@ li.navbar-menu.active>a::after {
 }
 }
 @media only screen and (min-width: 767px) and (max-width: 999px) {
-    .sidebar-mini #wrap.clearfix .main{
-        width: calc(100% - 90px);
-}
+    
 .category {
     padding-top: 25px!important;
     width: calc(100% - 150px);

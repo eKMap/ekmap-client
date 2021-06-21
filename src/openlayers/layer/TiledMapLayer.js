@@ -8,6 +8,7 @@ import { Util } from '../core/Util';
  * @param {string} options.token Will use this token to authenticate all calls to the service.
  * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
  * @param {string} options.id Id of layer and source.
+ * @param {string} options.tileSize=512 Units in pixels. The minimum visual size to display tiles for this layer. Only configurable for raster layers.
  * @extends {ol.Evented}
  */
 export class TiledMapLayer {
@@ -42,7 +43,8 @@ export class TiledMapLayer {
             this.layer = new ol.layer.Tile({
                 source: new ol.source.XYZ({
                     url: this.tileUrl,
-                    crossOrigin: "Anonymous"
+                    crossOrigin: "Anonymous",
+                    tileSize: this.options.tileSize != undefined ? this.options.tileSize : 512,
                 }),
                 title: this.options.name,
                 type: 'TileLayer',
@@ -52,7 +54,8 @@ export class TiledMapLayer {
         } else {
             this.layer = new ol.layer.Tile({
                 source: new ol.source.XYZ({
-                    crossOrigin: "Anonymous"
+                    crossOrigin: "Anonymous",
+                    tileSize: this.options.tileSize != undefined ? this.options.tileSize : 512,
                 }),
                 type: 'TileLayer'
             })

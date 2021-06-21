@@ -20,3 +20,5 @@ export { WMS }
 from './WMS';
 export { WFS }
 from './WFS';
+export { VectorTiledMapLayer }
+from './VectorTiledMapLayer';
