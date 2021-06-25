@@ -11,6 +11,8 @@ import mapboxgl from 'mapbox-gl';
  * @param {Boolean} displayControlsDefault=true The default value for controls. For example, if you would like all controls to be off by <br> default, and specify an allowed list with controls, use displayControlsDefault: false.
  * @param {Object} modes Over ride the default modes with your own.
  * @extends {mapboxgl.Evented}
+ * @fires mapboxgl.ekmap.control.Draw#endDraw
+ * @fires mapboxgl.ekmap.control.Draw#startDraw
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
@@ -26,6 +28,7 @@ export class Draw extends mapboxgl.Evented {
         this.displayControlsDefault = this.options.displayControlsDefault != undefined ? this.options.displayControlsDefault : true;
         this.modes = this.options.modes ? this.options.modes : {...MapboxDraw.modes, 'draw_rectangle_drag': mapboxGLDrawRectangleDrag };
         this.draw = '';
+        this.listeners = {};
     }
 
     /**
@@ -84,11 +87,35 @@ export class Draw extends mapboxgl.Evented {
      */
     changeMode(mode) {
         this.draw.changeMode(mode);
+        this.fire('startDraw', this);
+        this.offEvent();
+        this.listeners["draw"] = this.updateAreaPolygon.bind(this);
+        this._map.once('draw.create', this.listeners["draw"]);
         if (this._map.getLayer('buffered')) {
             this._map.removeLayer('buffered');
             this._map.removeSource('buffered')
         }
     }
+
+    updateAreaPolygon(e) {
+        if (e.features.length > 0) {
+            /**
+             * @event mapboxgl.ekmap.control.DrawLine#lineBufferDrawn
+             * @description Fired when line drawn
+             */
+            this.fire('endDraw', { data: e.features[0] });
+        }
+
+    }
+
+    offEvent() {
+        var draw = this.draw;
+        for (var evt in this.listeners) {
+            this._map.off('draw.create', this.listeners[evt]);
+        }
+        this.listeners = {};
+    }
+
 
     trash() {
         this.draw.trash();

@@ -154,7 +154,7 @@ var Legend = /*@__PURE__*/ (function(Control) {
                         var span
                         if (me.showLabel) {
                             span = document.createElement("span");
-                            span.innerHTML = listLenged[i].legend[j].label;
+                            span.innerHTML = listLenged[i].legend[j].label != '' ? listLenged[i].legend[j].label : listLenged[i].layerName;
                             span.style.paddingLeft = '15px';
                         }
                         var li1 = document.createElement("li");

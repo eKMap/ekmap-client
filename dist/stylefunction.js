@@ -315,6 +315,7 @@ export default function (olLayer, glStyle, source, resolutions, spriteData, spri
         if (!layers) {
             return;
         }
+        console.log(feature)
         var zoom = resolutions.indexOf(resolution);
         if (zoom == -1) {
             zoom = getZoomForResolution(resolution, resolutions);

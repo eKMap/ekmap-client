@@ -60,6 +60,8 @@ export class MapService extends ServiceBase {
             var param = {};
             param.searchText = params.searchText;
             param.layers = layers.toString();
+            param.contains = true;
+            param.searchFields = params.searchFields != undefined ? params.searchFields : '';
             param.f = 'json';
             var service = new MapService(me.options);
             return service.request('find', param, function(error, response) {

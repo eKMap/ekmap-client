@@ -28,7 +28,7 @@ export class FeatureInfomation extends mapboxgl.Evented {
         this.icon = this.options.icon ? this.options.icon : 'fa fa-flickr';
         this.active = false;
         this.target = this.options.target;
-
+        this.listeners = {};
     }
 
     /**
@@ -54,11 +54,13 @@ export class FeatureInfomation extends mapboxgl.Evented {
                 if (me.active) {
                     cursorDom[0].style.cursor = 'crosshair';
                     me.fire('click', me);
-                    me._map.on('click', onClick);
+                    me.offEvent();
+                 me.listeners["click"] = me.onClick.bind(me);
+                    me._map.on('click', me.listeners["click"]);
                 } else {
                     cursorDom[0].style.cursor = 'grab';
+                me.offEvent();
                     me.fire('unclick', me);
-                    me._map.off('click', onClick)
                 }
             });
         }
@@ -67,142 +69,164 @@ export class FeatureInfomation extends mapboxgl.Evented {
             if (me.active) {
                 cursorDom[0].style.cursor = 'crosshair';
                 me.fire('click', me);
-                me._map.on('click', onClick);
+                me.offEvent();
+                me.listeners["click"] = me.onClick.bind(me);
+                me._map.on('click', me.listeners["click"]);
             } else {
                 cursorDom[0].style.cursor = 'grab';
+                me.offEvent();
                 me.fire('unclick', me);
-                me._map.off('click', onClick)
             }
         });
-        return me._container
+        return me._container;
+    }
 
-        function onClick(e) {
-            var layers = map.getStyle().layers;
-            layers.forEach(layer => {
-                if (layer.metadata && layer.metadata.url && layer.metadata.type == 'overlayer' && layer.layout.visibility === "visible") {
-                    var mapService = new mapboxgl.ekmap.MapService({
-                        url: layer.metadata.url,
-                        token: layer.metadata.token
-                    });
-                    mapService.identify().on(map).at(e.lngLat).run(function(error, obj) {
-                        var features = [];
-                        if (obj.length > 0 && me.setStyle) {
-                            for (var i = 0; i < obj.length; i++) {
-                                //Point
-                                if (obj[i].geometryType == 'esriGeometryPoint') {
+    onClick(e) {
+        var me = this;
+        var layers = map.getStyle().layers;
+        layers.forEach(layer => {
+            if (layer.metadata && layer.metadata.url && layer.metadata.type == 'overlayer' && layer.layout.visibility === "visible") {
+                var mapService = new mapboxgl.ekmap.MapService({
+                    url: layer.metadata.url,
+                    token: layer.metadata.token
+                });
+                mapService.identify().on(map).at(e.lngLat).run(function(error, obj) {
+                    var features = [];
+                    if (obj.length > 0 && me.setStyle) {
+                        for (var i = 0; i < obj.length; i++) {
+                            //Point
+                            if (obj[i].geometryType == 'esriGeometryPoint') {
+                                features.push({
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'Point',
+                                        'coordinates': [
+                                            obj[i].geometry.x,
+                                            obj[i].geometry.y
+                                        ]
+                                    },
+                                    'properties': {
+                                        'name': 'point'
+                                    }
+                                })
+                            } else {
+                                var coordinates;
+                                if (obj[i].geometry.paths)
+                                    coordinates = obj[i].geometry.paths[0];
+                                else
+                                    coordinates = obj[i].geometry.rings[0];
+                                if (obj[i].geometryType == 'esriGeometryPolyline')
                                     features.push({
                                         'type': 'Feature',
                                         'geometry': {
-                                            'type': 'Point',
-                                            'coordinates': [
-                                                obj[i].geometry.x,
-                                                obj[i].geometry.y
-                                            ]
+                                            'type': 'LineString',
+                                            'coordinates': coordinates
                                         },
                                         'properties': {
-                                            'name': 'point'
+                                            'name': 'line'
                                         }
                                     })
-                                } else {
-                                    var coordinates;
-                                    if (obj[i].geometry.paths)
-                                        coordinates = obj[i].geometry.paths[0];
-                                    else
-                                        coordinates = obj[i].geometry.rings[0];
-                                    if (obj[i].geometryType == 'esriGeometryPolyline')
-                                        features.push({
-                                            'type': 'Feature',
-                                            'geometry': {
-                                                'type': 'LineString',
-                                                'coordinates': coordinates
-                                            },
-                                            'properties': {
-                                                'name': 'line'
-                                            }
-                                        })
-                                    else
-                                        features.push({
-                                            'type': 'Feature',
-                                            'geometry': {
-                                                'type': 'LineString',
-                                                'coordinates': coordinates
-                                            },
-                                            'properties': {
-                                                'name': 'area'
-                                            }
-                                        })
-                                }
-                                var data = {
-                                    'type': 'FeatureCollection',
-                                    'features': features
-                                }
-                                if (!map.getSource('feature-info')) {
-
-                                    map.addSource('feature-info', {
-                                        'type': 'geojson',
-                                        'data': data
-                                    })
-
-                                    map.addLayer({
-                                        'id': 'point',
-                                        'type': 'circle',
-                                        'source': 'feature-info',
-                                        'paint': {
-                                            'circle-radius': 10,
-                                            'circle-color': '#0000ff'
+                                else
+                                    features.push({
+                                        'type': 'Feature',
+                                        'geometry': {
+                                            'type': 'LineString',
+                                            'coordinates': coordinates
                                         },
-                                        'filter': ['in', 'name']
+                                        'properties': {
+                                            'name': 'area'
+                                        }
                                     })
-
-                                    map.addLayer({
-                                        'id': 'line',
-                                        'type': 'line',
-                                        'source': 'feature-info',
-                                        'layout': {
-                                            'line-join': 'round',
-                                            'line-cap': 'round'
-                                        },
-                                        'paint': {
-                                            'line-color': '#000',
-                                            'line-width': 5
-                                        },
-                                        'filter': ['in', 'name']
-                                    })
-
-                                    map.addLayer({
-                                        'id': 'area',
-                                        'type': 'fill',
-                                        'source': 'feature-info',
-                                        'layout': {},
-                                        'paint': {
-                                            'fill-outline-color': '#484896',
-                                            'fill-color': '#6e599f',
-                                            'fill-opacity': 0.75
-                                        },
-                                        'filter': ['in', 'name']
-                                    })
-                                    me.setFilter(map);
-                                } else {
-                                    map.getSource('feature-info').setData(data);
-                                    me.setFilter(map);
-                                }
-                                if (map.getLayer('point') && map.getLayer('line'))
-                                    map.moveLayer('line', 'point');
                             }
-                            obj.coordinate = e.lngLat;
-                        }
-                        /**
-                         * @event mapboxgl.ekmap.control.FeatureInfomation#selectfeatures
-                         * @description Fired when the feature is selected.
-                         */
-                        me.fire('selectfeatures', obj);
-                    }, "");
-                }
-            });
-        }
+                            var data = {
+                                'type': 'FeatureCollection',
+                                'features': features
+                            }
+                            if (!map.getSource('feature-info')) {
 
+                                map.addSource('feature-info', {
+                                    'type': 'geojson',
+                                    'data': data
+                                })
+
+                                map.addLayer({
+                                    'id': 'point',
+                                    'type': 'circle',
+                                    'source': 'feature-info',
+                                    'paint': {
+                                        'circle-radius': 10,
+                                        'circle-color': '#0000ff'
+                                    },
+                                    'filter': ['in', 'name']
+                                })
+
+                                map.addLayer({
+                                    'id': 'line',
+                                    'type': 'line',
+                                    'source': 'feature-info',
+                                    'layout': {
+                                        'line-join': 'round',
+                                        'line-cap': 'round'
+                                    },
+                                    'paint': {
+                                        'line-color': '#000',
+                                        'line-width': 5
+                                    },
+                                    'filter': ['in', 'name']
+                                })
+
+                                map.addLayer({
+                                    'id': 'area',
+                                    'type': 'fill',
+                                    'source': 'feature-info',
+                                    'layout': {},
+                                    'paint': {
+                                        'fill-outline-color': '#484896',
+                                        'fill-color': '#6e599f',
+                                        'fill-opacity': 0.75
+                                    },
+                                    'filter': ['in', 'name']
+                                })
+                                me.setFilter(map);
+                            } else {
+                                map.getSource('feature-info').setData(data);
+                                me.setFilter(map);
+                            }
+                            if (map.getLayer('point') && map.getLayer('line'))
+                                map.moveLayer('line', 'point');
+                        }
+                        obj.coordinate = e.lngLat;
+                    }
+                    /**
+                     * @event mapboxgl.ekmap.control.FeatureInfomation#selectfeatures
+                     * @description Fired when the feature is selected.
+                     */
+                    me.fire('selectfeatures', { features: obj });
+                }, "");
+            }
+        });
     }
 
+    /**
+     * @function mapboxgl.ekmap.control.Select.prototype.activate
+     * @description Activate control Select.
+     */
+     activate() {
+        var cursorDom = $('.mapboxgl-canvas-container')
+        cursorDom[0].style.cursor = 'crosshair';
+        this.offEvent();
+        this.listeners["click"] = this.onClick.bind(this);
+        this._map.on('click', this.listeners["click"]);
+        // this.fire('startselect', this);
+        this.active = true;
+    }
+
+    offEvent() {
+        for (var evt in this.listeners) {
+            this._map.off('click', this.listeners[evt]);
+        }
+        this.listeners = {};
+    }
 
     /**
      * @private

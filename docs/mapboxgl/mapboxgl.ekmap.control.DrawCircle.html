@@ -325,6 +325,35 @@
 	
         <tr>
             
+                <td class="name"><code>radius</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    2000
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Meter radius.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
                 <td class="name"><code>target</code></td>
             
             
@@ -391,6 +420,14 @@
         <li><a href="mapboxgl.ekmap.control.DrawCircle.html#event:circleDrawn">mapboxgl.ekmap.control.DrawCircle#event:circleDrawn</a></li>
     
         <li><a href="mapboxgl.ekmap.control.DrawCircle.html#event:startDrawCircle">mapboxgl.ekmap.control.DrawCircle#event:startDrawCircle</a></li>
+    
+        <li>mapboxgl.ekmap.control.DrawCircle#event:centerchanged</li>
+    
+        <li>mapboxgl.ekmap.control.DrawCircle#event:radiuschanged</li>
+    
+        <li>mapboxgl.ekmap.control.DrawCircle#event:click</li>
+    
+        <li>mapboxgl.ekmap.control.DrawCircle#event:contextmenu</li>
     </ul>
     
 
@@ -407,7 +444,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config...., }) map.addControl(new mapboxgl.ekmap.control.DrawCircle({         editable : true,         target: // the id attribute of target}),'bottom-right');</code></pre>
+    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config...., }) var myCircle = new mapboxgl.ekmap.control.DrawCircle({         editable : true,         target: // the id attribute of target}) map.addControl(myCircle); myCircle.on('centerchanged', function (circleObj) {        console.log('New center:', circleObj.circle.getCenter());    }); myCircle.once('radiuschanged', function (circleObj) {        console.log('New radius (once!):', circleObj.circle.getRadius());    }); myCircle.on('click', function (mapMouseEvent) {        console.log('Click:', mapMouseEvent.data.point);    }); myCircle.on('contextmenu', function (mapMouseEvent) {        console.log('Right-click:', mapMouseEvent.data.lngLat);    });</code></pre>
     
 
     
@@ -453,7 +490,7 @@
     
         
         <div class="tag-source">
-            control/DrawCircle.js, line 120
+            control/DrawCircle.js, line 152
         </div>
         
     </div>
@@ -524,7 +561,7 @@
     
         
         <div class="tag-source">
-            control/DrawCircle.js, line 62
+            control/DrawCircle.js, line 81
         </div>
         
     </div>
@@ -601,7 +638,7 @@
     
         
         <div class="tag-source">
-            control/DrawCircle.js, line 165
+            control/DrawCircle.js, line 208
         </div>
         
     </div>
@@ -672,7 +709,7 @@
     
         
         <div class="tag-source">
-            control/DrawCircle.js, line 145
+            control/DrawCircle.js, line 188
         </div>
         
     </div>
@@ -736,6 +773,198 @@
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="getCenter">
+            
+            getCenter<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/DrawCircle.js, line 230
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Object
+                        
+                    
+            </td>
+            <td class="description last">Circle center position</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="getRadius">
+            
+            getRadius<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{number}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/DrawCircle.js, line 238
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        number
+                        
+                    
+            </td>
+            <td class="description last">Current radius, in meters</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="onAdd">
             
             onAdd<span class="signature">(map)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{HTMLElement}</span>
@@ -743,7 +972,7 @@
     
         
         <div class="tag-source">
-            control/DrawCircle.js, line 41
+            control/DrawCircle.js, line 60
         </div>
         
     </div>
@@ -888,7 +1117,7 @@
     
         
         <div class="tag-source">
-            control/DrawCircle.js, line 79
+            control/DrawCircle.js, line 98
         </div>
         
     </div>
@@ -1026,14 +1255,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="setRadius">
+        <h4 class="name" id="remove">
             
-            setRadius<span class="signature">(newRadius)</span>
+            remove<span class="signature">()</span>
         </h4>
     
         
         <div class="tag-source">
-            control/DrawCircle.js, line 136
+            control/DrawCircle.js, line 222
         </div>
         
     </div>
@@ -1044,7 +1273,219 @@
     
     
     <div class="description">
-        <p>Change radius of circle.</p>
+        <p>remove DrawCircle.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="setCenter">
+            
+            setCenter<span class="signature">(position)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{MapboxCircle}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/DrawCircle.js, line 178
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>position</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        MapboxCircle
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="setRadius">
+            
+            setRadius<span class="signature">(newRadius)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            control/DrawCircle.js, line 168
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Change radius of circle when created circle.</p>
     </div>
     
 
@@ -1152,7 +1593,7 @@
 
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Mon Jun 21 2021 17:34:16 GMT+0700 (Indochina Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> on Fri Jun 25 2021 09:38:24 GMT+0700 (Indochina Time)
         </footer>
     </div>
 </div>

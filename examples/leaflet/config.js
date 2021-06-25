@@ -161,17 +161,17 @@ var exampleConfig = {
                     }
                 ]
             },
-            // vectortile: {
-            //     name: "Vector Tile Services",
-            //     name_en: "Vector Tile Services",
-            //     content: [{
-            //             name: "Mapbox Vector Tile",
-            //             name_en: "Mapbox Vector Tile",
-            //             thumbnail: "vectorTile_Map.png",
-            //             fileName: "vectorTile_Map",
-            //             subject: "Add vector tile.",
-            //             description: ""
-            //         },
+            vectortile: {
+                name: "Vector Tile Services",
+                name_en: "Vector Tile Services",
+                content: [{
+                        name: "Mapbox Vector Tile",
+                        name_en: "Mapbox Vector Tile",
+                        thumbnail: "vectorTile_Map.png",
+                        fileName: "vectorTile_Map",
+                        subject: "Add vector tile.",
+                        description: ""
+                    },
             //         // {
             //         //     name: "Mapbox Vector Tile Overlay",
             //         //     name_en: "Mapbox Vector Tile Overlay",
@@ -220,8 +220,8 @@ var exampleConfig = {
             //         //     subject: "Filter Province.",
             //         //     description: "Create polygon or line buffer to display data on polygon"
             //         // }
-            //     ]
-            // },
+                ]
+            },
             control: {
                 name: "Control",
                 name_en: "Control",

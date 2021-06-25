@@ -9,10 +9,12 @@ import { Util } from '../core/Util';
  * @param {Object} options Construction parameters.
  * @param {Array} options.baseLayers=null List of baselayer for which you want to display TreeLayer.
  * @param {Array} options.overLayers=null List of overlayer for which you want to display TreeLayer.
+ * @param {Array} options.vectorTiledMapLayer=null List of vectorlayer for which you want to display TreeLayer.
  * @param {Boolean} options.opacityControl=false Display opacity.
  * @param {string} options.title=TREELAYER Name of header.
  * @param {string} options.width=220px width of treelayer.
  * @param {String} options.tooltip=Treelayer Tooltip of button.
+ * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @param {Array<String>} options.layerIdHidden Array layerId you not show on treelayer.
  * 
  *
@@ -75,6 +77,7 @@ export class TreeLayer extends mapboxgl.Evented {
         if (this._vectorTiledOption !== null)
             this._vectorTiledOption = this._vectorTiledOption.objectLayer
         this._opacityControlOption = options.opacityControl || false;
+        this.target = this.options.target;
         this.className = 'mapboxgl-ctrl mapboxgl-ctrl-group' + ' ' + (options.className !== undefined ? options.className : '');
     }
 
@@ -87,10 +90,6 @@ export class TreeLayer extends mapboxgl.Evented {
     onAdd(map) {
         this._map = map;
         let me = this; //might use this later
-        this.div = document.createElement("div");
-        this.button = document.createElement("button");
-        this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Tree layer';
-        this.button.className = 'mapboxgl-btn-treelayer';
         this._map.on('zoom', function() {
             if (me._panel) {
                 var zoom = me._map.getZoom();
@@ -124,17 +123,26 @@ export class TreeLayer extends mapboxgl.Evented {
                 });
             }
         })
-        this.button.addEventListener("click", function(e) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (me._panel) {
-                me._container.removeChild(me._panel);
-            }
-            me.button.style.display = "none";
-            me.currentZoom = me._map.getZoom()
-            me._panel = me.createLayerInputToggle();
-            me._container.appendChild(me._panel);
-        })
+        if(!this.target){
+            this.button = document.createElement("button");
+            this.button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Tree layer';
+            this.button.className = 'mapboxgl-btn-treelayer';
+            this.button.addEventListener("click", function(e) {
+                event.preventDefault();
+                event.stopPropagation();
+                if (me._panel) {
+                    me._container.removeChild(me._panel);
+                }
+                me.button.style.display = "none";
+                me.currentZoom = me._map.getZoom()
+                me._panel = me.createLayerInputToggle();
+                me._container.appendChild(me._panel);
+            })
+        }else{
+            var panel = document.getElementById(this.target);
+            this.createLayerInputToggle(panel)
+        }
+      
         this._container = document.createElement('div');
         this._container.setAttribute("id", "container");
         me._container.style.overflow = "auto";
@@ -143,12 +151,17 @@ export class TreeLayer extends mapboxgl.Evented {
         me._container.style.background = "#fff";
         this._container.className = this.className;
         //this._container.style.padding = "8px";
-        $(document).click((event) => {
-            if (!$(event.target).closest('#container').length) {
-                me.close();
-            }
-        });
-        this._container.appendChild(this.button);
+        
+        if(this.button){
+            this._container.appendChild(this.button);
+            $(document).click((event) => {
+                if (!$(event.target).closest('#container').length) {
+                    me.close();
+                }
+            });
+        }
+        else
+            this._container.style.display = 'none';
         return this._container;
     }
 
@@ -169,37 +182,43 @@ export class TreeLayer extends mapboxgl.Evented {
      * @private
      * @description Create layer input
      */
-    createLayerInputToggle() {
+    createLayerInputToggle(divTarget) {
         var me = this;
-        var div = document.createElement("div");
-        div.id = 'opacity-control';
-        div.style.maxHeight = "300px";
-        div.style.maxWidth = "500px";
-        div.style.width = this.widthDiv;
-        div.style.padding = "0px 1rem";
-        div.className = 'scrollbar';
-        var header = document.createElement("div");
-        header.style.textAlign = 'center';
-        header.style.fontWeight = '700';
-        header.style.borderBottom = '1px solid #dddcdb';
-        header.style.padding = '10px';
-        header.innerHTML = this.options.title != undefined ? this.options.title : 'TREELAYER';
-        this.closeButton = document.createElement('a');
-        this.closeButton.style.position = 'absolute';
-        this.closeButton.style.top = '0';
-        this.closeButton.style.right = '5px';
-        this.imgClose = document.createElement('img');
-        this.imgClose.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC");
-        this.imgClose.style.padding = '5px';
-        this.imgClose.style.cursor = 'pointer';
-        this.closeButton.appendChild(this.imgClose);
-        div.appendChild(header);
-        div.appendChild(this.closeButton);
-        this.closeButton.addEventListener("click", event => {
-            event.preventDefault();
-            event.stopPropagation();
-            me.close();
-        })
+        var div;
+        if(!divTarget){
+            div = document.createElement("div");
+            div.id = 'opacity-control';
+            div.style.maxHeight = "300px";
+            div.style.maxWidth = "500px";
+            div.style.width = this.widthDiv;
+            div.style.padding = "0px 1rem";
+            div.className = 'scrollbar';
+            var header = document.createElement("div");
+            header.style.textAlign = 'center';
+            header.style.fontWeight = '700';
+            header.style.borderBottom = '1px solid #dddcdb';
+            header.style.padding = '10px';
+            header.innerHTML = this.options.title != undefined ? this.options.title : 'TREELAYER';
+            this.closeButton = document.createElement('a');
+            this.closeButton.style.position = 'absolute';
+            this.closeButton.style.top = '0';
+            this.closeButton.style.right = '5px';
+            this.imgClose = document.createElement('img');
+            this.imgClose.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEUAAACCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4OCg4MVktI5AAAAMnRSTlMAAQIDBAUGBwgJCg0ODxARJXV7hYiLj5GUmJ6go6aqsrS1w8XIytHT19nc4ubo6ev5+yWLQbAAAABzSURBVBgZncFHEoJAAATA2YBgFhQTBpBkAnX+/zjZpSiult34xeasYfmFgnHkRaOx5EvBkAlTDaxYz9CSMTMvZDVFR8b88DlBz3mTC/TEnuR1iI448DaPeB+hJU8sXIgdH2NYEfMBGmtWCsY2cWAFpcI/vj+FCU1mGENhAAAAAElFTkSuQmCC");
+            this.imgClose.style.padding = '5px';
+            this.imgClose.style.cursor = 'pointer';
+            this.closeButton.appendChild(this.imgClose);
+            div.appendChild(header);
+            div.appendChild(this.closeButton);
+            this.closeButton.addEventListener("click", event => {
+                event.preventDefault();
+                event.stopPropagation();
+                me.close();
+            })
+        }else{
+            div = divTarget
+        }
+       
         if (this._baseLayersOption !== null) {
             Object.keys(this._baseLayersOption).forEach((layer) => {
                 const layerId = layer;
@@ -324,18 +343,15 @@ export class TreeLayer extends mapboxgl.Evented {
         checkBox.style.height = '1.5rem';
         checkBox.style.width = '1.5rem';
         var layer = this._map.getLayer(layerId);
-        // this._map.getLayoutProperty(layerId, 'visibility')
-        if (this.currentZoom < layer.minzoom || this.currentZoom > layer.maxzoom) {
-            checkBox.checked = false;
-            checkBox.disabled = true;
-        } else {
-            checkBox.checked = true;
-
+        if(layer){
+            if (this.currentZoom < layer.minzoom || this.currentZoom > layer.maxzoom) {
+                checkBox.checked = false;
+                checkBox.disabled = true;
+            } else {
+                checkBox.checked = true;
+    
+            }
         }
-        // if (layer.visibility == 'none')
-        //     checkBox.checked = false;
-        // else
-        //     checkBox.checked = true;
 
         checkBox.addEventListener('change', (event) => {
             const ckFlag = event.target.checked;

@@ -13,18 +13,37 @@ const MapboxCircle = require('mapbox-gl-circle');
  * @param {Number} options.fillOpacity=0.25 Fill opacity.
  * @param {Number} options.strokeColor=#fbb03b Stroke color.
  * @param {String} options.tooltip=Drawcircle Tooltip of button.
+ * @param {String} options.radius=2000 Meter radius.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.DrawCircle#circleDrawn
  * @fires mapboxgl.ekmap.control.DrawCircle#startDrawCircle
+ * @fires mapboxgl.ekmap.control.DrawCircle#centerchanged
+ * @fires mapboxgl.ekmap.control.DrawCircle#radiuschanged
+ * @fires mapboxgl.ekmap.control.DrawCircle#click
+ * @fires mapboxgl.ekmap.control.DrawCircle#contextmenu
+ * 
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
  *  })
- *  map.addControl(new mapboxgl.ekmap.control.DrawCircle({
+ *  var myCircle = new mapboxgl.ekmap.control.DrawCircle({
  *          editable : true,
  *          target: // the id attribute of target
- * }),'bottom-right');
+ * })
+ *  map.addControl(myCircle);
+ *  myCircle.on('centerchanged', function (circleObj) {
+ *         console.log('New center:', circleObj.circle.getCenter());
+ *     });
+ *  myCircle.once('radiuschanged', function (circleObj) {
+ *         console.log('New radius (once!):', circleObj.circle.getRadius());
+ *     });
+ *  myCircle.on('click', function (mapMouseEvent) {
+ *         console.log('Click:', mapMouseEvent.data.point);
+ *     });
+ *  myCircle.on('contextmenu', function (mapMouseEvent) {
+ *         console.log('Right-click:', mapMouseEvent.data.lngLat);
+ *     });
  */
 export class DrawCircle extends mapboxgl.Evented {
 
@@ -33,7 +52,7 @@ export class DrawCircle extends mapboxgl.Evented {
         this.options = options ? options : {};
         this.target = this.options.target;
         this.active = false;
-        this.radius = undefined;
+        this.radius = this.options.radius != undefined? this.options.radius : undefined;
         this.listeners = {};
         this.drawCircle = ''
     }
@@ -107,6 +126,7 @@ export class DrawCircle extends mapboxgl.Evented {
     }
 
     onClick(e) {
+        var me = this;
         if (this.drawCircle)
             this.drawCircle.remove();
         this.drawCircle = new MapboxCircle({ lat: e.lngLat.lat, lng: e.lngLat.lng }, this.radius != undefined ? this.radius : 2000, {
@@ -117,6 +137,18 @@ export class DrawCircle extends mapboxgl.Evented {
             strokeWeight: 0.5,
             strokeOpacity: 0.75
         }).addTo(this._map);
+        this.drawCircle.on('radiuschanged',function(circleObj){
+            me.fire('radiuschanged', { data: me.drawCircle._circle, circle:circleObj  });
+        });
+        this.drawCircle.on('centerchanged',function(circleObj){
+            me.fire('centerchanged', { data: me.drawCircle._circle,circle:circleObj });
+        });
+        this.drawCircle.on('click',function(mapMouseEvent){
+            me.fire('click', { data: mapMouseEvent });
+        });
+        this.drawCircle.on('contextmenu',function(mapMouseEvent){
+            me.fire('contextmenu', { data: mapMouseEvent });
+        })
         /**
          * @event mapboxgl.ekmap.control.DrawCircle#circleDrawn
          * @description Fired when circle drawn
@@ -135,12 +167,23 @@ export class DrawCircle extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.control.DrawCircle.prototype.setRadius
-     * @description Change radius of circle.
+     * @description Change radius of circle when created circle.
      * @param {number} newRadius Meter radius.
      */
     setRadius(newRadius) {
+        this.drawCircle.setRadius(newRadius)
         this.radius = newRadius
     }
+
+    /**
+     * @function mapboxgl.ekmap.control.DrawCircle.prototype.setCenter
+     * @param {{lat: number, lng: number}} position
+     * @return {MapboxCircle}
+     */
+    setCenter(position) {
+        this.drawCircle.setCenter(position);
+    }
+
 
     /**
      * @function mapboxgl.ekmap.control.DrawCircle.prototype.deactivate
@@ -177,10 +220,27 @@ export class DrawCircle extends mapboxgl.Evented {
     }
 
     /**
-     *@private
+     * @function mapboxgl.ekmap.control.DrawCircle.prototype.remove
+     * @description remove DrawCircle.
      */
     remove() {
         this.drawCircle.remove();
+    }
+
+    /**
+     * @function mapboxgl.ekmap.control.DrawCircle.prototype.getCenter
+     * @return {{lat: number, lng: number}} Circle center position
+     */
+    getCenter() {
+        return this.drawCircle.getCenter();
+    }
+
+    /**
+     * @function mapboxgl.ekmap.control.DrawCircle.prototype.getRadius
+     * @return {number} Current radius, in meters
+     */
+    getRadius() {
+        return this.drawCircle.getRadius();
     }
 }
 

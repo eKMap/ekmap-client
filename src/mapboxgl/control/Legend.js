@@ -85,6 +85,7 @@ export class Legend extends mapboxgl.Evented {
             this._div.style.display = 'none';
         return this._div;
     }
+    
 
     /**
      * @function mapboxgl.ekmap.control.Legend.prototype.onRemove
@@ -105,8 +106,9 @@ export class Legend extends mapboxgl.Evented {
      */
     createLayerInputToggle(divTarget) {
         var me = this;
+        var div;
         if (!divTarget) {
-            var div = document.createElement("div");
+            div = document.createElement("div");
             div.className = 'scrollbar';
             div.id = 'opacity-control';
             var header = document.createElement("div");
@@ -132,7 +134,7 @@ export class Legend extends mapboxgl.Evented {
                 me.close();
             })
         } else
-            var div = divTarget;
+            div = divTarget;
         div.style.maxHeight = "500px";
         div.style.maxWidth = "300px";
         div.style.width = "220px";
@@ -164,7 +166,7 @@ export class Legend extends mapboxgl.Evented {
                         var span
                         if (me.showLabel) {
                             span = document.createElement("span");
-                            span.innerHTML = listLenged[i].legend[j].label;
+                            span.innerHTML = listLenged[i].legend[j].label != '' ? listLenged[i].legend[j].label : listLenged[i].layerName;
                             span.style.paddingLeft = '15px';
                         }
                         var li1 = document.createElement("li");

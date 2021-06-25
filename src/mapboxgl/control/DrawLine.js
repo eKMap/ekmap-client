@@ -47,6 +47,7 @@ export class DrawLine extends mapboxgl.Evented {
         this.units = this.options.units != undefined ? this.options.units : "meters";
         this.buffer = this.options.buffer;
         this.draw = draw;
+        this.line = null;
     }
 
     /**
@@ -130,11 +131,17 @@ export class DrawLine extends mapboxgl.Evented {
 
     /**
      * @function mapboxgl.ekmap.control.DrawLine.prototype.setBuffer
-     * @description Change buffer of line.
+     * @description Change buffer of line when created line.
      * @param {number} newBuffer buffer.
      */
     setBuffer(newBuffer) {
         this.buffer = newBuffer;
+        var source = this._map.getSource('buffered');
+        if(source){
+            var buffered = turf.buffer(this.line, newBuffer, { units: this.units });
+            this.fire('lineBufferDrawn', { data: buffered });
+            source.setData(buffered);
+        }
     }
 
     /**
@@ -188,20 +195,21 @@ export class DrawLine extends mapboxgl.Evented {
 
     updateAreaPolygon(e) {
         if (e.features.length > 0) {
-            var line = e.features[0];
-            var buffered = turf.buffer(line, this.buffer, { units: this.units });
+            this.line = e.features[0];
+            var buffered = turf.buffer(this.line, this.buffer, { units: this.units });
             /**
              * @event mapboxgl.ekmap.control.DrawLine#lineBufferDrawn
              * @description Fired when line drawn
              */
             this.fire('lineBufferDrawn', { data: buffered });
+            this._map.addSource('buffered',{
+                'type': 'geojson',
+                'data': buffered
+            })
             this._map.addLayer({
                 'id': 'buffered',
                 'type': 'fill',
-                'source': {
-                    'type': 'geojson',
-                    'data': buffered
-                },
+                'source': 'buffered',
                 'layout': {},
                 'paint': {
                     'fill-color': '#fbb03b',
@@ -211,6 +219,10 @@ export class DrawLine extends mapboxgl.Evented {
             })
         }
 
+    }
+
+    getBuffer(){
+        return this.buffer
     }
 }
 
