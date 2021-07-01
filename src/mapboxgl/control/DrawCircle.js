@@ -52,7 +52,7 @@ export class DrawCircle extends mapboxgl.Evented {
         this.options = options ? options : {};
         this.target = this.options.target;
         this.active = false;
-        this.radius = this.options.radius != undefined? this.options.radius : undefined;
+        this.radius = this.options.radius != undefined ? this.options.radius : undefined;
         this.listeners = {};
         this.drawCircle = ''
     }
@@ -72,7 +72,7 @@ export class DrawCircle extends mapboxgl.Evented {
         let input = this.createLayerInputToggle();
         let me = this; //might use this later
         var cursorDom = $('.mapboxgl-canvas-container')
-        input.addEventListener("click", function(e) {
+        input.addEventListener("click", function (e) {
             if (me._map.getLayer('buffered')) {
                 me._map.removeLayer('buffered');
                 me._map.removeSource('buffered')
@@ -137,16 +137,16 @@ export class DrawCircle extends mapboxgl.Evented {
             strokeWeight: 0.5,
             strokeOpacity: 0.75
         }).addTo(this._map);
-        this.drawCircle.on('radiuschanged',function(circleObj){
-            me.fire('radiuschanged', { data: me.drawCircle._circle, circle:circleObj  });
+        this.drawCircle.on('radiuschanged', function (circleObj) {
+            me.fire('radiuschanged', { data: me.drawCircle._circle, circle: circleObj });
         });
-        this.drawCircle.on('centerchanged',function(circleObj){
-            me.fire('centerchanged', { data: me.drawCircle._circle,circle:circleObj });
+        this.drawCircle.on('centerchanged', function (circleObj) {
+            me.fire('centerchanged', { data: me.drawCircle._circle, circle: circleObj });
         });
-        this.drawCircle.on('click',function(mapMouseEvent){
+        this.drawCircle.on('click', function (mapMouseEvent) {
             me.fire('click', { data: mapMouseEvent });
         });
-        this.drawCircle.on('contextmenu',function(mapMouseEvent){
+        this.drawCircle.on('contextmenu', function (mapMouseEvent) {
             me.fire('contextmenu', { data: mapMouseEvent });
         })
         /**
@@ -214,7 +214,7 @@ export class DrawCircle extends mapboxgl.Evented {
         cursorDom[0].style.cursor = 'help';
         this.offEvent();
         this.listeners["click"] = this.onClick.bind(this);
-        this._map.on('click', this.listeners["click"]);
+        this._map.once('click', this.listeners["click"]);
         // this.fire('startDrawCircle', this);
         this.active = true;
     }

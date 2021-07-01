@@ -343,11 +343,12 @@
     </div>
     <hr />
     <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
         var map = new mapboxgl.Map({
             container: 'divMapId',
             style: {
                 "version": 8,
-                "glyphs": 'https://viegisserver.ekgis.vn/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf',
+                "glyphs": 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
                 "sources": {},
                 "layers": []
             },
@@ -370,7 +371,6 @@
             widgets.loader.showLoader("data loading...");
             var divData = document.getElementById('listData');
             $.get("../../examples/data/data_tour.json", function(response) {
-                console.log(response)
                 var listData = response.result;
                 listData.forEach(feature => {
                     features.push({

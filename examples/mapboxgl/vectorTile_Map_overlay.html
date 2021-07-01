@@ -35,12 +35,12 @@
             zoom: 4.848587811931847
         });
 
-        var maps = new mapboxgl.ekmap.VectorTiledMapLayer({
+        var vectorTileMap = new mapboxgl.ekmap.VectorTiledMapLayer({
             url: urlVectorService145,
             token: tokenKey
         }).addTo(map);
 
-        maps.on('loadend', function() {
+        vectorTileMap.on('loaded', function() {
             var vnMap = new mapboxgl.ekmap.TiledVietNamMapLayer({
                 token: tokenVN
             }).addTo(map)

@@ -6,6 +6,7 @@ import mapboxgl from 'mapbox-gl';
  * @classdesc The TileLayer class.
  * @category  Layer
  * @param {Object} options Construction parameters.
+ * @param {Array<string>} options.urls An array of one or more tile source URLs, as in the TileJSON spec.
  * @param {string} options.url Required: URL of the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Map Service} with a tile cache.
  * @param {string} options.token Will use this token to authenticate all calls to the service.
  * @param {string} options.id Id of layer and source.

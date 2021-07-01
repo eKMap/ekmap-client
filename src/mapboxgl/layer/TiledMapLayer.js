@@ -9,11 +9,24 @@ import mapboxgl from 'mapbox-gl';
  * @param {string} options.url Required: URL of the {@link https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm|Map Service} with a tile cache.
  * @param {string} options.token Will use this token to authenticate all calls to the service.
  * @param {string} options.attribution Contains an attribution to be displayed when the map is shown to a user.
+ * @param {string} options.requestParams Contains an attribution to be displayed when the map is shown to a user.
  * @param {string} options.tileSize=512 Units in pixels. The minimum visual size to display tiles for this layer. Only configurable for raster layers.
  * @param {Number} options.minzoom The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden (between 0 and 24 inclusive).
  * @param {Number} options.maxzoom The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden (between 0 and 24 inclusive).
  * @param {Array} options.bounds=[-180,-85.051129,180,85.051129] An array containing the longitude and latitude of the southwest and northeast corners of the source's bounding box in the following <br> order: [sw.lng, sw.lat, ne.lng, ne.lat]. When this property is included in a source, no tiles outside of the given bounds are requested<br> by Mapbox GL.
  * @param {string} options.id Id of layer and source.
+ * @fires mapboxgl.ekmap.TiledMapLayer#loaded
+ * @example
+ *  var map = new mapboxgl.Map({
+ *      //config....
+ *  });
+ *  var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+ *       url: {{YOUR_URL_SERVER}},
+ *       token: {{YOUR_TOKEN}}
+ *  }).addTo(map);
+ *  tiledMap.on('loaded',function(){
+ *      //Event when the tile map loaded
+ *  })
  * @extends {mapboxgl.Evented}
  */
 export class TiledMapLayer extends mapboxgl.Evented {
@@ -42,9 +55,10 @@ export class TiledMapLayer extends mapboxgl.Evented {
                 //    this.tileUrl = this.tileUrl.replace('://tiles', '://tiles{s}');
                 //    options.subdomains = ['1', '2', '3', '4'];
                 //}
-            if (this.options.token) {
+            if (this.options.token && (options.requestParams && Object.keys(options.requestParams).length > 0)) {
+                this.tileUrl += '&token=' + this.options.token;
+            }else
                 this.tileUrl += '?token=' + this.options.token;
-            }
             //return new mapboxgl.ekmap.MapService(this.tileUrl);
             // init layer by calling TileLayers initialize method
             //TileLayer.prototype.initialize.call(this, this.tileUrl, options);
@@ -116,6 +130,11 @@ export class TiledMapLayer extends mapboxgl.Evented {
                 })
             }
             me.layer = map.getLayer(me.id);
+            /**
+                * @event mapboxgl.ekmap.TiledMapLayer#loaded
+                * @description Fired when the tile map loaded.
+                */
+             me.fire("loaded");
         } else {
             this.getExtent(function(obj) {
                 var bounds = [];
@@ -218,6 +237,11 @@ export class TiledMapLayer extends mapboxgl.Evented {
                     }
                 }
                 me.layer = map.getLayer(me.id);
+                /**
+                * @event mapboxgl.ekmap.TiledMapLayer#loaded
+                * @description Fired when the tile map loaded.
+                */
+                me.fire("loaded");
             })
         }
         return me;

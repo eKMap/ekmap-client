@@ -87,12 +87,14 @@
         </div>
     </div>
     <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
+
         var map = new mapboxgl.Map({
             container: 'divMapId',
             center: [105.60200498678955, 21.029573713872082],
             style: {
                 version: 8,
-                glyphs: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf',
+                glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
                 sources: {},
                 layers: [],
             },

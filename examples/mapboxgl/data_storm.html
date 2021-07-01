@@ -277,13 +277,14 @@
     </div>
     <script type="text/javascript" include="echarts" src="../js/include-web.js"></script>
     <script type="text/javascript">
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZWtnaXMiLCJhIjoiY2tnenZ5NDN6MDl6ZDJ4c2lkZzBjZHpuZyJ9.d1wSWx_jMWjNTbbbhS6iMg';
         var data;
         var chart, div, popup = '';
         var map = new mapboxgl.Map({
             container: 'divMapId',
             style: {
                 version: 8,
-                glyphs: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf',
+                glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
                 sources: {},
                 layers: [],
             },

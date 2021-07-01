@@ -8,6 +8,18 @@ import { Util } from '../core/Util';
  * @param {Object} options Construction parameters.
  * @param {string} options.url 
  * @param {string} options.token Will use this token to authenticate all calls to the service.
+ * @fires mapboxgl.ekmap.VectorTiledMapLayer#loaded
+ * @example
+ *  var map = new mapboxgl.Map({
+ *      //config....
+ *  });
+ *  var vectorTiledMap = new mapboxgl.ekmap.VectorTiledMapLayer({
+ *       url: {{YOUR_URL_VECTORTILE}},
+ *       token: {{YOUR_TOKEN}}
+ *  }).addTo(map);
+ *  vectorTiledMap.on('loaded',function(){
+ *      //Event when the vector tile loaded
+ *  })
  * @extends {mapboxgl.Evented}
  */
 export class VectorTiledMapLayer extends mapboxgl.Evented {
@@ -48,7 +60,11 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         var listLayer = [];
         //Style point,line,polygon
         map.on('style.load', function() {
-            me.fire('loadend', me);
+            /**
+            * @event mapboxgl.ekmap.VectorTiledMapLayer#loaded
+            * @description Fired when the vector tile map loaded.
+            */
+            me.fire('loaded', me);
             var layers = map.getStyle().layers;
             layers.forEach(layer => {
                 var id = parseInt(layer.id);

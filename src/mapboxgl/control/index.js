@@ -25,6 +25,9 @@ from './Reverse';
 export { TreeLayer }
 from './TreeLayer';
 
+export { TreeLayerPreview }
+from './TreeLayerPreview';
+
 export { TreeLayerGroup }
 from './TreeLayerGroup';
 
@@ -39,3 +42,6 @@ from './DrawLine'
 
 export { Geocoder }
 from './Geocoder/Geocoder';
+
+export { Rule }
+from './Rule';

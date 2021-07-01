@@ -1,6 +1,6 @@
 import '../core/Base';
 import mapboxgl from 'mapbox-gl';
-
+import { map } from 'leaflet';
 /**
  * @class mapboxgl.ekmap.control.Draw
  * @category  Control
@@ -63,6 +63,7 @@ export class Draw extends mapboxgl.Evented {
      */
     onRemove(map) {
         this._map = map;
+        map.removeControl(this.draw);
         this._div.parentNode.removeChild(this._div);
         this._map = undefined;
     }

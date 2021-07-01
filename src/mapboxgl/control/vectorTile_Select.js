@@ -17,6 +17,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {Number} options.lineWidth=2 Line width.
  * @param {String} options.mode=multi Default select multiple features se and vice versa set mode = 'single'.
  * @param {String} options.tooltip=SelectControl Tooltip of button.
+ * @param {String} options.showButton=true Show button control.
  * 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.Select#selectfeatures
@@ -83,8 +84,12 @@ export class Select extends mapboxgl.Evented {
             }
         });
 
-        if (!me.target)
-            me._container.appendChild(input);
+        if (!me.target){
+            if(this.showButton)
+                me._container.appendChild(input);
+            else
+                me._container.style.display = 'none';
+        }
         else
             me._container.style.display = 'none';
         return me._container

@@ -263,7 +263,8 @@ var exampleConfig = {
                         description: "Click on the map to retrieve the selected object.",
                         urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.FeatureInfomation.html",
                         nameApi:"mapboxgl.ekmap.control.FeatureInfomation"
-                    }, {
+                    }, 
+                    {
                         name: "Tree Layer",
                         name_en: "Tree Layer",
                         thumbnail: "control_treeLayerControl.png",
@@ -273,6 +274,16 @@ var exampleConfig = {
                         urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.TreeLayer.html",
                         nameApi:"mapboxgl.ekmap.control.TreeLayer"
                     },
+                    // {
+                    //     name: "Tree Layer",
+                    //     name_en: "Tree Layer",
+                    //     thumbnail: "control_treeLayerControl.png",
+                    //     fileName: "control_treeLayerPreviewControl",
+                    //     subject: "Tree Layer.",
+                    //     description: "Use mapboxgl.ekmap.control.TreeLayer to display, turn on / off map layers",
+                    //     urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.TreeLayer.html",
+                    //     nameApi:"mapboxgl.ekmap.control.TreeLayer"
+                    // },
                     {
                         name: "Tree Layer (VectorTile)",
                         name_en: "Tree Layer (VectorTile)",
@@ -939,6 +950,16 @@ var exampleConfig = {
                         description: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers.",
                         urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Draw.html",
                         nameApi:"mapboxgl.ekmap.control.Draw"
+                    },
+                    {
+                        name: "Rule",
+                        name_en: "Rule",
+                        thumbnail: "control_ruleControl.png",
+                        fileName: "control_ruleControl",
+                        subject: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers.",
+                        description: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers.",
+                        urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Rule.html",
+                        nameApi:"mapboxgl.ekmap.control.Rule"
                     },
                 ]
             }
