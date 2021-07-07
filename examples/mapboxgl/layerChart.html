@@ -294,7 +294,6 @@
         function createPieThemeLayer(showLabel) {
             themeLayerOptions.chartsSetting = chartsSettingForPieOrRing;
             chartsSettingForPieOrRing.showText = showLabel;
-            console.log(themeLayerOptions)
             themeLayer = new mapboxgl.ekmap.GraphThemeLayer("PieLayer", "Pie", themeLayerOptions);
             map.addLayer(themeLayer);
             themeLayer.addFeatures(features);

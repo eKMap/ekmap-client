@@ -1,74 +1,51 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Shape } from './Shape';
 import { SUtil } from './SUtil';
 
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Shape.SmicStar
- * @category Visualization Theme
- * @classdesc n 角星（n>3）。
- * @extends Ekmap.LevelRenderer.Shape
- * @example 
- *   var shape = new Ekmap.LevelRenderer.Shape.SmicStar({
- *         style: {
- *             x: 200,
- *             y: 100,
- *             r: 150,
- *             n: 5,
- *             text: '五角星'
- *         }
- *   });
- *   levelRenderer.addShape(shape);
- * 
- *
- */
 export class SmicStar extends Shape {
 
     /**
      * @member {Object} Ekmap.LevelRenderer.Shape.SmicStar.prototype.style
-     * @description 绘制样式。
+     * @description drawing style.
      *
-     * @param {number} style.x - n 角星外接圆心 x 坐标，必设参数。
-     * @param {number} style.y - n 角星外接圆心 y 坐标，必设参数。
-     * @param {number} style.r - n 角星外接圆半径，必设参数。
-     * @param {number} style.r0 - n 角星内部顶点（凹点）的外接圆半径。如果不指定此参数，则自动计算：取相隔外部顶点连线的交点作内部顶点。
-     * @param {number} style.n -指明几角星，必设参数。
-     * @param {string} style.brushType - 画笔类型。可设值："fill", "stroke", "both"。默认值："fill"。
-     * @param {string} style.color - 填充颜色。默认值："#000000'"。
-     * @param {string} style.strokeColor - 描边颜色。默认值："#000000'"。
-     * @param {string} style.lineCape - 线帽样式。可设值："butt", "round", "square"。默认值："butt"。
-     * @param {number} style.lineWidth - 描边宽度。默认值：1。
-     * @param {number} style.opacity - 绘制透明度。默认值：1。
-     * @param {number} style.shadowBlur - 阴影模糊度，大于0有效。默认值：0。
-     * @param {number} style.shadowColor - 阴影颜色。默认值："#000000'"。
-     * @param {number} style.shadowOffsetX - 阴影横向偏移。默认值：0。
-     * @param {number} style.shadowOffsetY - 阴影纵向偏移。默认值：0。
-     * @param {string} style.text - 图形中的附加文本。默认值：""。
-     * @param {string} style.textColor - 文本颜色。默认值："#000000'"。
-     * @param {string} style.textFont - 附加文本样式。示例:'bold 18px verdana'。
-     * @param {string} style.textPosition - 附加文本位置。可设值："inside", "left", "right", top", "bottom", "end"。默认值："end"。
-     * @param {string} style.textAlign - 附加文本水平对齐。可设值："start", "end", "left", "right", "center"。默认根据 textPosition 自动设置。
-     * @param {string} style.textBaseline - 附加文本垂直对齐。可设值："top", "bottom", "middle", "alphabetic", "hanging", "ideographic"。默认根据 textPosition 自动设置。
+     * @param {number} style.x-n The x coordinate of the circumscribed center of the corner star, a required parameter.
+     * @param {number} style.y-n The y coordinate of the circumcenter of the corner star, a required parameter.
+     * @param {number} style.r-n The radius of the circumcircle of the corner star, a required parameter.
+     * @param {number} style.r0-n The radius of the circumcircle of the inner vertex (concave point) of the corner star. If this parameter is not specified, it will be calculated automatically: take the intersection of the outer vertex line as the inner vertex.
+     * @param {number} style.n-Indicate the number of stars, parameters are required.
+     * @param {string} style.brushType-brush type. Possible values: "fill", "stroke", "both". Default value: "fill".
+     * @param {string} style.color-fill color. Default value: "#000000'".
+     * @param {string} style.strokeColor-stroke color. Default value: "#000000'".
+     * @param {string} style.lineCape-line cap style. Possible settings: "butt", "round", "square". Default value: "butt".
+     * @param {number} style.lineWidth-stroke width. Default value: 1.
+     * @param {number} style.opacity-drawing transparency. Default value: 1.
+     * @param {number} style.shadowBlur-the blur degree of the shadow, greater than 0 is valid. Default value: 0.
+     * @param {number} style.shadowColor-shadow color. Default value: "#000000'".
+     * @param {number} style.shadowOffsetX-the horizontal offset of the shadow. Default value: 0.
+     * @param {number} style.shadowOffsetY-the vertical offset of the shadow. Default value: 0.
+     * @param {string} style.text-additional text in the graphic. Defaults:"".
+     * @param {string} style.textColor-text color. Default value: "#000000'".
+     * @param {string} style.textFont-additional text style. Example:'bold 18px verdana'.
+     * @param {string} style.textPosition-additional text position. Possible settings: "inside", "left", "right", top", "bottom", "end". Default value: "end".
+     * @param {string} style.textAlign-horizontal alignment of additional text. Possible values: "start", "end", "left", "right", "center". By default, it is automatically set according to textPosition.
+     * @param {string} style.textBaseline-The additional text is aligned vertically. Possible settings: "top", "bottom", "middle", "alphabetic", "hanging", "ideographic". By default, it is automatically set according to textPosition.
      */
-    //打开接口 style
+    //Open the interface style
 
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicStar.constructor
-     * @description 构造函数。
-     * 
-     * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
+     * @description Constructor.
+     *
+     * @param {Array} options-The configuration (options) item of shape, which can be the own attribute of shape or a custom attribute.
      *
      */
     constructor(options) {
         super(options);
         /**
          * @member {string} Ekmap.LevelRenderer.Shape.SmicStar.prototype.type
-         * @description 图形类型。  
+         * @description Graphic type.
          */
-        this.type = 'smicstar';
+        this.type ='smicstar';
 
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
@@ -79,7 +56,7 @@ export class SmicStar extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicStar.prototype.destroy
-     * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
+     * @description destroys the object and releases resources. All properties will be set to null after calling this function.
      */
     destroy() {
         this.type = null;
@@ -88,10 +65,10 @@ export class SmicStar extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicStar.prototype.buildPath
-     * @description 创建n  角星（n>3）路径。
+     * @description creates an n-point star (n>3) path.
      *
-     * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
-     * @param {Object} style - style。
+     * @param {CanvasRenderingContext2D} ctx-Context2D context.
+     * @param {Object} style-style.
      *
      */
     buildPath(ctx, style) {
@@ -101,7 +78,7 @@ export class SmicStar extends Shape {
         var __OP = this.refOriginalPosition;
 
         var n = style.n;
-        if (!n || n < 2) {
+        if (!n || n <2) {
             return;
         }
 
@@ -114,14 +91,14 @@ export class SmicStar extends Shape {
         var r = style.r;
         var r0 = style.r0;
 
-        // 如果未指定内部顶点外接圆半径，则自动计算
+        // If the radius of the circumcircle of the inner vertex is not specified, it is automatically calculated
         if (r0 == null) {
-            r0 = n > 4
-                // 相隔的外部顶点的连线的交点，
-                // 被取为内部交点，以此计算r0
+            r0 = n> 4
+                // The intersection of the lines of separated external vertices,
+                // is taken as the internal intersection to calculate r0
                 ?
                 r * cos(2 * PI / n) / cos(PI / n)
-                // 二三四角星的特殊处理
+                // Special treatment of two, three, four-pointed stars
                 :
                 r / 3;
         }
@@ -132,19 +109,19 @@ export class SmicStar extends Shape {
         var yStart = y + r * sin(deg);
         deg += dStep;
 
-        // 记录边界点，用于判断inside
+        // Record boundary points, used to judge inside
         var pointList = style.pointList = [];
         pointList.push([xStart, yStart]);
-        for (var i = 0, end = n * 2 - 1, ri; i < end; i++) {
-            ri = i % 2 === 0 ? r0 : r;
+        for (var i = 0, end = n * 2-1, ri; i <end; i++) {
+            ri = i% 2 === 0? r0: r;
             pointList.push([x + ri * cos(deg), y + ri * sin(deg)]);
             deg += dStep;
         }
         pointList.push([xStart, yStart]);
 
-        // 绘制
+        // draw
         ctx.moveTo(pointList[0][0], pointList[0][1]);
-        for (let i = 0; i < pointList.length; i++) {
+        for (let i = 0; i <pointList.length; i++) {
             ctx.lineTo(pointList[i][0], pointList[i][1]);
         }
 
@@ -155,10 +132,10 @@ export class SmicStar extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicStar.prototype.getRect
-     * @description 返回 n 角星包围盒矩形。
+     * @description returns the bounding box rectangle of the n-point star.
      *
-     * @param {Object} style - style
-     * @return {Object} 边框对象。包含属性：x，y，width，height。
+     * @param {Object} style-style
+     * @return {Object} Border object. Contains attributes: x, y, width, height.
      */
     getRect(style) {
         if (style.__rect) {
@@ -171,14 +148,13 @@ export class SmicStar extends Shape {
         var __OP = this.refOriginalPosition;
 
         var lineWidth;
-        if (style.brushType == 'stroke' || style.brushType == 'fill') {
+        if (style.brushType =='stroke' || style.brushType =='fill') {
             lineWidth = style.lineWidth || 1;
-        } else {
-            lineWidth = 0;
+        } else {lineWidth = 0;
         }
         style.__rect = {
-            x: Math.round((style.x + __OP[0]) - style.r - lineWidth / 2),
-            y: Math.round((style.y + __OP[1]) - style.r - lineWidth / 2),
+            x: Math.round((style.x + __OP[0])-style.r-lineWidth / 2),
+            y: Math.round((style.y + __OP[1])-style.r-lineWidth / 2),
             width: style.r * 2 + lineWidth,
             height: style.r * 2 + lineWidth
         };

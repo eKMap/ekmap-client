@@ -1,13 +1,10 @@
 import { Ekmap } from "../../Ekmap";
-import { FetchRequest } from "../../util/FetchRequest";
-import { GetFeaturesBySQLParameters } from "../../iServer/GetFeaturesBySQLParameters";
-import { FilterParameter } from "../../iServer/FilterParameter";
-import { GetFeaturesBySQLService } from "../../iServer/GetFeaturesBySQLService";
-import { QueryBySQLParameters } from "../../iServer/QueryBySQLParameters";
-import { QueryBySQLService } from "../../iServer/QueryBySQLService";
+import { GetFeaturesBySQLParameters } from "../../eKServer/GetFeaturesBySQLParameters";
+import { FilterParameter } from "../../eKServer/FilterParameter";
+import { GetFeaturesBySQLService } from "../../eKServer/GetFeaturesBySQLService";
+import { QueryBySQLParameters } from "../../eKServer/QueryBySQLParameters";
+import { QueryBySQLService } from "../../eKServer/QueryBySQLService";
 import { DataFormat, QueryOption } from "../../REST";
-import { Lang } from "../../lang/Lang";
-import { FileReaderUtil } from "../util/FileReaderUtil";
 import { Events } from "../../commontypes/Events";
 
 export class ChartModel {
@@ -16,29 +13,6 @@ export class ChartModel {
         this.datasets = datasets;
         this.EVENT_TYPES = ["getdatafailed"];
         this.events = new Events(this, null, this.EVENT_TYPES);
-    }
-
-    getDatasetInfo(success) {
-        let datasetUrl = this.datasets.url;
-        let me = this;
-        FetchRequest.get(datasetUrl).then(function(response) {
-            return response.json();
-        }).then(function(results) {
-            if (results.datasetInfo) {
-                let datasetInfo = results.datasetInfo;
-                me.datasetsInfo = {
-                    dataSourceName: datasetInfo.dataSourceName,
-                    datasetName: datasetInfo.name,
-                    mapName: results.name
-                };
-                success({
-                    result: me.datasetsInfo
-                });
-            }
-        }).catch(function(error) {
-            console.log(error);
-            me._fireFailedEvent(error);
-        });
     }
 
     getDataFeatures(results, success) {
@@ -83,145 +57,6 @@ export class ChartModel {
             }
         });
         queryBySQLService.processAsync(queryBySQLParams);
-    }
-
-    getDataInfoByIptl(success) {
-        this.getServiceInfo(this.datasets.url, success);
-    }
-
-    getServiceInfo(url, success) {
-        let me = this;
-        FetchRequest.get(url, null, {
-            withCredentials: this.datasets.withCredentials
-        }).then(response => {
-            return response.json()
-        }).then(data => {
-            if (data.succeed === false) {
-                me._fireFailedEvent(data);
-                return;
-            }
-            if (data.dataItemServices && data.dataItemServices.length > 0) {
-                let dataItemServices = data.dataItemServices,
-                    resultData;
-
-                dataItemServices.forEach(item => {
-                    if (item.serviceType === 'RESTDATA' && item.serviceStatus === 'PUBLISHED') {
-                        resultData = item;
-                    } else if (item.serviceType === 'RESTMAP' && item.serviceStatus === 'PUBLISHED') {
-                        resultData = item;
-                    } else {
-                        me.getDatafromContent(url, success);
-                        return;
-                    }
-                })
-                resultData && me.getDatafromRest(resultData.serviceType, resultData.address, success)
-            } else {
-                me.getDatafromContent(url, success);
-                return;
-            }
-        }).catch(error => {
-            console.log(error);
-            me._fireFailedEvent(error);
-        })
-    }
-
-    getDatafromContent(url, success) {
-        let results = {
-                result: {}
-            },
-            me = this;
-        url += '/content.json?pageSize=9999999&currentPage=1',
-            FetchRequest.get(url, null, {
-                withCredentials: this.datasets.withCredentials
-            }).then(response => {
-                return response.json()
-            }).then(data => {
-                if (data.succeed === false) {
-                    me._fireFailedEvent(data);
-                    return;
-                }
-                if (data.type) {
-                    if (data.type === "JSON" || data.type === "GEOJSON") {
-                        data.content = JSON.parse(data.content.trim());
-                        if (!(data.content.features)) {
-                            console.log(Lang.i18n('msg_jsonResolveFiled'));
-                            return;
-                        }
-                        let features = this._formatGeoJSON(data.content);
-                        results.result.features = {
-                            type: data.content.type,
-                            features
-                        };
-
-                    } else if (data.type === 'EXCEL' || data.type === 'CSV') {
-                        let features = this._excelData2Feature(data.content);
-                        results.result.features = {
-                            type: 'FeatureCollection',
-                            features
-                        };
-                    }
-                    success(results, 'content');
-                }
-            }, this).catch(error => {
-                console.log(error);
-                me._fireFailedEvent(error);
-            });
-    }
-
-    getDatafromRest(serviceType, address, success) {
-        let me = this,
-            withCredentials = this.datasets.withCredentials;
-        if (serviceType === 'RESTDATA') {
-            let url = `${address}/data/datasources`,
-                sourceName, datasetName;
-            FetchRequest.get(url, null, {
-                withCredentials
-            }).then(response => {
-                return response.json()
-            }).then(data => {
-                sourceName = data.datasourceNames[0];
-                url = `${address}/data/datasources/${sourceName}/datasets`;
-                FetchRequest.get(url, null, {
-                    withCredentials
-                }).then(response => {
-                    return response.json()
-                }).then(data => {
-                    datasetName = data.datasetNames[0];
-                    me.getDatafromRestData(`${address}/data`, [sourceName + ':' + datasetName], success);
-                    return [sourceName + ':' + datasetName]
-                }).catch(function(error) {
-                    me._fireFailedEvent(error);
-                })
-            }).catch(function(error) {
-                me._fireFailedEvent(error);
-            });
-        } else {
-            let url = `${address}/maps`,
-                mapName, layerName, path;
-            FetchRequest.get(url, null, {
-                withCredentials
-            }).then(response => {
-                return response.json()
-            }).then(data => {
-                mapName = data[0].name;
-                path = data[0].path;
-                url = url = `${address}/maps/${mapName}/layers`;
-                FetchRequest.get(url, null, {
-                    withCredentials
-                }).then(response => {
-                    return response.json()
-                }).then(data => {
-                    layerName = data[0].subLayers.layers[0].caption;
-                    me.getDatafromRestMap(layerName, path, success)
-                    return layerName;
-                }).catch(function(error) {
-                    me._fireFailedEvent(error);
-                })
-            }).catch(function(error) {
-                me._fireFailedEvent(error);
-            });
-
-        }
     }
 
     getDatafromRestData(url, dataSource, success) {
@@ -330,51 +165,14 @@ export class ChartModel {
         return features;
     }
 
-    _excelData2Feature(dataContent) {
-        let fieldCaptions = dataContent.colTitles;
-        let xfieldIndex = -1,
-            yfieldIndex = -1;
-        for (let i = 0, len = fieldCaptions.length; i < len; i++) {
-            if (FileReaderUtil.isXField(fieldCaptions[i])) {
-                xfieldIndex = i;
-            }
-            if (FileReaderUtil.isYField(fieldCaptions[i])) {
-                yfieldIndex = i;
-            }
-        }
-
-        let features = [];
-
-        for (let i = 0, len = dataContent.rows.length; i < len; i++) {
-            let row = dataContent.rows[i];
-
-            let x = Number(row[xfieldIndex]),
-                y = Number(row[yfieldIndex]);
-            let attributes = {};
-            for (let index in dataContent.colTitles) {
-                let key = dataContent.colTitles[index];
-                attributes[key] = dataContent.rows[i][index];
-            }
-            attributes['index'] = i + '';
-            let feature = {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [x, y]
-                },
-                "properties": attributes
-            };
-            features.push(feature);
-        }
-        return features;
-    }
+    
 
     _fireFailedEvent(error) {
         let errorData = error ? {
             error,
-            message: Lang.i18n('msg_getdatafailed')
+            message: 'Lấy dữ liệu xảy ra lỗi !'
         } : {
-            message: Lang.i18n('msg_getdatafailed')
+            message: 'Lấy dữ liệu xảy ra lỗi !'
         };
 
         this.events.triggerEvent("getdatafailed", errorData);

@@ -1,31 +1,9 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Tool.Http
- * @category Visualization Theme
- * @classdesc LevelRenderer 工具-Http
- */
 export class Http {
 
-    /**
-     * @function Ekmap.LevelRenderer.Tool.Http.constructor
-     * @description 构造函数。
-     */
     constructor() {
         this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Http"
     }
 
-    /**
-     * @function Ekmap.LevelRenderer.Tool.Http.prototype.get
-     * @description get请求。
-     * @param {(string|IHTTPGetOption)} url - 请求url
-     * @param {function} onsuccess - 请求成功函数
-     * @param {function} onerror - 请求失败函数 
-     * @param {Object} opts - 额外参数
-     * @returns {number} cos值
-     */
     get(url, onsuccess, onerror) {
         if (typeof(url) === 'object') {
             var obj = url;

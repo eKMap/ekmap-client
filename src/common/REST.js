@@ -5,14 +5,13 @@ import {
 /**
  * @enum DataFormat
  * @memberOf Ekmap
- * @description 服务请求返回结果数据类型
  * @type {string}
  */
 var DataFormat = Ekmap.DataFormat = {
     /** GEOJSON */
     GEOJSON: "GEOJSON",
-    /** ISERVER */
-    ISERVER: "ISERVER"
+    /** EKSERVER */
+    EKSERVER: "EKSERVER"
 };
 export {
     DataFormat
@@ -25,10 +24,8 @@ export {
  * @type {string}
  */
 var ServerType = Ekmap.ServerType = {
-    /** ISERVER */
-    ISERVER: "ISERVER",
-    /** IPORTAL */
-    IPORTAL: "IPORTAL",
+    /** EKSERVER */
+    EKSERVER: "EKSERVER",
     /** ONLINE */
     ONLINE: "ONLINE"
 };
@@ -79,11 +76,8 @@ export {
  * @type {string}
  */
 var QueryOption = Ekmap.QueryOption = {
-    /** 属性 */
     ATTRIBUTE: "ATTRIBUTE",
-    /** 属性和几何对象 */
     ATTRIBUTEANDGEOMETRY: "ATTRIBUTEANDGEOMETRY",
-    /** 几何对象 */
     GEOMETRY: "GEOMETRY"
 };
 export {
@@ -496,13 +490,9 @@ export {
     OverlayOperationType
 }
 var OutputType = Ekmap.OutputType = {
-    /** INDEXEDHDFS */
     INDEXEDHDFS: "INDEXEDHDFS",
-    /** UDB */
     UDB: "UDB",
-    /** MONGODB */
     MONGODB: "MONGODB",
-    /** PG */
     PG: "PG"
 };
 export {
@@ -720,13 +710,10 @@ export {
 /**
  * @enum SummaryType
  * @memberOf Ekmap
- * @description 分布式分析聚合类型
  * @type {string}
  */
 var SummaryType = Ekmap.SummaryType = {
-    /** 格网聚合。 */
     "SUMMARYMESH": "SUMMARYMESH",
-    /** 多边形聚合。 */
     "SUMMARYREGION": "SUMMARYREGION"
 };
 export {

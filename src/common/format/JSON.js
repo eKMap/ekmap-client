@@ -6,55 +6,55 @@ import {
 } from './Format';
 
 /**
- * @class Ekmap.Format.JSON
- * @classdesc 安全的读写 JSON 的解析类。使用 {@link Ekmap.Format.JSON} 构造函数创建新实例。
- * @category BaseTypes Format
- * @param {Object} [options] - 参数。
- * @param {string} [options.indent="    "] - 用于格式化输出，indent 字符串会在每次缩进的时候使用一次。
- * @param {string} [options.space=" "] - 用于格式化输出，space 字符串会在名值对的 ":" 后边添加。
- * @param {string} [options.newline="\n"] - 用于格式化输出, newline 字符串会用在每一个名值对或数组项末尾。
- * @param {number} [options.level=0] - 用于格式化输出, 表示的是缩进级别。
- * @param {boolean} [options.pretty=false] - 是否在序列化的时候使用额外的空格控制结构。在 write 方法中使用。
- * @param {boolean} [options.nativeJSON] - 需要被注册的监听器对象。
- * @extends {Ekmap.Format}
- */
+  * @class Ekmap.Format.JSON
+  * @classdesc The parsing class for safe reading and writing of JSON. Use the {@link Ekmap.Format.JSON} constructor to create a new instance.
+  * @category BaseTypes Format
+  * @param {Object} [options] parameters.
+  * @param {string} [options.indent=" "] used to format the output, the indent string will be used once for each indentation.
+  * @param {string} [options.space=" "] used to format the output, the space string will be added after the ":" in the name-value pair.
+  * @param {string} [options.newline="\n"] used to format the output, the newline string will be used at the end of each name-value pair or array item.
+  * @param {number} [options.level=0] used to format the output, indicating the indentation level.
+  * @param {boolean} [options.pretty=false] Whether to use extra space control structure when serializing. Used in the write method.
+  * @param {boolean} [options.nativeJSON] The listener object that needs to be registered.
+  * @extends {Ekmap.Format}
+  */
 export class JSONFormat extends Format {
 
     constructor(options) {
         super(options);
         /**
-         * @member {string} [Ekmap.Format.JSON.prototype.indent="    "]
-         * @description 用于格式化输出，indent 字符串会在每次缩进的时候使用一次。
+         * @member {string} [Ekmap.Format.JSON.prototype.indent=" "]
+         * @description is used to format the output, and the indent string will be used once for each indentation.
          */
-        this.indent = "    ";
+        this.indent = "";
 
         /**
          * @member {string} [Ekmap.Format.JSON.prototype.space=" "]
-         * @description 用于格式化输出，space 字符串会在名值对的 ":" 后边添加。
+         * @description is used to format the output, and the space string will be added after the ":" of the name-value pair.
          */
-        this.space = " ";
+        this.space = "";
 
         /**
          * @member {string} [Ekmap.Format.JSON.prototype.newline="\n"]
-         * @description 用于格式化输出, newline 字符串会用在每一个名值对或数组项末尾。
+         * @description is used to format the output, and the newline string will be used at the end of each name-value pair or array item.
          */
         this.newline = "\n";
 
         /**
-         * @member {integer} [Ekmap.Format.JSON.prototype.level=0] 
-         * @description 用于格式化输出, 表示的是缩进级别。
+         * @member {integer} [Ekmap.Format.JSON.prototype.level=0]
+         * @description is used to format the output, indicating the indentation level.
          */
         this.level = 0;
 
         /**
          * @member {boolean} [Ekmap.Format.JSON.prototype.pretty=false]
-         * @description 是否在序列化的时候使用额外的空格控制结构。在 write 方法中使用。
+         * @description Whether to use extra space control structure when serializing. Used in the write method.
          */
         this.pretty = false;
 
         /**
-         * @member {boolean} Ekmap.Format.JSON.prototype.nativeJSON 
-         * @description 判断浏览器是否原生支持 JSON 格式数据。
+         * @member {boolean} Ekmap.Format.JSON.prototype.nativeJSON
+         * @description Determines whether the browser natively supports JSON format data.
          */
         this.nativeJSON = (function() {
             return !!(window.JSON && typeof JSON.parse === "function" && typeof JSON.stringify === "function");
@@ -63,14 +63,14 @@ export class JSONFormat extends Format {
         this.CLASS_NAME = "Ekmap.Format.JSON";
         /**
          * @member Ekmap.Format.JSON.prototype.serialize
-         * @description 提供一些类型对象转 JSON 字符串的方法。
+         * @description provides methods for converting some types of objects to JSON strings.
          */
         this.serialize = {
             /**
              * @function Ekmap.Format.JSON.serialize.object
-             * @description 把对象转换为 JSON 字符串。
-             * @param {Object} object - 可序列化的对象。
-             * @returns {string} JSON 字符串。
+             * @description converts the object into a JSON string.
+             * @param {Object} object-serializable object.
+             * @returns {string} JSON string.
              */
             'object': function(object) {
                 // three special objects that we want to treat differently
@@ -109,12 +109,12 @@ export class JSONFormat extends Format {
                 return pieces.join('');
             },
 
-            /**
-             * @function Ekmap.Format.JSON.serialize.array
-             * @description 把数组转换成 JSON 字符串。
-             * @param {Array} array - 可序列化的数组。
-             * @returns {string} JSON 字符串。
-             */
+           /**
+              * @function Ekmap.Format.JSON.serialize.array
+              * @description converts the array into a JSON string.
+              * @param {Array} array-serializable array.
+              * @returns {string} JSON string.
+              */
             'array': function(array) {
                 var json;
                 var pieces = ['['];
@@ -137,11 +137,11 @@ export class JSONFormat extends Format {
             },
 
             /**
-             * @function Ekmap.Format.JSON.serialize.string
-             * @description 把字符串转换成 JSON 字符串。
-             * @param {string} string - 可序列化的字符串。
-             * @returns {string} JSON 字符串。
-             */
+              * @function Ekmap.Format.JSON.serialize.string
+              * @description converts the string into a JSON string.
+              * @param {string} string-Serializable string.
+              * @returns {string} JSON string.
+              */
             'string': function(string) {
                 // If the string contains no control characters, no quote characters, and no
                 // backslash characters, then we can simply slap some quotes around it.
@@ -173,11 +173,11 @@ export class JSONFormat extends Format {
             },
 
             /**
-             * @function Ekmap.Format.JSON.serialize.number
-             * @description 把数字转换成 JSON 字符串。
-             * @param {number} number - 可序列化的数字。
-             * @returns {string} JSON 字符串。
-             */
+              * @function Ekmap.Format.JSON.serialize.number
+              * @description converts the number into a JSON string.
+              * @param {number} number-serializable number.
+              * @returns {string} JSON string.
+              */
             'number': function(number) {
                 return isFinite(number) ? String(number) : "null";
             },
@@ -193,11 +193,11 @@ export class JSONFormat extends Format {
             },
 
             /**
-             * @function Ekmap.Format.JSON.serialize.object
-             * @description 将日期对象转换成 JSON 字符串。
-             * @param {Date} date - 可序列化的日期对象。
-             * @returns {string} JSON 字符串。
-             */
+              * @function Ekmap.Format.JSON.serialize.object
+              * @description converts the date object into a JSON string.
+              * @param {Date} date-serializable date object.
+              * @returns {string} JSON string.
+              */
             'date': function(date) {
                 function format(number) {
                     // Format integers to have at least two digits.
@@ -215,12 +215,12 @@ export class JSONFormat extends Format {
     }
 
     /**
-     * @function Ekmap.Format.JSON.prototype.read
-     * @description 将一个符合 JSON 结构的字符串进行解析。
-     * @param {string} json - 符合 JSON 结构的字符串。
-     * @param {function} filter - 过滤方法，最终结果的每一个键值对都会调用该过滤方法，并在对应的值的位置替换成该方法返回的值。
-     * @returns {Object} 对象，数组，字符串或数字。
-     */
+      * @function Ekmap.Format.JSON.prototype.read
+      * @description parses a string conforming to the JSON structure.
+      * @param {string} json-a string conforming to the JSON structure.
+      * @param {function} filter-filter method, each key-value pair in the final result will call the filter method, and replace the value returned by the method in the corresponding value position.
+      * @returns {Object} Object, array, string or number.
+      */
     read(json, filter) {
         var object;
         if (this.nativeJSON) {
@@ -239,13 +239,13 @@ export class JSONFormat extends Format {
     }
 
     /**
-     * @function Ekmap.Format.JSON.prototype.write
-     * @description 序列化一个对象到一个符合 JSON 格式的字符串。
-     * @param {(object|string|Array|number|boolean)} value - 需要被序列化的对象，数组，字符串，数字，布尔值。
-     * @param {boolean} [pretty=false] - 是否在序列化的时候使用额外的空格控制结构。在 write 方法中使用。
-     * @returns {string} 符合 JSON 格式的字符串。
-     *
-     */
+      * @function Ekmap.Format.JSON.prototype.write
+      * @description serializes an object to a string in JSON format.
+      * @param {(object|string|Array|number|boolean)} value-The object, array, string, number, Boolean value that needs to be serialized.
+      * @param {boolean} [pretty=false] Whether to use extra space control structure when serializing. Used in the write method.
+      * @returns {string} A string conforming to the JSON format.
+      *
+      */
     write(value, pretty) {
         this.pretty = !!pretty;
         var json = null;
@@ -262,12 +262,12 @@ export class JSONFormat extends Format {
         return json;
     }
 
-    /**
-     * @function Ekmap.Format.JSON.prototype.writeIndent
-     * @description 根据缩进级别输出一个缩进字符串。
-     * @private
-     * @returns {string} 一个适当的缩进字符串。
-     */
+   /**
+      * @function Ekmap.Format.JSON.prototype.writeIndent
+      * @description outputs an indented string according to the indentation level.
+      * @private
+      * @returns {string} An appropriately indented string.
+      */
     writeIndent() {
         var pieces = [];
         if (this.pretty) {
@@ -278,24 +278,24 @@ export class JSONFormat extends Format {
         return pieces.join('');
     }
 
-    /**
-     * @function Ekmap.Format.JSON.prototype.writeNewline
-     * @description 在格式化输出模式情况下输出代表新一行的字符串。
-     * @private
-     * @returns {string} 代表新的一行的字符串。
-     */
+   /**
+      * @function Ekmap.Format.JSON.prototype.writeNewline
+      * @description outputs a string representing a new line in the formatted output mode.
+      * @private
+      * @returns {string} The string representing the new line.
+      */
     writeNewline() {
-        return (this.pretty) ? this.newline : '';
+        return (this.pretty)? this.newline:'';
     }
 
     /**
      * @function Ekmap.Format.JSON.prototype.writeSpace
      * @private
-     * @description 在格式化输出模式情况下输出一个代表空格的字符串。
-     * @returns {string} 一个空格。
+     * @description outputs a string representing spaces in the formatted output mode.
+     * @returns {string} A space.
      */
     writeSpace() {
-        return (this.pretty) ? this.space : '';
+        return (this.pretty)? this.space:'';
     }
 
 }

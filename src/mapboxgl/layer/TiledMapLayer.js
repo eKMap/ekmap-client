@@ -47,18 +47,21 @@ export class TiledMapLayer extends mapboxgl.Evented {
             this.identifies = this.service.identify();
             if (options.urls)
                 this.tileUrls = options.urls
-                // Remove subdomain in url
-                // https://github.com/Esri/esri-leaflet/issues/991
-                //this.service.addEventParent(this);
-                //var arcgisonline = new RegExp(/tiles.arcgis(online)?\.com/g);
-                //if (arcgisonline.test(options.url)) {
-                //    this.tileUrl = this.tileUrl.replace('://tiles', '://tiles{s}');
-                //    options.subdomains = ['1', '2', '3', '4'];
-                //}
-            if (this.options.token && (options.requestParams && Object.keys(options.requestParams).length > 0)) {
-                this.tileUrl += '&token=' + this.options.token;
-            }else
+            // Remove subdomain in url
+            // https://github.com/Esri/esri-leaflet/issues/991
+            //this.service.addEventParent(this);
+            //var arcgisonline = new RegExp(/tiles.arcgis(online)?\.com/g);
+            //if (arcgisonline.test(options.url)) {
+            //    this.tileUrl = this.tileUrl.replace('://tiles', '://tiles{s}');
+            //    options.subdomains = ['1', '2', '3', '4'];
+            //}
+            if (!options.requestParams)
                 this.tileUrl += '?token=' + this.options.token;
+            else {
+                var listRequests = Object.keys(options.requestParams);
+                if (_.indexOf(listRequests, 'token') == -1 && _.indexOf(listRequests, 'apikey') == -1)
+                    this.tileUrl += '&token=' + this.options.token;
+            }
             //return new mapboxgl.ekmap.MapService(this.tileUrl);
             // init layer by calling TileLayers initialize method
             //TileLayer.prototype.initialize.call(this, this.tileUrl, options);
@@ -87,7 +90,7 @@ export class TiledMapLayer extends mapboxgl.Evented {
                     "attribution": me.options.attribution ? me.options.attribution : '',
                     "type": "raster",
                     "tiles": [me.tileUrl],
-                    "tileSize": me.options.tileSize != undefined ? me.options.tileSize : 512,   
+                    "tileSize": me.options.tileSize != undefined ? me.options.tileSize : 512,
                     "bounds": me.options.bounds,
                     "minzoom": me.options.minzoom != undefined ? me.options.minzoom : 0,
                     "maxzoom": me.options.maxzoom != undefined ? me.options.maxzoom : 24,
@@ -134,9 +137,9 @@ export class TiledMapLayer extends mapboxgl.Evented {
                 * @event mapboxgl.ekmap.TiledMapLayer#loaded
                 * @description Fired when the tile map loaded.
                 */
-             me.fire("loaded");
+            me.fire("loaded");
         } else {
-            this.getExtent(function(obj) {
+            this.getExtent(function (obj) {
                 var bounds = [];
                 if (obj)
                     bounds = [obj.xmin, obj.ymin, obj.xmax, obj.ymax];
@@ -254,21 +257,21 @@ export class TiledMapLayer extends mapboxgl.Evented {
      * @returns this
      */
     removeFromMap() {
-            if (this.map.getLayer(this.id)) {
-                this.map.removeLayer(this.id);
-                this.map.removeSource(this.id);
-            } else {
-                throw "Error: The layer '" + this.id + "' does not exist in the map's style and cannot be removed.";
-            }
+        if (this.map.getLayer(this.id)) {
+            this.map.removeLayer(this.id);
+            this.map.removeSource(this.id);
+        } else {
+            throw "Error: The layer '" + this.id + "' does not exist in the map's style and cannot be removed.";
         }
-        /**
-         * @function mapboxgl.ekmap.TiledMapLayer.prototype.setUrls
-         * @description Updates the layer's URL template and redraws it.
-         * @returns this
-         */
+    }
+    /**
+     * @function mapboxgl.ekmap.TiledMapLayer.prototype.setUrls
+     * @description Updates the layer's URL template and redraws it.
+     * @returns this
+     */
     setUrls(url, token) {
         var source = this.map.getSource(this.id);
-        if (typeof(url) == 'string') {
+        if (typeof (url) == 'string') {
             this.options = Util.getUrlParams(this.options);
             this.tileUrl = (this.options.proxy ? this.options.proxy + '?' : '') + url + '/tile/{z}/{y}/{x}' + '?token=' + token;
             //  (this.options.requestParams && Object.keys(this.options.requestParams).length > 0 ? Util.getParamString(this.options.requestParams) : '');

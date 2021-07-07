@@ -1,7 +1,7 @@
 export const FileTypes = {
     EXCEL: "EXCEL",
     CSV: "CSV",
-    ISERVER: "ISERVER",
+    EKSERVER: "EKSERVER",
     GEOJSON: "GEOJSON",
     JSON: 'JSON'
 };

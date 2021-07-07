@@ -1,85 +1,59 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Ekmap } from '../../Ekmap';
 import { Util as CommonUtil } from '../../commontypes/Util';
 import { Eventful } from './Eventful';
 import { Transformable } from './Transformable';
 
-/**
- * @class  Ekmap.LevelRenderer.Group
- * @category Visualization Theme
- * @private 
- * @classdesc Group 是一个容器，可以插入子节点，Group 的变换也会被应用到子节点上。
- * @extends {Ekmap.LevelRenderer.Transformable}
- * (code)
- *     var g = new Ekmap.LevelRenderer.Group();
- *     var Circle = new Ekmap.LevelRenderer.Shape.Circle();
- *     g.position[0] = 100;
- *     g.position[1] = 100;
- *     g.addChild(new Circle({
- *         style: {
- *             x: 100,
- *             y: 100,
- *             r: 20,
- *             brushType: 'fill'
- *         }
- *     }));
- *     LR.addGroup(g);
- * (end)
- */
-
 export class Group extends Ekmap.mixin(Eventful, Transformable) {
 
-    /**
+   /**
      * @function Ekmap.LevelRenderer.Group.prototype.constructor
-     * @description 构造函数。
-     * @param {Array} options - Group 的配置（options）项，可以是 Group 的自有属性，也可以是自定义的属性。
+     * @description Constructor.
+     * @param {Array} options-Group configuration (options) items, which can be Group's own attributes or custom attributes.
      */
     constructor(options) {
         super(options)
         options = options || {};
         /**
          * @member {string} Ekmap.LevelRenderer.Group.prototype.id
-         * @description Group 的唯一标识。
+         * @description Group unique identifier.
          */
         this.id = null;
 
         /**
          * @readonly
          * @member {string} [Ekmap.LevelRenderer.Group.prototype.type='group']
-         * @description 类型。
+         * @description type.
          */
-        this.type = 'group';
+        this.type ='group';
 
         //http://www.w3.org/TR/2dcontext/#clipping-region
         /**
          * @member {string} Ekmap.LevelRenderer.Group.prototype.clipShape
-         * @description 用于裁剪的图形(shape)，所有 Group 内的图形在绘制时都会被这个图形裁剪，该图形会继承 Group 的变换。
+         * @description The shape used for clipping. All the graphics in the Group will be clipped by this shape when drawing, and the shape will inherit the transformation of the Group.
          */
         this.clipShape = null;
 
         /**
          * @member {Array} Ekmap.LevelRenderer.Group.prototype._children
-         * @description _children。
+         * @description _children.
          */
         this._children = [];
 
         /**
          * @member {Array} Ekmap.LevelRenderer.Group.prototype._storage
-         * @description _storage。
+         * @description _storage.
          */
         this._storage = null;
 
         /**
          * @member {boolean} [Ekmap.LevelRenderer.Group.prototype.__dirty=true]
-         * @description __dirty。
+         * @description __dirty.
          */
         this.__dirty = true;
 
         /**
          * @member {boolean} [Ekmap.LevelRenderer.Group.prototype.ignore=false]
-         * @description 是否忽略该 Group 及其所有子节点。
+         * @description Whether to ignore the Group and all its child nodes.
          */
         this.ignore = false;
         CommonUtil.extend(this, options);
@@ -90,7 +64,7 @@ export class Group extends Ekmap.mixin(Eventful, Transformable) {
 
     /**
      * @function Ekmap.LevelRenderer.Group.prototype.destroy
-     * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
+     * @description destroys the object and releases resources. All properties will be set to null after calling this function.
      */
     destroy() {
         this.id = null;
@@ -107,8 +81,8 @@ export class Group extends Ekmap.mixin(Eventful, Transformable) {
 
     /**
      * @function Ekmap.LevelRenderer.Group.prototype.children
-     * @description 复制并返回一份新的包含所有儿子节点的数组。
-     * @returns {Array.<Ekmap.LevelRenderer.Shape>} 图形数组。
+     * @description copies and returns a new array containing all the child nodes.
+     * @returns {Array.<Ekmap.LevelRenderer.Shape>} graphics array.
      */
     children() {
         return this._children.slice();
@@ -117,9 +91,9 @@ export class Group extends Ekmap.mixin(Eventful, Transformable) {
 
     /**
      * @function Ekmap.LevelRenderer.Group.prototype.childAt
-     * @description 获取指定 index 的儿子节点
-     * @param {number} idx - 节点索引。
-     * @returns {Ekmap.LevelRenderer.Shape} 图形。
+     * @description Get the child node of the specified index
+     * @param {number} idx-node index.
+     * @returns {Ekmap.LevelRenderer.Shape} graphics.
      */
     childAt(idx) {
         return this._children[idx];
@@ -128,8 +102,8 @@ export class Group extends Ekmap.mixin(Eventful, Transformable) {
 
     /**
      * @function Ekmap.LevelRenderer.Group.prototype.addChild
-     * @description 添加子节点，可以是 Shape 或者 Group。
-     * @param {(Ekmap.LevelRenderer.Shape|Ekmap.LevelRenderer.Group)} child - 节点图形。
+     * @description Add child nodes, which can be Shape or Group.
+     * @param {(Ekmap.LevelRenderer.Shape|Ekmap.LevelRenderer.Group)} child-node graph.
      */
     // TODO Type Check
     addChild(child) {
@@ -160,8 +134,8 @@ export class Group extends Ekmap.mixin(Eventful, Transformable) {
 
     /**
      * @function Ekmap.LevelRenderer.Group.prototype.removeChild
-     * @description 移除子节点。
-     * @param {Ekmap.LevelRenderer.Shape} child - 需要移除的子节点图形。
+     * @description Remove child nodes.
+     * @param {Ekmap.LevelRenderer.Shape} child-the child node shape that needs to be removed.
      */
     removeChild(child) {
         var idx = CommonUtil.indexOf(this._children, child);
@@ -182,13 +156,13 @@ export class Group extends Ekmap.mixin(Eventful, Transformable) {
 
     /**
      * @function Ekmap.LevelRenderer.Group.prototype.eachChild
-     * @description 遍历所有子节点。
-     * @param {function} cb - 回调函数。
-     * @param {Object} context - 上下文。
+     * @description Traverse all child nodes.
+     * @param {function} cb-callback function.
+     * @param {Object} context-context.
      */
     eachChild(cb, context) {
         var haveContext = !!context;
-        for (var i = 0; i < this._children.length; i++) {
+        for (var i = 0; i <this._children.length; i++) {
             var child = this._children[i];
             if (haveContext) {
                 cb.call(context, child);
@@ -201,13 +175,13 @@ export class Group extends Ekmap.mixin(Eventful, Transformable) {
 
     /**
      * @function Ekmap.LevelRenderer.Group.prototype.traverse
-     * @description 深度优先遍历所有子孙节点。
-     * @param {function} cb - 回调函数。
-     * @param {Object} context - 上下文。
+     * @description Depth-first traversal of all descendant nodes.
+     * @param {function} cb-callback function.
+     * @param {Object} context-context.
      */
     traverse(cb, context) {
         var haveContext = !!context;
-        for (var i = 0; i < this._children.length; i++) {
+        for (var i = 0; i <this._children.length; i++) {
             var child = this._children[i];
             if (haveContext) {
                 cb.call(context, child);
@@ -215,51 +189,49 @@ export class Group extends Ekmap.mixin(Eventful, Transformable) {
                 cb(child);
             }
 
-            if (child.type === 'group') {
+            if (child.type ==='group') {
                 child.traverse(cb, context);
+            }}
+        }
+    
+    
+        /**
+         * @function Ekmap.LevelRenderer.Group.prototype.addChildrenToStorage
+         * @description Add the sprite to the warehouse.
+         * @param {Ekmap.LevelRenderer.Storage} storage-graphics warehouse.
+         */
+        addChildrenToStorage(storage) {
+            for (var i = 0; i <this._children.length; i++) {
+                var child = this._children[i];
+                storage.addToMap(child);
+                if (child.type ==='group') {
+                    child.addChildrenToStorage(storage);
+                }
             }
         }
-    }
-
-
-    /**
-     * @function Ekmap.LevelRenderer.Group.prototype.addChildrenToStorage
-     * @description 把子图形添加到仓库。
-     * @param {Ekmap.LevelRenderer.Storage} storage - 图形仓库。
-     */
-    addChildrenToStorage(storage) {
-        for (var i = 0; i < this._children.length; i++) {
-            var child = this._children[i];
-            storage.addToMap(child);
-            if (child.type === 'group') {
-                child.addChildrenToStorage(storage);
+    
+    
+        /**
+         * @function Ekmap.LevelRenderer.Group.prototype.delChildrenFromStorage
+         * @description Delete the sub-graphics from the warehouse.
+         * @param {Ekmap.LevelRenderer.Storage} storage-graphics warehouse.
+         */
+        delChildrenFromStorage(storage) {
+            for (var i = 0; i <this._children.length; i++) {
+                var child = this._children[i];
+                storage.delFromMap(child.id);
+                if (child.type ==='group') {
+                    child.delChildrenFromStorage(storage);
+                }
             }
         }
-    }
-
-
-    /**
-     * @function Ekmap.LevelRenderer.Group.prototype.delChildrenFromStorage
-     * @description 从仓库把子图形删除。
-     * @param {Ekmap.LevelRenderer.Storage} storage - 图形仓库。
-     */
-    delChildrenFromStorage(storage) {
-        for (var i = 0; i < this._children.length; i++) {
-            var child = this._children[i];
-            storage.delFromMap(child.id);
-            if (child.type === 'group') {
-                child.delChildrenFromStorage(storage);
-            }
+    
+    
+        /**
+         * @function Ekmap.LevelRenderer.Group.prototype.modSelf
+         * @description Whether to modify.
+         */
+        modSelf() {
+            this.__dirty = true;
         }
-    }
-
-
-    /**
-     * @function Ekmap.LevelRenderer.Group.prototype.modSelf
-     * @description 是否修改。
-     */
-    modSelf() {
-        this.__dirty = true;
-    }
-
 }

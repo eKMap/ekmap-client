@@ -3,184 +3,182 @@ import { Util } from '../commontypes/Util';
 
 /**
  * @class Ekmap.ThemeStyle
- * @classdesc 客户端专题图风格类。
+ * @classdesc Client-side thematic map style class.
  * @category Visualization Theme
- * @param {Object} options - 可选参数。
- * @param {boolean} [options.fill=true] - 是否填充，不需要填充则设置为 false。如果 fill 与 stroke 同时为 false，将按 fill 与 stroke 的默认值渲染图层。
- * @param {string} [options.fillColor='#000000'] - 十六进制填充颜色。
- * @param {number} [options.fillOpacity=1] - 填充不透明度。取值范围[0, 1]。
- * @param {boolean} [options.stroke=false] -  是否描边，不需要描边则设置为false。如果 fill 与 stroke 同时为 false，将按 fill 与 stroke 的默认值渲染图层。
- * @param {string} [options.strokeColor='#000000'] - 十六进制描边颜色。
- * @param {number} [options.strokeOpacity=1] - 描边的不透明度。取值范围[0, 1]。
- * @param {number} [options.strokeWidth=1] - 线宽度/描边宽度。
- * @param {string} [options.strokeLinecap='butt'] - 线帽样式。strokeLinecap 有三种类型 “butt", "round", "square"。
- * @param {string} [options.strokeLineJoin='iter'] - 线段连接样式。strokeLineJoin 有三种类型 “miter", "round", "bevel"。
- * @param {string} [options.strokeDashstyle='solid'] - 虚线类型。strokeDashstyle 有八种类型 “dot",“dash",“dashdot",“longdash",“longdashdot",“solid", "dashed", "dotted"。solid 表示实线。
- * @param {number} [options.pointRadius=6] - 点半径,单位为像素。
- * @param {number} [options.shadowBlur=0] - 阴影模糊度，（大于 0 有效;）。注：请将 shadowColor 属性与 shadowBlur 属性一起使用，来创建阴影。
- * @param {string} [options.shadowColor='#000000'] - 阴影颜色。注：请将 shadowColor 属性与 shadowBlur 属性一起使用，来创建阴影。
- * @param {number} [options.shadowOffsetX=0] - 阴影 X 方向偏移值。
- * @param {number} [options.shadowOffsetY=0] - 阴影 Y 方向偏移值。
- * @param {string} options.label - 专题要素附加文本标签内容。
- * @param {string} [options.fontColor] - 附加文本字体颜色。
- * @param {number} [options.fontSize=12] - 附加文本字体大小,单位是像素。
- * @param {string} [options.fontStyle='normal'] - 附加文本字体样式。可设值："normal", "italic", "oblique"。
- * @param {string} [options.fontVariant='normal'] - 附加文本字体变体。可设值："normal", "small-caps"。
- * @param {string} [options.fontWeight='normal'] - 附加文本字体粗细。可设值："normal", "bold", "bolder", "lighter"。
- * @param {string} [options.fontFamily='arial,sans-serif'] - 附加文本字体系列。fontFamily 值是字体族名称或/及类族名称的一个优先表，每个值逗号分割，
- *                             浏览器会使用它可识别的第一个可以使用具体的字体名称（"times"、"courier"、"arial"）或字体系列名称
- *                              （"serif"、"sans-serif"、"cursive"、"fantasy"、"monospace"）。
- * @param {string} [options.labelPosition='top'] - 附加文本位置, 可以是 'inside', 'left', 'right', 'top', 'bottom'。
- * @param {string} [options.labelAlign='center'] - 附加文本水平对齐。可以是 'left', 'right', 'center'。
- * @param {string} [options.labelBaseline='middle'] - 附加文本垂直对齐。 可以是 'top', 'bottom', 'middle' 。
- * @param {number} [options.labelXOffset=0] - 附加文本在x轴方向的偏移量。
- * @param {number} [options.labelYOffset=0] - 附加文本在y轴方向的偏移量。
+ * @param {Object} options-optional parameters.
+ * @param {boolean} [options.fill=true] Whether to fill or not, set to false if no filling is required. If fill and stroke are both false, the layer will be rendered with the default values ​​of fill and stroke.
+ * @param {string} [options.fillColor='#000000'] Hexadecimal fill color.
+ * @param {number} [options.fillOpacity=1] Fill opacity. The value range is [0, 1].
+ * @param {boolean} [options.stroke=false] Whether to stroke or not, set to false if no stroke is required. If fill and stroke are both false, the layer will be rendered with the default values ​​of fill and stroke.
+ * @param {string} [options.strokeColor='#000000'] Hexadecimal stroke color.
+ * @param {number} [options.strokeOpacity=1] The opacity of the stroke. The value range is [0, 1].
+ * @param {number} [options.strokeWidth=1] line width/stroke width.
+ * @param {string} [options.strokeLinecap='butt'] line cap style. There are three types of strokeLinecap "butt", "round", and "square".
+ * @param {string} [options.strokeLineJoin='iter'] line segment connection style. There are three types of strokeLineJoin "miter", "round", "bevel".
+ * @param {string} [options.strokeDashstyle='solid'] The type of dashed line. There are eight types of strokeDashstyle "dot", "dash", "dashdot", "longdash", "longdashdot", "solid", "dashed", "dotted". solid represents a solid line.
+ * @param {number} [options.pointRadius=6] Point radius, in pixels.
+ * @param {number} [options.shadowBlur=0] shadow blur degree, (more than 0 valid;). Note: Please use the shadowColor property and the shadowBlur property together to create a shadow.
+ * @param {string} [options.shadowColor='#000000'] Shadow color. Note: Please use the shadowColor property and the shadowBlur property together to create a shadow.
+ * @param {number} [options.shadowOffsetX=0] The offset value of the shadow in the X direction.
+ * @param {number} [options.shadowOffsetY=0] the offset value of the shadow in the Y direction.
+ * @param {string} options.label-additional text label content for thematic elements.
+ * @param {string} [options.fontColor] Additional text font color.
+ * @param {number} [options.fontSize=12] Additional text font size, in pixels.
+ * @param {string} [options.fontStyle='normal'] Additional text font style. Possible values: "normal", "italic", "oblique".
+ * @param {string} [options.fontVariant='normal'] Additional text font variants. Possible values: "normal", "small-caps".
+ * @param {string} [options.fontWeight='normal'] Additional text font weight. Possible settings: "normal", "bold", "bolder", "lighter".
+ * @param {string} [options.fontFamily='arial,sans-serif'] additional text font family. The fontFamily value is a priority list of font family names or/and class family names. Each value is separated by a comma.
+ * The browser will use the first specific font name ("times", "courier", "arial") or font family name that it can recognize
+ * ("Serif", "sans-serif", "cursive", "fantasy", "monospace").
+ * @param {string} [options.labelPosition='top'] Additional text position, can be'inside','left','right','top','bottom'.
+ * @param {string} [options.labelAlign='center'] Horizontal alignment of additional text. Can be'left','right','center'.
+ * @param {string} [options.labelBaseline='middle'] The additional text is aligned vertically. Can be'top','bottom','middle'.
+ * @param {number} [options.labelXOffset=0] The offset of the additional text in the x-axis direction.
+ * @param {number} [options.labelYOffset=0] The offset of the additional text in the y-axis direction.
  */
 export class ThemeStyle {
-
-
     constructor(options) {
         options = options || {};
         /**
          * @member {boolean} [Ekmap.ThemeStyle.prototype.fill=true]
-         * @description 是否填充，不需要填充则设置为 false。如果 fill 与 stroke 同时为 false，将按 fill 与 stroke 的默认值渲染图层。
+         * @description Whether to fill or not, set to false if no filling is required. If fill and stroke are both false, the layer will be rendered with the default values ​​of fill and stroke.
          */
         this.fill = true;
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.fillColor="#000000"]
-         * @description 十六进制填充颜色。
+         * @description Hexadecimal fill color.
          */
         this.fillColor = "#000000";
         /**
-         *  @member {number} [Ekmap.ThemeStyle.prototype.fillOpacity=1]
-         *  @description 填充不透明度。取值范围[0, 1]。
+         * @member {number} [Ekmap.ThemeStyle.prototype.fillOpacity=1]
+         * @description Fill opacity. The value range is [0, 1].
          */
         this.fillOpacity = 1;
         /**
          * @member {boolean} [Ekmap.ThemeStyle.prototype.stroke=false]
-         * @description  是否描边，不需要描边则设置为false。如果 fill 与 stroke 同时为 false，将按 fill 与 stroke 的默认值渲染图层。
+         * @description Whether to stroke or not, set to false if no stroke is required. If fill and stroke are both false, the layer will be rendered with the default values ​​of fill and stroke.
          */
         this.stroke = false;
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.strokeColor="#000000"]
-         * @description  十六进制描边颜色。
+         * @description Hexadecimal stroke color.
          */
         this.strokeColor = "#000000";
         /**
          * @member {number} [Ekmap.ThemeStyle.prototype.strokeOpacity=1]
-         * @description  描边的不透明度。取值范围[0, 1]。
+         * @description The opacity of the stroke. The value range is [0, 1].
          */
         this.strokeOpacity = 1;
         /**
          * @member {number} [Ekmap.ThemeStyle.prototype.strokeWidth=1]
-         * @description  线宽度/描边宽度。
+         * @description Line width/stroke width.
          */
         this.strokeWidth = 1;
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.strokeLinecap="butt"]
-         * @description  线帽样式；strokeLinecap 有三种类型 “butt", "round", "square" 。
+         * @description line cap style; strokeLinecap has three types "butt", "round", "square".
          */
         this.strokeLinecap = "butt";
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.strokeLineJoin="miter"]
-         * @description  线段连接样式；strokeLineJoin 有三种类型 “miter", "round", "bevel"。
+         * @description line segment connection style; strokeLineJoin has three types "miter", "round", "bevel".
          */
         this.strokeLineJoin = "miter";
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.strokeDashstyle="solid"]
-         * @description   虚线类型； strokeDashstyle 有八种类型 “dot",“dash",“dashdot",“longdash",“longdashdot",“solid", "dashed", "dotted";
-         * solid 表示实线。
+         * @description dashed line type; strokeDashstyle has eight types "dot","dash","dashdot","longdash","longdashdot","solid", "dashed", "dotted";
+         * solid represents a solid line.
          */
         this.strokeDashstyle = "solid";
         /**
          * @member {number} [Ekmap.ThemeStyle.prototype.pointRadius=6]
-         * @description   点半径。单位为像素。
+         * @description point radius. The unit is pixel.
          */
         this.pointRadius = 6;
         /**
          * @member {number} [Ekmap.ThemeStyle.prototype.shadowBlur=0]
-         * @description   阴影模糊度，（大于 0 有效）。注：请将 shadowColor 属性与 shadowBlur 属性一起使用，来创建阴影。
+         * @description Shadow ambiguity, (greater than 0 is valid). Note: Please use the shadowColor property and the shadowBlur property together to create a shadow.
          */
         this.shadowBlur = 0;
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.shadowColor='#000000']
-         * @description  阴影颜色。注：请将 shadowColor 属性与 shadowBlur 属性一起使用，来创建阴影。
+         * @description The color of the shadow. Note: Please use the shadowColor property and the shadowBlur property together to create a shadow.
          */
         this.shadowColor = "#000000";
         /**
          * @member {number} [Ekmap.ThemeStyle.prototype.shadowOffsetX=0]
-         * @description 阴影 X 方向偏移值。
+         * @description The offset value of the shadow in the X direction.
          */
         this.shadowOffsetX = 0;
         /**
          * @member {number} Ekmap.ThemeStyle.prototype.shadowOffsetY
-         * @description Y 方向偏移值。
+         * @description Y-direction offset value.
          */
         this.shadowOffsetY = 0;
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.label]
-         * @description 专题要素附加文本标签内容。
+         * @description Additional text label content for thematic elements.
          */
         this.label = "";
         /**
          * @member {boolean} [Ekmap.ThemeStyle.prototype.labelRect=false]
-         * @description 是否显示文本标签矩形背景。
+         * @description Whether to display the rectangular background of the text label.
          */
         this.labelRect = false;
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.fontColor]
-         * @description 附加文本字体颜色。
+         * @description Additional text font color.
          */
         this.fontColor = "";
         /**
          * @member {number} [Ekmap.ThemeStyle.prototype.fontSize=12]
-         * @description 附加文本字体大小,单位是像素。
+         * @description Additional text font size, the unit is pixel.
          */
         this.fontSize = 12;
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.fontStyle="normal"]
-         * @description 附加文本字体样式。可设值："normal", "italic", "oblique"。
+         * @description Additional text font style. Possible values: "normal", "italic", "oblique".
          */
         this.fontStyle = "normal";
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.fontVariant="normal"]
-         * @description 附加文本字体变体。可设值："normal", "small-caps"。
+         * @description Additional text font variants. Possible values: "normal", "small-caps".
          */
         this.fontVariant = "normal";
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.fontWeight="normal"]
-         * @description 附加文本字体粗细。可设值："normal", "bold", "bolder", "lighter"。
+         * @description Additional text font weight. Possible settings: "normal", "bold", "bolder", "lighter".
          */
         this.fontWeight = "normal";
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.fontFamily="arial,sans-serif"]
-         * @description 附加文本字体系列。fontFamily 值是字体族名称或/及类族名称的一个优先表，每个值逗号分割，浏览器会使用它可识别的第一个
-         * 可以使用具体的字体名称（"times"、"courier"、"arial"）或字体系列名称（"serif"、"sans-serif"、"cursive"、"fantasy"、"monospace"）。
+         * @description Additional text font family. The fontFamily value is a priority list of font family names or/and class family names. Each value is separated by a comma, and the browser will use the first one that it can recognize
+         * Specific font names ("times", "courier", "arial") or font family names ("serif", "sans-serif", "cursive", "fantasy", "monospace") can be used.
          */
         this.fontFamily = "arial,sans-serif";
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.labelPosition='top']
-         * @description 附加文本位置, 可以是 'inside', 'left', 'right', 'top', 'bottom'。
+         * @description Additional text position, can be'inside','left','right','top','bottom'.
          */
         this.labelPosition = "top";
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.labelAlign='center']
-         * @description 附加文本水平对齐。可以是 'left', 'right', 'center'。
+         * @description Horizontal alignment of additional text. Can be'left','right','center'.
          */
         this.labelAlign = "center";
         /**
          * @member {string} [Ekmap.ThemeStyle.prototype.labelBaseline='middle']
-         * @description  附加文本垂直对齐。 可以是 'top', 'bottom', 'middle'。
+         * @description The additional text is aligned vertically. Can be'top','bottom','middle'.
          */
         this.labelBaseline = "middle";
         /**
          * @member {number} [Ekmap.ThemeStyle.prototype.labelXOffset=0]
-         * @description  附加文本在 X 轴方向的偏移量。
+         * @description The offset of the additional text in the X axis direction.
          */
         this.labelXOffset = 0;
         /**
          * @member {number} [Ekmap.ThemeStyle.prototype.labelYOffset=0]
-         * @description 附加文本在 Y 轴方向的偏移量。
+         * @description The offset of the additional text in the Y-axis direction.
          */
         this.labelYOffset = 0;
 

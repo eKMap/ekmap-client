@@ -62,23 +62,6 @@ export class Geometry {
         //
         return 0.0;
     }
-
-
-    // /**
-    //  * @function Ekmap.Geometry.prototype.toString
-    //  * @description 返回geometry对象的字符串表述，需要引入{@link Ekmap.Format.WKT}。此方法只能在子类实现，在父类使用会报错。
-    //  * @returns {string} geometry对象的字符串表述(Well-Known Text)
-    //  */
-    // toString() {
-    // var string;
-    // if (WKT) {
-    //     var wkt = new WKT();
-    //     string = wkt.write(new Vector(this));
-    // } else {
-    //     string = Object.prototype.toString.call(this);
-    // }
-    // return string;
-    // }
 }
 
 Ekmap.Geometry = Geometry;

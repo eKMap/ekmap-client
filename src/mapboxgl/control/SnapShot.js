@@ -88,7 +88,7 @@ export class SnapShot extends mapboxgl.Evented {
 
     /**
      * @private
-     * @description Create id
+     * @description Create id 
      */
     guid12() {
         function s4() {

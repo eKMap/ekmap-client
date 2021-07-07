@@ -1,26 +1,18 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Tool.Matrix
- * @category Visualization Theme
- * @classdesc LevelRenderer 工具-3x2矩阵操作类
- */
+
 export class Matrix {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.constructor
-     * @description 构造函数。
+     * @description Constructor.
      */
 
-    constructor() {
+     constructor() {
         /**
          * @member {Object} Ekmap.LevelRenderer.Tool.Matrix.prototype.ArrayCtor
-         * @description 数组类型控制
+         * @description array type control
          */
-        this.ArrayCtor = typeof Float32Array === 'undefined' ?
-            Array :
+        this.ArrayCtor = typeof Float32Array ==='undefined'?
+            Array:
             Float32Array;
 
         this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Matrix";
@@ -29,8 +21,8 @@ export class Matrix {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.create
-     * @description 创建一个单位矩阵。
-     * @returns {(Float32Array|Array.<number>)} 单位矩阵。
+     * @description creates an identity matrix.
+     * @returns {(Float32Array|Array.<number>)} identity matrix.
      */
     create() {
         var ArrayCtor = this.ArrayCtor;
@@ -43,9 +35,9 @@ export class Matrix {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.identity
-     * @description 设置矩阵为单位矩阵。
-     * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
-     * @returns {(Float32Array|Array.<number>)} 单位矩阵。
+     * @description sets the matrix as the identity matrix.
+     * @param {(Float32Array|Array.<number>)} out-the identity matrix.
+     * @returns {(Float32Array|Array.<number>)} identity matrix.
      */
     identity(out) {
         out[0] = 1;
@@ -60,9 +52,9 @@ export class Matrix {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.copy
-     * @description 复制矩阵。
-     * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
-     * @returns {(Float32Array|Array.<number>)} 克隆矩阵。
+     * @description Copy the matrix.
+     * @param {(Float32Array|Array.<number>)} out-the identity matrix.
+     * @returns {(Float32Array|Array.<number>)} Clone the matrix.
      */
     copy(out, m) {
         out[0] = m[0];
@@ -76,11 +68,11 @@ export class Matrix {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.mul
-     * @description 矩阵相乘。
-     * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
-     * @param {(Float32Array|Array.<number>)} m1 - 矩阵m1。
-     * @param {(Float32Array|Array.<number>)} m2- 矩阵m2。
-     * @returns {(Float32Array|Array.<number>)} 结果矩阵。
+     * @description Matrix multiplication.
+     * @param {(Float32Array|Array.<number>)} out-the identity matrix.
+     * @param {(Float32Array|Array.<number>)} m1-matrix m1.
+     * @param {(Float32Array|Array.<number>)} m2- matrix m2.
+     * @returns {(Float32Array|Array.<number>)} Result matrix.
      */
     mul(out, m1, m2) {
         out[0] = m1[0] * m2[0] + m1[2] * m2[1];
@@ -94,11 +86,11 @@ export class Matrix {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.mul
-     * @description 平移变换。
-     * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
-     * @param {(Float32Array|Array.<number>)} a - 矩阵。
-     * @param {(Float32Array|Array.<number>)} v- 平移参数。
-     * @returns {(Float32Array|Array.<number>)} 结果矩阵。
+     * @description Translation transformation.
+     * @param {(Float32Array|Array.<number>)} out-the identity matrix.
+     * @param {(Float32Array|Array.<number>)} a-matrix.
+     * @param {(Float32Array|Array.<number>)} v- translation parameter.
+     * @returns {(Float32Array|Array.<number>)} Result matrix.
      */
     translate(out, a, v) {
         out[0] = a[0];
@@ -112,11 +104,11 @@ export class Matrix {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.rotate
-     * @description 平移变换。
-     * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
-     * @param {(Float32Array|Array.<number>)} a - 矩阵。
-     * @param {(Float32Array|Array.<number>)} rad - 旋转参数。
-     * @returns {(Float32Array|Array.<number>)} 结果矩阵。
+     * @description Translation transformation.
+     * @param {(Float32Array|Array.<number>)} out-the identity matrix.
+     * @param {(Float32Array|Array.<number>)} a-matrix.
+     * @param {(Float32Array|Array.<number>)} rad-Rotation parameter.
+     * @returns {(Float32Array|Array.<number>)} Result matrix.
      */
     rotate(out, a, rad) {
         var aa = a[0];
@@ -133,17 +125,17 @@ export class Matrix {
         out[2] = ac * ct + ad * st;
         out[3] = -ac * st + ct * ad;
         out[4] = ct * atx + st * aty;
-        out[5] = ct * aty - st * atx;
+        out[5] = ct * aty-st * atx;
         return out;
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.scale
-     * @description 缩放变换。
-     * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
-     * @param {(Float32Array|Array.<number>)} a - 矩阵。
-     * @param {(Float32Array|Array.<number>)} v - 缩放参数。
-     * @returns {(Float32Array|Array.<number>)} 结果矩阵。
+     * @description zoom transformation.
+     * @param {(Float32Array|Array.<number>)} out-the identity matrix.
+     * @param {(Float32Array|Array.<number>)} a-matrix.
+     * @param {(Float32Array|Array.<number>)} v-scaling parameter.
+     * @returns {(Float32Array|Array.<number>)} Result matrix.
      */
     scale(out, a, v) {
         var vx = v[0];
@@ -159,10 +151,10 @@ export class Matrix {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.invert
-     * @description 求逆矩阵。
-     * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
-     * @param {(Float32Array|Array.<number>)} a - 矩阵。
-     * @returns {(Float32Array|Array.<number>)} 结果矩阵。
+     * @description Find the inverse matrix.
+     * @param {(Float32Array|Array.<number>)} out-the identity matrix.
+     * @param {(Float32Array|Array.<number>)} a-matrix.
+     * @returns {(Float32Array|Array.<number>)} Result matrix.
      */
     invert(out, a) {
         var aa = a[0];
@@ -172,7 +164,7 @@ export class Matrix {
         var ad = a[3];
         var aty = a[5];
 
-        var det = aa * ad - ab * ac;
+        var det = aa * ad-ab * ac;
         if (!det) {
             return null;
         }
@@ -182,20 +174,20 @@ export class Matrix {
         out[1] = -ab * det;
         out[2] = -ac * det;
         out[3] = aa * det;
-        out[4] = (ac * aty - ad * atx) * det;
-        out[5] = (ab * atx - aa * aty) * det;
+        out[4] = (ac * aty-ad * atx) * det;
+        out[5] = (ab * atx-aa * aty) * det;
         return out;
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Matrix.prototype.mulVector
-     * @description 矩阵左乘向量。
-     * @param {(Float32Array|Array.<number>)} out - 单位矩阵。
-     * @param {(Float32Array|Array.<number>)} a - 矩阵。
-     * @param {(Float32Array|Array.<number>)} v - 缩放参数。
-     * @returns {(Float32Array|Array.<number>)} 结果矩阵。
-     */
-    mulVector(out, a, v) {
+      * @description Matrix left multiplied by vector.
+      * @param {(Float32Array|Array.<number>)} out-the identity matrix.
+      * @param {(Float32Array|Array.<number>)} a-matrix.
+      * @param {(Float32Array|Array.<number>)} v-scaling parameter.
+      * @returns {(Float32Array|Array.<number>)} Result matrix.
+      */
+     mulVector(out, a, v) {
         var aa = a[0];
         var ac = a[2];
         var atx = a[4];

@@ -126,5 +126,10 @@
     },
     "pre-commit": [
         "lint"
-    ]
+    ],
+    "env": {
+        "development" : {
+          "compact": false
+        }
+      }
 }

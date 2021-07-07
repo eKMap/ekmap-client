@@ -45,3 +45,9 @@ from './Geocoder/Geocoder';
 
 export { Rule }
 from './Rule';
+
+export { Compass }
+from './Compass';
+
+export { Pitch }
+from './Pitch';

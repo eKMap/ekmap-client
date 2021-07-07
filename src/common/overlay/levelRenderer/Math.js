@@ -1,24 +1,9 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Tool.Math
- * @category Visualization Theme
- * @classdesc LevelRenderer 工具-数学辅助类
- */
 export class Math {
-
-    /**
-     * @function Ekmap.LevelRenderer.Tool.Math.constructor
-     * @description 构造函数。
-     */
-
     constructor() {
 
         /**
          * @member {number} Ekmap.LevelRenderer.Tool.Math._radians
-         * @description 角度与弧度转化参数
+         * @description Angle and radian conversion parameters
          */
         this._radians = window.Math.PI / 180;
 
@@ -27,32 +12,32 @@ export class Math {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Math.prototype.sin
-     * @description 正弦函数。
-     * @param {number} angle - 弧度（角度）参数。
-     * @param {boolean} [isDegrees=false] - angle参数是否为角度计算，angle为以弧度计量的角度。
-     * @returns {number} sin 值。
+     * @description Sine function.
+     * @param {number} angle-the radian (angle) parameter.
+     * @param {boolean} [isDegrees=false] Whether the angle parameter is an angle calculation, and angle is an angle measured in radians.
+     * @returns {number} sin value.
      */
     sin(angle, isDegrees) {
-        return window.Math.sin(isDegrees ? angle * this._radians : angle);
+        return window.Math.sin(isDegrees? angle * this._radians: angle);
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Math.prototype.cos
-     * @description 余弦函数。
-     * @param {number} angle - 弧度（角度）参数。
-     * @param {boolean} [isDegrees=false] - angle参数是否为角度计算，angle为以弧度计量的角度。
-     * @returns {number} cos 值。
+     * @description Cosine function.
+     * @param {number} angle-the radian (angle) parameter.
+     * @param {boolean} [isDegrees=false] Whether the angle parameter is an angle calculation, and angle is an angle measured in radians.
+     * @returns {number} cos value.
      */
     cos(angle, isDegrees) {
-        return window.Math.cos(isDegrees ? angle * this._radians : angle);
+        return window.Math.cos(isDegrees? angle * this._radians: angle);
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Math.prototype.degreeToRadian
-     * @description 角度转弧度。
-     * @param {number} angle - 弧度（角度）参数。
-     * @param {boolean} [isDegrees=false] - angle参数是否为角度计算，angle为以弧度计量的角度。
-     * @returns {number} 弧度值。
+     * @description Angle to radians.
+     * @param {number} angle-the radian (angle) parameter.
+     * @param {boolean} [isDegrees=false] Whether the angle parameter is an angle calculation, and angle is an angle measured in radians.
+     * @returns {number} radian value.
      */
     degreeToRadian(angle) {
         return angle * this._radians;
@@ -60,10 +45,10 @@ export class Math {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Math.prototype.radianToDegree
-     * @description 弧度转角度。
-     * @param {number} angle - 弧度（角度）参数。
-     * @param {boolean} [isDegrees=false] - angle参数是否为角度计算，angle为以弧度计量的角度。
-     * @returns {number} 角度。
+     * @description radians to angle.
+     * @param {number} angle-the radian (angle) parameter.
+     * @param {boolean} [isDegrees=false] Whether the angle parameter is an angle calculation, and angle is an angle measured in radians.
+     * @returns {number} angle.
      */
 
     radianToDegree(angle) {

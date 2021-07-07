@@ -1,25 +1,15 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Tool.Util
- * @category Visualization Theme
- * LevelRenderer 基础工具类
- *
- */
 export class Util {
 
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.constructor
-     * @description 构造函数。
+     * @description Constructor.
      *
      */
     constructor() {
         /**
          * @member {Object} Ekmap.LevelRenderer.Tool.Util.prototype.BUILTIN_OBJECT
-         * @description 用于处理merge时无法遍历Date等对象的问题
+         * @description is used to deal with the problem that objects such as Date cannot be traversed during merge
          */
         this.BUILTIN_OBJECT = {
             '[object Function]': 1,
@@ -77,18 +67,18 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.clone
-     * @description 对一个object进行深度拷贝。
-     * 
-     * @param {Object} source - 需要进行拷贝的对象。
-     * @return {Object} 拷贝后的新对象。
+     * @description makes a deep copy of an object.
+     *
+     * @param {Object} source-the object to be copied.
+     * @return {Object} The new object after copying.
      */
     clone(source) {
         var BUILTIN_OBJECT = this.BUILTIN_OBJECT;
-        if (typeof source == 'object' && source !== null) {
+        if (typeof source =='object' && source !== null) {
             var result = source;
             if (source instanceof Array) {
                 result = [];
-                for (var i = 0, len = source.length; i < len; i++) {
+                for (var i = 0, len = source.length; i <len; i++) {
                     result[i] = this.clone(source[i]);
                 }
             } else if (!BUILTIN_OBJECT[Object.prototype.toString.call(source)]) {
@@ -109,28 +99,28 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.mergeItem
-     * @description 合并源对象的单个属性到目标对象。
+     * @description merges a single attribute of the source object to the target object.
      *
-     * @param {Object} target - 目标对象。
-     * @param {Object} source - 源对象。
-     * @param {string} key - 键。
-     * @param {boolean} overwrite - 是否覆盖。
-     * @return {Object} 目标对象
+     * @param {Object} target-the target object.
+     * @param {Object} source-source object.
+     * @param {string} key-key.
+     * @param {boolean} overwrite-Whether to overwrite.
+     * @return {Object} target object
      */
     mergeItem(target, source, key, overwrite) {
         var BUILTIN_OBJECT = this.BUILTIN_OBJECT;
         if (source.hasOwnProperty(key)) {
-            if (typeof target[key] == 'object' &&
+            if (typeof target[key] =='object' &&
                 !BUILTIN_OBJECT[Object.prototype.toString.call(target[key])]
             ) {
-                // 如果需要递归覆盖，就递归调用merge
+                // If you need to recursively cover, call merge recursively
                 this.merge(
                     target[key],
                     source[key],
                     overwrite
                 );
             } else if (overwrite || !(key in target)) {
-                // 否则只处理overwrite为true，或者在目标对象中没有此属性的情况
+                // Otherwise, only handle the case where overwrite is true or there is no such attribute in the target object
                 target[key] = source[key];
             }
         }
@@ -139,12 +129,12 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.merge
-     * @description 合并源对象的属性到目标对象。
-     * 
-     * @param {Object} target - 目标对象。
-     * @param {Object} source - 源对象。
-     * @param {boolean} overwrite - 是否覆盖。
-     * @return {Object} 目标对象。
+     * @description merges the attributes of the source object to the target object.
+     *
+     * @param {Object} target-the target object.
+     * @param {Object} source-the source object.
+     * @param {boolean} overwrite-Whether to overwrite.
+     * @return {Object} The target object.
      */
     merge(target, source, overwrite) {
         for (var i in source) {
@@ -157,8 +147,8 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.getContext
-     * @description 获取 Canvas 上下文。
-     * @return {Object} 上下文。
+     * @description Get the Canvas context.
+     * @return {Object} Context.
      */
     getContext() {
         if (!this._ctx) {
@@ -170,8 +160,8 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.getPixelContext
-     * @description 获取像素拾取专用的上下文。
-     * @return {Object} 像素拾取专用的上下文。
+     * @description Get the context dedicated to pixel picking.
+     * @return {Object} Context dedicated to pixel picking.
      */
     getPixelContext() {
         if (!this._pixelCtx) {
@@ -186,10 +176,10 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.adjustCanvasSize
-     * @description 如果坐标处在_canvas外部，改变_canvas的大小，修改canvas的大小 需要重新设置translate
+     * @description If the coordinates are outside _canvas, change the size of _canvas, modify the size of canvas, you need to reset translate
      *
-     * @param {number} x - 横坐标。
-     * @param {number} y - 纵坐标。
+     * @param {number} x-the abscissa.
+     * @param {number} y-the ordinate.
      *
      */
     adjustCanvasSize(x, y) {
@@ -200,30 +190,30 @@ export class Util {
         var _offsetX = this._offsetX;
         var _offsetY = this._offsetY;
 
-        // 每次加的长度
+        // Length added each time
         var _v = 100;
         var _flag;
 
-        if (x + _offsetX > _width) {
+        if (x + _offsetX> _width) {
             _width = x + _offsetX + _v;
             _canvas.width = _width;
             _flag = true;
         }
 
-        if (y + _offsetY > _height) {
+        if (y + _offsetY> _height) {
             _height = y + _offsetY + _v;
             _canvas.height = _height;
             _flag = true;
         }
 
-        if (x < -_offsetX) {
+        if (x <-_offsetX) {
             _offsetX = Math.ceil(-x / _v) * _v;
             _width += _offsetX;
             _canvas.width = _width;
             _flag = true;
         }
 
-        if (y < -_offsetY) {
+        if (y <-_offsetY) {
             _offsetY = Math.ceil(-y / _v) * _v;
             _height += _offsetY;
             _canvas.height = _height;
@@ -238,8 +228,8 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.getPixelOffset
-     * @description 获取像素canvas的偏移量。
-     * @return {Object} 偏移量。
+     * @description Get the offset of the pixel canvas.
+     * @return {Object} Offset.
      */
     getPixelOffset() {
         return {
@@ -251,14 +241,14 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.indexOf
-     * @description 查询数组中元素的index
-     * @return {Object} 偏移量。
+     * @description query the index of the element in the array
+     * @return {Object} Offset.
      */
     indexOf(array, value) {
         if (array.indexOf) {
             return array.indexOf(value);
         }
-        for (var i = 0, len = array.length; i < len; i++) {
+        for (var i = 0, len = array.length; i <len; i++) {
             if (array[i] === value) {
                 return i;
             }
@@ -269,11 +259,11 @@ export class Util {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Util.prototype.inherits
-     * @description 构造类继承关系
-     * 
-     * @param {Function} clazz - 源类。
-     * @param {Function} baseClazz - 基类。
-     * @return {Object} 偏移量。
+     * @description constructs class inheritance relationship
+     *
+     * @param {Function} clazz-source class.
+     * @param {Function} baseClazz-base class.
+     * @return {Object} Offset.
      */
     inherits(clazz, baseClazz) {
         var clazzPrototype = clazz.prototype;

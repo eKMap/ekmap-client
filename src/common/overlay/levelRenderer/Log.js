@@ -1,20 +1,7 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Config } from './Config';
 
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Tool.Log
- * @category Visualization Theme
- * @classdesc LevelRenderer 工具-日志
- */
 export class Log {
 
-    /**
-     * @function Ekmap.LevelRenderer.Tool.Log.constructor
-     * @description 构造函数。
-     */
     constructor() {
 
         this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Log";
@@ -31,15 +18,6 @@ export class Log {
                 }
             }
         };
-
-        /* for debug
-         return function(mes) {
-         document.getElementById('wrong-message').innerHTML =
-         mes + ' ' + (new Date() - 0)
-         + '<br/>'
-         + document.getElementById('wrong-message').innerHTML;
-         };
-         */
     }
 
     destory() {

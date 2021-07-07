@@ -61,6 +61,19 @@
             inputCSS("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css")
         }
 
+        if (inArray(includes, 'bootstrap4')) {
+            inputScript("https://code.jquery.com/jquery-3.2.1.slim.min.js");
+            inputCSS('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+            inputScript("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js");
+            inputScript("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js");
+
+        }
+
+        if (inArray(includes, 'fontsw')) {
+            inputCSS('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+        }
+
+
         if (inArray(includes, 'echarts')) {
             inputScript('https://cdn.jsdelivr.net/npm/echarts@4.9.0/dist/echarts.min.js');
             inputScript('https://cdn.jsdelivr.net/npm/echarts-liquidfill@2.0.6/dist/echarts-liquidfill.min.js');

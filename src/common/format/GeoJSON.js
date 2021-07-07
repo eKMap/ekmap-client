@@ -39,46 +39,33 @@ import {
 } from '../commontypes/geometry/MultiPolygon';
 import {
     ServerGeometry
-} from '../iServer/ServerGeometry';
+} from '../eKServer/ServerGeometry';
 
 /**
  * @class Ekmap.Format.GeoJSON
- * @classdesc  GeoJSON 的读和写。使用 {@link Ekmap.Format.GeoJSON} 构造器创建一个 GeoJSON 解析器。
+ * @classdesc GeoJSON reading and writing. Use the {@link Ekmap.Format.GeoJSON} constructor to create a GeoJSON parser.
  * @category BaseTypes Format
- * @param {Object} [options] - 参数。
- * @param {string} [options.indent="    "] - 用于格式化输出，indent 字符串会在每次缩进的时候使用一次。
- * @param {string} [options.space=" "] - 用于格式化输出，space 字符串会在名值对的 ":" 后边添加。
- * @param {string} [options.newline="\n"] - 用于格式化输出, newline 字符串会用在每一个名值对或数组项末尾。
- * @param {number} [options.level=0] - 用于格式化输出, 表示的是缩进级别。
- * @param {boolean} [options.pretty=false] - 是否在序列化的时候使用额外的空格控制结构。在 write 方法中使用。
- * @param {boolean} [options.nativeJSON] - 需要被注册的监听器对象。
- * @param {boolean} [options.ignoreExtraDims=true] - 忽略维度超过 2 的几何要素。
+ * @param {Object} [options] parameters.
+ * @param {string} [options.indent=" "] used to format the output, the indent string will be used once for each indentation.
+ * @param {string} [options.space=" "] used to format the output, the space string will be added after the ":" in the name-value pair.
+ * @param {string} [options.newline="\n"] used to format the output, the newline string will be used at the end of each name-value pair or array item.
+ * @param {number} [options.level=0] used to format the output, indicating the indentation level.
+ * @param {boolean} [options.pretty=false] Whether to use extra space control structure when serializing. Used in the write method.
+ * @param {boolean} [options.nativeJSON] The listener object that needs to be registered.
+ * @param {boolean} [options.ignoreExtraDims=true] Ignore geometric features whose dimensions exceed 2.
  * @extends {Ekmap.Format.JSON}
  */
 export class GeoJSON extends JSONFormat {
 
-
     constructor(options) {
         super(options);
-        /**
-         * @member {boolean} [Ekmap.Format.GeoJSON.prototype.ignoreExtraDims=true]
-         * @description 忽略维度超过 2 的几何要素。
-         */
+       
         this.ignoreExtraDims = true;
 
         this.CLASS_NAME = "Ekmap.Format.GeoJSON";
-        /**
-         * @member {Object} Ekmap.Format.GeoJSON.prototype.parseCoords 
-         * @private
-         * @description 一个属性名对应着 GeoJSON 对象的几何类型的对象。每个属性其实都是一个实际上做解析用的方法。
-         */
+        
         this.parseCoords = {
-            /**
-             * @function Ekmap.Format.GeoJSON.parseCoords.point
-             * @description 将一组坐标转成一个 {@link Ekmap.Geometry} 对象。
-             * @param {Object} array - GeoJSON 片段中的一组坐标。
-             * @returns {Ekmap.Geometry} 一个几何对象。
-             */
+          
             "point": function(array) {
                 if (this.ignoreExtraDims === false &&
                     array.length != 2) {
@@ -87,12 +74,7 @@ export class GeoJSON extends JSONFormat {
                 return new Point(array[0], array[1]);
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.parseCoords.multipoint
-             * @description 将坐标组数组转化成为一个 {@link Ekmap.Geometry} 对象。
-             * @param {Object} array - GeoJSON 片段中的坐标组数组。
-             * @returns {Ekmap.Geometry} 一个几何对象。
-             */
+         
             "multipoint": function(array) {
                 var points = [];
                 var p = null;
@@ -107,12 +89,6 @@ export class GeoJSON extends JSONFormat {
                 return new MultiPoint(points);
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.parseCoords.linestring
-             * @description 将坐标组数组转化成为一个 {@link Ekmap.Geometry} 对象。
-             * @param {Object} array - GeoJSON 片段中的坐标组数组。
-             * @returns {Ekmap.Geometry} 一个几何对象。
-             */
             "linestring": function(array) {
                 var points = [];
                 var p = null;
@@ -127,12 +103,6 @@ export class GeoJSON extends JSONFormat {
                 return new LineString(points);
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.parseCoords.multilinestring
-             * @description 将坐标组数组转化成为一个 {@link Ekmap.Geometry} 对象。
-             * @param {Object} array - GeoJSON 片段中的坐标组数组。
-             * @returns {Ekmap.Geometry} 一个几何对象。
-             */
             "multilinestring": function(array) {
                 var lines = [];
                 var l = null;
@@ -147,11 +117,6 @@ export class GeoJSON extends JSONFormat {
                 return new MultiLineString(lines);
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.parseCoords.polygon
-             * @description 将坐标组数组转化成为一个 {@link Ekmap.Geometry} 对象。
-             * @returns {Ekmap.Geometry} 一个几何对象。
-             */
             "polygon": function(array) {
                 var rings = [];
                 var r, l;
@@ -167,12 +132,6 @@ export class GeoJSON extends JSONFormat {
                 return new Polygon(rings);
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.parseCoords.multipolygon
-             * @description 将坐标组数组转化成为一个 {@link Ekmap.Geometry} 对象。
-             * @param {Object} array - GeoJSON 片段中的坐标组数组。
-             * @returns {Ekmap.Geometry} 一个几何对象。
-             */
             "multipolygon": function(array) {
                 var polys = [];
                 var p = null;
@@ -187,12 +146,6 @@ export class GeoJSON extends JSONFormat {
                 return new MultiPolygon(polys);
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.parseCoords.box
-             * @description 将坐标组数组转化成为一个 {@link Ekmap.Geometry} 对象。
-             * @param {Object} array - GeoJSON 片段中的坐标组数组。
-             * @returns {Ekmap.Geometry} 一个几何对象。
-             */
             "box": function(array) {
                 if (array.length != 2) {
                     throw "GeoJSON box coordinates must have 2 elements";
@@ -209,18 +162,7 @@ export class GeoJSON extends JSONFormat {
             }
 
         };
-        /**
-         * @member {Object} Ekmap.Format.GeoJSON.prototype.extract
-         * @private
-         * @description 一个属性名对应着GeoJSON类型的对象。其值为相应的实际的解析方法。
-         */
         this.extract = {
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.feature
-             * @description 返回一个表示单个要素对象的 GeoJSON 的一部分。
-             * @param {Ekmap.ServerFeature} feature - iServer 要素对象。
-             * @returns {Object} 一个表示点的对象。
-             */
             'feature': function(feature) {
                 var geom = this.extract.geometry.apply(this, [feature.geometry]);
                 var json = {
@@ -241,14 +183,6 @@ export class GeoJSON extends JSONFormat {
                 }
                 return json;
             },
-
-
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.geometry
-             * @description 返回一个表示单个几何对象的 GeoJSON 的一部分。
-             * @param {Object} geometry - iServer 几何对象。
-             * @returns {Object} 一个表示几何体的对象。
-             */
             'geometry': function(geometry) {
                 if (geometry == null) {
                     return null;
@@ -282,13 +216,6 @@ export class GeoJSON extends JSONFormat {
                 return json;
             },
 
-
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.point
-             * @description 从一个点对象中返回一个坐标组。
-             * @param {Ekmap.Geometry.Point} point - 一个点对象。
-             * @returns {Array} 一个表示一个点的坐标组。
-             */
             'point': function(point) {
                 var p = [point.x, point.y];
                 for (var name in point) {
@@ -299,22 +226,10 @@ export class GeoJSON extends JSONFormat {
                 return p;
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.point
-             * @description 从一个文本对象中返回一个坐标组。
-             * @param {Object} geo - 一个文本对象。
-             * @returns {Array} 一个表示一个点的坐标组。
-             */
             'text': function(geo) {
                 return [geo.points[0].x, geo.points[0].y];
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.multipoint
-             * @description 从一个多点对象中返一个坐标组数组。
-             * @param {Ekmap.Geometry.MultiPoint} multipoint - 多点对象。
-             * @returns {Array} 一个表示多点的坐标组数组。
-             */
             'multipoint': function(multipoint) {
                 var array = [];
                 for (var i = 0, len = multipoint.components.length; i < len; ++i) {
@@ -323,12 +238,6 @@ export class GeoJSON extends JSONFormat {
                 return array;
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.linestring
-             * @description 从一个线对象中返回一个坐标组数组。
-             * @param {Ekmap.Geometry.Linestring} linestring - 线对象。
-             * @returns {Array} 一个表示线对象的坐标组数组。
-             */
             'linestring': function(linestring) {
                 var array = [];
                 for (var i = 0, len = linestring.components.length; i < len; ++i) {
@@ -337,13 +246,6 @@ export class GeoJSON extends JSONFormat {
                 return array;
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.multilinestring
-             * @description 从一个多线对象中返回一个线数组。
-             * @param {Ekmap.Geometry.MultiLinestring} multilinestring - 多线对象。
-             *
-             * @returns {Array} 一个表示多线的线数组。
-             */
             'multilinestring': function(multilinestring) {
                 var array = [];
                 for (var i = 0, len = multilinestring.components.length; i < len; ++i) {
@@ -352,12 +254,6 @@ export class GeoJSON extends JSONFormat {
                 return array;
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.polygon
-             * @description 从一个面对象中返回一组线环。
-             * @param {Ekmap.Geometry.Polygon} polygon - 面对象。
-             * @returns {Array} 一组表示面的线环。
-             */
             'polygon': function(polygon) {
                 var array = [];
                 for (var i = 0, len = polygon.components.length; i < len; ++i) {
@@ -366,12 +262,6 @@ export class GeoJSON extends JSONFormat {
                 return array;
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.multipolygon
-             * @description 从一个多面对象中返回一组面。
-             * @param {Ekmap.Geometry.MultiPolygon} multipolygon - 多面对象。
-             * @returns {Array} 一组表示多面的面。
-             */
             'multipolygon': function(multipolygon) {
                 var array = [];
                 for (var i = 0, len = multipolygon.components.length; i < len; ++i) {
@@ -380,12 +270,6 @@ export class GeoJSON extends JSONFormat {
                 return array;
             },
 
-            /**
-             * @function Ekmap.Format.GeoJSON.extract.collection
-             * @description 从一个几何要素集合中一组几何要素数组。
-             * @param {Ekmap.Geometry.Collection} collection - 几何要素集合。
-             * @returns {Array} 一组表示几何要素集合的几何要素数组。
-             */
             'collection': function(collection) {
                 var len = collection.components.length;
                 var array = new Array(len);
@@ -396,18 +280,6 @@ export class GeoJSON extends JSONFormat {
             }
         };
     }
-
-    /**
-     * @function Ekmap.Format.GeoJSON.prototype.read
-     * @description 将 GeoJSON 对象或者GeoJSON 对象字符串转换为 Ekmap Feature 对象。
-     * @param {GeoJSONObject} json - GeoJSON 对象。
-     * @param {string} [type='FeaureCollection'] - 可选的字符串，它决定了输出的格式。支持的值有："Geometry","Feature"，和 "FeatureCollection"，如果此值为null。
-     * @param {Function} filter - 对象中每个层次每个键值对都会调用此函数得出一个结果。每个值都会被 filter 函数的结果所替换掉。这个函数可被用来将某些对象转化成某个类相应的对象，或者将日期字符串转化成Date对象。
-     * @returns {Object}  返回值依赖于 type 参数的值。
-     *     -如果 type 等于 "FeatureCollection"，返回值将会是 {@link Ekmap.Feature.Vector} 数组。
-     *     -如果 type 为 "Geometry",输入的 JSON 对象必须表示一个唯一的几何体，然后返回值就会是 {@link Ekmap.Feature.Geometry}。
-     *     -如果 type 为 "Feature"，输入的 JSON 对象也必须表示的一个要素，这样返回值才会是 {@link Ekmap.Feature.Vector}。
-     */
 
     read(json, type, filter) {
         type = (type) ? type : "FeatureCollection";
@@ -478,25 +350,10 @@ export class GeoJSON extends JSONFormat {
         return results;
     }
 
-    /**
-     * @function Ekmap.Format.GeoJSON.prototype.write
-     * @description iServer Geometry JSON 对象 转 GeoJSON对象字符串。
-     * @param {Object} obj - iServer Geometry JSON 对象。
-     * @param {boolean} [pretty=false] - 是否使用换行和缩进来控制输出。
-     * @returns {GeoJSONObject} 一个 GeoJSON 字符串，它表示了输入的几何对象，要素对象，或者要素对象数组。
-     */
     write(obj, pretty) {
             return super.write(this.toGeoJSON(obj), pretty);
         }
-        /**
-         * @function Ekmap.Format.GeoJSON.prototype.fromGeoJSON
-         * @version 9.1.1
-         * @description 将 GeoJSON 对象或者GeoJSON 对象字符串转换为iServer Feature JSON。
-         * @param {GeoJSONObject} json - GeoJSON 对象。
-         * @param {string} [type='FeaureCollection'] - 可选的字符串，它决定了输出的格式。支持的值有："Geometry","Feature"，和 "FeatureCollection"，如果此值为null。
-         * @param {Function} filter - 对象中每个层次每个键值对都会调用此函数得出一个结果。每个值都会被 filter 函数的结果所替换掉。这个函数可被用来将某些对象转化成某个类相应的对象，或者将日期字符串转化成Date对象。
-         * @returns {Object}  iServer Feature JSON。
-         */
+      
     fromGeoJSON(json, type, filter) {
         let feature = this.read(json, type, filter);
         if (!Util.isArray(feature)) {
@@ -507,13 +364,6 @@ export class GeoJSON extends JSONFormat {
         })
     }
 
-    /**
-     * @function Ekmap.Format.GeoJSON.prototype.toGeoJSON
-     * @version 9.1.1
-     * @description 将 iServer Feature JSON 对象转换为 GeoJSON 对象。
-     * @param {Object} obj - iServer Feature JSON。
-     * @returns {GeoJSONObject}  GeoJSON 对象。
-     */
     toGeoJSON(obj) {
             var geojson = {
                 "type": null
@@ -547,12 +397,7 @@ export class GeoJSON extends JSONFormat {
             return geojson;
 
         }
-        /**
-         *  @function Ekmap.Format.GeoJSON.prototype.isValidType
-         *  @description 检查一个 GeoJSON 对象是否和给定的类型相符的合法的对象。
-         *  @returns {boolean} GeoJSON 是否是给定类型的合法对象。
-         *  @private
-         */
+   
     isValidType(obj, type) {
         var valid = false;
         switch (type) {
@@ -585,13 +430,6 @@ export class GeoJSON extends JSONFormat {
         return valid;
     }
 
-    /**
-     * @function Ekmap.Format.GeoJSON.prototype.parseFeature
-     * @description 将一个 GeoJSON 中的 feature 转化成 {@link Ekmap.Feature.Vector}> 对象。
-     * @private
-     * @param {GeoJSONObject} obj - 从 GeoJSON 对象中创建一个对象。
-     * @returns {Ekmap.Feature.Vector} 一个要素。
-     */
     parseFeature(obj) {
         var feature, geometry, attributes, bbox;
         attributes = (obj.properties) ? obj.properties : {};
@@ -612,14 +450,6 @@ export class GeoJSON extends JSONFormat {
         return feature;
     }
 
-
-    /**
-     * @function Ekmap.Format.GeoJSON.prototype.parseGeometry
-     * @description 将一个 GeoJSON 中的几何要素转化成 {@link Ekmap.Geometry} 对象。
-     * @param {GeoJSONObject} obj - 从 GeoJSON 对象中创建一个对象。
-     * @returns {Ekmap.Geometry} 一个几何要素。
-     * @private
-     */
     parseGeometry(obj) {
         if (obj == null) {
             return null;
@@ -656,14 +486,6 @@ export class GeoJSON extends JSONFormat {
         return geometry;
     }
 
-
-    /**
-     * @function Ekmap.Format.GeoJSON.prototype.createCRSObject
-     * @description 从一个要素对象中创建一个坐标参考系对象。
-     * @param {Ekmap.Feature.Vector} object - 要素对象。
-     * @private
-     * @returns {GeoJSONObject} 一个可作为 GeoJSON 对象的 CRS 属性使用的对象。
-     */
     createCRSObject(object) {
         var proj = object.layer.projection.toString();
         var crs = {};
