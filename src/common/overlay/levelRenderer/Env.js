@@ -1,17 +1,5 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-/**
- * @class  Ekmap.LevelRenderer.Tool.Env
- * @category Visualization Theme
- * @classdesc 环境识别
- * @private 
- */
 export class Env {
     constructor() {
-        // Zepto.js
-        // (c) 2010-2013 Thomas Fuchs
-        // Zepto.js may be freely distributed under the MIT license.
         this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Env";
         var me = this;
 
@@ -129,7 +117,6 @@ export class Env {
             return {
                 browser: browser,
                 os: os,
-                // 原生canvas支持
                 canvasSupported: document.createElement('canvas').getContext ? true : false
             };
         }

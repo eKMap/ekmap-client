@@ -462,6 +462,8 @@ export class Rule extends mapboxgl.Evented {
      */
   changeMode(mode) {
     this.mode = mode;
+    if (this.markers.length > 0)
+      this.markers.forEach(m => m.remove());
     this.activate();
   }
 }

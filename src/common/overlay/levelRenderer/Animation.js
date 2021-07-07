@@ -1,102 +1,54 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Util } from '../levelRenderer/Util';
 import { Eventful } from './Eventful';
 import { Clip } from './Clip';
 import { SUtil } from './SUtil';
 import { Util as CommonUtil } from "../../commontypes/Util";
 
-/**
- * @class Ekmap.LevelRenderer.Animation
- * @classdesc 动画主类, 调度和管理所有动画控制器
- * @category Visualization Theme
- * @extends {Ekmap.LevelRenderer.Eventful}
- * @private 
- */
 export class Animation extends Eventful {
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.prototype.constructor
-     * @description 构造函数。
-     * @param {Object} options - 动画参数。
-     * @param {Object} options.onframe - onframe。
-     * @param {Object} options.stage - stage。
-     * (start code)
-     *     var animation = new Ekmap.LevelRenderer.Animation();
-     *     var obj = {
-     *         x: 100,
-     *         y: 100
-     *     };
-     *     animation.animate(node.position)
-     *         .when(1000, {
-     *             x: 500,
-     *             y: 500
-     *         })
-     *         .when(2000, {
-     *             x: 100,
-     *             y: 100
-     *         })
-     *         .start('spline');
-     * (end)
-     */
     constructor(options) {
         super(options);
 
         options = options || {};
         /**
          * @member {Object} Ekmap.LevelRenderer.Animation.prototype.stage
-         * @description stage。
+         * @description stage.
          */
         this.stage = {};
 
         /**
          * @member {Object} Ekmap.LevelRenderer.Animation.prototype.onframe
-         * @description onframe。
+         * @description onframe.
          */
         this.onframe = function() {};
 
         /**
          * @member {Array} Ekmap.LevelRenderer.Animation.prototype._clips
-         * @description _clips。
+         * @description _clips.
          */
         this._clips = [];
 
         /**
          * @member {boolean} Ekmap.LevelRenderer.Animation.prototype._running
-         * @description _running。
+         * @description _running.
          */
         this._running = false;
 
         /**
          * @member {number} Ekmap.LevelRenderer.Animation.prototype._time
-         * @description _time。
+         * @description _time.
          */
         this._time = 0;
 
         CommonUtil.extend(this, options);
 
         this.CLASS_NAME = "Ekmap.LevelRenderer.Animation";
-
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.prototype.add
-     * @description 添加动画片段。
-     * @param {Ekmap.LevelRenderer.Animation.Clip} clip - 动画片段。
-     */
     add(clip) {
         this._clips.push(clip);
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.prototype.remove
-     * @description 删除动画片段。
-     * @param {Ekmap.LevelRenderer.Animation.Clip} clip - 动画片段。
-     */
     remove(clip) {
         var idx = new Util().indexOf(this._clips, clip);
         if (idx >= 0) {
@@ -104,11 +56,6 @@ export class Animation extends Eventful {
         }
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.prototype.update
-     * @description 更新动画片段。
-     */
     _update() {
         var time = new Date().getTime();
         var delta = time - this._time;
@@ -154,11 +101,6 @@ export class Animation extends Eventful {
         this.dispatch('frame', delta);
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.prototype.start
-     * @description 开始运行动画。
-     */
     start() {
         var requestAnimationFrame = window.requestAnimationFrame ||
             window.msRequestAnimationFrame ||
@@ -184,35 +126,14 @@ export class Animation extends Eventful {
         requestAnimationFrame(step);
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.prototype.stop
-     * @description 停止运行动画。
-     */
     stop() {
         this._running = false;
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.prototype.clear
-     * @description 清除所有动画片段。
-     */
     clear() {
         this._clips = [];
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.prototype.animate
-     * @description 对一个目标创建一个animator对象，可以指定目标中的属性使用动画。
-     * @param {Object} target - 目标对象。
-     * @param {Object} options - 动画参数选项。
-     * @param {boolean} [options.loop=false] - 是否循环播放动画。
-     * @param {function} [options.getter] - 如果指定getter函数，会通过getter函数取属性值。
-     * @param {function} [options.setter] - 如果指定setter函数，会通过setter函数设置属性值。
-     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator。
-     */
     animate(target, options) {
         options = options || {};
         var deferred = new Animator(
@@ -314,31 +235,11 @@ export class Animation extends Eventful {
     }
 }
 
-/**
- * @class Ekmap.LevelRenderer.Animation.Animator
- */
 export class Animator {
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.animate
-     * @description 构造函数
-     * @param {Object} target - 目标对象。
-     * @param {Object} options - 动画参数选项。
-     * @param {boolean} [loop=false] - 是否循环播放动画。
-     * @param {function} [getterl] - 如果指定getter函数，会通过getter函数取属性值。
-     * @param {function} [setter] - 如果指定setter函数，会通过setter函数设置属性值。
-     */
     constructor(target, loop, getter, setter) {
-        /**
-         * @member {Object} Ekmap.LevelRenderer.Animation.Animator.prototype._tracks
-         * @description _tracks。
-         */
+       
         this._tracks = {};
 
-        /**
-         * @member {Object} Ekmap.LevelRenderer.Animation.Animator.prototype._target
-         * @description _target。
-         */
         this._target = target;
 
         /**
@@ -400,13 +301,6 @@ export class Animator {
     }
 
 
-    /**
-     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.when
-     * @description 设置动画关键帧
-     * @param {number} time - 关键帧时间，单位是ms
-     * @param {Object} props - 关键帧的属性值，key-value表示
-     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
-     */
     when(time /* ms */ , props) {
         for (var propName in props) {
             if (!this._tracks[propName]) {
@@ -432,25 +326,11 @@ export class Animator {
         return this;
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.during
-     * @description 添加动画每一帧的回调函数
-     * @param {RequestCallback} callback - 回调函数
-     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
-     */
     during(callback) {
         this._onframeList.push(callback);
         return this;
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.start
-     * @description 开始执行动画
-     * @param {(string|function)} easing - 动画缓动函数。详见：<{@link Ekmap.LevelRenderer.Animation.easing}>。
-     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
-     */
     start(easing) {
         var self = this;
         var setter = this._setter;
@@ -642,11 +522,6 @@ export class Animator {
         return this;
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.stop
-     * @description 停止动画
-     */
     stop() {
         for (var i = 0; i < this._clipList.length; i++) {
             var clip = this._clipList[i];
@@ -655,30 +530,15 @@ export class Animator {
         this._clipList = [];
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.delay
-     * @description 设置动画延迟开始的时间
-     * @param {number} time - 时间，单位ms
-     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
-     */
     delay(time) {
         this._delay = time;
         return this;
     }
 
-
-    /**
-     * @function Ekmap.LevelRenderer.Animation.Animator.prototype.done
-     * @description 添加动画结束的回调
-     * @param {function} cb - Function
-     * @returns {Ekmap.LevelRenderer.Animation.Animator} Animator
-     */
     done(cb) {
         if (cb) {
             this._doneList.push(cb);
         }
         return this;
     }
-
 }

@@ -1,6 +1,3 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Area } from './Area';
 import { Color } from './Color';
 import { ComputeBoundingBox } from './ComputeBoundingBox';
@@ -15,17 +12,17 @@ import { Util } from './Util';
 import { Vector } from './Vector';
 
 export class SUtil {
-    /**
-     * @function Ekmap.LevelRenderer.SUtil.SUtil_smoothBezier
-     * @description 贝塞尔平滑曲线。
-     * @private 
-     * @param {Array} points - 线段顶点数组。
-     * @param {number} smooth - 平滑等级, 0-1。
-     * @param {boolean} isLoop - isLoop。
-     * @param {Array} constraint - 将计算出来的控制点约束在一个包围盒内，比如 [[0, 0], [100, 100]], 这个包围盒会与整个折线的包围盒做一个并集用来约束控制点。
-     * @param {Array} [originalPosition=[0, 0]] - 参考原点。
-     * @return {Array} 生成的平滑节点数组。
-     */
+  /**
+      * @function Ekmap.LevelRenderer.SUtil.SUtil_smoothBezier
+      * @description Bezier smooth curve.
+      * @private
+      * @param {Array} points-the vertex array of the line segment.
+      * @param {number} smooth-smoothing level, 0-1.
+      * @param {boolean} isLoop-isLoop.
+      * @param {Array} constraint-Constrain the calculated control points in a bounding box, such as [[0, 0], [100, 100]], this bounding box will be a union with the bounding box of the entire polyline Used to constrain control points.
+      * @param {Array} [originalPosition=[0, 0]] Reference origin.
+      * @return {Array} The generated smooth node array.
+      */
     static SUtil_smoothBezier(points, smooth, isLoop, constraint, originalPosition) {
         if (!originalPosition || originalPosition !== 2) {
             originalPosition = [0, 0];
@@ -48,7 +45,6 @@ export class SUtil {
                 SUtil.Util_vector.min(min, min, [points[i][0] + __OP[0], points[i][1] + __OP[1]]);
                 SUtil.Util_vector.max(max, max, [points[i][0] + __OP[0], points[i][1] + __OP[1]]);
             }
-            // 与指定的包围盒做并集
             SUtil.Util_vector.min(min, min, constraint[0]);
             SUtil.Util_vector.max(max, max, constraint[1]);
         }
@@ -107,15 +103,15 @@ export class SUtil {
     }
 
     /**
-     * @function Ekmap.LevelRenderer.SUtil.SUtil_smoothSpline
-     * @description 插值折线。
-     * @private 
-     * @param {Array} points - 线段顶点数组。
-     * @param {boolean} isLoop - isLoop。
-     * @param {Array} constraint - 将计算出来的控制点约束在一个包围盒内，比如 [[0, 0], [100, 100]], 这个包围盒会与整个折线的包围盒做一个并集用来约束控制点。
-     * @param {Array} originalPosition - 参考原点。默认值：[0, 0]。
-     * @return {Array} 生成的平滑节点数组。
-     */
+      * @function Ekmap.LevelRenderer.SUtil.SUtil_smoothSpline
+      * @description Interpolated polyline.
+      * @private
+      * @param {Array} points-the vertex array of the line segment.
+      * @param {boolean} isLoop-isLoop.
+      * @param {Array} constraint-Constrain the calculated control points in a bounding box, such as [[0, 0], [100, 100]], this bounding box will be a union with the bounding box of the entire polyline Used to constrain control points.
+      * @param {Array} originalPosition-Reference origin. Default value: [0, 0].
+      * @return {Array} The generated smooth node array.
+      */
     static SUtil_smoothSpline(points, isLoop, constraint, originalPosition) {
         if (!originalPosition || originalPosition !== 2) {
             originalPosition = [0, 0];
@@ -174,9 +170,9 @@ export class SUtil {
     }
 
     /**
-     * @function Ekmap.LevelRenderer.SUtil.SUtil_dashedLineTo
-     * @description 虚线 lineTo。
-     */
+      * @function Ekmap.LevelRenderer.SUtil.SUtil_dashedLineTo
+      * @description dashed lineTo.
+      */
     static SUtil_dashedLineTo(ctx, x1, y1, x2, y2, dashLength, customDashPattern) {
         // http://msdn.microsoft.com/en-us/library/ie/dn265063(v=vs.85).aspx
         var dashPattern = [5, 5];
@@ -221,8 +217,6 @@ export class SUtil {
         ctx.lineTo(x2, y2);
     }
 }
-// 把所有工具对象放到全局静态变量上，以便直接调用工具方法，
-// 避免使用工具时频繁的创建工具对象带来的性能消耗。
 SUtil.Util_area = new Area();
 SUtil.Util_color = new Color();
 SUtil.Util_computeBoundingBox = new ComputeBoundingBox();

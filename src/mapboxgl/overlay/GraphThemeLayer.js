@@ -80,7 +80,7 @@ export class GraphThemeLayer extends Theme {
 
     /**
      * @function mapboxgl.ekmap.GraphThemeLayer.prototype.addFeatures
-     * @description Add data to the thematic map layer. The supported feature type is: the feature JSON object returned by iServer.
+     * @description Add data to the thematic map layer. The supported feature type is: the feature JSON object returned by eKServer.
      * @param {ekmap.ServerFeature} features Elements to be added.
      */
     addFeatures(features) {
@@ -136,7 +136,7 @@ export class GraphThemeLayer extends Theme {
 
     /**
      * @function mapboxgl.ekmap.GraphThemeLayer.prototype.createThematicFeature
-     * @description  To add data to the thematic map layer, the supported feature type is: the feature json object returned by iServer.
+     * @description  To add data to the thematic map layer, the supported feature type is: the feature json object returned by eKServer.
      * @param {Object} feature Elements to be added.
      *
      */

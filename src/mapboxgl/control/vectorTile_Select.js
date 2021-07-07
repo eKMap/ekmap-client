@@ -6,7 +6,6 @@ import mapboxgl from 'mapbox-gl';
  * @category  Control
  * @classdesc Select.
  * @param {Object} options Construction parameters.
- * @param {string} options.icon=fa-flickr Icon of button.
  * @param {Boolean} options.showPopup=true Show popup when click.
  * @param {Boolean} options.setStyle=true If setStyle = false, the selected feature will not set style and vice versa it will set style default.
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
@@ -36,7 +35,6 @@ export class Select extends mapboxgl.Evented {
         super(options);
         this.options = options ? options : {};
         this.setStyle = this.options.setStyle != undefined ? this.options.setStyle : true;
-        this.icon = this.options.icon ? this.options.icon : 'fa fa-flickr';
         this.active = false;
         this.showButton = this.options.showButton != undefined ? this.options.showButton : true;
         this.target = this.options.target;
@@ -58,10 +56,10 @@ export class Select extends mapboxgl.Evented {
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         this._container.style.fontSize = "14px"
         this.featuresCheck = map.queryRenderedFeatures();
-        let input = this.createLayerInputToggle();
+        this.input = this.createLayerInputToggle();
         var cursorDom = $('.mapboxgl-canvas-container')
         var me = this;
-        input.addEventListener("click", function(e) {
+        this.input.addEventListener("click", function (e) {
             me.active = !me.active
             if (me.active) {
                 cursorDom[0].style.cursor = 'crosshair';
@@ -72,6 +70,7 @@ export class Select extends mapboxgl.Evented {
                 me.fire('startselect', me);
                 me.offEvent();
                 me.listeners["click"] = me.onClick.bind(me);
+                me.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAABPUlEQVRIS+2WO0/DMBSF700FDGkGFjakzqwNDo8lwf0RrIgV+CNswIpY+RE17cIjVroyV2JjYUgzAKovslCXVI4tZB6qyJqT8zn36pwEwfGqODsExAMi2kXEWyC6CoW8dHkcXURlL06RgkFdS6iyqF8MbR5OkIqzOwLYrpshwH0o5I4XyIQzMhm1hbQe1CrQ5pMeK4CgOwdCGLX7MvbyJuUeO0KE87mdEBxHN/LCC0SblDzZD4BO9G70LhTgWSTyaxtA33cal4tRk+ZvQHQIFcF6/aQBwpOXMJpCOAN6CePiQD6DuHkKBDEApt/aXT9SkP+Q2Q6dEr8Y43rlycYbTtdMn99laj2viPzxywVZZUmXAipsLYwK43CQj0y6xp3YasW1w34f8pJudZZaSv8KdRpGNn6fBtnq8GFs0nwAvqu3Gvgbt74AAAAASUVORK5CYII=")';
                 me._map.on('click', me.listeners["click"]);
             } else {
                 cursorDom[0].style.cursor = '';
@@ -80,13 +79,15 @@ export class Select extends mapboxgl.Evented {
                  * @description Fired when cancel control.
                  */
                 me.offEvent();
+                me.removeFeature();
                 me.fire('unselect', me);
+                me.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAA6ElEQVRIS+2VsQ4BURBFz/6ETqLW0qDhL7SixY/o0IrWX9CgWa1aovMTZORtI/N2pniRzcZtXrGz9753J3cmw48pMAEGwAnYAVvP75mnCBgCB6V2BBwtDq/IGegpZBegn0rkVUJkXtQsCOQ50FGErkA31UtmwFohmwObVCLCMwYWoTfSixWwtwTku9cuD1e0pjIiEsKmcs1HqjDGQlhoJgljfUTElmUInLzqG0nsKkh/MiD/Ih+7vYmvh11toFGyfp/ArWyCWnbJopKFZUEWlywwFZaINVZcM6wSIq3QCzljuAMyXuRU8Qb/yTEaeeVFEwAAAABJRU5ErkJggg==")';
             }
         });
 
-        if (!me.target){
-            if(this.showButton)
-                me._container.appendChild(input);
+        if (!me.target) {
+            if (this.showButton)
+                me._container.appendChild(me.input);
             else
                 me._container.style.display = 'none';
         }
@@ -116,11 +117,12 @@ export class Select extends mapboxgl.Evented {
     createLayerInputToggle() {
         if (!this.target) {
             var button = document.createElement("button");
-            var icon = document.createElement("i");
-            icon.className = this.icon;
             button.className = "mapboxgl-ctrl-zoom-in";
             button.title = this.options.tooltip != undefined ? this.options.tooltip : 'Select control';
-            button.appendChild(icon);
+            button.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAA6ElEQVRIS+2VsQ4BURBFz/6ETqLW0qDhL7SixY/o0IrWX9CgWa1aovMTZORtI/N2pniRzcZtXrGz9753J3cmw48pMAEGwAnYAVvP75mnCBgCB6V2BBwtDq/IGegpZBegn0rkVUJkXtQsCOQ50FGErkA31UtmwFohmwObVCLCMwYWoTfSixWwtwTku9cuD1e0pjIiEsKmcs1HqjDGQlhoJgljfUTElmUInLzqG0nsKkh/MiD/Ih+7vYmvh11toFGyfp/ArWyCWnbJopKFZUEWlywwFZaINVZcM6wSIq3QCzljuAMyXuRU8Qb/yTEaeeVFEwAAAABJRU5ErkJggg==")';
+            button.style.backgroundPosition = 'center';
+            button.style.backgroundRepeat = 'no-repeat';
+            button.style.backgroundSize = '70%';
         } else {
             var button = document.getElementById(this.target);
         }
@@ -150,7 +152,7 @@ export class Select extends mapboxgl.Evented {
                 .setLngLat(e.lngLat)
                 .addTo(me._map);
         }
-        mapService.identify().on(me._map).at(e.lngLat).run(function(error, obj) {
+        mapService.identify().on(me._map).at(e.lngLat).run(function (error, obj) {
             /**
              * @event mapboxgl.ekmap.control.Select#selectfeatures
              * @description Fired when the feature is selected.
@@ -254,6 +256,8 @@ export class Select extends mapboxgl.Evented {
         // this.fire('unselect', this);
         this.active = false;
         this.removeFeature();
+        if (!this.target)
+            this.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAA6ElEQVRIS+2VsQ4BURBFz/6ETqLW0qDhL7SixY/o0IrWX9CgWa1aovMTZORtI/N2pniRzcZtXrGz9753J3cmw48pMAEGwAnYAVvP75mnCBgCB6V2BBwtDq/IGegpZBegn0rkVUJkXtQsCOQ50FGErkA31UtmwFohmwObVCLCMwYWoTfSixWwtwTku9cuD1e0pjIiEsKmcs1HqjDGQlhoJgljfUTElmUInLzqG0nsKkh/MiD/Ih+7vYmvh11toFGyfp/ArWyCWnbJopKFZUEWlywwFZaINVZcM6wSIq3QCzljuAMyXuRU8Qb/yTEaeeVFEwAAAABJRU5ErkJggg==")';
     }
 
     /**
@@ -281,6 +285,8 @@ export class Select extends mapboxgl.Evented {
         this._map.on('click', this.listeners["click"]);
         // this.fire('startselect', this);
         this.active = true;
+        if (!this.target)
+            this.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAABPUlEQVRIS+2WO0/DMBSF700FDGkGFjakzqwNDo8lwf0RrIgV+CNswIpY+RE17cIjVroyV2JjYUgzAKovslCXVI4tZB6qyJqT8zn36pwEwfGqODsExAMi2kXEWyC6CoW8dHkcXURlL06RgkFdS6iyqF8MbR5OkIqzOwLYrpshwH0o5I4XyIQzMhm1hbQe1CrQ5pMeK4CgOwdCGLX7MvbyJuUeO0KE87mdEBxHN/LCC0SblDzZD4BO9G70LhTgWSTyaxtA33cal4tRk+ZvQHQIFcF6/aQBwpOXMJpCOAN6CePiQD6DuHkKBDEApt/aXT9SkP+Q2Q6dEr8Y43rlycYbTtdMn99laj2viPzxywVZZUmXAipsLYwK43CQj0y6xp3YasW1w34f8pJudZZaSv8KdRpGNn6fBtnq8GFs0nwAvqu3Gvgbt74AAAAASUVORK5CYII=")';
     }
 
     changeMode(mode) {

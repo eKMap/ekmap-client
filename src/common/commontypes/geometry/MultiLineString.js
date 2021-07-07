@@ -8,10 +8,10 @@ export class MultiLineString extends Collection {
     constructor(components) {
         super(components);
         /**
-         * @member {Array.<string>} [Ekmap.Geometry.MultiLineString.prototype.componentTypes=["Ekmap.Geometry.LineString"]]
-         * @description components 存储的的几何对象所支持的几何类型数组。
-         * @readonly
-         */
+          * @member {Array.<string>} [Ekmap.Geometry.MultiLineString.prototype.componentTypes=["Ekmap.Geometry.LineString"]]
+          * @description components The array of geometry types supported by the stored geometry objects.
+          * @readonly
+          */
         this.componentTypes = ["Ekmap.Geometry.LineString"];
         this.CLASS_NAME = "Ekmap.Geometry.MultiLineString";
         this.geometryType = "MultiLineString";

@@ -6,11 +6,6 @@ import { Util as CommonUtil } from '../commontypes/Util';
 import { Graph } from './Graph';
 import './feature/Label';
 import './feature/Line';
-
-
-
-
-
 /**
  * @class Ekmap.Feature.Theme.Bar
  * @classdesc Histogram.

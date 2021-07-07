@@ -11,12 +11,12 @@ import { Polygon } from '../commontypes/geometry/Polygon';
 import { MultiPolygon } from '../commontypes/geometry/MultiPolygon';
 
 /**
- * @class Ekmap.Format.WKT
- * @classdesc 用于读写常见文本的类。通过 {@link Ekmap.Format.WKT} 构造器来创建一个新的实例。
- * @category BaseTypes Format
- * @extends {Ekmap.Format}
- * @param {Object} options - 可选的选项对象，其属性将被设置到实例。option 具体配置项继承自 {@link Ekmap.Format}。
- */
+  * @class Ekmap.Format.WKT
+  * @classdesc The class used to read and write common text. Create a new instance through the {@link Ekmap.Format.WKT} constructor.
+  * @category BaseTypes Format
+  * @extends {Ekmap.Format}
+  * @param {Object} options-Optional option object whose properties will be set to the instance. The specific configuration items of option are inherited from {@link Ekmap.Format}.
+  */
 export class WKT extends Format {
 
     constructor(options) {

@@ -1,61 +1,51 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Shape } from './Shape';
 import { SUtil } from './SUtil';
 
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Shape.SmicIsogon
- * @category Visualization Theme
- * @classdesc 正多边形。
- * @extends Ekmap.LevelRenderer.Shape
- */
 export class SmicIsogon extends Shape {
 
     /**
      * @member {Object} Ekmap.LevelRenderer.Shape.SmicIsogon.prototype.style
-     * @description 绘制样式。
+     * @description drawing style.
      *
-     * @param {number} x - 正 n 边形外接圆心 x 坐标，必设参数。
-     * @param {number} y - 正 n 边形外接圆心 y 坐标，必设参数。
-     * @param {number} r - 正n边形外接圆半径，必设参数。
-     * @param {number} ｎ - 指明正几边形，必设参数（n>=3）。
-     * @param {string} brushType - 画笔类型。可设值："fill", "stroke", "both"。默认值："fill"。
-     * @param {string} color -  填充颜色。默认值："#000000'"。
-     * @param {string} strokeColor - 描边颜色。默认值："#000000'"。
-     * @param {string} lineCape - 线帽样式。可设值："butt", "round", "square"。默认值："butt"。
-     * @param {number} lineWidth - 描边宽度。默认值：1。
-     * @param {number} opacity - 绘制透明度。默认值：1。
-     * @param {number} shadowBlur - 阴影模糊度，大于0有效。默认值：0。
-     * @param {number} shadowColor - 阴影颜色。默认值："#000000'"。
-     * @param {number} shadowOffsetX - 阴影横向偏移。默认值：0。
-     * @param {number} shadowOffsetY - 阴影纵向偏移。默认值：0。
-     * @param {string} text - 图形中的附加文本。默认值：""。
-     * @param {string} textColor -文本颜色。默认值："#000000'"。
-     * @param {string} textFont - 附加文本样式。示例:'bold 18px verdana'。
-     * @param {string} textPosition - 附加文本位置。可设值："inside", "left", "right", top", "bottom", "end"。默认值："end"。
-     * @param {string} textAlign - 附加文本水平对齐。可设值："start", "end", "left", "right", "center"。默认根据 textPosition 自动设置。
-     * @param {string} textBaseline - 附加文本垂直对齐。可设值："top", "bottom", "middle", "alphabetic", "hanging", "ideographic"。默认根据 textPosition 自动设置。
+     * @param {number} x-The x coordinate of the center of the circumscribed circle of a positive n polygon, a required parameter.
+     * @param {number} y-The y coordinate of the circumscribed circle center of a positive n-sided polygon. A parameter is required.
+     * @param {number} r-The radius of the circumcircle of a regular n-sided polygon, a parameter is required.
+     * @param {number} n-Indicate the regular polygon, the parameter must be set (n>=3).
+     * @param {string} brushType-brush type. Possible values: "fill", "stroke", "both". Default value: "fill".
+     * @param {string} color-fill color. Default value: "#000000'".
+     * @param {string} strokeColor-stroke color. Default value: "#000000'".
+     * @param {string} lineCape-line cap style. Possible settings: "butt", "round", "square". Default value: "butt".
+     * @param {number} lineWidth-stroke width. Default value: 1.
+     * @param {number} opacity-draw transparency. Default value: 1.
+     * @param {number} shadowBlur-shadow blur degree, greater than 0 is valid. Default value: 0.
+     * @param {number} shadowColor-the color of the shadow. Default value: "#000000'".
+     * @param {number} shadowOffsetX-the horizontal offset of the shadow. Default value: 0.
+     * @param {number} shadowOffsetY-The shadow offset in the vertical direction. Default value: 0.
+     * @param {string} text-additional text in the graphic. Defaults:"".
+     * @param {string} textColor-text color. Default value: "#000000'".
+     * @param {string} textFont-additional text style. Example:'bold 18px verdana'.
+     * @param {string} textPosition-additional text position. Possible settings: "inside", "left", "right", top", "bottom", "end". Default value: "end".
+     * @param {string} textAlign-The horizontal alignment of the additional text. Possible values: "start", "end", "left", "right", "center". By default, it is automatically set according to textPosition.
+     * @param {string} textBaseline-The additional text is aligned vertically. Possible settings: "top", "bottom", "middle", "alphabetic", "hanging", "ideographic". By default, it is automatically set according to textPosition.
      */
-    //打开接口 style
+    //Open the interface style
 
 
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicIsogon.constructor
-     * @description 构造函数。
+     * @description Constructor.
      *
-     * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
+     * @param {Array} options-The configuration (options) item of shape, which can be the own attribute of shape or a custom attribute.
      *
      */
     constructor(options) {
         super(options);
         /**
          * @member {string} Ekmap.LevelRenderer.Shape.SmicIsogon.prototype.type
-         * @description 图形类型。
+         * @description Graphic type.
          */
-        this.type = 'smicisogon';
+        this.type ='smicisogon';
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
@@ -65,7 +55,7 @@ export class SmicIsogon extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicIsogon.prototype.destroy
-     * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
+     * @description destroys the object and releases resources. All properties will be set to null after calling this function.
      */
     destroy() {
         this.type = null;
@@ -75,10 +65,10 @@ export class SmicIsogon extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicIsogon.prototype.buildPath
-     * @description 创建n角星（n>=3）路径。
+     * @description creates an n-point star (n>=3) path.
      *
-     * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
-     * @param {Object} style - style。
+     * @param {CanvasRenderingContext2D} ctx-Context2D context.
+     * @param {Object} style-style.
      *
      */
     buildPath(ctx, style) {
@@ -92,7 +82,7 @@ export class SmicIsogon extends Shape {
         var PI = Math.PI;
 
         var n = style.n;
-        if (!n || n < 2) {
+        if (!n || n <2) {
             return;
         }
 
@@ -106,18 +96,18 @@ export class SmicIsogon extends Shape {
         var yStart = y + r * sin(deg);
         deg += dStep;
 
-        // 记录边界点，用于判断insight
+        // Record boundary points, used to judge insight
         var pointList = style.pointList = [];
         pointList.push([xStart, yStart]);
-        for (let i = 0, end = n - 1; i < end; i++) {
+        for (let i = 0, end = n-1; i <end; i++) {
             pointList.push([x + r * cos(deg), y + r * sin(deg)]);
             deg += dStep;
         }
         pointList.push([xStart, yStart]);
 
-        // 绘制
+        // draw
         ctx.moveTo(pointList[0][0], pointList[0][1]);
-        for (let i = 0; i < pointList.length; i++) {
+        for (let i = 0; i <pointList.length; i++) {
             ctx.lineTo(pointList[i][0], pointList[i][1]);
         }
         ctx.closePath();
@@ -128,10 +118,10 @@ export class SmicIsogon extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicIsogon.prototype.getRect
-     * @description 计算返回正多边形的包围盒矩形。
+     * @description Calculates and returns the bounding box rectangle of the regular polygon.
      *
-     * @param {Object} style - style
-     * @return {Object} 边框对象。包含属性：x，y，width，height。
+     * @param {Object} style-style
+     * @return {Object} Border object. Contains attributes: x, y, width, height.
      */
     getRect(style) {
         if (style.__rect) {
@@ -144,14 +134,14 @@ export class SmicIsogon extends Shape {
         var __OP = this.refOriginalPosition;
 
         var lineWidth;
-        if (style.brushType == 'stroke' || style.brushType == 'fill') {
+        if (style.brushType =='stroke' || style.brushType =='fill') {
             lineWidth = style.lineWidth || 1;
         } else {
             lineWidth = 0;
         }
         style.__rect = {
-            x: Math.round((style.x + __OP[0]) - style.r - lineWidth / 2),
-            y: Math.round((style.y + __OP[1]) - style.r - lineWidth / 2),
+            x: Math.round((style.x + __OP[0])-style.r-lineWidth / 2),
+            y: Math.round((style.y + __OP[1])-style.r-lineWidth / 2),
             width: style.r * 2 + lineWidth,
             height: style.r * 2 + lineWidth
         };

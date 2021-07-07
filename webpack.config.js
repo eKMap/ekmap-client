@@ -9,5 +9,9 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.json', '.css']
     },
-    plugins: []
+    plugins: [],
+    loaders: [
+        { test: /\.js$/, loader: 'babel', query: {compact: false} }
+    ],
+    
 };

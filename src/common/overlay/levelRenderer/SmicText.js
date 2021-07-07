@@ -1,66 +1,15 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Shape } from './Shape';
 import { SUtil } from './SUtil';
 
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Shape.SmicText
- * @category Visualization Theme
- * @extends {Ekmap.LevelRenderer.Shape}
- * @example
- *   var shape = new Ekmap.LevelRenderer.Shape.SmicText({
- *         style: {
- *             text: 'Label',
- *             x: 100,
- *             y: 100,
- *             textFont: '14px Arial'
- *         }
- *     });
- *   levelRenderer.addShape(shape);
- *
- */
 export class SmicText extends Shape {
 
-    /**
-     * @member {Object} Ekmap.LevelRenderer.Shape.SmicText.prototype.style
-     * @description 绘制样式。
-     *
-     * @param {number} style.x - 横坐标，必设参数。
-     * @param {number} style.y - 纵坐标，必设参数。
-     * @param {string} style.text - 图形中的附加文本。默认值：""。
-     * @param {number} style.maxWidth - 最大宽度限制。默认值：null。
-     * @param {string} style.textFont - 附加文本样式。示例:'bold 18px verdana'。
-     * @param {string} style.textAlign - 附加文本水平对齐。可设值："start", "end", "left", "right", "center"。默认根据 textPosition 自动设置。
-     * @param {string} style.textBaseline - 附加文本垂直对齐。可设值："top", "bottom", "middle", "alphabetic", "hanging", "ideographic"。默认根据 textPosition 自动设置。
-     * @param {string} style.brushType -画笔类型。可设值："fill", "stroke", "both"。默认值："fill"。
-     * @param {string} style.color - 填充颜色。默认值："#000000'"。
-     * @param {string} style.strokeColor - 描边颜色。默认值："#000000'"。
-     * @param {number} style.lineWidth - 描边宽度。默认值：1。
-     * @param {number} style.opacity - 绘制透明度。默认值：1。
-     * @param {number} style.shadowBlur - 阴影模糊度，大于0有效。默认值：0。
-     * @param {number} style.shadowColor - 阴影颜色。默认值："#000000'"。
-     * @param {number} style.shadowOffsetX - 阴影横向偏移。默认值：0。
-     * @param {number} style.shadowOffsetY - 阴影纵向偏移。默认值：0。
-     */
-    //打开接口 style
-
-
-    /**
-     * @function Ekmap.LevelRenderer.Shape.SmicText.constructor
-     * @description 构造函数。
-     *
-     * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
-     *
-     */
     constructor(options) {
         super(options);
         /**
          * @member {string} Ekmap.LevelRenderer.Shape.SmicText.prototype.type
-         * @description 图形类型.
+         * @description Graphic type.
          */
-        this.type = 'smictext';
+        this.type ='smictext';
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
@@ -70,7 +19,7 @@ export class SmicText extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.destroy
-     * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
+     * @description destroys the object and releases resources. All properties will be set to null after calling this function.
      */
     destroy() {
         this.type = null;
@@ -81,10 +30,10 @@ export class SmicText extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.brush
-     * @description 笔触。
+     * @description strokes.
      *
-     * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
-     * @param {boolean} isHighlight - 是否使用高亮属性。
+     * @param {CanvasRenderingContext2D} ctx-Context2D context.
+     * @param {boolean} isHighlight-Whether to use the highlight attribute.
      *
      */
     brush(ctx, isHighlight) {
@@ -95,13 +44,13 @@ export class SmicText extends Shape {
 
         var style = this.style;
         if (isHighlight) {
-            // 根据style扩展默认高亮样式
+            // Expand the default highlight style according to style
             style = this.getHighlightStyle(
                 style, this.highlightStyle || {}
             );
         }
 
-        if (typeof(style.text) == 'undefined' || style.text === false) {
+        if (typeof(style.text) =='undefined' || style.text === false) {
             return;
         }
 
@@ -110,24 +59,24 @@ export class SmicText extends Shape {
 
         this.setContext(ctx, style);
 
-        // 设置transform
+        // set transform
         this.setTransform(ctx);
 
         if (style.textFont) {
             ctx.font = style.textFont;
         }
-        ctx.textAlign = style.textAlign || 'start';
-        ctx.textBaseline = style.textBaseline || 'middle';
+        ctx.textAlign = style.textAlign ||'start';
+        ctx.textBaseline = style.textBaseline ||'middle';
 
-        var text = (style.text + '').split('\n');
+        var text = (style.text +'').split('\n');
         var lineHeight = SUtil.Util_area.getTextHeight('ZH', style.textFont);
         var rect = this.getRectNoRotation(style);
         // var x = style.x;
         var x = style.x + __OP[0];
         var y;
-        if (style.textBaseline == 'top') {
+        if (style.textBaseline =='top') {
             y = rect.y;
-        } else if (style.textBaseline == 'bottom') {
+        } else if (style.textBaseline =='bottom') {
             y = rect.y + lineHeight;
         } else {
             y = rect.y + lineHeight / 2;
@@ -135,41 +84,41 @@ export class SmicText extends Shape {
         var ox = style.x + __OP[0];
         var oy = style.y + __OP[1];
 
-        //文本绘制
-        for (var i = 0, l = text.length; i < l; i++) {
-            //是否渲染矩形背景及颜色
+        //Text drawing
+        for (var i = 0, l = text.length; i <l; i++) {
+            //Whether to render the rectangular background and color
             if (style.labelRect) {
-                //+4,-2是为了让文字距边框左右边缘有点间隔
-                ctx.fillRect(rect.x - 2, rect.y, rect.width + 4, rect.height);
+                //+4,-2 is to make the text a little spaced from the left and right edges of the border
+                ctx.fillRect(rect.x-2, rect.y, rect.width + 4, rect.height);
                 ctx.fillStyle = style.strokeColor;
-                ctx.strokeRect(rect.x - 2, rect.y, rect.width + 4, rect.height);
+                ctx.strokeRect(rect.x-2, rect.y, rect.width + 4, rect.height);
                 ctx.fillStyle = style.textColor;
             }
 
             switch (style.brushType) {
-                case 'stroke':
+                case'stroke':
                     this.setCtxGlobalAlpha(ctx, "stroke", style);
                     if (style.textRotation && style.textRotation !== 0) {
                         ctx.save();
                         ctx.translate(ox, oy);
                         ctx.rotate(style.textRotation * Math.PI / 180);
-                        if (style.textBaseline == 'top') {
+                        if (style.textBaseline =='top') {
                             if (style.maxWidth) {
                                 ctx.strokeText(text[i], 0, lineHeight * i, style.maxWidth);
                             } else {
                                 ctx.strokeText(text[i], 0, lineHeight * i);
                             }
-                        } else if (style.textBaseline == 'bottom') {
+                        } else if (style.textBaseline =='bottom') {
                             if (style.maxWidth) {
-                                ctx.strokeText(text[i], 0, lineHeight * (i + 1) - rect.height, style.maxWidth);
+                                ctx.strokeText(text[i], 0, lineHeight * (i + 1)-rect.height, style.maxWidth);
                             } else {
-                                ctx.strokeText(text[i], 0, lineHeight * (i + 1) - rect.height);
+                                ctx.strokeText(text[i], 0, lineHeight * (i + 1)-rect.height);
                             }
                         } else {
                             if (style.maxWidth) {
-                                ctx.strokeText(text[i], 0, lineHeight * (i + 1) - rect.height / 2 - lineHeight / 2, style.maxWidth);
+                                ctx.strokeText(text[i], 0, lineHeight * (i + 1)-rect.height / 2-lineHeight / 2, style.maxWidth);
                             } else {
-                                ctx.strokeText(text[i], 0, lineHeight * (i + 1) - rect.height / 2 - lineHeight / 2);
+                                ctx.strokeText(text[i], 0, lineHeight * (i + 1)-rect.height / 2-lineHeight / 2);
                             }
                         }
                         ctx.restore();
@@ -182,12 +131,11 @@ export class SmicText extends Shape {
                     }
                     this.setCtxGlobalAlpha(ctx, "reset", style);
                     break;
-                case 'both':
+                case'both':
                     if (style.textRotation && style.textRotation !== 0) {
                         ctx.save();
                         ctx.translate(ox, oy);
-                        ctx.rotate(style.textRotation * Math.PI / 180);
-                        if (style.textBaseline == 'top') {
+                        ctx.rotate(style.textRotation * Math.PI / 180);if (style.textBaseline =='top') {
                             if (style.maxWidth) {
                                 this.setCtxGlobalAlpha(ctx, "fill", style);
                                 ctx.fillText(text[i], 0, lineHeight * i, style.maxWidth);
@@ -205,40 +153,40 @@ export class SmicText extends Shape {
                                 ctx.strokeText(text[i], 0, lineHeight * i);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
                             }
-                        } else if (style.textBaseline == 'bottom') {
+                        } else if (style.textBaseline =='bottom') {
                             if (style.maxWidth) {
                                 this.setCtxGlobalAlpha(ctx, "fill", style);
-                                ctx.fillText(text[i], 0, lineHeight * (i + 1) - rect.height, style.maxWidth);
+                                ctx.fillText(text[i], 0, lineHeight * (i + 1)-rect.height, style.maxWidth);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
 
                                 this.setCtxGlobalAlpha(ctx, "stroke", style);
-                                ctx.strokeText(text[i], 0, lineHeight * (i + 1) - rect.height, style.maxWidth);
+                                ctx.strokeText(text[i], 0, lineHeight * (i + 1)-rect.height, style.maxWidth);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
                             } else {
                                 this.setCtxGlobalAlpha(ctx, "fill", style);
-                                ctx.fillText(text[i], 0, lineHeight * (i + 1) - rect.height);
+                                ctx.fillText(text[i], 0, lineHeight * (i + 1)-rect.height);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
 
                                 this.setCtxGlobalAlpha(ctx, "stroke", style);
-                                ctx.strokeText(text[i], 0, lineHeight * (i + 1) - rect.height);
+                                ctx.strokeText(text[i], 0, lineHeight * (i + 1)-rect.height);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
                             }
                         } else {
                             if (style.maxWidth) {
                                 this.setCtxGlobalAlpha(ctx, "fill", style);
-                                ctx.fillText(text[i], 0, lineHeight * (i + 1) - rect.height / 2 - lineHeight / 2, style.maxWidth);
+                                ctx.fillText(text[i], 0, lineHeight * (i + 1)-rect.height / 2-lineHeight / 2, style.maxWidth);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
 
                                 this.setCtxGlobalAlpha(ctx, "stroke", style);
-                                ctx.strokeText(text[i], 0, lineHeight * (i + 1) - rect.height / 2 - lineHeight / 2, style.maxWidth);
+                                ctx.strokeText(text[i], 0, lineHeight * (i + 1)-rect.height / 2-lineHeight / 2, style.maxWidth);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
                             } else {
                                 this.setCtxGlobalAlpha(ctx, "fill", style);
-                                ctx.fillText(text[i], 0, lineHeight * (i + 1) - rect.height / 2 - lineHeight / 2);
+                                ctx.fillText(text[i], 0, lineHeight * (i + 1)-rect.height / 2-lineHeight / 2);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
 
                                 this.setCtxGlobalAlpha(ctx, "stroke", style);
-                                ctx.strokeText(text[i], 0, lineHeight * (i + 1) - rect.height / 2 - lineHeight / 2);
+                                ctx.strokeText(text[i], 0, lineHeight * (i + 1)-rect.height / 2-lineHeight / 2);
                                 this.setCtxGlobalAlpha(ctx, "reset", style);
                             }
                         }
@@ -270,23 +218,23 @@ export class SmicText extends Shape {
                         ctx.save();
                         ctx.translate(ox, oy);
                         ctx.rotate(style.textRotation * Math.PI / 180);
-                        if (style.textBaseline == 'top') {
+                        if (style.textBaseline =='top') {
                             if (style.maxWidth) {
                                 ctx.fillText(text[i], 0, lineHeight * i, style.maxWidth);
                             } else {
                                 ctx.fillText(text[i], 0, lineHeight * i);
                             }
-                        } else if (style.textBaseline == 'bottom') {
+                        } else if (style.textBaseline =='bottom') {
                             if (style.maxWidth) {
-                                ctx.fillText(text[i], 0, lineHeight * (i + 1) - rect.height, style.maxWidth);
+                                ctx.fillText(text[i], 0, lineHeight * (i + 1)-rect.height, style.maxWidth);
                             } else {
-                                ctx.fillText(text[i], 0, lineHeight * (i + 1) - rect.height);
+                                ctx.fillText(text[i], 0, lineHeight * (i + 1)-rect.height);
                             }
                         } else {
                             if (style.maxWidth) {
-                                ctx.fillText(text[i], 0, lineHeight * (i + 1) - rect.height / 2 - lineHeight / 2, style.maxWidth);
+                                ctx.fillText(text[i], 0, lineHeight * (i + 1)-rect.height / 2-lineHeight / 2, style.maxWidth);
                             } else {
-                                ctx.fillText(text[i], 0, lineHeight * (i + 1) - rect.height / 2 - lineHeight / 2);
+                                ctx.fillText(text[i], 0, lineHeight * (i + 1)-rect.height / 2-lineHeight / 2);
                             }
                         }
                         ctx.restore();
@@ -309,7 +257,7 @@ export class SmicText extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.getRect
-     * @description 返回文字包围盒矩形
+     * @description returns the text bounding box rectangle
      */
     getRect(style) {
         if (style.__rect) {
@@ -318,26 +266,26 @@ export class SmicText extends Shape {
 
         var left, top, right, bottom
         var tbg = this.getTextBackground(style, true);
-        for (var i = 0, len = tbg.length; i < len; i++) {
+        for (var i = 0, len = tbg.length; i <len; i++) {
             var poi = tbg[i];
 
-            //用第一个点初始化
+            //Initialize with the first point
             if (i == 0) {
                 left = poi[0];
                 right = poi[0];
                 top = poi[1];
                 bottom = poi[1];
             } else {
-                if (poi[0] < left) {
+                if (poi[0] <left) {
                     left = poi[0]
                 }
-                if (poi[0] > right) {
+                if (poi[0]> right) {
                     right = poi[0]
                 }
-                if (poi[1] < top) {
+                if (poi[1] <top) {
                     top = poi[1]
                 }
-                if (poi[1] > bottom) {
+                if (poi[1]> bottom) {
                     bottom = poi[1]
                 }
             }
@@ -346,8 +294,8 @@ export class SmicText extends Shape {
         style.__rect = {
             x: left,
             y: top,
-            width: right - left,
-            height: bottom - top
+            width: right-left,
+            height: bottom-top
         };
 
         return style.__rect;
@@ -356,7 +304,7 @@ export class SmicText extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.getRectNoRotation
-     * @description 返回忽略旋转和maxWidth时文字包围盒矩形
+     * @description returns the text bounding box rectangle when rotation and maxWidth are ignored
      */
     getRectNoRotation(style) {
 
@@ -370,50 +318,50 @@ export class SmicText extends Shape {
         var width = SUtil.Util_area.getTextWidth(style.text, style.textFont);
         var height = SUtil.Util_area.getTextHeight(style.text, style.textFont);
 
-        //处理文字位置，注：文本的绘制是由此 rect 决定
-        var textX = style.x + __OP[0]; // 默认start == left
-        if (style.textAlign == 'end' || style.textAlign == 'right') {
+        //Process the text position, note: the drawing of the text is determined by this rect
+        var textX = style.x + __OP[0]; // default start == left
+        if (style.textAlign =='end' || style.textAlign =='right') {
             textX -= width;
-        } else if (style.textAlign == 'center') {
+        } else if (style.textAlign =='center') {
             textX -= (width / 2);
         }
 
         var textY;
-        if (style.textBaseline == 'top') {
+        if (style.textBaseline =='top') {
             // textY = style.y;
             textY = style.y + __OP[1];
-        } else if (style.textBaseline == 'bottom') {
-            textY = (style.y + __OP[1]) - height;
+        } else if (style.textBaseline =='bottom') {
+            textY = (style.y + __OP[1])-height;
         } else {
             // middle
-            textY = (style.y + __OP[1]) - height / 2;
+            textY = (style.y + __OP[1])-height / 2;
         }
 
         var isWidthChangeByMaxWidth = false;
         var widthBeforeChangeByMaxWidth;
 
-        //处理 maxWidth
+        //Handle maxWidth
         if (style.maxWidth) {
             var maxWidth = parseInt(style.maxWidth);
-            if (maxWidth < width) {
+            if (maxWidth <width) {
                 widthBeforeChangeByMaxWidth = width;
                 isWidthChangeByMaxWidth = true;
                 width = maxWidth;
             }
 
             textX = style.x + __OP[0];
-            if (style.textAlign == 'end' || style.textAlign == 'right') {
+            if (style.textAlign =='end' || style.textAlign =='right') {
                 textX -= width;
-            } else if (style.textAlign == 'center') {
+            } else if (style.textAlign =='center') {
                 textX -= (width / 2);
             }
         }
 
-        //处理斜体字
+        //Handle italics
         if (style.textFont) {
             var textFont = style.textFont;
             var textFontStr = textFont.toLowerCase()
-            if (textFontStr.indexOf("italic") > -1) {
+            if (textFontStr.indexOf("italic")> -1) {
                 if (isWidthChangeByMaxWidth === true) {
                     width += (lineHeight / 3) * (width / widthBeforeChangeByMaxWidth);
                 } else {
@@ -435,10 +383,10 @@ export class SmicText extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.getTextBackground
-     * @description 获取文本背景框范围
-     * 
-     * @param {Object} style - 样式。
-     * @param {boolean} redo - 是否强制重新计算 textBackground。
+     * @description Get the range of the text background box
+     *
+     * @param {Object} style-style.
+     * @param {boolean} redo-whether to force the textBackground to be recalculated.
      */
     getTextBackground(style, redo) {
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
@@ -450,14 +398,14 @@ export class SmicText extends Shape {
             return style.__textBackground;
         }
 
-        //不旋转时矩形框
+        //Rectangular frame when not rotating
         var rect = this.getRectNoRotation(style);
 
-        //旋转中心点
+        //Rotation center point
         var ox = style.x + __OP[0];
         var oy = style.y + __OP[1];
 
-        //背景框
+        //Background frame
         var background = [];
 
         if (style.textRotation && style.textRotation !== 0) {
@@ -491,14 +439,14 @@ export class SmicText extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicText.prototype.getRotatedLocation
-     * @description 获取一个点绕旋转中心顺时针旋转后的位置。（此方法用于屏幕坐标）
-     * 
-     * @param {number} x - 旋转点横坐标。
-     * @param {number} y - 旋转点纵坐标。
-     * @param {number} rx - 旋转中心点横坐标。
-     * @param {number} ry - 旋转中心点纵坐标。
-     * @param {number} angle - 旋转角度（度）。
-     * @return {Array} 旋转后的坐标位置，长度为 2 的一维数组，数组第一个元素表示 x 坐标，第二个元素表示 y 坐标。
+     * @description Gets the position of a point after rotating clockwise around the center of rotation. (This method is used for screen coordinates)
+     *
+     * @param {number} x-The abscissa of the rotation point.
+     * @param {number} y-The ordinate of the rotation point.
+     * @param {number} rx-The abscissa of the center of rotation.
+     * @param {number} ry-the ordinate of the center of rotation.
+     * @param {number} angle-rotation angle (degrees).
+     * @return {Array} The rotated coordinate position, a one-dimensional array of length 2. The first element of the array represents the x coordinate, and the second element represents the y coordinate.
      */
     getRotatedLocation(x, y, rx, ry, angle) {
         var loc = new Array(),
@@ -506,9 +454,9 @@ export class SmicText extends Shape {
 
         y = -y;
         ry = -ry;
-        angle = -angle; //顺时针旋转
-        x0 = (x - rx) * Math.cos((angle / 180) * Math.PI) - (y - ry) * Math.sin((angle / 180) * Math.PI) + rx;
-        y0 = (x - rx) * Math.sin((angle / 180) * Math.PI) + (y - ry) * Math.cos((angle / 180) * Math.PI) + ry;
+        angle = -angle; //Rotate clockwise
+        x0 = (x-rx) * Math.cos((angle / 180) * Math.PI)-(y-ry) * Math.sin((angle / 180) * Math.PI) + rx;
+        y0 = (x-rx) * Math.sin((angle / 180) * Math.PI) + (y-ry) * Math.cos((angle / 180) * Math.PI) + ry;
 
         loc[0] = x0;
         loc[1] = -y0;

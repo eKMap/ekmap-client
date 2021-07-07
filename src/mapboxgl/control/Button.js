@@ -9,6 +9,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {Object} options Construction parameters.
  * @param {string} options.icon=fa-flickr Icon of button.
  * @param {string} options.className Style class of button.
+ * @param {string} options.tooltip=Buttonclick Tooltip of button.
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....,
@@ -38,7 +39,7 @@ export class Button extends mapboxgl.Evented {
         this._map = map;
         let me = this; //might use this later
         this._div = document.createElement('div');
-        this._div.title = "Click button";
+        this._div.title = this.options.tooltip != undefined ? this.options.tooltip : 'Button click';
         this._div.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         if (this.options.className)
             this._div.className += " " + this.options.className;

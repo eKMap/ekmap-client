@@ -1,22 +1,12 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Tool.Vector
- * @category Visualization Theme
- * @classdesc LevelRenderer 二维向量类
- *
- */
 export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.constructor
-     * @description 构造函数
+     * @description constructor
      */
     constructor() {
-        this.ArrayCtor = typeof Float32Array === 'undefined' ?
-            Array :
+        this.ArrayCtor = typeof Float32Array ==='undefined'?
+            Array:
             Float32Array;
 
         this.CLASS_NAME = "Ekmap.LevelRenderer.Tool.Vector";
@@ -24,11 +14,11 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.create
-     * @description 创建一个向量。
-     * 
-     * @param {number} x - x坐标
-     * @param {number} y - Y坐标
-     * @return {Vector2} 向量。
+     * @description creates a vector.
+     *
+     * @param {number} x-x coordinate
+     * @param {number} y-Y coordinate
+     * @return {Vector2} vector.
      */
     create(x, y) {
         var ArrayCtor = this.ArrayCtor;
@@ -42,11 +32,11 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.copy
-     * @description 复制一个向量。
-     * 
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v - 向量。
-     * @return {Vector2} 克隆向量。
+     * @description copies a vector.
+     *
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v-vector.
+     * @return {Vector2} clone vector.
      */
     copy(out, v) {
         out[0] = v[0];
@@ -56,12 +46,12 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.set
-     * @description 设置向量的两个项。
-     * 
-     * @param {Vector2} out - 基础向量。
-     * @param {number} a - 项 a。
-     * @param {number} b - 项 b。
-     * @return {Vector2} 结果。
+     * @description sets the two items of the vector.
+     *
+     * @param {Vector2} out-basic vector.
+     * @param {number} a-item a.
+     * @param {number} b-item b.
+     * @return {Vector2} result.
      */
     set(out, a, b) {
         out[0] = a;
@@ -71,12 +61,12 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.add
-     * @description 向量相加。
-     * 
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {Vector2} 结果。
+     * @description Vector addition.
+     *
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {Vector2} result.
      */
     add(out, v1, v2) {
         out[0] = v1[0] + v2[0];
@@ -86,12 +76,12 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.scaleAndAdd
-     * @description 向量缩放后相加。
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2（缩放向量）。
-     * @param {number} a - 缩放参数。
-     * @return {Vector2} 结果。
+     * @description The vectors are scaled and added.
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-vector v2 (scale vector).
+     * @param {number} a-zoom parameter.
+     * @return {Vector2} result.
      */
     scaleAndAdd(out, v1, v2, a) {
         out[0] = v1[0] + v2[0] * a;
@@ -101,23 +91,23 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.sub
-     * @description 向量相减。
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {Vector2} 结果。
+     * @description Vector subtraction.
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {Vector2} result.
      */
     sub(out, v1, v2) {
-        out[0] = v1[0] - v2[0];
-        out[1] = v1[1] - v2[1];
+        out[0] = v1[0]-v2[0];
+        out[1] = v1[1]-v2[1];
         return out;
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.len
-     * @description 向量长度。
-     * @param {Vector2} v - 向量。
-     * @return {number} 向量长度。
+     * @description Vector length.
+     * @param {Vector2} v-vector.
+     * @return {number} Vector length.
      */
     len(v) {
         return Math.sqrt(this.lenSquare(v));
@@ -125,9 +115,9 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.lenSquare
-     * @description 向量长度平方。
-     * @param {Vector2} v - 向量。
-     * @return {number} 向量长度平方。
+     * @description The square of the length of the vector.
+     * @param {Vector2} v-vector.
+     * @return {number} The square of the vector length.
      */
     lenSquare(v) {
         return v[0] * v[0] + v[1] * v[1];
@@ -135,11 +125,11 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.mul
-     * @description 向量乘法。
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {Vector2} 结果。
+     * @description Vector multiplication.
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {Vector2} result.
      */
     mul(out, v1, v2) {
         out[0] = v1[0] * v2[0];
@@ -149,12 +139,12 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.div
-     * @description 向量除法。
-     * 
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {Vector2} 结果。
+     * @description Vector division.
+     *
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {Vector2} result.
      */
     div(out, v1, v2) {
         out[0] = v1[0] / v2[0];
@@ -164,11 +154,11 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.dot
-     * @description 向量点乘。
-     * 
-     * @param  {Vector2} v1 - 向量 v1。
-     * @param  {Vector2} v2 - 向量 v2。
-     * @return {number} 向量点乘。
+     * @description Vector dot product.
+     *
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {number} Vector dot product.
      */
     dot(v1, v2) {
         return v1[0] * v2[0] + v1[1] * v2[1];
@@ -176,12 +166,12 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.scale
-     * @description 向量缩放。
+     * @description Vector zoom.
      *
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v - 向量v。
-     * @param {number} s -缩放参数。
-     * @return {Vector2} 结果。
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v-vector v.
+     * @param {number} s-zoom parameter.
+     * @return {Vector2} result.
      */
     scale(out, v, s) {
         out[0] = v[0] * s;
@@ -191,11 +181,11 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.normalize
-     * @description 向量归一化。
+     * @description Vector normalization.
      *
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v - 向量 v。
-     * @return {Vector2} 结果。
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v-vector v.
+     * @return {Vector2} result.
      */
     normalize(out, v) {
         var d = this.len(v);
@@ -211,39 +201,38 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.distance
-     * @description 计算向量间距离。
-     * 
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {number} 向量间距离。
-     */
+     * @description Calculate the distance between vectors.
+     *
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {number} The distance between vectors.*/
     distance(v1, v2) {
         return Math.sqrt(
-            (v1[0] - v2[0]) * (v1[0] - v2[0]) +
-            (v1[1] - v2[1]) * (v1[1] - v2[1])
+            (v1[0]-v2[0]) * (v1[0]-v2[0]) +
+            (v1[1]-v2[1]) * (v1[1]-v2[1])
         );
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.distanceSquare
-     * @description 向量距离平方。
-     * 
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {number} 向量距离平方。
+     * @description Vector distance squared.
+     *
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {number} The square of the vector distance.
      */
     distanceSquare(v1, v2) {
-        return (v1[0] - v2[0]) * (v1[0] - v2[0]) +
-            (v1[1] - v2[1]) * (v1[1] - v2[1]);
+        return (v1[0]-v2[0]) * (v1[0]-v2[0]) +
+            (v1[1]-v2[1]) * (v1[1]-v2[1]);
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.negate
-     * @description 求负向量。
-     * 
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v - 向量 v。
-     * @return {Vector2} 负向量。
+     * @description Find the negative vector.
+     *
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v-vector v.
+     * @return {Vector2} Negative vector.
      */
     negate(out, v) {
         out[0] = -v[0];
@@ -253,28 +242,28 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.lerp
-     * @description 两点之间线性插值。
+     * @description Linear interpolation between two points.
      *
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
      * @param {number} t
-     * @return {Vector2} 结果。
+     * @return {Vector2} result.
      */
     lerp(out, v1, v2, t) {
-        out[0] = v1[0] + t * (v2[0] - v1[0]);
-        out[1] = v1[1] + t * (v2[1] - v1[1]);
+        out[0] = v1[0] + t * (v2[0]-v1[0]);
+        out[1] = v1[1] + t * (v2[1]-v1[1]);
         return out;
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.applyTransform
-     * @description 矩阵左乘向量。
-     * 
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {Vector2} 结果。
+     * @description Matrix left multiplied by vector.
+     *
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {Vector2} result.
      */
     applyTransform(out, v, m) {
         var x = v[0];
@@ -286,11 +275,11 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.min
-     * @description 求两个向量最小值。
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {Vector2} 结果。
+     * @description Find the minimum of two vectors.
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {Vector2} result.
      */
     min(out, v1, v2) {
         out[0] = Math.min(v1[0], v2[0]);
@@ -300,12 +289,12 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.max
-     * @description 求两个向量最大值。
+     * @description Find the maximum value of two vectors.
      *
-     * @param {Vector2} out - 基础向量。
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {Vector2} 结果。
+     * @param {Vector2} out-basic vector.
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {Vector2} result.
      */
     max(out, v1, v2) {
         out[0] = Math.max(v1[0], v2[0]);
@@ -316,10 +305,10 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.length
-     * @description 向量长度。
-     * 
-     * @param {Vector2} v - 向量。
-     * @return {number} 向量长度。
+     * @description Vector length.
+     *
+     * @param {Vector2} v-vector.
+     * @return {number} Vector length.
      */
     length(v) {
         return this.len(v);
@@ -327,10 +316,10 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.lengthSquare
-     * @description 向量长度平方。
-     * 
-     * @param {Vector2} v - 向量。
-     * @return {number} 向量长度平方。
+     * @description The square of the length of the vector.
+     *
+     * @param {Vector2} v-vector.
+     * @return {number} The square of the vector length.
      */
     lengthSquare(v) {
         return this.lenSquare(v);
@@ -338,11 +327,11 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.dist
-     * @description 计算向量间距离。
+     * @description Calculate the distance between vectors.
      *
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {number} 向量间距离。
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {number} The distance between vectors.
      */
     dist(v1, v2) {
         return this.distance(v1, v2);
@@ -350,11 +339,11 @@ export class Vector {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Vector.prototype.distSquare
-     * @description 向量距离平方。
-     * 
-     * @param {Vector2} v1 - 向量 v1。
-     * @param {Vector2} v2 - 向量 v2。
-     * @return {number} 向量距离平方
+     * @description Vector distance squared.
+     *
+     * @param {Vector2} v1-vector v1.
+     * @param {Vector2} v2-Vector v2.
+     * @return {number} vector distance square
      */
     distSquare(v1, v2) {
         return this.distanceSquare(v1, v2);

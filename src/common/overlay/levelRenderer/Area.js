@@ -1,85 +1,76 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Util } from './Util';
 import { Curve } from './Curve';
 
-/**
- * @class  Ekmap.LevelRenderer.Tool.Area
- * @category Visualization Theme
- * @classdesc LevelRenderer 工具-图形范围判断
- * @private 
- */
 export class Area {
 
-    /**
+   /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.constructor
-     * @description 构造函数。
+     * @description Constructor.
      */
     constructor() {
         /**
-         * @member {Ekmap.LevelRenderer.Tool.Util}  Ekmap.LevelRenderer.Tool.Areal.prototype.util
-         * @description 基础工具对象。
+         * @member {Ekmap.LevelRenderer.Tool.Util} Ekmap.LevelRenderer.Tool.Areal.prototype.util
+         * @description basic tool object.
          */
         this.util = new Util();
 
         /**
-         * @member {Ekmap.LevelRenderer.Tool.Curve}  Ekmap.LevelRenderer.Tool.Areal.prototype.curve
-         * @description 曲线工具对象
+         * @member {Ekmap.LevelRenderer.Tool.Curve} Ekmap.LevelRenderer.Tool.Areal.prototype.curve
+         * @description curve tool object
          */
         this.curve = new Curve();
 
         /**
          * @member {Object} Ekmap.LevelRenderer.Tool.Areal.prototype._ctx
-         * @description Cavans2D 渲染上下文
+         * @description Cavans2D rendering context
          */
         this._ctx = null;
 
         /**
          * @member {Object} Ekmap.LevelRenderer.Tool.Areal.prototype._textWidthCache
-         * @description 文本宽度缓存
+         * @description text width cache
          */
         this._textWidthCache = {};
 
         /**
          * @member {Object} Ekmap.LevelRenderer.Tool.Areal.prototype._textHeightCache
-         * @description 文本高度缓存
+         * @description text height cache
          */
         this._textHeightCache = {};
 
         /**
          * @member {number} Ekmap.LevelRenderer.Tool.Areal.prototype._textWidthCacheCounter
-         * @description 文本宽度缓存数量
+         * @description text width cache number
          */
         this._textWidthCacheCounter = 0;
 
         /**
          * @member {number} Ekmap.LevelRenderer.Tool.Areal.prototype._textHeightCacheCounter
-         * @description 文本高度缓存数量
+         * @description text height cache number
          */
         this._textHeightCacheCounter = 0;
 
         /**
          * @member {number} Ekmap.LevelRenderer.Tool.Areal.prototype.TEXT_CACHE_MAX
-         * @description 文本最大缓存数量
+         * @description Maximum number of text buffers
          */
         this.TEXT_CACHE_MAX = 5000;
 
         /**
          * @member {number} Ekmap.LevelRenderer.Tool.Areal.prototype.PI2
-         * @description 2*PI 的值
+         * @description 2*PI value
          */
         this.PI2 = Math.PI * 2;
 
         /**
          * @member {Array} Ekmap.LevelRenderer.Tool.Areal.prototype.roots
-         * @description 临时数组
+         * @description temporary array
          */
         this.roots = [-1, -1, -1];
 
         /**
          * @member {Array} Ekmap.LevelRenderer.Tool.Areal.prototype.extrema
-         * @description 临时数组
+         * @description temporary array
          */
         this.extrema = [-1, -1];
 
@@ -88,9 +79,9 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.normalizeRadian
-     * @description 弧度标准化函数。
-     * @param {number} angle - 弧度值。
-     * @returns {number} 标准化后的弧度值。
+     * @description Radian normalization function.
+     * @param {number} angle-the radian value.
+     * @returns {number} The normalized radian value.
      */
     normalizeRadian(angle) {
         angle %= this.PI2;
@@ -101,24 +92,22 @@ export class Area {
     }
 
     /**
-     * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInside
-     * @description 包含判断。
-     * @param {Object} shape - 图形。
-     * @param {number} area - 目标区域。
-     * @param {number} x - 横坐标。
-     * @param {number} y - 纵坐标。
-     * @returns {boolean} 图形是否包含鼠标位置。
-     */
+      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInside
+      * @description contains judgment.
+      * @param {Object} shape-shape.
+      * @param {number} area-target area.
+      * @param {number} x-the abscissa.
+      * @param {number} y-the ordinate.
+      * @returns {boolean} Whether the graphic includes the mouse position.
+      */
     isInside(shape, area, x, y) {
         if (!area || !shape) {
-            // 无参数或不支持类型
             return false;
         }
         var zoneType = shape.type;
 
         this._ctx = this._ctx || this.util.getContext();
 
-        // 未实现或不可用时则数学运算，主要是line，brokenLine，ring
         var _mathReturn = this._mathMethod(shape, area, x, y);
         if (typeof _mathReturn != 'undefined') {
             return _mathReturn;
@@ -128,42 +117,38 @@ export class Area {
             return this._buildPathMethod(shape, this._ctx, area, x, y);
         }
 
-        // 上面的方法都行不通时
         switch (zoneType) {
-            case 'ellipse': // Todo，不精确
-            case 'smicellipse': // Todo，不精确
+            case 'ellipse':
+            case 'smicellipse':
                 return true;
-                // 旋轮曲线  不准确
             case 'trochoid':
                 var _r = area.location == 'out' ?
                     area.r1 + area.r2 + area.d :
                     area.r1 - area.r2 + area.d;
                 return this.isInsideCircle(area, x, y, _r);
-                // 玫瑰线 不准确
             case 'rose':
                 return this.isInsideCircle(area, x, y, area.maxr);
-                // 路径，椭圆，曲线等-----------------13
             default:
-                return false; // Todo，暂不支持
+                return false; 
         }
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype._mathMethod
-     * @description 包含判断。用数学方法判断，三个方法中最快，但是支持的shape少。
-     * @param {Object} shape - 图形。
-     * @param {number} area - 目标区域。
-     * @param {number} x - 横坐标。
-     * @param {number} y - 纵坐标。
-     * @returns {boolean} 图形是否包含鼠标位置，true表示坐标处在图形中。
+     * @description contains judgment. Judging by mathematical methods, the three methods are the fastest, but the supported shapes are few.
+     * @param {Object} shape-shape.
+     * @param {number} area-target area.
+     * @param {number} x-the abscissa.
+     * @param {number} y-the ordinate.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
-    _mathMethod(shape, area, x, y) {
+     _mathMethod(shape, area, x, y) {
         var zoneType = shape.type;
-        // 在矩形内则部分图形需要进一步判断
+        // In the rectangle, some graphics need further judgment
         switch (zoneType) {
-            // 贝塞尔曲线
-            case 'bezier-curve':
-                if (typeof(area.cpX2) === 'undefined') {
+            // Bezier curve
+            case'bezier-curve':
+                if (typeof(area.cpX2) ==='undefined') {
                     return this.isInsideQuadraticStroke(
                         area.xStart, area.yStart,
                         area.cpX1, area.cpY1,
@@ -178,43 +163,43 @@ export class Area {
                     area.xEnd, area.yEnd,
                     area.lineWidth, x, y
                 );
-                // 线
-            case 'line':
+                // line
+            case'line':
                 return this.isInsideLine(
                     area.xStart, area.yStart,
                     area.xEnd, area.yEnd,
                     area.lineWidth, x, y
                 );
-                // 折线
-            case 'broken-line':
+                // Polyline
+            case'broken-line':
                 return this.isInsideBrokenLine(
                     area.pointList, area.lineWidth, x, y
                 );
-                // 扩展折线
-            case 'smicbroken-line':
+                // Expand polyline
+            case'smicbroken-line':
                 {
-                    // SMIC-修改 - start
+                    // SMIC-modify-start
                     let icX = x;
                     let icY = y;
                     if (shape.refOriginalPosition) {
-                        icX = x - shape.refOriginalPosition[0];
-                        icY = y - shape.refOriginalPosition[1];
+                        icX = x-shape.refOriginalPosition[0];
+                        icY = y-shape.refOriginalPosition[1];
                     }
                     return this.isInsideBrokenLine(
                         area.pointList, area.lineWidth, icX, icY
                     );
                 }
-                //初始代码：
-                //      return isInsideBrokenLine(
-                //          area.pointList, area.lineWidth, x, y
-                //      );
-                // SMIC-修改 - end
-                // 圆环
-            case 'ring':
+                //Initial code:
+                // return isInsideBrokenLine(
+                // area.pointList, area.lineWidth, x, y
+                // );
+                // SMIC-modify-end
+                // ring
+            case'ring':
                 return this.isInsideRing(
                     area.x, area.y, area.r0, area.r, x, y
                 );
-            case 'smicring':
+            case'smicring':
                 {
                     let areaX = area.x;
                     let areaY = area.y;
@@ -226,30 +211,30 @@ export class Area {
                         areaX, areaY, area.r0, area.r, x, y
                     );
                 }
-                // 圆形
-            case 'circle':
+                // round
+            case'circle':
                 return this.isInsideCircle(
                     area.x, area.y, area.r, x, y
                 );
-                // 扩展-点
-            case 'smicpoint':
+                // extension-point
+            case'smicpoint':
                 {
-                    // SMIC-修改 - start
+                    // SMIC-modify-start
                     let icX = x;
                     let icY = y;
                     if (shape.refOriginalPosition) {
-                        icX = x - shape.refOriginalPosition[0];
-                        icY = y - shape.refOriginalPosition[1];
+                        icX = x-shape.refOriginalPosition[0];
+                        icY = y-shape.refOriginalPosition[1];
                     }
                     return this.isInsideCircle(
                         area.x, area.y, area.r, icX, icY
                     );
                 }
-                //初始代码：
-                //  无
-                // SMIC-修改 - end
-                // 扇形
-            case 'sector':
+                //Initial code:
+                // None
+                // SMIC-modify-end
+                // sector
+            case'sector':
                 {
                     let startAngle = area.startAngle * Math.PI / 180;
                     let endAngle = area.endAngle * Math.PI / 180;
@@ -263,11 +248,11 @@ export class Area {
                         x, y
                     );
                 }
-                //初始代码：
-                //  无
-                // SMIC-增加 - end
-                // 扇形
-            case 'smicsector':
+                //Initial code:
+                // None
+                // SMIC-Increase-end
+                // sector
+            case'smicsector':
                 {
                     let startAngle = area.startAngle * Math.PI / 180;
                     let endAngle = area.endAngle * Math.PI / 180;
@@ -289,37 +274,37 @@ export class Area {
                         x, y
                     );
                 }
-                // 多边形
-            case 'path':
+                // Polygon
+            case'path':
                 return this.isInsidePath(
                     area.pathArray, Math.max(area.lineWidth, 5),
                     area.brushType, x, y
                 );
-            case 'polygon':
-            case 'star':
-            case 'smicstar':
-            case 'isogon':
-            case 'smicisogon':
+            case'polygon':
+            case'star':
+            case'smicstar':
+            case'isogon':
+            case'smicisogon':
                 return this.isInsidePolygon(area.pointList, x, y);
-                // 扩展多边形
-            case 'smicpolygon':
+                // extended polygon
+            case'smicpolygon':
                 {
-                    // SMIC-修改 - start
+                    // SMIC-modify-start
                     let icX = x;
                     let icY = y;
                     if (shape.refOriginalPosition) {
-                        icX = x - shape.refOriginalPosition[0];
-                        icY = y - shape.refOriginalPosition[1];
+                        icX = x-shape.refOriginalPosition[0];
+                        icY = y-shape.refOriginalPosition[1];
                     }
 
-                    //岛洞面
-                    if (shape.holePolygonPointLists && shape.holePolygonPointLists.length > 0) {
+                    //Island cave noodles
+                    if (shape.holePolygonPointLists && shape.holePolygonPointLists.length> 0) {
                         var isOnBase = this.isInsidePolygon(area.pointList, icX, icY);
 
-                        // 遍历岛洞子面
+                        // Traverse the island cave face
                         var holePLS = shape.holePolygonPointLists;
                         var isOnHole = false;
-                        for (var i = 0, holePLSen = holePLS.length; i < holePLSen; i++) {
+                        for (var i = 0, holePLSen = holePLS.length; i <holePLSen; i++) {
                             var holePL = holePLS[i];
                             var isOnSubHole = this.isInsidePolygon(holePL, icX, icY);
                             if (isOnSubHole === true) {
@@ -327,37 +312,37 @@ export class Area {
                             }
                         }
 
-                        // 捕获判断
+                        // Capture judgment
                         return isOnBase === true && isOnHole === false;
                     } else {
                         return this.isInsidePolygon(area.pointList, icX, icY);
                     }
                 }
-                // 初始代码：
-                //  无
-                // SMIC-修改 - end
-                // 文本
-            case 'text':
+                // Initial code:
+                // None
+                // SMIC-modify-end
+                // text
+            case'text':
                 var rect = area.__rect || shape.getRect(area);
                 return this.isInsideRect(
                     rect.x, rect.y, rect.width, rect.height, x, y
                 );
-                // 扩展文本
-            case 'smictext':
-                //用文本背景矩形判断
+                // extended text
+            case'smictext':
+                //Use the text background rectangle to judge
                 var textBg = shape.getTextBackground(area);
                 return this.isInsidePolygon(textBg, x, y);
-                //初始代码：
-                //  无
-                // SMIC-修改 - end
-                // 矩形
-            case 'rectangle':
-            case 'image':
-                // 图片
+                //Initial code:
+                // None
+                // SMIC-modify-end
+                // rectangle
+            case'rectangle':
+            case'image':
+                // Picture
                 return this.isInsideRect(
                     area.x, area.y, area.width, area.height, x, y
                 );
-            case 'smicimage':
+            case'smicimage':
                 {
                     let areaX = area.x;
                     let areaY = area.y;
@@ -369,36 +354,36 @@ export class Area {
                         areaX, areaY, area.width, area.height, x, y
                     );
                 }
-                //// 扩展矩形
-                //case 'smicpolygon':
-                //    // SMIC-修改 - start
-                //    var icX = x;
-                //    var icY = y;
-                //    if(shape.refOriginalPosition) {
-                //        icX = x - shape.refOriginalPosition[0];
-                //        icY = y - shape.refOriginalPosition[1];
-                //    }
-                //    return this.isInsideRect(
-                //        area.x, area.y, area.width, area.height, icX, icY
-                //    );
-                //初始代码：
-                //  无
-                // SMIC-修改 - end
+                //// Extended rectangle
+                //case'smicpolygon':
+                // // SMIC-modify-start
+                // var icX = x;
+                // var icY = y;
+                // if(shape.refOriginalPosition) {
+                // icX = x-shape.refOriginalPosition[0];
+                // icY = y-shape.refOriginalPosition[1];
+                //}
+                // return this.isInsideRect(
+                // area.x, area.y, area.width, area.height, icX, icY
+                // );
+                //Initial code:
+                // None
+                // SMIC-modify-end
         }
     }
 
-    /**
+   /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype._buildPathMethod
-     * @description 包含判断。通过buildPath方法来判断，三个方法中较快，但是不支持线条类型的 shape。
-     * @param {Object} shape - 图形。
-     * @param {Object} context - 上下文。
-     * @param {number} area - 目标区域。
-     * @param {number} x - 横坐标。
-     * @param {number} y - 纵坐标。
-     * @returns {boolean} 图形是否包含鼠标位置，true表示坐标处在图形中。
+     * @description contains judgment. Judging by the buildPath method, the three methods are faster, but the shape of the line type is not supported.
+     * @param {Object} shape-shape.
+     * @param {Object} context-context.
+     * @param {number} area-target area.
+     * @param {number} x-the abscissa.
+     * @param {number} y-the ordinate.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     _buildPathMethod(shape, context, area, x, y) {
-        // 图形类实现路径创建了则用类的path
+        // The implementation path of the graphics class creates the path of the class
         context.beginPath();
         shape.buildPath(context, area);
         context.closePath();
@@ -407,12 +392,12 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isOutside
-     * @description 图形是否不包含鼠标位置。
-     * @param {Object} shape - 图形。
-     * @param {number} area - 目标区域。
-     * @param {number} x - 横坐标。
-     * @param {number} y - 纵坐标。
-     * @returns {boolean} 图形是否不包含鼠标位置, true表示坐标处在图形外。
+     * @description Whether the graphic does not include the mouse position.
+     * @param {Object} shape-shape.
+     * @param {number} area-target area.
+     * @param {number} x-the abscissa.
+     * @param {number} y-the ordinate.
+     * @returns {boolean} Whether the graphic does not include the mouse position, true means the coordinates are outside the graphic.
      */
     isOutside(shape, area, x, y) {
         return !this.isInside(shape, area, x, y);
@@ -420,15 +405,15 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideLine
-     * @description 线段包含判断。
-     * @param {number} x0 - 线起始点横坐标。
-     * @param {number} y0 - 线起始点纵坐标。
-     * @param {number} x1 - 线终点横坐标。
-     * @param {number} y1 - 线终点纵坐标。
-     * @param {number} lineWidth - 线宽。
-     * @param {number} x - 鼠标位置横坐标。
-     * @param {number} y - 鼠标位置纵坐标。
-     * @returns {boolean} 图形是否包含鼠标位置，true表示坐标处在图形内。
+     * @description The line segment contains judgment.
+     * @param {number} x0-the abscissa of the starting point of the line.
+     * @param {number} y0-the ordinate of the starting point of the line.
+     * @param {number} x1-the abscissa of the end point of the line.
+     * @param {number} y1-the ordinate of the end of the line.
+     * @param {number} lineWidth-line width.
+     * @param {number} x-the abscissa of the mouse position.
+     * @param {number} y-the ordinate of the mouse position.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideLine(x0, y0, x1, y1, lineWidth, x, y) {
         if (lineWidth === 0) {
@@ -439,38 +424,38 @@ export class Area {
         var _b = 0;
         // Quick reject
         if (
-            (y > y0 + _l && y > y1 + _l) ||
-            (y < y0 - _l && y < y1 - _l) ||
-            (x > x0 + _l && x > x1 + _l) ||
-            (x < x0 - _l && x < x1 - _l)
+            (y> y0 + _l && y> y1 + _l) ||
+            (y <y0-_l && y <y1-_l) ||
+            (x> x0 + _l && x> x1 + _l) ||
+            (x <x0-_l && x <x1-_l)
         ) {
             return false;
         }
 
         if (x0 !== x1) {
-            _a = (y0 - y1) / (x0 - x1);
-            _b = (x0 * y1 - x1 * y0) / (x0 - x1);
+            _a = (y0-y1) / (x0-x1);
+            _b = (x0 * y1-x1 * y0) / (x0-x1);
         } else {
-            return Math.abs(x - x0) <= _l / 2;
+            return Math.abs(x-x0) <= _l / 2;
         }
-        var tmp = _a * x - y + _b;
+        var tmp = _a * x-y + _b;
         var _s = tmp * tmp / (_a * _a + 1);
         return _s <= _l / 2 * _l / 2;
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideCubicStroke
-     * @description 三次贝塞尔曲线描边包含判断。
-     * @param {number} x0 - 点1横坐标。
-     * @param {number} y0 - 点1纵坐标。
-     * @param {number} x1 - 点2横坐标。
-     * @param {number} y1 - 点2纵坐标。
-     * @param {number} x2 - 点3纵坐标。
-     * @param {number} y2 - 点3纵坐标。
-     * @param {number} lineWidth - 线宽。
-     * @param {number} x - 鼠标位置横坐标。
-     * @param {number} y - 鼠标位置纵坐标。
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description The stroke of the cubic Bezier curve contains judgment.
+     * @param {number} x0-the abscissa of point 1.
+     * @param {number} y0-the ordinate of point 1.
+     * @param {number} x1-The abscissa of point 2.
+     * @param {number} y1-the ordinate of point 2.
+     * @param {number} x2-The ordinate of point 3.
+     * @param {number} y2-the ordinate of point 3.
+     * @param {number} lineWidth-line width.
+     * @param {number} x-the abscissa of the mouse position.
+     * @param {number} y-the ordinate of the mouse position.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideCubicStroke(x0, y0, x1, y1, x2, y2, x3, y3, lineWidth, x, y) {
         if (lineWidth === 0) {
@@ -479,10 +464,10 @@ export class Area {
         var _l = Math.max(lineWidth, 5);
         // Quick reject
         if (
-            (y > y0 + _l && y > y1 + _l && y > y2 + _l && y > y3 + _l) ||
-            (y < y0 - _l && y < y1 - _l && y < y2 - _l && y < y3 - _l) ||
-            (x > x0 + _l && x > x1 + _l && x > x2 + _l && x > x3 + _l) ||
-            (x < x0 - _l && x < x1 - _l && x < x2 - _l && x < x3 - _l)
+            (y> y0 + _l && y> y1 + _l && y> y2 + _l && y> y3 + _l) ||
+            (y <y0-_l && y <y1-_l && y <y2-_l && y <y3-_l) ||
+            (x> x0 + _l && x> x1 + _l && x> x2 + _l && x> x3 + _l) ||
+            (x <x0-_l && x <x1-_l && x <x2-_l && x <x3-_l)
         ) {
             return false;
         }
@@ -495,17 +480,17 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideQuadraticStroke
-     * @description 二次贝塞尔曲线描边包含判断。
-     * @param {number} x0 - 点1横坐标。
-     * @param {number} y0 - 点1纵坐标。
-     * @param {number} x1 - 点2横坐标。
-     * @param {number} y1 - 点2纵坐标。
-     * @param {number} x2 - 点3纵坐标。
-     * @param {number} y2 - 点3纵坐标。
-     * @param {number} lineWidth - 线宽。
-     * @param {number} x - 鼠标位置横坐标。
-     * @param {number} y - 鼠标位置纵坐标。
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description The stroke of the quadratic Bezier curve contains judgment.
+     * @param {number} x0-the abscissa of point 1.
+     * @param {number} y0-the ordinate of point 1.
+     * @param {number} x1-The abscissa of point 2.
+     * @param {number} y1-the ordinate of point 2.
+     * @param {number} x2-The ordinate of point 3.
+     * @param {number} y2-the ordinate of point 3.
+     * @param {number} lineWidth-line width.
+     * @param {number} x-the abscissa of the mouse position.
+     * @param {number} y-the ordinate of the mouse position.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideQuadraticStroke(x0, y0, x1, y1, x2, y2, lineWidth, x, y) {
         if (lineWidth === 0) {
@@ -514,10 +499,10 @@ export class Area {
         var _l = Math.max(lineWidth, 5);
         // Quick reject
         if (
-            (y > y0 + _l && y > y1 + _l && y > y2 + _l) ||
-            (y < y0 - _l && y < y1 - _l && y < y2 - _l) ||
-            (x > x0 + _l && x > x1 + _l && x > x2 + _l) ||
-            (x < x0 - _l && x < x1 - _l && x < x2 - _l)
+            (y> y0 + _l && y> y1 + _l && y> y2 + _l) ||
+            (y <y0-_l && y <y1-_l && y <y2-_l) ||
+            (x> x0 + _l && x> x1 + _l && x> x2 + _l) ||
+            (x <x0-_l && x <x1-_l && x <x2-_l)
         ) {
             return false;
         }
@@ -530,17 +515,17 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideArcStroke
-     * @description 圆弧描边包含判断。
-     * @param {number} cx - 圆心横坐标。
-     * @param {number} cy - 圆心纵坐标。
-     * @param {number} r - 圆半径。
-     * @param {number} startAngle - 起始角度。
-     * @param {number} endAngle - 终止角度。
-     * @param {number} anticlockwise - 顺时针还是逆时针。
-     * @param {number} lineWidth - 线宽。
-     * @param {number} x - 鼠标位置横坐标。
-     * @param {number} y - 鼠标位置纵坐标。
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description The arc stroke contains judgment.
+     * @param {number} cx-the abscissa of the center of the circle.
+     * @param {number} cy-the ordinate of the center of the circle.
+     * @param {number} r-the radius of the circle.
+     * @param {number} startAngle-the starting angle.
+     * @param {number} endAngle-end angle.
+     * @param {number} anticlockwise-clockwise or anticlockwise.
+     * @param {number} lineWidth-line width.
+     * @param {number} x-The abscissa of the mouse position.
+     * @param {number} y-the ordinate of the mouse position.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideArcStroke(cx, cy, r, startAngle, endAngle, anticlockwise, lineWidth, x, y) {
         var PI2 = this.PI2;
@@ -553,10 +538,10 @@ export class Area {
         x -= cx;
         y -= cy;
         var d = Math.sqrt(x * x + y * y);
-        if ((d - _l > r) || (d + _l < r)) {
+        if ((d-_l> r) || (d + _l <r)) {
             return false;
         }
-        if (Math.abs(startAngle - endAngle) >= PI2) {
+        if (Math.abs(startAngle-endAngle) >= PI2) {
             // Is a circle
             return true;
         }
@@ -568,12 +553,12 @@ export class Area {
             startAngle = this.normalizeRadian(startAngle);
             endAngle = this.normalizeRadian(endAngle);
         }
-        if (startAngle > endAngle) {
+        if (startAngle> endAngle) {
             endAngle += PI2;
         }
 
         var angle = Math.atan2(y, x);
-        if (angle < 0) {
+        if (angle <0) {
             angle += PI2;
         }
         return (angle >= startAngle && angle <= endAngle) ||
@@ -582,16 +567,16 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideBrokenLine
-     * @description 图形 BrokenLine 是否包含鼠标位置, true表示坐标处在图形内。
-     * @param {Array} points - 曲线点对象。
-     * @param {number} lineWidth - 线宽。
-     * @param {number} x - 鼠标位置横坐标。
-     * @param {number} y - 鼠标位置纵坐标。
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description Whether the BrokenLine graphic contains the mouse position, true means the coordinates are in the graphic.
+     * @param {Array} points-the curve point object.
+     * @param {number} lineWidth-line width.
+     * @param {number} x-the abscissa of the mouse position.
+     * @param {number} y-the ordinate of the mouse position.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideBrokenLine(points, lineWidth, x, y) {
         var _lineWidth = Math.max(lineWidth, 10);
-        for (var i = 0, l = points.length - 1; i < l; i++) {
+        for (var i = 0, l = points.length-1; i <l; i++) {
             var x0 = points[i][0];
             var y0 = points[i][1];
             var x1 = points[i + 1][0];
@@ -607,18 +592,18 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideRing
-     * @description  图形 Ring 是否包含鼠标位置, true表示坐标处在图形内。
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description Whether the graphic Ring contains the mouse position, true means the coordinates are in the graphic.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideRing(cx, cy, r0, r, x, y) {
-        var d = (x - cx) * (x - cx) + (y - cy) * (y - cy);
-        return (d < r * r) && (d > r0 * r0);
+        var d = (x-cx) * (x-cx) + (y-cy) * (y-cy);
+        return (d <r * r) && (d> r0 * r0);
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideRect
-     * @description 图形 Rect 是否包含鼠标位置, true表示坐标处在图形内。
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description Whether the graphic Rect includes the mouse position, true means the coordinates are in the graphic.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideRect(x0, y0, width, height, x, y) {
         return x >= x0 && x <= (x0 + width) && y >= y0 && y <= (y0 + height);
@@ -626,32 +611,32 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideCircle
-     * @description 图形 Circle 是否包含鼠标位置, true表示坐标处在图形内。
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description Whether the graphic Circle contains the mouse position, true means the coordinates are in the graphic.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideCircle(x0, y0, r, x, y) {
-        return (x - x0) * (x - x0) + (y - y0) * (y - y0) < r * r;
+        return (x-x0) * (x-x0) + (y-y0) * (y-y0) <r * r;
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsideSector
-     * @description 图形 Sector 是否包含鼠标位置, true表示坐标处在图形内。
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description Whether the graphic sector contains the mouse position, true means the coordinates are in the graphic.
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsideSector(cx, cy, r0, r, startAngle, endAngle, anticlockwise, x, y) {
-        return this.isInsideArcStroke(cx, cy, (r0 + r) / 2, startAngle, endAngle, anticlockwise, r - r0, x, y);
+        return this.isInsideArcStroke(cx, cy, (r0 + r) / 2, startAngle, endAngle, anticlockwise, r-r0, x, y);
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsidePolygon
-     * @description 图形 Polygon 是否包含鼠标位置, true表示坐标处在图形内。与 canvas 一样采用 non-zero winding rule
-     * @returns {boolean} 图形是否包含鼠标位置, true表示坐标处在图形内。
+     * @description Whether the graphic Polygon contains the mouse position, true means the coordinates are in the graphic. Use non-zero winding rule like canvas
+     * @returns {boolean} Whether the graphic contains the mouse position, true means the coordinates are in the graphic.
      */
     isInsidePolygon(points, x, y) {
         var N = points.length;
         var w = 0;
 
-        for (var i = 0, j = N - 1; i < N; i++) {
+        for (var i = 0, j = N-1; i <N; i++) {
             var x0 = points[j][0];
             var y0 = points[j][1];
             var x1 = points[i][0];
@@ -667,17 +652,17 @@ export class Area {
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.windingLine
      */
     windingLine(x0, y0, x1, y1, x, y) {
-        if ((y > y0 && y > y1) || (y < y0 && y < y1)) {
+        if ((y> y0 && y> y1) || (y <y0 && y <y1)) {
             return 0;
         }
         if (y1 == y0) {
             return 0;
         }
-        var dir = y1 < y0 ? 1 : -1;
-        var t = (y - y0) / (y1 - y0);
-        var x_ = t * (x1 - x0) + x0;
+        var dir = y1 <y0? 1: -1;
+        var t = (y-y0) / (y1-y0);
+        var x_ = t * (x1-x0) + x0;
 
-        return x_ > x ? dir : 0;
+        return x_> x? dir: 0;
     }
 
     /**
@@ -699,8 +684,8 @@ export class Area {
 
         // Quick reject
         if (
-            (y > y0 && y > y1 && y > y2 && y > y3) ||
-            (y < y0 && y < y1 && y < y2 && y < y3)
+            (y> y0 && y>y1 && y> y2 && y> y3) ||
+            (y <y0 && y <y1 && y <y2 && y <y3)
         ) {
             return 0;
         }
@@ -711,37 +696,37 @@ export class Area {
             var w = 0;
             var nExtrema = -1;
             var y0_, y1_;
-            for (var i = 0; i < nRoots; i++) {
+            for (var i = 0; i <nRoots; i++) {
                 var t = roots[i];
                 var x_ = curve.cubicAt(x0, x1, x2, x3, t);
-                if (x_ < x) { // Quick reject
+                if (x_ <x) {// Quick reject
                     continue;
                 }
-                if (nExtrema < 0) {
+                if (nExtrema <0) {
                     nExtrema = curve.cubicExtrema(y0, y1, y2, y3, extrema);
-                    if (extrema[1] < extrema[0] && nExtrema > 1) {
+                    if (extrema[1] <extrema[0] && nExtrema> 1) {
                         this.swapExtrema();
                     }
                     y0_ = curve.cubicAt(y0, y1, y2, y3, extrema[0]);
-                    if (nExtrema > 1) {
+                    if (nExtrema> 1) {
                         y1_ = curve.cubicAt(y0, y1, y2, y3, extrema[1]);
                     }
                 }
                 if (nExtrema == 2) {
-                    // 分成三段单调函数
-                    if (t < extrema[0]) {
-                        w += y0_ < y0 ? 1 : -1;
-                    } else if (t < extrema[1]) {
-                        w += y1_ < y0_ ? 1 : -1;
+                    // Divided into three monotonic functions
+                    if (t <extrema[0]) {
+                        w += y0_ <y0? 1: -1;
+                    } else if (t <extrema[1]) {
+                        w += y1_ <y0_? 1: -1;
                     } else {
-                        w += y3 < y1_ ? 1 : -1;
+                        w += y3 <y1_? 1: -1;
                     }
                 } else {
-                    // 分成两段单调函数
-                    if (t < extrema[0]) {
-                        w += y0_ < y0 ? 1 : -1;
+                    // Divide into two monotonic functions
+                    if (t <extrema[0]) {
+                        w += y0_ <y0? 1: -1;
                     } else {
-                        w += y3 < y0_ ? 1 : -1;
+                        w += y3 <y0_? 1: -1;
                     }
                 }
             }
@@ -758,8 +743,8 @@ export class Area {
 
         // Quick reject
         if (
-            (y > y0 && y > y1 && y > y2) ||
-            (y < y0 && y < y1 && y < y2)
+            (y> y0 && y> y1 && y> y2) ||
+            (y <y0 && y <y1 && y <y2)
         ) {
             return 0;
         }
@@ -771,49 +756,49 @@ export class Area {
             if (t >= 0 && t <= 1) {
                 var w = 0;
                 var y_ = curve.quadraticAt(y0, y1, y2, t);
-                for (let i = 0; i < nRoots; i++) {
+                for (let i = 0; i <nRoots; i++) {
                     let x_ = curve.quadraticAt(x0, x1, x2, roots[i]);
-                    if (x_ > x) {
+                    if (x_> x) {
                         continue;
                     }
-                    if (roots[i] < t) {
-                        w += y_ < y0 ? 1 : -1;
+                    if (roots[i] <t) {
+                        w += y_ <y0? 1: -1;
                     } else {
-                        w += y2 < y_ ? 1 : -1;
+                        w += y2 <y_? 1: -1;
                     }
                 }
                 return w;
             } else {
                 let x_ = curve.quadraticAt(x0, x1, x2, roots[0]);
-                if (x_ > x) {
+                if (x_> x) {
                     return 0;
                 }
-                return y2 < y0 ? 1 : -1;
+                return y2 <y0? 1: -1;
             }
         }
     }
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.windingArc
-     * // TODO   Arc 旋转
+     * // TODO Arc rotation
      */
     windingArc(cx, cy, r, startAngle, endAngle, anticlockwise, x, y) {
         var roots = this.roots;
         var PI2 = this.PI2;
 
         y -= cy;
-        if (y > r || y < -r) {
+        if (y> r || y <-r) {
             return 0;
         }
-        let tmp = Math.sqrt(r * r - y * y);
+        let tmp = Math.sqrt(r * r-y * y);
         roots[0] = -tmp;
         roots[1] = tmp;
 
-        if (Math.abs(startAngle - endAngle) >= PI2) {
+        if (Math.abs(startAngle-endAngle) >= PI2) {
             // Is a circle
             startAngle = 0;
             endAngle = PI2;
-            var dir = anticlockwise ? 1 : -1;
+            var dir = anticlockwise? 1: -1;
             if (x >= roots[0] + cx && x <= roots[1] + cx) {
                 return dir;
             } else {
@@ -829,24 +814,24 @@ export class Area {
             startAngle = this.normalizeRadian(startAngle);
             endAngle = this.normalizeRadian(endAngle);
         }
-        if (startAngle > endAngle) {
+        if (startAngle> endAngle) {
             endAngle += PI2;
         }
 
         var w = 0;
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i <2; i++) {
             var x_ = roots[i];
-            if (x_ + cx > x) {
+            if (x_ + cx> x) {
                 let angle = Math.atan2(y, x_);
-                let dir = anticlockwise ? 1 : -1;
-                if (angle < 0) {
+                let dir = anticlockwise? 1: -1;
+                if (angle <0) {
                     angle = PI2 + angle;
                 }
                 if (
                     (angle >= startAngle && angle <= endAngle) ||
                     (angle + PI2 >= startAngle && angle + PI2 <= endAngle)
                 ) {
-                    if (angle > Math.PI / 2 && angle < Math.PI * 1.5) {
+                    if (angle> Math.PI / 2 && angle <Math.PI * 1.5) {
                         dir = -dir;
                     }
                     w += dir;
@@ -859,7 +844,7 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.isInsidePath
-     * @description 与 canvas 一样采用 non-zero winding rule
+     * @description uses the non-zero winding rule the same as canvas
      */
     isInsidePath(pathArray, lineWidth, brushType, x, y) {
         var w = 0;
@@ -870,18 +855,18 @@ export class Area {
         var beginSubpath = true;
         var firstCmd = true;
 
-        brushType = brushType || 'fill';
+        brushType = brushType ||'fill';
 
-        var hasStroke = brushType === 'stroke' || brushType === 'both';
-        var hasFill = brushType === 'fill' || brushType === 'both';
+        var hasStroke = brushType ==='stroke' || brushType ==='both';
+        var hasFill = brushType ==='fill' || brushType ==='both';
 
         // var roots = [-1, -1, -1];
-        for (var i = 0; i < pathArray.length; i++) {
+        for (var i = 0; i <pathArray.length; i++) {
             var seg = pathArray[i];
             var p = seg.points;
             // Begin a new subpath
-            if (beginSubpath || seg.command === 'M') {
-                if (i > 0) {
+            if (beginSubpath || seg.command ==='M') {
+                if (i> 0) {
                     // Close previous subpath
                     if (hasFill) {
                         w += this.windingLine(xi, yi, x0, y0, x, y);
@@ -890,24 +875,24 @@ export class Area {
                         return true;
                     }
                 }
-                x0 = p[p.length - 2];
-                y0 = p[p.length - 1];
+                x0 = p[p.length-2];
+                y0 = p[p.length-1];
                 beginSubpath = false;
-                if (firstCmd && seg.command !== 'A') {
-                    // 如果第一个命令不是M, 是lineTo, bezierCurveTo
-                    // 等绘制命令的话，是会从该绘制的起点开始算的
-                    // Arc 会在之后做单独处理所以这里忽略
+                if (firstCmd && seg.command !=='A') {
+                    // If the first command is not M, it is lineTo, bezierCurveTo
+                    // If you wait for the drawing command, it will start from the starting point of the drawing
+                    // Arc will be processed separately later, so ignore it here
                     firstCmd = false;
                     xi = x0;
                     yi = y0;
                 }
             }
             switch (seg.command) {
-                case 'M':
+                case'M':
                     xi = p[0];
                     yi = p[1];
                     break;
-                case 'L':
+                case'L':
                     if (hasStroke) {
                         if (this.isInsideLine(
                                 xi, yi, p[0], p[1], lineWidth, x, y
@@ -921,7 +906,7 @@ export class Area {
                     xi = p[0];
                     yi = p[1];
                     break;
-                case 'C':
+                case'C':
                     if (hasStroke) {
                         if (this.isInsideCubicStroke(
                                 xi, yi, p[0], p[1], p[2], p[3], p[4], p[5],
@@ -938,7 +923,7 @@ export class Area {
                     xi = p[4];
                     yi = p[5];
                     break;
-                case 'Q':
+                case'Q':
                     if (hasStroke) {
                         if (this.isInsideQuadraticStroke(
                                 xi, yi, p[0], p[1], p[2], p[3],
@@ -955,9 +940,9 @@ export class Area {
                     xi = p[2];
                     yi = p[3];
                     break;
-                case 'A':
-                    // TODO Arc 旋转
-                    // TODO Arc 判断的开销比较大
+                case'A':
+                    // TODO Arc rotation
+                    // The cost of TODO Arc judgment is relatively large
                     var cx = p[0];
                     var cy = p[1];
                     var rx = p[2];
@@ -966,20 +951,20 @@ export class Area {
                     var dTheta = p[5];
                     var x1 = Math.cos(theta) * rx + cx;
                     var y1 = Math.sin(theta) * ry + cy;
-                    // 不是直接使用 arc 命令
+                    // not directly use the arc command
                     if (!firstCmd) {
                         w += this.windingLine(xi, yi, x1, y1);
                     } else {
                         firstCmd = false;
-                        // 第一个命令起点还未定义
+                        // The starting point of the first command has not been defined
                         x0 = x1;
                         y0 = y1;
                     }
-                    // zr 使用scale来模拟椭圆, 这里也对x做一定的缩放
-                    var _x = (x - cx) * ry / rx + cx;
+                    // zr uses scale to simulate an ellipse, here is also a certain scaling of x
+                    var _x = (x-cx) * ry / rx + cx;
                     if (hasStroke) {
                         if (this.isInsideArcStroke(
-                                cx, cy, ry, theta, theta + dTheta, 1 - p[7],
+                                cx, cy, ry, theta, theta + dTheta, 1-p[7],
                                 lineWidth, _x, y
                             )) {
                             return true;
@@ -987,14 +972,14 @@ export class Area {
                     }
                     if (hasFill) {
                         w += this.windingArc(
-                            cx, cy, ry, theta, theta + dTheta, 1 - p[7],
+                            cx, cy, ry, theta, theta + dTheta, 1-p[7],
                             _x, y
                         );
                     }
                     xi = Math.cos(theta + dTheta) * rx + cx;
                     yi = Math.sin(theta + dTheta) * ry + cy;
                     break;
-                case 'z':
+                case'z':
                     if (hasStroke) {
                         if (this.isInsideLine(
                                 xi, yi, x0, y0, lineWidth, x, y
@@ -1014,10 +999,10 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.getTextWidth
-     * @description 测算多行文本宽度
+     * @description measures the width of multi-line text
      */
     getTextWidth(text, textFont) {
-        var key = text + ':' + textFont;
+        var key = text +':' + textFont;
         if (this._textWidthCache[key]) {
             return this._textWidthCache[key];
         }
@@ -1028,9 +1013,9 @@ export class Area {
             this._ctx.font = textFont;
         }
 
-        text = (text + '').split('\n');
+        text = (text +'').split('\n');
         var width = 0;
-        for (var i = 0, l = text.length; i < l; i++) {
+        for (var i = 0, l = text.length; i <l; i++) {
             width = Math.max(
                 this._ctx.measureText(text[i]).width,
                 width
@@ -1039,8 +1024,8 @@ export class Area {
         this._ctx.restore();
 
         this._textWidthCache[key] = width;
-        if (++this._textWidthCacheCounter > this.TEXT_CACHE_MAX) {
-            // 内存释放
+        if (++this._textWidthCacheCounter> this.TEXT_CACHE_MAX) {
+            // memory release
             this._textWidthCacheCounter = 0;
             this._textWidthCache = {};
         }
@@ -1050,10 +1035,10 @@ export class Area {
 
     /**
      * @function Ekmap.LevelRenderer.Tool.Areal.prototype.getTextHeight
-     * @description 测算多行文本高度
+     * @description measures the height of multi-line text
      */
     getTextHeight(text, textFont) {
-        var key = text + ':' + textFont;
+        var key = text +':' + textFont;
         if (this._textHeightCache[key]) {
             return this._textHeightCache[key];
         }
@@ -1065,16 +1050,16 @@ export class Area {
             this._ctx.font = textFont;
         }
 
-        text = (text + '').split('\n');
-        // 比较粗暴
-        //var height = (this._ctx.measureText('国').width + 2) * text.length;  //打包不支持中文，替换掉
+        text = (text +'').split('\n');
+        // Rough
+        //var height = (this._ctx.measureText('国').width + 2) * text.length; //Packing does not support Chinese, replace it
         var height = (this._ctx.measureText('ZH').width + 2) * text.length;
 
         this._ctx.restore();
 
         this._textHeightCache[key] = height;
-        if (++this._textHeightCacheCounter > this.TEXT_CACHE_MAX) {
-            // 内存释放
+        if (++this._textHeightCacheCounter> this.TEXT_CACHE_MAX) {
+            // memory release
             this._textHeightCacheCounter = 0;
             this._textHeightCache = {};
         }

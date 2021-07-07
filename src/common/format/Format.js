@@ -2,27 +2,27 @@ import { Ekmap } from '../Ekmap';
 import { Util } from '../commontypes/Util';
 
 /**
- * @class Ekmap.Format
- * @classdesc 读写各种格式的格式类基类。其子类应该包含并实现 read 和 write 方法。
- * @category BaseTypes Format
- * @param {Object} options - 可选参数。
- * @param {boolean} [options.keepData=false] - 如果设置为 true， data 属性会指向被解析的对象（例如 JSON 或 xml 数据对象）。
- * @param {Object} [options.data] - 当 keepData 属性设置为 true，这是传递给 read 操作的要被解析的字符串。
- */
+  * @class Ekmap.Format
+  * @classdesc Read and write format class base classes of various formats. Its subclasses should contain and implement read and write methods.
+  * @category BaseTypes Format
+  * @param {Object} options-optional parameters.
+  * @param {boolean} [options.keepData=false] If set to true, the data attribute will point to the parsed object (such as JSON or xml data objects).
+  * @param {Object} [options.data] When the keepData attribute is set to true, this is the string to be parsed passed to the read operation.
+  */
 export class Format {
 
 
     constructor(options) {
-        /**
-         * @member {Object} Ekmap.Format.prototype.data 
-         * @description 当 keepData 属性设置为 true，这是传递给 read 操作的要被解析的字符串。
-         */
+       /**
+          * @member {Object} Ekmap.Format.prototype.data
+          * @description When the keepData attribute is set to true, this is the string passed to the read operation to be parsed.
+          */
         this.data = null;
 
         /**
          * APIProperty: keepData
          * @member {Object} [Ekmap.Format.prototype.keepData=false]
-         * @description 保持最近读到的数据的引用（通过 <data> 属性）。
+         * @description keeps a reference to the most recently read data (via the <data> attribute).
          */
         this.keepData = false;
 
@@ -33,30 +33,30 @@ export class Format {
     }
 
     /**
-     * @function Ekmap.Format.prototype.destroy
-     * @description 销毁该格式类，释放相关资源。
-     */
-    destroy() {
-        //用来销毁该格式类，释放相关资源
+      * @function Ekmap.Format.prototype.destroy
+      * @description Destroy the format class and release related resources.
+      */
+     destroy() {
+        //Used to destroy the format class and release related resources
     }
 
     /**
-     * @function Ekmap.Format.prototype.read
-     * @description 来从字符串中读取数据。
-     * @param {string} data - 读取的数据。
-     */
-    read(data) { // eslint-disable-line no-unused-vars
-        //用来从字符串中读取数据
+      * @function Ekmap.Format.prototype.read
+      * @description to read data from a string.
+      * @param {string} data-the data to be read.
+      */
+     read(data) {// eslint-disable-line no-unused-vars
+        //Used to read data from a string
     }
 
     /**
      * @function Ekmap.Format.prototype.write
-     * @description 将对象写成字符串。
-     * @param {Object} object - 可序列化的对象。
-     * @returns {string} 对象被写成字符串。
+     * @description writes the object as a string.
+     * @param {Object} object-serializable object.
+     * @returns {string} The object is written as a string.
      */
-    write(object) { // eslint-disable-line no-unused-vars
-        //用来写字符串
+    write(object) {// eslint-disable-line no-unused-vars
+        //Used to write strings
     }
 }
 

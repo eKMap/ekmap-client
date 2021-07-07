@@ -37,8 +37,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.getId
-     * @description 获取实例唯一标识。
-     * @return {string} 实例唯一标识。
+     * @description Get the unique identifier of the instance.
+     * @return {string} The unique identifier of the instance.
      */
     getId() {
         return this.id;
@@ -46,10 +46,10 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.addShape
-     * @description 添加图形形状到根节点。
+     * @description adds the shape of the graph to the root node.
      *
-     * @param {Ekmap.LevelRenderer.Shape} shape - 图形对象，可用属性全集，详见各 shape。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {Ekmap.LevelRenderer.Shape} shape-shape object, full set of available attributes, see each shape for details.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     addShape(shape) {
         this.storage.addRoot(shape);
@@ -58,27 +58,27 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.addGroup
-     * @description 添加组到根节点。
+     * @description adds the group to the root node.
      *
      * (code)
-     * //添加组到根节点例子
+     * //Add group to root node example
      * var render = new Ekmap.LevelRenderer.Render("Render",document.getElementById('lRendertest'));
      * render.clear();
      * var g = new Ekmap.LevelRenderer.Group();
      * g.addChild(new Ekmap.LevelRenderer.Shape.Circle({
-     *     style: {
-     *         x: 100,
-     *         y: 100,
-     *         r: 20,
-     *         brushType: 'fill'
-     *     }
+     * style: {
+     * x: 100,
+     * y: 100,
+     * r: 20,
+     * brushType:'fill'
+     *}
      * }));
      * render.addGroup(g);
      * render.render();
      * (end)
      *
-     * @param {Ekmap.LevelRenderer.Group} group - 组对象。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {Ekmap.LevelRenderer.Group} group-group object.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     addGroup(group) {
         this.storage.addRoot(group);
@@ -87,10 +87,10 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.delShape
-     * @description 从根节点删除图形形状。
+     * @description deletes the graph shape from the root node.
      *
-     * @param {string} shapeId - 图形对象唯一标识。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {string} shapeId-the unique identifier of the shape object.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     delShape(shapeId) {
         this.storage.delRoot(shapeId);
@@ -99,10 +99,10 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.delGroup
-     * @description 从根节点删除组。
+     * @description deletes the group from the root node.
      *
-     * @param {string} groupId - 组对象唯一标识。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {string} groupId-the unique identifier of the group object.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     delGroup(groupId) {
         this.storage.delRoot(groupId);
@@ -111,11 +111,11 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.modShape
-     * @description 修改图形形状。
+     * @description Modify the shape of the graph.
      *
-     * @param {string} shapeId - 图形对象唯一标识。
-     * @param {Ekmap.LevelRenderer.Shape} shape - 图形对象。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {string} shapeId-the unique identifier of the shape object.
+     * @param {Ekmap.LevelRenderer.Shape} shape-shape object.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     modShape(shapeId, shape) {
         this.storage.mod(shapeId, shape);
@@ -124,11 +124,11 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.modGroup
-     * @description 修改组。
+     * @description Modify the group.
      *
-     * @param {string} groupId - 组对象唯一标识。
-     * @param {Ekmap.LevelRenderer.Group} group - 组对象。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {string} groupId-the unique identifier of the group object.
+     * @param {Ekmap.LevelRenderer.Group} group-group object.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     modGroup(groupId, group) {
         this.storage.mod(groupId, group);
@@ -137,19 +137,19 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.modLayer
-     * @description 修改指定 zlevel 的绘制配置项。
+     * @description Modify the drawing configuration items of the specified zlevel.
      *
-     * @param {string} zLevel - 组对象唯一标识。
-     * @param {Object} config - 配置对象。
-     * @param {string} clearColor - 每次清空画布的颜色。默认值：0。
-     * @param {noolean} motionBlur - 是否开启动态模糊。默认值：false。
-     * @param {number}  lastFrameAlpha - 在开启动态模糊的时候使用，与上一帧混合的alpha值，值越大尾迹越明显。默认值：0.7。
-     * @param {Array.<number>} position - 层的平移。
-     * @param {Array.<number>} rotation - 层的旋转。
-     * @param {Array.<number>} scale - 层的缩放。
-     * @param {boolean} zoomable - 层是否支持鼠标缩放操作。默认值：false。
-     * @param {boolean} panable - 层是否支持鼠标平移操作。默认值：false。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {string} zLevel-the unique identifier of the group object.
+     * @param {Object} config-configuration object.
+     * @param {string} clearColor-The color of the canvas when the canvas is cleared each time. Default value: 0.
+     * @param {noolean} motionBlur-whether to enable motion blur. Default value: false.
+     * @param {number} lastFrameAlpha-used when the motion blur is turned on, the alpha value blended with the previous frame, the larger the value, the more obvious the trail. Default value: 0.7.
+     * @param {Array.<number>} position-the translation of the layer.
+     * @param {Array.<number>} rotation-the rotation of the layer.
+     * @param {Array.<number>} scale-The scale of the layer.
+     * @param {boolean} zoomable-whether the layer supports mouse zooming operations. Default value: false.
+     * @param {boolean} panable-Whether the layer supports mouse pan operation. Default value: false.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     modLayer(zLevel, config) {
         this.painter.modLayer(zLevel, config);
@@ -158,10 +158,10 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.addHoverShape
-     * @description 添加额外高亮层显示，仅提供添加方法，每次刷新后高亮层图形均被清空。
+     * @description Add extra highlight layer display, only adding method is provided, the highlight layer graphics will be cleared after each refresh.
      *
-     * @param {Ekmap.LevelRenderer.Shape} shape - 图形对象。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {Ekmap.LevelRenderer.Shape} shape-shape object.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     addHoverShape(shape) {
         this.storage.addHover(shape);
@@ -170,10 +170,10 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.render
-     * @description 渲染。
+     * @description rendering.
      *
-     * @callback {Function} callback - 渲染结束后回调函数。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @callback {Function} callback-callback function after rendering.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     render(callback) {
         this.painter.render(callback);
@@ -183,10 +183,10 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.refresh
-     * @description 视图更新。
+     * @The description view is updated.
      *
-     * @callback {Function} callback - 视图更新后回调函数。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @callback {Function} callback-callback function after the view is updated.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     refresh(callback) {
         this.painter.refresh(callback);
@@ -196,8 +196,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.refreshNextFrame
-     * @description 标记视图在浏览器下一帧需要绘制。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @description marks that the view needs to be drawn in the next frame of the browser.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     refreshNextFrame() {
         this._needsRefreshNextFrame = true;
@@ -206,9 +206,9 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.refreshHover
-     * @description 绘制（视图更新）高亮层。
-     * @callback {Function} callback - 视图更新后回调函数。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @description draw (view update) highlight layer.
+     * @callback {Function} callback-callback function after the view is updated.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     refreshHover(callback) {
         this.painter.refreshHover(callback);
@@ -217,11 +217,11 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.refreshShapes
-     * @description 视图更新。
+     * @description view update.
      *
-     * @param {Array.<Ekmap.LevelRenderer.Shape>} shapeList - 需要更新的图形列表。
-     * @callback {Function} callback - 视图更新后回调函数。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {Array.<Ekmap.LevelRenderer.Shape>} shapeList-The shape list that needs to be updated.
+     * @callback {Function} callback-callback function after the view is updated.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     refreshShapes(shapeList, callback) {
         this.painter.refreshShapes(shapeList, callback);
@@ -230,8 +230,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.resize
-     * @description 调整视图大小。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @description Adjust the size of the view.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     resize() {
         this.painter.resize();
@@ -240,22 +240,22 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.animate
-     * @description 动画。
+     * @description animation.
      *
      * @example
-     *     zr.animate(circle.id, 'style', false)
-     *         .when(1000, {x: 10} )
-     *         .done(function(){ // Animation done })
-     *         .start()
-     * 
+     * zr.animate(circle.id,'style', false)
+     * .when(1000, {x: 10})
+     * .done(function(){ // Animation done })
+     * .start()
      *
-     * @param {Array.<(Ekmap.LevelRenderer.Shape/Ekmap.LevelRenderer.Group)>} el - 动画对象。
-     * @param {string} path - 需要添加动画的属性获取路径，可以通过 a.b.c 来获取深层的属性。若传入对象为<Ekmap.LevelRenderer.Group>,path需为空字符串。
-     * @param {Function} loop - 动画是否循环。
-     * @return {Ekmap.LevelRenderer.animation.Animator} Animator。
+     *
+     * @param {Array.<(Ekmap.LevelRenderer.Shape/Ekmap.LevelRenderer.Group)>} el-animation object.
+     * @param {string} path-Need to add animation attributes to get the path, you can get deep attributes through a.b.c. If the incoming object is <Ekmap.LevelRenderer.Group>, path must be an empty string.
+     * @param {Function} loop-Whether the animation loops.
+     * @return {Ekmap.LevelRenderer.animation.Animator} Animator.
      */
     animate(el, path, loop) {
-        if (typeof(el) === 'string') {
+        if (typeof(el) ==='string') {
             el = this.storage.get(el);
         }
         if (el) {
@@ -263,7 +263,7 @@ export class Render {
             if (path) {
                 var pathSplitted = path.split('.');
                 var prop = el;
-                for (var i = 0, l = pathSplitted.length; i < l; i++) {
+                for (var i = 0, l = pathSplitted.length; i <l; i++) {
                     if (!prop) {
                         continue;
                     }
@@ -278,17 +278,17 @@ export class Render {
 
             if (!target) {
                 SUtil.Util_log(
-                    'Property "' +
+                    'Property "'+
                     path +
-                    '" is not existed in element ' +
+                    '" is not existed in element '+
                     el.id
                 );
                 return;
             }
 
             var animatingElements = this.animatingElements;
-            if (typeof el.__aniCount === 'undefined') {
-                // 正在进行的动画记数
+            if (typeof el.__aniCount ==='undefined') {
+                // Count of ongoing animation
                 el.__aniCount = 0;
             }
             if (el.__aniCount === 0) {
@@ -296,11 +296,11 @@ export class Render {
             }
             el.__aniCount++;
 
-            return this.animation.animate(target, { loop: loop })
+            return this.animation.animate(target, {loop: loop })
                 .done(function() {
                     el.__aniCount--;
                     if (el.__aniCount === 0) {
-                        // 从animatingElements里移除
+                        // Remove from animatedElements
                         var idx = new Util().indexOf(animatingElements, el);
                         animatingElements.splice(idx, 1);
                     }
@@ -312,7 +312,7 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.clearAnimation
-     * @description 停止所有动画。
+     * @description Stop all animations.
      *
      */
     clearAnimation() {
@@ -321,8 +321,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.getWidth
-     * @description 获取视图宽度。
-     * @return {number} 视图宽度。
+     * @description Get the width of the view.
+     * @return {number} View width.
      */
     getWidth() {
         return this.painter.getWidth();
@@ -330,8 +330,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.getHeight
-     * @description 获取视图高度。
-     * @return {number} 视图高度。
+     * @description Get the height of the view.
+     * @return {number} The height of the view.
      */
     getHeight() {
         return this.painter.getHeight();
@@ -339,12 +339,12 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.toDataURL
-     * @description 图像导出。
+     * @description Image export.
      *
-     * @param {string} type - 类型。
-     * @param {string} backgroundColor - 背景色，默认值："#FFFFFF"。
-     * @param {string} args - 参数。
-     * @return {string} 图片的 Base64 url。
+     * @param {string} type-type.
+     * @param {string} backgroundColor-background color, default value: "#FFFFFF".
+     * @param {string} args-parameters.
+     * @return {string} The Base64 url ​​of the image.
      */
     toDataURL(type, backgroundColor, args) {
         return this.painter.toDataURL(type, backgroundColor, args);
@@ -352,12 +352,11 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.shapeToImage
-     * @description 将常规 shape 转成 image shape。
+     * @description converts regular shape to image shape.
      *
-     * @param {Ekmap.LevelRenderer.Shape} e - 图形。
-     * @param {number} width - 宽度。
-     * @param {number} height - 高度。
-     * @return {Object} image shape。
+     * @param {Ekmap.LevelRenderer.Shape} e-graphics.* @param {number} width-width.
+     * @param {number} height-height.
+     * @return {Object} image shape.
      */
     shapeToImage(e, width, height) {
         var id = CommonUtil.createUniqueID("Ekmap.LevelRenderer.ToImage_");
@@ -366,11 +365,11 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.on
-     * @description 事件绑定。
+     * @description event binding.
      *
-     * @param {string} eventName - 事件名称。
-     * @param {Function} eventHandler - 响应函数。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {string} eventName-the name of the event.
+     * @param {Function} eventHandler-response function.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     on(eventName, eventHandler) {
         this.handler.on(eventName, eventHandler);
@@ -379,11 +378,11 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.un
-     * @description 事件解绑定，参数为空则解绑所有自定义事件。
+     * @description event unbind, if the parameter is empty, all custom events will be unbound.
      *
-     * @param {string} eventName - 事件名称。
-     * @param {Function} eventHandler - 响应函数。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {string} eventName-the name of the event.
+     * @param {Function} eventHandler-response function.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     un(eventName, eventHandler) {
         this.handler.un(eventName, eventHandler);
@@ -392,11 +391,11 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.trigger
-     * @description  事件触发。
+     * @description event is triggered.
      *
-     * @param {string} eventName - 事件名称，resize，hover，drag，etc。
-     * @param {event} event - event dom事件对象。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {string} eventName-event name, resize, hover, drag, etc.
+     * @param {event} event-event dom event object.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     trigger(eventName, event) {
         this.handler.trigger(eventName, event);
@@ -406,8 +405,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.clear
-     * @description 清除当前 Render 下所有类图的数据和显示，clear 后 MVC 和已绑定事件均还存在在，Render 可用。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @description Clear the data and display of all class diagrams under the current Render. After clear, the MVC and bound events still exist, and Render is available.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     clear() {
         this.storage.delRoot();
@@ -417,7 +416,7 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.dispose
-     * @description 释放当前 Render 实例（删除包括 dom，数据、显示和事件绑定），dispose后 Render 不可用。
+     * @description releases the current Render instance (deletes including dom, data, display and event bindings). Render is unavailable after dispose.
      */
     dispose() {
         this.animation.stop();
@@ -433,18 +432,18 @@ export class Render {
         this.painter = null;
         this.handler = null;
 
-        // 释放后告诉全局删除对自己的索引，没想到啥好方法
+        // After the release, tell the global to delete the index to yourself, but I didn't think of a good way
         // zrender.delInstance(this.id);
 
     }
 
-    // SMIC-方法扩展 - start
+    // SMIC-Method Extension-start
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.updateHoverShapes
-     * @description 更新设置显示高亮图层。
+     * @description Update the settings to display the highlighted layer.
      *
-     * @param {Array.<Ekmap.LevelRenderer.Shape>} shapes - 图形数组。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @param {Array.<Ekmap.LevelRenderer.Shape>} shapes-shape array.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     updateHoverShapes(shapes) {
         this.painter.updateHoverLayer(shapes);
@@ -453,8 +452,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.getAllShapes
-     * @description 获取所有图形。
-     * @return {Array.<Ekmap.LevelRenderer.Shape>} 图形数组。
+     * @description Get all graphics.
+     * @return {Array.<Ekmap.LevelRenderer.Shape>} graphics array.
      */
     getAllShapes() {
         return this.storage._shapeList;
@@ -462,8 +461,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.clearAll
-     * @description 清除高亮和图形图层。
-     * @return {Ekmap.LevelRenderer.Render} this。
+     * @description Clear highlight and graphic layers.
+     * @return {Ekmap.LevelRenderer.Render} this.
      */
     clearAll() {
         this.clear();
@@ -473,8 +472,8 @@ export class Render {
 
     /**
      * @function Ekmap.LevelRenderer.Render.prototype.getHoverOne
-     * @description 获取单个高亮图形，当前鼠标对应。
-     * @return {Ekmap.LevelRenderer.Shape} 高亮图形。
+     * @description Get a single highlighted graphic, corresponding to the current mouse.
+     * @return {Ekmap.LevelRenderer.Shape} highlight the shape.
      */
     getHoverOne() {
         return this.handler.getLastHoverOne();
@@ -484,9 +483,9 @@ export class Render {
         return function() {
             var animatingElements = renderInstance.animatingElements;
 
-            //animatingElements instanceof Array 临时解决 destory 报错
+            //animatingElements instanceof Array temporarily solves the destruction error
             if (animatingElements instanceof Array) {
-                for (var i = 0, l = animatingElements.length; i < l; i++) {
+                for (var i = 0, l = animatingElements.length; i <l; i++) {
                     renderInstance.storage.mod(animatingElements[i].id);
                 }
 
@@ -497,7 +496,5 @@ export class Render {
         };
     }
 
-    // SMIC-方法扩展 - end
-
-
+    // SMIC-Method Extension-end
 }

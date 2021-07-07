@@ -1,88 +1,67 @@
-/* Copyright© 2000 - 2020 Ekmap Software Co.Ltd. All rights reserved.
- * This program are made available under the terms of the Apache License, Version 2.0
- * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.html.*/
 import { Shape } from './Shape';
 import { SmicPolygon } from './SmicPolygon';
 import { SUtil } from './SUtil';
 
-/**
- * @private
- * @class  Ekmap.LevelRenderer.Shape.SmicBrokenLine
- * @category Visualization Theme
- * @classdesc 折线(ic)。
- * @extends Ekmap.LevelRenderer.Shape
- * @example
- *   var shape = new Ekmap.LevelRenderer.Shape.SmicBrokenLine({
- *         style: {
- *             pointList: [[0, 0], [100, 100], [100, 0]],
- *             smooth: 'bezier',
- *             strokeColor: 'purple'
- *         }
- *   });
- *   levelRenderer.addShape(shape);
- * 
- *
- */
 export class SmicBrokenLine extends Shape {
 
     /**
      * @member {Object} Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.style
-     * @description 绘制样式。
+     * @description drawing style.
      *
-     * @param {Array} pointList - 节点数组，二维数组。默认值：null，必设参数。其形式如下：
+     * @param {Array} pointList-node array, two-dimensional array. Default value: null, parameter is required. Its form is as follows:
      * (code)
      * (start code)
-     *  [
-     *  [10, 20],         //单个节点
-     *  [30, 40],
-     *  [25, 30]
-     *   ]
+     * [
+     * [10, 20], //Single node
+     * [30, 40],
+     * [25, 30]
+     *]
      * (end)
-     * @param {string} smooth - 是否做平滑插值, 平滑算法可以选择 "bezier", "spline"。默认值："";
-     * @param {number} smoothConstraint - 平滑约束。
-     * @param {string} strokeColor - 描边颜色。默认值："#000000'"。
-     * @param {string} lineCape - 线帽样式。可设值："butt", "round", "square"。默认值："butt"。
-     * @param {number} lineWidth - 描边宽度。默认值：1。
-     * @param {number} opacity - 绘制透明度。默认值：1。
-     * @param {number} shadowBlur - 阴影模糊度，大于0有效。默认值：0。
-     * @param {number} shadowColor - 阴影颜色。默认值："#000000'"。
-     * @param {number} shadowOffsetX - 阴影横向偏移。默认值：0。
-     * @param {number} shadowOffsetY - 阴影纵向偏移。默认值：0。
-     * @param {string} text - 图形中的附加文本。默认值：""。
-     * @param {string} textColor - 文本颜色。默认值："#000000'"。
-     * @param {string} textFont - 附加文本样式。示例:'bold 18px verdana'。
-     * @param {string} textPosition - 附加文本位置。可设值："inside", "left", "right", top", "bottom", "end"。默认值："end"。
-     * @param {string} textAlign - 附加文本水平对齐。可设值："start", "end", "left", "right", "center"。默认根据 textPosition 自动设置。
-     * @param {string} textBaseline - 附加文本垂直对齐。可设值："top", "bottom", "middle", "alphabetic", "hanging", "ideographic"。默认根据 textPosition 自动设置。
+     * @param {string} smooth-Whether to do smooth interpolation, the smoothing algorithm can be "bezier", "spline". Defaults:"";
+     * @param {number} smoothConstraint-smoothing constraint.
+     * @param {string} strokeColor-stroke color. Default value: "#000000'".
+     * @param {string} lineCape-line cap style. Possible settings: "butt", "round", "square". Default value: "butt".
+     * @param {number} lineWidth-stroke width. Default value: 1.
+     * @param {number} opacity-draw transparency. Default value: 1.
+     * @param {number} shadowBlur-shadow blur degree, greater than 0 is valid. Default value: 0.
+     * @param {number} shadowColor-the color of the shadow. Default value: "#000000'".
+     * @param {number} shadowOffsetX-the horizontal offset of the shadow. Default value: 0.
+     * @param {number} shadowOffsetY-The shadow offset in the vertical direction. Default value: 0.
+     * @param {string} text-additional text in the graphic. Defaults:"".
+     * @param {string} textColor-text color. Default value: "#000000'".
+     * @param {string} textFont-additional text style. Example:'bold 18px verdana'.
+     * @param {string} textPosition-additional text position. Possible settings: "inside", "left", "right", top", "bottom", "end". Default value: "end".
+     * @param {string} textAlign-The horizontal alignment of the additional text. Possible values: "start", "end", "left", "right", "center". By default, it is automatically set according to textPosition.
+     * @param {string} textBaseline-The additional text is aligned vertically. Possible settings: "top", "bottom", "middle", "alphabetic", "hanging", "ideographic". By default, it is automatically set according to textPosition.
      */
-    //打开接口 style
+    //Open the interface style
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicBrokenLine.constructor
-     * @description 构造函数。
+     * @description Constructor.
      *
-     * @param {Array} options - shape 的配置（options）项，可以是 shape 的自有属性，也可以是自定义的属性。
+     * @param {Array} options-The configuration (options) item of shape, which can be the own attribute of shape or a custom attribute.
      *
      */
     constructor(options) {
         super(options);
         /**
-         * @member {string}  Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.brushTypeOnly
-         * @description 线条只能描边。
+         * @member {string} Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.brushTypeOnly
+         * @description Lines can only be stroked.
          */
-        this.brushTypeOnly = 'stroke';
+        this.brushTypeOnly ='stroke';
 
         /**
          * @member {string} Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.textPosition
-         * @description 文本位置。
+         * @description text position.
          */
-        this.textPosition = 'end';
+        this.textPosition ='end';
 
         /**
          * @member {string} Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.type
-         * @description 图形类型.
+         * @description Graphic type.
          */
-        this.type = 'smicbroken-line';
+        this.type ='smicbroken-line';
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {
             this.refOriginalPosition = [0, 0];
         }
@@ -93,7 +72,7 @@ export class SmicBrokenLine extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.destroy
-     * @description 销毁对象，释放资源。调用此函数后所有属性将被置为 null。
+     * @description destroys the object and releases resources. All properties will be set to null after calling this function.
      */
     destroy() {
         this.brushTypeOnly = null;
@@ -106,10 +85,10 @@ export class SmicBrokenLine extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.buildPath
-     * @description 创建折线路径。
+     * @description creates a polyline path.
      *
-     * @param {CanvasRenderingContext2D} ctx - Context2D 上下文。
-     * @param {Object} style - style。
+     * @param {CanvasRenderingContext2D} ctx-Context2D context.
+     * @param {Object} style-style.
      *
      */
     buildPath(ctx, style) {
@@ -120,21 +99,21 @@ export class SmicBrokenLine extends Shape {
         var __OP = this.refOriginalPosition;
 
         var pointList = style.pointList;
-        if (pointList.length < 2) {
-            // 少于2个点就不画了~
+        if (pointList.length <2) {
+            // Don't draw less than 2 points~
             return;
         }
 
         var len = Math.min(style.pointList.length, Math.round(style.pointListLength || style.pointList.length));
 
-        if (style.smooth && style.smooth !== 'spline') {
+        if (style.smooth && style.smooth !=='spline') {
             var controlPoints = SUtil.SUtil_smoothBezier(pointList, style.smooth, false, style.smoothConstraint, __OP);
 
             ctx.moveTo(pointList[0][0] + __OP[0], pointList[0][1] + __OP[1]);
             var cp1;
             var cp2;
             var p;
-            for (let i = 0; i < len - 1; i++) {
+            for (let i = 0; i <len-1; i++) {
                 cp1 = controlPoints[i * 2];
                 cp2 = controlPoints[i * 2 + 1];
                 p = [pointList[i + 1][0] + __OP[0], pointList[i + 1][1] + __OP[1]];
@@ -143,28 +122,28 @@ export class SmicBrokenLine extends Shape {
                 );
             }
         } else {
-            if (style.smooth === 'spline') {
+            if (style.smooth ==='spline') {
                 pointList = SUtil.SUtil_smoothSpline(pointList, null, null, __OP);
                 len = pointList.length;
             }
-            if (!style.lineType || style.lineType === 'solid') {
-                // 默认为实线
+            if (!style.lineType || style.lineType ==='solid') {
+                // The default is a solid line
                 ctx.moveTo(pointList[0][0] + __OP[0], pointList[0][1] + __OP[1]);
-                for (let i = 1; i < len; i++) {
+                for (let i = 1; i <len; i++) {
                     ctx.lineTo(pointList[i][0] + __OP[0], pointList[i][1] + __OP[1]);
                 }
-            } else if (style.lineType === 'dashed' ||
-                style.lineType === 'dotted' ||
-                style.lineType === 'dot' ||
-                style.lineType === 'dash' ||
-                style.lineType === 'longdash'
+            } else if (style.lineType ==='dashed' ||
+                style.lineType ==='dotted' ||
+                style.lineType ==='dot' ||
+                style.lineType ==='dash' ||
+                style.lineType ==='longdash'
             ) {
                 let dashLength = (style.lineWidth || 1);
                 let pattern1 = dashLength;
                 let pattern2 = dashLength;
 
                 //dashed
-                if (style.lineType === 'dashed') {
+                if (style.lineType ==='dashed') {
                     pattern1 *= 5;
                     pattern2 *= 5;
                     if (style.lineCap && style.lineCap !== "butt") {
@@ -174,7 +153,7 @@ export class SmicBrokenLine extends Shape {
                 }
 
                 //dotted
-                if (style.lineType === 'dotted') {
+                if (style.lineType ==='dotted') {
                     if (style.lineCap && style.lineCap !== "butt") {
                         pattern1 = 1;
                         pattern2 += dashLength;
@@ -182,7 +161,7 @@ export class SmicBrokenLine extends Shape {
                 }
 
                 //dot
-                if (style.lineType === 'dot') {
+                if (style.lineType ==='dot') {
                     pattern2 *= 4;
                     if (style.lineCap && style.lineCap !== "butt") {
                         pattern1 = 1;
@@ -191,7 +170,7 @@ export class SmicBrokenLine extends Shape {
                 }
 
                 //dash
-                if (style.lineType === 'dash') {
+                if (style.lineType ==='dash') {
                     pattern1 *= 4;
                     pattern2 *= 4;
                     if (style.lineCap && style.lineCap !== "butt") {
@@ -201,7 +180,7 @@ export class SmicBrokenLine extends Shape {
                 }
 
                 //longdash
-                if (style.lineType === 'longdash') {
+                if (style.lineType ==='longdash') {
                     pattern1 *= 8;
                     pattern2 *= 4;
                     if (style.lineCap && style.lineCap !== "butt") {
@@ -211,16 +190,16 @@ export class SmicBrokenLine extends Shape {
                 }
 
                 ctx.moveTo(pointList[0][0] + __OP[0], pointList[0][1] + __OP[1]);
-                for (var i = 1; i < len; i++) {
+                for (var i = 1; i <len; i++) {
                     SUtil.SUtil_dashedLineTo(
                         ctx,
-                        pointList[i - 1][0] + __OP[0], pointList[i - 1][1] + __OP[1],
+                        pointList[i-1][0] + __OP[0], pointList[i-1][1] + __OP[1],
                         pointList[i][0] + __OP[0], pointList[i][1] + __OP[1],
                         dashLength, [pattern1, pattern2]
                     );
                 }
-            } else if (style.lineType === 'dashdot' ||
-                style.lineType === 'longdashdot'
+            } else if (style.lineType ==='dashdot' ||
+                style.lineType ==='longdashdot'
             ) {
                 let dashLength = (style.lineWidth || 1);
                 let pattern1 = dashLength;
@@ -229,7 +208,7 @@ export class SmicBrokenLine extends Shape {
                 let pattern4 = dashLength;
 
                 //dashdot
-                if (style.lineType === 'dashdot') {
+                if (style.lineType ==='dashdot') {
                     pattern1 *= 4;
                     pattern2 *= 4;
                     pattern4 *= 4;
@@ -242,7 +221,7 @@ export class SmicBrokenLine extends Shape {
                 }
 
                 //longdashdot
-                if (style.lineType === 'longdashdot') {
+                if (style.lineType ==='longdashdot') {
                     pattern1 *= 8;
                     pattern2 *= 4;
                     pattern4 *= 4;
@@ -255,12 +234,12 @@ export class SmicBrokenLine extends Shape {
                 }
 
                 dashLength = (style.lineWidth || 1) *
-                    (style.lineType === 'dashed' ? 5 : 1);
+                    (style.lineType ==='dashed'? 5: 1);
                 ctx.moveTo(pointList[0][0] + __OP[0], pointList[0][1] + __OP[1]);
-                for (let i = 1; i < len; i++) {
+                for (let i = 1; i <len; i++) {
                     SUtil.SUtil_dashedLineTo(
                         ctx,
-                        pointList[i - 1][0] + __OP[0], pointList[i - 1][1] + __OP[1],
+                        pointList[i-1][0] + __OP[0], pointList[i-1][1] + __OP[1],
                         pointList[i][0] + __OP[0], pointList[i][1] + __OP[1],
                         dashLength, [pattern1, pattern2, pattern3, pattern4]
                     );
@@ -274,10 +253,10 @@ export class SmicBrokenLine extends Shape {
 
     /**
      * @function Ekmap.LevelRenderer.Shape.SmicBrokenLine.prototype.getRect
-     * @description 计算返回折线包围盒矩形。该包围盒是直接从四个控制点计算，并非最小包围盒。
+     * @description The calculation returns the bounding box rectangle of the polyline. The bounding box is calculated directly from the four control points, not the minimum bounding box.
      *
-     * @param {Object} style - style
-     * @return {Object} 边框对象。包含属性：x，y，width，height。
+     * @param {Object} style-style
+     * @return {Object} Border object. Contains attributes: x, y, width, height.
      */
     getRect(style) {
         if (!this.refOriginalPosition || this.refOriginalPosition.length !== 2) {

@@ -233,3 +233,11 @@
     border-radius: 5px;
     color: #333;
 }
+
+.mapboxgl-ctrl-bottom-right .mapbox-control-Pitch {
+  margin-right: 35px !important;
+}
+
+.mapboxgl-ctrl-top-right .mapbox-control-Pitch {
+  margin-right: 35px !important;
+}
