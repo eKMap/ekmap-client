@@ -115,7 +115,7 @@
         query();
 
         function query() {
-            $.get("../data/echarts_lineMarker.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/echarts_lineMarker.json", function(response) {
                 var features = response.features;
                 L.geoJSON(features, {
                         pointToLayer: function(feature, latlng) {

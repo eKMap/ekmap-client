@@ -68,7 +68,7 @@
                 map.addImage('positionRaint', image);
             });
             //Source: KTTV
-            $.get("../data/weather/rain.json ", function (response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/weather/rain.json ", function (response) {
                 map.addLayer({
                     "id": "rain",
                     "type": "symbol",

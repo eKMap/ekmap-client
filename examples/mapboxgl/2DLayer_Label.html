@@ -122,7 +122,7 @@
 
             var features = [];
             //https://moitruongthudo.vn/
-            $.get("../data/nhietDoHN.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/nhietDoHN.json", function(response) {
                 response.forEach(province => {
                     var lng = province.longtitude;
                     var lat = province.latitude;

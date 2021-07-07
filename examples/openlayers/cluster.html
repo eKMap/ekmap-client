@@ -42,7 +42,7 @@
             token: tokenVN
         }).addTo(map)
         //Data Source: https://ncov.moh.gov.vn/ban-do-vn
-        $.get("../data/covid_boyte.json", function (response) {
+        $.get("https://demo.ekgis.vn/ekmapsdks/data/covid_boyte.json", function (response) {
             var geojson = response.data;
             var features = []
             geojson.forEach(element => {

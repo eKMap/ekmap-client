@@ -67,7 +67,7 @@
         query();
 
         function query() {
-            $.get("../data/echarts_lineMarker.json", function (response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/echarts_lineMarker.json", function (response) {
                 map.addLayer({
                     "id": "points",
                     "type": "symbol",

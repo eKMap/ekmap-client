@@ -376,7 +376,7 @@
                 }
             })
         })
-        d3.json('../data/covid-data.json', function (response) {
+        d3.json('https://demo.ekgis.vn/ekmapsdks/data/covid-data.json', function (response) {
             listData = response;
             widgets.loader.removeLoader();
             interval = setInterval(function () {

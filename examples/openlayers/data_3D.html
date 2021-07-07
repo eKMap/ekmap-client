@@ -122,7 +122,7 @@
                 'ten': 'B',
                 'mau': 'blue'
             }];
-            $.get("../data/3d_buildings.json", function (response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/3d_buildings.json", function (response) {
                 map.addSource('floorplan', {
                     'type': 'geojson',
                     'data': response

@@ -184,7 +184,7 @@
             <div class="container containerImg">
                 <div class="row" style="height: 100%;">
                     <div class="col-md-12" style="height: 100%;">
-                        <img class="imgSelected" src="../data/Tourism/tranquoc.jpg" id='imgSelected'>
+                        <img class="imgSelected" src="https://demo.ekgis.vn/ekmapsdks/data/Tourism/tranquoc.jpg" id='imgSelected'>
                     </div>
                     <div class="col-md-12" id="placardContainer"
                         style="height: auto; top: auto; left: 0px;  display: block; padding: 0px;">
@@ -251,7 +251,7 @@
                     iconCollapse.setAttribute('class', 'fa fa-chevron-down');
             }
 
-            $.get('../data/Tourism/data_tour.json', function (response) {
+            $.get('https://demo.ekgis.vn/ekmapsdks/data/Tourism/data_tour.json', function (response) {
                 features = response.features;
                 var divItem = document.createElement('div');
                 caroselInner = document.getElementById('caroselInner');

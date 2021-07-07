@@ -153,7 +153,7 @@
         var vnMap = new ol.ekmap.TiledVietNamMapLayer({
             token: tokenVN
         }).addTo(map)
-        $.get("../data/water_quality.json", function(response) {
+        $.get("https://demo.ekgis.vn/ekmapsdks/data/water_quality.json", function(response) {
             features = response.features;
         }).done(function() {
             createDomLayer('pie', ['#008000', '#ffa500', '#ff0000', '#0000ff']);

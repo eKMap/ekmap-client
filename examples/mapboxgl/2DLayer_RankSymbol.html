@@ -76,7 +76,7 @@
                 compact: false
             }));
             var features = [];
-            $.get("../data/Buffer_Covid.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/Buffer_Covid.json", function(response) {
                 var provinces = response.provinces;
                 provinces.forEach(province => {
                     var confirmed = province.Confirmed;

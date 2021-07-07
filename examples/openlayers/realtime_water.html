@@ -113,7 +113,7 @@
             token: tokenVN
         }).addTo(map);
         widgets.loader.showLoader("data loading...");
-        $.get("../data/water/dma.json", function(response) {
+        $.get("https://demo.ekgis.vn/ekmapsdks/data/water/dma.json", function(response) {
             var listData = response.features;
             var features = [];
             var layer;

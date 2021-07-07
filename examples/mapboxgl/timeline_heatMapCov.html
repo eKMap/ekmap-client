@@ -117,7 +117,7 @@
 
         for (var i = 0; i < 144; i++) {
             widgets.loader.showLoader("data loading...");
-            var string = "../data/coranavirus/2020_" + i + ".json"
+            var string = "https://demo.ekgis.vn/ekmapsdks/data/coranavirus/2020_" + i + ".json"
             $.get(string, function (response) {
                 var listdata = response.features;
                 features = [];

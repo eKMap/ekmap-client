@@ -156,12 +156,12 @@
         }
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         map.on('load', function () {
-            map.loadImage('../data/marker.png', function (error, image) {
+            map.loadImage('https://demo.ekgis.vn/ekmapsdks/data/marker.png', function (error, image) {
                 if (error) throw error;
                 map.addImage('positionMarker', image);
             });
             //Source: KTTV
-            $.get("../data/route.json", function (response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/route.json", function (response) {
 
                 map.addSource('route', {
                     'type': 'geojson',
