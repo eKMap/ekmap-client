@@ -112,7 +112,7 @@
             map.addControl(new mapboxgl.NavigationControl(), 'top-left');
             //Data
             select = document.getElementById('mySelect')
-            $.get("../data/data.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/data.json", function(response) {
                 features = response;
                 features.forEach(feature => {
                     var option = document.createElement("option");

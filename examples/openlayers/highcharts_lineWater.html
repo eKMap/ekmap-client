@@ -73,7 +73,7 @@
         ]
 
         function query() {
-            $.get("../data/waterdata.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/waterdata.json", function(response) {
                 dataSource = new ol.source.Vector({
                     features: new ol.format.GeoJSON().readFeatures(response),
                 });
@@ -83,7 +83,7 @@
                 });
                 map.addLayer(featureLayers)
             })
-            $.get("../data/water/p.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/water/p.json", function(response) {
                 response.forEach(feature => {
                     dataP.push(feature.value)
                     datatime.push(feature.datatime)
@@ -92,7 +92,7 @@
                 count++;
                 startHightChart();
             })
-            $.get("../data/water/q.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/water/q.json", function(response) {
                 response.forEach(feature => {
                     dataQ.push(feature.value)
                 });

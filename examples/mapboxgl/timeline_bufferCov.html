@@ -189,7 +189,7 @@
             date = [];
         widgets.loader.showLoader("data loading...");
         for (var i = 0; i < 144; i++) {
-            $.get("../data/coranavirus/2020_" + i + ".json", function (response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/coranavirus/2020_" + i + ".json", function (response) {
                 var dataLayer = [];
                 var covid = response.features;
                 date.push(response.date);

@@ -274,7 +274,7 @@
         }
 
         function query() {
-            $.get("../data/echarts_pie.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/echarts_pie.json", function(response) {
                 dataSource = new ol.source.Vector({
                     features: new ol.format.GeoJSON().readFeatures(response),
                 });

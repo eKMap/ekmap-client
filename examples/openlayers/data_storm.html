@@ -362,23 +362,23 @@
             })
         });
 
-        // map.loadImage('../data/ATND_DaDiQua.png', function(error, image) {
+        // map.loadImage('https://demo.ekgis.vn/ekmapsdks/data/ATND_DaDiQua.png', function(error, image) {
         //     if (error) throw error;
         //     map.addImage('positionPointDQ', image);
         // });
-        // map.loadImage('../data/ApThap_DuBao.png', function(error, image) {
+        // map.loadImage('https://demo.ekgis.vn/ekmapsdks/data/ApThap_DuBao.png', function(error, image) {
         //     if (error) throw error;
         //     map.addImage('positionPointDB', image);
         // });
-        // map.loadImage('../data/ATND_HT.png', function(error, image) {
+        // map.loadImage('https://demo.ekgis.vn/ekmapsdks/data/ATND_HT.png', function(error, image) {
         //     if (error) throw error;
         //     map.addImage('positionPointHT', image);
         // });
-        // map.loadImage('../data/Bao_DaDiQua.png', function(error, image) {
+        // map.loadImage('https://demo.ekgis.vn/ekmapsdks/data/Bao_DaDiQua.png', function(error, image) {
         //     if (error) throw error;
         //     map.addImage('positionPointBM', image);
         // });
-        // map.loadImage('../data/Bao_HT.png', function(error, image) {
+        // map.loadImage('https://demo.ekgis.vn/ekmapsdks/data/Bao_HT.png', function(error, image) {
         //     if (error) throw error;
         //     map.addImage('positionPointBHT', image);
         // });
@@ -390,7 +390,7 @@
         var layerImage;
         layerImage = new ol.layer.Image({
             source: new ol.source.ImageStatic({
-                url: '../data/storm.jpg',
+                url: 'https://demo.ekgis.vn/ekmapsdks/data/storm.jpg',
                 imageExtent: [94.9918863632, -4.93329949898, 139.923662363, 39.998476501],
             })
         })
@@ -399,7 +399,7 @@
         document.getElementById('checkbox').checked = true;
 
         //Source Data: https://nchmf.gov.vn/ 
-        $.get("../data/storm.json", function(response) {
+        $.get("https://demo.ekgis.vn/ekmapsdks/data/storm.json", function(response) {
             response.forEach(feature => {
                 features.push({
                     'type': 'Feature',
@@ -425,7 +425,7 @@
                 })
             })
         }).done(function() {
-            $.get("../data/data_draw_storm.json", function(data) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/data_draw_storm.json", function(data) {
                 var arr = [];
                 var arrFeature = [];
                 data.forEach(element => {
@@ -832,7 +832,7 @@
             if (checkbox) {
                 layerImage = new ol.layer.Image({
                     source: new ol.source.ImageStatic({
-                        url: '../data/storm.jpg',
+                        url: 'https://demo.ekgis.vn/ekmapsdks/data/storm.jpg',
                         imageExtent: [94.9918863632, -4.93329949898, 139.923662363, 39.998476501],
                     })
                 })

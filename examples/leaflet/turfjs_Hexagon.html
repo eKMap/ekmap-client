@@ -115,7 +115,7 @@
             var listPoint = [];
             var hex;
             var fea = [];
-            $.get('../data/hanoi.json', function(response) {
+            $.get('https://demo.ekgis.vn/ekmapsdks/data/hanoi.json', function(response) {
                 var features = response.features;
                 features.forEach(fea => {
                     listPoint.push(fea.geometry.coordinates)

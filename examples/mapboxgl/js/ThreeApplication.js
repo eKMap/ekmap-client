@@ -36,7 +36,7 @@ var SceneBuilder = {
         var manager, slowLoopIntervalId, is3DDataLoaded = false;
 
         function loadData(onComplete) {
-            var url = '../data/ThreeBuildingData.json';
+            var url = 'https://demo.ekgis.vn/ekmapsdks/data/ThreeBuildingData.json';
             $.ajax({
                 dataType: 'json',
                 url: url,

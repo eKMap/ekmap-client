@@ -134,7 +134,7 @@
         }).addTo(map);
 
         //Source: KTTV
-        $.get("../data/weather/rain.json ", function(response) {
+        $.get("https://demo.ekgis.vn/ekmapsdks/data/weather/rain.json ", function(response) {
             var features = response.features;
             var listFeatures = []
             features.forEach(feature => {

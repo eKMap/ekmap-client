@@ -73,7 +73,7 @@
         var features = [];
         var hoveredStateId = null;
 
-        $.get("../data/Buffer_Covid.json", function (response) {
+        $.get("https://demo.ekgis.vn/ekmapsdks/data/Buffer_Covid.json", function (response) {
             var provinces = response.provinces
             provinces.forEach(province => {
                 var point = turf.point([province.Long, province.Lat]);

@@ -56,7 +56,7 @@
             }).addTo(map)
             
             //Data Source: https://namdinh.gov.vn/sothongtintruyenthong/1223/28318/44734/101964/Danh-sach-tram-BTS/Danh-sach-tram-BTS-kiem-dinh-nam-2018--Viettel-.aspx 
-            $.get("../data/heatmapBTS.json", function (response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/heatmapBTS.json", function (response) {
                 var features = [];
                 var listdata = response[0]
                 for (var i = 2; i < listdata.length; i++) {

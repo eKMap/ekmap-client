@@ -41,7 +41,7 @@
         map.on('load', function() {
             var me = this;
             //Source: http://vnmha.gov.vn/
-            $.get("../data/weather/temp_rain.json", function(response) {
+            $.get("https://demo.ekgis.vn/ekmapsdks/data/weather/temp_rain.json", function(response) {
                 var features = response.features
                 var theme = new mapboxgl.ekmap.ThemeMapLayer().addTo(map);
                 theme.addFeatures(features)
