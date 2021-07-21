@@ -91,8 +91,6 @@ export class Compass extends mapboxgl.Evented {
     this.map = undefined;
   }
 
-  
-
   /**
    * @private
    * @description Create layer input

@@ -70,7 +70,8 @@ export class Select extends mapboxgl.Evented {
                 me.fire('startselect', me);
                 me.offEvent();
                 me.listeners["click"] = me.onClick.bind(me);
-                me.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAABPUlEQVRIS+2WO0/DMBSF700FDGkGFjakzqwNDo8lwf0RrIgV+CNswIpY+RE17cIjVroyV2JjYUgzAKovslCXVI4tZB6qyJqT8zn36pwEwfGqODsExAMi2kXEWyC6CoW8dHkcXURlL06RgkFdS6iyqF8MbR5OkIqzOwLYrpshwH0o5I4XyIQzMhm1hbQe1CrQ5pMeK4CgOwdCGLX7MvbyJuUeO0KE87mdEBxHN/LCC0SblDzZD4BO9G70LhTgWSTyaxtA33cal4tRk+ZvQHQIFcF6/aQBwpOXMJpCOAN6CePiQD6DuHkKBDEApt/aXT9SkP+Q2Q6dEr8Y43rlycYbTtdMn99laj2viPzxywVZZUmXAipsLYwK43CQj0y6xp3YasW1w34f8pJudZZaSv8KdRpGNn6fBtnq8GFs0nwAvqu3Gvgbt74AAAAASUVORK5CYII=")';
+                if(!me.target)
+                    me.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAABPUlEQVRIS+2WO0/DMBSF700FDGkGFjakzqwNDo8lwf0RrIgV+CNswIpY+RE17cIjVroyV2JjYUgzAKovslCXVI4tZB6qyJqT8zn36pwEwfGqODsExAMi2kXEWyC6CoW8dHkcXURlL06RgkFdS6iyqF8MbR5OkIqzOwLYrpshwH0o5I4XyIQzMhm1hbQe1CrQ5pMeK4CgOwdCGLX7MvbyJuUeO0KE87mdEBxHN/LCC0SblDzZD4BO9G70LhTgWSTyaxtA33cal4tRk+ZvQHQIFcF6/aQBwpOXMJpCOAN6CePiQD6DuHkKBDEApt/aXT9SkP+Q2Q6dEr8Y43rlycYbTtdMn99laj2viPzxywVZZUmXAipsLYwK43CQj0y6xp3YasW1w34f8pJudZZaSv8KdRpGNn6fBtnq8GFs0nwAvqu3Gvgbt74AAAAASUVORK5CYII=")';
                 me._map.on('click', me.listeners["click"]);
             } else {
                 cursorDom[0].style.cursor = '';
@@ -81,7 +82,8 @@ export class Select extends mapboxgl.Evented {
                 me.offEvent();
                 me.removeFeature();
                 me.fire('unselect', me);
-                me.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAA6ElEQVRIS+2VsQ4BURBFz/6ETqLW0qDhL7SixY/o0IrWX9CgWa1aovMTZORtI/N2pniRzcZtXrGz9753J3cmw48pMAEGwAnYAVvP75mnCBgCB6V2BBwtDq/IGegpZBegn0rkVUJkXtQsCOQ50FGErkA31UtmwFohmwObVCLCMwYWoTfSixWwtwTku9cuD1e0pjIiEsKmcs1HqjDGQlhoJgljfUTElmUInLzqG0nsKkh/MiD/Ih+7vYmvh11toFGyfp/ArWyCWnbJopKFZUEWlywwFZaINVZcM6wSIq3QCzljuAMyXuRU8Qb/yTEaeeVFEwAAAABJRU5ErkJggg==")';
+                if(!me.target)
+                    me.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAA6ElEQVRIS+2VsQ4BURBFz/6ETqLW0qDhL7SixY/o0IrWX9CgWa1aovMTZORtI/N2pniRzcZtXrGz9753J3cmw48pMAEGwAnYAVvP75mnCBgCB6V2BBwtDq/IGegpZBegn0rkVUJkXtQsCOQ50FGErkA31UtmwFohmwObVCLCMwYWoTfSixWwtwTku9cuD1e0pjIiEsKmcs1HqjDGQlhoJgljfUTElmUInLzqG0nsKkh/MiD/Ih+7vYmvh11toFGyfp/ArWyCWnbJopKFZUEWlywwFZaINVZcM6wSIq3QCzljuAMyXuRU8Qb/yTEaeeVFEwAAAABJRU5ErkJggg==")';
             }
         });
 
