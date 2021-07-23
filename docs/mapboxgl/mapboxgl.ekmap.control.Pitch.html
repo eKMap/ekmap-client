@@ -70,7 +70,7 @@
     <div class="navigationDiv">
     </div>
     <div class="main content-wrapper examples-container">
-        <h1 class="page-title" data-filename="mapboxgl.ekmap.control.SnapShot.html">Class: SnapShot</h1>
+        <h1 class="page-title" data-filename="mapboxgl.ekmap.control.Pitch.html">Class: Pitch</h1>
         
 
 
@@ -78,11 +78,11 @@
 <section>
     
 <header>
-    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a><a href="mapboxgl.ekmap.control.html">.control</a>.</span>SnapShot
+    <h2><span class="ancestors"><a href="mapboxgl.html">mapboxgl</a><a href="mapboxgl.ekmap.html">.ekmap</a><a href="mapboxgl.ekmap.control.html">.control</a>.</span>Pitch
     
     </h2>
     
-        <div class="class-description"><p>SnapShot.</p></div>
+        <div class="class-description"><p>Pitch.</p></div>
     
 </header>  
 
@@ -94,14 +94,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="SnapShot">
+        <h4 class="name" id="Pitch">
             
-            new mapboxgl.ekmap.control.SnapShot<span class="signature">(options)</span>
+            new mapboxgl.ekmap.control.Pitch<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            control/SnapShot.js, line 3
+            control/Pitch.js, line 5
         </div>
         
     </div>
@@ -180,34 +180,7 @@
 	
         <tr>
             
-                <td class="name"><code>target</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-            
-            
-                <td class="default">
-                
-                </td>
-            
-            
-            <td class="description last">
-                
-                <p>Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default.</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>tooltip</code></td>
+                <td class="name"><code>mainColor</code></td>
             
             
             <td class="type">
@@ -222,14 +195,217 @@
             
                 <td class="default">
                 
-                    Snapshot
+                    #fbb03b
                 
                 </td>
             
             
             <td class="description last">
                 
-                <p>Tooltip of button.</p></td>
+                <p>Color of Pitchr lines.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>labelColor</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    #263238
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Color of label.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>secondaryColor</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    #fff
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Color of halo and inner marker background.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fontHalo</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Label font halo size.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>font</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    ['Roboto
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Medium']  Array of fonts.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fontSize</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    12
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Label font size.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>mode</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    'line'
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Available mode names are line and polygon.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>instant</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                <p>Any units <a href="https://github.com/Turfjs/turf/tree/master/packages/turf-distance">@turf/distance</a> supports.</p></td>
         </tr>
 	
 	
@@ -269,6 +445,15 @@
 </dl>
 
     
+    
+    <h5>Fires</h5>
+    <ul>
+        <li>mapboxgl.ekmap.control.Pitch#Pitchr.event:on</li>
+    
+        <li>mapboxgl.ekmap.control.Pitch#Pitchr.event:off</li>
+    
+        <li>mapboxgl.ekmap.control.Pitch#Pitchr.event:change</li>
+    </ul>
     
 
     
@@ -284,7 +469,7 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config....,     preserveDrawingBuffer: true }) map.addControl(new mapboxgl.ekmap.control.SnapShot(),'bottom-right');</code></pre>
+    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config...., }) map.addControl(new mapboxgl.ekmap.control.Pitch(),'top-right'); //target map.addControl(new mapboxgl.ekmap.control.Pitch({     target: // the id attribute of target }));// with miles: map.addControl(new PitchrControl({     units: 'miles' }), 'top-right');// with mode polygon: map.addControl(new PitchrControl({     mode: 'polygon' }), 'top-right');// or var PitchControl = new mapboxgl.ekmap.control.Pitch(); map.addControl(PitchControl); PitchControl.changeMode('polygon')</code></pre>
     
 
     
@@ -294,58 +479,16 @@
     </div>
     
     
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-        <h3 class="subsection-title">Events</h3>
-
-        <dl>
+        <h3 class="subsection-title">Extends</h3>
+        <ul>
             
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="event:aftersnap">
             
-            aftersnap
-        </h4>
-    
-        
-        <div class="tag-source">
-            control/SnapShot.js, line 45
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Fired when after snap.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
+            
+            
+            <li><a href="https://www.mapbox.com/mapbox-gl-js/api/#Evented">mapboxgl.Evented</a></li>
+            
+            
+        </ul>
     
 
     
@@ -357,29 +500,7 @@
     
     
     
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        </dl>
     
 
     
@@ -396,7 +517,7 @@
     
         
         <div class="tag-source">
-            control/SnapShot.js, line 26
+            control/Pitch.js, line 59
         </div>
         
     </div>
@@ -541,7 +662,7 @@
     
         
         <div class="tag-source">
-            control/SnapShot.js, line 58
+            control/Pitch.js, line 107
         </div>
         
     </div>

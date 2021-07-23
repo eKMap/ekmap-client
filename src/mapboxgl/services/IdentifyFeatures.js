@@ -11,6 +11,7 @@ import { Util } from '../core/Util';
  * @param {object} options Construction parameters.
  * @param {string} options.url URL of the ArcGIS service you would like to consume.
  * @param {string} options.token - Will use this token to authenticate all calls to the service.
+ * @param {Array<string>} options.layers=['all'] - List layers use for identify.
  * @example
  * var map = new mapboxgl.Map({
  *      container: 'divMapId',
@@ -34,10 +35,11 @@ export class IdentifyFeatures extends ServiceBase {
         super(options);
         if (options.url)
             this.options = Util.getUrlParams(options);
+        this.layers = this.options.layers != undefined ? 'visible:' + this.options.layers.toString : 'all';
         this.paramsIdentify = {
             geometry: '',
             sr: 4326,
-            layers: 'all',
+            layers: this.layers,
             tolerance: 6,
             returnGeometry: true,
             f: 'json'
@@ -86,7 +88,7 @@ export class IdentifyFeatures extends ServiceBase {
      */
     run(callback, context) {
         var service = new IdentifyFeatures(this.options);
-        return service.request('identify', this.paramsIdentify, function(error, response) {
+        return service.request('identify', this.paramsIdentify, function (error, response) {
             // immediately invoke with an error
 
             callback.call(context, error, response.results);
@@ -102,6 +104,19 @@ export class IdentifyFeatures extends ServiceBase {
         var converted = Util._setGeometry(geometry);
         this.paramsIdentify.geometry = converted.geometry;
         this.paramsIdentify.geometryType = converted.geometryType;
+    }
+
+    /**
+     * @function mapboxgl.ekmap.IdentifyFeatures.prototype.setLayers
+     * @param {Array<string>} layers List layers (if you want to set all layers eg: ['all']).
+     * @description Set list layers for identify.
+     */
+    setLayers(layers) {
+        var layers = layers.toString();
+        if (layers == 'all')
+            this.paramsIdentify.layers = 'all';
+        else
+            this.paramsIdentify.layers = 'visible:' + layers.toString();
     }
 }
 

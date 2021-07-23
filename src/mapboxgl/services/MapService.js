@@ -24,13 +24,6 @@ export class MapService extends ServiceBase {
     constructor(options) {
         super(options);
         this.options = Util.getUrlParams(options);
-        this.paramsIdentify = {
-            geometry: '',
-            sr: 4326,
-            layers: 'all',
-            tolerance: 3,
-            returnGeometry: true
-        };
     }
 
     /**

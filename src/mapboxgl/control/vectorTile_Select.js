@@ -17,6 +17,8 @@ import mapboxgl from 'mapbox-gl';
  * @param {String} options.mode=multi Default select multiple features se and vice versa set mode = 'single'.
  * @param {String} options.tooltip=SelectControl Tooltip of button.
  * @param {String} options.showButton=true Show button control.
+ * @param {Array<string>} options.layers=['all'] - List layers use for identify.
+ * 
  * 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.Select#selectfeatures
@@ -41,6 +43,11 @@ export class Select extends mapboxgl.Evented {
         this.mode = this.options.mode != undefined ? this.options.mode : 'multi';
         this.showPopup = this.options.showPopup != undefined ? this.options.showPopup : false;
         this.listeners = {};
+        this.identify = new mapboxgl.ekmap.IdentifyFeatures({
+            url: this.options.url,
+            token: this.options.token,
+            layers: this.options.layers
+        });
     }
 
     /**
@@ -143,18 +150,23 @@ export class Select extends mapboxgl.Evented {
             throw "Error: Popup is undefined. You need set option 'showPopup' of control.";
     }
 
+    /**
+     * @function mapboxgl.ekmap.control.Select.prototype.setLayers
+     * @param {Array<string>} layers List layers (if you want to set all layers eg: ['all']).
+     * @description Set list layers for identify.
+     */
+    setLayers(layers) {
+        this.identify.setLayers(layers);
+    }
+
     onClick(e) {
         var me = this;
-        var mapService = new mapboxgl.ekmap.MapService({
-            url: me.options.url,
-            token: me.options.token
-        });
         if (this.showPopup) {
             this.popup = new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
                 .addTo(me._map);
         }
-        mapService.identify().on(me._map).at(e.lngLat).run(function (error, obj) {
+        me.identify.on(me._map).at(e.lngLat).run(function (error, obj) {
             /**
              * @event mapboxgl.ekmap.control.Select#selectfeatures
              * @description Fired when the feature is selected.
