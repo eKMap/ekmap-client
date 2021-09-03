@@ -35,7 +35,7 @@ export class IdentifyFeatures extends ServiceBase {
         super(options);
         if (options.url)
             this.options = Util.getUrlParams(options);
-        this.layers = this.options.layers != undefined ? 'visible:' + this.options.layers.toString : 'all';
+        this.layers = this.options.layers != undefined ? 'visible:' + this.options.layers.toString() : 'all';
         this.paramsIdentify = {
             geometry: '',
             sr: 4326,
@@ -44,6 +44,8 @@ export class IdentifyFeatures extends ServiceBase {
             returnGeometry: true,
             f: 'json'
         };
+        console.log(this.paramsIdentify)
+
     }
 
     /**

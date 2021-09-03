@@ -17,7 +17,7 @@ import mapboxgl from 'mapbox-gl';
  * @param {String} options.mode=multi Default select multiple features se and vice versa set mode = 'single'.
  * @param {String} options.tooltip=SelectControl Tooltip of button.
  * @param {String} options.showButton=true Show button control.
- * @param {Array<string>} options.layers=['all'] - List layers use for identify.
+ * @param {Array<string>} options.layers=['all'] List layers use for identify.
  * 
  * 
  * @extends {mapboxgl.Evented}
@@ -57,7 +57,6 @@ export class Select extends mapboxgl.Evented {
      * @returns {HTMLElement}  The control's container element. This should be created by the control and returned by onAdd without being attached to the DOM: the map will insert the control's element into the DOM as necessary.
      */
     onAdd(map) {
-
         this._map = map;
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
@@ -77,7 +76,7 @@ export class Select extends mapboxgl.Evented {
                 me.fire('startselect', me);
                 me.offEvent();
                 me.listeners["click"] = me.onClick.bind(me);
-                if(!me.target)
+                if (!me.target)
                     me.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAABPUlEQVRIS+2WO0/DMBSF700FDGkGFjakzqwNDo8lwf0RrIgV+CNswIpY+RE17cIjVroyV2JjYUgzAKovslCXVI4tZB6qyJqT8zn36pwEwfGqODsExAMi2kXEWyC6CoW8dHkcXURlL06RgkFdS6iyqF8MbR5OkIqzOwLYrpshwH0o5I4XyIQzMhm1hbQe1CrQ5pMeK4CgOwdCGLX7MvbyJuUeO0KE87mdEBxHN/LCC0SblDzZD4BO9G70LhTgWSTyaxtA33cal4tRk+ZvQHQIFcF6/aQBwpOXMJpCOAN6CePiQD6DuHkKBDEApt/aXT9SkP+Q2Q6dEr8Y43rlycYbTtdMn99laj2viPzxywVZZUmXAipsLYwK43CQj0y6xp3YasW1w34f8pJudZZaSv8KdRpGNn6fBtnq8GFs0nwAvqu3Gvgbt74AAAAASUVORK5CYII=")';
                 me._map.on('click', me.listeners["click"]);
             } else {
@@ -89,7 +88,7 @@ export class Select extends mapboxgl.Evented {
                 me.offEvent();
                 me.removeFeature();
                 me.fire('unselect', me);
-                if(!me.target)
+                if (!me.target)
                     me.input.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAA6ElEQVRIS+2VsQ4BURBFz/6ETqLW0qDhL7SixY/o0IrWX9CgWa1aovMTZORtI/N2pniRzcZtXrGz9753J3cmw48pMAEGwAnYAVvP75mnCBgCB6V2BBwtDq/IGegpZBegn0rkVUJkXtQsCOQ50FGErkA31UtmwFohmwObVCLCMwYWoTfSixWwtwTku9cuD1e0pjIiEsKmcs1HqjDGQlhoJgljfUTElmUInLzqG0nsKkh/MiD/Ih+7vYmvh11toFGyfp/ArWyCWnbJopKFZUEWlywwFZaINVZcM6wSIq3QCzljuAMyXuRU8Qb/yTEaeeVFEwAAAABJRU5ErkJggg==")';
             }
         });
@@ -202,6 +201,7 @@ export class Select extends mapboxgl.Evented {
                             },
                         });
                     } else if (feature.geometryType == "esriGeometryPolyline") {
+                        var type = feature.geometry.paths.length == 1 ? "LineString" : "MultiLineString";
                         me._map.addLayer({
                             "id": "selectedEK-" + guid12(),
                             "source": {
@@ -209,8 +209,8 @@ export class Select extends mapboxgl.Evented {
                                 'data': {
                                     'type': 'Feature',
                                     'geometry': {
-                                        'type': 'LineString',
-                                        'coordinates': feature.geometry.paths[0]
+                                        'type': type,
+                                        'coordinates': feature.geometry.paths
                                     }
                                 }
                             },
@@ -229,30 +229,65 @@ export class Select extends mapboxgl.Evented {
                             }
                         });
                     } else {
-                        me._map.addLayer({
-                            "id": "selectedEK-" + guid12(),
-                            "source": {
-                                'type': 'geojson',
-                                'data': {
-                                    'type': 'Feature',
-                                    'geometry': {
-                                        'type': 'Polygon',
-                                        'coordinates': feature.geometry.rings[0]
+                        var rings = feature.geometry.rings;
+                        var type = feature.geometry.rings.length == 1 ? "Polygon" : "MultiPolygon";
+                        //Cấu trúc MultiPolygon không đúng với Mapbox nên tính lại MultiPolygon
+                        if (type == "MultiPolygon") {
+                            var ringsMulti = [];
+                            for (var i = 0; i < rings.length; i++)
+                                ringsMulti.push([rings[i]])
+                            me._map.addLayer({
+                                "id": "selectedEK-" + guid12(),
+                                "source": {
+                                    'type': 'geojson',
+                                    'data': {
+                                        'type': 'Feature',
+                                        'geometry': {
+                                            'type': type,
+                                            'coordinates': ringsMulti
+                                        }
                                     }
-                                }
-                            },
-                            "type": "fill",
-                            "metadata": {
-                                'name': '',
-                                'type': '',
-                            },
-                            'layout': {},
-                            'paint': {
-                                'fill-color': 'yellow',
-                                'fill-opacity': 0.8,
-                                'fill-outline-color': 'red'
-                            },
-                        });
+                                },
+                                "type": "fill",
+                                "metadata": {
+                                    'name': '',
+                                    'type': '',
+                                },
+                                'layout': {},
+                                'paint': {
+                                    'fill-color': 'yellow',
+                                    'fill-opacity': 0.8,
+                                    'fill-outline-color': 'red'
+                                },
+                            });
+                        }else{
+                            me._map.addLayer({
+                                "id": "selectedEK-" + guid12(),
+                                "source": {
+                                    'type': 'geojson',
+                                    'data': {
+                                        'type': 'Feature',
+                                        'geometry': {
+                                            'type': type,
+                                            'coordinates': rings
+                                        }
+                                    }
+                                },
+                                "type": "fill",
+                                "metadata": {
+                                    'name': '',
+                                    'type': '',
+                                },
+                                'layout': {},
+                                'paint': {
+                                    'fill-color': 'yellow',
+                                    'fill-opacity': 0.8,
+                                    'fill-outline-color': 'red'
+                                },
+                            });
+                        }
+
+                        
                     }
                 });
             }
