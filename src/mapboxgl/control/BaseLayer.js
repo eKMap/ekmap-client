@@ -241,7 +241,7 @@ export class BaseLayer extends mapboxgl.Evented {
         //         anhdaidien = fn.call(source, coord, source.getProjection());
         //     } catch (ex) {
         //         console.log(ex);
-        //     }
+        //     }   
         // }
         return anhdaidien;
     }
