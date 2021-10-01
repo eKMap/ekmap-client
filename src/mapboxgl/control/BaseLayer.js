@@ -242,7 +242,7 @@ export class BaseLayer extends mapboxgl.Evented {
         //     } catch (ex) {
         //         console.log(ex);
         //     }   
-        // }
+        // }  
         return anhdaidien;
     }
 
