@@ -136,7 +136,7 @@ export class BaseLayer extends mapboxgl.Evented {
             gclient_element.create('div', {
                 className: 'gclient-bl-bg-text',
                 parent: this.first,
-                uid: baseActive ? baseActive.ol_uid : "",
+                uid: baseActive ? baseActive.id : "",
                 html: baseActive ? this.formatString(baseActive.metadata.name) : 'Không có nền',
                 title: baseActive ? (baseActive.metadata.name) : 'Không có nền'
             })
@@ -163,7 +163,7 @@ export class BaseLayer extends mapboxgl.Evented {
                 gclient_element.create('div', {
                     className: 'gclient-bl-bg-text',
                     parent: element,
-                    uid: layer.ol_uid,
+                    uid: layer.id,
                     html: this.formatString(layer.metadata.name),
                     title: layer.metadata.name
                 })

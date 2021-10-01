@@ -67,14 +67,14 @@ export class TileLayer extends mapboxgl.Evented {
                 "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": [this.tileUrl],
+                "minzoom": this.options.minzoom != undefined ? this.options.minzoom : 0,
+                "maxzoom": this.options.maxzoom != undefined ? this.options.maxzoom : 24,
                 "tileSize": this.options.tileSize != undefined ? this.options.tileSize : 256,
             });
             map.addLayer({
                 "id": id,
                 "type": "raster",
                 "source": id,
-                "minzoom": this.options.minzoom != undefined ? this.options.minzoom : 0,
-                "maxzoom": this.options.maxzoom != undefined ? this.options.maxzoom : 24,
                 'layout': {
                     'visibility': this.options.visibility ? this.options.visibility : 'visible'
                 },
@@ -93,14 +93,14 @@ export class TileLayer extends mapboxgl.Evented {
                 "attribution": this.options.attribution ? this.options.attribution : '',
                 "type": "raster",
                 "tiles": this.tileUrls,
+                "minzoom": this.options.minzoom != undefined ? this.options.minzoom : 0,
+                "maxzoom": this.options.maxzoom != undefined ? this.options.maxzoom : 24,
                 "tileSize": this.options.tileSize != undefined ? this.options.tileSize : 256,
             });
             map.addLayer({
                 "id": id,
                 "type": "raster",
                 "source": id,
-                "minzoom": this.options.minzoom != undefined ? this.options.minzoom : 0,
-                "maxzoom": this.options.maxzoom != undefined ? this.options.maxzoom : 24,
                 'layout': {
                     'visibility': this.options.visibility ? this.options.visibility : 'visible'
                 },
