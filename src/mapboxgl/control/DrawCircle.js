@@ -13,7 +13,9 @@ const MapboxCircle = require('mapbox-gl-circle');
  * @param {Number} options.fillOpacity=0.25 Fill opacity.
  * @param {Number} options.strokeColor=#fbb03b Stroke color.
  * @param {String} options.tooltip=Drawcircle Tooltip of button.
- * @param {String} options.radius=2000 Meter radius.
+ * @param {Number} options.radius=2000 Meter radius.
+ * @param {Number} options.minRadius=10 Minimum radius on user interaction (meter).
+ * @param {Number} options.maxRadius=1100000 Maximum radius on user interaction (meter).
  * @param {string} options.target Specify a target if you want the control to be rendered outside of the map's viewport.</br> If target is equal to null or undefined, control will render by default. 
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.DrawCircle#circleDrawn
@@ -52,9 +54,11 @@ export class DrawCircle extends mapboxgl.Evented {
         this.options = options ? options : {};
         this.target = this.options.target;
         this.active = false;
-        this.radius = this.options.radius != undefined ? this.options.radius : undefined;
+        this.radius = this.options.radius != undefined ? this.options.radius : 2000;
+        this.minRadius = this.options.minRadius != undefined ? this.options.minRadius : 10;
+        this.maxRadius = this.options.maxRadius != undefined ? this.options.maxRadius : 1100000;
         this.listeners = {};
-        this.drawCircle = ''
+        this.drawCircle = '' 
     }
 
     /**
@@ -129,13 +133,15 @@ export class DrawCircle extends mapboxgl.Evented {
         var me = this;
         if (this.drawCircle)
             this.drawCircle.remove();
-        this.drawCircle = new MapboxCircle({ lat: e.lngLat.lat, lng: e.lngLat.lng }, this.radius != undefined ? this.radius : 2000, {
+        this.drawCircle = new MapboxCircle({ lat: e.lngLat.lat, lng: e.lngLat.lng }, this.radius, {
             editable: this.options.editable != undefined ? this.options.editable : false,
             fillColor: this.options.fillColor != undefined ? this.options.fillColor : '#fbb03b',
             fillOpacity: this.options.fillOpacity != undefined ? this.options.fillOpacity : 0.25,
             strokeColor: this.options.strokeColor != undefined ? this.options.strokeColor : '#fbb03b',
             strokeWeight: 0.5,
-            strokeOpacity: 0.75
+            strokeOpacity: 0.75,
+            minRadius: this.minRadius,
+            maxRadius: this.maxRadius,
         }).addTo(this._map);
         this.drawCircle.on('radiuschanged', function (circleObj) {
             me.fire('radiuschanged', { data: me.drawCircle._circle, circle: circleObj });
