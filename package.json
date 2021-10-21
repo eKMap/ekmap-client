@@ -128,8 +128,8 @@
         "lint"
     ],
     "env": {
-        "development" : {
-          "compact": false
+        "development": {
+            "compact": false
         }
-      }
+    }
 }

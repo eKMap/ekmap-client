@@ -960,7 +960,7 @@ var exampleConfig = {
                         description: "Use control Draw to draw a rectangle and Turf.js to calculate its area in square kilometers.",
                         urlApi: "/docs/mapboxgl/mapboxgl.ekmap.control.Rule.html",
                         nameApi:"mapboxgl.ekmap.control.Rule"
-                    },
+                    }
                 ]
             }
         }

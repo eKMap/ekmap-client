@@ -8,8 +8,8 @@ import { map } from 'leaflet';
  *
  * @param {Object} options Construction parameters.
  * @param {Object} options.controls Hide or show individual controls. Each property's name is a control, and value is a boolean indicating whether the <br> control is on or off. Available control names are point, line_string, polygon, trash, combine_features and uncombine_features. By <br> default, all controls are on. To change that default, use displayControlsDefault..
- * @param {Boolean} displayControlsDefault=true The default value for controls. For example, if you would like all controls to be off by <br> default, and specify an allowed list with controls, use displayControlsDefault: false.
- * @param {Object} modes Over ride the default modes with your own.
+ * @param {Boolean} options.displayControlsDefault=true The default value for controls. For example, if you would like all controls to be off by <br> default, and specify an allowed list with controls, use displayControlsDefault: false.
+ * @param {Object} options.modes Over ride the default modes with your own.
  * @extends {mapboxgl.Evented}
  * @fires mapboxgl.ekmap.control.Draw#endDraw
  * @fires mapboxgl.ekmap.control.Draw#startDraw
@@ -26,7 +26,10 @@ export class Draw extends mapboxgl.Evented {
         this.options = options ? options : {};
         this.controls = this.options.controls ? this.options.controls : {};
         this.displayControlsDefault = this.options.displayControlsDefault != undefined ? this.options.displayControlsDefault : true;
-        this.modes = this.options.modes ? this.options.modes : {...MapboxDraw.modes, 'draw_rectangle_drag': mapboxGLDrawRectangleDrag };
+        this.modes = this.options.modes ? this.options.modes : {
+            ...MapboxDraw.modes,
+            'draw_rectangle_drag': mapboxGLDrawRectangleDrag,
+        };
         this.draw = '';
         this.listeners = {};
     }
@@ -47,7 +50,15 @@ export class Draw extends mapboxgl.Evented {
         this.draw = new MapboxDraw({
             displayControlsDefault: this.displayControlsDefault,
             controls: this.controls,
-            modes: this.modes
+            modes: this.modes,
+            // styles: SnapModeDrawStyles,
+            // snap: true,
+            // snapOptions: {
+            //   snapPx: 15, // defaults to 15
+            //   snapToMidPoints: true, // defaults to false
+            //   snapVertexPriorityDistance: 0.0025, // defaults to 1.25
+            // },
+            // guides: false
         });
         map.addControl(this.draw, 'top-left');
         if (!this.displayControlsDefault)
@@ -91,7 +102,9 @@ export class Draw extends mapboxgl.Evented {
         this.fire('startDraw', this);
         this.offEvent();
         this.listeners["draw"] = this.updateAreaPolygon.bind(this);
+        this.listeners["draw_change"] = this.updateAreaPolygon.bind(this);
         this._map.once('draw.create', this.listeners["draw"]);
+        this._map.on('draw.update', this.listeners["draw_change"]);
         if (this._map.getLayer('buffered')) {
             this._map.removeLayer('buffered');
             this._map.removeSource('buffered')
@@ -104,7 +117,21 @@ export class Draw extends mapboxgl.Evented {
              * @event mapboxgl.ekmap.control.DrawLine#lineBufferDrawn
              * @description Fired when line drawn
              */
-            this.fire('endDraw', { data: e.features[0] });
+            var data = e.features[0];
+            var polygon
+
+            if (data.geometry.type == "Polygon" || data.geometry.type == "LineString") {
+                if (data.geometry.type == "Polygon")
+                    polygon = data.geometry.coordinates[0];
+                else if (data.geometry.type == "LineString")
+                    polygon = data.geometry.coordinates;
+                var bounds = new mapboxgl.LngLatBounds();
+                polygon.forEach(function (coord) { bounds = bounds.extend(coord) });
+                this.fire('endDraw', { data: data, center: bounds.getCenter() });
+            }
+            else if (data.geometry.type == "Point")
+                this.fire('endDraw', { data: data, center: data.geometry.coordinates });
+
         }
 
     }
@@ -112,7 +139,10 @@ export class Draw extends mapboxgl.Evented {
     offEvent() {
         var draw = this.draw;
         for (var evt in this.listeners) {
-            this._map.off('draw.create', this.listeners[evt]);
+            if (evt == 'draw')
+                this._map.off('draw.create', this.listeners[evt]);
+            else if (evt == 'draw_change')
+                this._map.off('draw.update', this.listeners[evt]);
         }
         this.listeners = {};
     }
@@ -120,6 +150,10 @@ export class Draw extends mapboxgl.Evented {
 
     trash() {
         this.draw.trash();
+    }
+
+    set(featureCollection) {
+        this.draw.set(featureCollection);
     }
 }
 
