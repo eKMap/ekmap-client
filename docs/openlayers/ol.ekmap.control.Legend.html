@@ -396,7 +396,16 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new ol.Map({     //config.... }); var tiledMap = new ol.ekmap.TiledMapLayer({      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer' }).addTo(map); var legend = new ol.ekmap.control.Legend({     layers: [tiledMap] }); map.addControl(legend,"top-left");</code></pre>
+    <pre class="prettyprint"><code>var map = new ol.Map({https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer
+     //config....
+ });
+ var tiledMap = new ol.ekmap.TiledMapLayer({
+      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
+ }).addTo(map);
+ var legend = new ol.ekmap.control.Legend({
+     layers: [tiledMap]
+ });
+ map.addControl(legend,"top-left");</code></pre>
     
 
     

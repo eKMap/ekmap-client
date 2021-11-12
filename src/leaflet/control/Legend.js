@@ -17,7 +17,7 @@ import { Util } from '../core/Util';
  *      //config....
  *  });
  *  var tiledMap = new L.ekmap.TiledMapLayer({
- *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
+ *       url: 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer'
  *  }).addTo(map);
  *  var legend = new L.ekmap.control.Legend({
  *      layers: [tiledMap]

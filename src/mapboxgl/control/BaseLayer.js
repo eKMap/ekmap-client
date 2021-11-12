@@ -14,7 +14,7 @@ import gclient_element from '../core/Element';
  *      //config....
  *  });
  *  var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
- *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
+ *       url: 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer'
  *  }).addTo(map);
  * // BaseLayer
  *   const mapBaseLayer = {

@@ -19,7 +19,7 @@ import Control from 'ol/control/Control';
  *      //config....
  *  });
  *  var tiledMap = new ol.ekmap.TiledMapLayer({
- *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
+ *       url: 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer'
  *  }).addTo(map);
  *  var legend = new ol.ekmap.control.Legend({
  *      layers: [tiledMap]

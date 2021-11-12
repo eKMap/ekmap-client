@@ -272,7 +272,21 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new ol.Map({     container: 'divMapId',     center: [103.9, 22.2],     zoom: 6})var identify = new ol.ekmap.IdentifyFeatures({     url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'})  .on(map)  .at([])  .run(function (obj) {     console.log();  })    //doSomething})</code></pre>
+    <pre class="prettyprint"><code>var map = new ol.Map({https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer
+     container: 'divMapId',
+     center: [103.9, 22.2],
+     zoom: 6
+})
+var identify = new ol.ekmap.IdentifyFeatures({
+     url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
+})
+  .on(map)
+  .at([])
+  .run(function (obj) {
+     console.log();
+  })
+    //doSomething
+})</code></pre>
     
 
     

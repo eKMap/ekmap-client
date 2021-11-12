@@ -17,7 +17,7 @@ import Tree from '@widgetjs/tree';
  *      //config....
  *  });
  *  var tiledMap = new L.ekmap.TiledMapLayer({
- *       url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
+ *       url: 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer'
  *  }).addTo(map);
  *  var TreeLayerGroup = new L.ekmap.control.TreeLayerGroup({
  *      layers: [tiledMap]

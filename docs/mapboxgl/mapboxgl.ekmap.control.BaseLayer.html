@@ -249,7 +249,29 @@
         
 
     
-    <pre class="prettyprint"><code>var map = new mapboxgl.Map({     //config.... }); var tiledMap = new mapboxgl.ekmap.TiledMapLayer({      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer' }).addTo(map);// BaseLayer  const mapBaseLayer = {       m_mono: "MIERUNE Mono",      m_color: "MIERUNE Color" };  // OverLayer  const mapOverLayer = {       o_std: "OpenStreetMap",       t_pale: "GSI Pale",       t_ort: "GSI Ort"   }; var BaseLayer = new mapboxgl.ekmap.control.BaseLayer({       baseLayers: mapBaseLayer,       overLayers: mapOverLayer,       opacityControl: true  }); map.addControl(BaseLayer,"top-left");</code></pre>
+    <pre class="prettyprint"><code>var map = new mapboxgl.Map({https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer
+     //config....
+ });
+ var tiledMap = new mapboxgl.ekmap.TiledMapLayer({
+      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
+ }).addTo(map);
+// BaseLayer
+  const mapBaseLayer = {
+       m_mono: "MIERUNE Mono",
+      m_color: "MIERUNE Color"
+ };
+  // OverLayer
+  const mapOverLayer = {
+       o_std: "OpenStreetMap",
+       t_pale: "GSI Pale",
+       t_ort: "GSI Ort"
+   };
+ var BaseLayer = new mapboxgl.ekmap.control.BaseLayer({
+       baseLayers: mapBaseLayer,
+       overLayers: mapOverLayer,
+       opacityControl: true
+  });
+ map.addControl(BaseLayer,"top-left");</code></pre>
     
 
     

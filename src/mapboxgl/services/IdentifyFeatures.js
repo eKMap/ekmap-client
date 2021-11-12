@@ -19,7 +19,7 @@ import { Util } from '../core/Util';
  *      zoom: 6
  * })
  * var identify = new mapboxgl.ekmap.IdentifyFeatures({
- *      url: 'https://viegisserver.ekgis.vn/gserver/rest/services/35/MapServer'
+ *      url: 'https://server.ekgis.vn/ekmapserver/rest/services/145/MapServer'
  * })
  *   .on(map)
  *   .at([])
