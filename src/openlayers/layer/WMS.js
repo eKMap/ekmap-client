@@ -55,30 +55,36 @@ export class WMS extends Observable {
         return this;
     }
 
-     /**
-     * @function ol.ekmap.WMS.prototype.getLayers
-     * @description Get layer name of map service.
-     * @param {RequestCallback} callback The callback of result data returned.
-     */
-      getLayers(callback,context) {
+    /**
+    * @function ol.ekmap.WMS.prototype.getLayers
+    * @description Get layer name of map service.
+    * @param {RequestCallback} callback The callback of result data returned.
+    */
+    getLayers(callback, context) {
         var parser = new ol.format.WMSCapabilities();
         var url;
-        if(this.options.token)
+        if (this.options.token)
             url = this.url + '&request=GetCapabilities&service=WMS'
         else
-        url = this.url + '?request=GetCapabilities&service=WMS'
+            url = this.url + '?request=GetCapabilities&service=WMS'
 
         fetch(url)
-            .then(function(response) {
+            .then(function (response) {
                 return response.text();
             })
-            .then(function(text) {
+            .then(function (text) {
                 var result = parser.read(text, null, 2);
                 var layers = result.Capability.Layer.Layer;
                 var arrName = []
-                for(var i = 0; i < layers.length; i++)
-                    arrName.push(layers[i].Name)
-                return callback.call(context,arrName)
+                for (var i = 0; i < layers.length; i++) {
+                    if (layers[i].Layer && layers[i].Layer.length > 0) {
+                        for(var j = 0; j < layers[i].Layer.length; j++ )
+                        arrName.push(layers[i].Layer[j].Name)
+                    } else {
+                        arrName.push(layers[i].Name)
+                    }
+                }
+                return callback.call(context, arrName)
             });
     }
 
@@ -98,13 +104,13 @@ export class WMS extends Observable {
             coordinate,
             viewResolution,
             this.projection, {
-                'INFO_FORMAT': me.format,
-                'REQUEST': "GetFeatureInfo",
-            }
+            'INFO_FORMAT': me.format,
+            'REQUEST': "GetFeatureInfo",
+        }
         );
 
         if (url) {
-            return fetch(url).then(function(response) { return response.text(); })
+            return fetch(url).then(function (response) { return response.text(); })
         }
         return "";
     }

@@ -62,7 +62,7 @@ export class Util {
 
         var args = slice.call(arguments, 2);
 
-        return function() {
+        return function () {
             return fn.apply(obj, args.length ? args.concat(slice.call(arguments)) : arguments);
         };
     }
@@ -88,10 +88,11 @@ export class Util {
                     value = param.valueOf();
                 } else {
                     var param = param + '';
-                    if (param.indexOf(':') && key != 'layerDefs')
-                        param = param.replace(":", "%3A");
-                    if (param.indexOf('/'))
-                        param = param.replace("/", "%2F");
+                    // if (param.indexOf(':') && key != 'layerDefs') {
+                    //     param = param.replace(":", "%3A");
+                    // }
+                    // if (param.indexOf('/'))
+                    //     param = param.replace("/", "%2F");
                     value = param;
                 }
                 data += encodeURIComponent(key) + '=' + value;
@@ -284,14 +285,14 @@ export class Util {
 
         var args = slice.call(arguments, 2);
 
-        return function() {
+        return function () {
             return fn.apply(obj, args.length ? args.concat(slice.call(arguments)) : arguments);
         };
     }
 
     static cancelAnimFrame(id) {
         var cancelFn = window.cancelAnimationFrame || this.getPrefixed('CancelAnimationFrame') ||
-            this.getPrefixed('CancelRequestAnimationFrame') || function(id) { window.clearTimeout(id); };
+            this.getPrefixed('CancelRequestAnimationFrame') || function (id) { window.clearTimeout(id); };
         if (id) {
             cancelFn.call(window, id);
         }

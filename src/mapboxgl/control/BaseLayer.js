@@ -9,6 +9,7 @@ import gclient_element from '../core/Element';
  * @classdesc BaseLayer.
  * @param {Object} options Construction parameters.
  * @param {Boolean} options.className CSS
+ * @fires mapboxgl.ekmap.control.BaseLayer#changeBaseLayer
  * @example
  *  var map = new mapboxgl.Map({
  *      //config....
@@ -135,7 +136,7 @@ export class BaseLayer extends mapboxgl.Evented {
             gclient_element.create('div', {
                 className: 'gclient-bl-bg-text',
                 parent: this.first,
-                uid: baseActive ? baseActive.ol_uid : "",
+                uid: baseActive ? baseActive.id : "",
                 html: baseActive ? this.formatString(baseActive.metadata.name) : 'Không có nền',
                 title: baseActive ? (baseActive.metadata.name) : 'Không có nền'
             })
@@ -162,7 +163,7 @@ export class BaseLayer extends mapboxgl.Evented {
                 gclient_element.create('div', {
                     className: 'gclient-bl-bg-text',
                     parent: element,
-                    uid: layer.ol_uid,
+                    uid: layer.id,
                     html: this.formatString(layer.metadata.name),
                     title: layer.metadata.name
                 })
@@ -240,8 +241,8 @@ export class BaseLayer extends mapboxgl.Evented {
         //         anhdaidien = fn.call(source, coord, source.getProjection());
         //     } catch (ex) {
         //         console.log(ex);
-        //     }
-        // }
+        //     }   
+        // }  
         return anhdaidien;
     }
 
@@ -298,12 +299,11 @@ export class BaseLayer extends mapboxgl.Evented {
         }
         var baselayer = arr;
         for (var i = 0; i < baselayer.length; i++) {
-            if (layerActive != baselayer[i]) {
+            if (layerActive != baselayer[i]) 
                 this._map.setLayoutProperty(baselayer[i].id, 'visibility', 'none');
-                // baselayer[i].setVisible(false);
-            }
         }
-        if (layerActive) this._map.setLayoutProperty(layerActive.id, 'visibility', 'visible'); //layerActive.setVisible(true);
+        if (layerActive) 
+            this._map.setLayoutProperty(layerActive.id, 'visibility', 'visible');
         if (!this.isMediumScreen_() && this.first) {
             var text = 'Không có nền';
             var title = 'Không có nền';
@@ -316,6 +316,21 @@ export class BaseLayer extends mapboxgl.Evented {
                 element.innerHTML = text;
             })
         }
+        //Cập nhật lại layer đã bật/tắt
+        var arr1 = [];
+        var layers = this._map.getStyle().layers,
+        len = layers.length;
+        for (var i = len - 1; i >= 0; i--) {
+            var layer = layers[i];
+            if (layer.metadata && layer.metadata.type && layer.metadata.type == 'baselayer') {
+                arr1.push(layer);
+            }
+        }
+         /**
+                     * @event mapboxgl.ekmap.control.BaseLayer#changeBaseLayer
+                     * @description Fired when the feature is selected.
+                     */
+          this.fire('changeBaseLayer', { layers: arr1 });
         this.handleCollapseClick_();
     }
 
