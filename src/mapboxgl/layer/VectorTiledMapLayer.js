@@ -61,14 +61,14 @@ export class VectorTiledMapLayer extends mapboxgl.Evented {
         //Style point,line,polygon
         map.on('style.load', function() {
             /**
-            * @event mapboxgl.ekmap.VectorTiledMapLayer#loaded
-            * @description Fired when the vector tile map loaded.
-            */
+             * @event mapboxgl.ekmap.VectorTiledMapLayer#loaded
+             * @description Fired when the vector tile map loaded.
+             */
             me.fire('loaded', me);
             var layers = map.getStyle().layers;
             layers.forEach(layer => {
-                var id = parseInt(layer.id);
-                if (!isNaN(id)) {
+                var id = layer.id;
+                if (id) {
                     listLayer.push(layer)
                     me.arr.push(layer.id)
                     if (layer.metadata)
